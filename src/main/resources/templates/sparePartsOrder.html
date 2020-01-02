@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>备件订购</title>
+    <link rel="stylesheet" type="text/css" href="${req.contextPath}/static/plugin/jquery-easyui-1.5.5.4/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="${req.contextPath}/static/plugin/jquery-easyui-1.5.5.4/themes/icon.css">
+    <script type="text/javascript" src="${req.contextPath}/static/plugin/jquery-easyui-1.5.5.4/jquery.min.js"></script>
+    <script type="text/javascript" src="${req.contextPath}/static/plugin/jquery-easyui-1.5.5.4/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="${req.contextPath}/static/plugin/jquery-easyui-1.5.5.4/locale/easyui-lang-zh_CN.js"></script>
+    <style type="text/css">
+        html { overflow-y:hidden; }
+        td{
+            padding: 5px;
+        }
+        .easyui-textbox{
+            width: 135px;
+        }
+        .easyui-combobox{
+            width: 135px;
+        }
+    </style>
+    <script type="text/javascript">
+        var system = "wms";
+        var module = "order/sparePartsOrder";
+        var moduleDesc = "备件订单"
+        $(function () {
+            //判断session是否过期
+            //列表展示
+            $("#dg").datagrid({
+                url:"/" + system + "/" + module + "/list",
+                method:"GET",
+                title: moduleDesc + "信息"
+            })
+            //权限控制
+            //字典项调用
+            //选择框选项配置
+            $(".easyui-combobox.dict").each(function (index, element) {
+                console.log(element);
+                $("#"+element.id).combobox({url:"/wms/dict/listInArray?dictType1="+$("#"+element.id).attr("comboname")});
+            })
+        })
+        function add() {
+            $('#dlg').dialog("open", "新增" + moduleDesc)
+        }
+        function saveDlg() {
+            var url="/" + system + "/" + module + "/build";
+            $("#fm").form("submit", {
+                url: url,
+                dataType: "json",
+                onSubmit: function () {
+                    return true
+                },
+                success: function (result) {
+                    var result = JSON.parse(result);
+                    if (result.success != "true") {
+                        $.messager.alert('系统提示', "<font color=red>" + result.errorMsg + "</font>");
+                        return;
+                    } else {
+                        $.messager.alert('系统提示', '保存成功');
+                        $("#dg").datagrid("reload");
+                        $("#dlg").dialog("close");
+                        $("#fm").form("clear");
+                    }
+                }
+            })
+        }
+        function closeDlg() {
+            $('#dlg').dialog('close');
+        }
+        function excelFileUpload() {
+            //首先验证文件格式
+            var fileName = $('#excelFile').val();
+            if (fileName === '') {
+                alert('请选择文件');
+                return false;
+            }
+            var fileType = (fileName.substring(fileName
+                            .lastIndexOf(".") + 1, fileName.length))
+                    .toLowerCase();
+            if (fileType !== 'xls' && fileType !== 'xlxs') {
+                alert('文件格式不正确，请上传bpmn文件！');
+                return false;
+            }
+            alert('系统提示',"正在上传，上传完成后会有提示，请耐心等候");
+            $("#excelForm").ajaxSubmit({
+                url:"/" + system + "/" + module + "/upload",
+                dataType:"json",
+                success:function(data) {
+                    if (data.success == 'true') {
+                        $.messager.alert("系统提示",'上传文件成功');
+                    } else {
+                        $.messager.alert("系统提示",'上传文件失败');
+                    }
+                    return false;
+                }
+            });
+            return false;
+        }
+        function closeExcelDlg() {
+            $('#excelDlg').dialog('close');
+        }
+        function openUploadDlg(){
+            $('#excelDlg').dialog('open','上传excel');
+        }
+
+        function downloadExcel() {
+
+        }
+
+        function remove(){
+
+        }
+
+
+        function search(){
+            $('#dg').datagrid({
+                url:"/" + system + "/" + module + "/list",
+            })
+            $('#dg').datagrid('reload', $("#searchForm").serialize());
+        }
+    </script>
+<body style="overflow-y: hidden">
+<div id="tb">
+    <div>
+        <a href="javascript:add()" class="easyui-linkbutton" iconCls="icon-add" >新增</a>
+        <a href="javascript:remove()" class="easyui-linkbutton" iconCls="icon-remove" >删除</a>
+        <a href="javascript:openUploadDlg()" class="easyui-linkbutton">导入excel</a>
+        <a href="javascript:downloadExcel()" class="easyui-linkbutton">导出excel</a>
+    </div>
+    <div>
+        <form id="searchForm">
+            <table>
+                <tr>
+                    <td>
+
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
+</div>
+
+<table id="dg" title="信息" class="easyui-datagrid" fitColumns="false"
+       pagination="true" rownumbers="true" fit="true" toolbar="#tb" method="GET">
+    <thead>
+    <tr>
+        <th field="orderState" align="center">订单状态</th>
+        <th field="materialCode" align="center">物料编号</th>
+        <th field="materialName" align="center">物料名称</th>
+        <th field="materialSpecs" align="center">规格型号</th>
+        <th field="supplierCode" align="center">供应商代码</th>
+        <th field="orderMaterialNum" align="center">订购数</th>
+        <th field="productionLine" align="center">生产线</th>
+        <th field="operationPositionCode" align="center">工序号</th>
+        <th field="equipmentCompany" align="center">设备厂家</th>
+    </tr>
+    </thead>
+</table>
+
+<div id="dlg" name="dlg" class="easyui-dialog" title="新增" style="width: 800px;height: 600px" closed="true" buttons="#dlgbutton">
+    <form id="fm" method="post">
+        <table>
+            <tr>
+                <td>物料编号</td><td><input class="easyui-textbox" id="materialCode" name="materialCode" required="required"></td>
+                <td>物料名称</td><td><input class="easyui-textbox" id="materialName" name="materialName"></td>
+                <td>规格</td><td><input class="easyui-textbox" id="materialSpecs" name="materialSpecs"></td>
+            </tr>
+            <tr>
+                <td>供应商编号</td><td><input class="easyui-textbox" id="supplierCode" name="supplierCode"></td>
+                <td>仓库编码</td><td><input class="easyui-textbox" id="warehouseCode" name="warehouseCode"></td>
+                <td>在库区分</td><td><input class="easyui-textbox" id="shelfCode" name="shelfCode"></td>
+            </tr>
+            <tr>
+                <td>订购数</td><td><input class="easyui-textbox" id="orderMaterialNum" name="orderMaterialNum"></td>
+            </tr>
+
+            <tr class="no-contract-tr">
+                <td colspan="6">--------------------------------未签开口合同选项-----------------------------------</td>
+            </tr>
+            <tr class="no-contract-tr">
+                <td>推荐品牌</td><td><input class="easyui-textbox" id="materialBrand" name="materialBrand"></td>
+                <td>推荐供应商</td><td><input class="easyui-textbox" id="recommendedSupplierName" name="recommendedSupplierName"></td>
+                <td>希望到货日期</td><td><input class="easyui-textbox" id="prospectiveArrivalDate" name="prospectiveArrivalDate"></td>
+            </tr>
+            <tr class="no-contract-tr">
+                <td>重点项目管理号</td><td><input class="easyui-textbox" id="financialCenterCode" name="financialCenterCode"></td>
+                <td colspan="3">是否质量成本管理</td><td><input class="easyui-textbox" id="operationPositionCode" name="recommendedSupplierName"></td>
+            </tr>
+
+            <tr class="no-contract-tr">
+                <td>费用中心</td><td><input class="easyui-textbox" id="productionLine" name="productionLine"></td>
+                <td>出库原因代码</td><td><input class="easyui-textbox" id="operationPositionCode" name="operationPositionCode"></td>
+                <td>是否质量成本管理</td><td><input class="easyui-textbox" id="operationPositionCode" name="operationPositionCode"></td>
+            </tr>
+            <tr class="special_tr spare_parts_tr">
+                <td colspan="6">--------------------------------备件选项-----------------------------------</td>
+            </tr>
+            <tr class="special_tr spare_parts_tr">
+                <td>生产线</td><td><input class="easyui-textbox" id="productionLine" name="productionLine"></td>
+                <td>工序号</td><td><input class="easyui-textbox" id="operationPositionCode" name="operationPositionCode"></td>
+            </tr>
+            <tr class="special_tr spare_parts_tr">
+                <td>设备厂家</td><td><input class="easyui-combobox" id="equipmentCompany" name="equipmentCompany"></td>
+            </tr>
+            <tr class="special_tr spare_parts_tr">
+                <td>订购性质</td><td><input class="easyui-combobox" id="sparePartsOrderReason" name="sparePartsOrderReason" valueField="dictValue" textField="dictText" editable="false"></td>
+                <td>紧急性</td><td><input class="easyui-combobox" id="sparePartsEmergency" name="sparePartsEmergency" valueField="dictValue" textField="dictText" editable="false"></td>
+            </tr>
+            <tr class="special_tr spare_parts_tr">
+                <td>品牌</td><td><input class="easyui-combobox" id="sparePartsBrand" name="sparePartsBrand"></td>
+            </tr>
+            <tr class="special_tr spare_parts_tr">
+                <td>订购说明</td><td><input class="easyui-textbox" id="sparePartsOrderDesc" name="sparePartsOrderDesc"></td>
+            </tr>
+        </table>
+    </form>
+</div>
+<div id="dlgbutton">
+    <a href="javascript:saveDlg()" class="easyui-linkbutton">保存</a>
+    <a href="javascript:closeDlg()" class="easyui-linkbutton">关闭</a>
+</div>
+
+<div id="excelDlg" name="dlg" class="easyui-dialog" title="上传" style="width: 800px;height: 600px" closed="true" buttons="#excelDlgbutton">
+    <form  method="post" enctype="multipart/form-data" id="excelForm">
+        <input type="file" name="file" id="file"/>
+        <input type="submit" value="上传文件"/>
+    </form>
+</div>
+<div id="excelDlgbutton">
+    <a href="javascript:closeExcelDlg()" class="easyui-linkbutton">关闭</a>
+</div>
+</body>
+</html>

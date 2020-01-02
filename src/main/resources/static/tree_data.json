@@ -1,0 +1,128 @@
+[{
+  "id":1,
+  "text":"祺盛动力仓储管理",
+  "state": "closed",
+  "children":[
+    {
+      "text":"系统管理(尚未完成)",
+      "state": "closed",
+      "children":[
+        {
+          "text":"权限设置",
+          "state": "open",
+          "attributes": {
+            "url": "/wms/view/"
+          }
+        },
+        {
+          "text": "权限分配",
+          "state": "open",
+          "attributes": {
+            "url": "/process/view/entityProcess"
+          }
+        },
+        {
+          "text": "系统配置项",
+          "state": "open",
+          "attributes": {
+            "url": "/wms/view/dict"
+          }
+        }
+      ]
+    },
+    {
+      "text": "物料管理",
+      "state": "open",
+      "children":[
+        {
+          "text": "库存清单",
+          "state": "open",
+          "attributes": {
+            "url": "/wms/view/material"
+          }
+        },
+        {
+          "text": "申请新增物料",
+          "state": "open",
+          "attributes": {
+            "url": "/wms/view/newMaterial"
+          }
+        },
+        {
+          "text": "已签开口合同资材清单",
+          "state": "open",
+          "attributes": {
+            "url": "/wms/view/materialContract"
+          }
+        },
+        {
+          "text": "已签开口合同备件清单",
+          "state": "open",
+          "attributes": {
+            "url": "/wms/view/sparePartsContract"
+          }
+        },
+        {
+          "text": "供应商清单",
+          "state": "open",
+          "attributes": {
+            "url": "/wms/view/supplier"
+          }
+        }
+      ]
+    },
+    {
+      "text": "订购管理",
+      "state": "open",
+      "children":[
+        {
+          "text": "订购汇总",
+          "state": "open",
+          "attributes": {
+            "url": "/wms/view/order"
+          }
+        },
+        {
+          "text": "订购收货管理",
+          "state": "open",
+          "attributes": {
+            "url": "/wms/view/orderReceipt"
+          }
+        }
+      ]
+    },
+    {
+      "text": "调整出入库管理",
+      "state": "open",
+      "children":[
+        {
+          "text": "调整入库管理",
+          "state": "open",
+          "attributes": {
+            "url": "/wms/view/warehousingIn"
+          }
+        },
+        {
+          "text": "调整出库管理",
+          "state": "open",
+          "attributes": {
+            "url": "/wms/view/warehousingOut"
+          }
+        }
+      ]
+    },
+    {
+      "text": "数据分析",
+      "state": "open",
+      "children":[
+        {
+          "text": "库存金额数据分析",
+          "state": "open",
+          "attributes": {
+            "url": "/wms/view/storageAmountCharts"
+          }
+        }
+      ]
+    }
+  ]
+}]

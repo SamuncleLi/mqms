@@ -1,0 +1,41 @@
+debug: false
+server:
+ port: 8083
+ servlet:
+  context-path: /mqms
+spring:
+ servlet:
+  multipart:
+   max-file-size: 100MB
+   max-request-size: 100MB
+ http:
+  encoding:
+   charset: utf-8
+ mvc:
+  date-format: yyyy-MM-dd
+  static-path-pattern: /static/** #静态资源路径
+ resources:
+   static-locations: classpath:/static/
+ jackson:
+  date-format: yyyy-MM-dd HH:mm:ss
+  time-zone: GMT+8
+ datasource:
+  driver-class-name: com.mysql.jdbc.Driver
+  url: jdbc:mysql://localhost:3306/wms?useSSL=false&useUnicode=true&characterEncoding=utf-8
+  username: root
+  password: root
+ freemarker:
+  request-context-attribute: req  #req访问request
+  suffix: .html  #后缀名
+  content-type: text/html
+  enabled: true
+  cache: false #缓存配置
+  template-loader-path: classpath:/templates/ #模板加载路径 按需配置
+  charset: UTF-8 #编码格式
+  settings:
+   number_format: '0.##'   #数字格式化，无小数点
+mybatis:
+ config-location: classpath:/mybatis/mybatis-config.xml
+ mapper-locations: classpath:/mybatis/mapper/*.xml,classpath:/mybatis/mapper/base/*.xml
+cxf:
+  path: /ws

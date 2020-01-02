@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <link rel="stylesheet" type="text/css" href="${req.contextPath}/static/plugin/jquery-easyui-1.5.5.4/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="${req.contextPath}/static/plugin/jquery-easyui-1.5.5.4/themes/icon.css">
+    <script type="text/javascript" src="${req.contextPath}/static/plugin/jquery-easyui-1.5.5.4/jquery.min.js"></script>
+    <script type="text/javascript" src="${req.contextPath}/static/plugin/jquery-easyui-1.5.5.4/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="${req.contextPath}/static/plugin/jquery-easyui-1.5.5.4/locale/easyui-lang-zh_CN.js"></script>
+    <style type="text/css">
+        html { overflow-y:hidden; }
+        td{
+            padding: 5px;
+        }
+        .easyui-textbox{
+            width: 135px;
+        }
+        .easyui-combobox{
+            width: 135px;
+        }
+        .easyui-datebox{
+            width: 135px;
+        }
+    </style>
+
+<body style="overflow-y: hidden">
+<div id="tb">
+    <div>
+        <a href="javascript:add()" class="easyui-linkbutton" iconCls="icon-add" >新增</a>
+        <a href="javascript:edit()" class="easyui-linkbutton" iconCls="icon-edit" >修改</a>
+        <a href="javascript:remove()" class="easyui-linkbutton" iconCls="icon-remove" >撤回</a>
+        <a href="javascript:summary()" class="easyui-linkbutton">汇总</a>
+        <!--<a href="javascript:openUploadDlg()" class="easyui-linkbutton">导入excel</a>-->
+        <a href="javascript:downloadOrderContract()" class="easyui-linkbutton">导出ERP格式excel</a>
+        <a href="javascript:downloadOrderNoContract()" class="easyui-linkbutton">导出OA格式excel</a>
+    </div>
+    <div>
+        <form id="excelForm" hidden="hidden">
+            <input id="orderIdsExcel" name="orderIds">
+        </form>
+        <form id="searchForm">
+        <table>
+            <tr>
+                <td>采购订单号:</td><td><input id="purchasingOrderCodeSearch" name="purchasingOrderCode" class="easyui-textbox"></td>
+                <td>采购担当</td><td><input id="supplierNameSearch" name="supplierName" class="easyui-textbox"></td>
+                <td>申请日期</td><td><input id="orderOperaterTimeSearch" name="orderOperaterTime" class="easyui-datebox"></td>
+                <td>是否开口</td><td><input id="contractType" name="contractType" class="easyui-combobox dict" valueField="dictValue" textField="dictText"></td>
+            </tr>
+            <tr>
+                <td>物料号</td><td><input id="materialCodeSearch" name="materialCode" class="easyui-textbox"></td>
+                <td>物料名称</td><td><input id="materialNameSearch" name="materialName" class="easyui-textbox"></td>
+                <td>规格</td><td><input id="materialSpecsSearch" name="materialSpecs" class="easyui-textbox"></td>
+                <td>合同状态</td><td><input id="orderInitialState" name="orderInitialState" class="easyui-combobox dict" valueField="dictValue" textField="dictText"></td>
+                <td ><a href="javascript:search()" class="easyui-linkbutton" iconCls="icon-search" >搜索</a></td>
+            </tr>
+        </table>
+        </form>
+    </div>
+</div>
+
+<table id="dg" title="订单信息" class="easyui-datagrid" fitColumns="false"
+       pagination="true" rownumbers="true" fit="true" toolbar="#tb" method="GET"
+       pageList="[ 10, 50, 100, 500, 2000]">
+    <thead frozen="true">
+    <tr>
+        <th field="cb" checkbox="true" align="center"></th>
+        <th field="purchasingOrderCode" align="center">采购订单编号</th>
+    </tr>
+    </thead>
+    <thead>
+    <tr>
+        <th field="orderInitialUserName" align="center">申请人</th>
+        <th field="orderInitialTime" align="center">WMS提单时间</th>
+        <th field="orderInitialState" align="center">WMS审核状态</th>
+        <th field="productionLine" align="center">生产线</th>
+        <th field="materialCode" align="center">物料号</th>
+        <th field="materialName" align="center">物料名称</th>
+        <th field="materialSpecs" align="center">规格型号</th>
+        <th field="orderMaterialNum" align="center">订购数量</th>
+        <th field="productionLine" align="center">生产线</th>
+        <th field="operationPosition" align="center">工序号</th>
+        <th field="extraOrderReson" align="center">订购原因</th>
+        <th field="warehousingReasonCode" align="center">出库原因代码</th>
+        <th field="orderOperaterTime" align="center">申请日期</th>
+        <th field="orderType" align="center">类别</th>
+        <th field="financialListCode" align="center">财务审批表</th>
+        <th field="purchasingListCode" align="center">采购申请单号</th>
+        <th field="materialCode" align="center">物料编码</th>
+        <th field="orderMaterialName" align="center">申请名称</th>
+        <th field="confirmMaterialName" align="center">确定名称</th>
+        <th field="orderMaterialSpecs" align="center">申请规格型号</th>
+        <th field="confirmMaterialSpecs" align="center">确定规格型号</th>
+        <th field="orderMaterialBrand" align="center">申请品牌</th>
+        <th field="confirmMaterialBrand" align="center">确定品牌</th>
+        <th field="financialCenterCode" align="center">费用中心</th>
+        <th field="orderBuyer" align="center">采购担当</th>
+        <th field="orderState" align="center">当前状态</th>
+        <th field="orderBuyerCheckDate" align="center">采购审核日期</th>
+        <th field="orderPriceCheckDate" align="center">价格审核日期</th>
+        <th field="purchasingOrderCode" align="center">采购订单号</th>
+        <th field="arrivalDate" align="center">到货日期</th>
+        <th field="receivedNum" align="center">验收数量</th>
+        <th field="receivedDate" align="center">验收日期</th>
+        <th field="paymentType" align="center">付款方式</th>
+        <th field="paymentRate" align="center">付款比率</th>
+        <th field="budgetType" align="center">预算类别</th>
+        <th field="budgetSubject" align="center">预算科目</th>
+        <th field="investManagementCode" align="center">投资管理号</th>
+        <th field="researchTestProject" align="center">研试费项目</th>
+        <th field="orderBuilderName" align="center">建单人</th>
+        <th field="orderDescription" align="center">备注</th>
+        <th field="orderId" align="center" hidden="hidden"></th>
+    </tr>
+    </thead>
+</table>
+
+<div id="dlg" name="dlg" class="easyui-dialog" title="新增订单" style="width: 800px;height: 600px" closed="true" buttons="#dlgbutton">
+    <div id="dlgtb">
+        <a href="javascript:append()" class="easyui-linkbutton" iconCls="icon-add" >新增</a>
+        <a href="javascript:removeit()" class="easyui-linkbutton" iconCls="icon-remove" >删除</a>
+    </div>
+    <form id="fm" method="post">
+        <table>
+            <tr>
+                <td>姓名</td><td><input name="orderInitialUserName" class="easyui-textbox"></td>
+                <td>工号</td><td><input name="orderInitialUserNo" class="easyui-textbox"></td>
+                <td>部门</td><td><input name="orderInitialUserDepartment" class="easyui-textbox"></td>
+            </tr>
+            <tr>
+                <td>费用中心</td><td><input id="financialCenterCode" name="financialCenterCode" class="easyui-combobox" valueField="dictValue" textField="dictText" required="true"></td>
+                <td>科资材管理员</td><td><input id="kzcbjgly" name="kzcbjgly" class="easyui-combobox orderChecker" valueField="orderCheckerUserId" textField="orderCheckerUserName" required="true"></td>
+                <td>系长</td><td><input id="xz" name="xz" class="easyui-combobox orderChecker" valueField="orderCheckerUserId" textField="orderCheckerUserName" required="true"></td>
+            </tr>
+            <tr>
+                <td>科预算员</td><td><input id="kysy" name="kysy" class="easyui-combobox orderChecker" valueField="orderCheckerUserId" textField="orderCheckerUserName" required="true"></td>
+                <td>科长</td><td><input id="kz" name="kz" class="easyui-combobox orderChecker" valueField="orderCheckerUserId" textField="orderCheckerUserName" required="true"></td>
+                <td>部长</td><td><input id="bz" name="bz" class="easyui-combobox orderChecker" valueField="orderCheckerUserId" textField="orderCheckerUserName" required="true"></td>
+                <td>总监/总助/本部长</td><td><input id="zj" name="zj" class="easyui-combobox orderChecker" valueField="orderCheckerUserId" textField="orderCheckerUserName" required="true"></td>
+            </tr>
+            <tr hidden="hidden">
+                <td colspan="5"><input id="orderInitialUserId" name="orderInitialUserId" style="width: 400px" value="<#if Session["userId"]?exists>${Session["userId"]}</#if>"></td>
+                <td><input id="processChecker" name="processChecker"></td>
+                <td><input id="conditions" name="conditions"></td>
+                <td><input id="dataArray" name="dataArray"></td>
+            </tr>
+
+        </table>
+        <table id="dlgdg" name="dlgdg" class="easyui-datagrid"
+               data-options="
+               toolbar: '#dlgtb',
+               singleSelect: true,
+               onClickCell: onClickCell
+            ">
+            <thead>
+            <tr>
+                <th data-options="field:'newMaterialSymbol',width:90,editor:'newBox'">是否新物料</th>
+                <th data-options="field:'newMaterialType',width:135,editor:{
+                            type:'combobox',
+                            options:{
+                                valueField:'dictValue',
+                                textField:'dictText',
+                                url:'/wms/dict/listInArray?dictType1=newMaterialType',
+                                method:'get',
+                                required:true,
+                                disabled:true
+                                }
+                            }">新物料种类</th>
+                <th data-options="field:'materialCode',width:135,editor:'materialbox'">物料编号</th>
+                <th data-options="field:'materialName',width:135,editor:{type:'textbox',options:{required:true}}">物料名称</th>
+                <th data-options="field:'materialSpecs',width:135,editor:{type:'textbox',options:{required:true}}">规格型号</th>
+                <th data-options="field:'materialUnit',width:135,editor:{
+                            type:'combobox',
+                            options:{
+                                valueField:'dictValue',
+                                textField:'dictText',
+                                url:'/wms/dict/listInArray?dictType1=materialUnit',
+                                method:'get',
+                                required:true,
+                                }
+                            }">计量单位</th>
+                <th data-options="field:'orderMaterialNum',width:135,editor:{type:'numberbox',options:{required:true,precision:0,min:1}}">申请数量</th>
+                <!--<th data-options="field:'attr1',width:135,editor:'textbox'">预算单价</th>-->
+                <th data-options="field:'warehousingReasonCode',width:135,editor:'textbox'">出库原因代码</th>
+                <th data-options="field:'warehouseCode',width:135,editor:{
+                            type:'combobox',
+                            options:{
+                                valueField:'dictValue',
+                                textField:'dictText',
+                                url:'/wms/dict/listInArray?dictType1=warehouseCode',
+                                method:'get',
+                                required:true,
+                                editable:false
+                                }
+                            }">仓库编码</th>
+                <th data-options="field:'warehouseSymbol',width:135,editor:{
+                            type:'combobox',
+                            options:{
+                                valueField:'dictValue',
+                                textField:'dictText',
+                                url:'/wms/dict/listInArray?dictType1=warehouseSymbol',
+                                method:'get',
+                                required:true,
+                                editable:false
+                                }
+                            }">在库区分</th>
+                <th data-options="field:'materialBrand',width:135,editor:{type:'textbox',options:{required:true}}">推荐品牌</th>
+                <th data-options="field:'recommendedSupplierName',width:135,editor:'textbox'">推荐供应商</th>
+                <th data-options="field:'prospectiveArrivalDate',width:135,editor:'textbox'">希望交货日期</th>
+
+                <th data-options="field:'importantProjectCode',width:135,editor:'textbox'">重点项目管理号</th>
+                <th data-options="field:'extraOrderReason',width:270,editor:'textbox'">备注</th>
+                <th data-options="field:'researchTestProject',width:135,editor:'textbox'">研试费项目</th>
+            <!--<th data-options="field:'attr1',width:135,editor:'textbox'">使用人</th>-->
+                <#--<th data-options="field:'attr1',width:135,editor:'textbox'">手机号</th>-->
+
+                <#--<th data-options="field:'attr1',width:135,editor:'textbox'">原本费用中心</th>-->
+                <#--<th data-options="field:'attr1',width:135,editor:'textbox'">原因代码</th>-->
+                <#--<th data-options="field:'attr1',width:135,editor:'textbox'">原本预算单价</th>-->
+            </tr>
+            </thead>
+        </table>
+    </form>
+</div>
+<div id="dlgbutton">
+    <a href="javascript:saveDlg()" class="easyui-linkbutton">保存</a>
+    <a href="javascript:closeDlg()" class="easyui-linkbutton">关闭</a>
+</div>
+
+<div id="editdlg" name="editdlg" class="easyui-dialog" title="修改订单" style="width: 800px;height: 600px" closed="true" buttons="#editdlgbutton">
+<form id="editfm" method="post">
+    <table>
+        <tr>
+            <td>物料编号</td><td><input disabled="disabled" name="materialCode"></td>
+            <td>物料名</td><td><input disabled="disabled" name="materialName"></td>
+            <td>物料规格</td><td><input disabled="disabled" name="materialSpecs"></td>
+        </tr>
+        <tr>
+            <td>计量单位</td><td><input name="materialUnit"></td>
+            <td>数量</td><td><input name="orderMaterialNum"></td>
+            <td>出库原因代码</td><td><input name="warehousingReasonCode"></td>
+        </tr>
+        <tr>
+            <td>推荐品牌</td><td><input name="materialBrand"></td>
+            <td>推荐供应商</td><td><input name="recommendedSupplierName"></td>
+            <td>希望交货日期</td><td><input name="prospectiveArrivalDate"></td>
+        </tr>
+        <tr>
+            <td>重点项目管理号</td><td><input name="importantProjectCode"></td>
+            <td>备注</td><td><input name="extraOrderReason"></td>
+            <td>研试费项目</td><td><input name="researchTestProject"></td>
+        </tr>
+        <tr>
+            <td><input name="orderId" hidden="hidden"></td>
+        </tr>
+    </table>
+</form>
+</div>
+<div id="editdlgbutton">
+    <a href="javascript:saveEditDlg()" class="easyui-linkbutton">保存</a>
+    <a href="javascript:closeEditDlg()" class="easyui-linkbutton">关闭</a>
+</div>
+
+<!--<div id="excelDlg" name="dlg" class="easyui-dialog" title="上传订单" style="width: 800px;height: 600px" closed="true" buttons="#excelDlgbutton">-->
+    <!--<form  method="post" enctype="multipart/form-data" id="excelForm" action="/wms/order/upload">-->
+        <!--<input type="file" name="file" id="file"/>-->
+        <!--<input type="submit" value="上传文件"/>-->
+    <!--</form>-->
+<!--</div>-->
+<div id="excelDlgbutton">
+    <a href="javascript:closeExcelDlg()" class="easyui-linkbutton">关闭</a>
+</div>
+
+<script type="text/javascript">
+    var formUrl = "/wms/order/batch/build";
+    var editIndex = undefined;
+
+    function endEditing(){
+        if (editIndex == undefined){return true}
+        if ($('#dlgdg').datagrid('validateRow', editIndex)){
+            $('#dlgdg').datagrid('endEdit', editIndex);
+            editIndex = undefined;
+            return true;
+        } else {
+            return false;
+        }
+    }
+    function onClickCell(index, field){
+        if (editIndex != index){
+            if (endEditing()){
+                $('#dlgdg').datagrid('selectRow', index)
+                        .datagrid('beginEdit', index);
+                var ed = $('#dlgdg').datagrid('getEditor', {index:index,field:field});
+                if (ed){
+                    ($(ed.target).data('textbox') ? $(ed.target).textbox('textbox') : $(ed.target)).focus();
+                }
+                editIndex = index;
+            } else {
+                setTimeout(function(){
+                    $('#dlgdg').datagrid('selectRow', editIndex);
+                },0);
+            }
+        }
+    }
+    //    function onEndEdit(index, row){
+    //        var ed = $(this).datagrid('getEditor', {
+    //            index: index,
+    //            field: 'productid'
+    //        });
+    //        row.productname = $(ed.target).combobox('getText');
+    //    }
+    function append(){
+        if (endEditing()){
+            $('#dlgdg').datagrid('appendRow',{status:'P'});
+            editIndex = $('#dlgdg').datagrid('getRows').length-1;
+            $('#dlgdg').datagrid('selectRow', editIndex)
+                    .datagrid('beginEdit', editIndex);
+        }
+    }
+    function removeit(){
+        if (editIndex == undefined){return}
+        $('#dlgdg').datagrid('cancelEdit', editIndex)
+                .datagrid('deleteRow', editIndex);
+        editIndex = undefined;
+    }
+    function acceptit(){
+        if (endEditing()){
+            $('#dlgdg').datagrid('acceptChanges');
+        }
+    }
+    function reject(){
+        $('#dlgdg').datagrid('rejectChanges');
+        editIndex = undefined;
+    }
+    function getChanges(){
+        var rows = $('#dlgdg').datagrid('getChanges');
+        alert(rows.length+' rows are changed!');
+    }
+
+    $.extend($.fn.datagrid.defaults.editors, {
+        materialbox: {
+            init: function (container, options) {
+                options['onSelect'] = function (record) {
+                    //获取物料信息并赋值editor
+                    var editor = $('#dlgdg').datagrid('getEditor', {index:editIndex,field:'materialName'}).target.textbox('setValue',record.materialName);
+                    $('#dlgdg').datagrid('getEditor', {index:editIndex,field:'materialSpecs'}).target.textbox('setValue',record.materialSpecs);
+                    $('#dlgdg').datagrid('getEditor', {index:editIndex,field:'materialUnit'}).target.textbox('setValue',record.materialUnit);
+                    $('#dlgdg').datagrid('getEditor', {index:editIndex,field:'materialCode'}).target.combobox('hidePanel');
+                    $($('#dlgdg').datagrid('getEditor', {index:editIndex,field:'orderMaterialNum'}).target).focus();
+
+                    //判断是否是已签开口合同，如果已签开口合同则部分栏目不需要填
+                    //资材：是否M开头
+                    if(record.materialCode.charAt(0) == "M"){
+                        $('#dlgdg').datagrid('getEditor', {index:editIndex,field:'materialBrand'}).target.textbox({disabled:true});
+                        $('#dlgdg').datagrid('getEditor', {index:editIndex,field:'recommendedSupplierName'}).target.textbox({disabled:true});
+                        $('#dlgdg').datagrid('getEditor', {index:editIndex,field:'prospectiveArrivalDate'}).target.textbox({disabled:true});
+                        $('#dlgdg').datagrid('getEditor', {index:editIndex,field:'importantProjectCode'}).target.textbox({disabled:true});
+                        $('#dlgdg').datagrid('getEditor', {index:editIndex,field:'extraOrderReason'}).target.textbox({disabled:true});
+                        $('#dlgdg').datagrid('getEditor', {index:editIndex,field:'researchTestProject'}).target.textbox({disabled:true});
+                        $('#dlgdg').datagrid('getEditor', {index:editIndex,field:'warehousingReasonCode'}).target.textbox({disabled:false});
+                        $('#dlgdg').datagrid('getEditor', {index:editIndex,field:'warehouseCode'}).target.textbox({disabled:false});
+                        $('#dlgdg').datagrid('getEditor', {index:editIndex,field:'warehouseSymbol'}).target.textbox({disabled:false});
+                    }
+                    else{
+                        $('#dlgdg').datagrid('getEditor', {index:editIndex,field:'warehousingReasonCode'}).target.textbox({disabled:true});
+                        $('#dlgdg').datagrid('getEditor', {index:editIndex,field:'warehouseCode'}).target.textbox({disabled:true});
+                        $('#dlgdg').datagrid('getEditor', {index:editIndex,field:'warehouseSymbol'}).target.textbox({disabled:true});
+                        $('#dlgdg').datagrid('getEditor', {index:editIndex,field:'materialBrand'}).target.textbox({disabled:false});
+                        $('#dlgdg').datagrid('getEditor', {index:editIndex,field:'recommendedSupplierName'}).target.textbox({disabled:false});
+                        $('#dlgdg').datagrid('getEditor', {index:editIndex,field:'prospectiveArrivalDate'}).target.textbox({disabled:false});
+                        $('#dlgdg').datagrid('getEditor', {index:editIndex,field:'importantProjectCode'}).target.textbox({disabled:false});
+                        $('#dlgdg').datagrid('getEditor', {index:editIndex,field:'extraOrderReason'}).target.textbox({disabled:false});
+                        $('#dlgdg').datagrid('getEditor', {index:editIndex,field:'researchTestProject'}).target.textbox({disabled:false});
+                    }
+                }
+                var input = $('<input type="text" class="datagrid-editable-input easyui-combobox" valueField="materialCode" textField="materialCode" groupField="supplierName">').appendTo(container).combobox(options);
+                input.combobox('textbox').keyup(function (e) {
+                    //显示下拉面板，下拉面板是模糊搜索结果
+                    if (e.keyCode != 13 && input.combobox('getText').length>4) {
+                        //获取当前操作的行，并给对应行赋值
+                        input.combobox('reload','/wms/material/list/fuzzySearch?materialCode=' + input.combobox('getText'));
+                        input.combobox('showPanel');
+                    }
+                })
+                return input;
+            },
+            getValue: function (target) {
+                return $(target).val()
+            },
+            setValue: function (target, value) {
+                $(target).val(value)
+            }
+        },
+        newBox:{
+            init: function (container, options) {
+                options['onChange'] = function (checked) {
+                    console.log(checked);
+                }
+                var input = $('<input type="checkbox" class="easyui-checkbox">').appendTo(container);
+                input.change(function () {
+                    //jquery中判断checked的方法，true/false
+                    if(input.is(':checked')==true){
+                        input.val('true');
+                        $('#dlgdg').datagrid('getEditor', {index:editIndex,field:'materialCode'}).target.combobox({disabled:true});
+                        $('#dlgdg').datagrid('getEditor', {index:editIndex,field:'newMaterialType'}).target.combobox({disabled:false});
+                    }
+                    else{
+                        input.val('false');
+                        $('#dlgdg').datagrid('getEditor', {index:editIndex,field:'newMaterialType'}).target.combobox({disabled:true});
+                        $('#dlgdg').datagrid('getEditor', {index:editIndex,field:'materialCode'}).target.combobox({disabled:false});
+                    }
+                })
+                return input;
+            },
+            getValue: function (target) {
+                return $(target).val()
+            },
+            setValue: function (target, value) {
+                $(target).val(value)
+            }
+        }
+    })
+    function searchMaterial(){
+        $.getJSON("/wms/material/listLimit1",{materialCode:$('#materialCode').textbox('getText')},function (result) {
+            console.log(result);
+            $('#materialName').textbox('setValue',result.materialName);
+            $('#materialSpecs').textbox('setValue',result.materialSpecs);
+            $('#supplierCode').textbox('setValue',result.supplierCode);
+            $('#warehouseCode').textbox('setValue',result.warehouseCode);
+
+            if(result.materialName == undefined){
+                $.messager.confirm({
+                    title:"系统提示",
+                    msg:"物料不存在，是否是新增物料",
+                    ok:"是",
+                    cancel:"否",
+                    fn:function (r) {
+                        if (r){
+                            //如果是新物料，则勾选新物料选项
+                        }
+                        else{
+                            //如果用户确认不是新物料，则清空
+                        }
+                    }
+                });
+            }
+        })
+    }
+    $(function () {
+        $("#dg").datagrid({
+            url:"/wms/order/list",
+            method:"GET",
+        })
+        $('.special_tr').hide();
+
+        //选择框选项配置
+        $(".easyui-combobox.dict").each(function (index, element) {
+            console.log(element);
+            $("#"+element.id).combobox({url:"/wms/dict/listInArray?dictType1="+$("#"+element.id).attr("comboname")});
+        })
+//            //物料查询
+//            $('#materialCode').textbox('textbox').keydown(function (e) {
+//                if (e.keyCode == 13) {
+//                    searchMaterial();
+//                }
+//            })
+        //根据管理类型来切换定制项目,form里的url也随之变化
+        $("#managementType").combobox({
+            onSelect:function (record) {
+                $('.special_tr').hide();
+                //拼接class，combobox里的value就是对应的特殊行的class
+                console.log(record);
+                $("." + record.dictValue + "_tr").show();
+            }
+        })
+        //根据所选择的费用中心来选择
+        $('#financialCenterCode').combobox({
+            url:'/wms/financialCenter/listInArray',
+            textField:'financialCenterName',
+            valueField:'financialCenterCode',
+            onSelect:function (record) {
+                console.log(record);
+                $('.orderChecker').each(function () {
+                    $(this).combobox('reload','/wms/orderChecker/listInArray?financialCenterCode='+record.financialCenterCode+'&orderCheckerLevelName='+$(this).attr('id'))
+                });
+            }
+
+        })
+    })
+    function add() {
+        $('#dlg').dialog("open", "新增订单")
+    }
+    function saveDlg() {
+        //保存dlgdg
+        $('#dlgdg').datagrid("acceptChanges");
+        //将dlgdg的数据转化成form里隐藏input里面的数据
+        $('#dataArray').val(JSON.stringify($('#dlgdg').datagrid('getData').rows));
+        //将人员选择框里面的人转化成processChecker,conditions
+        var processChecker = {};
+        var conditions = {};
+        $('.orderChecker').each(function () {
+            //符号“/”代表空
+            if($(this).combobox('getValue') !="/"){
+                processChecker[$(this).attr('id')] = parseInt($(this).combobox('getValue'));
+                conditions[$(this).attr('id')] = "y";
+            }
+            else{
+                conditions[$(this).attr('id')] = "n";
+            }
+        });
+        $('#processChecker').val(JSON.stringify(processChecker));
+        $('#conditions').val(JSON.stringify(conditions));
+
+        $("#fm").form("submit", {
+            url: formUrl,
+            dataType: "json",
+            onSubmit: function(){
+                //验证逻辑：如果是新物料，则必须填写新物料类别，如果是已签开口合同物料，则基础选项都必须填，额外选项不必填，如果未签可口合同，则所有选项都必须填
+                var isValid = $(this).form('validate');
+                if (!isValid){
+                    $.messager.alert('系统提示',"请填写必要信息");	// hide progress bar while the form is invalid
+                }
+                return isValid;	// return false will stop the form submission
+            },
+            success: function (result) {
+                console.log(result);
+                var result = JSON.parse(result);
+                if (result.success != "true") {
+                    $.messager.alert('系统提示', "<font color=red>" + result.errorMsg + "</font>");
+                    return;
+                } else {
+                    $.messager.alert('系统提示', '保存成功');
+                    $("#dg").datagrid("reload");
+                    $("#dlg").dialog("close");
+                    $("#fm").form("clear");
+                }
+            }
+        })
+    }
+    function closeDlg() {
+        $('#dlg').dialog('close');
+    }
+    function excelFileUpload() {
+        //首先验证文件格式
+        var fileName = $('#excelFile').val();
+        if (fileName === '') {
+            alert('请选择文件');
+            return false;
+        }
+        var fileType = (fileName.substring(fileName
+                        .lastIndexOf(".") + 1, fileName.length))
+                .toLowerCase();
+        if (fileType !== 'xls' && fileType !== 'xlxs') {
+            alert('文件格式不正确，请上传bpmn文件！');
+            return false;
+        }
+        alert('系统提示',"正在上传，上传完成后会有提示，请耐心等候");
+        $("#excelForm").ajaxSubmit({
+            url:"/",
+            dataType:"json",
+            success:function(data) {
+                if (data.success == 'true') {
+                    $.messager.alert("系统提示",'上传文件成功');
+                } else {
+                    $.messager.alert("系统提示",'上传文件失败');
+                }
+                return false;
+            }
+        });
+        return false;
+    }
+    function closeExcelDlg() {
+        $('#excelDlg').dialog('close');
+    }
+    function openUploadDlg(){
+        $('#excelDlg').dialog('open','上传excel');
+    }
+
+
+    function search(){
+        var url= "/wms/order/list";
+//            $("#searchForm").form("submit", {
+//                url: url,
+//                dataType: "json",
+//                onSubmit: function () {
+//                    return true
+//                },
+//                success: function (result) {
+//                    var result = JSON.parse(result);
+//                    $('#dg').datagrid('loadData', result);
+//                }
+//            })
+        console.log($("#searchForm").serialize());
+        $('#dg').datagrid({
+            url:url+"?"+$("#searchForm").serialize(),
+
+        })
+//            $('#dg').datagrid('reload', $("#searchForm").serialize());
+    }
+
+    function downloadOrderContract() {
+        //将选择的订单行号id全部发送到后台
+        var selectedRows = $('#dg').datagrid('getSelections');
+        if(selectedRows.length!=1){
+            $.messager.alert("系统提示","请选择需要导出的订单行");
+            return;
+        }
+        var orderIds=[];
+        for(var i=0;i<selectedRows.length;i++){
+            orderIds.push(selectedRows[i].orderId);//以列表中的哪个字段为索引
+            if(selectedRows[i].orderInitialState !="审核完成"){
+                orderIds=[];
+                $.messager.alert("系统提示","只可导出审核完成的表单，请重新选择");
+                return;
+            }
+        }
+        var orderIdList = orderIds.join(",");
+        console.log(excelForm);
+        $('#orderIdsExcel').val(orderIdList);
+        document.getElementById("excelForm").action = "/wms/order/download/contract";
+        document.getElementById("excelForm").submit();
+    }
+
+    function downloadOrderNoContract() {
+        //将选择的订单行号id全部发送到后台
+        var selectedRows = $('#dg').datagrid('getSelections');
+        if(selectedRows.length!=1){
+            $.messager.alert("系统提示","请选择需要导出的订单行");
+            return;
+        }
+        var orderIds=[];
+        console.log(orderIdList);
+        for(var i=0;i<selectedRows.length;i++){
+            orderIds.push(selectedRows[i].orderId);//以列表中的哪个字段为索引
+            if(selectedRows[i].orderInitialState !="审核完成"){
+                orderIds=[];
+                $.messager.alert("系统提示","只可导出审核完成的表单，请重新选择");
+                return;
+            }
+        }
+        var orderIdList = orderIds.join(",");
+        $('#orderIdsExcel').val(orderIdList);
+        document.getElementById("excelForm").action = "/wms/order/download/noContract";
+        document.getElementById("excelForm").submit();
+    }
+
+    //汇总成一张单
+    function summary() {
+        //将选择的订单行号id全部发送到后台
+        var selectedRows = $('#dg').datagrid('getSelections');
+        var orderIds=[];
+        for(var i=0;i<selectedRows.length;i++){
+            orderIds.push(selectedRows[i].orderId);//以列表中的哪个字段为索引
+            if(selectedRows[i].orderInitialState !="待汇总"){
+                orderIds=[];
+                $.messager.alert("系统提示","只可汇总待汇总订单，请重新选择");
+                return;
+            }
+        }
+        var orderIdList = orderIds.join(",");
+        $.messager.prompt({
+            title:"系统提示",
+            msg:"请输入汇总备注以便领导审核",
+            ok:"是",
+            cancel:"否",
+            fn:function (r) {
+                if (r){
+                    $.post("/wms/order/summary", {orderIds:orderIdList,simpleReason:r, orderInitialUserId:<#if Session["userId"]?exists>${Session["userId"]}</#if>}, function (result) {
+                        if(result.success != "true"){
+                            $.messager.alert("系统提示", result.errorMsg)
+                        }
+                        else{
+                            $.messager.alert("系统提示", "汇总提交成功")
+                        }
+                    },"json")
+                }
+            }
+        });
+    }
+
+    function remove(){
+        var selectedRows = $('#dg').datagrid('getSelections');
+        var orderIds=[];
+        for(var i=0;i<selectedRows.length;i++){
+            if(selectedRows[i].orderInitialState!="待汇总"){
+                $.messager.alert("系统提示", "只能撤回待汇总的申请");
+                return;
+            }
+            orderIds.push(selectedRows[i].orderId);//以列表中的哪个字段为索引
+        }
+        var orderIdList = orderIds.join(",");
+        $.ajax({
+            url:"/wms/order/batch/delete",
+            method:"DELETE",
+            data:{orderIds:orderIdList},
+            dataType:"json",
+            success:function(result){
+                if(result.success == "true"){
+                    $.messager.alert("系统提示", "撤回成功");
+                    $("#dg").datagrid("reload")
+                }
+                else{
+                    $.messager.alert("系统提示", result.errorMsg);
+                    $("#dg").datagrid("reload")
+                }
+            }
+        })
+    }
+
+    function edit(){
+        var selectedRows = $('#dg').datagrid('getSelections');
+        if(selectedRows.length!=1){
+            $.messager.alert("系统提示","请选择其中一行")
+        }
+        else{
+            if(selectedRows[0].orderInitialState!="待汇总" && selectedRows[0].orderInitialState!="已撤回" && selectedRows[0].orderInitialState!="被驳回"){
+                $.messager.alert("系统提示", "只能修改待汇总、已撤回、被驳回的申请");
+                return;
+            }
+            else{
+                $('#editdlg').dialog('open').dialog('setTitle','修改订单');
+                $('#editfm').form('load',selectedRows[0])
+            }
+        }
+    }
+
+    function saveEditDlg(){
+        $.messager.confirm({
+            title:"系统提示",
+            msg:"确定要修改该订单行吗",
+            ok:"是",
+            cancel:"否",
+            fn:function (r) {
+                if (r) {
+                    $("#editfm").form("submit", {
+                        url: "/wms/order/update",
+//                            dataType: "json",
+                        onSubmit: function () {
+                            return $(this).form('validate');
+                        },
+                        success: function (result) {
+                            var result = JSON.parse(result);
+                        }
+                    })
+                }
+
+                else{
+                    //如果用户确认不是新物料，则清空
+                }
+            }
+        });
+        $('#fm').form('clear');
+        $('#editdlg').dialog('close')
+    }
+
+    function closeEditDlg(){
+        $('#fm').form('clear');
+        $('#editdlg').dialog('close')
+    }
+</script>
+</body>
+</html>

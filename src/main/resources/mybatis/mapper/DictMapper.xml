@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gamc.efactory.dao.DictMapper">
+    <select id="countDict" resultType="java.lang.Integer">
+        select COUNT(*)
+        from  `wms_dict`
+        <trim prefix="where" suffixOverrides="and | or">
+            <if test="dictId != null">
+                `dict_id` = #{dictId} and
+            </if>
+            <if test="dictType1 != null and dictType1!=''">
+                `dict_type_1` = #{dictType1} and
+            </if>
+            <if test="dictType2 != null and dictType2!=''">
+                `dict_type_2` = #{dictType2} and
+            </if>
+            <if test="dictValue != null and dictValue!=''">
+                `dict_value` = #{dictValue} and
+            </if>
+            <if test="dictText != null and dictText!=''">
+                `dict_text` = #{dictText} and
+            </if>
+            <if test="dictDesc1 != null and dictDesc1!=''">
+                `dict_desc_1` = #{dictDesc1} and
+            </if>
+            <if test="dictDesc2 != null and dictDesc2!=''">
+                `dict_desc_2` = #{dictDesc2} and
+            </if>
+            <if test="dictState != null and dictState!=''">
+                `dict_state` = #{dictState} and
+            </if>
+            <if test="dictIcon != null and dictIcon!=''">
+                `dict_icon` = #{dictIcon} and
+            </if>
+            <if test="dictCanModify != null">
+                `dict_can_modify` = #{dictCanModify} and
+            </if>
+            <if test="dictDefault != null">
+                `dict_default` = #{dictDefault} and
+            </if>
+            <if test = "(_parameter instanceof com.gamc.efactory.model.dataObject.Dict$QueryBuilder) == true">
+                <if test="dictIdList != null">
+                    `dict_id` in
+                    <foreach collection="dictIdList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test="dictIdSt !=null">
+                    `dict_id` >= #{dictIdSt} and
+                </if>
+                <if test="dictIdEd!=null">
+                    `dict_id` &lt;= #{dictIdEd} and
+                </if>
+                <if test="dictType1List != null">
+                    `dict_type_1` in
+                    <foreach collection="dictType1List" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyDictType1!=null and fuzzyDictType1.size()>0">
+                    (
+                    <foreach collection="fuzzyDictType1"  separator="or" item="item">
+                        `Dict_type_1` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyDictType1!=null and rightFuzzyDictType1.size()>0">
+                    (
+                    <foreach collection="rightFuzzyDictType1"  separator="or" item="item">
+                        `Dict_type_1` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="dictType2List != null">
+                    `dict_type_2` in
+                    <foreach collection="dictType2List" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyDictType2!=null and fuzzyDictType2.size()>0">
+                    (
+                    <foreach collection="fuzzyDictType2"  separator="or" item="item">
+                        `Dict_type_2` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyDictType2!=null and rightFuzzyDictType2.size()>0">
+                    (
+                    <foreach collection="rightFuzzyDictType2"  separator="or" item="item">
+                        `Dict_type_2` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="dictValueList != null">
+                    `dict_value` in
+                    <foreach collection="dictValueList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyDictValue!=null and fuzzyDictValue.size()>0">
+                    (
+                    <foreach collection="fuzzyDictValue"  separator="or" item="item">
+                        `Dict_value` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyDictValue!=null and rightFuzzyDictValue.size()>0">
+                    (
+                    <foreach collection="rightFuzzyDictValue"  separator="or" item="item">
+                        `Dict_value` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="dictTextList != null">
+                    `dict_text` in
+                    <foreach collection="dictTextList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyDictText!=null and fuzzyDictText.size()>0">
+                    (
+                    <foreach collection="fuzzyDictText"  separator="or" item="item">
+                        `Dict_text` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyDictText!=null and rightFuzzyDictText.size()>0">
+                    (
+                    <foreach collection="rightFuzzyDictText"  separator="or" item="item">
+                        `Dict_text` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="dictDesc1List != null">
+                    `dict_desc_1` in
+                    <foreach collection="dictDesc1List" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyDictDesc1!=null and fuzzyDictDesc1.size()>0">
+                    (
+                    <foreach collection="fuzzyDictDesc1"  separator="or" item="item">
+                        `Dict_desc_1` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyDictDesc1!=null and rightFuzzyDictDesc1.size()>0">
+                    (
+                    <foreach collection="rightFuzzyDictDesc1"  separator="or" item="item">
+                        `Dict_desc_1` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="dictDesc2List != null">
+                    `dict_desc_2` in
+                    <foreach collection="dictDesc2List" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyDictDesc2!=null and fuzzyDictDesc2.size()>0">
+                    (
+                    <foreach collection="fuzzyDictDesc2"  separator="or" item="item">
+                        `Dict_desc_2` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyDictDesc2!=null and rightFuzzyDictDesc2.size()>0">
+                    (
+                    <foreach collection="rightFuzzyDictDesc2"  separator="or" item="item">
+                        `Dict_desc_2` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="dictStateList != null">
+                    `dict_state` in
+                    <foreach collection="dictStateList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyDictState!=null and fuzzyDictState.size()>0">
+                    (
+                    <foreach collection="fuzzyDictState"  separator="or" item="item">
+                        `Dict_state` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyDictState!=null and rightFuzzyDictState.size()>0">
+                    (
+                    <foreach collection="rightFuzzyDictState"  separator="or" item="item">
+                        `Dict_state` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="dictIconList != null">
+                    `dict_icon` in
+                    <foreach collection="dictIconList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyDictIcon!=null and fuzzyDictIcon.size()>0">
+                    (
+                    <foreach collection="fuzzyDictIcon"  separator="or" item="item">
+                        `Dict_icon` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyDictIcon!=null and rightFuzzyDictIcon.size()>0">
+                    (
+                    <foreach collection="rightFuzzyDictIcon"  separator="or" item="item">
+                        `Dict_icon` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="dictCanModifyList != null">
+                    `dict_can_modify` in
+                    <foreach collection="dictCanModifyList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test="dictCanModifySt !=null">
+                    `dict_can_modify` >= #{dictCanModifySt} and
+                </if>
+                <if test="dictCanModifyEd!=null">
+                    `dict_can_modify` &lt;= #{dictCanModifyEd} and
+                </if>
+                <if test="dictDefaultList != null">
+                    `dict_default` in
+                    <foreach collection="dictDefaultList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test="dictDefaultSt !=null">
+                    `dict_default` >= #{dictDefaultSt} and
+                </if>
+                <if test="dictDefaultEd!=null">
+                    `dict_default` &lt;= #{dictDefaultEd} and
+                </if>
+            </if>
+        </trim>
+    </select>
+
+</mapper>

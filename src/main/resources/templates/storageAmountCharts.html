@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="en" style="width: 100%;height: 100%">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>统计报表</title>
+    <link rel="stylesheet" type="text/css" href="${req.contextPath}/static/plugin/jquery-easyui-1.5.5.4/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="${req.contextPath}/static/plugin/jquery-easyui-1.5.5.4/themes/icon.css">
+    <script type="text/javascript" src="${req.contextPath}/static/plugin/jquery-easyui-1.5.5.4/jquery.min.js"></script>
+    <script type="text/javascript" src="${req.contextPath}/static/plugin/jquery-easyui-1.5.5.4/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="${req.contextPath}/static/plugin/jquery-easyui-1.5.5.4/locale/easyui-lang-zh_CN.js"></script>
+    <script type="text/javascript" src="${req.contextPath}/static/echart/echarts.js"></script>
+    <style type="text/css">
+        html { overflow-y:hidden; }
+        td{
+            padding: 5px;
+        }
+        .easyui-textbox{
+            width: 135px;
+        }
+        .easyui-combobox{
+            width: 135px;
+        }
+    </style>
+    <script type="text/javascript">
+        var screenHeight = window.screen.height;
+        var screenWidth = window.screen.width;
+
+        var option4;
+        $(function () {
+            $('#yearAndMonth').datebox({
+                onShowPanel : function() {// 显示日趋选择对象后再触发弹出月份层的事件，初始化时没有生成月份层
+                    span.trigger('click'); // 触发click事件弹出月份层
+                    if (!tds)
+                        setTimeout(function() {// 延时触发获取月份对象，因为上面的事件触发和对象生成有时间间隔
+                            tds = p.find('div.calendar-menu-month-inner td');
+                            tds.click(function(e) {
+                                e.stopPropagation(); // 禁止冒泡执行easyui给月份绑定的事件
+                                var year = /\d{4}/.exec(span.html())[0]// 得到年份
+                                        , month = parseInt($(this).attr('abbr'), 10) + 1; // 月份
+                                $('#yearAndMonth').datebox('hidePanel')// 隐藏日期对象
+                                        .datebox('setValue', year + '-' + month); // 设置日期的值
+                            });
+                        }, 0);
+                },
+                parser : function(s) {// 配置parser，返回选择的日期
+                    if (!s)
+                        return new Date();
+                    var arr = s.split('-');
+                    return new Date(parseInt(arr[0], 10), parseInt(arr[1], 10) - 1, 1);
+                },
+                formatter : function(d) {
+                    var month = d.getMonth();
+                    if(month<10){
+                        month = "0"+month;
+                    }
+                    if (d.getMonth() == 0) {
+                        return d.getFullYear()-1 + '-' + 12;
+                    } else {
+                        return d.getFullYear() + '-' + month;
+                    }
+                }// 配置formatter，只返回年月
+            });
+            var p = $('#yearAndMonth').datebox('panel'), // 日期选择对象
+                    tds = false, // 日期选择对象中月份
+                    span = p.find('span.calendar-text'); // 显示月份层的触发控件
+            //初始化年月选择器
+            var date = new Date();
+            var stryear = date.getFullYear();
+            var strmonth = date.getMonth() + 2;
+            var strYM = stryear + '-' + (strmonth.toString().length < 2 ? '0' + strmonth : strmonth);
+            $('#yearAndMonth').datebox('setValue', strYM);
+        })
+
+        function analysis() {
+            //库存金额堆叠图
+            $.ajax({
+                type: "post",
+                async: true,            //异步请求（同步请求将会锁住浏览器，用户其他操作必须等待请求完成才可以执行）
+                url: "/wms/analysis/money_amount_stack?yearAndMonth=" + $('#yearAndMonth').val(),    //请求发送到TestServlet处
+                dataType: "json",        //返回数据形式为json
+                success: function (result) {
+                    var serie=[];
+                    var item={
+                        name:'总量',
+                        type:'line',
+                        label: {
+                                    normal: {
+                                        show: true
+                                    }
+                                },
+                        data:result.allTypeSerie
+                    };
+                    serie.push(item);
+                    for(var i = 0; i < result.serie.length; i++){
+                        var flag=false;
+                        for(var j=0;j< result.serie[i].length;j++){
+                            if(result.serie[i][j]>100){
+                                flag = true;
+                            }
+                        }
+                        var item={
+                            name:result.legend[i],
+                            type:'bar',
+                            barWidth:screenWidth/50,
+                            stack:'总量',
+                            label: {
+                                normal: {
+                                    show: flag,
+                                    position: 'insideRight',
+                                    formatter: '{a},{@'+result.legend[i]+'}'
+                                },
+                            },
+                            data:result.serie[i]
+                        }
+                        serie.push(item);
+                    }
+                    console.log(serie);
+
+                    money_amount_stack = echarts.init(document.getElementById('money_amount_stack'));
+                    money_amount_stack.setOption({
+                        title: {
+                            text: '在库金额分析',
+                            subtext: 'GAC',
+                            x: 'left',
+                            textStyle: {
+                                fontSize: screenWidth / 75
+                            }
+                        },
+                        tooltip: {
+                            trigger: 'axis',
+                            axisPointer: {            // 坐标轴指示器，坐标轴触发有效
+                                type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+                            }
+                        },
+                        toolbox: {
+                            feature: {
+                                dataView: {show: true, readOnly: false},
+                                restore: {show: true},
+                                saveAsImage: {show: true}
+                            }
+                        },
+                        legend: {
+                            type: 'scroll',
+                            left: screenWidth / 12,
+                            right: screenWidth / 12,
+                            itemGap: 5,
+                            textStyle: {fontSize: screenWidth / 120},
+                            data: result.legend
+                        },
+                        grid: {
+                            left: '3%',
+                            right: '4%',
+                            bottom: '3%',
+                            containLabel: true
+                        },
+                        xAxis: [
+                            {
+                                type: 'category',
+                                textStyle: {fontSize: screenWidth / 150},
+                                data: result.xAxis
+                            }
+                        ],
+                        yAxis: [
+                            {
+                                type: 'value'
+                            }
+                        ],
+                        series:serie
+                    });
+                }
+            })
+
+//            字符串模板
+//
+//            字符串模板 模板变量有：
+//
+//{a}：系列名。
+//{b}：数据名。
+//{c}：数据值。
+//{d}：百分比。
+//{@xxx}：数据中名为'xxx'的维度的值，如{@product}表示名为'product'` 的维度的值。
+//{@[n]}：数据中维度n的值，如{@[3]}` 表示维度 3 的值，从 0 开始计数。
+//示例：
+//
+//formatter: '{b}: {d}'
+            //库存比例饼状图
+            $.ajax({
+                type: "post",
+                async: true,            //异步请求（同步请求将会锁住浏览器，用户其他操作必须等待请求完成才可以执行）
+                url: "/wms/analysis/money_amount_pie?yearAndMonth=" + $('#yearAndMonth').val(),    //请求发送到TestServlet处
+                dataType: "json",        //返回数据形式为json
+                success: function (result) {
+                    var data = [];
+                    var legend = [];
+                    for(var i=0;i<result.data.length;i++){
+                        var item = {
+                            name:result.data[i].materialType,
+                            value:result.data[i].moneyAmount
+                        };
+                        data.push(item);
+                        legend.push(result.data[i].materialType)
+                    }
+                    console.log(data);
+                    console.log(legend);
+                    money_amount_pie = echarts.init(document.getElementById('money_amount_pie'));
+                    money_amount_pie.setOption({
+                        title: {
+                            text: '库存金额比例',
+                            subtext: 'GAC',
+                            textStyle: {
+                                fontSize: screenWidth / 75
+                            }
+                        },
+                        tooltip: {
+                            trigger: 'item',
+                            formatter: "{a} <br/>{b}: {c} ({d}%)"
+                        },
+                        toolbox: {
+                            feature: {
+                                dataView: {show: true, readOnly: false},
+                                restore: {show: true},
+                                saveAsImage: {show: true}
+                            }
+                        },
+                        legend: {
+                            orient: 'vertical',
+                            x: 'right',
+                            y: 'center',
+                            data: legend
+                        },
+                        series: [
+                            {
+                                name: '库存',
+                                type: 'pie',
+                                radius: '65%',
+                                minAngle: 15,
+                                avoidLabelOverlap: true,
+                                label: {
+                                    normal: {
+                                        show: true,
+//                                        position: 'inside',
+                                        formatter: '{b},{d}%'
+                                    },
+                                    emphasis: {
+                                        show: true,
+                                        textStyle: {
+                                            fontSize: '30',
+                                            fontWeight: 'bold'
+                                        }
+                                    }
+                                },
+                                data: data
+                            }
+                        ]
+                    });
+                }
+            })
+
+
+            //库存增加堆叠图
+            storage_rise_stack = echarts.init(document.getElementById('storage_change_log'));
+            storage_rise_stack.setOption({
+                title: {
+                    text: '2019年7月在库增加情况',
+                    textStyle: {
+                        fontSize: screenWidth / 75
+                    }
+
+//                    subtext: 'From ExcelHome',
+//                    sublink: 'http://e.weibo.com/1341556070/AjQH99che'
+                },
+                tooltip: {
+                    trigger: 'axis',
+                    axisPointer: {            // 坐标轴指示器，坐标轴触发有效
+                        type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+                    },
+                    formatter: function (params) {
+                        var tar = params[1];
+                        return tar.name + '<br/>' + tar.seriesName + ' : ' + tar.value;
+                    }
+                },
+                toolbox: {
+                    feature: {
+                        dataView: {show: true, readOnly: false},
+                        restore: {show: true},
+                        saveAsImage: {show: true}
+                    }
+                },
+                grid: {
+                    left: '3%',
+                    right: '4%',
+                    bottom: '3%',
+                    containLabel: true
+                },
+                xAxis: {
+                    type: 'category',
+                    splitLine: {show: false},
+                    data: ['内控目标', '6月实际', '7月变化', '7月实际']
+                },
+                yAxis: {
+                    type: 'log',
+                    name: '库存金额/万元'
+                },
+                legend: {
+                    orient: 'vertical',
+                    x: 'right',
+                    y: 'center',
+                    data: ['刀具','工具','备件']
+                },
+                series: [
+                    {
+                        name: '工具',
+                        type: 'line',
+                        label: {
+                            normal: {
+                                show: true,
+                                formatter: '{a},{@工具}'
+                            }
+                        },
+                        markLine:{
+                            lineStyle:{
+                                color:'rgba(128,128,128,30)'
+                            },
+                            label:{
+                                position: 'start',
+                                formatter:'{a}内控目标'
+                            },
+                            data:[{
+                                name:'目标',
+                                yAxis:200
+                            }]
+                        },
+                        data: [110, 98, 8, 106]
+                    },
+                    {
+                        name: '工具',
+                        type: 'line',
+                        label: {
+                            normal: {
+                                show: true,
+                                formatter: '{a},{@工具}'
+                            }
+                        },
+                        markLine:{
+                            lineStyle:{
+                                color:'rgba(128,128,128,30)'
+                            },
+                            label:{
+                                position: 'start',
+                                formatter:'{a}内控目标'
+                            },
+                            data:[{
+                                name:'目标',
+                                yAxis:200
+                            }]
+                        },
+                        data: [110, 98, 8, 106]
+                    },
+                    {
+                        name: '备件',
+                        type: 'line',
+                        label: {
+                            normal: {
+                                show: true,
+                                formatter: '{a},{@备件}'
+                            }
+                        },
+                        markLine:{
+                            lineStyle:{
+                                color:'rgba(128,128,128,30)'
+                            },
+                            label:{
+                                position: 'start',
+                                formatter:'{a}内控目标'
+                            },
+                            data:[{
+                                name:'目标',
+                                yAxis:1700
+                            }]
+                        },
+                        data: [1831, 1831, 1831, 1831]
+                    },
+                    {
+                        name: '刀具',
+                        type: 'line',
+                        label: {
+                            normal: {
+                                show: true,
+                                formatter: '{a},{@刀具}'
+                            }
+                        },
+                        markLine:{
+                            lineStyle:{
+                                color:'rgba(128,128,128,30)'
+                            },
+                            label:{
+                                position: 'start',
+                                formatter:'{a}内控目标'
+                            },
+                            data:[{
+                                name:'目标',
+                                yAxis:2300
+                            }]
+                        },
+                        data: [2809, 2709, 2609, 2909]
+                    }
+                ]
+            });
+
+//            //库存比例饼状图
+//            storage_descend_stack = echarts.init(document.getElementById('storage_descend_stack'));
+//            storage_descend_stack.setOption({
+//                title: {
+//                    text: '2019年7月在库减少情况',
+//                    textStyle: {
+//                        fontSize: screenWidth / 75
+//                    }
+////                    subtext: 'From ExcelHome',
+////                    sublink: 'http://e.weibo.com/1341556070/AjQH99che'
+//                },
+//                tooltip: {
+//                    trigger: 'axis',
+//                    axisPointer: {            // 坐标轴指示器，坐标轴触发有效
+//                        type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+//                    },
+//                    formatter: function (params) {
+//                        var tar = params[1];
+//                        return tar.name + '<br/>' + tar.seriesName + ' : ' + tar.value;
+//                    }
+//                },
+//                toolbox: {
+//                    feature: {
+//                        dataView: {show: true, readOnly: false},
+//                        restore: {show: true},
+//                        saveAsImage: {show: true}
+//                    }
+//                },
+//                grid: {
+//                    left: '3%',
+//                    right: '4%',
+//                    bottom: '3%',
+//                    containLabel: true
+//                },
+//                xAxis: {
+//                    type: 'category',
+//                    splitLine: {show: false},
+//                    data: ['6月实际', '7月变化', '7月实际']
+//                },
+//                yAxis: {
+//                    type: 'value'
+//                },
+//                series: [
+//                    {
+//                        name: '辅助',
+//                        type: 'bar',
+//                        stack: '总量',
+//                        itemStyle: {
+//                            normal: {
+//                                barBorderColor: 'rgba(0,0,0,0)',
+//                                color: 'rgba(0,0,0,0)'
+//                            },
+//                            emphasis: {
+//                                barBorderColor: 'rgba(0,0,0,0)',
+//                                color: 'rgba(0,0,0,0)'
+//                            }
+//                        },
+//                        data: [0, 4140, 0]
+//                    },
+//                    {
+//                        name: '备件',
+//                        type: 'bar',
+//                        stack: '总量',
+//                        label: {
+//                            normal: {
+//                                show: true,
+//                                position: 'insideBottom',
+//                                formatter: '{a},{@备件}'
+//                            }
+//                        },
+//                        data: [1855, 24, 1831]
+//                    },
+//                    {
+//                        name: '刀具',
+//                        type: 'bar',
+//                        stack: '总量',
+//                        label: {
+//                            normal: {
+//                                show: true,
+//                                position: 'insideTop',
+//                                formatter: '{a},{@刀具}'
+//                            }
+//                        },
+//                        data: [2345, 23, 2305]
+//                    }
+//                ]
+//            });
+
+        }
+    </script>
+</head>
+<body style="width: 100%;height: 100%">
+<div id="tb" style="width: 100%;height:5%;float:left">
+    时间：<input class="easyui-datebox" width="200px" id="yearAndMonth" name="yearAndMonth">
+    <a id="asy" href="javascript:analysis()" class="easyui-linkbutton" data-options="iconCls:'icon-search'">分析</a> &nbsp;
+
+</div>
+<div id="money_amount_stack" style="width: 45%;height: 40%;margin: 2%;float:left""></div>
+<div id="money_amount_pie" style="width: 45%;height: 40%;margin: 1%;float:left""></div>
+<div id="storage_change_log" style="width: 95%;height: 45%;margin: 1%;float:left""></div>
+<#--<div id="storage_descend_stack" style="width: 45%;height: 40%;margin: 2%;float:left""></div>-->
+<div></div>
+</body>
+</html>

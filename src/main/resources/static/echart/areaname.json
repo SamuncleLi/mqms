@@ -1,0 +1,107 @@
+[{
+  "name": "三区热磨台架", "value": 100, "url": "", "event": "1个活动", "selected": false
+}, {
+  "name": "二区热磨台架", "value": 1600, "url": "", "event": "2个活动", "selected": false
+}, {
+  "name": "MT装配线", "value": 200, "url": "", "event": "3个活动", "selected": false
+}, {
+  "name": "二线总装", "value": 1500, "url": "", "event": "4个活动", "selected": false
+}, {
+  "name": "三线总装", "value": 300, "url": "", "event": "5个活动", "selected": false
+}, {
+  "name": "二号综合电房", "value": 1700, "url": "", "event": "6个活动", "selected": false
+}, {
+  "name": "曲轴二线", "value": 248, "url": "", "event": "7个活动", "selected": false
+}, {
+  "name": "三线缸体分装", "value": 890, "url": "", "event": "8个活动", "selected": false
+}, {
+  "name": "缸盖三线", "value": 2000, "url": "", "event": "9个活动", "selected": false
+}, {
+  "name": "二线缸体分装", "value": 400, "url": "", "event": "10个活动", "selected": false
+}, {
+  "name": "精测室二期", "value": 1700, "url": "", "event": "11个活动", "selected": false
+}, {
+  "name": "一区热磨台架", "value": 500, "url": "", "event": "11个活动", "selected": false
+}, {
+  "name": "发动机性能试验台1", "value": 1700, "url": "", "event": "11个活动", "selected": false
+}, {
+  "name": "三号综合电房", "value": 600, "url": "", "event": "11个活动", "selected": false
+}, {
+  "name": "配电所", "value": 1700, "url": "", "event": "11个活动", "selected": false
+}, {
+  "name": "缸盖四线", "value": 700, "url": "", "event": "11个活动", "selected": false
+}, {
+  "name": "连杆一线", "value": 1700, "url": "", "event": "11个活动", "selected": false
+}, {
+  "name": "缸体一线", "value": 800, "url": "", "event": "11个活动", "selected": false
+}, {
+  "name": "一线缸体分装", "value": 1700, "url": "", "event": "11个活动", "selected": false
+}, {
+  "name": "连杆二线", "value": 900, "url": "", "event": "11个活动", "selected": false
+}, {
+  "name": "油罐区", "value": 1700, "url": "", "event": "11个活动", "selected": false
+}, {
+  "name": "设备科大本营", "value": 1000, "url": "", "event": "11个活动", "selected": false
+}, {
+  "name": "现场休息区2", "value": 1700, "url": "", "event": "11个活动", "selected": false
+}, {
+  "name": "培训中心", "value": 900, "url": "", "event": "11个活动", "selected": false
+}, {
+  "name": "现场休息区", "value": 1700, "url": "", "event": "11个活动", "selected": false
+}, {
+  "name": "试制区", "value": 800, "url": "", "event": "11个活动", "selected": false
+}, {
+  "name": "刃磨区", "value": 1700, "url": "", "event": "11个活动", "selected": false
+}, {
+  "name": "一期精测室", "value": 700, "url": "", "event": "11个活动", "selected": false
+}, {
+  "name": "油化库", "value": 1700, "url": "", "event": "11个活动", "selected": false
+}, {
+  "name": "发动机性能试验台2", "value": 600, "url": "", "event": "11个活动", "selected": false
+}, {
+  "name": "变速箱性能试验台", "value": 1700, "url": "", "event": "11个活动", "selected": false
+}, {
+  "name": "动力综合站房", "value": 500, "url": "", "event": "11个活动", "selected": false
+}, {
+  "name": "GPS仓库", "value": 1700, "url": "", "event": "11个活动", "selected": false
+}, {
+  "name": "变速箱试制间", "value": 400, "url": "", "event": "11个活动", "selected": false
+}, {
+  "name": "办公楼", "value": 1700, "url": "", "event": "11个活动", "selected": false
+}, {
+  "name": "壳体线", "value": 300, "url": "", "event": "11个活动", "selected": false
+}, {
+  "name": "缸体四线", "value": 1700, "url": "", "event": "11个活动", "selected": false
+}, {
+  "name": "缸体三线", "value": 700, "url": "", "event": "11个活动", "selected": false
+}, {
+  "name": "缸盖一线", "value": 1700, "url": "", "event": "11个活动", "selected": false
+}, {
+  "name": "缸盖二线", "value": 800, "url": "", "event": "11个活动", "selected": false
+}, {
+  "name": "一线总装", "value": 1700, "url": "", "event": "11个活动", "selected": false
+}, {
+  "name": "调刀室", "value": 900, "url": "", "event": "11个活动", "selected": false
+}, {
+  "name": "曲轴一线", "value": 1700, "url": "", "event": "11个活动", "selected": false
+}, {
+  "name": "凸轮轴", "value": 1000, "url": "", "event": "11个活动", "selected": false
+}, {
+  "name": "变压所", "value": 1700, "url": "", "event": "11个活动", "selected": false
+}, {
+  "name": "制冷站", "value": 300, "url": "", "event": "11个活动", "selected": false
+}, {
+  "name": "GS系列缸盖分装", "value": 1700, "url": "", "event": "11个活动", "selected": false
+}, {
+  "name": "缸体二线", "value": 700, "url": "", "event": "11个活动", "selected": false
+}, {
+  "name": "空压站2", "value": 1700, "url": "", "event": "11个活动", "selected": false
+}, {
+  "name": "GMC装配线", "value": 900, "url": "", "event": "11个活动", "selected": false
+}, {
+  "name": "曲轴三线", "value": 1700, "url": "", "event": "11个活动", "selected": false
+}, {
+  "name": "G系列缸盖分装", "value": 600, "url": "", "event": "11个活动", "selected": false
+}, {
+  "name": "空压站1", "value": 1700, "url": "", "event": "11个活动", "selected": false
+}]

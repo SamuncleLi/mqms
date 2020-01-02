@@ -1,0 +1,23 @@
+[{
+  "name": "OP10", "value": 1300, "url": "", "event": "1个活动", "selected": false
+}, {
+  "name": "OP20", "value": 1600, "url": "", "event": "2个活动", "selected": false
+}, {
+  "name": "OP30", "value": 1200, "url": "", "event": "3个活动", "selected": false
+}, {
+  "name": "OP40", "value": 1500, "url": "", "event": "4个活动", "selected": false
+}, {
+  "name": "OP50", "value": 1800, "url": "", "event": "5个活动", "selected": false
+}, {
+  "name": "OP60", "value": 1700, "url": "", "event": "6个活动", "selected": false
+}, {
+  "name": "OP70", "value": 248, "url": "", "event": "7个活动", "selected": false
+}, {
+  "name": "OP80", "value": 890, "url": "", "event": "8个活动", "selected": false
+}, {
+  "name": "动力综合站房动力", "value": 2000, "url": "", "event": "9个活动", "selected": false
+}, {
+  "name": "三号综合电房", "value": 1100, "url": "", "event": "10个活动", "selected": false
+}, {
+  "name": "配电所", "value": 1700, "url": "", "event": "11个活动", "selected": false
+}]

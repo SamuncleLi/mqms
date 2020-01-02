@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gamc.efactory.dao.RoleMapper">
+    <resultMap id="Auth" type="com.gamc.efactory.model.dataObject.Auth">
+        <result property="id" column="id"/>
+        <result property="authName" column="auth_name"/>
+        <result property="authLevel" column="auth_level"/>
+        <result property="authUrl" column="auth_url"/>
+        <result property="authParentId" column="auth_parent_id"/>
+        <result property="authDescription" column="auth_description"/>
+        <result property="state" column="state"/>
+        <result property="iconCls" column="icon_cls"/>
+    </resultMap>
+    <select id="queryAuths" parameterType="com.gamc.efactory.model.dataObject.Role" resultMap="Auth">
+        SELECT a.auth_name,a.auth_level,a.auth_parent_id, a.auth_url, a.icon_cls, state FROM wms_role r
+        LEFT JOIN wms_auth_role sar on r.id= sar.role_id
+        LEFT JOIN wms_auth a on sar.auth_id=a.id
+        <where>
+            r.id = #{id}
+        </where>
+    </select>
+</mapper>

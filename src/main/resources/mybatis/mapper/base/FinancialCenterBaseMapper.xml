@@ -1,0 +1,337 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gamc.efactory.dao.base.FinancialCenterBaseMapper">
+
+
+    <insert id="insertFinancialCenter"  useGeneratedKeys="true" keyProperty="financialCenterId">
+        INSERT INTO `wms_financial_center`
+        (
+        <trim suffixOverrides=",">
+                    <if test="financialCenterId!=null">
+                        `financialCenterId`,
+                    </if>
+                    <if test="financialCenterCode!=null">
+                        `financialCenterCode`,
+                    </if>
+                    <if test="financialCenterName!=null">
+                        `financialCenterName`,
+                    </if>
+        </trim>
+        )
+        VALUES
+        (
+        <trim suffixOverrides=",">
+                <if test="financialCenterId!=null">
+                    #{financialCenterId},
+                </if>
+                <if test="financialCenterCode!=null">
+                    #{financialCenterCode},
+                </if>
+                <if test="financialCenterName!=null">
+                    #{financialCenterName},
+                </if>
+        </trim>
+        )
+    </insert>
+
+
+
+
+    <update id="updateFinancialCenter">
+        UPDATE `wms_financial_center`
+        SET
+        <trim suffixOverrides=",">
+            <if test="financialCenterCode != null and financialCenterCode!=''">
+                `financialCenterCode` = #{financialCenterCode},
+            </if>
+            <if test="financialCenterName != null and financialCenterName!=''">
+                `financialCenterName` = #{financialCenterName},
+            </if>
+        </trim>
+        WHERE
+        <trim suffixOverrides="and">
+                `financialCenterId` = #{financialCenterId} and
+        </trim>
+    </update>
+
+    <update id="update">
+        UPDATE `wms_financial_center`
+        SET
+        <trim suffixOverrides=",">
+        <if test="set.financialCenterCode != null and set.financialCenterCode!=''">
+            `financialCenterCode` = #{set.financialCenterCode},
+        </if>
+        <if test="set.financialCenterName != null and set.financialCenterName!=''">
+            `financialCenterName` = #{set.financialCenterName},
+        </if>
+        </trim>
+        <trim prefix="where" suffixOverrides="and | or">
+                <if test="where.financialCenterIdList != null">
+                    `financialCenterId` in
+                    <foreach collection="where.financialCenterIdList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test="where.financialCenterIdSt !=null">
+                `financialCenterId` >= #{where.financialCenterIdSt} and
+            </if>
+            <if test="where.financialCenterIdEd!=null">
+                `financialCenterId` &lt;= #{where.financialCenterIdEd} and
+            </if>
+                <if test="where.financialCenterCodeList != null">
+                    `financialCenterCode` in
+                    <foreach collection="where.financialCenterCodeList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test ="where.fuzzyFinancialCenterCode!=null and where.fuzzyFinancialCenterCode.size()>0">
+                (
+                <foreach collection="where.fuzzyFinancialCenterCode"  separator="or" item="item">
+                    `FinancialCenterCode` like concat('%',#{item},'%')
+                </foreach>
+                ) and
+            </if>
+            <if test ="where.rightFuzzyFinancialCenterCode!=null and where.rightFuzzyFinancialCenterCode.size()>0">
+                (
+                <foreach collection="where.rightFuzzyFinancialCenterCode"  separator="or" item="item">
+                    `FinancialCenterCode` like concat(#{item},'%')
+                </foreach>
+                ) and
+            </if>
+                <if test="where.financialCenterNameList != null">
+                    `financialCenterName` in
+                    <foreach collection="where.financialCenterNameList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test ="where.fuzzyFinancialCenterName!=null and where.fuzzyFinancialCenterName.size()>0">
+                (
+                <foreach collection="where.fuzzyFinancialCenterName"  separator="or" item="item">
+                    `FinancialCenterName` like concat('%',#{item},'%')
+                </foreach>
+                ) and
+            </if>
+            <if test ="where.rightFuzzyFinancialCenterName!=null and where.rightFuzzyFinancialCenterName.size()>0">
+                (
+                <foreach collection="where.rightFuzzyFinancialCenterName"  separator="or" item="item">
+                    `FinancialCenterName` like concat(#{item},'%')
+                </foreach>
+                ) and
+            </if>
+        </trim>
+    </update>
+
+
+    <resultMap type="com.gamc.efactory.model.dataObject.FinancialCenter" id="FinancialCenterMap">
+        <result property="financialCenterId" column="financialCenterId"/>
+        <result property="financialCenterCode" column="financialCenterCode"/>
+        <result property="financialCenterName" column="financialCenterName"/>
+    </resultMap>
+
+
+    <select id="queryFinancialCenter" resultMap="FinancialCenterMap">
+        select
+        <include refid="baseResult"></include>
+        from  `wms_financial_center`
+        <trim prefix="where" suffixOverrides="and | or">
+            <if test="financialCenterId != null">
+                `financialCenterId` = #{financialCenterId} and
+            </if>
+            <if test="financialCenterCode != null and financialCenterCode!=''">
+                `financialCenterCode` = #{financialCenterCode} and
+            </if>
+            <if test="financialCenterName != null and financialCenterName!=''">
+                `financialCenterName` = #{financialCenterName} and
+            </if>
+            <if test = "(_parameter instanceof com.gamc.efactory.model.dataObject.FinancialCenter$QueryBuilder) == true">
+                <if test="financialCenterIdList != null">
+                    `financialCenterId` in
+                    <foreach collection="financialCenterIdList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test="financialCenterIdSt !=null">
+                    `financialCenterId` >= #{financialCenterIdSt} and
+                </if>
+                <if test="financialCenterIdEd!=null">
+                    `financialCenterId` &lt;= #{financialCenterIdEd} and
+                </if>
+                <if test="financialCenterCodeList != null">
+                    `financialCenterCode` in
+                    <foreach collection="financialCenterCodeList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyFinancialCenterCode!=null and fuzzyFinancialCenterCode.size()>0">
+                    (
+                    <foreach collection="fuzzyFinancialCenterCode"  separator="or" item="item">
+                        `FinancialCenterCode` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyFinancialCenterCode!=null and rightFuzzyFinancialCenterCode.size()>0">
+                    (
+                    <foreach collection="rightFuzzyFinancialCenterCode"  separator="or" item="item">
+                        `FinancialCenterCode` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="financialCenterNameList != null">
+                    `financialCenterName` in
+                    <foreach collection="financialCenterNameList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyFinancialCenterName!=null and fuzzyFinancialCenterName.size()>0">
+                    (
+                    <foreach collection="fuzzyFinancialCenterName"  separator="or" item="item">
+                        `FinancialCenterName` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyFinancialCenterName!=null and rightFuzzyFinancialCenterName.size()>0">
+                    (
+                    <foreach collection="rightFuzzyFinancialCenterName"  separator="or" item="item">
+                        `FinancialCenterName` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+            </if>
+        </trim>
+    </select>
+
+    <select id="queryFinancialCenterLimit1" resultMap="FinancialCenterMap">
+        select
+        <include refid="baseResult"></include>
+        from  `wms_financial_center`
+        <trim prefix="where" suffixOverrides="and | or">
+            <if test="financialCenterId != null">
+                `financialCenterId` = #{financialCenterId} and
+            </if>
+            <if test="financialCenterCode != null and financialCenterCode!=''">
+                `financialCenterCode` = #{financialCenterCode} and
+            </if>
+            <if test="financialCenterName != null and financialCenterName!=''">
+                `financialCenterName` = #{financialCenterName} and
+            </if>
+            <if test = "(_parameter instanceof com.gamc.efactory.model.dataObject.FinancialCenter$QueryBuilder) == true">
+                    <if test="financialCenterIdList != null">
+                        `financialCenterId` in
+                        <foreach collection="financialCenterIdList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test="financialCenterIdSt !=null">
+                    `financialCenterId` >= #{financialCenterIdSt} and
+                </if>
+                <if test="financialCenterIdEd!=null">
+                    `financialCenterId` &lt;= #{financialCenterIdEd} and
+                </if>
+                    <if test="financialCenterCodeList != null">
+                        `financialCenterCode` in
+                        <foreach collection="financialCenterCodeList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyFinancialCenterCode!=null and fuzzyFinancialCenterCode.size()>0">
+                    (
+                    <foreach collection="fuzzyFinancialCenterCode"  separator="or" item="item">
+                        `FinancialCenterCode` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyFinancialCenterCode!=null and rightFuzzyFinancialCenterCode.size()>0">
+                    (
+                    <foreach collection="rightFuzzyFinancialCenterCode"  separator="or" item="item">
+                        `FinancialCenterCode` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                    <if test="financialCenterNameList != null">
+                        `financialCenterName` in
+                        <foreach collection="financialCenterNameList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyFinancialCenterName!=null and fuzzyFinancialCenterName.size()>0">
+                    (
+                    <foreach collection="fuzzyFinancialCenterName"  separator="or" item="item">
+                        `FinancialCenterName` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyFinancialCenterName!=null and rightFuzzyFinancialCenterName.size()>0">
+                    (
+                    <foreach collection="rightFuzzyFinancialCenterName"  separator="or" item="item">
+                        `FinancialCenterName` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+            </if>
+        </trim>
+        limit 1
+    </select>
+
+    <sql id="allResult">
+        <trim suffixOverrides=",">
+        `financialCenterId`,
+        `financialCenterCode`,
+        `financialCenterName`,
+        </trim>
+    </sql>
+
+
+
+    <sql id="baseResult">
+        <trim suffixOverrides=",">
+            <if test = "(_parameter instanceof com.gamc.efactory.model.dataObject.FinancialCenter$QueryBuilder) == true">
+
+                <if test="fetchFields==null">
+                    <include refid="allResult"></include>
+                </if>
+                <if test="fetchFields!=null">
+                    <if test="fetchFields.AllFields !=null">
+                        <include refid="allResult"></include>
+                    </if>
+                    <if test="fetchFields.AllFields ==null and fetchFields.fetchFields==null and fetchFields.excludeFields==null and fetchFields.otherFields==null">
+                        <include refid="allResult"></include>
+                    </if>
+                    <if test="fetchFields.AllFields==null and fetchFields.fetchFields!=null">
+                    <if test="fetchFields.fetchFields.financialCenterId==true">
+                        `financialCenterId`,
+                    </if>
+                    <if test="fetchFields.fetchFields.financialCenterCode==true">
+                        `financialCenterCode`,
+                    </if>
+                    <if test="fetchFields.fetchFields.financialCenterName==true">
+                        `financialCenterName`,
+                    </if>
+                    </if>
+                    <if test="fetchFields.AllFields==null and fetchFields.excludeFields!=null">
+                    <if test="fetchFields.excludeFields.financialCenterId==null">
+                        `financialCenterId`,
+                    </if>
+                    <if test="fetchFields.excludeFields.financialCenterCode==null">
+                        `financialCenterCode`,
+                    </if>
+                    <if test="fetchFields.excludeFields.financialCenterName==null">
+                        `financialCenterName`,
+                    </if>
+                    </if>
+                    <if test="fetchFields.otherFields!=null and fetchFields.otherFields.size>0">
+                        <foreach collection="fetchFields.otherFields" index="index" item="item" separator=",">
+                        `#{item}`
+                        </foreach>
+                    </if>
+                </if>
+            </if>
+            <if test="(_parameter instanceof com.gamc.efactory.model.dataObject.FinancialCenter$QueryBuilder) == false" >
+                <include refid="allResult"></include>
+            </if>
+
+        </trim>
+    </sql>
+
+
+</mapper>

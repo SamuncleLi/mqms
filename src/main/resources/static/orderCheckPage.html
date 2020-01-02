@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>FTL模板</title>
+    <link rel="stylesheet" type="text/css" href="plugin/jquery-easyui-1.5.5.4/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="plugin/jquery-easyui-1.5.5.4/themes/icon.css">
+    <script type="text/javascript" src="plugin/jquery-easyui-1.5.5.4/jquery.min.js"></script>
+    <script type="text/javascript" src="plugin/jquery-easyui-1.5.5.4/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="plugin/jquery-easyui-1.5.5.4/locale/easyui-lang-zh_CN.js"></script>
+    <style type="text/css">
+        html { overflow-y:hidden; }
+        td{
+            padding: 5px;
+        }
+        .easyui-textbox{
+            width: 135px;
+        }
+        .easyui-combobox{
+            width: 135px;
+        }
+    </style>
+    <script type="text/javascript">
+        var details;
+        window.addEventListener('message',function(event){
+            var obj = event.data;
+            console.log(event);
+            console.log(obj);
+            var type = obj.type;
+            if (type=="details"){
+                details=obj.details;
+                console.log(details);
+                //表单读取数据
+                $('#dg').datagrid({
+                    url:'/wms/order/list?simpleApplicationObjectId='+details.simpleApplicationObjectId
+                })
+            }
+        }, false);
+
+
+        //向流程系统发送同意
+        function agree() {
+            $.messager.confirm("系统提示","您确认要提交结果么？一旦提交将无法撤回！",function(r) {
+                if (r) {
+                    //发送请求
+                    $.post("/wms/order/audit",
+                        {simpleApplicationObjectId:details.simpleApplicationObjectId,
+                            processInstId:details.processInstId,
+                            taskId:details.taskId,
+                            auditorInfo:"agree",
+                            auditorComment:"",
+                            assigneeId:details.assigneeId,
+                            variables:"",
+                            arrayVariables:""}, function (result) {
+                            //显示返回信息并将信息返回给主页面
+//                        $("#dlg4").dialog("close");
+                            if (result.success) {
+                                $.messager.alert("系统提示", "提交成功");
+                            }
+                            else {
+                                $.messager.alert("系统提示", result.errorMsg);
+                            }
+                            console.log(result);
+                            window.parent.postMessage(result, '*');
+                        }
+                    );
+                }
+            });
+
+        }
+        function webview(obj){
+            var obj=eval('('+obj+')');
+            details=obj;
+            console.log(details);
+            //表单读取数据
+            $('#dg').datagrid({
+//                url:'http://192.168.199.14:8080/wms/order/list?simpleApplicationObjectId='+details.simpleApplicationObjectId
+                url:'http://192.168.199.105:8083/wms/order/list?simpleApplicationObjectId='+details.simpleApplicationObjectId
+            })
+        }
+    </script>
+</head>
+<body style="overflow-y: hidden">
+<div id="div" style="width: 100%;border:1px solid #97CBFF">
+    <div  style="width: 100%;height: 30px;border-bottom:1px solid #97CBFF;background: #ECF5FF;color: #0E2D5F"><b>订购申请单详情</b></div>
+    <table id="dg" class="easyui-datagrid" fitColumns="true"
+           pagination="true" rownumbers="true" fit="true" toolbar="#tb" method="GET"
+           pageList="[ 10, 50, 100, 500, 2000]">
+        <thead>
+        <tr>
+            <th field="materialCode" align="center" width="150">物料编号</th>
+            <th field="materialName" align="center" width="150">物料名称</th>
+            <th field="materialSpecs" align="center" width="150">规格型号</th>
+            <th field="materialUnit" align="center" width="150">计量单位</th>
+            <th field="orderMaterialNum" align="center" width="150">申请数量</th>
+            <th field="warehousingCode" align="center" width="150">出库原因代码</th>
+            <th field="materialBrand" align="center" width="150">推荐品牌</th>
+            <th field="recommendedSupplierName" align="center" width="150">推荐供应商</th>
+            <th field="prospectiveArrivalDate" align="center" width="150">希望交货日期</th>
+            <th field="importantProjectCode" align="center" width="150">重点项目管理号</th>
+            <th field="extraOrderReason" align="center" width="150">备注</th>
+            <th field="researchTestProject" align="center" width="150">研试费项目</th>
+        </tr>
+        </thead>
+    </table>
+    <div id="tb">
+        <a href="javascript:agree()" class="easyui-linkbutton" iconCls="icon-ok" plain="true" id="agree"><font size="4">同意</font></a>
+        <a href="javascript:disagree()" class="easyui-linkbutton" iconCls="icon-cancel" plain="true" id="disagree" ><font size="4">不同意</font></a>
+    </div>
+</div>
+</body>
+</html>

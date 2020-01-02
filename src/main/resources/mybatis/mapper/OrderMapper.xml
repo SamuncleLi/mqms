@@ -1,0 +1,1300 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gamc.efactory.dao.OrderMapper">
+    <select id="countOrder" resultType="java.lang.Integer">
+        select COUNT(*)
+        from  `wms_order`
+        <trim prefix="where" suffixOverrides="and | or">
+            <if test="orderId != null">
+                `order_id` = #{orderId} and
+            </if>
+            <if test="orderOperaterUserName != null and orderOperaterUserName!=''">
+                `order_operater_user_name` = #{orderOperaterUserName} and
+            </if>
+            <if test="orderOperaterTime != null and orderOperaterTime!=''">
+                `order_operater_time` = #{orderOperaterTime} and
+            </if>
+            <if test="orderType != null and orderType!=''">
+                `order_type` = #{orderType} and
+            </if>
+            <if test="financialListCode != null and financialListCode!=''">
+                `financial_list_code` = #{financialListCode} and
+            </if>
+            <if test="purchasingListCode != null and purchasingListCode!=''">
+                `purchasing_list_code` = #{purchasingListCode} and
+            </if>
+            <if test="materialCode != null and materialCode!=''">
+                `material_code` = #{materialCode} and
+            </if>
+            <if test="materialName != null and materialName!=''">
+                `material_name` = #{materialName} and
+            </if>
+            <if test="confirmMaterialName != null and confirmMaterialName!=''">
+                `confirm_material_name` = #{confirmMaterialName} and
+            </if>
+            <if test="materialSpecs != null and materialSpecs!=''">
+                `material_specs` = #{materialSpecs} and
+            </if>
+            <if test="confirmMaterialSpecs != null and confirmMaterialSpecs!=''">
+                `confirm_material_specs` = #{confirmMaterialSpecs} and
+            </if>
+            <if test="materialBrand != null and materialBrand!=''">
+                `material_brand` = #{materialBrand} and
+            </if>
+            <if test="confirmMaterialBrand != null and confirmMaterialBrand!=''">
+                `confirm_material_brand` = #{confirmMaterialBrand} and
+            </if>
+            <if test="materialUnit != null and materialUnit!=''">
+                `material_unit` = #{materialUnit} and
+            </if>
+            <if test="orderMaterialNum != null">
+                `order_material_num` = #{orderMaterialNum} and
+            </if>
+            <if test="financialCenterCode != null and financialCenterCode!=''">
+                `financial_center_code` = #{financialCenterCode} and
+            </if>
+            <if test="orderBuyer != null and orderBuyer!=''">
+                `order_buyer` = #{orderBuyer} and
+            </if>
+            <if test="supplierName != null and supplierName!=''">
+                `supplier_name` = #{supplierName} and
+            </if>
+            <if test="orderState != null and orderState!=''">
+                `order_state` = #{orderState} and
+            </if>
+            <if test="orderBuyerCheckDate != null and orderBuyerCheckDate!=''">
+                `order_buyer_check_date` = #{orderBuyerCheckDate} and
+            </if>
+            <if test="orderPriceCheckDate != null and orderPriceCheckDate!=''">
+                `order_price_check_date` = #{orderPriceCheckDate} and
+            </if>
+            <if test="purchasingOrderCode != null and purchasingOrderCode!=''">
+                `purchasing_order_code` = #{purchasingOrderCode} and
+            </if>
+            <if test="arrivalDate != null and arrivalDate!=''">
+                `arrival_date` = #{arrivalDate} and
+            </if>
+            <if test="receivedNum != null">
+                `received_num` = #{receivedNum} and
+            </if>
+            <if test="receivedDate != null and receivedDate!=''">
+                `received_date` = #{receivedDate} and
+            </if>
+            <if test="paymentType != null and paymentType!=''">
+                `payment_type` = #{paymentType} and
+            </if>
+            <if test="paymentRate != null and paymentRate!=''">
+                `payment_rate` = #{paymentRate} and
+            </if>
+            <if test="budgetType != null and budgetType!=''">
+                `budget_type` = #{budgetType} and
+            </if>
+            <if test="budgetSubject != null and budgetSubject!=''">
+                `budget_subject` = #{budgetSubject} and
+            </if>
+            <if test="investManagementCode != null and investManagementCode!=''">
+                `invest_management_code` = #{investManagementCode} and
+            </if>
+            <if test="researchTestProject != null and researchTestProject!=''">
+                `research_test_project` = #{researchTestProject} and
+            </if>
+            <if test="orderBuilderName != null and orderBuilderName!=''">
+                `order_builder_name` = #{orderBuilderName} and
+            </if>
+            <if test="orderDescription != null and orderDescription!=''">
+                `order_description` = #{orderDescription} and
+            </if>
+            <if test="orderInitialUserId != null">
+                `order_initial_user_id` = #{orderInitialUserId} and
+            </if>
+            <if test="orderInitialTime != null and orderInitialTime!=''">
+                `order_initial_time` = #{orderInitialTime} and
+            </if>
+            <if test="orderInitialState != null and orderInitialState!=''">
+                `order_initial_state` = #{orderInitialState} and
+            </if>
+            <if test="orderManagementType != null and orderManagementType!=''">
+                `order_management_type` = #{orderManagementType} and
+            </if>
+            <if test="orderManagementFormName != null and orderManagementFormName!=''">
+                `order_management_form_name` = #{orderManagementFormName} and
+            </if>
+            <if test="orderManagementFormId != null">
+                `order_management_form_id` = #{orderManagementFormId} and
+            </if>
+            <if test="simpleApplicationObjectId != null">
+                `simple_application_object_id` = #{simpleApplicationObjectId} and
+            </if>
+            <if test="prospectiveArrivalDate != null and prospectiveArrivalDate!=''">
+                `prospective_arrival_date` = #{prospectiveArrivalDate} and
+            </if>
+            <if test="supplierCode != null and supplierCode!=''">
+                `supplier_code` = #{supplierCode} and
+            </if>
+            <if test="contractType != null and contractType!=''">
+                `contract_type` = #{contractType} and
+            </if>
+            <if test="orderInitialDepartment != null and orderInitialDepartment!=''">
+                `order_initial_department` = #{orderInitialDepartment} and
+            </if>
+            <if test="orderInitialUserName != null and orderInitialUserName!=''">
+                `order_initial_user_name` = #{orderInitialUserName} and
+            </if>
+            <if test="recommendedSupplierName != null and recommendedSupplierName!=''">
+                `recommended_supplier_name` = #{recommendedSupplierName} and
+            </if>
+            <if test="warehouseSymbol != null and warehouseSymbol!=''">
+                `warehouse_symbol` = #{warehouseSymbol} and
+            </if>
+            <if test="costManagement != null and costManagement!=''">
+                `cost_management` = #{costManagement} and
+            </if>
+            <if test="productionLine != null and productionLine!=''">
+                `production_line` = #{productionLine} and
+            </if>
+            <if test="operationPositionCode != null and operationPositionCode!=''">
+                `operation_position_code` = #{operationPositionCode} and
+            </if>
+            <if test="equipmentCompany != null and equipmentCompany!=''">
+                `equipment_company` = #{equipmentCompany} and
+            </if>
+            <if test="sparePartsBrand != null and sparePartsBrand!=''">
+                `spare_parts_brand` = #{sparePartsBrand} and
+            </if>
+            <if test="sparePartsOrderDesc != null and sparePartsOrderDesc!=''">
+                `spare_parts_order_desc` = #{sparePartsOrderDesc} and
+            </if>
+            <if test="sparePartsEmergency != null and sparePartsEmergency!=''">
+                `spare_parts_emergency` = #{sparePartsEmergency} and
+            </if>
+            <if test="extraOrderReason != null and extraOrderReason!=''">
+                `extra_order_reason` = #{extraOrderReason} and
+            </if>
+            <if test="knifeCode != null and knifeCode!=''">
+                `knife_code` = #{knifeCode} and
+            </if>
+            <if test="importantProjectCode != null and importantProjectCode!=''">
+                `important_project_code` = #{importantProjectCode} and
+            </if>
+            <if test="warehousingReasonCode != null and warehousingReasonCode!=''">
+                `warehousing_reason_code` = #{warehousingReasonCode} and
+            </if>
+            <if test = "(_parameter instanceof com.gamc.efactory.model.dataObject.Order$QueryBuilder) == true">
+                <if test="orderIdList != null">
+                    `order_id` in
+                    <foreach collection="orderIdList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test="orderIdSt !=null">
+                    `order_id` >= #{orderIdSt} and
+                </if>
+                <if test="orderIdEd!=null">
+                    `order_id` &lt;= #{orderIdEd} and
+                </if>
+                <if test="orderOperaterUserNameList != null">
+                    `order_operater_user_name` in
+                    <foreach collection="orderOperaterUserNameList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyOrderOperaterUserName!=null and fuzzyOrderOperaterUserName.size()>0">
+                    (
+                    <foreach collection="fuzzyOrderOperaterUserName"  separator="or" item="item">
+                        `Order_operater_user_name` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyOrderOperaterUserName!=null and rightFuzzyOrderOperaterUserName.size()>0">
+                    (
+                    <foreach collection="rightFuzzyOrderOperaterUserName"  separator="or" item="item">
+                        `Order_operater_user_name` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="orderOperaterTimeList != null">
+                    `order_operater_time` in
+                    <foreach collection="orderOperaterTimeList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyOrderOperaterTime!=null and fuzzyOrderOperaterTime.size()>0">
+                    (
+                    <foreach collection="fuzzyOrderOperaterTime"  separator="or" item="item">
+                        `Order_operater_time` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyOrderOperaterTime!=null and rightFuzzyOrderOperaterTime.size()>0">
+                    (
+                    <foreach collection="rightFuzzyOrderOperaterTime"  separator="or" item="item">
+                        `Order_operater_time` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="orderTypeList != null">
+                    `order_type` in
+                    <foreach collection="orderTypeList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyOrderType!=null and fuzzyOrderType.size()>0">
+                    (
+                    <foreach collection="fuzzyOrderType"  separator="or" item="item">
+                        `Order_type` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyOrderType!=null and rightFuzzyOrderType.size()>0">
+                    (
+                    <foreach collection="rightFuzzyOrderType"  separator="or" item="item">
+                        `Order_type` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="financialListCodeList != null">
+                    `financial_list_code` in
+                    <foreach collection="financialListCodeList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyFinancialListCode!=null and fuzzyFinancialListCode.size()>0">
+                    (
+                    <foreach collection="fuzzyFinancialListCode"  separator="or" item="item">
+                        `Financial_list_code` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyFinancialListCode!=null and rightFuzzyFinancialListCode.size()>0">
+                    (
+                    <foreach collection="rightFuzzyFinancialListCode"  separator="or" item="item">
+                        `Financial_list_code` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="purchasingListCodeList != null">
+                    `purchasing_list_code` in
+                    <foreach collection="purchasingListCodeList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyPurchasingListCode!=null and fuzzyPurchasingListCode.size()>0">
+                    (
+                    <foreach collection="fuzzyPurchasingListCode"  separator="or" item="item">
+                        `Purchasing_list_code` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyPurchasingListCode!=null and rightFuzzyPurchasingListCode.size()>0">
+                    (
+                    <foreach collection="rightFuzzyPurchasingListCode"  separator="or" item="item">
+                        `Purchasing_list_code` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="materialCodeList != null">
+                    `material_code` in
+                    <foreach collection="materialCodeList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyMaterialCode!=null and fuzzyMaterialCode.size()>0">
+                    (
+                    <foreach collection="fuzzyMaterialCode"  separator="or" item="item">
+                        `Material_code` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyMaterialCode!=null and rightFuzzyMaterialCode.size()>0">
+                    (
+                    <foreach collection="rightFuzzyMaterialCode"  separator="or" item="item">
+                        `Material_code` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="materialNameList != null">
+                    `material_name` in
+                    <foreach collection="materialNameList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyMaterialName!=null and fuzzyMaterialName.size()>0">
+                    (
+                    <foreach collection="fuzzyMaterialName"  separator="or" item="item">
+                        `Material_name` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyMaterialName!=null and rightFuzzyMaterialName.size()>0">
+                    (
+                    <foreach collection="rightFuzzyMaterialName"  separator="or" item="item">
+                        `Material_name` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="confirmMaterialNameList != null">
+                    `confirm_material_name` in
+                    <foreach collection="confirmMaterialNameList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyConfirmMaterialName!=null and fuzzyConfirmMaterialName.size()>0">
+                    (
+                    <foreach collection="fuzzyConfirmMaterialName"  separator="or" item="item">
+                        `Confirm_material_name` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyConfirmMaterialName!=null and rightFuzzyConfirmMaterialName.size()>0">
+                    (
+                    <foreach collection="rightFuzzyConfirmMaterialName"  separator="or" item="item">
+                        `Confirm_material_name` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="materialSpecsList != null">
+                    `material_specs` in
+                    <foreach collection="materialSpecsList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyMaterialSpecs!=null and fuzzyMaterialSpecs.size()>0">
+                    (
+                    <foreach collection="fuzzyMaterialSpecs"  separator="or" item="item">
+                        `Material_specs` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyMaterialSpecs!=null and rightFuzzyMaterialSpecs.size()>0">
+                    (
+                    <foreach collection="rightFuzzyMaterialSpecs"  separator="or" item="item">
+                        `Material_specs` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="confirmMaterialSpecsList != null">
+                    `confirm_material_specs` in
+                    <foreach collection="confirmMaterialSpecsList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyConfirmMaterialSpecs!=null and fuzzyConfirmMaterialSpecs.size()>0">
+                    (
+                    <foreach collection="fuzzyConfirmMaterialSpecs"  separator="or" item="item">
+                        `Confirm_material_specs` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyConfirmMaterialSpecs!=null and rightFuzzyConfirmMaterialSpecs.size()>0">
+                    (
+                    <foreach collection="rightFuzzyConfirmMaterialSpecs"  separator="or" item="item">
+                        `Confirm_material_specs` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="materialBrandList != null">
+                    `material_brand` in
+                    <foreach collection="materialBrandList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyMaterialBrand!=null and fuzzyMaterialBrand.size()>0">
+                    (
+                    <foreach collection="fuzzyMaterialBrand"  separator="or" item="item">
+                        `Material_brand` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyMaterialBrand!=null and rightFuzzyMaterialBrand.size()>0">
+                    (
+                    <foreach collection="rightFuzzyMaterialBrand"  separator="or" item="item">
+                        `Material_brand` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="confirmMaterialBrandList != null">
+                    `confirm_material_brand` in
+                    <foreach collection="confirmMaterialBrandList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyConfirmMaterialBrand!=null and fuzzyConfirmMaterialBrand.size()>0">
+                    (
+                    <foreach collection="fuzzyConfirmMaterialBrand"  separator="or" item="item">
+                        `Confirm_material_brand` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyConfirmMaterialBrand!=null and rightFuzzyConfirmMaterialBrand.size()>0">
+                    (
+                    <foreach collection="rightFuzzyConfirmMaterialBrand"  separator="or" item="item">
+                        `Confirm_material_brand` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="materialUnitList != null">
+                    `material_unit` in
+                    <foreach collection="materialUnitList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyMaterialUnit!=null and fuzzyMaterialUnit.size()>0">
+                    (
+                    <foreach collection="fuzzyMaterialUnit"  separator="or" item="item">
+                        `Material_unit` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyMaterialUnit!=null and rightFuzzyMaterialUnit.size()>0">
+                    (
+                    <foreach collection="rightFuzzyMaterialUnit"  separator="or" item="item">
+                        `Material_unit` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="orderMaterialNumList != null">
+                    `order_material_num` in
+                    <foreach collection="orderMaterialNumList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test="orderMaterialNumSt !=null">
+                    `order_material_num` >= #{orderMaterialNumSt} and
+                </if>
+                <if test="orderMaterialNumEd!=null">
+                    `order_material_num` &lt;= #{orderMaterialNumEd} and
+                </if>
+                <if test="financialCenterCodeList != null">
+                    `financial_center_code` in
+                    <foreach collection="financialCenterCodeList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyFinancialCenterCode!=null and fuzzyFinancialCenterCode.size()>0">
+                    (
+                    <foreach collection="fuzzyFinancialCenterCode"  separator="or" item="item">
+                        `Financial_center_code` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyFinancialCenterCode!=null and rightFuzzyFinancialCenterCode.size()>0">
+                    (
+                    <foreach collection="rightFuzzyFinancialCenterCode"  separator="or" item="item">
+                        `Financial_center_code` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="orderBuyerList != null">
+                    `order_buyer` in
+                    <foreach collection="orderBuyerList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyOrderBuyer!=null and fuzzyOrderBuyer.size()>0">
+                    (
+                    <foreach collection="fuzzyOrderBuyer"  separator="or" item="item">
+                        `Order_buyer` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyOrderBuyer!=null and rightFuzzyOrderBuyer.size()>0">
+                    (
+                    <foreach collection="rightFuzzyOrderBuyer"  separator="or" item="item">
+                        `Order_buyer` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="supplierNameList != null">
+                    `supplier_name` in
+                    <foreach collection="supplierNameList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzySupplierName!=null and fuzzySupplierName.size()>0">
+                    (
+                    <foreach collection="fuzzySupplierName"  separator="or" item="item">
+                        `Supplier_name` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzySupplierName!=null and rightFuzzySupplierName.size()>0">
+                    (
+                    <foreach collection="rightFuzzySupplierName"  separator="or" item="item">
+                        `Supplier_name` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="orderStateList != null">
+                    `order_state` in
+                    <foreach collection="orderStateList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyOrderState!=null and fuzzyOrderState.size()>0">
+                    (
+                    <foreach collection="fuzzyOrderState"  separator="or" item="item">
+                        `Order_state` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyOrderState!=null and rightFuzzyOrderState.size()>0">
+                    (
+                    <foreach collection="rightFuzzyOrderState"  separator="or" item="item">
+                        `Order_state` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="orderBuyerCheckDateList != null">
+                    `order_buyer_check_date` in
+                    <foreach collection="orderBuyerCheckDateList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyOrderBuyerCheckDate!=null and fuzzyOrderBuyerCheckDate.size()>0">
+                    (
+                    <foreach collection="fuzzyOrderBuyerCheckDate"  separator="or" item="item">
+                        `Order_buyer_check_date` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyOrderBuyerCheckDate!=null and rightFuzzyOrderBuyerCheckDate.size()>0">
+                    (
+                    <foreach collection="rightFuzzyOrderBuyerCheckDate"  separator="or" item="item">
+                        `Order_buyer_check_date` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="orderPriceCheckDateList != null">
+                    `order_price_check_date` in
+                    <foreach collection="orderPriceCheckDateList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyOrderPriceCheckDate!=null and fuzzyOrderPriceCheckDate.size()>0">
+                    (
+                    <foreach collection="fuzzyOrderPriceCheckDate"  separator="or" item="item">
+                        `Order_price_check_date` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyOrderPriceCheckDate!=null and rightFuzzyOrderPriceCheckDate.size()>0">
+                    (
+                    <foreach collection="rightFuzzyOrderPriceCheckDate"  separator="or" item="item">
+                        `Order_price_check_date` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="purchasingOrderCodeList != null">
+                    `purchasing_order_code` in
+                    <foreach collection="purchasingOrderCodeList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyPurchasingOrderCode!=null and fuzzyPurchasingOrderCode.size()>0">
+                    (
+                    <foreach collection="fuzzyPurchasingOrderCode"  separator="or" item="item">
+                        `Purchasing_order_code` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyPurchasingOrderCode!=null and rightFuzzyPurchasingOrderCode.size()>0">
+                    (
+                    <foreach collection="rightFuzzyPurchasingOrderCode"  separator="or" item="item">
+                        `Purchasing_order_code` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="arrivalDateList != null">
+                    `arrival_date` in
+                    <foreach collection="arrivalDateList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyArrivalDate!=null and fuzzyArrivalDate.size()>0">
+                    (
+                    <foreach collection="fuzzyArrivalDate"  separator="or" item="item">
+                        `Arrival_date` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyArrivalDate!=null and rightFuzzyArrivalDate.size()>0">
+                    (
+                    <foreach collection="rightFuzzyArrivalDate"  separator="or" item="item">
+                        `Arrival_date` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="receivedNumList != null">
+                    `received_num` in
+                    <foreach collection="receivedNumList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test="receivedNumSt !=null">
+                    `received_num` >= #{receivedNumSt} and
+                </if>
+                <if test="receivedNumEd!=null">
+                    `received_num` &lt;= #{receivedNumEd} and
+                </if>
+                <if test="receivedDateList != null">
+                    `received_date` in
+                    <foreach collection="receivedDateList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyReceivedDate!=null and fuzzyReceivedDate.size()>0">
+                    (
+                    <foreach collection="fuzzyReceivedDate"  separator="or" item="item">
+                        `Received_date` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyReceivedDate!=null and rightFuzzyReceivedDate.size()>0">
+                    (
+                    <foreach collection="rightFuzzyReceivedDate"  separator="or" item="item">
+                        `Received_date` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="paymentTypeList != null">
+                    `payment_type` in
+                    <foreach collection="paymentTypeList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyPaymentType!=null and fuzzyPaymentType.size()>0">
+                    (
+                    <foreach collection="fuzzyPaymentType"  separator="or" item="item">
+                        `Payment_type` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyPaymentType!=null and rightFuzzyPaymentType.size()>0">
+                    (
+                    <foreach collection="rightFuzzyPaymentType"  separator="or" item="item">
+                        `Payment_type` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="paymentRateList != null">
+                    `payment_rate` in
+                    <foreach collection="paymentRateList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyPaymentRate!=null and fuzzyPaymentRate.size()>0">
+                    (
+                    <foreach collection="fuzzyPaymentRate"  separator="or" item="item">
+                        `Payment_rate` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyPaymentRate!=null and rightFuzzyPaymentRate.size()>0">
+                    (
+                    <foreach collection="rightFuzzyPaymentRate"  separator="or" item="item">
+                        `Payment_rate` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="budgetTypeList != null">
+                    `budget_type` in
+                    <foreach collection="budgetTypeList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyBudgetType!=null and fuzzyBudgetType.size()>0">
+                    (
+                    <foreach collection="fuzzyBudgetType"  separator="or" item="item">
+                        `Budget_type` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyBudgetType!=null and rightFuzzyBudgetType.size()>0">
+                    (
+                    <foreach collection="rightFuzzyBudgetType"  separator="or" item="item">
+                        `Budget_type` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="budgetSubjectList != null">
+                    `budget_subject` in
+                    <foreach collection="budgetSubjectList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyBudgetSubject!=null and fuzzyBudgetSubject.size()>0">
+                    (
+                    <foreach collection="fuzzyBudgetSubject"  separator="or" item="item">
+                        `Budget_subject` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyBudgetSubject!=null and rightFuzzyBudgetSubject.size()>0">
+                    (
+                    <foreach collection="rightFuzzyBudgetSubject"  separator="or" item="item">
+                        `Budget_subject` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="investManagementCodeList != null">
+                    `invest_management_code` in
+                    <foreach collection="investManagementCodeList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyInvestManagementCode!=null and fuzzyInvestManagementCode.size()>0">
+                    (
+                    <foreach collection="fuzzyInvestManagementCode"  separator="or" item="item">
+                        `Invest_management_code` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyInvestManagementCode!=null and rightFuzzyInvestManagementCode.size()>0">
+                    (
+                    <foreach collection="rightFuzzyInvestManagementCode"  separator="or" item="item">
+                        `Invest_management_code` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="researchTestProjectList != null">
+                    `research_test_project` in
+                    <foreach collection="researchTestProjectList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyResearchTestProject!=null and fuzzyResearchTestProject.size()>0">
+                    (
+                    <foreach collection="fuzzyResearchTestProject"  separator="or" item="item">
+                        `Research_test_project` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyResearchTestProject!=null and rightFuzzyResearchTestProject.size()>0">
+                    (
+                    <foreach collection="rightFuzzyResearchTestProject"  separator="or" item="item">
+                        `Research_test_project` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="orderBuilderNameList != null">
+                    `order_builder_name` in
+                    <foreach collection="orderBuilderNameList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyOrderBuilderName!=null and fuzzyOrderBuilderName.size()>0">
+                    (
+                    <foreach collection="fuzzyOrderBuilderName"  separator="or" item="item">
+                        `Order_builder_name` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyOrderBuilderName!=null and rightFuzzyOrderBuilderName.size()>0">
+                    (
+                    <foreach collection="rightFuzzyOrderBuilderName"  separator="or" item="item">
+                        `Order_builder_name` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="orderDescriptionList != null">
+                    `order_description` in
+                    <foreach collection="orderDescriptionList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyOrderDescription!=null and fuzzyOrderDescription.size()>0">
+                    (
+                    <foreach collection="fuzzyOrderDescription"  separator="or" item="item">
+                        `Order_description` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyOrderDescription!=null and rightFuzzyOrderDescription.size()>0">
+                    (
+                    <foreach collection="rightFuzzyOrderDescription"  separator="or" item="item">
+                        `Order_description` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="orderInitialUserIdList != null">
+                    `order_initial_user_id` in
+                    <foreach collection="orderInitialUserIdList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test="orderInitialUserIdSt !=null">
+                    `order_initial_user_id` >= #{orderInitialUserIdSt} and
+                </if>
+                <if test="orderInitialUserIdEd!=null">
+                    `order_initial_user_id` &lt;= #{orderInitialUserIdEd} and
+                </if>
+                <if test="orderInitialTimeList != null">
+                    `order_initial_time` in
+                    <foreach collection="orderInitialTimeList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyOrderInitialTime!=null and fuzzyOrderInitialTime.size()>0">
+                    (
+                    <foreach collection="fuzzyOrderInitialTime"  separator="or" item="item">
+                        `Order_initial_time` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyOrderInitialTime!=null and rightFuzzyOrderInitialTime.size()>0">
+                    (
+                    <foreach collection="rightFuzzyOrderInitialTime"  separator="or" item="item">
+                        `Order_initial_time` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="orderInitialStateList != null">
+                    `order_initial_state` in
+                    <foreach collection="orderInitialStateList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyOrderInitialState!=null and fuzzyOrderInitialState.size()>0">
+                    (
+                    <foreach collection="fuzzyOrderInitialState"  separator="or" item="item">
+                        `Order_initial_state` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyOrderInitialState!=null and rightFuzzyOrderInitialState.size()>0">
+                    (
+                    <foreach collection="rightFuzzyOrderInitialState"  separator="or" item="item">
+                        `Order_initial_state` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="orderManagementTypeList != null">
+                    `order_management_type` in
+                    <foreach collection="orderManagementTypeList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyOrderManagementType!=null and fuzzyOrderManagementType.size()>0">
+                    (
+                    <foreach collection="fuzzyOrderManagementType"  separator="or" item="item">
+                        `Order_management_type` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyOrderManagementType!=null and rightFuzzyOrderManagementType.size()>0">
+                    (
+                    <foreach collection="rightFuzzyOrderManagementType"  separator="or" item="item">
+                        `Order_management_type` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="orderManagementFormNameList != null">
+                    `order_management_form_name` in
+                    <foreach collection="orderManagementFormNameList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyOrderManagementFormName!=null and fuzzyOrderManagementFormName.size()>0">
+                    (
+                    <foreach collection="fuzzyOrderManagementFormName"  separator="or" item="item">
+                        `Order_management_form_name` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyOrderManagementFormName!=null and rightFuzzyOrderManagementFormName.size()>0">
+                    (
+                    <foreach collection="rightFuzzyOrderManagementFormName"  separator="or" item="item">
+                        `Order_management_form_name` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="orderManagementFormIdList != null">
+                    `order_management_form_id` in
+                    <foreach collection="orderManagementFormIdList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test="orderManagementFormIdSt !=null">
+                    `order_management_form_id` >= #{orderManagementFormIdSt} and
+                </if>
+                <if test="orderManagementFormIdEd!=null">
+                    `order_management_form_id` &lt;= #{orderManagementFormIdEd} and
+                </if>
+                <if test="simpleApplicationObjectIdList != null">
+                    `simple_application_object_id` in
+                    <foreach collection="simpleApplicationObjectIdList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test="simpleApplicationObjectIdSt !=null">
+                    `simple_application_object_id` >= #{simpleApplicationObjectIdSt} and
+                </if>
+                <if test="simpleApplicationObjectIdEd!=null">
+                    `simple_application_object_id` &lt;= #{simpleApplicationObjectIdEd} and
+                </if>
+                <if test="prospectiveArrivalDateList != null">
+                    `prospective_arrival_date` in
+                    <foreach collection="prospectiveArrivalDateList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyProspectiveArrivalDate!=null and fuzzyProspectiveArrivalDate.size()>0">
+                    (
+                    <foreach collection="fuzzyProspectiveArrivalDate"  separator="or" item="item">
+                        `Prospective_arrival_date` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyProspectiveArrivalDate!=null and rightFuzzyProspectiveArrivalDate.size()>0">
+                    (
+                    <foreach collection="rightFuzzyProspectiveArrivalDate"  separator="or" item="item">
+                        `Prospective_arrival_date` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="supplierCodeList != null">
+                    `supplier_code` in
+                    <foreach collection="supplierCodeList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzySupplierCode!=null and fuzzySupplierCode.size()>0">
+                    (
+                    <foreach collection="fuzzySupplierCode"  separator="or" item="item">
+                        `Supplier_code` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzySupplierCode!=null and rightFuzzySupplierCode.size()>0">
+                    (
+                    <foreach collection="rightFuzzySupplierCode"  separator="or" item="item">
+                        `Supplier_code` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="contractTypeList != null">
+                    `contract_type` in
+                    <foreach collection="contractTypeList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyContractType!=null and fuzzyContractType.size()>0">
+                    (
+                    <foreach collection="fuzzyContractType"  separator="or" item="item">
+                        `Contract_type` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyContractType!=null and rightFuzzyContractType.size()>0">
+                    (
+                    <foreach collection="rightFuzzyContractType"  separator="or" item="item">
+                        `Contract_type` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="orderInitialDepartmentList != null">
+                    `order_initial_department` in
+                    <foreach collection="orderInitialDepartmentList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyOrderInitialDepartment!=null and fuzzyOrderInitialDepartment.size()>0">
+                    (
+                    <foreach collection="fuzzyOrderInitialDepartment"  separator="or" item="item">
+                        `Order_initial_department` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyOrderInitialDepartment!=null and rightFuzzyOrderInitialDepartment.size()>0">
+                    (
+                    <foreach collection="rightFuzzyOrderInitialDepartment"  separator="or" item="item">
+                        `Order_initial_department` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="orderInitialUserNameList != null">
+                    `order_initial_user_name` in
+                    <foreach collection="orderInitialUserNameList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyOrderInitialUserName!=null and fuzzyOrderInitialUserName.size()>0">
+                    (
+                    <foreach collection="fuzzyOrderInitialUserName"  separator="or" item="item">
+                        `Order_initial_user_name` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyOrderInitialUserName!=null and rightFuzzyOrderInitialUserName.size()>0">
+                    (
+                    <foreach collection="rightFuzzyOrderInitialUserName"  separator="or" item="item">
+                        `Order_initial_user_name` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="recommendedSupplierNameList != null">
+                    `recommended_supplier_name` in
+                    <foreach collection="recommendedSupplierNameList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyRecommendedSupplierName!=null and fuzzyRecommendedSupplierName.size()>0">
+                    (
+                    <foreach collection="fuzzyRecommendedSupplierName"  separator="or" item="item">
+                        `Recommended_supplier_name` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyRecommendedSupplierName!=null and rightFuzzyRecommendedSupplierName.size()>0">
+                    (
+                    <foreach collection="rightFuzzyRecommendedSupplierName"  separator="or" item="item">
+                        `Recommended_supplier_name` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="warehouseSymbolList != null">
+                    `warehouse_symbol` in
+                    <foreach collection="warehouseSymbolList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyWarehouseSymbol!=null and fuzzyWarehouseSymbol.size()>0">
+                    (
+                    <foreach collection="fuzzyWarehouseSymbol"  separator="or" item="item">
+                        `Warehouse_symbol` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyWarehouseSymbol!=null and rightFuzzyWarehouseSymbol.size()>0">
+                    (
+                    <foreach collection="rightFuzzyWarehouseSymbol"  separator="or" item="item">
+                        `Warehouse_symbol` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="costManagementList != null">
+                    `cost_management` in
+                    <foreach collection="costManagementList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyCostManagement!=null and fuzzyCostManagement.size()>0">
+                    (
+                    <foreach collection="fuzzyCostManagement"  separator="or" item="item">
+                        `Cost_management` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyCostManagement!=null and rightFuzzyCostManagement.size()>0">
+                    (
+                    <foreach collection="rightFuzzyCostManagement"  separator="or" item="item">
+                        `Cost_management` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="productionLineList != null">
+                    `production_line` in
+                    <foreach collection="productionLineList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyProductionLine!=null and fuzzyProductionLine.size()>0">
+                    (
+                    <foreach collection="fuzzyProductionLine"  separator="or" item="item">
+                        `Production_line` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyProductionLine!=null and rightFuzzyProductionLine.size()>0">
+                    (
+                    <foreach collection="rightFuzzyProductionLine"  separator="or" item="item">
+                        `Production_line` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="operationPositionCodeList != null">
+                    `operation_position_code` in
+                    <foreach collection="operationPositionCodeList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyOperationPositionCode!=null and fuzzyOperationPositionCode.size()>0">
+                    (
+                    <foreach collection="fuzzyOperationPositionCode"  separator="or" item="item">
+                        `Operation_position_code` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyOperationPositionCode!=null and rightFuzzyOperationPositionCode.size()>0">
+                    (
+                    <foreach collection="rightFuzzyOperationPositionCode"  separator="or" item="item">
+                        `Operation_position_code` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="equipmentCompanyList != null">
+                    `equipment_company` in
+                    <foreach collection="equipmentCompanyList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyEquipmentCompany!=null and fuzzyEquipmentCompany.size()>0">
+                    (
+                    <foreach collection="fuzzyEquipmentCompany"  separator="or" item="item">
+                        `Equipment_company` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyEquipmentCompany!=null and rightFuzzyEquipmentCompany.size()>0">
+                    (
+                    <foreach collection="rightFuzzyEquipmentCompany"  separator="or" item="item">
+                        `Equipment_company` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="sparePartsBrandList != null">
+                    `spare_parts_brand` in
+                    <foreach collection="sparePartsBrandList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzySparePartsBrand!=null and fuzzySparePartsBrand.size()>0">
+                    (
+                    <foreach collection="fuzzySparePartsBrand"  separator="or" item="item">
+                        `Spare_parts_brand` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzySparePartsBrand!=null and rightFuzzySparePartsBrand.size()>0">
+                    (
+                    <foreach collection="rightFuzzySparePartsBrand"  separator="or" item="item">
+                        `Spare_parts_brand` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="sparePartsOrderDescList != null">
+                    `spare_parts_order_desc` in
+                    <foreach collection="sparePartsOrderDescList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzySparePartsOrderDesc!=null and fuzzySparePartsOrderDesc.size()>0">
+                    (
+                    <foreach collection="fuzzySparePartsOrderDesc"  separator="or" item="item">
+                        `Spare_parts_order_desc` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzySparePartsOrderDesc!=null and rightFuzzySparePartsOrderDesc.size()>0">
+                    (
+                    <foreach collection="rightFuzzySparePartsOrderDesc"  separator="or" item="item">
+                        `Spare_parts_order_desc` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="sparePartsEmergencyList != null">
+                    `spare_parts_emergency` in
+                    <foreach collection="sparePartsEmergencyList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzySparePartsEmergency!=null and fuzzySparePartsEmergency.size()>0">
+                    (
+                    <foreach collection="fuzzySparePartsEmergency"  separator="or" item="item">
+                        `Spare_parts_emergency` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzySparePartsEmergency!=null and rightFuzzySparePartsEmergency.size()>0">
+                    (
+                    <foreach collection="rightFuzzySparePartsEmergency"  separator="or" item="item">
+                        `Spare_parts_emergency` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="extraOrderReasonList != null">
+                    `extra_order_reason` in
+                    <foreach collection="extraOrderReasonList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyExtraOrderReason!=null and fuzzyExtraOrderReason.size()>0">
+                    (
+                    <foreach collection="fuzzyExtraOrderReason"  separator="or" item="item">
+                        `Extra_order_reason` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyExtraOrderReason!=null and rightFuzzyExtraOrderReason.size()>0">
+                    (
+                    <foreach collection="rightFuzzyExtraOrderReason"  separator="or" item="item">
+                        `Extra_order_reason` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="knifeCodeList != null">
+                    `knife_code` in
+                    <foreach collection="knifeCodeList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyKnifeCode!=null and fuzzyKnifeCode.size()>0">
+                    (
+                    <foreach collection="fuzzyKnifeCode"  separator="or" item="item">
+                        `Knife_code` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyKnifeCode!=null and rightFuzzyKnifeCode.size()>0">
+                    (
+                    <foreach collection="rightFuzzyKnifeCode"  separator="or" item="item">
+                        `Knife_code` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="importantProjectCodeList != null">
+                    `important_project_code` in
+                    <foreach collection="importantProjectCodeList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyImportantProjectCode!=null and fuzzyImportantProjectCode.size()>0">
+                    (
+                    <foreach collection="fuzzyImportantProjectCode"  separator="or" item="item">
+                        `Important_project_code` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyImportantProjectCode!=null and rightFuzzyImportantProjectCode.size()>0">
+                    (
+                    <foreach collection="rightFuzzyImportantProjectCode"  separator="or" item="item">
+                        `Important_project_code` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="warehousingReasonCodeList != null">
+                    `warehousing_reason_code` in
+                    <foreach collection="warehousingReasonCodeList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyWarehousingReasonCode!=null and fuzzyWarehousingReasonCode.size()>0">
+                    (
+                    <foreach collection="fuzzyWarehousingReasonCode"  separator="or" item="item">
+                        `Warehousing_reason_code` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyWarehousingReasonCode!=null and rightFuzzyWarehousingReasonCode.size()>0">
+                    (
+                    <foreach collection="rightFuzzyWarehousingReasonCode"  separator="or" item="item">
+                        `Warehousing_reason_code` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+            </if>
+        </trim>
+    </select>
+
+</mapper>

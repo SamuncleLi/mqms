@@ -1,0 +1,805 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gamc.efactory.dao.base.OrderCheckerBaseMapper">
+
+
+    <insert id="insertOrderChecker"  useGeneratedKeys="true" keyProperty="orderCheckerId">
+        INSERT INTO `wms_order_checker`
+        (
+        <trim suffixOverrides=",">
+                    <if test="orderCheckerId!=null">
+                        `order_checker_id`,
+                    </if>
+                    <if test="financialCenterCode!=null">
+                        `financial_center_code`,
+                    </if>
+                    <if test="orderCheckerLevelId!=null">
+                        `order_checker_level_id`,
+                    </if>
+                    <if test="orderCheckerLevelName!=null">
+                        `order_checker_level_name`,
+                    </if>
+                    <if test="orderCheckerLevelDesc!=null">
+                        `order_checker_level_desc`,
+                    </if>
+                    <if test="orderCheckerUserId!=null">
+                        `order_checker_user_id`,
+                    </if>
+                    <if test="orderCheckerUserName!=null">
+                        `order_checker_user_name`,
+                    </if>
+                    <if test="orderCheckerUserNo!=null">
+                        `order_checker_user_no`,
+                    </if>
+                    <if test="dictDefault!=null">
+                        `dict_default`,
+                    </if>
+        </trim>
+        )
+        VALUES
+        (
+        <trim suffixOverrides=",">
+                <if test="orderCheckerId!=null">
+                    #{orderCheckerId},
+                </if>
+                <if test="financialCenterCode!=null">
+                    #{financialCenterCode},
+                </if>
+                <if test="orderCheckerLevelId!=null">
+                    #{orderCheckerLevelId},
+                </if>
+                <if test="orderCheckerLevelName!=null">
+                    #{orderCheckerLevelName},
+                </if>
+                <if test="orderCheckerLevelDesc!=null">
+                    #{orderCheckerLevelDesc},
+                </if>
+                <if test="orderCheckerUserId!=null">
+                    #{orderCheckerUserId},
+                </if>
+                <if test="orderCheckerUserName!=null">
+                    #{orderCheckerUserName},
+                </if>
+                <if test="orderCheckerUserNo!=null">
+                    #{orderCheckerUserNo},
+                </if>
+                <if test="dictDefault!=null">
+                    #{dictDefault},
+                </if>
+        </trim>
+        )
+    </insert>
+
+
+
+
+    <update id="updateOrderChecker">
+        UPDATE `wms_order_checker`
+        SET
+        <trim suffixOverrides=",">
+            <if test="financialCenterCode != null and financialCenterCode!=''">
+                `financial_center_code` = #{financialCenterCode},
+            </if>
+            <if test="orderCheckerLevelId != null">
+                `order_checker_level_id` = #{orderCheckerLevelId},
+            </if>
+            <if test="orderCheckerLevelName != null and orderCheckerLevelName!=''">
+                `order_checker_level_name` = #{orderCheckerLevelName},
+            </if>
+            <if test="orderCheckerLevelDesc != null and orderCheckerLevelDesc!=''">
+                `order_checker_level_desc` = #{orderCheckerLevelDesc},
+            </if>
+            <if test="orderCheckerUserId != null and orderCheckerUserId!=''">
+                `order_checker_user_id` = #{orderCheckerUserId},
+            </if>
+            <if test="orderCheckerUserName != null and orderCheckerUserName!=''">
+                `order_checker_user_name` = #{orderCheckerUserName},
+            </if>
+            <if test="orderCheckerUserNo != null and orderCheckerUserNo!=''">
+                `order_checker_user_no` = #{orderCheckerUserNo},
+            </if>
+            <if test="dictDefault != null">
+                `dict_default` = #{dictDefault},
+            </if>
+        </trim>
+        WHERE
+        <trim suffixOverrides="and">
+                `order_checker_id` = #{orderCheckerId} and
+        </trim>
+    </update>
+
+    <update id="update">
+        UPDATE `wms_order_checker`
+        SET
+        <trim suffixOverrides=",">
+        <if test="set.financialCenterCode != null and set.financialCenterCode!=''">
+            `financial_center_code` = #{set.financialCenterCode},
+        </if>
+        <if test="set.orderCheckerLevelId != null">
+            `order_checker_level_id` = #{set.orderCheckerLevelId},
+        </if>
+        <if test="set.orderCheckerLevelName != null and set.orderCheckerLevelName!=''">
+            `order_checker_level_name` = #{set.orderCheckerLevelName},
+        </if>
+        <if test="set.orderCheckerLevelDesc != null and set.orderCheckerLevelDesc!=''">
+            `order_checker_level_desc` = #{set.orderCheckerLevelDesc},
+        </if>
+        <if test="set.orderCheckerUserId != null and set.orderCheckerUserId!=''">
+            `order_checker_user_id` = #{set.orderCheckerUserId},
+        </if>
+        <if test="set.orderCheckerUserName != null and set.orderCheckerUserName!=''">
+            `order_checker_user_name` = #{set.orderCheckerUserName},
+        </if>
+        <if test="set.orderCheckerUserNo != null and set.orderCheckerUserNo!=''">
+            `order_checker_user_no` = #{set.orderCheckerUserNo},
+        </if>
+        <if test="set.dictDefault != null">
+            `dict_default` = #{set.dictDefault},
+        </if>
+        </trim>
+        <trim prefix="where" suffixOverrides="and | or">
+                <if test="where.orderCheckerIdList != null">
+                    `order_checker_id` in
+                    <foreach collection="where.orderCheckerIdList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test="where.orderCheckerIdSt !=null">
+                `order_checker_id` >= #{where.orderCheckerIdSt} and
+            </if>
+            <if test="where.orderCheckerIdEd!=null">
+                `order_checker_id` &lt;= #{where.orderCheckerIdEd} and
+            </if>
+                <if test="where.financialCenterCodeList != null">
+                    `financial_center_code` in
+                    <foreach collection="where.financialCenterCodeList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test ="where.fuzzyFinancialCenterCode!=null and where.fuzzyFinancialCenterCode.size()>0">
+                (
+                <foreach collection="where.fuzzyFinancialCenterCode"  separator="or" item="item">
+                    `Financial_center_code` like concat('%',#{item},'%')
+                </foreach>
+                ) and
+            </if>
+            <if test ="where.rightFuzzyFinancialCenterCode!=null and where.rightFuzzyFinancialCenterCode.size()>0">
+                (
+                <foreach collection="where.rightFuzzyFinancialCenterCode"  separator="or" item="item">
+                    `Financial_center_code` like concat(#{item},'%')
+                </foreach>
+                ) and
+            </if>
+                <if test="where.orderCheckerLevelIdList != null">
+                    `order_checker_level_id` in
+                    <foreach collection="where.orderCheckerLevelIdList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test="where.orderCheckerLevelIdSt !=null">
+                `order_checker_level_id` >= #{where.orderCheckerLevelIdSt} and
+            </if>
+            <if test="where.orderCheckerLevelIdEd!=null">
+                `order_checker_level_id` &lt;= #{where.orderCheckerLevelIdEd} and
+            </if>
+                <if test="where.orderCheckerLevelNameList != null">
+                    `order_checker_level_name` in
+                    <foreach collection="where.orderCheckerLevelNameList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test ="where.fuzzyOrderCheckerLevelName!=null and where.fuzzyOrderCheckerLevelName.size()>0">
+                (
+                <foreach collection="where.fuzzyOrderCheckerLevelName"  separator="or" item="item">
+                    `Order_checker_level_name` like concat('%',#{item},'%')
+                </foreach>
+                ) and
+            </if>
+            <if test ="where.rightFuzzyOrderCheckerLevelName!=null and where.rightFuzzyOrderCheckerLevelName.size()>0">
+                (
+                <foreach collection="where.rightFuzzyOrderCheckerLevelName"  separator="or" item="item">
+                    `Order_checker_level_name` like concat(#{item},'%')
+                </foreach>
+                ) and
+            </if>
+                <if test="where.orderCheckerLevelDescList != null">
+                    `order_checker_level_desc` in
+                    <foreach collection="where.orderCheckerLevelDescList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test ="where.fuzzyOrderCheckerLevelDesc!=null and where.fuzzyOrderCheckerLevelDesc.size()>0">
+                (
+                <foreach collection="where.fuzzyOrderCheckerLevelDesc"  separator="or" item="item">
+                    `Order_checker_level_desc` like concat('%',#{item},'%')
+                </foreach>
+                ) and
+            </if>
+            <if test ="where.rightFuzzyOrderCheckerLevelDesc!=null and where.rightFuzzyOrderCheckerLevelDesc.size()>0">
+                (
+                <foreach collection="where.rightFuzzyOrderCheckerLevelDesc"  separator="or" item="item">
+                    `Order_checker_level_desc` like concat(#{item},'%')
+                </foreach>
+                ) and
+            </if>
+                <if test="where.orderCheckerUserIdList != null">
+                    `order_checker_user_id` in
+                    <foreach collection="where.orderCheckerUserIdList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test ="where.fuzzyOrderCheckerUserId!=null and where.fuzzyOrderCheckerUserId.size()>0">
+                (
+                <foreach collection="where.fuzzyOrderCheckerUserId"  separator="or" item="item">
+                    `Order_checker_user_id` like concat('%',#{item},'%')
+                </foreach>
+                ) and
+            </if>
+            <if test ="where.rightFuzzyOrderCheckerUserId!=null and where.rightFuzzyOrderCheckerUserId.size()>0">
+                (
+                <foreach collection="where.rightFuzzyOrderCheckerUserId"  separator="or" item="item">
+                    `Order_checker_user_id` like concat(#{item},'%')
+                </foreach>
+                ) and
+            </if>
+                <if test="where.orderCheckerUserNameList != null">
+                    `order_checker_user_name` in
+                    <foreach collection="where.orderCheckerUserNameList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test ="where.fuzzyOrderCheckerUserName!=null and where.fuzzyOrderCheckerUserName.size()>0">
+                (
+                <foreach collection="where.fuzzyOrderCheckerUserName"  separator="or" item="item">
+                    `Order_checker_user_name` like concat('%',#{item},'%')
+                </foreach>
+                ) and
+            </if>
+            <if test ="where.rightFuzzyOrderCheckerUserName!=null and where.rightFuzzyOrderCheckerUserName.size()>0">
+                (
+                <foreach collection="where.rightFuzzyOrderCheckerUserName"  separator="or" item="item">
+                    `Order_checker_user_name` like concat(#{item},'%')
+                </foreach>
+                ) and
+            </if>
+                <if test="where.orderCheckerUserNoList != null">
+                    `order_checker_user_no` in
+                    <foreach collection="where.orderCheckerUserNoList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test ="where.fuzzyOrderCheckerUserNo!=null and where.fuzzyOrderCheckerUserNo.size()>0">
+                (
+                <foreach collection="where.fuzzyOrderCheckerUserNo"  separator="or" item="item">
+                    `Order_checker_user_no` like concat('%',#{item},'%')
+                </foreach>
+                ) and
+            </if>
+            <if test ="where.rightFuzzyOrderCheckerUserNo!=null and where.rightFuzzyOrderCheckerUserNo.size()>0">
+                (
+                <foreach collection="where.rightFuzzyOrderCheckerUserNo"  separator="or" item="item">
+                    `Order_checker_user_no` like concat(#{item},'%')
+                </foreach>
+                ) and
+            </if>
+                <if test="where.dictDefaultList != null">
+                    `dict_default` in
+                    <foreach collection="where.dictDefaultList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test="where.dictDefaultSt !=null">
+                `dict_default` >= #{where.dictDefaultSt} and
+            </if>
+            <if test="where.dictDefaultEd!=null">
+                `dict_default` &lt;= #{where.dictDefaultEd} and
+            </if>
+        </trim>
+    </update>
+
+
+    <resultMap type="com.gamc.efactory.model.dataObject.OrderChecker" id="OrderCheckerMap">
+        <result property="orderCheckerId" column="order_checker_id"/>
+        <result property="financialCenterCode" column="financial_center_code"/>
+        <result property="orderCheckerLevelId" column="order_checker_level_id"/>
+        <result property="orderCheckerLevelName" column="order_checker_level_name"/>
+        <result property="orderCheckerLevelDesc" column="order_checker_level_desc"/>
+        <result property="orderCheckerUserId" column="order_checker_user_id"/>
+        <result property="orderCheckerUserName" column="order_checker_user_name"/>
+        <result property="orderCheckerUserNo" column="order_checker_user_no"/>
+        <result property="dictDefault" column="dict_default"/>
+    </resultMap>
+
+
+    <select id="queryOrderChecker" resultMap="OrderCheckerMap">
+        select
+        <include refid="baseResult"></include>
+        from  `wms_order_checker`
+        <trim prefix="where" suffixOverrides="and | or">
+            <if test="orderCheckerId != null">
+                `order_checker_id` = #{orderCheckerId} and
+            </if>
+            <if test="financialCenterCode != null and financialCenterCode!=''">
+                `financial_center_code` = #{financialCenterCode} and
+            </if>
+            <if test="orderCheckerLevelId != null">
+                `order_checker_level_id` = #{orderCheckerLevelId} and
+            </if>
+            <if test="orderCheckerLevelName != null and orderCheckerLevelName!=''">
+                `order_checker_level_name` = #{orderCheckerLevelName} and
+            </if>
+            <if test="orderCheckerLevelDesc != null and orderCheckerLevelDesc!=''">
+                `order_checker_level_desc` = #{orderCheckerLevelDesc} and
+            </if>
+            <if test="orderCheckerUserId != null and orderCheckerUserId!=''">
+                `order_checker_user_id` = #{orderCheckerUserId} and
+            </if>
+            <if test="orderCheckerUserName != null and orderCheckerUserName!=''">
+                `order_checker_user_name` = #{orderCheckerUserName} and
+            </if>
+            <if test="orderCheckerUserNo != null and orderCheckerUserNo!=''">
+                `order_checker_user_no` = #{orderCheckerUserNo} and
+            </if>
+            <if test="dictDefault != null">
+                `dict_default` = #{dictDefault} and
+            </if>
+            <if test = "(_parameter instanceof com.gamc.efactory.model.dataObject.OrderChecker$QueryBuilder) == true">
+                <if test="orderCheckerIdList != null">
+                    `order_checker_id` in
+                    <foreach collection="orderCheckerIdList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test="orderCheckerIdSt !=null">
+                    `order_checker_id` >= #{orderCheckerIdSt} and
+                </if>
+                <if test="orderCheckerIdEd!=null">
+                    `order_checker_id` &lt;= #{orderCheckerIdEd} and
+                </if>
+                <if test="financialCenterCodeList != null">
+                    `financial_center_code` in
+                    <foreach collection="financialCenterCodeList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyFinancialCenterCode!=null and fuzzyFinancialCenterCode.size()>0">
+                    (
+                    <foreach collection="fuzzyFinancialCenterCode"  separator="or" item="item">
+                        `Financial_center_code` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyFinancialCenterCode!=null and rightFuzzyFinancialCenterCode.size()>0">
+                    (
+                    <foreach collection="rightFuzzyFinancialCenterCode"  separator="or" item="item">
+                        `Financial_center_code` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="orderCheckerLevelIdList != null">
+                    `order_checker_level_id` in
+                    <foreach collection="orderCheckerLevelIdList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test="orderCheckerLevelIdSt !=null">
+                    `order_checker_level_id` >= #{orderCheckerLevelIdSt} and
+                </if>
+                <if test="orderCheckerLevelIdEd!=null">
+                    `order_checker_level_id` &lt;= #{orderCheckerLevelIdEd} and
+                </if>
+                <if test="orderCheckerLevelNameList != null">
+                    `order_checker_level_name` in
+                    <foreach collection="orderCheckerLevelNameList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyOrderCheckerLevelName!=null and fuzzyOrderCheckerLevelName.size()>0">
+                    (
+                    <foreach collection="fuzzyOrderCheckerLevelName"  separator="or" item="item">
+                        `Order_checker_level_name` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyOrderCheckerLevelName!=null and rightFuzzyOrderCheckerLevelName.size()>0">
+                    (
+                    <foreach collection="rightFuzzyOrderCheckerLevelName"  separator="or" item="item">
+                        `Order_checker_level_name` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="orderCheckerLevelDescList != null">
+                    `order_checker_level_desc` in
+                    <foreach collection="orderCheckerLevelDescList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyOrderCheckerLevelDesc!=null and fuzzyOrderCheckerLevelDesc.size()>0">
+                    (
+                    <foreach collection="fuzzyOrderCheckerLevelDesc"  separator="or" item="item">
+                        `Order_checker_level_desc` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyOrderCheckerLevelDesc!=null and rightFuzzyOrderCheckerLevelDesc.size()>0">
+                    (
+                    <foreach collection="rightFuzzyOrderCheckerLevelDesc"  separator="or" item="item">
+                        `Order_checker_level_desc` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="orderCheckerUserIdList != null">
+                    `order_checker_user_id` in
+                    <foreach collection="orderCheckerUserIdList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyOrderCheckerUserId!=null and fuzzyOrderCheckerUserId.size()>0">
+                    (
+                    <foreach collection="fuzzyOrderCheckerUserId"  separator="or" item="item">
+                        `Order_checker_user_id` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyOrderCheckerUserId!=null and rightFuzzyOrderCheckerUserId.size()>0">
+                    (
+                    <foreach collection="rightFuzzyOrderCheckerUserId"  separator="or" item="item">
+                        `Order_checker_user_id` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="orderCheckerUserNameList != null">
+                    `order_checker_user_name` in
+                    <foreach collection="orderCheckerUserNameList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyOrderCheckerUserName!=null and fuzzyOrderCheckerUserName.size()>0">
+                    (
+                    <foreach collection="fuzzyOrderCheckerUserName"  separator="or" item="item">
+                        `Order_checker_user_name` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyOrderCheckerUserName!=null and rightFuzzyOrderCheckerUserName.size()>0">
+                    (
+                    <foreach collection="rightFuzzyOrderCheckerUserName"  separator="or" item="item">
+                        `Order_checker_user_name` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="orderCheckerUserNoList != null">
+                    `order_checker_user_no` in
+                    <foreach collection="orderCheckerUserNoList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyOrderCheckerUserNo!=null and fuzzyOrderCheckerUserNo.size()>0">
+                    (
+                    <foreach collection="fuzzyOrderCheckerUserNo"  separator="or" item="item">
+                        `Order_checker_user_no` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyOrderCheckerUserNo!=null and rightFuzzyOrderCheckerUserNo.size()>0">
+                    (
+                    <foreach collection="rightFuzzyOrderCheckerUserNo"  separator="or" item="item">
+                        `Order_checker_user_no` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="dictDefaultList != null">
+                    `dict_default` in
+                    <foreach collection="dictDefaultList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test="dictDefaultSt !=null">
+                    `dict_default` >= #{dictDefaultSt} and
+                </if>
+                <if test="dictDefaultEd!=null">
+                    `dict_default` &lt;= #{dictDefaultEd} and
+                </if>
+            </if>
+        </trim>
+    </select>
+
+    <select id="queryOrderCheckerLimit1" resultMap="OrderCheckerMap">
+        select
+        <include refid="baseResult"></include>
+        from  `wms_order_checker`
+        <trim prefix="where" suffixOverrides="and | or">
+            <if test="orderCheckerId != null">
+                `order_checker_id` = #{orderCheckerId} and
+            </if>
+            <if test="financialCenterCode != null and financialCenterCode!=''">
+                `financial_center_code` = #{financialCenterCode} and
+            </if>
+            <if test="orderCheckerLevelId != null">
+                `order_checker_level_id` = #{orderCheckerLevelId} and
+            </if>
+            <if test="orderCheckerLevelName != null and orderCheckerLevelName!=''">
+                `order_checker_level_name` = #{orderCheckerLevelName} and
+            </if>
+            <if test="orderCheckerLevelDesc != null and orderCheckerLevelDesc!=''">
+                `order_checker_level_desc` = #{orderCheckerLevelDesc} and
+            </if>
+            <if test="orderCheckerUserId != null and orderCheckerUserId!=''">
+                `order_checker_user_id` = #{orderCheckerUserId} and
+            </if>
+            <if test="orderCheckerUserName != null and orderCheckerUserName!=''">
+                `order_checker_user_name` = #{orderCheckerUserName} and
+            </if>
+            <if test="orderCheckerUserNo != null and orderCheckerUserNo!=''">
+                `order_checker_user_no` = #{orderCheckerUserNo} and
+            </if>
+            <if test="dictDefault != null">
+                `dict_default` = #{dictDefault} and
+            </if>
+            <if test = "(_parameter instanceof com.gamc.efactory.model.dataObject.OrderChecker$QueryBuilder) == true">
+                    <if test="orderCheckerIdList != null">
+                        `order_checker_id` in
+                        <foreach collection="orderCheckerIdList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test="orderCheckerIdSt !=null">
+                    `order_checker_id` >= #{orderCheckerIdSt} and
+                </if>
+                <if test="orderCheckerIdEd!=null">
+                    `order_checker_id` &lt;= #{orderCheckerIdEd} and
+                </if>
+                    <if test="financialCenterCodeList != null">
+                        `financial_center_code` in
+                        <foreach collection="financialCenterCodeList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyFinancialCenterCode!=null and fuzzyFinancialCenterCode.size()>0">
+                    (
+                    <foreach collection="fuzzyFinancialCenterCode"  separator="or" item="item">
+                        `Financial_center_code` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyFinancialCenterCode!=null and rightFuzzyFinancialCenterCode.size()>0">
+                    (
+                    <foreach collection="rightFuzzyFinancialCenterCode"  separator="or" item="item">
+                        `Financial_center_code` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                    <if test="orderCheckerLevelIdList != null">
+                        `order_checker_level_id` in
+                        <foreach collection="orderCheckerLevelIdList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test="orderCheckerLevelIdSt !=null">
+                    `order_checker_level_id` >= #{orderCheckerLevelIdSt} and
+                </if>
+                <if test="orderCheckerLevelIdEd!=null">
+                    `order_checker_level_id` &lt;= #{orderCheckerLevelIdEd} and
+                </if>
+                    <if test="orderCheckerLevelNameList != null">
+                        `order_checker_level_name` in
+                        <foreach collection="orderCheckerLevelNameList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyOrderCheckerLevelName!=null and fuzzyOrderCheckerLevelName.size()>0">
+                    (
+                    <foreach collection="fuzzyOrderCheckerLevelName"  separator="or" item="item">
+                        `Order_checker_level_name` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyOrderCheckerLevelName!=null and rightFuzzyOrderCheckerLevelName.size()>0">
+                    (
+                    <foreach collection="rightFuzzyOrderCheckerLevelName"  separator="or" item="item">
+                        `Order_checker_level_name` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                    <if test="orderCheckerLevelDescList != null">
+                        `order_checker_level_desc` in
+                        <foreach collection="orderCheckerLevelDescList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyOrderCheckerLevelDesc!=null and fuzzyOrderCheckerLevelDesc.size()>0">
+                    (
+                    <foreach collection="fuzzyOrderCheckerLevelDesc"  separator="or" item="item">
+                        `Order_checker_level_desc` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyOrderCheckerLevelDesc!=null and rightFuzzyOrderCheckerLevelDesc.size()>0">
+                    (
+                    <foreach collection="rightFuzzyOrderCheckerLevelDesc"  separator="or" item="item">
+                        `Order_checker_level_desc` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                    <if test="orderCheckerUserIdList != null">
+                        `order_checker_user_id` in
+                        <foreach collection="orderCheckerUserIdList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyOrderCheckerUserId!=null and fuzzyOrderCheckerUserId.size()>0">
+                    (
+                    <foreach collection="fuzzyOrderCheckerUserId"  separator="or" item="item">
+                        `Order_checker_user_id` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyOrderCheckerUserId!=null and rightFuzzyOrderCheckerUserId.size()>0">
+                    (
+                    <foreach collection="rightFuzzyOrderCheckerUserId"  separator="or" item="item">
+                        `Order_checker_user_id` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                    <if test="orderCheckerUserNameList != null">
+                        `order_checker_user_name` in
+                        <foreach collection="orderCheckerUserNameList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyOrderCheckerUserName!=null and fuzzyOrderCheckerUserName.size()>0">
+                    (
+                    <foreach collection="fuzzyOrderCheckerUserName"  separator="or" item="item">
+                        `Order_checker_user_name` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyOrderCheckerUserName!=null and rightFuzzyOrderCheckerUserName.size()>0">
+                    (
+                    <foreach collection="rightFuzzyOrderCheckerUserName"  separator="or" item="item">
+                        `Order_checker_user_name` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                    <if test="orderCheckerUserNoList != null">
+                        `order_checker_user_no` in
+                        <foreach collection="orderCheckerUserNoList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyOrderCheckerUserNo!=null and fuzzyOrderCheckerUserNo.size()>0">
+                    (
+                    <foreach collection="fuzzyOrderCheckerUserNo"  separator="or" item="item">
+                        `Order_checker_user_no` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyOrderCheckerUserNo!=null and rightFuzzyOrderCheckerUserNo.size()>0">
+                    (
+                    <foreach collection="rightFuzzyOrderCheckerUserNo"  separator="or" item="item">
+                        `Order_checker_user_no` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                    <if test="dictDefaultList != null">
+                        `dict_default` in
+                        <foreach collection="dictDefaultList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test="dictDefaultSt !=null">
+                    `dict_default` >= #{dictDefaultSt} and
+                </if>
+                <if test="dictDefaultEd!=null">
+                    `dict_default` &lt;= #{dictDefaultEd} and
+                </if>
+            </if>
+        </trim>
+        limit 1
+    </select>
+
+    <sql id="allResult">
+        <trim suffixOverrides=",">
+        `order_checker_id`,
+        `financial_center_code`,
+        `order_checker_level_id`,
+        `order_checker_level_name`,
+        `order_checker_level_desc`,
+        `order_checker_user_id`,
+        `order_checker_user_name`,
+        `order_checker_user_no`,
+        `dict_default`+0 as `dict_default`,
+        </trim>
+    </sql>
+
+
+
+    <sql id="baseResult">
+        <trim suffixOverrides=",">
+            <if test = "(_parameter instanceof com.gamc.efactory.model.dataObject.OrderChecker$QueryBuilder) == true">
+
+                <if test="fetchFields==null">
+                    <include refid="allResult"></include>
+                </if>
+                <if test="fetchFields!=null">
+                    <if test="fetchFields.AllFields !=null">
+                        <include refid="allResult"></include>
+                    </if>
+                    <if test="fetchFields.AllFields ==null and fetchFields.fetchFields==null and fetchFields.excludeFields==null and fetchFields.otherFields==null">
+                        <include refid="allResult"></include>
+                    </if>
+                    <if test="fetchFields.AllFields==null and fetchFields.fetchFields!=null">
+                    <if test="fetchFields.fetchFields.orderCheckerId==true">
+                        `order_checker_id`,
+                    </if>
+                    <if test="fetchFields.fetchFields.financialCenterCode==true">
+                        `financial_center_code`,
+                    </if>
+                    <if test="fetchFields.fetchFields.orderCheckerLevelId==true">
+                        `order_checker_level_id`,
+                    </if>
+                    <if test="fetchFields.fetchFields.orderCheckerLevelName==true">
+                        `order_checker_level_name`,
+                    </if>
+                    <if test="fetchFields.fetchFields.orderCheckerLevelDesc==true">
+                        `order_checker_level_desc`,
+                    </if>
+                    <if test="fetchFields.fetchFields.orderCheckerUserId==true">
+                        `order_checker_user_id`,
+                    </if>
+                    <if test="fetchFields.fetchFields.orderCheckerUserName==true">
+                        `order_checker_user_name`,
+                    </if>
+                    <if test="fetchFields.fetchFields.orderCheckerUserNo==true">
+                        `order_checker_user_no`,
+                    </if>
+                    <if test="fetchFields.fetchFields.dictDefault==true">
+                        `dict_default`+0 as `dict_default`,
+                    </if>
+                    </if>
+                    <if test="fetchFields.AllFields==null and fetchFields.excludeFields!=null">
+                    <if test="fetchFields.excludeFields.orderCheckerId==null">
+                        `order_checker_id`,
+                    </if>
+                    <if test="fetchFields.excludeFields.financialCenterCode==null">
+                        `financial_center_code`,
+                    </if>
+                    <if test="fetchFields.excludeFields.orderCheckerLevelId==null">
+                        `order_checker_level_id`,
+                    </if>
+                    <if test="fetchFields.excludeFields.orderCheckerLevelName==null">
+                        `order_checker_level_name`,
+                    </if>
+                    <if test="fetchFields.excludeFields.orderCheckerLevelDesc==null">
+                        `order_checker_level_desc`,
+                    </if>
+                    <if test="fetchFields.excludeFields.orderCheckerUserId==null">
+                        `order_checker_user_id`,
+                    </if>
+                    <if test="fetchFields.excludeFields.orderCheckerUserName==null">
+                        `order_checker_user_name`,
+                    </if>
+                    <if test="fetchFields.excludeFields.orderCheckerUserNo==null">
+                        `order_checker_user_no`,
+                    </if>
+                    <if test="fetchFields.excludeFields.dictDefault==null">
+                        `dict_default`+0 as `dict_default`,
+                    </if>
+                    </if>
+                    <if test="fetchFields.otherFields!=null and fetchFields.otherFields.size>0">
+                        <foreach collection="fetchFields.otherFields" index="index" item="item" separator=",">
+                        `#{item}`
+                        </foreach>
+                    </if>
+                </if>
+            </if>
+            <if test="(_parameter instanceof com.gamc.efactory.model.dataObject.OrderChecker$QueryBuilder) == false" >
+                <include refid="allResult"></include>
+            </if>
+
+        </trim>
+    </sql>
+
+
+</mapper>

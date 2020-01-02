@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>系统配置项</title>
+    <link rel="stylesheet" type="text/css" href="${req.contextPath}/static/plugin/jquery-easyui-1.5.5.4/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="${req.contextPath}/static/plugin/jquery-easyui-1.5.5.4/themes/icon.css">
+    <script type="text/javascript" src="${req.contextPath}/static/plugin/jquery-easyui-1.5.5.4/jquery.min.js"></script>
+    <script type="text/javascript" src="${req.contextPath}/static/plugin/jquery-easyui-1.5.5.4/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="${req.contextPath}/static/plugin/jquery-easyui-1.5.5.4/locale/easyui-lang-zh_CN.js"></script>
+    <style type="text/css">
+        html { overflow-y:hidden; }
+        td{
+            padding: 5px;
+        }
+        .easyui-textbox{
+            width: 135px;
+        }
+        .easyui-combobox{
+            width: 135px;
+        }
+    </style>
+    <script type="text/javascript">
+        var system = "wms";
+        var module = "dict";
+        var moduleDesc = "字典"
+        $(function () {
+            //判断session是否过期
+            //列表展示
+            $("#dg").datagrid({
+                url:"/" + system + "/" + module + "/list",
+                method:"GET",
+                title: moduleDesc + "信息"
+            })
+            //权限控制
+            //字典项调用
+            //多选框
+            $(".easyui-combobox.liselectoptions").each(function (index, element) {
+                $("#"+element.id).combobox("reload","dict?action=listInArray&dictType1="+element.name);
+            })
+        })
+        function add() {
+            $('#dlg').dialog("open", "新增" + moduleDesc)
+        }
+        function saveDlg() {
+            var url="/" + system + "/" + module + "/build";
+            $("#fm").form("submit", {
+                url: url,
+                dataType: "json",
+                onSubmit: function () {
+                    return true
+                },
+                success: function (result) {
+                    var result = JSON.parse(result);
+                    if (result.success != "true") {
+                        $.messager.alert('系统提示', "<font color=red>" + result.errorMsg + "</font>");
+                        return;
+                    } else {
+                        $.messager.alert('系统提示', '保存成功');
+                        $("#dg").datagrid("reload");
+                        $("#dlg").dialog("close");
+                        $("#fm").form("clear");
+                    }
+                }
+            })
+        }
+        function closeDlg() {
+            $('#dlg').dialog('close');
+        }
+        function excelFileUpload() {
+            //首先验证文件格式
+            var fileName = $('#excelFile').val();
+            if (fileName === '') {
+                alert('请选择文件');
+                return false;
+            }
+            var fileType = (fileName.substring(fileName
+                            .lastIndexOf(".") + 1, fileName.length))
+                    .toLowerCase();
+            if (fileType !== 'xls' && fileType !== 'xlxs') {
+                alert('文件格式不正确，请上传bpmn文件！');
+                return false;
+            }
+            alert('系统提示',"正在上传，上传完成后会有提示，请耐心等候");
+            $("#excelForm").ajaxSubmit({
+                url:"/" + system + "/" + module + "/upload",
+                dataType:"json",
+                success:function(data) {
+                    if (data.success == 'true') {
+                        $.messager.alert("系统提示",'上传文件成功');
+                    } else {
+                        $.messager.alert("系统提示",'上传文件失败');
+                    }
+                    return false;
+                }
+            });
+            return false;
+        }
+        function closeExcelDlg() {
+            $('#excelDlg').dialog('close');
+        }
+        function openUploadDlg(){
+            $('#excelDlg').dialog('open','上传excel');
+        }
+
+        function downloadExcel() {
+
+        }
+
+        function remove(){
+
+        }
+
+
+        function search(){
+            $('#dg').datagrid({
+                url:"/" + system + "/" + module + "/list",
+            })
+            $('#dg').datagrid('reload', $("#searchForm").serialize());
+        }
+    </script>
+<body style="overflow-y: hidden">
+<div id="tb">
+    <div>
+        <a href="javascript:add()" class="easyui-linkbutton" iconCls="icon-add" >新增</a>
+        <a href="javascript:remove()" class="easyui-linkbutton" iconCls="icon-remove" >删除</a>
+        <a href="javascript:openUploadDlg()" class="easyui-linkbutton">导入excel</a>
+        <a href="javascript:downloadExcel()" class="easyui-linkbutton">导出excel</a>
+    </div>
+    <div>
+        <form id="searchForm">
+            <table>
+                <tr>
+                    <td>字典最高层级描述</td><td><input id="dictDesc1Search" name="dictDesc1"></td>
+                    <td>字典次高层级描述</td><td><input id="dictDesc2Search" name="dictDesc2"></td>
+                    <td>字典内容描述</td><td><input id="dictTextSearch" name="dictText"></td>
+                </tr>
+            </table>
+        </form>
+    </div>
+</div>
+
+<table id="dg" title="信息" class="easyui-datagrid" fitColumns="false"
+       pagination="true" rownumbers="true" fit="true" toolbar="#tb" method="GET">
+    <thead>
+    <tr>
+        <th field="dictType1" align="center">最高层级</th>
+        <th field="dictType2" align="center">次高层级</th>
+        <th field="dictDesc1" align="center">最高层级描述</th>
+        <th field="dictDesc2" align="center">次高层级描述</th>
+        <th field="dictValue" align="center">字典值</th>
+        <th field="dictText" align="center">字典值描述</th>
+        <th field="dictState" align="center">状态</th>
+        <th field="dictIcon" align="center">图标</th>
+        <th field="dictCanModify" align="center">能否改动</th>
+        <th field="dictDefault" align="center">是否设为默认值</th>
+        <th field="dictId" align="center" hidden="hidden">配置项id</th>
+    </tr>
+    </thead>
+</table>
+
+<div id="dlg" name="dlg" class="easyui-dialog" title="新增" style="width: 800px;height: 600px" closed="true" buttons="#dlgbutton">
+    <form id="fm" method="post">
+        <table id="erp_template">
+
+        </table>
+    </form>
+</div>
+<div id="dlgbutton">
+    <a href="javascript:saveDlg()" class="easyui-linkbutton">保存</a>
+    <a href="javascript:closeDlg()" class="easyui-linkbutton">关闭</a>
+</div>
+
+<div id="excelDlg" name="dlg" class="easyui-dialog" title="上传" style="width: 800px;height: 600px" closed="true" buttons="#excelDlgbutton">
+    <form  method="post" enctype="multipart/form-data" id="excelForm">
+        <input type="file" name="file" id="file"/>
+        <input type="submit" value="上传文件"/>
+    </form>
+</div>
+<div id="excelDlgbutton">
+    <a href="javascript:closeExcelDlg()" class="easyui-linkbutton">关闭</a>
+</div>
+</body>
+</html>

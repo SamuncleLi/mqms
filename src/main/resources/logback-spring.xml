@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <!--定义日志保存的路径-->
+    <springProfile name="dev">
+        <property name="LOG_HOME" value="D:/logs/activiti/log" />
+    </springProfile>
+    <springProfile name="prd">
+        <property name="LOG_HOME" value="/usr/local/tomcat8/log" />
+    </springProfile>
+    <!--定义一个控制台的输出器，名为console-->
+    <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+        <!-- encoder 默认配置为PatternLayoutEncoder -->   
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">   
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} %-5level [%thread] %logger{30} - %msg%n</pattern>   
+            <charset>UTF-8</charset>
+        </encoder>   
+    </appender>
+    <!--定义一个日滚动（每天生成一份）的日志文件-->
+    <!--定义一个控制台的输出器，名为console-->
+    <appender name="file" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!-- encoder 默认配置为PatternLayoutEncoder -->   
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">   
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} %-5level [%thread] %logger{30} - %msg%n</pattern>   
+            <charset>UTF-8</charset>
+        </encoder>   
+        <!--定义保存的文件名-->
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!--%d{yyyy-MM-dd}代表每天生成一个新的日志-->
+            <fileNamePattern>${LOG_HOME}/springbootbeetl_%d{yyyy-MM-dd}.log</fileNamePattern>
+            <!--日志最多保存90天也就是90份-->
+            <maxHistory>90</maxHistory>
+        </rollingPolicy>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+        <level>ERROR</level>
+        <onMatch>ACCEPT</onMatch>
+        <onMismatch>DENY</onMismatch>
+    </filter>
+    </appender>
+    <!--定义日志的全局最低输出级别是INFO，同时向控制台和日滚动文件输出-->
+    <root level="INFO">
+        <appender-ref ref="console" />
+        <appender-ref ref="file" />
+    </root>
+</configuration>

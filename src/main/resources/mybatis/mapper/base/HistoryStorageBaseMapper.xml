@@ -1,0 +1,915 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gamc.efactory.dao.base.HistoryStorageBaseMapper">
+
+
+    <insert id="insertHistoryStorage"  useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO `wms_history_storage`
+        (
+        <trim suffixOverrides=",">
+                    <if test="id!=null">
+                        `id`,
+                    </if>
+                    <if test="applier!=null">
+                        `applier`,
+                    </if>
+                    <if test="applyTime!=null">
+                        `apply_time`,
+                    </if>
+                    <if test="year!=null">
+                        `year`,
+                    </if>
+                    <if test="month!=null">
+                        `month`,
+                    </if>
+                    <if test="day!=null">
+                        `day`,
+                    </if>
+                    <if test="date!=null">
+                        `date`,
+                    </if>
+                    <if test="moneyAmount!=null">
+                        `money_amount`,
+                    </if>
+                    <if test="warehouseCode!=null">
+                        `warehouse_code`,
+                    </if>
+                    <if test="materialType!=null">
+                        `material_type`,
+                    </if>
+        </trim>
+        )
+        VALUES
+        (
+        <trim suffixOverrides=",">
+                <if test="id!=null">
+                    #{id},
+                </if>
+                <if test="applier!=null">
+                    #{applier},
+                </if>
+                <if test="applyTime!=null">
+                    #{applyTime},
+                </if>
+                <if test="year!=null">
+                    #{year},
+                </if>
+                <if test="month!=null">
+                    #{month},
+                </if>
+                <if test="day!=null">
+                    #{day},
+                </if>
+                <if test="date!=null">
+                    #{date},
+                </if>
+                <if test="moneyAmount!=null">
+                    #{moneyAmount},
+                </if>
+                <if test="warehouseCode!=null">
+                    #{warehouseCode},
+                </if>
+                <if test="materialType!=null">
+                    #{materialType},
+                </if>
+        </trim>
+        )
+    </insert>
+
+
+
+
+    <update id="updateHistoryStorage">
+        UPDATE `wms_history_storage`
+        SET
+        <trim suffixOverrides=",">
+            <if test="applier != null and applier!=''">
+                `applier` = #{applier},
+            </if>
+            <if test="applyTime != null and applyTime!=''">
+                `apply_time` = #{applyTime},
+            </if>
+            <if test="year != null and year!=''">
+                `year` = #{year},
+            </if>
+            <if test="month != null and month!=''">
+                `month` = #{month},
+            </if>
+            <if test="day != null and day!=''">
+                `day` = #{day},
+            </if>
+            <if test="date != null and date!=''">
+                `date` = #{date},
+            </if>
+            <if test="moneyAmount != null">
+                `money_amount` = #{moneyAmount},
+            </if>
+            <if test="warehouseCode != null and warehouseCode!=''">
+                `warehouse_code` = #{warehouseCode},
+            </if>
+            <if test="materialType != null and materialType!=''">
+                `material_type` = #{materialType},
+            </if>
+        </trim>
+        WHERE
+        <trim suffixOverrides="and">
+                `id` = #{id} and
+        </trim>
+    </update>
+
+    <update id="update">
+        UPDATE `wms_history_storage`
+        SET
+        <trim suffixOverrides=",">
+        <if test="set.applier != null and set.applier!=''">
+            `applier` = #{set.applier},
+        </if>
+        <if test="set.applyTime != null and set.applyTime!=''">
+            `apply_time` = #{set.applyTime},
+        </if>
+        <if test="set.year != null and set.year!=''">
+            `year` = #{set.year},
+        </if>
+        <if test="set.month != null and set.month!=''">
+            `month` = #{set.month},
+        </if>
+        <if test="set.day != null and set.day!=''">
+            `day` = #{set.day},
+        </if>
+        <if test="set.date != null and set.date!=''">
+            `date` = #{set.date},
+        </if>
+        <if test="set.moneyAmount != null">
+            `money_amount` = #{set.moneyAmount},
+        </if>
+        <if test="set.warehouseCode != null and set.warehouseCode!=''">
+            `warehouse_code` = #{set.warehouseCode},
+        </if>
+        <if test="set.materialType != null and set.materialType!=''">
+            `material_type` = #{set.materialType},
+        </if>
+        </trim>
+        <trim prefix="where" suffixOverrides="and | or">
+                <if test="where.idList != null">
+                    `id` in
+                    <foreach collection="where.idList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test="where.idSt !=null">
+                `id` >= #{where.idSt} and
+            </if>
+            <if test="where.idEd!=null">
+                `id` &lt;= #{where.idEd} and
+            </if>
+                <if test="where.applierList != null">
+                    `applier` in
+                    <foreach collection="where.applierList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test ="where.fuzzyApplier!=null and where.fuzzyApplier.size()>0">
+                (
+                <foreach collection="where.fuzzyApplier"  separator="or" item="item">
+                    `Applier` like concat('%',#{item},'%')
+                </foreach>
+                ) and
+            </if>
+            <if test ="where.rightFuzzyApplier!=null and where.rightFuzzyApplier.size()>0">
+                (
+                <foreach collection="where.rightFuzzyApplier"  separator="or" item="item">
+                    `Applier` like concat(#{item},'%')
+                </foreach>
+                ) and
+            </if>
+                <if test="where.applyTimeList != null">
+                    `apply_time` in
+                    <foreach collection="where.applyTimeList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test ="where.fuzzyApplyTime!=null and where.fuzzyApplyTime.size()>0">
+                (
+                <foreach collection="where.fuzzyApplyTime"  separator="or" item="item">
+                    `Apply_time` like concat('%',#{item},'%')
+                </foreach>
+                ) and
+            </if>
+            <if test ="where.rightFuzzyApplyTime!=null and where.rightFuzzyApplyTime.size()>0">
+                (
+                <foreach collection="where.rightFuzzyApplyTime"  separator="or" item="item">
+                    `Apply_time` like concat(#{item},'%')
+                </foreach>
+                ) and
+            </if>
+                <if test="where.yearList != null">
+                    `year` in
+                    <foreach collection="where.yearList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test ="where.fuzzyYear!=null and where.fuzzyYear.size()>0">
+                (
+                <foreach collection="where.fuzzyYear"  separator="or" item="item">
+                    `Year` like concat('%',#{item},'%')
+                </foreach>
+                ) and
+            </if>
+            <if test ="where.rightFuzzyYear!=null and where.rightFuzzyYear.size()>0">
+                (
+                <foreach collection="where.rightFuzzyYear"  separator="or" item="item">
+                    `Year` like concat(#{item},'%')
+                </foreach>
+                ) and
+            </if>
+                <if test="where.monthList != null">
+                    `month` in
+                    <foreach collection="where.monthList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test ="where.fuzzyMonth!=null and where.fuzzyMonth.size()>0">
+                (
+                <foreach collection="where.fuzzyMonth"  separator="or" item="item">
+                    `Month` like concat('%',#{item},'%')
+                </foreach>
+                ) and
+            </if>
+            <if test ="where.rightFuzzyMonth!=null and where.rightFuzzyMonth.size()>0">
+                (
+                <foreach collection="where.rightFuzzyMonth"  separator="or" item="item">
+                    `Month` like concat(#{item},'%')
+                </foreach>
+                ) and
+            </if>
+                <if test="where.dayList != null">
+                    `day` in
+                    <foreach collection="where.dayList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test ="where.fuzzyDay!=null and where.fuzzyDay.size()>0">
+                (
+                <foreach collection="where.fuzzyDay"  separator="or" item="item">
+                    `Day` like concat('%',#{item},'%')
+                </foreach>
+                ) and
+            </if>
+            <if test ="where.rightFuzzyDay!=null and where.rightFuzzyDay.size()>0">
+                (
+                <foreach collection="where.rightFuzzyDay"  separator="or" item="item">
+                    `Day` like concat(#{item},'%')
+                </foreach>
+                ) and
+            </if>
+                <if test="where.dateList != null">
+                    `date` in
+                    <foreach collection="where.dateList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test ="where.fuzzyDate!=null and where.fuzzyDate.size()>0">
+                (
+                <foreach collection="where.fuzzyDate"  separator="or" item="item">
+                    `Date` like concat('%',#{item},'%')
+                </foreach>
+                ) and
+            </if>
+            <if test ="where.rightFuzzyDate!=null and where.rightFuzzyDate.size()>0">
+                (
+                <foreach collection="where.rightFuzzyDate"  separator="or" item="item">
+                    `Date` like concat(#{item},'%')
+                </foreach>
+                ) and
+            </if>
+                <if test="where.moneyAmountList != null">
+                    `money_amount` in
+                    <foreach collection="where.moneyAmountList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test="where.moneyAmountSt !=null">
+                `money_amount` >= #{where.moneyAmountSt} and
+            </if>
+            <if test="where.moneyAmountEd!=null">
+                `money_amount` &lt;= #{where.moneyAmountEd} and
+            </if>
+                <if test="where.warehouseCodeList != null">
+                    `warehouse_code` in
+                    <foreach collection="where.warehouseCodeList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test ="where.fuzzyWarehouseCode!=null and where.fuzzyWarehouseCode.size()>0">
+                (
+                <foreach collection="where.fuzzyWarehouseCode"  separator="or" item="item">
+                    `Warehouse_code` like concat('%',#{item},'%')
+                </foreach>
+                ) and
+            </if>
+            <if test ="where.rightFuzzyWarehouseCode!=null and where.rightFuzzyWarehouseCode.size()>0">
+                (
+                <foreach collection="where.rightFuzzyWarehouseCode"  separator="or" item="item">
+                    `Warehouse_code` like concat(#{item},'%')
+                </foreach>
+                ) and
+            </if>
+                <if test="where.materialTypeList != null">
+                    `material_type` in
+                    <foreach collection="where.materialTypeList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test ="where.fuzzyMaterialType!=null and where.fuzzyMaterialType.size()>0">
+                (
+                <foreach collection="where.fuzzyMaterialType"  separator="or" item="item">
+                    `Material_type` like concat('%',#{item},'%')
+                </foreach>
+                ) and
+            </if>
+            <if test ="where.rightFuzzyMaterialType!=null and where.rightFuzzyMaterialType.size()>0">
+                (
+                <foreach collection="where.rightFuzzyMaterialType"  separator="or" item="item">
+                    `Material_type` like concat(#{item},'%')
+                </foreach>
+                ) and
+            </if>
+        </trim>
+    </update>
+
+
+    <resultMap type="com.gamc.efactory.model.dataObject.HistoryStorage" id="HistoryStorageMap">
+        <result property="id" column="id"/>
+        <result property="applier" column="applier"/>
+        <result property="applyTime" column="apply_time"/>
+        <result property="year" column="year"/>
+        <result property="month" column="month"/>
+        <result property="day" column="day"/>
+        <result property="date" column="date"/>
+        <result property="moneyAmount" column="money_amount"/>
+        <result property="warehouseCode" column="warehouse_code"/>
+        <result property="materialType" column="material_type"/>
+    </resultMap>
+
+
+    <select id="queryHistoryStorage" resultMap="HistoryStorageMap">
+        select
+        <include refid="baseResult"></include>
+        from  `wms_history_storage`
+        <trim prefix="where" suffixOverrides="and | or">
+            <if test="id != null">
+                `id` = #{id} and
+            </if>
+            <if test="applier != null and applier!=''">
+                `applier` = #{applier} and
+            </if>
+            <if test="applyTime != null and applyTime!=''">
+                `apply_time` = #{applyTime} and
+            </if>
+            <if test="year != null and year!=''">
+                `year` = #{year} and
+            </if>
+            <if test="month != null and month!=''">
+                `month` = #{month} and
+            </if>
+            <if test="day != null and day!=''">
+                `day` = #{day} and
+            </if>
+            <if test="date != null and date!=''">
+                `date` = #{date} and
+            </if>
+            <if test="moneyAmount != null">
+                `money_amount` = #{moneyAmount} and
+            </if>
+            <if test="warehouseCode != null and warehouseCode!=''">
+                `warehouse_code` = #{warehouseCode} and
+            </if>
+            <if test="materialType != null and materialType!=''">
+                `material_type` = #{materialType} and
+            </if>
+            <if test = "(_parameter instanceof com.gamc.efactory.model.dataObject.HistoryStorage$QueryBuilder) == true">
+                <if test="idList != null">
+                    `id` in
+                    <foreach collection="idList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test="idSt !=null">
+                    `id` >= #{idSt} and
+                </if>
+                <if test="idEd!=null">
+                    `id` &lt;= #{idEd} and
+                </if>
+                <if test="applierList != null">
+                    `applier` in
+                    <foreach collection="applierList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyApplier!=null and fuzzyApplier.size()>0">
+                    (
+                    <foreach collection="fuzzyApplier"  separator="or" item="item">
+                        `Applier` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyApplier!=null and rightFuzzyApplier.size()>0">
+                    (
+                    <foreach collection="rightFuzzyApplier"  separator="or" item="item">
+                        `Applier` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="applyTimeList != null">
+                    `apply_time` in
+                    <foreach collection="applyTimeList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyApplyTime!=null and fuzzyApplyTime.size()>0">
+                    (
+                    <foreach collection="fuzzyApplyTime"  separator="or" item="item">
+                        `Apply_time` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyApplyTime!=null and rightFuzzyApplyTime.size()>0">
+                    (
+                    <foreach collection="rightFuzzyApplyTime"  separator="or" item="item">
+                        `Apply_time` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="yearList != null">
+                    `year` in
+                    <foreach collection="yearList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyYear!=null and fuzzyYear.size()>0">
+                    (
+                    <foreach collection="fuzzyYear"  separator="or" item="item">
+                        `Year` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyYear!=null and rightFuzzyYear.size()>0">
+                    (
+                    <foreach collection="rightFuzzyYear"  separator="or" item="item">
+                        `Year` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="monthList != null">
+                    `month` in
+                    <foreach collection="monthList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyMonth!=null and fuzzyMonth.size()>0">
+                    (
+                    <foreach collection="fuzzyMonth"  separator="or" item="item">
+                        `Month` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyMonth!=null and rightFuzzyMonth.size()>0">
+                    (
+                    <foreach collection="rightFuzzyMonth"  separator="or" item="item">
+                        `Month` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="dayList != null">
+                    `day` in
+                    <foreach collection="dayList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyDay!=null and fuzzyDay.size()>0">
+                    (
+                    <foreach collection="fuzzyDay"  separator="or" item="item">
+                        `Day` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyDay!=null and rightFuzzyDay.size()>0">
+                    (
+                    <foreach collection="rightFuzzyDay"  separator="or" item="item">
+                        `Day` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="dateList != null">
+                    `date` in
+                    <foreach collection="dateList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyDate!=null and fuzzyDate.size()>0">
+                    (
+                    <foreach collection="fuzzyDate"  separator="or" item="item">
+                        `Date` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyDate!=null and rightFuzzyDate.size()>0">
+                    (
+                    <foreach collection="rightFuzzyDate"  separator="or" item="item">
+                        `Date` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="moneyAmountList != null">
+                    `money_amount` in
+                    <foreach collection="moneyAmountList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test="moneyAmountSt !=null">
+                    `money_amount` >= #{moneyAmountSt} and
+                </if>
+                <if test="moneyAmountEd!=null">
+                    `money_amount` &lt;= #{moneyAmountEd} and
+                </if>
+                <if test="warehouseCodeList != null">
+                    `warehouse_code` in
+                    <foreach collection="warehouseCodeList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyWarehouseCode!=null and fuzzyWarehouseCode.size()>0">
+                    (
+                    <foreach collection="fuzzyWarehouseCode"  separator="or" item="item">
+                        `Warehouse_code` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyWarehouseCode!=null and rightFuzzyWarehouseCode.size()>0">
+                    (
+                    <foreach collection="rightFuzzyWarehouseCode"  separator="or" item="item">
+                        `Warehouse_code` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="materialTypeList != null">
+                    `material_type` in
+                    <foreach collection="materialTypeList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyMaterialType!=null and fuzzyMaterialType.size()>0">
+                    (
+                    <foreach collection="fuzzyMaterialType"  separator="or" item="item">
+                        `Material_type` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyMaterialType!=null and rightFuzzyMaterialType.size()>0">
+                    (
+                    <foreach collection="rightFuzzyMaterialType"  separator="or" item="item">
+                        `Material_type` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+            </if>
+        </trim>
+    </select>
+
+    <select id="queryHistoryStorageLimit1" resultMap="HistoryStorageMap">
+        select
+        <include refid="baseResult"></include>
+        from  `wms_history_storage`
+        <trim prefix="where" suffixOverrides="and | or">
+            <if test="id != null">
+                `id` = #{id} and
+            </if>
+            <if test="applier != null and applier!=''">
+                `applier` = #{applier} and
+            </if>
+            <if test="applyTime != null and applyTime!=''">
+                `apply_time` = #{applyTime} and
+            </if>
+            <if test="year != null and year!=''">
+                `year` = #{year} and
+            </if>
+            <if test="month != null and month!=''">
+                `month` = #{month} and
+            </if>
+            <if test="day != null and day!=''">
+                `day` = #{day} and
+            </if>
+            <if test="date != null and date!=''">
+                `date` = #{date} and
+            </if>
+            <if test="moneyAmount != null">
+                `money_amount` = #{moneyAmount} and
+            </if>
+            <if test="warehouseCode != null and warehouseCode!=''">
+                `warehouse_code` = #{warehouseCode} and
+            </if>
+            <if test="materialType != null and materialType!=''">
+                `material_type` = #{materialType} and
+            </if>
+            <if test = "(_parameter instanceof com.gamc.efactory.model.dataObject.HistoryStorage$QueryBuilder) == true">
+                    <if test="idList != null">
+                        `id` in
+                        <foreach collection="idList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test="idSt !=null">
+                    `id` >= #{idSt} and
+                </if>
+                <if test="idEd!=null">
+                    `id` &lt;= #{idEd} and
+                </if>
+                    <if test="applierList != null">
+                        `applier` in
+                        <foreach collection="applierList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyApplier!=null and fuzzyApplier.size()>0">
+                    (
+                    <foreach collection="fuzzyApplier"  separator="or" item="item">
+                        `Applier` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyApplier!=null and rightFuzzyApplier.size()>0">
+                    (
+                    <foreach collection="rightFuzzyApplier"  separator="or" item="item">
+                        `Applier` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                    <if test="applyTimeList != null">
+                        `apply_time` in
+                        <foreach collection="applyTimeList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyApplyTime!=null and fuzzyApplyTime.size()>0">
+                    (
+                    <foreach collection="fuzzyApplyTime"  separator="or" item="item">
+                        `Apply_time` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyApplyTime!=null and rightFuzzyApplyTime.size()>0">
+                    (
+                    <foreach collection="rightFuzzyApplyTime"  separator="or" item="item">
+                        `Apply_time` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                    <if test="yearList != null">
+                        `year` in
+                        <foreach collection="yearList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyYear!=null and fuzzyYear.size()>0">
+                    (
+                    <foreach collection="fuzzyYear"  separator="or" item="item">
+                        `Year` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyYear!=null and rightFuzzyYear.size()>0">
+                    (
+                    <foreach collection="rightFuzzyYear"  separator="or" item="item">
+                        `Year` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                    <if test="monthList != null">
+                        `month` in
+                        <foreach collection="monthList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyMonth!=null and fuzzyMonth.size()>0">
+                    (
+                    <foreach collection="fuzzyMonth"  separator="or" item="item">
+                        `Month` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyMonth!=null and rightFuzzyMonth.size()>0">
+                    (
+                    <foreach collection="rightFuzzyMonth"  separator="or" item="item">
+                        `Month` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                    <if test="dayList != null">
+                        `day` in
+                        <foreach collection="dayList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyDay!=null and fuzzyDay.size()>0">
+                    (
+                    <foreach collection="fuzzyDay"  separator="or" item="item">
+                        `Day` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyDay!=null and rightFuzzyDay.size()>0">
+                    (
+                    <foreach collection="rightFuzzyDay"  separator="or" item="item">
+                        `Day` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                    <if test="dateList != null">
+                        `date` in
+                        <foreach collection="dateList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyDate!=null and fuzzyDate.size()>0">
+                    (
+                    <foreach collection="fuzzyDate"  separator="or" item="item">
+                        `Date` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyDate!=null and rightFuzzyDate.size()>0">
+                    (
+                    <foreach collection="rightFuzzyDate"  separator="or" item="item">
+                        `Date` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                    <if test="moneyAmountList != null">
+                        `money_amount` in
+                        <foreach collection="moneyAmountList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test="moneyAmountSt !=null">
+                    `money_amount` >= #{moneyAmountSt} and
+                </if>
+                <if test="moneyAmountEd!=null">
+                    `money_amount` &lt;= #{moneyAmountEd} and
+                </if>
+                    <if test="warehouseCodeList != null">
+                        `warehouse_code` in
+                        <foreach collection="warehouseCodeList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyWarehouseCode!=null and fuzzyWarehouseCode.size()>0">
+                    (
+                    <foreach collection="fuzzyWarehouseCode"  separator="or" item="item">
+                        `Warehouse_code` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyWarehouseCode!=null and rightFuzzyWarehouseCode.size()>0">
+                    (
+                    <foreach collection="rightFuzzyWarehouseCode"  separator="or" item="item">
+                        `Warehouse_code` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                    <if test="materialTypeList != null">
+                        `material_type` in
+                        <foreach collection="materialTypeList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyMaterialType!=null and fuzzyMaterialType.size()>0">
+                    (
+                    <foreach collection="fuzzyMaterialType"  separator="or" item="item">
+                        `Material_type` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyMaterialType!=null and rightFuzzyMaterialType.size()>0">
+                    (
+                    <foreach collection="rightFuzzyMaterialType"  separator="or" item="item">
+                        `Material_type` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+            </if>
+        </trim>
+        limit 1
+    </select>
+
+    <sql id="allResult">
+        <trim suffixOverrides=",">
+        `id`,
+        `applier`,
+        `apply_time`,
+        `year`,
+        `month`,
+        `day`,
+        `date`,
+        `money_amount`,
+        `warehouse_code`,
+        `material_type`,
+        </trim>
+    </sql>
+
+
+
+    <sql id="baseResult">
+        <trim suffixOverrides=",">
+            <if test = "(_parameter instanceof com.gamc.efactory.model.dataObject.HistoryStorage$QueryBuilder) == true">
+
+                <if test="fetchFields==null">
+                    <include refid="allResult"></include>
+                </if>
+                <if test="fetchFields!=null">
+                    <if test="fetchFields.AllFields !=null">
+                        <include refid="allResult"></include>
+                    </if>
+                    <if test="fetchFields.AllFields ==null and fetchFields.fetchFields==null and fetchFields.excludeFields==null and fetchFields.otherFields==null">
+                        <include refid="allResult"></include>
+                    </if>
+                    <if test="fetchFields.AllFields==null and fetchFields.fetchFields!=null">
+                    <if test="fetchFields.fetchFields.id==true">
+                        `id`,
+                    </if>
+                    <if test="fetchFields.fetchFields.applier==true">
+                        `applier`,
+                    </if>
+                    <if test="fetchFields.fetchFields.applyTime==true">
+                        `apply_time`,
+                    </if>
+                    <if test="fetchFields.fetchFields.year==true">
+                        `year`,
+                    </if>
+                    <if test="fetchFields.fetchFields.month==true">
+                        `month`,
+                    </if>
+                    <if test="fetchFields.fetchFields.day==true">
+                        `day`,
+                    </if>
+                    <if test="fetchFields.fetchFields.date==true">
+                        `date`,
+                    </if>
+                    <if test="fetchFields.fetchFields.moneyAmount==true">
+                        `money_amount`,
+                    </if>
+                    <if test="fetchFields.fetchFields.warehouseCode==true">
+                        `warehouse_code`,
+                    </if>
+                    <if test="fetchFields.fetchFields.materialType==true">
+                        `material_type`,
+                    </if>
+                    </if>
+                    <if test="fetchFields.AllFields==null and fetchFields.excludeFields!=null">
+                    <if test="fetchFields.excludeFields.id==null">
+                        `id`,
+                    </if>
+                    <if test="fetchFields.excludeFields.applier==null">
+                        `applier`,
+                    </if>
+                    <if test="fetchFields.excludeFields.applyTime==null">
+                        `apply_time`,
+                    </if>
+                    <if test="fetchFields.excludeFields.year==null">
+                        `year`,
+                    </if>
+                    <if test="fetchFields.excludeFields.month==null">
+                        `month`,
+                    </if>
+                    <if test="fetchFields.excludeFields.day==null">
+                        `day`,
+                    </if>
+                    <if test="fetchFields.excludeFields.date==null">
+                        `date`,
+                    </if>
+                    <if test="fetchFields.excludeFields.moneyAmount==null">
+                        `money_amount`,
+                    </if>
+                    <if test="fetchFields.excludeFields.warehouseCode==null">
+                        `warehouse_code`,
+                    </if>
+                    <if test="fetchFields.excludeFields.materialType==null">
+                        `material_type`,
+                    </if>
+                    </if>
+                    <if test="fetchFields.otherFields!=null and fetchFields.otherFields.size>0">
+                        <foreach collection="fetchFields.otherFields" index="index" item="item" separator=",">
+                        `#{item}`
+                        </foreach>
+                    </if>
+                </if>
+            </if>
+            <if test="(_parameter instanceof com.gamc.efactory.model.dataObject.HistoryStorage$QueryBuilder) == false" >
+                <include refid="allResult"></include>
+            </if>
+
+        </trim>
+    </sql>
+
+
+</mapper>
