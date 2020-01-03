@@ -112,7 +112,7 @@ function addTab(menuid){
     }else{
         var content="<iframe frameborder=0 scrolling='auto' style='width:100%;height:100%' src="+node.url+"></iframe>";
         $("#tabs").tabs("add",{
-            title:node.text,
+            title:node.menuname,
             iconCls:node.iconCls,
             closable:true,
             content:content
@@ -121,21 +121,30 @@ function addTab(menuid){
 }
 
  //设置 tab 中的 iframe
-function createFrame(opts){
-	var url=opts.href;
-	var $iframe=$("<iframe id='center_iframe' name='"+opts.title+"'  class='main_iframe' src='"+url+"' width='100%' height='100%' allowfullscreen></iframe>");
-	opts.content=$iframe;
-	opts.href="";
-}
-	 
+// function createFrame(opts){
+// 	var url=opts.href;
+// 	var $iframe=$("<iframe id='center_iframe' name='"+opts.title+"'  class='main_iframe' src='"+url+"' width='100%' height='100%' allowfullscreen></iframe>");
+// 	opts.content=$iframe;
+// 	opts.href="";
+// }
+//
 //打开首页
+// function addFristPage(){
+// 	var $iframe=$("<iframe id='center_iframe' class='main_iframe' border='1'  scrolling='auto' src='/mqms/view/newMaterial' width='100%' height='100%'></iframe>");
+// 	$('#layout_center_plan').panel( {
+// 		title:'<ul class="navigation-path"><li><a href="javascript:;" onclick="addFristPage()" >首页</a></li></ul>',
+// 		closable:false,
+// 		content:$iframe
+// 	});
+// }
 function addFristPage(){
-	var $iframe=$("<iframe id='center_iframe' class='main_iframe' border='1'  scrolling='auto' src='/mqms/view/newMaterial' width='100%' height='100%'></iframe>");
-	$('#layout_center_plan').panel( {
-		title:'<ul class="navigation-path"><li><a href="javascript:;" onclick="addFristPage()" >首页</a></li></ul>',
-		closable:false,
-		content:$iframe
-	});
+    var content="<iframe frameborder=0 scrolling='auto' style='width:100%;height:100%' src='/mqms/view/newMaterial'></iframe>";
+    $("#tabs").tabs("add",{
+        title:node.menuname,
+        iconCls:node.iconCls,
+        closable:true,
+        content:content
+    });
 }
 
 function firstrefresh (){
