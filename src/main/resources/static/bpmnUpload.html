@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="${req.contextPath}/static/plugin/jquery-easyui-1.5.5.4/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="${req.contextPath}/static/plugin/jquery-easyui-1.5.5.4/themes/icon.css">
+    <script type="text/javascript" src="${req.contextPath}/static/plugin/jquery-easyui-1.5.5.4/jquery.min.js"></script>
+    <script type="text/javascript" src="${req.contextPath}/static/plugin/jquery-easyui-1.5.5.4/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="${req.contextPath}/static/plugin/jquery-easyui-1.5.5.4/locale/easyui-lang-zh_CN.js"></script>
+    <title>流程上传</title>
+</head>
+<script>
+    function bpmnFileUpload() {
+        //首先验证文件格式
+        var fileName = $('#bpmnFile').val();
+        if (fileName === '') {
+            alert('请选择文件');
+            return false;
+        }
+        var fileType = (fileName.substring(fileName
+                .lastIndexOf(".") + 1, fileName.length))
+            .toLowerCase();
+        if (fileType !== 'xlsx') {
+            alert('文件格式不正确，请上传bpmn文件！');
+            return false;
+        }
+
+        $.messager.alert('系统提示',"正在上传，上传完成后会有提示，请耐心等候");
+
+        $("#bpmnForm").ajaxSubmit({
+            url:"/mqms/import/veiData",
+            dataType:"json",
+            success:function(data) {
+                if (data.success == 'true') {
+                    $.messager.alert("系统提示",'上传文件成功');
+                } else {
+                    $.messager.alert("系统提示",'上传文件失败');
+                }
+                return false;
+            }
+        });
+        return false;
+    }
+</script>
+<body>
+<form  method="post" enctype="multipart/form-data" id="bpmnForm" action="/mqms/import/veiData">
+    <input type="file" name="file" id="bpmnFile"/>
+    <input type="submit" value="上传文件"/>
+</form>
+</body>
+</html>
