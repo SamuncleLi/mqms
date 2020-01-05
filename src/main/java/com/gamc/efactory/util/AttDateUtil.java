@@ -3,6 +3,8 @@ package com.gamc.efactory.util;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by Zeho Lee on 2018/5/11.
@@ -292,29 +294,28 @@ public class AttDateUtil {
     }
 
     //判断两个时间段是否有重叠
-    public static boolean isOverlapped(String time1Begin, String time1End, String time2Begin, String time2End){
-        if((time1Begin.compareTo(time2End)>=0 && time1End.compareTo(time2End)>=0) || (time2Begin.compareTo(time1End)>=0) && (time2End.compareTo(time1End)>=0)){
+    public static boolean isOverlapped(String time1Begin, String time1End, String time2Begin, String time2End) {
+        if ((time1Begin.compareTo(time2End) >= 0 && time1End.compareTo(time2End) >= 0) || (time2Begin.compareTo(time1End) >= 0) && (time2End.compareTo(time1End) >= 0)) {
             return false;
-        }
-        else{
+        } else {
             return true;
         }
     }
 
-/**
- * @描述 获取某月的最后一天
- * @编写人 Zeho Lee
- * @日期 2018/12/18
- * @参变量
- * @返回
- * @抛出异常
-*/
-    public static String getLastDayOfMonth(int year, int month){
+    /**
+     * @描述 获取某月的最后一天
+     * @编写人 Zeho Lee
+     * @日期 2018/12/18
+     * @参变量
+     * @返回
+     * @抛出异常
+     */
+    public static String getLastDayOfMonth(int year, int month) {
         Calendar cal = Calendar.getInstance();
         //设置年份
-        cal.set(Calendar.YEAR,year);
+        cal.set(Calendar.YEAR, year);
         //设置月份
-        cal.set(Calendar.MONTH, month-1);
+        cal.set(Calendar.MONTH, month - 1);
         //获取某月最大天数
         int lastDay = cal.getActualMaximum(Calendar.DAY_OF_MONTH);
         //设置日历中月份的最大天数
@@ -331,48 +332,94 @@ public class AttDateUtil {
     }
 
     public static void main(String args[]) {
-        int[][] obstacleGrid = {{0,0},{0,1}};
+        int[][] obstacleGrid = {{0, 0}, {0, 1}};
         int m = obstacleGrid.length;
         int n = obstacleGrid[0].length;
         int[][] paths = new int[m][n];
 
-        for(int j=n-1;j>=0;j--){
-            if(obstacleGrid[0][j] == 0){
-                paths[0][j] =1;
-            }
-            else{
-                for(int k=j;k>=0;k--){
-                    paths[0][k] =0;
+        for (int j = n - 1; j >= 0; j--) {
+            if (obstacleGrid[0][j] == 0) {
+                paths[0][j] = 1;
+            } else {
+                for (int k = j; k >= 0; k--) {
+                    paths[0][k] = 0;
                 }
                 break;
             }
         }
 
-        for(int i=0;i<m;i++){
-            if(obstacleGrid[i][n-1] == 0){
-                paths[i][n-1] =1;
-            }
-            else{
-                for(int k=i;k<m;k++){
-                    paths[k][n-1] =0;
+        for (int i = 0; i < m; i++) {
+            if (obstacleGrid[i][n - 1] == 0) {
+                paths[i][n - 1] = 1;
+            } else {
+                for (int k = i; k < m; k++) {
+                    paths[k][n - 1] = 0;
                 }
                 break;
             }
         }
 
         //从倒数第二行倒数第二列算起
-        for(int i=1;i<m;i++){
-            for(int j=n-2;j>=0;j--){
-                if(obstacleGrid[i][j] == 0){
-                    paths[i][j] =paths[i-1][j] + paths[i][j+1];
-                }
-                else{
-                    paths[i][j]=0;
+        for (int i = 1; i < m; i++) {
+            for (int j = n - 2; j >= 0; j--) {
+                if (obstacleGrid[i][j] == 0) {
+                    paths[i][j] = paths[i - 1][j] + paths[i][j + 1];
+                } else {
+                    paths[i][j] = 0;
                 }
             }
         }
         System.out.println(paths);
     }
 
+    public static int getMonth(String startDate, String endDate) throws Exception {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        Calendar c = Calendar.getInstance();
+        c.setTime(sdf.parse(endDate));
+        int year1 = c.get(Calendar.YEAR);
+        int month1 = c.get(Calendar.MONTH);
+
+        c.setTime(sdf.parse(startDate));
+        int year2 = c.get(Calendar.YEAR);
+        int month2 = c.get(Calendar.MONTH);
+
+        int result;
+        if (year1 == year2) {
+            result = month1 - month2;
+        } else {
+            result = 12 * (year1 - year2) + month1 - month2;
+        }
+
+        return result;
+    }
+
+    public static Map<String, String> getWeekDate(String dateTime) throws java.text.ParseException {
+        Map<String, String> map = new HashMap();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        Date date = sdf.parse(dateTime);
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        cal.setFirstDayOfWeek(Calendar.WEDNESDAY);// 设置一个星期的第一天，按中国的习惯一个星期的第一天是星期一
+        int dayWeek = cal.get(Calendar.DAY_OF_WEEK);// 获得当前日期是一个星期的第几天
+        if (dayWeek == 1) {
+            dayWeek = 8;
+        }
+
+        cal.add(Calendar.DATE, cal.getFirstDayOfWeek() - dayWeek);// 根据日历的规则，给当前日期减去星期几与一个星期第一天的差值
+        Date mondayDate = cal.getTime();
+        String weekBegin = sdf.format(mondayDate);
+
+
+        cal.add(Calendar.DATE, 4 + cal.getFirstDayOfWeek());
+        Date sundayDate = cal.getTime();
+        String weekEnd = sdf.format(sundayDate);
+
+
+        map.put("wednesdayDate", weekBegin);
+        map.put("ThursdayDate", weekEnd);
+        return map;
+    }
 }
+
+
 
