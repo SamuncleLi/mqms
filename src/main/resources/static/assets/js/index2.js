@@ -1,7 +1,7 @@
 ﻿$(function(){
 	InitTopMenu();
 	InitLeftMenu("0");//参数选择0为左侧选择第一个
-	addFristPage();
+	// addFristPage();
 
 	//绑定 div 的鼠标事件
 	$('.navmenu-item a').click(function(){

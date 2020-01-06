@@ -8,7 +8,7 @@
     <script type="text/javascript" src="${req.contextPath}/static/plugin/jquery-easyui-1.5.5.4/locale/easyui-lang-zh_CN.js"></script>
     <link rel="stylesheet" href="${req.contextPath}/static/plugin/jquery-easyui-1.5.5.4/themes/gray/easyui.css" type="text/css"/>
     <link rel="stylesheet" href="${req.contextPath}/static/plugin/jquery-easyui-1.5.5.4/themes/icon.css" type="text/css"/>
-    <link rel="stylesheet" href="${req.contextPath}/static/plugin/style/qcdata.css" type="text/css"/>
+    <link rel="stylesheet" href="${req.contextPath}/static/css/qcdata.css" type="text/css"/>
     <script type="text/javascript" src="${req.contextPath}/static/plugin/jquery-easyui-1.5.5.4/datagrid-detailview.js"></script>
     <script type="text/javascript" src="${req.contextPath}/static/plugin/jquery-easyui-1.5.5.4/datagrid-filter.js"></script>
     <link  href="${req.contextPath}/static/layuiExtend/layui/css/layui.css" media="all" rel="stylesheet">
@@ -114,6 +114,8 @@
                 }
             }
         });
+
+        load_dynamic();
     });
     //多表汇总导出数据
     function export_record() {
@@ -153,52 +155,65 @@
     function load_dynamic() {
         //查询数据表头
         $.ajax({
-            url: 'qc?action=qc_qc_tablecolumns_single&s_devicename='+$('#s_device_name').combobox('getText')+'&s_linename='+$('#s_linename').combobox('getText'),
+            url: '/mqms/voucher/columnNameAndComment?table=voucher',
             cache: false,
             type: 'POST',
             data: "",//json字符串
             dataType: 'json',//返回类型
             contentType: "application/json; charset=utf-8",//发送类型，重要，不然会报错
             success: function (result) {
-                var arr = result.columns.split(',');
+                var arr = result;
+                console.log(arr);
                 //动态生成dcDemo中的li
                 columns_auto_single[0] = function () {
                     var data = [];
                     var dataFields = [];
                     for (var i = 0; i < arr.length-1; i++) {
                         var str = {
-                            "field": "" + arr[i],
-                            "title": "" + arr[i],
+                            "field": "" + arr[i].columnName,
+                            "title": "" + arr[i].comment,
                             "width":150,
                             "align": 'center'
                         };
                         var str2= {
-                            field: "" + arr[i],
-                            title: "" + arr[i],
+                            field: "" + arr[i].columnName,
+                            title: "" + arr[i].comment,
                             edit:"text"
                         };
                         data.push(str);
                         dataFields.push(str2);
                     }
-                    //初始化查询实例
-                    complexDc = dynamicCondition.create({
+                    //高级查询
+                    layui.config({
+                        base: '${req.contextPath}/static/layuiExtend/layui_exts/' //设定扩展的Layui模块的所在目录，一般用于外部模块扩展
+                    }).extend({
+                        dynamicCondition: 'dynamicCondition/dynamicCondition'
+                    }).use(['table', 'form', 'dynamicCondition'], function () {
+                        console.log("111");
+                        var $ = layui.$, table = layui.table, form = layui.table;
+                        dynamicCondition = layui.dynamicCondition;
+
+                        //初始化查询实例
+                        complexDc = dynamicCondition.create({
 //                    elem: "#dcDemo" //通过容器选择器传入，也可以$("#dcDemo"),或者document.getElementById("dcDemo")
-                        fields:dataFields
-                        //,tableId:"listTable" //静态页面不好演示table数据表格更新
-                        , type: "complex"  //type:"simple"/"complex"
-                        , conditionTextId: "#msg2"
-                        //当有多个动态条件查询实例时，定义instanceName属性可以通过dynamicCondition.getInstance(instanceName)获取对应的实例
-                        , instanceName: "complexInstance"
-                        , queryCallBack: function (requestData) {
-                            $("#result2").html(JSON.stringify(requestData));
-                            load_dynamic_records();
-                        }
+                            fields:dataFields
+                            //,tableId:"listTable" //静态页面不好演示table数据表格更新
+                            , type: "complex"  //type:"simple"/"complex"
+                            , conditionTextId: "#msg2"
+                            //当有多个动态条件查询实例时，定义instanceName属性可以通过dynamicCondition.getInstance(instanceName)获取对应的实例
+                            , instanceName: "complexInstance"
+                            , queryCallBack: function (requestData) {
+                                $("#result2").html(JSON.stringify(requestData));
+                                load_dynamic_records();
+                            }
+                        });
+                        $("#result2").html(JSON.stringify(complexDc.buildRequestData()));
+                        /**复杂查询*/
+                        $("#complexBtn").on("click", function () {
+                            dynamicCondition.getInstance("complexInstance").open();
+                        });
                     });
-                    $("#result2").html(JSON.stringify(complexDc.buildRequestData()));
-                    /**复杂查询*/
-                    $("#complexBtn").on("click", function () {
-                        dynamicCondition.getInstance("complexInstance").open();
-                    });
+
                     return data;
                 }();
                 load_dynamic_records();
@@ -226,25 +241,7 @@
         });
 //        $("#dg2").datagrid("load");  //动态取数据
     }
-    //二级级联-single
-    $('#s_linename').combobox({
-        onSelect: function (row) {
-            if (row != null) {
-                $('#s_device_name').combobox({
-                    url: "qc?action=qc_getdevicename&linename=" + row.LineName
-                });
-            }
-        }
-    });
-    $('#s_device_name').combobox({
-        onSelect: function (row) {
-            if (row != null) {
-                $('#s_device_name').combobox('setText',row.Device_Name);
-                $("#msg2").children().filter('div').remove(); //动态删除
-                load_dynamic();
-            }
-        }
-    });
+
 
     //正则验证
     $.extend($.fn.validatebox.defaults.rules, {
@@ -263,15 +260,16 @@
             message: '请输入有效机型流水号C70 H888888|C706H888888'
         }
     });
-    //高级查询
-    layui.config({
-        base: 'static/layuiExtend/layui_exts/' //设定扩展的Layui模块的所在目录，一般用于外部模块扩展
-    }).extend({
-        dynamicCondition: 'dynamicCondition/dynamicCondition'
-    }).use(['table', 'form', 'dynamicCondition'], function () {
-        var $ = layui.$, table = layui.table, form = layui.table;
-        dynamicCondition = layui.dynamicCondition;
-    });
+//    //高级查询
+//    layui.config({
+//        base: '${req.contextPath}/static/layuiExtend/layui_exts/' //设定扩展的Layui模块的所在目录，一般用于外部模块扩展
+//    }).extend({
+//        dynamicCondition: 'dynamicCondition/dynamicCondition'
+//    }).use(['table', 'form', 'dynamicCondition'], function () {
+//        console.log("111");
+//        var $ = layui.$, table = layui.table, form = layui.table;
+//        dynamicCondition = layui.dynamicCondition;
+//    });
 </script>
 </body>
 </html>
