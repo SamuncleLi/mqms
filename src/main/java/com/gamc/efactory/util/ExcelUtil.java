@@ -158,13 +158,13 @@ public class ExcelUtil {
                             rowList.add("");
                         }
                         else if (cell.getCellType() == Cell.CELL_TYPE_NUMERIC) {
-//                            if (HSSFDateUtil.isCellDateFormatted(cell)) {
+                            if (HSSFDateUtil.isCellDateFormatted(cell)) {
                                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                                 rowList.add(sdf.format(HSSFDateUtil.getJavaDate(cell.getNumericCellValue())));
-//                            }
-//                            else {
-//                                rowList.add(String.valueOf(cell.getNumericCellValue()));
-//                            }
+                            }
+                            else {
+                                rowList.add(String.valueOf(cell.getNumericCellValue()));
+                            }
                         }
                         else {
                             rowList.add(cell.toString());

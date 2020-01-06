@@ -10,7 +10,7 @@ var _menus=[
             ]
     },
 	{"menuid":"11","icon":"fa-trophy","menuname":"市场数据",parentMenu:'1',
-		"menus":[{"menuid":"110","menuname":"市场故障清单","icon":"fa-window-restore","url":"demo/form-success-popup1.html"},
+		"menus":[{"menuid":"110","menuname":"市场故障清单","icon":"fa-window-restore","url":"/mqms/view/voucher"},
                 {"menuid":"111","menuname":"市场通报清单","icon":"fa-window-restore","url":"demo/form-success-popup2.html"},
                 {"menuid":"112","menuname":"销售清单","icon":"fa-window-maximize","url":"demo/form-success1.html"},
                 {"menuid":"113","menuname":"生产清单","icon":"fa-window-maximize","url":"demo/form-success2.html"},

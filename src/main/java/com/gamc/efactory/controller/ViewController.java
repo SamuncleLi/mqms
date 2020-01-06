@@ -129,4 +129,9 @@ public class ViewController {
         return "warehousingOutCheckPage";
     }
 
+    @RequestMapping(value = "voucher")
+    public String voucherView(){
+        return "voucher";
+    }
+
 }
