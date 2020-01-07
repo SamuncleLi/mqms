@@ -10,7 +10,7 @@ import java.util.List;
 */
 public class ProductionRaw implements Serializable {
 
-    private static final long serialVersionUID = 1578022821575L;
+    private static final long serialVersionUID = 1578241043505L;
 
 
     /**

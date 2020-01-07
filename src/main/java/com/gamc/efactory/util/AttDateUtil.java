@@ -1,8 +1,12 @@
 package com.gamc.efactory.util;
 
+import org.apache.xmlbeans.impl.jam.mutable.MElement;
+
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by Zeho Lee on 2018/5/11.
@@ -292,29 +296,28 @@ public class AttDateUtil {
     }
 
     //判断两个时间段是否有重叠
-    public static boolean isOverlapped(String time1Begin, String time1End, String time2Begin, String time2End){
-        if((time1Begin.compareTo(time2End)>=0 && time1End.compareTo(time2End)>=0) || (time2Begin.compareTo(time1End)>=0) && (time2End.compareTo(time1End)>=0)){
+    public static boolean isOverlapped(String time1Begin, String time1End, String time2Begin, String time2End) {
+        if ((time1Begin.compareTo(time2End) >= 0 && time1End.compareTo(time2End) >= 0) || (time2Begin.compareTo(time1End) >= 0) && (time2End.compareTo(time1End) >= 0)) {
             return false;
-        }
-        else{
+        } else {
             return true;
         }
     }
 
-/**
- * @描述 获取某月的最后一天
- * @编写人 Zeho Lee
- * @日期 2018/12/18
- * @参变量
- * @返回
- * @抛出异常
-*/
-    public static String getLastDayOfMonth(int year, int month){
+    /**
+     * @描述 获取某月的最后一天
+     * @编写人 Zeho Lee
+     * @日期 2018/12/18
+     * @参变量
+     * @返回
+     * @抛出异常
+     */
+    public static String getLastDayOfMonth(int year, int month) {
         Calendar cal = Calendar.getInstance();
         //设置年份
-        cal.set(Calendar.YEAR,year);
+        cal.set(Calendar.YEAR, year);
         //设置月份
-        cal.set(Calendar.MONTH, month-1);
+        cal.set(Calendar.MONTH, month - 1);
         //获取某月最大天数
         int lastDay = cal.getActualMaximum(Calendar.DAY_OF_MONTH);
         //设置日历中月份的最大天数
@@ -331,48 +334,48 @@ public class AttDateUtil {
     }
 
     public static void main(String args[]) {
-        int[][] obstacleGrid = {{0,0},{0,1}};
+        int[][] obstacleGrid = {{0, 0}, {0, 1}};
         int m = obstacleGrid.length;
         int n = obstacleGrid[0].length;
         int[][] paths = new int[m][n];
 
-        for(int j=n-1;j>=0;j--){
-            if(obstacleGrid[0][j] == 0){
-                paths[0][j] =1;
-            }
-            else{
-                for(int k=j;k>=0;k--){
-                    paths[0][k] =0;
+        for (int j = n - 1; j >= 0; j--) {
+            if (obstacleGrid[0][j] == 0) {
+                paths[0][j] = 1;
+            } else {
+                for (int k = j; k >= 0; k--) {
+                    paths[0][k] = 0;
                 }
                 break;
             }
         }
 
-        for(int i=0;i<m;i++){
-            if(obstacleGrid[i][n-1] == 0){
-                paths[i][n-1] =1;
-            }
-            else{
-                for(int k=i;k<m;k++){
-                    paths[k][n-1] =0;
+        for (int i = 0; i < m; i++) {
+            if (obstacleGrid[i][n - 1] == 0) {
+                paths[i][n - 1] = 1;
+            } else {
+                for (int k = i; k < m; k++) {
+                    paths[k][n - 1] = 0;
                 }
                 break;
             }
         }
 
         //从倒数第二行倒数第二列算起
-        for(int i=1;i<m;i++){
-            for(int j=n-2;j>=0;j--){
-                if(obstacleGrid[i][j] == 0){
-                    paths[i][j] =paths[i-1][j] + paths[i][j+1];
-                }
-                else{
-                    paths[i][j]=0;
+        for (int i = 1; i < m; i++) {
+            for (int j = n - 2; j >= 0; j--) {
+                if (obstacleGrid[i][j] == 0) {
+                    paths[i][j] = paths[i - 1][j] + paths[i][j + 1];
+                } else {
+                    paths[i][j] = 0;
                 }
             }
         }
         System.out.println(paths);
     }
 
+
 }
+
+
 

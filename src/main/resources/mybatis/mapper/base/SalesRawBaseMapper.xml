@@ -35,6 +35,15 @@
                     <if test="secondPinDate!=null">
                         `second_pin_date`,
                     </if>
+                    <if test="mtoc!=null">
+                        `mtoc`,
+                    </if>
+                    <if test="carType!=null">
+                        `car_type`,
+                    </if>
+                    <if test="transmissionCode!=null">
+                        `transmission_code`,
+                    </if>
                     <if test="factoryCode!=null">
                         `factory_code`,
                     </if>
@@ -108,6 +117,15 @@
                 </if>
                 <if test="secondPinDate!=null">
                     #{secondPinDate},
+                </if>
+                <if test="mtoc!=null">
+                    #{mtoc},
+                </if>
+                <if test="carType!=null">
+                    #{carType},
+                </if>
+                <if test="transmissionCode!=null">
+                    #{transmissionCode},
                 </if>
                 <if test="factoryCode!=null">
                     #{factoryCode},
@@ -186,6 +204,15 @@
             <if test="secondPinDate != null and secondPinDate!=''">
                 `second_pin_date` = #{secondPinDate},
             </if>
+            <if test="mtoc != null and mtoc!=''">
+                `mtoc` = #{mtoc},
+            </if>
+            <if test="carType != null and carType!=''">
+                `car_type` = #{carType},
+            </if>
+            <if test="transmissionCode != null and transmissionCode!=''">
+                `transmission_code` = #{transmissionCode},
+            </if>
             <if test="factoryCode != null and factoryCode!=''">
                 `factory_code` = #{factoryCode},
             </if>
@@ -262,6 +289,15 @@
         </if>
         <if test="set.secondPinDate != null and set.secondPinDate!=''">
             `second_pin_date` = #{set.secondPinDate},
+        </if>
+        <if test="set.mtoc != null and set.mtoc!=''">
+            `mtoc` = #{set.mtoc},
+        </if>
+        <if test="set.carType != null and set.carType!=''">
+            `car_type` = #{set.carType},
+        </if>
+        <if test="set.transmissionCode != null and set.transmissionCode!=''">
+            `transmission_code` = #{set.transmissionCode},
         </if>
         <if test="set.factoryCode != null and set.factoryCode!=''">
             `factory_code` = #{set.factoryCode},
@@ -476,6 +512,66 @@
                 (
                 <foreach collection="where.rightFuzzySecondPinDate"  separator="or" item="item">
                     `Second_pin_date` like concat(#{item},'%')
+                </foreach>
+                ) and
+            </if>
+                <if test="where.mtocList != null">
+                    `mtoc` in
+                    <foreach collection="where.mtocList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test ="where.fuzzyMtoc!=null and where.fuzzyMtoc.size()>0">
+                (
+                <foreach collection="where.fuzzyMtoc"  separator="or" item="item">
+                    `Mtoc` like concat('%',#{item},'%')
+                </foreach>
+                ) and
+            </if>
+            <if test ="where.rightFuzzyMtoc!=null and where.rightFuzzyMtoc.size()>0">
+                (
+                <foreach collection="where.rightFuzzyMtoc"  separator="or" item="item">
+                    `Mtoc` like concat(#{item},'%')
+                </foreach>
+                ) and
+            </if>
+                <if test="where.carTypeList != null">
+                    `car_type` in
+                    <foreach collection="where.carTypeList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test ="where.fuzzyCarType!=null and where.fuzzyCarType.size()>0">
+                (
+                <foreach collection="where.fuzzyCarType"  separator="or" item="item">
+                    `Car_type` like concat('%',#{item},'%')
+                </foreach>
+                ) and
+            </if>
+            <if test ="where.rightFuzzyCarType!=null and where.rightFuzzyCarType.size()>0">
+                (
+                <foreach collection="where.rightFuzzyCarType"  separator="or" item="item">
+                    `Car_type` like concat(#{item},'%')
+                </foreach>
+                ) and
+            </if>
+                <if test="where.transmissionCodeList != null">
+                    `transmission_code` in
+                    <foreach collection="where.transmissionCodeList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test ="where.fuzzyTransmissionCode!=null and where.fuzzyTransmissionCode.size()>0">
+                (
+                <foreach collection="where.fuzzyTransmissionCode"  separator="or" item="item">
+                    `Transmission_code` like concat('%',#{item},'%')
+                </foreach>
+                ) and
+            </if>
+            <if test ="where.rightFuzzyTransmissionCode!=null and where.rightFuzzyTransmissionCode.size()>0">
+                (
+                <foreach collection="where.rightFuzzyTransmissionCode"  separator="or" item="item">
+                    `Transmission_code` like concat(#{item},'%')
                 </foreach>
                 ) and
             </if>
@@ -773,6 +869,9 @@
         <result property="produceDate" column="produce_date"/>
         <result property="firstPinDate" column="first_pin_date"/>
         <result property="secondPinDate" column="second_pin_date"/>
+        <result property="mtoc" column="mtoc"/>
+        <result property="carType" column="car_type"/>
+        <result property="transmissionCode" column="transmission_code"/>
         <result property="factoryCode" column="factory_code"/>
         <result property="factoryArea" column="factory_area"/>
         <result property="engShortCode" column="eng_short_code"/>
@@ -821,6 +920,15 @@
             </if>
             <if test="secondPinDate != null and secondPinDate!=''">
                 `second_pin_date` = #{secondPinDate} and
+            </if>
+            <if test="mtoc != null and mtoc!=''">
+                `mtoc` = #{mtoc} and
+            </if>
+            <if test="carType != null and carType!=''">
+                `car_type` = #{carType} and
+            </if>
+            <if test="transmissionCode != null and transmissionCode!=''">
+                `transmission_code` = #{transmissionCode} and
             </if>
             <if test="factoryCode != null and factoryCode!=''">
                 `factory_code` = #{factoryCode} and
@@ -1034,6 +1142,66 @@
                     (
                     <foreach collection="rightFuzzySecondPinDate"  separator="or" item="item">
                         `Second_pin_date` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="mtocList != null">
+                    `mtoc` in
+                    <foreach collection="mtocList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyMtoc!=null and fuzzyMtoc.size()>0">
+                    (
+                    <foreach collection="fuzzyMtoc"  separator="or" item="item">
+                        `Mtoc` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyMtoc!=null and rightFuzzyMtoc.size()>0">
+                    (
+                    <foreach collection="rightFuzzyMtoc"  separator="or" item="item">
+                        `Mtoc` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="carTypeList != null">
+                    `car_type` in
+                    <foreach collection="carTypeList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyCarType!=null and fuzzyCarType.size()>0">
+                    (
+                    <foreach collection="fuzzyCarType"  separator="or" item="item">
+                        `Car_type` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyCarType!=null and rightFuzzyCarType.size()>0">
+                    (
+                    <foreach collection="rightFuzzyCarType"  separator="or" item="item">
+                        `Car_type` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="transmissionCodeList != null">
+                    `transmission_code` in
+                    <foreach collection="transmissionCodeList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyTransmissionCode!=null and fuzzyTransmissionCode.size()>0">
+                    (
+                    <foreach collection="fuzzyTransmissionCode"  separator="or" item="item">
+                        `Transmission_code` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyTransmissionCode!=null and rightFuzzyTransmissionCode.size()>0">
+                    (
+                    <foreach collection="rightFuzzyTransmissionCode"  separator="or" item="item">
+                        `Transmission_code` like concat(#{item},'%')
                     </foreach>
                     ) and
                 </if>
@@ -1353,6 +1521,15 @@
             <if test="secondPinDate != null and secondPinDate!=''">
                 `second_pin_date` = #{secondPinDate} and
             </if>
+            <if test="mtoc != null and mtoc!=''">
+                `mtoc` = #{mtoc} and
+            </if>
+            <if test="carType != null and carType!=''">
+                `car_type` = #{carType} and
+            </if>
+            <if test="transmissionCode != null and transmissionCode!=''">
+                `transmission_code` = #{transmissionCode} and
+            </if>
             <if test="factoryCode != null and factoryCode!=''">
                 `factory_code` = #{factoryCode} and
             </if>
@@ -1565,6 +1742,66 @@
                     (
                     <foreach collection="rightFuzzySecondPinDate"  separator="or" item="item">
                         `Second_pin_date` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                    <if test="mtocList != null">
+                        `mtoc` in
+                        <foreach collection="mtocList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyMtoc!=null and fuzzyMtoc.size()>0">
+                    (
+                    <foreach collection="fuzzyMtoc"  separator="or" item="item">
+                        `Mtoc` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyMtoc!=null and rightFuzzyMtoc.size()>0">
+                    (
+                    <foreach collection="rightFuzzyMtoc"  separator="or" item="item">
+                        `Mtoc` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                    <if test="carTypeList != null">
+                        `car_type` in
+                        <foreach collection="carTypeList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyCarType!=null and fuzzyCarType.size()>0">
+                    (
+                    <foreach collection="fuzzyCarType"  separator="or" item="item">
+                        `Car_type` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyCarType!=null and rightFuzzyCarType.size()>0">
+                    (
+                    <foreach collection="rightFuzzyCarType"  separator="or" item="item">
+                        `Car_type` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                    <if test="transmissionCodeList != null">
+                        `transmission_code` in
+                        <foreach collection="transmissionCodeList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyTransmissionCode!=null and fuzzyTransmissionCode.size()>0">
+                    (
+                    <foreach collection="fuzzyTransmissionCode"  separator="or" item="item">
+                        `Transmission_code` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyTransmissionCode!=null and rightFuzzyTransmissionCode.size()>0">
+                    (
+                    <foreach collection="rightFuzzyTransmissionCode"  separator="or" item="item">
+                        `Transmission_code` like concat(#{item},'%')
                     </foreach>
                     ) and
                 </if>
@@ -1864,6 +2101,9 @@
         `produce_date`,
         `first_pin_date`,
         `second_pin_date`,
+        `mtoc`,
+        `car_type`,
+        `transmission_code`,
         `factory_code`,
         `factory_area`,
         `eng_short_code`,
@@ -1924,6 +2164,15 @@
                     </if>
                     <if test="fetchFields.fetchFields.secondPinDate==true">
                         `second_pin_date`,
+                    </if>
+                    <if test="fetchFields.fetchFields.mtoc==true">
+                        `mtoc`,
+                    </if>
+                    <if test="fetchFields.fetchFields.carType==true">
+                        `car_type`,
+                    </if>
+                    <if test="fetchFields.fetchFields.transmissionCode==true">
+                        `transmission_code`,
                     </if>
                     <if test="fetchFields.fetchFields.factoryCode==true">
                         `factory_code`,
@@ -1995,6 +2244,15 @@
                     </if>
                     <if test="fetchFields.excludeFields.secondPinDate==null">
                         `second_pin_date`,
+                    </if>
+                    <if test="fetchFields.excludeFields.mtoc==null">
+                        `mtoc`,
+                    </if>
+                    <if test="fetchFields.excludeFields.carType==null">
+                        `car_type`,
+                    </if>
+                    <if test="fetchFields.excludeFields.transmissionCode==null">
+                        `transmission_code`,
                     </if>
                     <if test="fetchFields.excludeFields.factoryCode==null">
                         `factory_code`,
