@@ -19,7 +19,7 @@ SET FOREIGN_KEY_CHECKS=0;
 -- Table structure for production_raw
 -- ----------------------------
 DROP TABLE IF EXISTS `production_raw`;
-CREATE TABLE `production_raw` (
+CREATE TABLE `production` (
   `production_id` int(11) NOT NULL AUTO_INCREMENT,
   `factory_code` varchar(255) DEFAULT NULL,
   `production_batch` varchar(255) DEFAULT NULL,
@@ -36,7 +36,21 @@ CREATE TABLE `production_raw` (
   `period` varchar(255) DEFAULT NULL COMMENT '阶段',
   `car_type` varchar(255) DEFAULT NULL,
   `export_country` varchar(255) DEFAULT NULL,
+  `short_code` varchar(255) DEFAULT NULL,
+  `eng_code` varchar(255) DEFAULT NULL,
+  `serial_code` varchar(255) DEFAULT NULL,
+  `districtName` varchar(255) DEFAULT NULL,
+  `sales_year` varchar(255) DEFAULT NULL,
+  `sales_month` varchar(255) DEFAULT NULL,
+  `transmission_short_code` varchar(255) DEFAULT NULL,
+  `transmission_simple_code` varchar(255) DEFAULT NULL,
+  `transmission_type` varchar(255) DEFAULT NULL,
+  `car_short_code` varchar(255) DEFAULT NULL,
+  `car_type_code` varchar(255) DEFAULT NULL,
+  `car_simple_code` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`production_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
+
+
 
 
