@@ -9,6 +9,7 @@ import com.gamc.efactory.model.dataObject.VoucherRawCreate;
 import com.gamc.efactory.service.VeiDataService;
 import com.gamc.efactory.util.AttDateUtil;
 import com.gamc.efactory.util.ExcelUtil;
+import com.gamc.efactory.util.MqmsUnit;
 import com.gamc.efactory.util.RangeResultUtil;
 import com.sun.xml.internal.ws.developer.Serialization;
 import org.slf4j.Logger;
@@ -77,8 +78,8 @@ public class VeiDataServiceImpl implements VeiDataService {
                     VoucherRawCreate voucherRawCreate = new VoucherRawCreate();
                     BeanUtils.copyProperties(voucherRaw,voucherRawCreate);
 
-                    int salesFailureMonths=AttDateUtil.getMonth(voucherRawCreate.getSalesDate(),voucherRawCreate.getFailureDate());
-                    int offlineFailureMonths=AttDateUtil.getMonth(voucherRawCreate.getOfflineDate(),voucherRawCreate.getConfirmDate());
+                    int salesFailureMonths= MqmsUnit.getMonth(voucherRawCreate.getSalesDate(),voucherRawCreate.getFailureDate());
+                    int offlineFailureMonths=MqmsUnit.getMonth(voucherRawCreate.getOfflineDate(),voucherRawCreate.getConfirmDate());
                     voucherRawCreate.setSalesFailureTime(Integer.toString(salesFailureMonths));
                     voucherRawCreate.setOfflineFailureTime(Integer.toString(offlineFailureMonths));
                     voucherRawCreate.setMileageDistribution(RangeResultUtil.rangeResult(voucherRawCreate.getMileage(),5000,100000));
@@ -86,7 +87,7 @@ public class VeiDataServiceImpl implements VeiDataService {
                     voucherRawCreate.setFailureYear(dateTime[0]);
                     voucherRawCreate.setFailureMonth(dateTime[1]);
                     Map<String, String> map = new HashMap();
-                    map=AttDateUtil.getWeekDate(voucherRawCreate.getUpdateTime());
+                    map=MqmsUnit.getWeekDate(voucherRawCreate.getUpdateTime());
                     voucherRawCreate.setUpdateTime(map.get("weekBegin")+"~"+map.get("weekBegin"));
                     voucherRawCreateList.add(voucherRawCreate);
 

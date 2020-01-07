@@ -11,6 +11,7 @@ import java.io.FileInputStream;
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -154,16 +155,25 @@ public class ExcelUtil {
                     // 读取每一个单元格
                     for (int k = 0; k < cellNum; k++) {//处理每一个单元格
                         Cell cell = row.getCell(k);
+                        int formatType=cell.getCellStyle().getDataFormat();
                         if (cell == null) {
                             rowList.add("");
                         }
                         else if (cell.getCellType() == Cell.CELL_TYPE_NUMERIC) {
+                            
                             if (HSSFDateUtil.isCellDateFormatted(cell)) {
+                                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                                rowList.add(sdf.format(HSSFDateUtil.getJavaDate(cell.getNumericCellValue())));
+
+                            }
+                            //增加自定义单元格类型判定，用于对形如：XX年XX月XX日等内容导入时候能正确解析，目前仅增加176,177,182,183，185,186的
+                            else if (Arrays.asList(176,177,182,183,185,186).contains(formatType)){
                                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                                 rowList.add(sdf.format(HSSFDateUtil.getJavaDate(cell.getNumericCellValue())));
                             }
                             else {
                                 rowList.add(String.valueOf(cell.getNumericCellValue()));
+
                             }
                         }
                         else {

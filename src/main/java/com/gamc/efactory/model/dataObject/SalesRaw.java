@@ -10,7 +10,7 @@ import java.util.List;
 */
 public class SalesRaw implements Serializable {
 
-    private static final long serialVersionUID = 1578022814231L;
+    private static final long serialVersionUID = 1578313747544L;
 
 
     /**
@@ -67,6 +67,24 @@ public class SalesRaw implements Serializable {
     * isNullAble:1
     */
     private String secondPinDate;
+
+    /**
+    * MTOC
+    * isNullAble:1
+    */
+    private String mtoc;
+
+    /**
+    * 车型
+    * isNullAble:1
+    */
+    private String carType;
+
+    /**
+    * 变速箱号
+    * isNullAble:1
+    */
+    private String transmissionCode;
 
     /**
     * 工厂简码
@@ -189,6 +207,18 @@ public class SalesRaw implements Serializable {
 
     public String getSecondPinDate(){return this.secondPinDate;}
 
+    public void setMtoc(String mtoc){this.mtoc = mtoc;}
+
+    public String getMtoc(){return this.mtoc;}
+
+    public void setCarType(String carType){this.carType = carType;}
+
+    public String getCarType(){return this.carType;}
+
+    public void setTransmissionCode(String transmissionCode){this.transmissionCode = transmissionCode;}
+
+    public String getTransmissionCode(){return this.transmissionCode;}
+
     public void setFactoryCode(String factoryCode){this.factoryCode = factoryCode;}
 
     public String getFactoryCode(){return this.factoryCode;}
@@ -256,6 +286,9 @@ public class SalesRaw implements Serializable {
                 "produceDate='" + produceDate + '\'' +
                 "firstPinDate='" + firstPinDate + '\'' +
                 "secondPinDate='" + secondPinDate + '\'' +
+                "mtoc='" + mtoc + '\'' +
+                "carType='" + carType + '\'' +
+                "transmissionCode='" + transmissionCode + '\'' +
                 "factoryCode='" + factoryCode + '\'' +
                 "factoryArea='" + factoryArea + '\'' +
                 "engShortCode='" + engShortCode + '\'' +
@@ -426,6 +459,42 @@ public class SalesRaw implements Serializable {
         private List<String> rightFuzzySecondPinDate;
 
         public List<String> getRightFuzzySecondPinDate(){return this.rightFuzzySecondPinDate;}
+        private List<String> mtocList;
+
+        public List<String> getMtocList(){return this.mtocList;}
+
+
+        private List<String> fuzzyMtoc;
+
+        public List<String> getFuzzyMtoc(){return this.fuzzyMtoc;}
+
+        private List<String> rightFuzzyMtoc;
+
+        public List<String> getRightFuzzyMtoc(){return this.rightFuzzyMtoc;}
+        private List<String> carTypeList;
+
+        public List<String> getCarTypeList(){return this.carTypeList;}
+
+
+        private List<String> fuzzyCarType;
+
+        public List<String> getFuzzyCarType(){return this.fuzzyCarType;}
+
+        private List<String> rightFuzzyCarType;
+
+        public List<String> getRightFuzzyCarType(){return this.rightFuzzyCarType;}
+        private List<String> transmissionCodeList;
+
+        public List<String> getTransmissionCodeList(){return this.transmissionCodeList;}
+
+
+        private List<String> fuzzyTransmissionCode;
+
+        public List<String> getFuzzyTransmissionCode(){return this.fuzzyTransmissionCode;}
+
+        private List<String> rightFuzzyTransmissionCode;
+
+        public List<String> getRightFuzzyTransmissionCode(){return this.rightFuzzyTransmissionCode;}
         private List<String> factoryCodeList;
 
         public List<String> getFactoryCodeList(){return this.factoryCodeList;}
@@ -996,6 +1065,141 @@ public class SalesRaw implements Serializable {
 
         public QueryBuilder excludeSecondPinDate(){
             setFetchFields("excludeFields","secondPinDate");
+            return this;
+        }
+
+        public QueryBuilder fuzzyMtoc (List<String> fuzzyMtoc){
+            this.fuzzyMtoc = fuzzyMtoc;
+            return this;
+        }
+
+        public QueryBuilder fuzzyMtoc (String ... fuzzyMtoc){
+            this.fuzzyMtoc = solveNullList(fuzzyMtoc);
+            return this;
+        }
+
+        public QueryBuilder rightFuzzyMtoc (List<String> rightFuzzyMtoc){
+            this.rightFuzzyMtoc = rightFuzzyMtoc;
+            return this;
+        }
+
+        public QueryBuilder rightFuzzyMtoc (String ... rightFuzzyMtoc){
+            this.rightFuzzyMtoc = solveNullList(rightFuzzyMtoc);
+            return this;
+        }
+
+        public QueryBuilder mtoc(String mtoc){
+            setMtoc(mtoc);
+            return this;
+        }
+
+        public QueryBuilder mtocList(String ... mtoc){
+            this.mtocList = solveNullList(mtoc);
+            return this;
+        }
+
+        public QueryBuilder mtocList(List<String> mtoc){
+            this.mtocList = mtoc;
+            return this;
+        }
+
+        public QueryBuilder fetchMtoc(){
+            setFetchFields("fetchFields","mtoc");
+            return this;
+        }
+
+        public QueryBuilder excludeMtoc(){
+            setFetchFields("excludeFields","mtoc");
+            return this;
+        }
+
+        public QueryBuilder fuzzyCarType (List<String> fuzzyCarType){
+            this.fuzzyCarType = fuzzyCarType;
+            return this;
+        }
+
+        public QueryBuilder fuzzyCarType (String ... fuzzyCarType){
+            this.fuzzyCarType = solveNullList(fuzzyCarType);
+            return this;
+        }
+
+        public QueryBuilder rightFuzzyCarType (List<String> rightFuzzyCarType){
+            this.rightFuzzyCarType = rightFuzzyCarType;
+            return this;
+        }
+
+        public QueryBuilder rightFuzzyCarType (String ... rightFuzzyCarType){
+            this.rightFuzzyCarType = solveNullList(rightFuzzyCarType);
+            return this;
+        }
+
+        public QueryBuilder carType(String carType){
+            setCarType(carType);
+            return this;
+        }
+
+        public QueryBuilder carTypeList(String ... carType){
+            this.carTypeList = solveNullList(carType);
+            return this;
+        }
+
+        public QueryBuilder carTypeList(List<String> carType){
+            this.carTypeList = carType;
+            return this;
+        }
+
+        public QueryBuilder fetchCarType(){
+            setFetchFields("fetchFields","carType");
+            return this;
+        }
+
+        public QueryBuilder excludeCarType(){
+            setFetchFields("excludeFields","carType");
+            return this;
+        }
+
+        public QueryBuilder fuzzyTransmissionCode (List<String> fuzzyTransmissionCode){
+            this.fuzzyTransmissionCode = fuzzyTransmissionCode;
+            return this;
+        }
+
+        public QueryBuilder fuzzyTransmissionCode (String ... fuzzyTransmissionCode){
+            this.fuzzyTransmissionCode = solveNullList(fuzzyTransmissionCode);
+            return this;
+        }
+
+        public QueryBuilder rightFuzzyTransmissionCode (List<String> rightFuzzyTransmissionCode){
+            this.rightFuzzyTransmissionCode = rightFuzzyTransmissionCode;
+            return this;
+        }
+
+        public QueryBuilder rightFuzzyTransmissionCode (String ... rightFuzzyTransmissionCode){
+            this.rightFuzzyTransmissionCode = solveNullList(rightFuzzyTransmissionCode);
+            return this;
+        }
+
+        public QueryBuilder transmissionCode(String transmissionCode){
+            setTransmissionCode(transmissionCode);
+            return this;
+        }
+
+        public QueryBuilder transmissionCodeList(String ... transmissionCode){
+            this.transmissionCodeList = solveNullList(transmissionCode);
+            return this;
+        }
+
+        public QueryBuilder transmissionCodeList(List<String> transmissionCode){
+            this.transmissionCodeList = transmissionCode;
+            return this;
+        }
+
+        public QueryBuilder fetchTransmissionCode(){
+            setFetchFields("fetchFields","transmissionCode");
+            return this;
+        }
+
+        public QueryBuilder excludeTransmissionCode(){
+            setFetchFields("excludeFields","transmissionCode");
             return this;
         }
 
@@ -1779,6 +1983,42 @@ public class SalesRaw implements Serializable {
         private List<String> rightFuzzySecondPinDate;
 
         public List<String> getRightFuzzySecondPinDate(){return this.rightFuzzySecondPinDate;}
+        private List<String> mtocList;
+
+        public List<String> getMtocList(){return this.mtocList;}
+
+
+        private List<String> fuzzyMtoc;
+
+        public List<String> getFuzzyMtoc(){return this.fuzzyMtoc;}
+
+        private List<String> rightFuzzyMtoc;
+
+        public List<String> getRightFuzzyMtoc(){return this.rightFuzzyMtoc;}
+        private List<String> carTypeList;
+
+        public List<String> getCarTypeList(){return this.carTypeList;}
+
+
+        private List<String> fuzzyCarType;
+
+        public List<String> getFuzzyCarType(){return this.fuzzyCarType;}
+
+        private List<String> rightFuzzyCarType;
+
+        public List<String> getRightFuzzyCarType(){return this.rightFuzzyCarType;}
+        private List<String> transmissionCodeList;
+
+        public List<String> getTransmissionCodeList(){return this.transmissionCodeList;}
+
+
+        private List<String> fuzzyTransmissionCode;
+
+        public List<String> getFuzzyTransmissionCode(){return this.fuzzyTransmissionCode;}
+
+        private List<String> rightFuzzyTransmissionCode;
+
+        public List<String> getRightFuzzyTransmissionCode(){return this.rightFuzzyTransmissionCode;}
         private List<String> factoryCodeList;
 
         public List<String> getFactoryCodeList(){return this.factoryCodeList;}
@@ -2211,6 +2451,96 @@ public class SalesRaw implements Serializable {
 
         public ConditionBuilder secondPinDateList(List<String> secondPinDate){
             this.secondPinDateList = secondPinDate;
+            return this;
+        }
+
+        public ConditionBuilder fuzzyMtoc (List<String> fuzzyMtoc){
+            this.fuzzyMtoc = fuzzyMtoc;
+            return this;
+        }
+
+        public ConditionBuilder fuzzyMtoc (String ... fuzzyMtoc){
+            this.fuzzyMtoc = solveNullList(fuzzyMtoc);
+            return this;
+        }
+
+        public ConditionBuilder rightFuzzyMtoc (List<String> rightFuzzyMtoc){
+            this.rightFuzzyMtoc = rightFuzzyMtoc;
+            return this;
+        }
+
+        public ConditionBuilder rightFuzzyMtoc (String ... rightFuzzyMtoc){
+            this.rightFuzzyMtoc = solveNullList(rightFuzzyMtoc);
+            return this;
+        }
+
+        public ConditionBuilder mtocList(String ... mtoc){
+            this.mtocList = solveNullList(mtoc);
+            return this;
+        }
+
+        public ConditionBuilder mtocList(List<String> mtoc){
+            this.mtocList = mtoc;
+            return this;
+        }
+
+        public ConditionBuilder fuzzyCarType (List<String> fuzzyCarType){
+            this.fuzzyCarType = fuzzyCarType;
+            return this;
+        }
+
+        public ConditionBuilder fuzzyCarType (String ... fuzzyCarType){
+            this.fuzzyCarType = solveNullList(fuzzyCarType);
+            return this;
+        }
+
+        public ConditionBuilder rightFuzzyCarType (List<String> rightFuzzyCarType){
+            this.rightFuzzyCarType = rightFuzzyCarType;
+            return this;
+        }
+
+        public ConditionBuilder rightFuzzyCarType (String ... rightFuzzyCarType){
+            this.rightFuzzyCarType = solveNullList(rightFuzzyCarType);
+            return this;
+        }
+
+        public ConditionBuilder carTypeList(String ... carType){
+            this.carTypeList = solveNullList(carType);
+            return this;
+        }
+
+        public ConditionBuilder carTypeList(List<String> carType){
+            this.carTypeList = carType;
+            return this;
+        }
+
+        public ConditionBuilder fuzzyTransmissionCode (List<String> fuzzyTransmissionCode){
+            this.fuzzyTransmissionCode = fuzzyTransmissionCode;
+            return this;
+        }
+
+        public ConditionBuilder fuzzyTransmissionCode (String ... fuzzyTransmissionCode){
+            this.fuzzyTransmissionCode = solveNullList(fuzzyTransmissionCode);
+            return this;
+        }
+
+        public ConditionBuilder rightFuzzyTransmissionCode (List<String> rightFuzzyTransmissionCode){
+            this.rightFuzzyTransmissionCode = rightFuzzyTransmissionCode;
+            return this;
+        }
+
+        public ConditionBuilder rightFuzzyTransmissionCode (String ... rightFuzzyTransmissionCode){
+            this.rightFuzzyTransmissionCode = solveNullList(rightFuzzyTransmissionCode);
+            return this;
+        }
+
+        public ConditionBuilder transmissionCodeList(String ... transmissionCode){
+            this.transmissionCodeList = solveNullList(transmissionCode);
+            return this;
+        }
+
+        public ConditionBuilder transmissionCodeList(List<String> transmissionCode){
+            this.transmissionCodeList = transmissionCode;
             return this;
         }
 
@@ -2692,6 +3022,18 @@ public class SalesRaw implements Serializable {
         }
         public Builder secondPinDate(String secondPinDate){
             this.obj.setSecondPinDate(secondPinDate);
+            return this;
+        }
+        public Builder mtoc(String mtoc){
+            this.obj.setMtoc(mtoc);
+            return this;
+        }
+        public Builder carType(String carType){
+            this.obj.setCarType(carType);
+            return this;
+        }
+        public Builder transmissionCode(String transmissionCode){
+            this.obj.setTransmissionCode(transmissionCode);
             return this;
         }
         public Builder factoryCode(String factoryCode){
