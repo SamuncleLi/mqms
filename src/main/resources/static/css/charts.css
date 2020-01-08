@@ -2,15 +2,15 @@ label{
     margin: 2%;
 }
 .easyui-datebox{
-    width: 18%;
+    width: 15%;
     margin: 2%;
 }
 .easyui-combobox{
-    width: 18%;
+    width: 15%;
     margin: 2%;
 }
 .easyui-slider{
-    width: 18%;
+    width: 15%;
     margin: 2%;
 }
 .mqmscharts{
@@ -21,7 +21,7 @@ label{
 }
 .select-area{
     width: 98%;
-    height: 20%;
+    height: 8%;
     background-color: whitesmoke;
     margin-bottom: 1%;
     padding-top: 1%;

@@ -6,11 +6,11 @@ import java.util.Map;
 import java.util.List;
 /**
 *
-*  @author wangjian
+*  @author author
 */
 public class VoucherRaw implements Serializable {
 
-    private static final long serialVersionUID = 1578022807432L;
+    private static final long serialVersionUID = 1578464405030L;
 
 
     /**
@@ -22,7 +22,7 @@ public class VoucherRaw implements Serializable {
 
     /**
     * 单据编号
-    * isNullAble:1
+    * isNullAble:0
     */
     private String voucherCode;
 
@@ -88,7 +88,7 @@ public class VoucherRaw implements Serializable {
 
     /**
     * vin码
-    * isNullAble:0
+    * isNullAble:1
     */
     private String vinCode;
 

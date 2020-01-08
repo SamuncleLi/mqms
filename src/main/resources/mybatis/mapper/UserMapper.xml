@@ -17,9 +17,7 @@
 </resultMap>
 
     <select id="queryUserLimit1" parameterType="java.lang.Integer" resultMap="User">
-        SELECT u.menberId,u.menberNo,u.menberName,u.division,u.department,u.phone,u.email,r.id,r.name FROM sgopdb.sheet1 u
-        LEFT JOIN wms_role_user sru on u.menberId= sru.user_id
-        LEFT JOIN wms_role r on sru.role_id=r.id
+        SELECT u.menberId,u.menberNo,u.menberName,u.division,u.department,u.phone,u.email FROM sgopdb.sheet1 u
         <where>
             menberId = #{menberId}
         </where>
