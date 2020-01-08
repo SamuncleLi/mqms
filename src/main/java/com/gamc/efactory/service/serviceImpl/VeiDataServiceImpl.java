@@ -80,12 +80,12 @@ public class VeiDataServiceImpl implements VeiDataService {
 
                     int salesFailureMonths= MqmsUnit.getMonth(voucherRawCreate.getSalesDate(),voucherRawCreate.getFailureDate());
                     int offlineFailureMonths=MqmsUnit.getMonth(voucherRawCreate.getOfflineDate(),voucherRawCreate.getConfirmDate());
-                    voucherRawCreate.setSalesFailureTime(Integer.toString(salesFailureMonths));
-                    voucherRawCreate.setOfflineFailureTime(Integer.toString(offlineFailureMonths));
-                    voucherRawCreate.setMileageDistribution(RangeResultUtil.rangeResult(voucherRawCreate.getMileage(),5000,100000));
-                    String[] dateTime=voucherRawCreate.getFailureDate().split("-");
-                    voucherRawCreate.setFailureYear(dateTime[0]);
-                    voucherRawCreate.setFailureMonth(dateTime[1]);
+//                    voucherRawCreate.setSalesFailureTime(Integer.toString(salesFailureMonths));
+//                    voucherRawCreate.setOfflineFailureTime(Integer.toString(offlineFailureMonths));
+//                    voucherRawCreate.setMileageDistribution(RangeResultUtil.rangeResult(voucherRawCreate.getMileage(),5000,100000));
+//                    String[] dateTime=voucherRawCreate.getFailureDate().split("-");
+//                    voucherRawCreate.setFailureYear(dateTime[0]);
+//                    voucherRawCreate.setFailureMonth(dateTime[1]);
                     Map<String, String> map = new HashMap();
                     map=MqmsUnit.getWeekDate(voucherRawCreate.getUpdateTime());
                     voucherRawCreate.setUpdateTime(map.get("weekBegin")+"~"+map.get("weekBegin"));

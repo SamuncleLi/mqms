@@ -29,4 +29,10 @@ public class VoucherController {
         String table = "voucher";
         return multiFilterService.multiFilterQuery(table,condition,page,rows);
     }
+
+    @RequestMapping("/list")
+    public JSONObject voucherList(){
+        JSONObject result = new JSONObject();
+        return result;
+    }
 }

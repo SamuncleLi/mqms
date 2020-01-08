@@ -2,9 +2,9 @@ package com.gamc.efactory.service.serviceImpl;
 
 
 import com.gamc.efactory.dao.SalesRawMapper;
-import com.gamc.efactory.dao.salesMapper;
+import com.gamc.efactory.dao.SalesRawCreateMapper;
 import com.gamc.efactory.model.dataObject.SalesRaw;
-import com.gamc.efactory.model.dataObject.sales;
+import com.gamc.efactory.model.dataObject.SalesRawCreate;
 import com.gamc.efactory.service.SalesService;
 import com.gamc.efactory.util.ExcelUtil;
 import org.slf4j.Logger;
@@ -25,7 +25,7 @@ import java.util.List;
 @Service
 public class SalesServiceImpl implements SalesService {
     @Autowired
-    private salesMapper salesMapper;
+    private SalesRawCreateMapper salesMapper;
     @Autowired
     private SalesRawMapper salesRawMapper;
     Logger logger = LoggerFactory.getLogger(SalesServiceImpl.class);
@@ -33,7 +33,7 @@ public class SalesServiceImpl implements SalesService {
     public boolean batchImport(String fileName, MultipartFile file) {
         try {
             if (fileName.endsWith(".xlsx")) {
-                List<sales> salesList = new ArrayList<>();
+                List<SalesRawCreate> salesList = new ArrayList<>();
                 List<SalesRaw> salesRawList= new ArrayList<>();
                 // 说明是xlsx文件,不过这里最好限制一下
                 List<List<String>> result = ExcelUtil.importXlsx(file.getInputStream());
@@ -42,7 +42,7 @@ public class SalesServiceImpl implements SalesService {
                     List<String> rowData = result.get(i);
 
                     //利用反射遍历对属性赋值
-                    sales sales = new sales();
+                    SalesRawCreate sales = new SalesRawCreate();
                     Class cls = sales.getClass();
                     Field[] fields = cls.getDeclaredFields();
                     for (int j = 2; j < fields.length; j++) {
@@ -82,8 +82,8 @@ public class SalesServiceImpl implements SalesService {
                     salesRawList.add(salesRaw);
 
                 }
-                for (sales salesRecord : salesList) {
-                    salesMapper.insertsales(salesRecord);
+                for (SalesRawCreate salesRecord : salesList) {
+                    salesMapper.insertSalesRawCreate(salesRecord);
                 }
                     for (SalesRaw salesRawRecord : salesRawList) {
                         salesRawMapper.insertSalesRaw(salesRawRecord);
