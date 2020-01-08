@@ -134,4 +134,16 @@ public class ViewController {
         return "voucher";
     }
 
+    @RequestMapping(value = "charts_eng_failure_rate")
+    public String charts_eng_failure_rateView(){
+        return "charts_eng_failure_rate";
+    }
+
+    @RequestMapping(value = "charts_tran_failure_rate")
+    public String charts_tran_failure_rateView(){
+        return "charts_tran_failure_rate";
+    }
+
+
+
 }

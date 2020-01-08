@@ -224,7 +224,7 @@
         var condiction=$("#result2")[0].innerHTML;
         //动态加载数据
         $("#dg2").datagrid({
-            url: 'qc?action=qc_tablerecord_single&s_devicename='+$('#s_device_name').combobox('getText')+'&s_linename='+$('#s_linename').combobox('getText')+'&s_condiction='+condiction,
+            url: '/mqms/voucher/list',
             method: 'POST',
             toolbar:'#tb2',
             contentType: "application/json",
