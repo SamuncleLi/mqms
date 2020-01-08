@@ -19,7 +19,7 @@ SET FOREIGN_KEY_CHECKS=0;
 -- Table structure for breakdown
 -- ----------------------------
 DROP TABLE IF EXISTS `breakdown`;
-CREATE TABLE `breakdown` (
+CREATE TABLE `mqms_breakdown` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `parts_code` varchar(255) DEFAULT NULL,
   `parts_name` varchar(255) DEFAULT NULL,

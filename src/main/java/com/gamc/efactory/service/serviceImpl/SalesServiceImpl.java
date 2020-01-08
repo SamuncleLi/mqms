@@ -1,10 +1,14 @@
 package com.gamc.efactory.service.serviceImpl;
 
 
+import com.gamc.efactory.dao.MqmsSalesMapper;
+import com.gamc.efactory.dao.MqmsSalesRawMapper;
 import com.gamc.efactory.dao.SalesRawMapper;
-import com.gamc.efactory.dao.SalesRawCreateMapper;
+import com.gamc.efactory.dao.salesMapper;
+import com.gamc.efactory.model.dataObject.MqmsSales;
+import com.gamc.efactory.model.dataObject.MqmsSalesRaw;
 import com.gamc.efactory.model.dataObject.SalesRaw;
-import com.gamc.efactory.model.dataObject.SalesRawCreate;
+import com.gamc.efactory.model.dataObject.sales;
 import com.gamc.efactory.service.SalesService;
 import com.gamc.efactory.util.ExcelUtil;
 import org.slf4j.Logger;
@@ -25,16 +29,16 @@ import java.util.List;
 @Service
 public class SalesServiceImpl implements SalesService {
     @Autowired
-    private SalesRawCreateMapper salesMapper;
+    private MqmsSalesRawMapper mqmsSalesRawMapper;
     @Autowired
-    private SalesRawMapper salesRawMapper;
+    private MqmsSalesMapper mqmsSalesMapper;
     Logger logger = LoggerFactory.getLogger(SalesServiceImpl.class);
 
     public boolean batchImport(String fileName, MultipartFile file) {
         try {
             if (fileName.endsWith(".xlsx")) {
-                List<SalesRawCreate> salesList = new ArrayList<>();
-                List<SalesRaw> salesRawList= new ArrayList<>();
+                List<MqmsSalesRaw> mqmsSalesRawList = new ArrayList<>();
+                List<MqmsSales> mqmsSalesList= new ArrayList<>();
                 // 说明是xlsx文件,不过这里最好限制一下
                 List<List<String>> result = ExcelUtil.importXlsx(file.getInputStream());
                 //第0行为表头
@@ -42,17 +46,17 @@ public class SalesServiceImpl implements SalesService {
                     List<String> rowData = result.get(i);
 
                     //利用反射遍历对属性赋值
-                    SalesRawCreate sales = new SalesRawCreate();
-                    Class cls = sales.getClass();
+                    MqmsSalesRaw mqmsSalesRaw = new MqmsSalesRaw();
+                    Class cls = mqmsSalesRaw.getClass();
                     Field[] fields = cls.getDeclaredFields();
                     for (int j = 2; j < fields.length; j++) {
                         Field f = fields[j];
                         f.setAccessible(true);
                         if (f.getType().equals(String.class)) {
-                            f.set(sales, rowData.get(j - 2));
+                            f.set(mqmsSalesRaw, rowData.get(j - 2));
                         } else if (f.getType().equals(BigDecimal.class)) {
 
-                            f.set(sales, new BigDecimal(rowData.get(j - 2)));
+                            f.set(mqmsSalesRaw, new BigDecimal(rowData.get(j - 2)));
                         } else if (f.getType().equals(Integer.class)) {
                             //来自前面的坑，EXCEL导出整数变成字符多了小数点，例2838(Int),2838.0(String
                             String str = rowData.get(j - 2);
@@ -60,33 +64,33 @@ public class SalesServiceImpl implements SalesService {
                                 int indexOf = str.indexOf(".");
                                 str = str.substring(0, indexOf);
                             }
-                            f.set(sales, Integer.parseInt(str));
+                            f.set(mqmsSalesRaw, Integer.parseInt(str));
                         }
                     }
-                    salesList.add(sales);
-                    //相同属性复制，避免重复性Get/Set
-                    SalesRaw salesRaw = new SalesRaw();
-                    BeanUtils.copyProperties(sales, salesRaw);
+                    mqmsSalesRawList.add(mqmsSalesRaw);
+                    //相同属性复制
+                    MqmsSales mqmsSales = new MqmsSales();
+                    BeanUtils.copyProperties(mqmsSalesRaw, mqmsSales);
                     String factoryCode="";
-                    if(salesRaw.getVinCode().length()<=3)
+                    if(mqmsSales.getVinCode().length()<=3)
                     {
-                        factoryCode=salesRaw.getVinCode().toString();
+                        factoryCode=mqmsSales.getVinCode().toString();
                     }
                     else {
-                        factoryCode = salesRaw.getVinCode().substring(0, 3);
+                        factoryCode = mqmsSales.getVinCode().substring(0, 3);
                     }
-                    salesRaw.setFactoryCode(factoryCode);
-                    String[] dateTime=salesRaw.getSecondPinDate().split("-");
-                    salesRaw.setSalesYear(dateTime[0]);
-                    salesRaw.setSalesMonth(dateTime[1]);
-                    salesRawList.add(salesRaw);
+                    mqmsSales.setFactoryCode(factoryCode);
+                    String[] dateTime=mqmsSales.getSecondPinDate().split("-");
+                    mqmsSales.setSalesYear(dateTime[0]);
+                    mqmsSales.setSalesMonth(dateTime[1]);
+                    mqmsSalesList.add(mqmsSales);
 
                 }
-                for (SalesRawCreate salesRecord : salesList) {
-                    salesMapper.insertSalesRawCreate(salesRecord);
+                for (MqmsSalesRaw mqmsSalesRawRecord : mqmsSalesRawList) {
+                    mqmsSalesRawMapper.insertMqmsSalesRaw(mqmsSalesRawRecord);
                 }
-                    for (SalesRaw salesRawRecord : salesRawList) {
-                        salesRawMapper.insertSalesRaw(salesRawRecord);
+                    for (MqmsSales mqmsSalesRecord : mqmsSalesList) {
+                        mqmsSalesMapper.insertMqmsSales(mqmsSalesRecord);
                     }
                 }
                 return true;

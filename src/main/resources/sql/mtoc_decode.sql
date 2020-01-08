@@ -19,7 +19,7 @@ SET FOREIGN_KEY_CHECKS=0;
 -- Table structure for mtoc_decode
 -- ----------------------------
 DROP TABLE IF EXISTS `mtoc_decode`;
-CREATE TABLE `mtoc_decode` (
+CREATE TABLE `mqms_mtoc_decode` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `mtoc_type` varchar(255) DEFAULT NULL COMMENT '解码类型',
   `mtoc_source` varchar(255) DEFAULT NULL COMMENT 'mtoc原码',

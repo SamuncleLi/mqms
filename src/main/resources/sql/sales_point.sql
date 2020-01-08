@@ -19,7 +19,7 @@ SET FOREIGN_KEY_CHECKS=0;
 -- Table structure for sales_point
 -- ----------------------------
 DROP TABLE IF EXISTS `sales_point`;
-CREATE TABLE `sales_point` (
+CREATE TABLE `mqms_sales_point` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `sales_point_code` varchar(255) DEFAULT NULL COMMENT '销售点代码',
   `sales_point_area` varchar(255) DEFAULT NULL COMMENT '销售区域',

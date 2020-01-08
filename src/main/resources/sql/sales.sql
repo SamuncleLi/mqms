@@ -18,7 +18,7 @@ SET FOREIGN_KEY_CHECKS=0;
 -- ----------------------------
 -- Table structure for sales_raw
 -- ----------------------------
-DROP TABLE IF EXISTS `sales_raw`;
+DROP TABLE IF EXISTS `mqms_sales_raw`;
 CREATE TABLE `sales` (
   `sales_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '销售数据id',
   `vin_code` varchar(255) DEFAULT NULL COMMENT 'vin码',

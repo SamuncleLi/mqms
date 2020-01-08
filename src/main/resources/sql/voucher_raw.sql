@@ -19,7 +19,7 @@ SET FOREIGN_KEY_CHECKS=0;
 -- Table structure for voucher_raw
 -- ----------------------------
 DROP TABLE IF EXISTS `voucher_raw`;
-CREATE TABLE `voucher_raw` (
+CREATE TABLE `mqms_voucher_raw` (
   `voucher_id` int(11) NOT NULL AUTO_INCREMENT,
   `voucher_code` varchar(255) NOT NULL COMMENT '单据编号',
   `dealer_code` varchar(255) DEFAULT NULL COMMENT '经销商代码',
