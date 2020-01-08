@@ -10,7 +10,7 @@ import java.util.List;
 */
 public class EngType implements Serializable {
 
-    private static final long serialVersionUID = 1578465060259L;
+    private static final long serialVersionUID = 1578469159488L;
 
 
     /**

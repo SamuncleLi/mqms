@@ -3,12 +3,9 @@ package com.gamc.efactory.service.serviceImpl;
 
 import com.gamc.efactory.dao.MqmsSalesMapper;
 import com.gamc.efactory.dao.MqmsSalesRawMapper;
-import com.gamc.efactory.dao.SalesRawMapper;
-import com.gamc.efactory.dao.salesMapper;
+
 import com.gamc.efactory.model.dataObject.MqmsSales;
 import com.gamc.efactory.model.dataObject.MqmsSalesRaw;
-import com.gamc.efactory.model.dataObject.SalesRaw;
-import com.gamc.efactory.model.dataObject.sales;
 import com.gamc.efactory.service.SalesService;
 import com.gamc.efactory.util.ExcelUtil;
 import org.slf4j.Logger;
