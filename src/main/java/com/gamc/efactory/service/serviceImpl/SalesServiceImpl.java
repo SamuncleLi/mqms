@@ -68,7 +68,7 @@ public class SalesServiceImpl implements SalesService {
                         }
                     }
                     mqmsSalesRawList.add(mqmsSalesRaw);
-                    //相同属性复制，避免重复性Get/Set
+                    //相同属性复制
                     MqmsSales mqmsSales = new MqmsSales();
                     BeanUtils.copyProperties(mqmsSalesRaw, mqmsSales);
                     String factoryCode="";
