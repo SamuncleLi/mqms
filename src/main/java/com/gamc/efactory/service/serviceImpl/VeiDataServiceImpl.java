@@ -2,8 +2,12 @@ package com.gamc.efactory.service.serviceImpl;
 
 import com.fasterxml.jackson.databind.util.BeanUtil;
 import com.gamc.efactory.controller.WarehousingController;
+import com.gamc.efactory.dao.MqmsVoucherMapper;
+import com.gamc.efactory.dao.MqmsVoucherRawMapper;
 import com.gamc.efactory.dao.VoucherRawCreateMapper;
 import com.gamc.efactory.dao.VoucherRawMapper;
+import com.gamc.efactory.model.dataObject.MqmsVoucher;
+import com.gamc.efactory.model.dataObject.MqmsVoucherRaw;
 import com.gamc.efactory.model.dataObject.VoucherRaw;
 import com.gamc.efactory.model.dataObject.VoucherRawCreate;
 import com.gamc.efactory.service.VeiDataService;
@@ -33,15 +37,15 @@ import java.util.Map;
 @Service
 public class VeiDataServiceImpl implements VeiDataService {
     @Autowired
-    private VoucherRawMapper voucherRawMapper;
+    private MqmsVoucherRawMapper mqmsVoucherRawMapper;
     @Autowired
-    private VoucherRawCreateMapper voucherRawCreateMapper;
+    private MqmsVoucherMapper mqmsVoucherMapper;
     Logger logger = LoggerFactory.getLogger(VeiDataServiceImpl.class);
     public boolean batchImport(String fileName, MultipartFile file){
         try{
             if (fileName.endsWith(".xlsx")) {
-                List<VoucherRaw> voucherRawList = new ArrayList<>();
-                List<VoucherRawCreate> voucherRawCreateList = new ArrayList<>();
+                List<MqmsVoucherRaw> mqmsVoucherRawList = new ArrayList<>();
+                List<MqmsVoucher> mqmsVoucherList = new ArrayList<>();
                 // 说明是xlsx文件,不过这里最好限制一下
                 List<List<String>> result = ExcelUtil.importXlsx(file.getInputStream());
                 //第0行为表头
@@ -49,18 +53,18 @@ public class VeiDataServiceImpl implements VeiDataService {
                     List<String> rowData = result.get(i);
 
                     //利用反射遍历对属性赋值
-                    VoucherRaw voucherRaw = new VoucherRaw();
-                    Class cls = voucherRaw.getClass();
+                    MqmsVoucherRaw mqmsVoucherRaw = new MqmsVoucherRaw();
+                    Class cls = mqmsVoucherRaw.getClass();
                     Field[] fields = cls.getDeclaredFields();
                     for(int j=2;j<fields.length;j++){
                         Field f = fields[j];
                         f.setAccessible(true);
                         if(f.getType().equals(String.class)){
-                            f.set(voucherRaw, rowData.get(j-2));
+                            f.set(mqmsVoucherRaw, rowData.get(j-2));
                         }
                         else if(f.getType().equals(BigDecimal.class)){
 
-                            f.set(voucherRaw, new BigDecimal(rowData.get(j-2)));
+                            f.set(mqmsVoucherRaw, new BigDecimal(rowData.get(j-2)));
                         }
                         else if(f.getType().equals(Integer.class)){
                             //来自前面的坑，EXCEL导出整数变成字符多了小数点，例2838(Int),2838.0(String)
@@ -69,34 +73,34 @@ public class VeiDataServiceImpl implements VeiDataService {
                                 int indexOf = str.indexOf(".");
                                 str = str.substring(0, indexOf);
                             }
-                            f.set(voucherRaw, Integer.parseInt(str));
-                            System.out.println("属性名:" + f.getName() + " 属性值:" + f.get(voucherRaw));
+                            f.set(mqmsVoucherRaw, Integer.parseInt(str));
+//                            System.out.println("属性名:" + f.getName() + " 属性值:" + f.get(mqmsVoucherRaw));
                         }
                     }
-                    voucherRawList.add(voucherRaw);
+                    mqmsVoucherRawList.add(mqmsVoucherRaw);
                     //相同属性复制，避免重复性Get/Set
-                    VoucherRawCreate voucherRawCreate = new VoucherRawCreate();
-                    BeanUtils.copyProperties(voucherRaw,voucherRawCreate);
+                    MqmsVoucher mqmsVoucher = new MqmsVoucher();
+                    BeanUtils.copyProperties(mqmsVoucherRaw,mqmsVoucher);
 
-                    int salesFailureMonths= MqmsUnit.getMonth(voucherRawCreate.getSalesDate(),voucherRawCreate.getFailureDate());
-                    int offlineFailureMonths=MqmsUnit.getMonth(voucherRawCreate.getOfflineDate(),voucherRawCreate.getConfirmDate());
-                    voucherRawCreate.setSalesFailureTime(Integer.toString(salesFailureMonths));
-                    voucherRawCreate.setOfflineFailureTime(Integer.toString(offlineFailureMonths));
-                    voucherRawCreate.setMileageDistribution(RangeResultUtil.rangeResult(voucherRawCreate.getMileage(),5000,100000));
-                    String[] dateTime=voucherRawCreate.getFailureDate().split("-");
-                    voucherRawCreate.setFailureYear(dateTime[0]);
-                    voucherRawCreate.setFailureMonth(dateTime[1]);
+                    int salesFailureMonths= MqmsUnit.getMonth(mqmsVoucher.getSalesDate(),mqmsVoucher.getFailureDate());
+                    int offlineFailureMonths=MqmsUnit.getMonth(mqmsVoucher.getOfflineDate(),mqmsVoucher.getConfirmDate());
+                    mqmsVoucher.setSalesFailureTime(Integer.toString(salesFailureMonths));
+                    mqmsVoucher.setOfflineFailureTime(Integer.toString(offlineFailureMonths));
+                    mqmsVoucher.setMileageDistribution(RangeResultUtil.rangeResult(mqmsVoucher.getMileage(),5000,100000));
+                    String[] dateTime=mqmsVoucher.getFailureDate().split("-");
+                    mqmsVoucher.setFailureYear(dateTime[0]);
+                    mqmsVoucher.setFailureMonth(dateTime[1]);
                     Map<String, String> map = new HashMap();
-                    map=MqmsUnit.getWeekDate(voucherRawCreate.getUpdateTime());
-                    voucherRawCreate.setUpdateTime(map.get("weekBegin")+"~"+map.get("weekBegin"));
-                    voucherRawCreateList.add(voucherRawCreate);
+                    map=MqmsUnit.getWeekDate(mqmsVoucher.getUpdateTime());
+                    mqmsVoucher.setUpdateTime(map.get("weekBegin")+"~"+map.get("weekBegin"));
+                    mqmsVoucherList.add(mqmsVoucher);
 
                 }
-                for(VoucherRaw voucherRawRecord:voucherRawList){
-                    voucherRawMapper.insertVoucherRaw(voucherRawRecord);
+                    for(MqmsVoucherRaw mqmsVoucherRawRecord:mqmsVoucherRawList){
+                    mqmsVoucherRawMapper.insertMqmsVoucherRaw(mqmsVoucherRawRecord);
                 }
-                for(VoucherRawCreate voucherRawCreateRecord:voucherRawCreateList){
-                    voucherRawCreateMapper.insertVoucherRawCreate(voucherRawCreateRecord);
+                for(MqmsVoucher mqmsVoucherRecord:mqmsVoucherList){
+                    mqmsVoucherMapper.insertMqmsVoucher(mqmsVoucherRecord);
                 }
 
 

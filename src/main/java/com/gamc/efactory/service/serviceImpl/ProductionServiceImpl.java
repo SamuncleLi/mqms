@@ -1,13 +1,7 @@
 package com.gamc.efactory.service.serviceImpl;
 
-import com.gamc.efactory.dao.ProductionRawCreateMapper;
-import com.gamc.efactory.dao.ProductionRawMapper;
-import com.gamc.efactory.dao.VoucherRawCreateMapper;
-import com.gamc.efactory.dao.VoucherRawMapper;
-import com.gamc.efactory.model.dataObject.ProductionRaw;
-import com.gamc.efactory.model.dataObject.ProductionRawCreate;
-import com.gamc.efactory.model.dataObject.VoucherRaw;
-import com.gamc.efactory.model.dataObject.VoucherRawCreate;
+import com.gamc.efactory.dao.*;
+import com.gamc.efactory.model.dataObject.*;
 import com.gamc.efactory.service.ProductionService;
 import com.gamc.efactory.service.VeiDataService;
 import com.gamc.efactory.util.AttDateUtil;
@@ -33,16 +27,16 @@ import java.util.Map;
 @Service
 public class ProductionServiceImpl implements ProductionService {
     @Autowired
-    private ProductionRawMapper productionRawMapper;
+    private MqmsProductionRawMapper mqmsProductionRawMapper;
     @Autowired
-    private ProductionRawCreateMapper productionRawCreateMapper;
+    private MqmsProductionMapper mqmsProductionMapper;
     Logger logger = LoggerFactory.getLogger(ProductionServiceImpl.class);
 
     public boolean batchImport(String fileName, MultipartFile file) {
         try {
             if (fileName.endsWith(".xlsx")) {
-                List<ProductionRaw> productionRawList = new ArrayList<>();
-                List<ProductionRawCreate> productionRawCreateList = new ArrayList<>();
+                List<MqmsProductionRaw> mqmsProductionRawList = new ArrayList<>();
+                List<MqmsProduction> mqmsProductionList = new ArrayList<>();
                 // 说明是xlsx文件,不过这里最好限制一下
                 List<List<String>> result = ExcelUtil.importXlsx(file.getInputStream());
                 //第0行为表头
@@ -50,17 +44,17 @@ public class ProductionServiceImpl implements ProductionService {
                     List<String> rowData = result.get(i);
 
                     //利用反射遍历对属性赋值
-                    ProductionRaw productionRaw = new ProductionRaw();
-                    Class cls = productionRaw.getClass();
+                    MqmsProductionRaw mqmsProductionRaw = new MqmsProductionRaw();
+                    Class cls = mqmsProductionRaw.getClass();
                     Field[] fields = cls.getDeclaredFields();
                     for (int j = 2; j < fields.length; j++) {
                         Field f = fields[j];
                         f.setAccessible(true);
                         if (f.getType().equals(String.class)) {
-                            f.set(productionRaw, rowData.get(j - 2));
+                            f.set(mqmsProductionRaw, rowData.get(j - 2));
                         } else if (f.getType().equals(BigDecimal.class)) {
 
-                            f.set(productionRaw, new BigDecimal(rowData.get(j - 2)));
+                            f.set(mqmsProductionRaw, new BigDecimal(rowData.get(j - 2)));
                         } else if (f.getType().equals(Integer.class)) {
                             //来自前面的坑，EXCEL导出整数变成字符多了小数点，例2838(Int),2838.0(String
                             String str = rowData.get(j - 2);
@@ -68,30 +62,30 @@ public class ProductionServiceImpl implements ProductionService {
                                 int indexOf = str.indexOf(".");
                                 str = str.substring(0, indexOf);
                             }
-                            f.set(productionRaw, Integer.parseInt(str));
+                            f.set(mqmsProductionRaw, Integer.parseInt(str));
                         }
                     }
-                    productionRawList.add(productionRaw);
+                    mqmsProductionRawList.add(mqmsProductionRaw);
                     //相同属性复制，避免重复性Get/Set
-                    ProductionRawCreate productionRawCreate = new ProductionRawCreate();
-                    BeanUtils.copyProperties(productionRaw, productionRawCreate);
+                    MqmsProduction mqmsProduction = new MqmsProduction();
+                    BeanUtils.copyProperties(mqmsProductionRaw, mqmsProduction);
                     String shortCode="";
-                    if(productionRawCreate.getVin().length()<=5)
+                    if(mqmsProduction.getVin().length()<=5)
                     {
-                        shortCode=productionRawCreate.getVin().toString();
+                        shortCode=mqmsProduction.getVin().toString();
                     }
                     else {
-                        shortCode = productionRawCreate.getVin().substring(0, 5);
+                        shortCode = mqmsProduction.getVin().substring(0, 5);
                     }
-                    productionRawCreate.setShortCode(shortCode);
-                    productionRawCreateList.add(productionRawCreate);
+                    mqmsProduction.setShortCode(shortCode);
+                    mqmsProductionList.add(mqmsProduction);
 
                 }
-                for (ProductionRaw productionRawRecord : productionRawList) {
-                    productionRawMapper.insertProductionRaw(productionRawRecord);
+                for (MqmsProductionRaw mqmsProductionRawRecord : mqmsProductionRawList) {
+                    mqmsProductionRawMapper.insertMqmsProductionRaw(mqmsProductionRawRecord);
                 }
-                    for (ProductionRawCreate productionRawCreateRecord : productionRawCreateList) {
-                        productionRawCreateMapper.insertProductionRawCreate(productionRawCreateRecord);
+                    for (MqmsProduction mqmsProductionRecord : mqmsProductionList) {
+                        mqmsProductionMapper.insertMqmsProduction(mqmsProductionRecord);
                     }
 
 

@@ -18,7 +18,7 @@ SET FOREIGN_KEY_CHECKS=0;
 -- ----------------------------
 -- Table structure for failure_report_raw
 -- ----------------------------
-DROP TABLE IF EXISTS `failure_report_raw`;
+DROP TABLE IF EXISTS `mqms_failure_report_raw`;
 CREATE TABLE `failure_report_raw` (
   `voucher_id` int(11) NOT NULL AUTO_INCREMENT,
   `voucher_code` varchar(255) DEFAULT NULL,

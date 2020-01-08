@@ -19,7 +19,7 @@ SET FOREIGN_KEY_CHECKS=0;
 -- Table structure for production_raw
 -- ----------------------------
 DROP TABLE IF EXISTS `production_raw`;
-CREATE TABLE `production` (
+CREATE TABLE `mqms_production` (
   `production_id` int(11) NOT NULL AUTO_INCREMENT,
   `factory_code` varchar(255) DEFAULT NULL,
   `production_batch` varchar(255) DEFAULT NULL,
