@@ -15,9 +15,9 @@
 </head>
 <body>
 <div title="选择区" data-options="region:'north',split:false,border:false" class="select-area">
-    <div id="yearAndMonth" title="选择起始月" class="easyui-combobox"></div>
-    <div id="timeSpan" title="选择时间跨度" class="easyui-combobox"></div>
-    <div id="engType" title="机型选择" class="easyui-combobox"></div>
+    <label for="yearAndMonth">起始月份</label><input id="yearAndMonth" class="easyui-datebox">
+    <label for="timeSpan">时间跨度/月</label><input id="timeSpan" class="easyui-numberspinner" value="12">
+    <label for="engType">机型</label><input id="engType" class="easyui-combobox liselectoptions">
 </div>
 
 <div title="图表区" data-options="region:'south',split:false,border:false" class="charts-area">
@@ -30,11 +30,117 @@
 <script type="text/javascript">
 
     $(function () {
+        //多选框
+        $('#financialCenterCode').combobox({
+            url:'/mqms/engType/listInArray',
+            textField:'engType',
+            valueField:'engType',
+            multiple:true
+        })
+
+        //年月选择控件
+        $('#yearAndMonth').datebox({
+            onShowPanel: function () {// 显示日趋选择对象后再触发弹出月份层的事件，初始化时没有生成月份层
+                span.trigger('click'); // 触发click事件弹出月份层
+                if (!tds)
+                    setTimeout(function () {// 延时触发获取月份对象，因为上面的事件触发和对象生成有时间间隔
+                        tds = p.find('div.calendar-menu-month-inner td');
+                        tds.click(function (e) {
+                            e.stopPropagation(); // 禁止冒泡执行easyui给月份绑定的事件
+                            var year = /\d{4}/.exec(span.html())[0]// 得到年份
+                                , month = parseInt($(this).attr('abbr'), 10) + 1; // 月份
+                            $('#yearAndMonth').datebox('hidePanel')// 隐藏日期对象
+                                .datebox('setValue', year + '-' + month); // 设置日期的值
+                        });
+                    }, 0);
+            },
+            parser: function (s) {// 配置parser，返回选择的日期
+                if (!s)
+                    return new Date();
+                var arr = s.split('-');
+                return new Date(parseInt(arr[0], 10), parseInt(arr[1], 10) - 1, 1);
+            },
+            formatter: function (d) {
+                var month = d.getMonth();
+                if (month < 10) {
+                    month = "0" + month;
+                }
+                if (d.getMonth() == 0) {
+                    return d.getFullYear() - 1 + '-' + 12;
+                } else {
+                    return d.getFullYear() + '-' + month;
+                }
+            }// 配置formatter，只返回年月
+        });
+        var p = $('#yearAndMonth').datebox('panel'), // 日期选择对象
+            tds = false, // 日期选择对象中月份
+            span = p.find('span.calendar-text'); // 显示月份层的触发控件
+        //初始化年月选择器
+        var date = new Date();
+        var stryear = date.getFullYear();
+        var strmonth = date.getMonth() + 2;
+        var strYM = stryear + '-' + (strmonth.toString().length < 2 ? '0' + strmonth : strmonth);
+        $('#yearAndMonth').datebox('setValue', strYM);
+
+        $('#yearAndMonth_top10').datebox({
+            onShowPanel: function () {// 显示日趋选择对象后再触发弹出月份层的事件，初始化时没有生成月份层
+                span.trigger('click'); // 触发click事件弹出月份层
+                if (!tds)
+                    setTimeout(function () {// 延时触发获取月份对象，因为上面的事件触发和对象生成有时间间隔
+                        tds = p.find('div.calendar-menu-month-inner td');
+                        tds.click(function (e) {
+                            e.stopPropagation(); // 禁止冒泡执行easyui给月份绑定的事件
+                            var year = /\d{4}/.exec(span.html())[0]// 得到年份
+                                , month = parseInt($(this).attr('abbr'), 10) + 1; // 月份
+                            $('#yearAndMonth_top10').datebox('hidePanel')// 隐藏日期对象
+                                .datebox('setValue', year + '-' + month); // 设置日期的值
+                        });
+                    }, 0);
+            },
+            parser: function (s) {// 配置parser，返回选择的日期
+                if (!s)
+                    return new Date();
+                var arr = s.split('-');
+                return new Date(parseInt(arr[0], 10), parseInt(arr[1], 10) - 1, 1);
+            },
+            formatter: function (d) {
+                var month = d.getMonth();
+                if (month < 10) {
+                    month = "0" + month;
+                }
+                if (d.getMonth() == 0) {
+                    return d.getFullYear() - 1 + '-' + 12;
+                } else {
+                    return d.getFullYear() + '-' + month;
+                }
+            }// 配置formatter，只返回年月
+        });
+        var p = $('#yearAndMonth').datebox('panel'), // 日期选择对象
+            tds = false, // 日期选择对象中月份
+            span = p.find('span.calendar-text'); // 显示月份层的触发控件
+        //初始化年月选择器
+        var date = new Date();
+        var stryear = date.getFullYear();
+        var strmonth = date.getMonth() + 2;
+        var strYM = stryear + '-' + (strmonth.toString().length < 2 ? '0' + strmonth : strmonth);
+        $('#yearAndMonth').datebox('setValue', strYM);
+
+    })
+
+    //绘制图表
+    $(function () {
         charts_1 = echarts.init(document.getElementById('charts_1'));
         charts_2 = echarts.init(document.getElementById('charts_2'));
         charts_3 = echarts.init(document.getElementById('charts_3'));
         charts_4 = echarts.init(document.getElementById('charts_4'));
         var option = {
+            toolbox: {
+                feature: {
+                    dataView: {show: true, readOnly: false},
+                    restore: {show: true},
+                    saveAsImage: {show: true}
+                }
+            },
             legend: {},
             tooltip: {
                 trigger: 'axis',
@@ -42,21 +148,20 @@
             },
             dataset: {
                 source: [
-                    ['product', '2012', '2013', '2014', '2015', '2016', '2017'],
-                    ['Matcha Latte', 41.1, 30.4, 65.1, 53.3, 83.8, 98.7],
-                    ['Milk Tea', 86.5, 92.1, 85.7, 83.1, 73.4, 55.1],
-                    ['Cheese Cocoa', 24.1, 67.2, 79.5, 86.4, 65.2, 82.5],
-                    ['Walnut Brownie', 55.2, 67.1, 69.2, 72.4, 53.9, 39.1]
+                    ['机型', '2012', '2013', '2014', '2015', '2016', '2017'],
+                    ['151', 41.1, 30.4, 65.1, 53.3, 83.8, 98.7],
+                    ['153', 86.5, 92.1, 85.7, 83.1, 73.4, 55.1],
+                    ['131', 24.1, 67.2, 79.5, 86.4, 65.2, 82.5],
+                    ['204', 55.2, 67.1, 69.2, 72.4, 53.9, 39.1]
                 ]
             },
             xAxis: {type: 'category'},
-            yAxis: {gridIndex: 0},
-            grid: {right: '25%'},
+            yAxis: {
+                name: '台',
+                gridIndex: 0
+            },
+            grid: {left:'5%', right: '30%'},
             series: [
-                {type: 'line', smooth: true, seriesLayoutBy: 'row'},
-                {type: 'line', smooth: true, seriesLayoutBy: 'row'},
-                {type: 'line', smooth: true, seriesLayoutBy: 'row'},
-                {type: 'line', smooth: true, seriesLayoutBy: 'row'},
                 {
                     type: 'pie',
                     id: 'pie',
@@ -67,11 +172,15 @@
                         position: 'inner'
                     },
                     encode: {
-                        itemName: 'product',
+                        itemName: '机型',
                         value: '2012',
                         tooltip: '2012'
                     }
-                }
+                },
+                {type: 'line', seriesLayoutBy: 'row',itemStyle: { normal: {label: {show: true}}}},
+                {type: 'line', seriesLayoutBy: 'row',itemStyle: { normal: {label: {show: true}}}},
+                {type: 'line', seriesLayoutBy: 'row',itemStyle: { normal: {label: {show: true}}}},
+                {type: 'line', seriesLayoutBy: 'row',itemStyle: { normal: {label: {show: true}}}}
             ]
         };
 
