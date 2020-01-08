@@ -66,7 +66,7 @@ public class ProductionServiceImpl implements ProductionService {
                         }
                     }
                     mqmsProductionRawList.add(mqmsProductionRaw);
-                    //相同属性复制，避免重复性Get/Set
+                    //相同属性复制
                     MqmsProduction mqmsProduction = new MqmsProduction();
                     BeanUtils.copyProperties(mqmsProductionRaw, mqmsProduction);
                     String shortCode="";
