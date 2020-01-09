@@ -10,14 +10,14 @@ var _menus=[
             ]
     },
 	{"menuid":"11","icon":"fa-trophy","menuname":"市场数据",parentMenu:'1',
-		"menus":[{"menuid":"110","menuname":"市场故障清单","icon":"fa-window-restore","url":"/mqms/view/charts_eng_failure_rate"},
+		"menus":[{"menuid":"110","menuname":"市场故障清单","icon":"fa-window-restore","url":"/mqms/view/voucher"},
                 {"menuid":"111","menuname":"市场通报清单","icon":"fa-window-restore","url":"/mqms/view/charts_tran_failure_rate"},
                 {"menuid":"112","menuname":"销售清单","icon":"fa-window-maximize","url":"/mqms/view/charts_eng_failure_rate"},
                 {"menuid":"113","menuname":"生产清单","icon":"fa-window-maximize","url":"/mqms/view/charts_eng_failure_rate"},
 			]},{
      "menuid":"12","icon":"fa-television","menuname":"市场报表",parentMenu:'1',
-        "menus":[{"menuid":"120","menuname":"发动机不良率","icon":"fa-globe","url":"https://item.taobao.com/item.htm?id=545823027227"},
-                {"menuid":"121","menuname":"变速箱不良率","icon":"fa-laptop","url":"http://www.uimaker.com/member/index.php?uid=poya"},
+        "menus":[{"menuid":"120","menuname":"发动机不良率","icon":"fa-globe","url":"/mqms/view/charts_eng_failure_rate"},
+                {"menuid":"121","menuname":"变速箱不良率","icon":"fa-laptop","url":"/mqms/view/charts_tran_failure_rate"},
                 {"menuid":"122","menuname":"发动机单台索赔件数","icon":"fa-laptop","url":"http://www.uedna.com/user/33963/"},
                 {"menuid":"122","menuname":"变速箱索赔金额","icon":"fa-laptop","url":"http://www.zcool.com.cn/u/16062070"}
             ]

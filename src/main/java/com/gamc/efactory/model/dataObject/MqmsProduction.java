@@ -6,11 +6,11 @@ import java.util.Map;
 import java.util.List;
 /**
 *
-*  @author wangjian
+*  @author author
 */
 public class MqmsProduction implements Serializable {
 
-    private static final long serialVersionUID = 1578466614058L;
+    private static final long serialVersionUID = 1578469893674L;
 
 
     /**

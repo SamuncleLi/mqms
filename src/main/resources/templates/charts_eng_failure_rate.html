@@ -133,8 +133,6 @@
         charts_3 = echarts.init(document.getElementById('charts_3'));
         charts_4 = echarts.init(document.getElementById('charts_4'));
 
-
-//        analysis();
 //        var option = {
 //            toolbox: {
 //                feature: {
@@ -151,7 +149,7 @@
 //            dataset: {
 //                source: [
 //                    ['机型', '2012', '2013', '2014', '2015', '2016', '2017'],
-//                    ['151', 41.1, 30.4, 65.1, 53.3, 83.8, 98.7],
+//                    ['151', '41.1', '30.4', '65.1', '53.3', '83.8', '98.7'],
 //                    ['153', 86.5, 92.1, 85.7, 83.1, 73.4, 55.1],
 //                    ['131', 24.1, 67.2, 79.5, 86.4, 65.2, 82.5],
 //                    ['204', 55.2, 67.1, 69.2, 72.4, 53.9, 39.1]
@@ -211,6 +209,11 @@
     })
 
     function analysis() {
+        $.ajax({
+            url:"/mqms/charts/engineFailureRate?yearAndMonth=" + $('#yearAndMonth').datebox('getValue') + "&timeSpan=" + $('#timeSpan').numberspinner('getValue') + "&engType="+ $('#engType').combobox('getValue'),
+            success:function (result) {
+                console.log(result);
+
                 var engType = $("#engType").combobox("getValues");
 
                 //添加相当于机型数量的折线
@@ -249,13 +252,14 @@
                         showContent: false
                     },
                     dataset: {
-                        source: [
-                            ['product', '2020-01', '2020-02', '2020-03', '2020-04', '2020-05', '2020-06'],
-                            ['Matcha Latte', 41.1, 30.4, 65.1, 53.3, 83.8, 98.7],
-                            ['Milk Tea', 86.5, 92.1, 85.7, 83.1, 73.4, 55.1],
-                            ['Cheese Cocoa', 24.1, 67.2, 79.5, 86.4, 65.2, 82.5],
-                            ['Walnut Brownie', 55.2, 67.1, 69.2, 72.4, 53.9, 39.1]
-                        ]
+//                        source: [
+//                            ['product', '2020-01', '2020-02', '2020-03', '2020-04', '2020-05', '2020-06'],
+//                            ['131', 41.1, 30.4, 65.1, 53.3, 83.8, 98.7],
+//                            ['151', 86.5, 92.1, 85.7, 83.1, 73.4, 55.1],
+//                            ['132', 24.1, 67.2, 79.5, 86.4, 65.2, 82.5],
+//                            ['183', 55.2, 67.1, 69.2, 72.4, 53.9, 39.1]
+//                        ]
+                        source:result
                     },
                     xAxis: {type: 'category'},
                     yAxis: {
@@ -288,6 +292,12 @@
                 });
 
                 charts_1.setOption(option_1);
+
+                charts_2.setOption(option_1);
+
+                charts_3.setOption(option_1);
+            }
+        })
     }
 </script>
 </body>
