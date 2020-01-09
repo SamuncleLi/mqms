@@ -21,7 +21,7 @@ SET FOREIGN_KEY_CHECKS=0;
 DROP TABLE IF EXISTS `voucher`;
 CREATE TABLE `mqms_voucher` (
   `voucher_id` int(11) NOT NULL AUTO_INCREMENT,
-  `voucher_code` varchar(255) NOT NULL COMMENT '单据编号',
+  `voucher_code` varchar(255) DEFAULT NULL COMMENT '单据编号',
   `dealer_code` varchar(255) DEFAULT NULL COMMENT '经销商代码',
   `dealer_name` varchar(255) DEFAULT NULL COMMENT '经销商名称',
   `vei_state` varchar(255) DEFAULT NULL COMMENT 'vei系统状态',
@@ -32,7 +32,7 @@ CREATE TABLE `mqms_voucher` (
   `phone_no` varchar(255) DEFAULT NULL COMMENT '电话号码',
   `fax` varchar(255) DEFAULT NULL COMMENT '传真',
   `theme` varchar(255) DEFAULT NULL COMMENT '主题',
-  `vin_code` varchar(255) DEFAULT NULL COMMENT 'vin码',
+  `vin_code` varchar(255) NOT NULL COMMENT 'vin码',
   `vehicle_type` varchar(255) DEFAULT NULL COMMENT '车辆类型',
   `egtype_code` varchar(255) DEFAULT NULL COMMENT '发动机号',
   `transmission_type` varchar(255) DEFAULT NULL COMMENT '变速箱类型',
@@ -68,6 +68,27 @@ CREATE TABLE `mqms_voucher` (
   `model_year` varchar(255) DEFAULT NULL COMMENT '年款',
   `offline_date` varchar(255) DEFAULT NULL COMMENT '下线日期',
   `sales_date` varchar(255) DEFAULT NULL COMMENT '销售日期',
-  PRIMARY KEY (`voucher_id`),
-  UNIQUE KEY `voucher_code` (`voucher_code`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='vei系统导出表的拓展信息表';
+  `eng_arrange` varchar(255) DEFAULT NULL,
+  `sales_failure_time` varchar(255) DEFAULT NULL,
+  `car_model` varchar(255) DEFAULT NULL,
+  `eng_code` varchar(255) DEFAULT NULL,
+  `transmission_code_re` varchar(255) DEFAULT NULL,
+  `transmission_manufacturer` varchar(255) DEFAULT NULL,
+  `receive_time` varchar(255) DEFAULT NULL,
+  `claim_compensation` varchar(255) DEFAULT NULL,
+  `production_raw_description` varchar(255) DEFAULT NULL,
+  `PDI` varchar(255) DEFAULT NULL,
+  `offline_failure_time` varchar(255) DEFAULT NULL,
+  `transmission_comfirm_time` varchar(255) DEFAULT NULL,
+  `eng_settle` varchar(255) DEFAULT NULL,
+  `short_code` varchar(255) DEFAULT NULL,
+  `fault_code_classification` varchar(255) DEFAULT NULL,
+  `transmission_production_data` varchar(255) DEFAULT NULL,
+  `failure_year` varchar(255) DEFAULT NULL,
+  `failure_month` varchar(255) DEFAULT NULL,
+  `transmission_short_code` varchar(255) DEFAULT NULL,
+  `mileage_distribution` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`voucher_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
+
+
