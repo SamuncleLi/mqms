@@ -1,0 +1,337 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gamc.efactory.dao.base.MqmsFailureReportRawBaseMapper">
+
+
+    <insert id="insertMqmsFailureReportRaw"  useGeneratedKeys="true" keyProperty="voucherId">
+        INSERT INTO `mqms_failure_report_raw`
+        (
+        <trim suffixOverrides=",">
+                    <if test="voucherId!=null">
+                        `voucher_id`,
+                    </if>
+                    <if test="voucherCode!=null">
+                        `voucher_code`,
+                    </if>
+                    <if test="voucher!=null">
+                        `voucher`,
+                    </if>
+        </trim>
+        )
+        VALUES
+        (
+        <trim suffixOverrides=",">
+                <if test="voucherId!=null">
+                    #{voucherId},
+                </if>
+                <if test="voucherCode!=null">
+                    #{voucherCode},
+                </if>
+                <if test="voucher!=null">
+                    #{voucher},
+                </if>
+        </trim>
+        )
+    </insert>
+
+
+
+
+    <update id="updateMqmsFailureReportRaw">
+        UPDATE `mqms_failure_report_raw`
+        SET
+        <trim suffixOverrides=",">
+            <if test="voucherCode != null and voucherCode!=''">
+                `voucher_code` = #{voucherCode},
+            </if>
+            <if test="voucher != null and voucher!=''">
+                `voucher` = #{voucher},
+            </if>
+        </trim>
+        WHERE
+        <trim suffixOverrides="and">
+                `voucher_id` = #{voucherId} and
+        </trim>
+    </update>
+
+    <update id="update">
+        UPDATE `mqms_failure_report_raw`
+        SET
+        <trim suffixOverrides=",">
+        <if test="set.voucherCode != null and set.voucherCode!=''">
+            `voucher_code` = #{set.voucherCode},
+        </if>
+        <if test="set.voucher != null and set.voucher!=''">
+            `voucher` = #{set.voucher},
+        </if>
+        </trim>
+        <trim prefix="where" suffixOverrides="and | or">
+                <if test="where.voucherIdList != null">
+                    `voucher_id` in
+                    <foreach collection="where.voucherIdList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test="where.voucherIdSt !=null">
+                `voucher_id` >= #{where.voucherIdSt} and
+            </if>
+            <if test="where.voucherIdEd!=null">
+                `voucher_id` &lt;= #{where.voucherIdEd} and
+            </if>
+                <if test="where.voucherCodeList != null">
+                    `voucher_code` in
+                    <foreach collection="where.voucherCodeList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test ="where.fuzzyVoucherCode!=null and where.fuzzyVoucherCode.size()>0">
+                (
+                <foreach collection="where.fuzzyVoucherCode"  separator="or" item="item">
+                    `Voucher_code` like concat('%',#{item},'%')
+                </foreach>
+                ) and
+            </if>
+            <if test ="where.rightFuzzyVoucherCode!=null and where.rightFuzzyVoucherCode.size()>0">
+                (
+                <foreach collection="where.rightFuzzyVoucherCode"  separator="or" item="item">
+                    `Voucher_code` like concat(#{item},'%')
+                </foreach>
+                ) and
+            </if>
+                <if test="where.voucherList != null">
+                    `voucher` in
+                    <foreach collection="where.voucherList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test ="where.fuzzyVoucher!=null and where.fuzzyVoucher.size()>0">
+                (
+                <foreach collection="where.fuzzyVoucher"  separator="or" item="item">
+                    `Voucher` like concat('%',#{item},'%')
+                </foreach>
+                ) and
+            </if>
+            <if test ="where.rightFuzzyVoucher!=null and where.rightFuzzyVoucher.size()>0">
+                (
+                <foreach collection="where.rightFuzzyVoucher"  separator="or" item="item">
+                    `Voucher` like concat(#{item},'%')
+                </foreach>
+                ) and
+            </if>
+        </trim>
+    </update>
+
+
+    <resultMap type="com.gamc.efactory.model.dataObject.MqmsFailureReportRaw" id="MqmsFailureReportRawMap">
+        <result property="voucherId" column="voucher_id"/>
+        <result property="voucherCode" column="voucher_code"/>
+        <result property="voucher" column="voucher"/>
+    </resultMap>
+
+
+    <select id="queryMqmsFailureReportRaw" resultMap="MqmsFailureReportRawMap">
+        select
+        <include refid="baseResult"></include>
+        from  `mqms_failure_report_raw`
+        <trim prefix="where" suffixOverrides="and | or">
+            <if test="voucherId != null">
+                `voucher_id` = #{voucherId} and
+            </if>
+            <if test="voucherCode != null and voucherCode!=''">
+                `voucher_code` = #{voucherCode} and
+            </if>
+            <if test="voucher != null and voucher!=''">
+                `voucher` = #{voucher} and
+            </if>
+            <if test = "(_parameter instanceof com.gamc.efactory.model.dataObject.MqmsFailureReportRaw$QueryBuilder) == true">
+                <if test="voucherIdList != null">
+                    `voucher_id` in
+                    <foreach collection="voucherIdList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test="voucherIdSt !=null">
+                    `voucher_id` >= #{voucherIdSt} and
+                </if>
+                <if test="voucherIdEd!=null">
+                    `voucher_id` &lt;= #{voucherIdEd} and
+                </if>
+                <if test="voucherCodeList != null">
+                    `voucher_code` in
+                    <foreach collection="voucherCodeList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyVoucherCode!=null and fuzzyVoucherCode.size()>0">
+                    (
+                    <foreach collection="fuzzyVoucherCode"  separator="or" item="item">
+                        `Voucher_code` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyVoucherCode!=null and rightFuzzyVoucherCode.size()>0">
+                    (
+                    <foreach collection="rightFuzzyVoucherCode"  separator="or" item="item">
+                        `Voucher_code` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="voucherList != null">
+                    `voucher` in
+                    <foreach collection="voucherList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyVoucher!=null and fuzzyVoucher.size()>0">
+                    (
+                    <foreach collection="fuzzyVoucher"  separator="or" item="item">
+                        `Voucher` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyVoucher!=null and rightFuzzyVoucher.size()>0">
+                    (
+                    <foreach collection="rightFuzzyVoucher"  separator="or" item="item">
+                        `Voucher` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+            </if>
+        </trim>
+    </select>
+
+    <select id="queryMqmsFailureReportRawLimit1" resultMap="MqmsFailureReportRawMap">
+        select
+        <include refid="baseResult"></include>
+        from  `mqms_failure_report_raw`
+        <trim prefix="where" suffixOverrides="and | or">
+            <if test="voucherId != null">
+                `voucher_id` = #{voucherId} and
+            </if>
+            <if test="voucherCode != null and voucherCode!=''">
+                `voucher_code` = #{voucherCode} and
+            </if>
+            <if test="voucher != null and voucher!=''">
+                `voucher` = #{voucher} and
+            </if>
+            <if test = "(_parameter instanceof com.gamc.efactory.model.dataObject.MqmsFailureReportRaw$QueryBuilder) == true">
+                    <if test="voucherIdList != null">
+                        `voucher_id` in
+                        <foreach collection="voucherIdList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test="voucherIdSt !=null">
+                    `voucher_id` >= #{voucherIdSt} and
+                </if>
+                <if test="voucherIdEd!=null">
+                    `voucher_id` &lt;= #{voucherIdEd} and
+                </if>
+                    <if test="voucherCodeList != null">
+                        `voucher_code` in
+                        <foreach collection="voucherCodeList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyVoucherCode!=null and fuzzyVoucherCode.size()>0">
+                    (
+                    <foreach collection="fuzzyVoucherCode"  separator="or" item="item">
+                        `Voucher_code` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyVoucherCode!=null and rightFuzzyVoucherCode.size()>0">
+                    (
+                    <foreach collection="rightFuzzyVoucherCode"  separator="or" item="item">
+                        `Voucher_code` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                    <if test="voucherList != null">
+                        `voucher` in
+                        <foreach collection="voucherList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyVoucher!=null and fuzzyVoucher.size()>0">
+                    (
+                    <foreach collection="fuzzyVoucher"  separator="or" item="item">
+                        `Voucher` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyVoucher!=null and rightFuzzyVoucher.size()>0">
+                    (
+                    <foreach collection="rightFuzzyVoucher"  separator="or" item="item">
+                        `Voucher` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+            </if>
+        </trim>
+        limit 1
+    </select>
+
+    <sql id="allResult">
+        <trim suffixOverrides=",">
+        `voucher_id`,
+        `voucher_code`,
+        `voucher`,
+        </trim>
+    </sql>
+
+
+
+    <sql id="baseResult">
+        <trim suffixOverrides=",">
+            <if test = "(_parameter instanceof com.gamc.efactory.model.dataObject.MqmsFailureReportRaw$QueryBuilder) == true">
+
+                <if test="fetchFields==null">
+                    <include refid="allResult"></include>
+                </if>
+                <if test="fetchFields!=null">
+                    <if test="fetchFields.AllFields !=null">
+                        <include refid="allResult"></include>
+                    </if>
+                    <if test="fetchFields.AllFields ==null and fetchFields.fetchFields==null and fetchFields.excludeFields==null and fetchFields.otherFields==null">
+                        <include refid="allResult"></include>
+                    </if>
+                    <if test="fetchFields.AllFields==null and fetchFields.fetchFields!=null">
+                    <if test="fetchFields.fetchFields.voucherId==true">
+                        `voucher_id`,
+                    </if>
+                    <if test="fetchFields.fetchFields.voucherCode==true">
+                        `voucher_code`,
+                    </if>
+                    <if test="fetchFields.fetchFields.voucher==true">
+                        `voucher`,
+                    </if>
+                    </if>
+                    <if test="fetchFields.AllFields==null and fetchFields.excludeFields!=null">
+                    <if test="fetchFields.excludeFields.voucherId==null">
+                        `voucher_id`,
+                    </if>
+                    <if test="fetchFields.excludeFields.voucherCode==null">
+                        `voucher_code`,
+                    </if>
+                    <if test="fetchFields.excludeFields.voucher==null">
+                        `voucher`,
+                    </if>
+                    </if>
+                    <if test="fetchFields.otherFields!=null and fetchFields.otherFields.size>0">
+                        <foreach collection="fetchFields.otherFields" index="index" item="item" separator=",">
+                        `#{item}`
+                        </foreach>
+                    </if>
+                </if>
+            </if>
+            <if test="(_parameter instanceof com.gamc.efactory.model.dataObject.MqmsFailureReportRaw$QueryBuilder) == false" >
+                <include refid="allResult"></include>
+            </if>
+
+        </trim>
+    </sql>
+
+
+</mapper>

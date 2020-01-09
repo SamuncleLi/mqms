@@ -1,0 +1,423 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gamc.efactory.dao.base.MqmsTranCodeDecodeBaseMapper">
+
+
+    <insert id="insertMqmsTranCodeDecode"  useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO `mqms_tran_code_decode`
+        (
+        <trim suffixOverrides=",">
+                    <if test="id!=null">
+                        `id`,
+                    </if>
+                    <if test="tranCodeType!=null">
+                        `tran_code_type`,
+                    </if>
+                    <if test="tranCodeSource!=null">
+                        `tran_code_source`,
+                    </if>
+                    <if test="tranCodeResult!=null">
+                        `tran_code_result`,
+                    </if>
+        </trim>
+        )
+        VALUES
+        (
+        <trim suffixOverrides=",">
+                <if test="id!=null">
+                    #{id},
+                </if>
+                <if test="tranCodeType!=null">
+                    #{tranCodeType},
+                </if>
+                <if test="tranCodeSource!=null">
+                    #{tranCodeSource},
+                </if>
+                <if test="tranCodeResult!=null">
+                    #{tranCodeResult},
+                </if>
+        </trim>
+        )
+    </insert>
+
+
+
+
+    <update id="updateMqmsTranCodeDecode">
+        UPDATE `mqms_tran_code_decode`
+        SET
+        <trim suffixOverrides=",">
+            <if test="tranCodeType != null and tranCodeType!=''">
+                `tran_code_type` = #{tranCodeType},
+            </if>
+            <if test="tranCodeSource != null and tranCodeSource!=''">
+                `tran_code_source` = #{tranCodeSource},
+            </if>
+            <if test="tranCodeResult != null and tranCodeResult!=''">
+                `tran_code_result` = #{tranCodeResult},
+            </if>
+        </trim>
+        WHERE
+        <trim suffixOverrides="and">
+                `id` = #{id} and
+        </trim>
+    </update>
+
+    <update id="update">
+        UPDATE `mqms_tran_code_decode`
+        SET
+        <trim suffixOverrides=",">
+        <if test="set.tranCodeType != null and set.tranCodeType!=''">
+            `tran_code_type` = #{set.tranCodeType},
+        </if>
+        <if test="set.tranCodeSource != null and set.tranCodeSource!=''">
+            `tran_code_source` = #{set.tranCodeSource},
+        </if>
+        <if test="set.tranCodeResult != null and set.tranCodeResult!=''">
+            `tran_code_result` = #{set.tranCodeResult},
+        </if>
+        </trim>
+        <trim prefix="where" suffixOverrides="and | or">
+                <if test="where.idList != null">
+                    `id` in
+                    <foreach collection="where.idList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test="where.idSt !=null">
+                `id` >= #{where.idSt} and
+            </if>
+            <if test="where.idEd!=null">
+                `id` &lt;= #{where.idEd} and
+            </if>
+                <if test="where.tranCodeTypeList != null">
+                    `tran_code_type` in
+                    <foreach collection="where.tranCodeTypeList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test ="where.fuzzyTranCodeType!=null and where.fuzzyTranCodeType.size()>0">
+                (
+                <foreach collection="where.fuzzyTranCodeType"  separator="or" item="item">
+                    `Tran_code_type` like concat('%',#{item},'%')
+                </foreach>
+                ) and
+            </if>
+            <if test ="where.rightFuzzyTranCodeType!=null and where.rightFuzzyTranCodeType.size()>0">
+                (
+                <foreach collection="where.rightFuzzyTranCodeType"  separator="or" item="item">
+                    `Tran_code_type` like concat(#{item},'%')
+                </foreach>
+                ) and
+            </if>
+                <if test="where.tranCodeSourceList != null">
+                    `tran_code_source` in
+                    <foreach collection="where.tranCodeSourceList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test ="where.fuzzyTranCodeSource!=null and where.fuzzyTranCodeSource.size()>0">
+                (
+                <foreach collection="where.fuzzyTranCodeSource"  separator="or" item="item">
+                    `Tran_code_source` like concat('%',#{item},'%')
+                </foreach>
+                ) and
+            </if>
+            <if test ="where.rightFuzzyTranCodeSource!=null and where.rightFuzzyTranCodeSource.size()>0">
+                (
+                <foreach collection="where.rightFuzzyTranCodeSource"  separator="or" item="item">
+                    `Tran_code_source` like concat(#{item},'%')
+                </foreach>
+                ) and
+            </if>
+                <if test="where.tranCodeResultList != null">
+                    `tran_code_result` in
+                    <foreach collection="where.tranCodeResultList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test ="where.fuzzyTranCodeResult!=null and where.fuzzyTranCodeResult.size()>0">
+                (
+                <foreach collection="where.fuzzyTranCodeResult"  separator="or" item="item">
+                    `Tran_code_result` like concat('%',#{item},'%')
+                </foreach>
+                ) and
+            </if>
+            <if test ="where.rightFuzzyTranCodeResult!=null and where.rightFuzzyTranCodeResult.size()>0">
+                (
+                <foreach collection="where.rightFuzzyTranCodeResult"  separator="or" item="item">
+                    `Tran_code_result` like concat(#{item},'%')
+                </foreach>
+                ) and
+            </if>
+        </trim>
+    </update>
+
+
+    <resultMap type="com.gamc.efactory.model.dataObject.MqmsTranCodeDecode" id="MqmsTranCodeDecodeMap">
+        <result property="id" column="id"/>
+        <result property="tranCodeType" column="tran_code_type"/>
+        <result property="tranCodeSource" column="tran_code_source"/>
+        <result property="tranCodeResult" column="tran_code_result"/>
+    </resultMap>
+
+
+    <select id="queryMqmsTranCodeDecode" resultMap="MqmsTranCodeDecodeMap">
+        select
+        <include refid="baseResult"></include>
+        from  `mqms_tran_code_decode`
+        <trim prefix="where" suffixOverrides="and | or">
+            <if test="id != null">
+                `id` = #{id} and
+            </if>
+            <if test="tranCodeType != null and tranCodeType!=''">
+                `tran_code_type` = #{tranCodeType} and
+            </if>
+            <if test="tranCodeSource != null and tranCodeSource!=''">
+                `tran_code_source` = #{tranCodeSource} and
+            </if>
+            <if test="tranCodeResult != null and tranCodeResult!=''">
+                `tran_code_result` = #{tranCodeResult} and
+            </if>
+            <if test = "(_parameter instanceof com.gamc.efactory.model.dataObject.MqmsTranCodeDecode$QueryBuilder) == true">
+                <if test="idList != null">
+                    `id` in
+                    <foreach collection="idList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test="idSt !=null">
+                    `id` >= #{idSt} and
+                </if>
+                <if test="idEd!=null">
+                    `id` &lt;= #{idEd} and
+                </if>
+                <if test="tranCodeTypeList != null">
+                    `tran_code_type` in
+                    <foreach collection="tranCodeTypeList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyTranCodeType!=null and fuzzyTranCodeType.size()>0">
+                    (
+                    <foreach collection="fuzzyTranCodeType"  separator="or" item="item">
+                        `Tran_code_type` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyTranCodeType!=null and rightFuzzyTranCodeType.size()>0">
+                    (
+                    <foreach collection="rightFuzzyTranCodeType"  separator="or" item="item">
+                        `Tran_code_type` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="tranCodeSourceList != null">
+                    `tran_code_source` in
+                    <foreach collection="tranCodeSourceList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyTranCodeSource!=null and fuzzyTranCodeSource.size()>0">
+                    (
+                    <foreach collection="fuzzyTranCodeSource"  separator="or" item="item">
+                        `Tran_code_source` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyTranCodeSource!=null and rightFuzzyTranCodeSource.size()>0">
+                    (
+                    <foreach collection="rightFuzzyTranCodeSource"  separator="or" item="item">
+                        `Tran_code_source` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="tranCodeResultList != null">
+                    `tran_code_result` in
+                    <foreach collection="tranCodeResultList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyTranCodeResult!=null and fuzzyTranCodeResult.size()>0">
+                    (
+                    <foreach collection="fuzzyTranCodeResult"  separator="or" item="item">
+                        `Tran_code_result` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyTranCodeResult!=null and rightFuzzyTranCodeResult.size()>0">
+                    (
+                    <foreach collection="rightFuzzyTranCodeResult"  separator="or" item="item">
+                        `Tran_code_result` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+            </if>
+        </trim>
+    </select>
+
+    <select id="queryMqmsTranCodeDecodeLimit1" resultMap="MqmsTranCodeDecodeMap">
+        select
+        <include refid="baseResult"></include>
+        from  `mqms_tran_code_decode`
+        <trim prefix="where" suffixOverrides="and | or">
+            <if test="id != null">
+                `id` = #{id} and
+            </if>
+            <if test="tranCodeType != null and tranCodeType!=''">
+                `tran_code_type` = #{tranCodeType} and
+            </if>
+            <if test="tranCodeSource != null and tranCodeSource!=''">
+                `tran_code_source` = #{tranCodeSource} and
+            </if>
+            <if test="tranCodeResult != null and tranCodeResult!=''">
+                `tran_code_result` = #{tranCodeResult} and
+            </if>
+            <if test = "(_parameter instanceof com.gamc.efactory.model.dataObject.MqmsTranCodeDecode$QueryBuilder) == true">
+                    <if test="idList != null">
+                        `id` in
+                        <foreach collection="idList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test="idSt !=null">
+                    `id` >= #{idSt} and
+                </if>
+                <if test="idEd!=null">
+                    `id` &lt;= #{idEd} and
+                </if>
+                    <if test="tranCodeTypeList != null">
+                        `tran_code_type` in
+                        <foreach collection="tranCodeTypeList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyTranCodeType!=null and fuzzyTranCodeType.size()>0">
+                    (
+                    <foreach collection="fuzzyTranCodeType"  separator="or" item="item">
+                        `Tran_code_type` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyTranCodeType!=null and rightFuzzyTranCodeType.size()>0">
+                    (
+                    <foreach collection="rightFuzzyTranCodeType"  separator="or" item="item">
+                        `Tran_code_type` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                    <if test="tranCodeSourceList != null">
+                        `tran_code_source` in
+                        <foreach collection="tranCodeSourceList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyTranCodeSource!=null and fuzzyTranCodeSource.size()>0">
+                    (
+                    <foreach collection="fuzzyTranCodeSource"  separator="or" item="item">
+                        `Tran_code_source` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyTranCodeSource!=null and rightFuzzyTranCodeSource.size()>0">
+                    (
+                    <foreach collection="rightFuzzyTranCodeSource"  separator="or" item="item">
+                        `Tran_code_source` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                    <if test="tranCodeResultList != null">
+                        `tran_code_result` in
+                        <foreach collection="tranCodeResultList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyTranCodeResult!=null and fuzzyTranCodeResult.size()>0">
+                    (
+                    <foreach collection="fuzzyTranCodeResult"  separator="or" item="item">
+                        `Tran_code_result` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyTranCodeResult!=null and rightFuzzyTranCodeResult.size()>0">
+                    (
+                    <foreach collection="rightFuzzyTranCodeResult"  separator="or" item="item">
+                        `Tran_code_result` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+            </if>
+        </trim>
+        limit 1
+    </select>
+
+    <sql id="allResult">
+        <trim suffixOverrides=",">
+        `id`,
+        `tran_code_type`,
+        `tran_code_source`,
+        `tran_code_result`,
+        </trim>
+    </sql>
+
+
+
+    <sql id="baseResult">
+        <trim suffixOverrides=",">
+            <if test = "(_parameter instanceof com.gamc.efactory.model.dataObject.MqmsTranCodeDecode$QueryBuilder) == true">
+
+                <if test="fetchFields==null">
+                    <include refid="allResult"></include>
+                </if>
+                <if test="fetchFields!=null">
+                    <if test="fetchFields.AllFields !=null">
+                        <include refid="allResult"></include>
+                    </if>
+                    <if test="fetchFields.AllFields ==null and fetchFields.fetchFields==null and fetchFields.excludeFields==null and fetchFields.otherFields==null">
+                        <include refid="allResult"></include>
+                    </if>
+                    <if test="fetchFields.AllFields==null and fetchFields.fetchFields!=null">
+                    <if test="fetchFields.fetchFields.id==true">
+                        `id`,
+                    </if>
+                    <if test="fetchFields.fetchFields.tranCodeType==true">
+                        `tran_code_type`,
+                    </if>
+                    <if test="fetchFields.fetchFields.tranCodeSource==true">
+                        `tran_code_source`,
+                    </if>
+                    <if test="fetchFields.fetchFields.tranCodeResult==true">
+                        `tran_code_result`,
+                    </if>
+                    </if>
+                    <if test="fetchFields.AllFields==null and fetchFields.excludeFields!=null">
+                    <if test="fetchFields.excludeFields.id==null">
+                        `id`,
+                    </if>
+                    <if test="fetchFields.excludeFields.tranCodeType==null">
+                        `tran_code_type`,
+                    </if>
+                    <if test="fetchFields.excludeFields.tranCodeSource==null">
+                        `tran_code_source`,
+                    </if>
+                    <if test="fetchFields.excludeFields.tranCodeResult==null">
+                        `tran_code_result`,
+                    </if>
+                    </if>
+                    <if test="fetchFields.otherFields!=null and fetchFields.otherFields.size>0">
+                        <foreach collection="fetchFields.otherFields" index="index" item="item" separator=",">
+                        `#{item}`
+                        </foreach>
+                    </if>
+                </if>
+            </if>
+            <if test="(_parameter instanceof com.gamc.efactory.model.dataObject.MqmsTranCodeDecode$QueryBuilder) == false" >
+                <include refid="allResult"></include>
+            </if>
+
+        </trim>
+    </sql>
+
+
+</mapper>

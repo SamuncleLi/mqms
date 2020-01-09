@@ -1,0 +1,423 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gamc.efactory.dao.base.MqmsMtocDecodeBaseMapper">
+
+
+    <insert id="insertMqmsMtocDecode"  useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO `mqms_mtoc_decode`
+        (
+        <trim suffixOverrides=",">
+                    <if test="id!=null">
+                        `id`,
+                    </if>
+                    <if test="mtocType!=null">
+                        `mtoc_type`,
+                    </if>
+                    <if test="mtocSource!=null">
+                        `mtoc_source`,
+                    </if>
+                    <if test="mtocResult!=null">
+                        `mtoc_result`,
+                    </if>
+        </trim>
+        )
+        VALUES
+        (
+        <trim suffixOverrides=",">
+                <if test="id!=null">
+                    #{id},
+                </if>
+                <if test="mtocType!=null">
+                    #{mtocType},
+                </if>
+                <if test="mtocSource!=null">
+                    #{mtocSource},
+                </if>
+                <if test="mtocResult!=null">
+                    #{mtocResult},
+                </if>
+        </trim>
+        )
+    </insert>
+
+
+
+
+    <update id="updateMqmsMtocDecode">
+        UPDATE `mqms_mtoc_decode`
+        SET
+        <trim suffixOverrides=",">
+            <if test="mtocType != null and mtocType!=''">
+                `mtoc_type` = #{mtocType},
+            </if>
+            <if test="mtocSource != null and mtocSource!=''">
+                `mtoc_source` = #{mtocSource},
+            </if>
+            <if test="mtocResult != null and mtocResult!=''">
+                `mtoc_result` = #{mtocResult},
+            </if>
+        </trim>
+        WHERE
+        <trim suffixOverrides="and">
+                `id` = #{id} and
+        </trim>
+    </update>
+
+    <update id="update">
+        UPDATE `mqms_mtoc_decode`
+        SET
+        <trim suffixOverrides=",">
+        <if test="set.mtocType != null and set.mtocType!=''">
+            `mtoc_type` = #{set.mtocType},
+        </if>
+        <if test="set.mtocSource != null and set.mtocSource!=''">
+            `mtoc_source` = #{set.mtocSource},
+        </if>
+        <if test="set.mtocResult != null and set.mtocResult!=''">
+            `mtoc_result` = #{set.mtocResult},
+        </if>
+        </trim>
+        <trim prefix="where" suffixOverrides="and | or">
+                <if test="where.idList != null">
+                    `id` in
+                    <foreach collection="where.idList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test="where.idSt !=null">
+                `id` >= #{where.idSt} and
+            </if>
+            <if test="where.idEd!=null">
+                `id` &lt;= #{where.idEd} and
+            </if>
+                <if test="where.mtocTypeList != null">
+                    `mtoc_type` in
+                    <foreach collection="where.mtocTypeList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test ="where.fuzzyMtocType!=null and where.fuzzyMtocType.size()>0">
+                (
+                <foreach collection="where.fuzzyMtocType"  separator="or" item="item">
+                    `Mtoc_type` like concat('%',#{item},'%')
+                </foreach>
+                ) and
+            </if>
+            <if test ="where.rightFuzzyMtocType!=null and where.rightFuzzyMtocType.size()>0">
+                (
+                <foreach collection="where.rightFuzzyMtocType"  separator="or" item="item">
+                    `Mtoc_type` like concat(#{item},'%')
+                </foreach>
+                ) and
+            </if>
+                <if test="where.mtocSourceList != null">
+                    `mtoc_source` in
+                    <foreach collection="where.mtocSourceList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test ="where.fuzzyMtocSource!=null and where.fuzzyMtocSource.size()>0">
+                (
+                <foreach collection="where.fuzzyMtocSource"  separator="or" item="item">
+                    `Mtoc_source` like concat('%',#{item},'%')
+                </foreach>
+                ) and
+            </if>
+            <if test ="where.rightFuzzyMtocSource!=null and where.rightFuzzyMtocSource.size()>0">
+                (
+                <foreach collection="where.rightFuzzyMtocSource"  separator="or" item="item">
+                    `Mtoc_source` like concat(#{item},'%')
+                </foreach>
+                ) and
+            </if>
+                <if test="where.mtocResultList != null">
+                    `mtoc_result` in
+                    <foreach collection="where.mtocResultList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test ="where.fuzzyMtocResult!=null and where.fuzzyMtocResult.size()>0">
+                (
+                <foreach collection="where.fuzzyMtocResult"  separator="or" item="item">
+                    `Mtoc_result` like concat('%',#{item},'%')
+                </foreach>
+                ) and
+            </if>
+            <if test ="where.rightFuzzyMtocResult!=null and where.rightFuzzyMtocResult.size()>0">
+                (
+                <foreach collection="where.rightFuzzyMtocResult"  separator="or" item="item">
+                    `Mtoc_result` like concat(#{item},'%')
+                </foreach>
+                ) and
+            </if>
+        </trim>
+    </update>
+
+
+    <resultMap type="com.gamc.efactory.model.dataObject.MqmsMtocDecode" id="MqmsMtocDecodeMap">
+        <result property="id" column="id"/>
+        <result property="mtocType" column="mtoc_type"/>
+        <result property="mtocSource" column="mtoc_source"/>
+        <result property="mtocResult" column="mtoc_result"/>
+    </resultMap>
+
+
+    <select id="queryMqmsMtocDecode" resultMap="MqmsMtocDecodeMap">
+        select
+        <include refid="baseResult"></include>
+        from  `mqms_mtoc_decode`
+        <trim prefix="where" suffixOverrides="and | or">
+            <if test="id != null">
+                `id` = #{id} and
+            </if>
+            <if test="mtocType != null and mtocType!=''">
+                `mtoc_type` = #{mtocType} and
+            </if>
+            <if test="mtocSource != null and mtocSource!=''">
+                `mtoc_source` = #{mtocSource} and
+            </if>
+            <if test="mtocResult != null and mtocResult!=''">
+                `mtoc_result` = #{mtocResult} and
+            </if>
+            <if test = "(_parameter instanceof com.gamc.efactory.model.dataObject.MqmsMtocDecode$QueryBuilder) == true">
+                <if test="idList != null">
+                    `id` in
+                    <foreach collection="idList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test="idSt !=null">
+                    `id` >= #{idSt} and
+                </if>
+                <if test="idEd!=null">
+                    `id` &lt;= #{idEd} and
+                </if>
+                <if test="mtocTypeList != null">
+                    `mtoc_type` in
+                    <foreach collection="mtocTypeList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyMtocType!=null and fuzzyMtocType.size()>0">
+                    (
+                    <foreach collection="fuzzyMtocType"  separator="or" item="item">
+                        `Mtoc_type` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyMtocType!=null and rightFuzzyMtocType.size()>0">
+                    (
+                    <foreach collection="rightFuzzyMtocType"  separator="or" item="item">
+                        `Mtoc_type` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="mtocSourceList != null">
+                    `mtoc_source` in
+                    <foreach collection="mtocSourceList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyMtocSource!=null and fuzzyMtocSource.size()>0">
+                    (
+                    <foreach collection="fuzzyMtocSource"  separator="or" item="item">
+                        `Mtoc_source` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyMtocSource!=null and rightFuzzyMtocSource.size()>0">
+                    (
+                    <foreach collection="rightFuzzyMtocSource"  separator="or" item="item">
+                        `Mtoc_source` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="mtocResultList != null">
+                    `mtoc_result` in
+                    <foreach collection="mtocResultList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyMtocResult!=null and fuzzyMtocResult.size()>0">
+                    (
+                    <foreach collection="fuzzyMtocResult"  separator="or" item="item">
+                        `Mtoc_result` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyMtocResult!=null and rightFuzzyMtocResult.size()>0">
+                    (
+                    <foreach collection="rightFuzzyMtocResult"  separator="or" item="item">
+                        `Mtoc_result` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+            </if>
+        </trim>
+    </select>
+
+    <select id="queryMqmsMtocDecodeLimit1" resultMap="MqmsMtocDecodeMap">
+        select
+        <include refid="baseResult"></include>
+        from  `mqms_mtoc_decode`
+        <trim prefix="where" suffixOverrides="and | or">
+            <if test="id != null">
+                `id` = #{id} and
+            </if>
+            <if test="mtocType != null and mtocType!=''">
+                `mtoc_type` = #{mtocType} and
+            </if>
+            <if test="mtocSource != null and mtocSource!=''">
+                `mtoc_source` = #{mtocSource} and
+            </if>
+            <if test="mtocResult != null and mtocResult!=''">
+                `mtoc_result` = #{mtocResult} and
+            </if>
+            <if test = "(_parameter instanceof com.gamc.efactory.model.dataObject.MqmsMtocDecode$QueryBuilder) == true">
+                    <if test="idList != null">
+                        `id` in
+                        <foreach collection="idList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test="idSt !=null">
+                    `id` >= #{idSt} and
+                </if>
+                <if test="idEd!=null">
+                    `id` &lt;= #{idEd} and
+                </if>
+                    <if test="mtocTypeList != null">
+                        `mtoc_type` in
+                        <foreach collection="mtocTypeList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyMtocType!=null and fuzzyMtocType.size()>0">
+                    (
+                    <foreach collection="fuzzyMtocType"  separator="or" item="item">
+                        `Mtoc_type` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyMtocType!=null and rightFuzzyMtocType.size()>0">
+                    (
+                    <foreach collection="rightFuzzyMtocType"  separator="or" item="item">
+                        `Mtoc_type` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                    <if test="mtocSourceList != null">
+                        `mtoc_source` in
+                        <foreach collection="mtocSourceList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyMtocSource!=null and fuzzyMtocSource.size()>0">
+                    (
+                    <foreach collection="fuzzyMtocSource"  separator="or" item="item">
+                        `Mtoc_source` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyMtocSource!=null and rightFuzzyMtocSource.size()>0">
+                    (
+                    <foreach collection="rightFuzzyMtocSource"  separator="or" item="item">
+                        `Mtoc_source` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                    <if test="mtocResultList != null">
+                        `mtoc_result` in
+                        <foreach collection="mtocResultList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyMtocResult!=null and fuzzyMtocResult.size()>0">
+                    (
+                    <foreach collection="fuzzyMtocResult"  separator="or" item="item">
+                        `Mtoc_result` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyMtocResult!=null and rightFuzzyMtocResult.size()>0">
+                    (
+                    <foreach collection="rightFuzzyMtocResult"  separator="or" item="item">
+                        `Mtoc_result` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+            </if>
+        </trim>
+        limit 1
+    </select>
+
+    <sql id="allResult">
+        <trim suffixOverrides=",">
+        `id`,
+        `mtoc_type`,
+        `mtoc_source`,
+        `mtoc_result`,
+        </trim>
+    </sql>
+
+
+
+    <sql id="baseResult">
+        <trim suffixOverrides=",">
+            <if test = "(_parameter instanceof com.gamc.efactory.model.dataObject.MqmsMtocDecode$QueryBuilder) == true">
+
+                <if test="fetchFields==null">
+                    <include refid="allResult"></include>
+                </if>
+                <if test="fetchFields!=null">
+                    <if test="fetchFields.AllFields !=null">
+                        <include refid="allResult"></include>
+                    </if>
+                    <if test="fetchFields.AllFields ==null and fetchFields.fetchFields==null and fetchFields.excludeFields==null and fetchFields.otherFields==null">
+                        <include refid="allResult"></include>
+                    </if>
+                    <if test="fetchFields.AllFields==null and fetchFields.fetchFields!=null">
+                    <if test="fetchFields.fetchFields.id==true">
+                        `id`,
+                    </if>
+                    <if test="fetchFields.fetchFields.mtocType==true">
+                        `mtoc_type`,
+                    </if>
+                    <if test="fetchFields.fetchFields.mtocSource==true">
+                        `mtoc_source`,
+                    </if>
+                    <if test="fetchFields.fetchFields.mtocResult==true">
+                        `mtoc_result`,
+                    </if>
+                    </if>
+                    <if test="fetchFields.AllFields==null and fetchFields.excludeFields!=null">
+                    <if test="fetchFields.excludeFields.id==null">
+                        `id`,
+                    </if>
+                    <if test="fetchFields.excludeFields.mtocType==null">
+                        `mtoc_type`,
+                    </if>
+                    <if test="fetchFields.excludeFields.mtocSource==null">
+                        `mtoc_source`,
+                    </if>
+                    <if test="fetchFields.excludeFields.mtocResult==null">
+                        `mtoc_result`,
+                    </if>
+                    </if>
+                    <if test="fetchFields.otherFields!=null and fetchFields.otherFields.size>0">
+                        <foreach collection="fetchFields.otherFields" index="index" item="item" separator=",">
+                        `#{item}`
+                        </foreach>
+                    </if>
+                </if>
+            </if>
+            <if test="(_parameter instanceof com.gamc.efactory.model.dataObject.MqmsMtocDecode$QueryBuilder) == false" >
+                <include refid="allResult"></include>
+            </if>
+
+        </trim>
+    </sql>
+
+
+</mapper>
