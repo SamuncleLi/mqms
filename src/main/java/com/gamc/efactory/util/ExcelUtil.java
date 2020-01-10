@@ -141,9 +141,9 @@ public class ExcelUtil {
             for (int i = 0, len = wb.getNumberOfSheets(); i < len; i++) {
                 Sheet sheet = wb.getSheetAt(i);
                 for (int j = 0; j <= sheet.getLastRowNum(); j++) {//处理每一行,如果要去掉表头这里需要把j定义从1或2开始，取决于你的Excel表格内容.
-//                    if(j==0){
+                    if(j==0){
                         cellNum = sheet.getRow(j).getLastCellNum();
-//                    }
+                    }
                     List<String> rowList = new ArrayList<String>();
                     if (sheet == null) {
                         return null;

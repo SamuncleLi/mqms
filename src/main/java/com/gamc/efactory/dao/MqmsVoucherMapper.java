@@ -10,4 +10,5 @@ import com.gamc.efactory.dao.base.MqmsVoucherBaseMapper;
 public interface MqmsVoucherMapper extends MqmsVoucherBaseMapper{
 
 
+
 }

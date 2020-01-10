@@ -1,6 +1,9 @@
 package com.gamc.efactory.controller;
 
 import com.alibaba.fastjson.JSONArray;
+import com.gamc.efactory.dao.DictMapper;
+import com.gamc.efactory.dao.MqmsVoucherMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -21,9 +24,16 @@ public class ChartsController {
      * @返回
      * @抛出异常
     */
+    @Autowired
+    MqmsVoucherMapper mqmsVoucherMapper;
     @RequestMapping("engineFailureRate")
     public String[][] calculateEngineFailureRate(@RequestParam String yearAndMonth, @RequestParam String timeSpan, @RequestParam String engType){
         System.out.println(yearAndMonth + timeSpan + engType);
+
+        String[] engTypeAssemble=engType.split(",");
+        System.out.println(engTypeAssemble[0]);
+        int thisEngtypeCount=mqmsVoucherMapper.queryEngTyeCount(engTypeAssemble[0]);
+        System.out.println(thisEngtypeCount);
         String[][] array = {{"机型", "2012-01", "2012-02", "2012-03", "2012-04", "2012-05", "2012-06"},
                     {"151", "41.1", "30.4", "65.1", "53.3", "83.8", "98.7"},
                     {"153", "86.5", "92.1", "85.7", "83.1", "73.4", "55.1"},

@@ -28,7 +28,7 @@
         $.messager.alert('系统提示',"正在上传，上传完成后会有提示，请耐心等候");
 
         $("#bpmnForm").ajaxSubmit({
-            url:"/mqms/import/proData",
+            url:"/mqms/import/veiData",
             dataType:"json",
             success:function(data) {
                 if (data.success == 'true') {
@@ -43,7 +43,7 @@
     }
 </script>
 <body>
-<form  method="post" enctype="multipart/form-data" id="bpmnForm" action="/mqms/import/proData">
+<form  method="post" enctype="multipart/form-data" id="bpmnForm" action="/mqms/import/veiData">
     <input type="file" name="file" id="bpmnFile"/>
     <input type="submit" value="上传文件"/>
 </form>
