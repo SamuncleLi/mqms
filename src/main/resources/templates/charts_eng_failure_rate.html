@@ -210,7 +210,7 @@
 
     function analysis() {
         $.ajax({
-            url:"/mqms/charts/engineFailureRate?yearAndMonth=" + $('#yearAndMonth').datebox('getValue') + "&timeSpan=" + $('#timeSpan').numberspinner('getValue') + "&engType="+ $('#engType').combobox('getValues'),
+            url:"/mqms/charts/singleClaimRate?yearAndMonth=" + $('#yearAndMonth').datebox('getValue') + "&timeSpan=" + $('#timeSpan').numberspinner('getValue') + "&engTypes="+ $('#engType').combobox('getValues'),
             success:function (result) {
                 console.log(result);
 

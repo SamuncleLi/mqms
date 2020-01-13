@@ -5803,10 +5803,7 @@
         </trim>
     </sql>
 
-    <select id="selectEngTypeCount"  resultType="java.lang.Integer" >
-        SELECT COUNT(*) FROM `mqms_voucher`
-        WHERE  `eng_code` = #{eng_code} AND  `sales_date` LIKE #{sales_date}
-    </select>
+
 
 
 

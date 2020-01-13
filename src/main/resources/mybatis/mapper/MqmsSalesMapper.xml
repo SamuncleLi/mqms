@@ -4,4 +4,21 @@
 <mapper namespace="com.gamc.efactory.dao.MqmsSalesMapper">
 
 
+
+    <resultMap type="com.gamc.efactory.model.dataObject.MqmsSalesRaw" id="MqmsSalesRawMap">
+        <result property="salesId" column="sales_id"/>
+        <result property="vinCode" column="vin_code"/>
+        <result property="salesCarType" column="sales_car_type"/>
+        <result property="salesState" column="sales_state"/>
+        <result property="dealerCode" column="dealer_code"/>
+        <result property="dealerName" column="dealer_name"/>
+        <result property="produceDate" column="produce_date"/>
+        <result property="firstPinDate" column="first_pin_date"/>
+        <result property="secondPinDate" column="second_pin_date"/>
+    </resultMap>
+
+        <select id="selectSecondSalesCount"  resultType="java.lang.Integer" >
+            SELECT COUNT(*) FROM `mqms_sales`
+            WHERE  `eng_type` = #{eng_type} AND  `second_pin_date` LIKE  concat(#{second_pin_date},'%')
+        </select>
 </mapper>

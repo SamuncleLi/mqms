@@ -50,7 +50,7 @@ CREATE TABLE `mqms_voucher` (
   `submit_date` varchar(255) DEFAULT NULL COMMENT '提交时间',
   `important_level` varchar(255) DEFAULT NULL COMMENT '重要级别',
   `car_type` varchar(255) DEFAULT NULL COMMENT '车种',
-  `diagnostic_result` varchar(255) DEFAULT NULL COMMENT '诊断结果',
+  `diagnostic_result` varchar(2000) DEFAULT NULL COMMENT '诊断结果',
   `vei_user_description` varchar(255) DEFAULT NULL COMMENT 'vei系统备注',
   `parts_code` varchar(255) DEFAULT NULL COMMENT '零部件编号',
   `parts_name` varchar(255) DEFAULT NULL,

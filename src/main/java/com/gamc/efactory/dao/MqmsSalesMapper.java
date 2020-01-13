@@ -9,5 +9,5 @@ import com.gamc.efactory.dao.base.MqmsSalesBaseMapper;
 */
 public interface MqmsSalesMapper extends MqmsSalesBaseMapper{
 
-
-}
+    int selectSecondSalesCount(@Param("eng_type") String engCode,@Param("second_pin_date") String secondPinDate);
+        }

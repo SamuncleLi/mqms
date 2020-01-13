@@ -71,7 +71,7 @@ public class SalesServiceImpl implements SalesService {
                     String factoryCode="";
                     if(mqmsSales.getVinCode().length()<=3)
                     {
-                        factoryCode=mqmsSales.getVinCode().toString();
+                        factoryCode=mqmsSales.getVinCode();
                     }
                     else {
                         factoryCode = mqmsSales.getVinCode().substring(0, 3);

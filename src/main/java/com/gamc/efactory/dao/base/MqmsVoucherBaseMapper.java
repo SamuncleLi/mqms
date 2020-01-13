@@ -18,7 +18,7 @@ public interface MqmsVoucherBaseMapper {
 
     MqmsVoucher queryMqmsVoucherLimit1(MqmsVoucher object);
 
-    int queryEngTyeCount(@Param("eng_code") String engCode);
+
 
 
 }

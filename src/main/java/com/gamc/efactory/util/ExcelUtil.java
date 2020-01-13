@@ -141,11 +141,11 @@ public class ExcelUtil {
             for (int i = 0, len = wb.getNumberOfSheets(); i < len; i++) {
                 Sheet sheet = wb.getSheetAt(i);
                 for (int j = 0; j <= sheet.getLastRowNum(); j++) {//处理每一行,如果要去掉表头这里需要把j定义从1或2开始，取决于你的Excel表格内容.
-                    if(j==0){
+//                    if(j==0){
                         cellNum = sheet.getRow(j).getLastCellNum();
-                    }
+//                    }
                     List<String> rowList = new ArrayList<String>();
-                    if (sheet == null) {
+                    if (sheet==null) {
                         return null;
                     }
                     Row row = sheet.getRow(j);
@@ -155,11 +155,13 @@ public class ExcelUtil {
                     // 读取每一个单元格
                     for (int k = 0; k < cellNum; k++) {//处理每一个单元格
                         Cell cell = row.getCell(k);
-                        int formatType=cell.getCellStyle().getDataFormat();
+
                         if (cell == null) {
                             rowList.add("");
                         }
+
                         else if (cell.getCellType() == Cell.CELL_TYPE_NUMERIC) {
+                            int formatType=cell.getCellStyle().getDataFormat();
                             if (HSSFDateUtil.isCellDateFormatted(cell)) {
                                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                                 rowList.add(sdf.format(HSSFDateUtil.getJavaDate(cell.getNumericCellValue())));
