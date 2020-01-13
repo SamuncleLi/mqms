@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>数据追溯</title>
+    <script type="text/javascript" src="${req.contextPath}/static/plugin/jquery-easyui-1.5.5.4/jquery.min.js"></script>
+    <script type="text/javascript" src="${req.contextPath}/static/plugin/jquery-easyui-1.5.5.4/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="${req.contextPath}/static/plugin/jquery-easyui-1.5.5.4/locale/easyui-lang-zh_CN.js"></script>
+    <link rel="stylesheet" href="${req.contextPath}/static/plugin/jquery-easyui-1.5.5.4/themes/gray/easyui.css" type="text/css"/>
+    <link rel="stylesheet" href="${req.contextPath}/static/plugin/jquery-easyui-1.5.5.4/themes/icon.css" type="text/css"/>
+    <link rel="stylesheet" href="${req.contextPath}/static/css/data_production.css" type="text/css"/>
+    <script type="text/javascript" src="${req.contextPath}/static/plugin/jquery-easyui-1.5.5.4/datagrid-detailview.js"></script>
+    <script type="text/javascript" src="${req.contextPath}/static/plugin/jquery-easyui-1.5.5.4/datagrid-filter.js"></script>
+    <link  href="${req.contextPath}/static/layuiExtend/layui/css/layui.css" media="all" rel="stylesheet">
+    <script src="${req.contextPath}/static/layuiExtend/layui/layui.js"></script>
+</head>
+<body>
+<table id="dg2" class="easyui-datagrid" title="生产数据查询" style="width:100%;height:100%"
+       data-options="singleSelect:true,collapsible:true" toolbar="#tb2">
+    <thead>
+    <tr></tr>
+    </thead>
+</table>
+<div id="tb2" class="select-area">
+    <div>
+        <a id="complexBtn" class="layui-btn">复杂查询</a>
+        <a href="javascript:export_record2()" class="easyui-linkbutton" iconCls="icon-save" plain="true">导出</a>
+    </div>
+    <div id="msg2">查询条件：</div>
+    <div id="result2" style="word-break:break-all;height:60px;width:500px;padding-left:50px;display: none;"></div>
+</div>
+</div>
+<script type="text/javascript">
+    //初始化全局变量
+    var columns_auto_single=new Array(1);
+    var complexDc;var dynamicCondition;
+    var systemName = "mqms";
+    var model = "production";
+    //加载模型
+    $(function(){
+        load_dynamic();
+    });
+    //动态加载数据
+    function load_dynamic() {
+        //查询数据表头
+        $.ajax({
+            url: '/mqms/' + model + '/columnNameAndComment?table=' + systemName + "_" + model,
+            cache: false,
+            type: 'POST',
+            data: "",//json字符串
+            dataType: 'json',//返回类型
+            contentType: "application/json; charset=utf-8",//发送类型，重要，不然会报错
+            success: function (result) {
+                var arr = result;
+                //动态生成dcDemo中的li
+                columns_auto_single[0] = function () {
+                    var data = [];
+                    var dataFields = [];
+                    for (var i = 0; i < arr.length-1; i++) {
+                        var str = {
+                            "field": "" + arr[i].columnName,
+                            "title": "" + arr[i].comment,
+                            "width":150,
+                            "align": 'center'
+                        };
+                        var str2= {
+                            field: "" + arr[i].columnName,
+                            title: "" + arr[i].comment,
+                            edit:"text"
+                        };
+                        data.push(str);
+                        dataFields.push(str2);
+                    }
+                    //高级查询
+                    layui.config({
+                        base: '${req.contextPath}/static/layuiExtend/layui_exts/' //设定扩展的Layui模块的所在目录，一般用于外部模块扩展
+                    }).extend({
+                        dynamicCondition: 'dynamicCondition/dynamicCondition'
+                    }).use(['table', 'form', 'dynamicCondition'], function () {
+                        var $ = layui.$, table = layui.table, form = layui.table;
+                        dynamicCondition = layui.dynamicCondition;
+
+                        //初始化查询实例
+                        complexDc = dynamicCondition.create({
+//                    elem: "#dcDemo" //通过容器选择器传入，也可以$("#dcDemo"),或者document.getElementById("dcDemo")
+                            fields:dataFields
+                            //,tableId:"listTable" //静态页面不好演示table数据表格更新
+                            , type: "complex"  //type:"simple"/"complex"
+                            , conditionTextId: "#msg2"
+                            //当有多个动态条件查询实例时，定义instanceName属性可以通过dynamicCondition.getInstance(instanceName)获取对应的实例
+                            , instanceName: "complexInstance"
+                            , queryCallBack: function (requestData) {
+                                console.log(requestData)
+                                $("#result2").html(JSON.stringify(requestData));
+                                load_dynamic_records(requestData);
+                            }
+                        });
+                        $("#result2").html(JSON.stringify(complexDc.buildRequestData()));
+                        /**复杂查询*/
+                        $("#complexBtn").on("click", function () {
+                            dynamicCondition.getInstance("complexInstance").open();
+                        });
+                    });
+
+                    return data;
+                }();
+                load_dynamic_records("");
+            }
+        });
+    }
+    function load_dynamic_records(requestData) {
+        //动态加载数据
+        $("#dg2").datagrid({
+            toolbar:'#tb2',
+//            contentType: "application/json",
+            columns:columns_auto_single,//外层ajax请求的表头json
+            rownumbers: true,// 行号
+            autoRowHeight: false,
+            pagination: true,// 分页条
+            checkOnSelect: false,
+            selectOnCheck: true,
+            pageSize: 10,
+            pageList: [10, 20, 40, 50],
+            loader:function(param,success,error){
+                $.ajax({
+                    url:'/mqms/'+ model + '/list',
+                    data:requestData,
+                    type:"get",
+                    dataType:"json",
+                    success: function(data){
+                        console.log(param);
+                        success(data);
+                    }
+                })
+            }
+        });
+    }
+</script>
+</body>
+</html>

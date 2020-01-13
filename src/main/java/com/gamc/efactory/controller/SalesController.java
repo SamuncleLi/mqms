@@ -9,11 +9,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * Created by Zeho Lee on 2020/1/6.
+ * Created by Zeho Lee on 2020/1/13.
  */
 @RestController
-@RequestMapping("/voucher")
-public class VoucherController {
+@RequestMapping("/sales")
+public class SalesController {
     @Autowired
     MultiFilterService multiFilterService;
 
@@ -25,10 +25,9 @@ public class VoucherController {
     }
 
     @RequestMapping("/list")
-    public JSONObject multiFilter(@RequestParam(required = false)String page, @RequestParam(required = false) String rows,@RequestParam(required = false) String condition){
-        String table = "mqms_voucher";
-        String orderByColumn = "voucher_id";
+    public JSONObject multiFilter(@RequestParam(required = false)String page, @RequestParam(required = false) String rows, @RequestParam(required = false) String condition){
+        String table = "mqms_sales";
+        String orderByColumn = "sales_id";
         return multiFilterService.multiFilterQuery(table,condition,page,rows, orderByColumn);
     }
-
 }

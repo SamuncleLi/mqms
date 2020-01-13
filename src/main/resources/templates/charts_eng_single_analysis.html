@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>单机型市场品质数据</title>
+    <link rel="stylesheet" type="text/css" href="${req.contextPath}/static/css/charts_eng_single_analysis.css">
+    <link rel="stylesheet" type="text/css" href="${req.contextPath}/static/plugin/jquery-easyui-1.5.5.4/themes/gray/easyui.css">
+    <link rel="stylesheet" type="text/css" href="${req.contextPath}/static/plugin/jquery-easyui-1.5.5.4/themes/icon.css">
+    <script type="text/javascript" src="${req.contextPath}/static/plugin/jquery-easyui-1.5.5.4/jquery.min.js"></script>
+    <script type="text/javascript" src="${req.contextPath}/static/plugin/jquery-easyui-1.5.5.4/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="${req.contextPath}/static/plugin/jquery-easyui-1.5.5.4/locale/easyui-lang-zh_CN.js"></script>
+    <script type="text/javascript" src="${req.contextPath}/static/echart/echarts.js"></script>
+</head>
+<body>
+<div title="选择区" data-options="region:'north',split:false,border:false" class="select-area">
+    <label for="yearAndMonth">起始月份</label><input id="yearAndMonth" class="easyui-datebox">
+    <label for="timeSpan">时间跨度/月</label><input id="timeSpan" class="easyui-numberspinner" value="12">
+    <label for="engType">机型</label><input id="engType" class="easyui-combobox liselectoptions">
+    <a id="asy" href="javascript:analysis()" class="easyui-linkbutton" data-options="iconCls:'icon-search'">分析</a>
+</div>
+
+<div title="图表区" data-options="region:'south',split:false,border:false" class="charts-area">
+    <div title="变速箱类型分布" id="charts_1" class="mqmscharts"></div>
+    <div title="售出时间分布" id="charts_2" class="mqmscharts"></div>
+
+    <div title="索赔金额推移图" id="charts_3" class="mqmscharts"></div>
+    <div title="top10课题" id="charts_4" class="mqmscharts"></div>
+    <div title="索赔发动机推移" id="charts_5" class="mqmscharts"></div>
+</div>
+<script>
+    function analysis() {
+        var charts_1 = echarts.init(document.getElementById('charts_1'));
+        var charts_2 = echarts.init(document.getElementById('charts_2'));
+        var charts_3 = echarts.init(document.getElementById('charts_3'));
+        var charts_4 = echarts.init(document.getElementById('charts_4'));
+        var charts_5 = echarts.init(document.getElementById('charts_5'));
+
+        $.ajax({
+            
+        })
+        var option_1 = {
+            title: {
+                text: '变速箱类型',
+                subtext: '祺盛动力',
+                left: 'center'
+            },
+
+            tooltip: {
+                trigger: 'item',
+                formatter: '{a} <br/>{b} : {c} ({d}%)'
+            },
+            legend: {
+                type: 'scroll',
+                orient: 'vertical',
+                right: 10,
+                top: 20,
+                bottom: 20,
+                data: ['AT','DCT','MT']
+            },
+            series: [
+                {
+                    name: '机型',
+                    type: 'pie',
+                    radius: '55%',
+                    center: ['40%', '50%'],
+                    label: {
+                        formatter: '{b}:\n {c} \n({d}%)',
+                        color: '#000000',
+                    },
+                    data: [
+                        {
+                            name:'AT',
+                            value:40000
+                        },
+                        {
+                            name:'DCT',
+                            value:100000
+                        },
+                        {
+                            name:'MT',
+                            value:200000
+                        }],
+                    emphasis: {
+                        itemStyle: {
+                            shadowBlur: 10,
+                            shadowOffsetX: 0,
+                            shadowColor: 'rgba(0, 0, 0, 0.5)'
+                        }
+                    }
+                }
+            ]
+        };
+        charts_1.setOption(option_1);
+
+        var option_2 = {
+            title: {
+                text: '售出时间分布（滚轮缩放)',
+                subtext: '祺盛动力'
+            },
+            tooltip: {
+                trigger: 'axis',
+                axisPointer: {
+                    type: 'cross',
+                    crossStyle: {
+                        color: '#999'
+                    }
+                }
+            },
+            dataset: {
+                source: [
+                    ['售出时间', '0-6月', '7-12月', '13-24月', '25-36月', '36月+'],
+                    ['台数', 4, 3, 6, 5, 8]
+                ]
+            },
+            xAxis: [
+                {
+                    type: 'category',
+                    axisPointer: {
+                        type: 'shadow'
+                    }
+                }
+            ],
+            yAxis: [
+                {
+                    type: 'value',
+                    min: 0,
+                    axisLabel: {
+                        formatter: '{value} '
+                    }
+                }
+            ],
+            series: [{
+                type: 'bar', seriesLayoutBy: 'row',itemStyle: {
+                    normal: {
+                        color:'#4d4bff',
+                        label: {
+                            show: true
+                        }
+                    }
+                }
+            }]
+        };
+
+        charts_2.setOption(option_2);
+
+
+//        var condition = $("#condition").combobox("getValues");
+        var condition = ['6个月','12个月','24个月', '36个月']
+
+        //添加相当于机型数量的折线
+        var series = [];
+        for(var i=0;i<condition.length;i++){
+            var line = {type: 'line', seriesLayoutBy: 'row',itemStyle: { normal: {label: {show: true}}}};
+            series.push(line)
+        }
+
+        var option_3 = {
+            title: {
+                text: '不良推移图',
+                subtext: '祺盛动力'
+            },
+            toolbox: {
+                feature: {
+                    dataView: {show: true, readOnly: false},
+                    restore: {show: true},
+                    saveAsImage: {show: true}
+                }
+            },
+            legend: {},
+            tooltip: {
+                trigger: 'axis',
+                showContent: false
+            },
+            dataset: {
+                source: [
+                    ['日期', '2020-01', '2020-02', '2020-03', '2020-04', '2020-05', '2020-06'],
+                    ['6个月', 41.1, 30.4, 65.1, 53.3, 83.8, 98.7],
+                    ['12个月', 86.5, 92.1, 85.7, 83.1, 73.4, 55.1],
+                    ['24个月', 24.1, 67.2, 79.5, 86.4, 65.2, 82.5],
+                    ['36个月', 55.2, 67.1, 69.2, 72.4, 53.9, 39.1]
+                ]
+            },
+            xAxis: {type: 'category'},
+            yAxis: {
+                type:'value',
+                gridIndex: 0
+            },
+            series:series
+        };
+
+        charts_3.setOption(option_3)
+
+        var option_4 = {
+            title: {
+                text: 'TOP10课题',
+                subtext: '祺盛动力'
+            },
+            tooltip: {
+                trigger: 'axis',
+                axisPointer: {
+                    type: 'cross',
+                    crossStyle: {
+                        color: '#999'
+                    }
+                }
+            },
+            toolbox: {
+                feature: {
+                    dataView: {show: true, readOnly: false},
+                    restore: {show: true},
+                    saveAsImage: {show: true}
+                }
+            },
+            legend: {},
+            dataset:{
+                source: [
+                            ['ENG整理', '01', '02', '03', '04', '05', '06'],
+                            ['汇总', 41.1, 30.4, 65.1, 53.3, 83.8, 98.7],
+                            ['累计不良率', 86.5, 92.1, 85.7, 83.1, 73.4, 55.1]
+                        ]
+            },
+            xAxis: [
+                {
+                    type: 'category',
+                    axisPointer: {
+                        type: 'shadow'
+                    }
+                }
+            ],
+            yAxis: [
+                {
+                    type: 'value',
+                    name: '汇总',
+                    min: 0,
+                    axisLabel: {
+                        formatter: '{value} '
+                    }
+                },
+                {
+                    type: 'value',
+                    name: '累计不良率',
+                    min: 0,
+                    max: 100,
+                    interval: 20,
+                    axisLabel: {
+                        formatter: '{value} %'
+                    }
+                }
+            ],
+            series: [
+                {type: 'bar', seriesLayoutBy: 'row',itemStyle: { normal: {color:'#4d4bff',label: {show: true}}}},
+                {type: 'line', seriesLayoutBy: 'row',itemStyle: { normal: {label: {color:'#ff332e',show: true}}}}
+            ]
+        };
+
+        charts_4.setOption(option_4);
+
+        var option_5 = {
+            title: {
+                text: '索赔发动机推移',
+                subtext: '祺盛动力'
+            },
+            tooltip: {
+                trigger: 'axis',
+                axisPointer: {
+                    type: 'cross',
+                    crossStyle: {
+                        color: '#999'
+                    }
+                }
+            },
+            toolbox: {
+                feature: {
+                    dataView: {show: true, readOnly: false},
+                    restore: {show: true},
+                    saveAsImage: {show: true}
+                }
+            },
+            legend: {},
+            dataset:{
+                source: [
+                    ['月份', '01', '02', '03', '04', '05', '06'],
+                    ['台数', 4, 3, 6, 5, 8, 9]
+                ]
+            },
+            xAxis: [
+                {
+                    type: 'category',
+                    axisPointer: {
+                        type: 'shadow'
+                    }
+                }
+            ],
+            yAxis: [
+                {
+                    type: 'value',
+                    name: '汇总',
+                    min: 0,
+                    axisLabel: {
+                        formatter: '{value} '
+                    }
+                }
+            ],
+            series: [{
+                type: 'bar', seriesLayoutBy: 'row',itemStyle: {
+                    normal: {
+                        color:'#4d4bff',
+                        label: {
+                            show: true
+                        }
+                    }
+                }
+            }]
+        };
+
+        charts_5.setOption(option_5)
+
+    }
+
+
+</script>
+
+</body>
+</html>

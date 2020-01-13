@@ -18,11 +18,9 @@ public interface ColumnNameAndCommentMapper{
     })
     public List<ColumnNameAndComment> getColumnNameAndComment(@Param("schema")String schema, @Param("table")String table)throws SQLException;
 
-    @Select("select * from #{table} #{condition} limit (#{page}-1)*#{rows}, #{page} * #{rows}")
-    @ResultType(HashMap.class)
-    public List<HashMap<String, String>> multiFilter(@Param("table")String table, @Param("condition")String condition, @Param("page")int page, @Param("rows")int rows);
+    @SelectProvider(type=DynaSqlProvider.class,method="dynaSelect")
+    public List<HashMap<String, String>> multiFilter(final String table, final String condition);
 
-    @Select("select * from #{table} #{condition}")
-    @ResultType(HashMap.class)
+    @SelectProvider(type=DynaSqlProvider.class,method="dynaSelectCount")
     public int multiFilterCount(String table, String condition);
 }
