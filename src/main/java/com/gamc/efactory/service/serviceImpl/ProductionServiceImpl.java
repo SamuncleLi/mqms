@@ -81,10 +81,27 @@ public class ProductionServiceImpl implements ProductionService {
 
                 }
                 for (MqmsProductionRaw mqmsProductionRawRecord : mqmsProductionRawList) {
-                    mqmsProductionRawMapper.insertMqmsProductionRaw(mqmsProductionRawRecord);
+                    String vin=mqmsProductionRawRecord.getVin();
+                    int cnt = mqmsProductionRawMapper.selectByVin(vin);
+                    System.out.println(cnt);
+                    if (cnt == 0) {
+                        mqmsProductionRawMapper.insertMqmsProductionRaw(mqmsProductionRawRecord);
+                        System.out.println(" 插入 "+mqmsProductionRawRecord);
+                    } else {
+                        mqmsProductionRawMapper.updateByVin(mqmsProductionRawRecord);
+                        System.out.println(" 更新 "+mqmsProductionRawRecord);
+                    }
                 }
                     for (MqmsProduction mqmsProductionRecord : mqmsProductionList) {
-                        mqmsProductionMapper.insertMqmsProduction(mqmsProductionRecord);
+                        String vin=mqmsProductionRecord.getVin();
+                        int cnt = mqmsProductionMapper.selectByVin(vin);
+                        if (cnt == 0) {
+                            mqmsProductionMapper.insertMqmsProduction(mqmsProductionRecord);
+                            System.out.println(" 插入 "+mqmsProductionRecord);
+                        } else {
+                            mqmsProductionMapper.updateByVin(mqmsProductionRecord);
+                            System.out.println(" 更新 "+mqmsProductionRecord);
+                        }
                     }
 
 

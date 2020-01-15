@@ -88,7 +88,7 @@ public class ImportExcelController {
     }
     @Autowired
     private ProductionService productionService;
-    @RequestMapping(value = "/proData")
+    @RequestMapping(value = "/productionData")
     public String exImportProductionData(@RequestParam()MultipartFile file, HttpSession session) {
 
         boolean a = false;

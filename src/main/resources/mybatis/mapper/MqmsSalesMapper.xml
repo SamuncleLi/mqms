@@ -16,9 +16,97 @@
         <result property="firstPinDate" column="first_pin_date"/>
         <result property="secondPinDate" column="second_pin_date"/>
     </resultMap>
-
-        <select id="selectSecondSalesCount"  resultType="java.lang.Integer" >
+    <select id="selectSecondSalesCount"  resultType="java.lang.Integer" >
             SELECT COUNT(*) FROM `mqms_sales`
             WHERE  `eng_type` = #{eng_type} AND  `second_pin_date` LIKE  concat(#{second_pin_date},'%')
-        </select>
+    </select>
+    <select id="selectByVinCode"  resultType="java.lang.Integer" >
+        SELECT COUNT(*) FROM `mqms_sales`
+        WHERE  `vin_code` = #{vin_code}
+    </select>
+    <update id="updateByVinCode">
+        UPDATE `mqms_sales`
+        SET
+        <trim suffixOverrides=",">
+            <if test="vinCode != null and vinCode!=''">
+                `vin_code` = #{vinCode},
+            </if>
+            <if test="salesCarType != null and salesCarType!=''">
+                `sales_car_type` = #{salesCarType},
+            </if>
+            <if test="salesState != null and salesState!=''">
+                `sales_state` = #{salesState},
+            </if>
+            <if test="dealerCode != null and dealerCode!=''">
+                `dealer_code` = #{dealerCode},
+            </if>
+            <if test="dealerName != null and dealerName!=''">
+                `dealer_name` = #{dealerName},
+            </if>
+            <if test="produceDate != null and produceDate!=''">
+                `produce_date` = #{produceDate},
+            </if>
+            <if test="firstPinDate != null and firstPinDate!=''">
+                `first_pin_date` = #{firstPinDate},
+            </if>
+            <if test="secondPinDate != null and secondPinDate!=''">
+                `second_pin_date` = #{secondPinDate},
+            </if>
+            <if test="mtoc != null and mtoc!=''">
+                `mtoc` = #{mtoc},
+            </if>
+            <if test="carType != null and carType!=''">
+                `car_type` = #{carType},
+            </if>
+            <if test="transmissionCode != null and transmissionCode!=''">
+                `transmission_code` = #{transmissionCode},
+            </if>
+            <if test="factoryCode != null and factoryCode!=''">
+                `factory_code` = #{factoryCode},
+            </if>
+            <if test="factoryArea != null and factoryArea!=''">
+                `factory_area` = #{factoryArea},
+            </if>
+            <if test="engShortCode != null and engShortCode!=''">
+                `eng_short_code` = #{engShortCode},
+            </if>
+            <if test="engType != null and engType!=''">
+                `eng_type` = #{engType},
+            </if>
+            <if test="engSeries != null and engSeries!=''">
+                `eng_series` = #{engSeries},
+            </if>
+            <if test="salesArea != null and salesArea!=''">
+                `sales_area` = #{salesArea},
+            </if>
+            <if test="salesYear != null and salesYear!=''">
+                `sales_year` = #{salesYear},
+            </if>
+            <if test="salesMonth != null and salesMonth!=''">
+                `sales_month` = #{salesMonth},
+            </if>
+            <if test="tranShortCode != null and tranShortCode!=''">
+                `tran_short_code` = #{tranShortCode},
+            </if>
+            <if test="tranType != null and tranType!=''">
+                `tran_type` = #{tranType},
+            </if>
+            <if test="tranSeries != null and tranSeries!=''">
+                `tran_series` = #{tranSeries},
+            </if>
+            <if test="carShortCode != null and carShortCode!=''">
+                `car_short_code` = #{carShortCode},
+            </if>
+            <if test="carModel != null and carModel!=''">
+                `car_model` = #{carModel},
+            </if>
+            <if test="carModelCode != null and carModelCode!=''">
+                `car_model_code` = #{carModelCode},
+            </if>
+        </trim>
+        WHERE
+        <trim suffixOverrides="and">
+            `vin_code` = #{vinCode} and
+        </trim>
+    </update>
 </mapper>
