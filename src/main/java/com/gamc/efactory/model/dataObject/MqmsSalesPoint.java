@@ -6,11 +6,11 @@ import java.util.Map;
 import java.util.List;
 /**
 *
-*  @author author
+*  @author wangjian
 */
 public class MqmsSalesPoint implements Serializable {
 
-    private static final long serialVersionUID = 1578469907720L;
+    private static final long serialVersionUID = 1579049761658L;
 
 
     /**
@@ -24,7 +24,7 @@ public class MqmsSalesPoint implements Serializable {
     * 销售点代码
     * isNullAble:1
     */
-    private String salesPointCode;
+    private String salesPointName;
 
     /**
     * 销售区域
@@ -32,24 +32,35 @@ public class MqmsSalesPoint implements Serializable {
     */
     private String salesPointArea;
 
+    /**
+    * 
+    * isNullAble:1
+    */
+    private String salesPointCode;
+
 
     public void setId(Integer id){this.id = id;}
 
     public Integer getId(){return this.id;}
 
-    public void setSalesPointCode(String salesPointCode){this.salesPointCode = salesPointCode;}
+    public void setSalesPointName(String salesPointName){this.salesPointName = salesPointName;}
 
-    public String getSalesPointCode(){return this.salesPointCode;}
+    public String getSalesPointName(){return this.salesPointName;}
 
     public void setSalesPointArea(String salesPointArea){this.salesPointArea = salesPointArea;}
 
     public String getSalesPointArea(){return this.salesPointArea;}
+
+    public void setSalesPointCode(String salesPointCode){this.salesPointCode = salesPointCode;}
+
+    public String getSalesPointCode(){return this.salesPointCode;}
     @Override
     public String toString() {
         return "MqmsSalesPoint{" +
                 "id='" + id + '\'' +
-                "salesPointCode='" + salesPointCode + '\'' +
+                "salesPointName='" + salesPointName + '\'' +
                 "salesPointArea='" + salesPointArea + '\'' +
+                "salesPointCode='" + salesPointCode + '\'' +
             '}';
     }
 
@@ -110,18 +121,18 @@ public class MqmsSalesPoint implements Serializable {
 
         public Integer getIdEd(){return this.idEd;}
 
-        private List<String> salesPointCodeList;
+        private List<String> salesPointNameList;
 
-        public List<String> getSalesPointCodeList(){return this.salesPointCodeList;}
+        public List<String> getSalesPointNameList(){return this.salesPointNameList;}
 
 
-        private List<String> fuzzySalesPointCode;
+        private List<String> fuzzySalesPointName;
 
-        public List<String> getFuzzySalesPointCode(){return this.fuzzySalesPointCode;}
+        public List<String> getFuzzySalesPointName(){return this.fuzzySalesPointName;}
 
-        private List<String> rightFuzzySalesPointCode;
+        private List<String> rightFuzzySalesPointName;
 
-        public List<String> getRightFuzzySalesPointCode(){return this.rightFuzzySalesPointCode;}
+        public List<String> getRightFuzzySalesPointName(){return this.rightFuzzySalesPointName;}
         private List<String> salesPointAreaList;
 
         public List<String> getSalesPointAreaList(){return this.salesPointAreaList;}
@@ -134,6 +145,18 @@ public class MqmsSalesPoint implements Serializable {
         private List<String> rightFuzzySalesPointArea;
 
         public List<String> getRightFuzzySalesPointArea(){return this.rightFuzzySalesPointArea;}
+        private List<String> salesPointCodeList;
+
+        public List<String> getSalesPointCodeList(){return this.salesPointCodeList;}
+
+
+        private List<String> fuzzySalesPointCode;
+
+        public List<String> getFuzzySalesPointCode(){return this.fuzzySalesPointCode;}
+
+        private List<String> rightFuzzySalesPointCode;
+
+        public List<String> getRightFuzzySalesPointCode(){return this.rightFuzzySalesPointCode;}
         private QueryBuilder (){
             this.fetchFields = new HashMap<>();
         }
@@ -179,48 +202,48 @@ public class MqmsSalesPoint implements Serializable {
             return this;
         }
 
-        public QueryBuilder fuzzySalesPointCode (List<String> fuzzySalesPointCode){
-            this.fuzzySalesPointCode = fuzzySalesPointCode;
+        public QueryBuilder fuzzySalesPointName (List<String> fuzzySalesPointName){
+            this.fuzzySalesPointName = fuzzySalesPointName;
             return this;
         }
 
-        public QueryBuilder fuzzySalesPointCode (String ... fuzzySalesPointCode){
-            this.fuzzySalesPointCode = solveNullList(fuzzySalesPointCode);
+        public QueryBuilder fuzzySalesPointName (String ... fuzzySalesPointName){
+            this.fuzzySalesPointName = solveNullList(fuzzySalesPointName);
             return this;
         }
 
-        public QueryBuilder rightFuzzySalesPointCode (List<String> rightFuzzySalesPointCode){
-            this.rightFuzzySalesPointCode = rightFuzzySalesPointCode;
+        public QueryBuilder rightFuzzySalesPointName (List<String> rightFuzzySalesPointName){
+            this.rightFuzzySalesPointName = rightFuzzySalesPointName;
             return this;
         }
 
-        public QueryBuilder rightFuzzySalesPointCode (String ... rightFuzzySalesPointCode){
-            this.rightFuzzySalesPointCode = solveNullList(rightFuzzySalesPointCode);
+        public QueryBuilder rightFuzzySalesPointName (String ... rightFuzzySalesPointName){
+            this.rightFuzzySalesPointName = solveNullList(rightFuzzySalesPointName);
             return this;
         }
 
-        public QueryBuilder salesPointCode(String salesPointCode){
-            setSalesPointCode(salesPointCode);
+        public QueryBuilder salesPointName(String salesPointName){
+            setSalesPointName(salesPointName);
             return this;
         }
 
-        public QueryBuilder salesPointCodeList(String ... salesPointCode){
-            this.salesPointCodeList = solveNullList(salesPointCode);
+        public QueryBuilder salesPointNameList(String ... salesPointName){
+            this.salesPointNameList = solveNullList(salesPointName);
             return this;
         }
 
-        public QueryBuilder salesPointCodeList(List<String> salesPointCode){
-            this.salesPointCodeList = salesPointCode;
+        public QueryBuilder salesPointNameList(List<String> salesPointName){
+            this.salesPointNameList = salesPointName;
             return this;
         }
 
-        public QueryBuilder fetchSalesPointCode(){
-            setFetchFields("fetchFields","salesPointCode");
+        public QueryBuilder fetchSalesPointName(){
+            setFetchFields("fetchFields","salesPointName");
             return this;
         }
 
-        public QueryBuilder excludeSalesPointCode(){
-            setFetchFields("excludeFields","salesPointCode");
+        public QueryBuilder excludeSalesPointName(){
+            setFetchFields("excludeFields","salesPointName");
             return this;
         }
 
@@ -266,6 +289,51 @@ public class MqmsSalesPoint implements Serializable {
 
         public QueryBuilder excludeSalesPointArea(){
             setFetchFields("excludeFields","salesPointArea");
+            return this;
+        }
+
+        public QueryBuilder fuzzySalesPointCode (List<String> fuzzySalesPointCode){
+            this.fuzzySalesPointCode = fuzzySalesPointCode;
+            return this;
+        }
+
+        public QueryBuilder fuzzySalesPointCode (String ... fuzzySalesPointCode){
+            this.fuzzySalesPointCode = solveNullList(fuzzySalesPointCode);
+            return this;
+        }
+
+        public QueryBuilder rightFuzzySalesPointCode (List<String> rightFuzzySalesPointCode){
+            this.rightFuzzySalesPointCode = rightFuzzySalesPointCode;
+            return this;
+        }
+
+        public QueryBuilder rightFuzzySalesPointCode (String ... rightFuzzySalesPointCode){
+            this.rightFuzzySalesPointCode = solveNullList(rightFuzzySalesPointCode);
+            return this;
+        }
+
+        public QueryBuilder salesPointCode(String salesPointCode){
+            setSalesPointCode(salesPointCode);
+            return this;
+        }
+
+        public QueryBuilder salesPointCodeList(String ... salesPointCode){
+            this.salesPointCodeList = solveNullList(salesPointCode);
+            return this;
+        }
+
+        public QueryBuilder salesPointCodeList(List<String> salesPointCode){
+            this.salesPointCodeList = salesPointCode;
+            return this;
+        }
+
+        public QueryBuilder fetchSalesPointCode(){
+            setFetchFields("fetchFields","salesPointCode");
+            return this;
+        }
+
+        public QueryBuilder excludeSalesPointCode(){
+            setFetchFields("excludeFields","salesPointCode");
             return this;
         }
         private <T>List<T> solveNullList(T ... objs){
@@ -323,18 +391,18 @@ public class MqmsSalesPoint implements Serializable {
 
         public Integer getIdEd(){return this.idEd;}
 
-        private List<String> salesPointCodeList;
+        private List<String> salesPointNameList;
 
-        public List<String> getSalesPointCodeList(){return this.salesPointCodeList;}
+        public List<String> getSalesPointNameList(){return this.salesPointNameList;}
 
 
-        private List<String> fuzzySalesPointCode;
+        private List<String> fuzzySalesPointName;
 
-        public List<String> getFuzzySalesPointCode(){return this.fuzzySalesPointCode;}
+        public List<String> getFuzzySalesPointName(){return this.fuzzySalesPointName;}
 
-        private List<String> rightFuzzySalesPointCode;
+        private List<String> rightFuzzySalesPointName;
 
-        public List<String> getRightFuzzySalesPointCode(){return this.rightFuzzySalesPointCode;}
+        public List<String> getRightFuzzySalesPointName(){return this.rightFuzzySalesPointName;}
         private List<String> salesPointAreaList;
 
         public List<String> getSalesPointAreaList(){return this.salesPointAreaList;}
@@ -347,6 +415,18 @@ public class MqmsSalesPoint implements Serializable {
         private List<String> rightFuzzySalesPointArea;
 
         public List<String> getRightFuzzySalesPointArea(){return this.rightFuzzySalesPointArea;}
+        private List<String> salesPointCodeList;
+
+        public List<String> getSalesPointCodeList(){return this.salesPointCodeList;}
+
+
+        private List<String> fuzzySalesPointCode;
+
+        public List<String> getFuzzySalesPointCode(){return this.fuzzySalesPointCode;}
+
+        private List<String> rightFuzzySalesPointCode;
+
+        public List<String> getRightFuzzySalesPointCode(){return this.rightFuzzySalesPointCode;}
 
         public ConditionBuilder idBetWeen(Integer idSt,Integer idEd){
             this.idSt = idSt;
@@ -374,33 +454,33 @@ public class MqmsSalesPoint implements Serializable {
             return this;
         }
 
-        public ConditionBuilder fuzzySalesPointCode (List<String> fuzzySalesPointCode){
-            this.fuzzySalesPointCode = fuzzySalesPointCode;
+        public ConditionBuilder fuzzySalesPointName (List<String> fuzzySalesPointName){
+            this.fuzzySalesPointName = fuzzySalesPointName;
             return this;
         }
 
-        public ConditionBuilder fuzzySalesPointCode (String ... fuzzySalesPointCode){
-            this.fuzzySalesPointCode = solveNullList(fuzzySalesPointCode);
+        public ConditionBuilder fuzzySalesPointName (String ... fuzzySalesPointName){
+            this.fuzzySalesPointName = solveNullList(fuzzySalesPointName);
             return this;
         }
 
-        public ConditionBuilder rightFuzzySalesPointCode (List<String> rightFuzzySalesPointCode){
-            this.rightFuzzySalesPointCode = rightFuzzySalesPointCode;
+        public ConditionBuilder rightFuzzySalesPointName (List<String> rightFuzzySalesPointName){
+            this.rightFuzzySalesPointName = rightFuzzySalesPointName;
             return this;
         }
 
-        public ConditionBuilder rightFuzzySalesPointCode (String ... rightFuzzySalesPointCode){
-            this.rightFuzzySalesPointCode = solveNullList(rightFuzzySalesPointCode);
+        public ConditionBuilder rightFuzzySalesPointName (String ... rightFuzzySalesPointName){
+            this.rightFuzzySalesPointName = solveNullList(rightFuzzySalesPointName);
             return this;
         }
 
-        public ConditionBuilder salesPointCodeList(String ... salesPointCode){
-            this.salesPointCodeList = solveNullList(salesPointCode);
+        public ConditionBuilder salesPointNameList(String ... salesPointName){
+            this.salesPointNameList = solveNullList(salesPointName);
             return this;
         }
 
-        public ConditionBuilder salesPointCodeList(List<String> salesPointCode){
-            this.salesPointCodeList = salesPointCode;
+        public ConditionBuilder salesPointNameList(List<String> salesPointName){
+            this.salesPointNameList = salesPointName;
             return this;
         }
 
@@ -434,6 +514,36 @@ public class MqmsSalesPoint implements Serializable {
             return this;
         }
 
+        public ConditionBuilder fuzzySalesPointCode (List<String> fuzzySalesPointCode){
+            this.fuzzySalesPointCode = fuzzySalesPointCode;
+            return this;
+        }
+
+        public ConditionBuilder fuzzySalesPointCode (String ... fuzzySalesPointCode){
+            this.fuzzySalesPointCode = solveNullList(fuzzySalesPointCode);
+            return this;
+        }
+
+        public ConditionBuilder rightFuzzySalesPointCode (List<String> rightFuzzySalesPointCode){
+            this.rightFuzzySalesPointCode = rightFuzzySalesPointCode;
+            return this;
+        }
+
+        public ConditionBuilder rightFuzzySalesPointCode (String ... rightFuzzySalesPointCode){
+            this.rightFuzzySalesPointCode = solveNullList(rightFuzzySalesPointCode);
+            return this;
+        }
+
+        public ConditionBuilder salesPointCodeList(String ... salesPointCode){
+            this.salesPointCodeList = solveNullList(salesPointCode);
+            return this;
+        }
+
+        public ConditionBuilder salesPointCodeList(List<String> salesPointCode){
+            this.salesPointCodeList = salesPointCode;
+            return this;
+        }
+
         private <T>List<T> solveNullList(T ... objs){
             if (objs != null){
             List<T> list = new ArrayList<>();
@@ -462,12 +572,16 @@ public class MqmsSalesPoint implements Serializable {
             this.obj.setId(id);
             return this;
         }
-        public Builder salesPointCode(String salesPointCode){
-            this.obj.setSalesPointCode(salesPointCode);
+        public Builder salesPointName(String salesPointName){
+            this.obj.setSalesPointName(salesPointName);
             return this;
         }
         public Builder salesPointArea(String salesPointArea){
             this.obj.setSalesPointArea(salesPointArea);
+            return this;
+        }
+        public Builder salesPointCode(String salesPointCode){
+            this.obj.setSalesPointCode(salesPointCode);
             return this;
         }
         public MqmsSalesPoint build(){return obj;}

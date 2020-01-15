@@ -84,4 +84,219 @@
         WHERE  `eng_code` = #{eng_code} AND  `confirm_date` LIKE  concat(#{confirm_date},'%')
     </select>
 
+    <select id="selectByVoucherCode"  resultType="java.lang.Integer" >
+        SELECT COUNT(*) FROM `mqms_voucher`
+        WHERE  `voucher_code` = #{voucher_code}
+    </select>
+    <update id="updateByVoucher">
+        UPDATE `mqms_voucher`
+        SET
+        <trim suffixOverrides=",">
+            <if test="voucherCode != null and voucherCode!=''">
+                `voucher_code` = #{voucherCode},
+            </if>
+            <if test="dealerCode != null and dealerCode!=''">
+                `dealer_code` = #{dealerCode},
+            </if>
+            <if test="dealerName != null and dealerName!=''">
+                `dealer_name` = #{dealerName},
+            </if>
+            <if test="veiState != null and veiState!=''">
+                `vei_state` = #{veiState},
+            </if>
+            <if test="updateTime != null and updateTime!=''">
+                `update_time` = #{updateTime},
+            </if>
+            <if test="maintenanceContractCode != null and maintenanceContractCode!=''">
+                `maintenance_contract_code` = #{maintenanceContractCode},
+            </if>
+            <if test="maintenanceItemCode != null and maintenanceItemCode!=''">
+                `maintenance_item_code` = #{maintenanceItemCode},
+            </if>
+            <if test="contact != null and contact!=''">
+                `contact` = #{contact},
+            </if>
+            <if test="phoneNo != null and phoneNo!=''">
+                `phone_no` = #{phoneNo},
+            </if>
+            <if test="fax != null and fax!=''">
+                `fax` = #{fax},
+            </if>
+            <if test="theme != null and theme!=''">
+                `theme` = #{theme},
+            </if>
+            <if test="vinCode != null and vinCode!=''">
+                `vin_code` = #{vinCode},
+            </if>
+            <if test="vehicleType != null and vehicleType!=''">
+                `vehicle_type` = #{vehicleType},
+            </if>
+            <if test="egtypeCode != null and egtypeCode!=''">
+                `egtype_code` = #{egtypeCode},
+            </if>
+            <if test="transmissionType != null and transmissionType!=''">
+                `transmission_type` = #{transmissionType},
+            </if>
+            <if test="mileage != null">
+                `mileage` = #{mileage},
+            </if>
+            <if test="transmissionCode != null and transmissionCode!=''">
+                `transmission_code` = #{transmissionCode},
+            </if>
+            <if test="mtoc != null and mtoc!=''">
+                `mtoc` = #{mtoc},
+            </if>
+            <if test="failureDate != null and failureDate!=''">
+                `failure_date` = #{failureDate},
+            </if>
+            <if test="failureLocationCode != null and failureLocationCode!=''">
+                `failure_location_code` = #{failureLocationCode},
+            </if>
+            <if test="failureLocationName != null and failureLocationName!=''">
+                `failure_location_name` = #{failureLocationName},
+            </if>
+            <if test="symptomTypeCode != null and symptomTypeCode!=''">
+                `symptom_type_code` = #{symptomTypeCode},
+            </if>
+            <if test="symptomTypeName != null and symptomTypeName!=''">
+                `symptom_type_name` = #{symptomTypeName},
+            </if>
+            <if test="symptomCode != null and symptomCode!=''">
+                `symptom_code` = #{symptomCode},
+            </if>
+            <if test="symptomName != null and symptomName!=''">
+                `symptom_name` = #{symptomName},
+            </if>
+            <if test="symptomContent != null and symptomContent!=''">
+                `symptom_content` = #{symptomContent},
+            </if>
+            <if test="submitDate != null and submitDate!=''">
+                `submit_date` = #{submitDate},
+            </if>
+            <if test="importantLevel != null and importantLevel!=''">
+                `important_level` = #{importantLevel},
+            </if>
+            <if test="carType != null and carType!=''">
+                `car_type` = #{carType},
+            </if>
+            <if test="diagnosticResult != null and diagnosticResult!=''">
+                `diagnostic_result` = #{diagnosticResult},
+            </if>
+            <if test="veiUserDescription != null and veiUserDescription!=''">
+                `vei_user_description` = #{veiUserDescription},
+            </if>
+            <if test="partsCode != null and partsCode!=''">
+                `parts_code` = #{partsCode},
+            </if>
+            <if test="partsName != null and partsName!=''">
+                `parts_name` = #{partsName},
+            </if>
+            <if test="manCost != null">
+                `man_cost` = #{manCost},
+            </if>
+            <if test="materialCost != null">
+                `material_cost` = #{materialCost},
+            </if>
+            <if test="otherCost != null">
+                `other_cost` = #{otherCost},
+            </if>
+            <if test="totalCost != null">
+                `total_cost` = #{totalCost},
+            </if>
+            <if test="confirmor != null and confirmor!=''">
+                `confirmor` = #{confirmor},
+            </if>
+            <if test="confirmDate != null and confirmDate!=''">
+                `confirm_date` = #{confirmDate},
+            </if>
+            <if test="veiSysDescription != null and veiSysDescription!=''">
+                `vei_sys_description` = #{veiSysDescription},
+            </if>
+            <if test="licenseCode != null and licenseCode!=''">
+                `license_code` = #{licenseCode},
+            </if>
+            <if test="servicePerformance1 != null and servicePerformance1!=''">
+                `service_performance_1` = #{servicePerformance1},
+            </if>
+            <if test="servicePerformance2 != null and servicePerformance2!=''">
+                `service_performance_2` = #{servicePerformance2},
+            </if>
+            <if test="servicePerformance3 != null and servicePerformance3!=''">
+                `service_performance_3` = #{servicePerformance3},
+            </if>
+            <if test="modelYear != null and modelYear!=''">
+                `model_year` = #{modelYear},
+            </if>
+            <if test="offlineDate != null and offlineDate!=''">
+                `offline_date` = #{offlineDate},
+            </if>
+            <if test="salesDate != null and salesDate!=''">
+                `sales_date` = #{salesDate},
+            </if>
+            <if test="engArrange != null and engArrange!=''">
+                `eng_arrange` = #{engArrange},
+            </if>
+            <if test="salesFailureTime != null and salesFailureTime!=''">
+                `sales_failure_time` = #{salesFailureTime},
+            </if>
+            <if test="carModel != null and carModel!=''">
+                `car_model` = #{carModel},
+            </if>
+            <if test="engCode != null and engCode!=''">
+                `eng_code` = #{engCode},
+            </if>
+            <if test="transmissionCodeRe != null and transmissionCodeRe!=''">
+                `transmission_code_re` = #{transmissionCodeRe},
+            </if>
+            <if test="transmissionManufacturer != null and transmissionManufacturer!=''">
+                `transmission_manufacturer` = #{transmissionManufacturer},
+            </if>
+            <if test="receiveTime != null and receiveTime!=''">
+                `receive_time` = #{receiveTime},
+            </if>
+            <if test="claimCompensation != null and claimCompensation!=''">
+                `claim_compensation` = #{claimCompensation},
+            </if>
+            <if test="productionRawDescription != null and productionRawDescription!=''">
+                `production_raw_description` = #{productionRawDescription},
+            </if>
+            <if test="PDI != null and PDI!=''">
+                `PDI` = #{PDI},
+            </if>
+            <if test="offlineFailureTime != null and offlineFailureTime!=''">
+                `offline_failure_time` = #{offlineFailureTime},
+            </if>
+            <if test="transmissionComfirmTime != null and transmissionComfirmTime!=''">
+                `transmission_comfirm_time` = #{transmissionComfirmTime},
+            </if>
+            <if test="engSettle != null and engSettle!=''">
+                `eng_settle` = #{engSettle},
+            </if>
+            <if test="shortCode != null and shortCode!=''">
+                `short_code` = #{shortCode},
+            </if>
+            <if test="faultCodeClassification != null and faultCodeClassification!=''">
+                `fault_code_classification` = #{faultCodeClassification},
+            </if>
+            <if test="transmissionProductionData != null and transmissionProductionData!=''">
+                `transmission_production_data` = #{transmissionProductionData},
+            </if>
+            <if test="failureYear != null and failureYear!=''">
+                `failure_year` = #{failureYear},
+            </if>
+            <if test="failureMonth != null and failureMonth!=''">
+                `failure_month` = #{failureMonth},
+            </if>
+            <if test="transmissionShortCode != null and transmissionShortCode!=''">
+                `transmission_short_code` = #{transmissionShortCode},
+            </if>
+            <if test="mileageDistribution != null and mileageDistribution!=''">
+                `mileage_distribution` = #{mileageDistribution},
+            </if>
+        </trim>
+        WHERE
+        <trim suffixOverrides="and">
+            `voucher_code` = #{voucherCode} and
+        </trim>
+    </update>
 </mapper>

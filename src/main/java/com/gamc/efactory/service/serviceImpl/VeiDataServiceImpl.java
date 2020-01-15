@@ -92,10 +92,26 @@ public class VeiDataServiceImpl implements VeiDataService {
 
                 }
                     for(MqmsVoucherRaw mqmsVoucherRawRecord:mqmsVoucherRawList){
-                    mqmsVoucherRawMapper.insertMqmsVoucherRaw(mqmsVoucherRawRecord);
+                    String voucherCode=mqmsVoucherRawRecord.getVoucherCode();
+                        int cnt = mqmsVoucherRawMapper.selectByVoucherCode(voucherCode);
+                        if (cnt == 0) {
+                            mqmsVoucherRawMapper.insertMqmsVoucherRaw(mqmsVoucherRawRecord);
+                            System.out.println(" 插入 "+mqmsVoucherRawRecord);
+                        } else {
+                            mqmsVoucherRawMapper.updateByVoucher(mqmsVoucherRawRecord);
+                            System.out.println(" 更新 "+mqmsVoucherRawRecord);
+                        }
                 }
                 for(MqmsVoucher mqmsVoucherRecord:mqmsVoucherList){
-                    mqmsVoucherMapper.insertMqmsVoucher(mqmsVoucherRecord);
+                    String voucherCode=mqmsVoucherRecord.getVoucherCode();
+                    int cnt = mqmsVoucherMapper.selectByVoucherCode(voucherCode);
+                    if (cnt == 0) {
+                        mqmsVoucherMapper.insertMqmsVoucher(mqmsVoucherRecord);
+                        System.out.println(" 插入 "+mqmsVoucherRecord);
+                    } else {
+                        mqmsVoucherMapper.updateByVoucher(mqmsVoucherRecord);
+                        System.out.println(" 更新 "+mqmsVoucherRecord);
+                    }
                 }
 
 
