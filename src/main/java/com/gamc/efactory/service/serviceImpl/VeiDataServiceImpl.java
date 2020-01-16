@@ -79,12 +79,12 @@ public class VeiDataServiceImpl implements VeiDataService {
 
                     int salesFailureMonths= MqmsUnit.getMonth(mqmsVoucher.getSalesDate(),mqmsVoucher.getFailureDate());
                     int offlineFailureMonths=MqmsUnit.getMonth(mqmsVoucher.getOfflineDate(),mqmsVoucher.getConfirmDate());
-//                    mqmsVoucher.set(Integer.toString(salesFailureMonths));
-//                    mqmsVoucher.setOfflineFailureTime(Integer.toString(offlineFailureMonths));
-//                    mqmsVoucher.setMileageDistribution(RangeResultUtil.rangeResult(mqmsVoucher.getMileage(),5000,100000));
-//                    String[] dateTime=mqmsVoucher.getFailureDate().split("-");
-//                    mqmsVoucher.setFailureYear(dateTime[0]);
-//                    mqmsVoucher.setFailureMonth(dateTime[1]);
+                    mqmsVoucher.setSalesFailureTime(salesFailureMonths);
+                    mqmsVoucher.setOfflineFailureTime(offlineFailureMonths);
+                    mqmsVoucher.setMileageDistribution(RangeResultUtil.rangeResult(mqmsVoucher.getMileage(),5000,100000));
+                    String[] dateTime=mqmsVoucher.getFailureDate().split("-");
+                    mqmsVoucher.setFailureYear(dateTime[0]);
+                    mqmsVoucher.setFailureMonth(dateTime[1]);
                     Map<String, String> map = new HashMap();
                     map=MqmsUnit.getWeekDate(mqmsVoucher.getUpdateTime());
                     mqmsVoucher.setUpdateTime(map.get("weekBegin")+"~"+map.get("weekBegin"));

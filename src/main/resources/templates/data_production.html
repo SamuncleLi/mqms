@@ -2,20 +2,20 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>数据追溯</title>
+    <title>装配数据追溯</title>
     <script type="text/javascript" src="${req.contextPath}/static/plugin/jquery-easyui-1.5.5.4/jquery.min.js"></script>
     <script type="text/javascript" src="${req.contextPath}/static/plugin/jquery-easyui-1.5.5.4/jquery.easyui.min.js"></script>
     <script type="text/javascript" src="${req.contextPath}/static/plugin/jquery-easyui-1.5.5.4/locale/easyui-lang-zh_CN.js"></script>
     <link rel="stylesheet" href="${req.contextPath}/static/plugin/jquery-easyui-1.5.5.4/themes/gray/easyui.css" type="text/css"/>
     <link rel="stylesheet" href="${req.contextPath}/static/plugin/jquery-easyui-1.5.5.4/themes/icon.css" type="text/css"/>
-    <link rel="stylesheet" href="${req.contextPath}/static/css/data_production.css" type="text/css"/>
+    <link rel="stylesheet" href="${req.contextPath}/static/css/data_voucher.css" type="text/css"/>
     <script type="text/javascript" src="${req.contextPath}/static/plugin/jquery-easyui-1.5.5.4/datagrid-detailview.js"></script>
     <script type="text/javascript" src="${req.contextPath}/static/plugin/jquery-easyui-1.5.5.4/datagrid-filter.js"></script>
     <link  href="${req.contextPath}/static/layuiExtend/layui/css/layui.css" media="all" rel="stylesheet">
     <script src="${req.contextPath}/static/layuiExtend/layui/layui.js"></script>
 </head>
 <body>
-<table id="dg2" class="easyui-datagrid" title="生产数据查询" style="width:100%;height:100%"
+<table id="dg2" class="easyui-datagrid" title="VEI数据查询" style="width:100%;height:100%"
        data-options="singleSelect:true,collapsible:true" toolbar="#tb2">
     <thead>
     <tr></tr>
@@ -34,7 +34,7 @@
     //初始化全局变量
     var columns_auto_single=new Array(1);
     var complexDc;var dynamicCondition;
-    var systemName = "mqms";
+    var system = "mqms";
     var model = "production";
     //加载模型
     $(function(){
@@ -44,7 +44,7 @@
     function load_dynamic() {
         //查询数据表头
         $.ajax({
-            url: '/mqms/' + model + '/columnNameAndComment?table=' + systemName + "_" + model,
+            url: '/mqms/' + model +'/columnNameAndComment?table=mqms_' + model,
             cache: false,
             type: 'POST',
             data: "",//json字符串
@@ -92,7 +92,7 @@
                             , queryCallBack: function (requestData) {
                                 console.log(requestData)
                                 $("#result2").html(JSON.stringify(requestData));
-                                load_dynamic_records(requestData);
+                                load_dynamic_records(JSON.stringify(requestData));
                             }
                         });
                         $("#result2").html(JSON.stringify(complexDc.buildRequestData()));
@@ -112,7 +112,7 @@
         //动态加载数据
         $("#dg2").datagrid({
             toolbar:'#tb2',
-//            contentType: "application/json",
+            contentType: "application/json",
             columns:columns_auto_single,//外层ajax请求的表头json
             rownumbers: true,// 行号
             autoRowHeight: false,
@@ -122,13 +122,17 @@
             pageSize: 10,
             pageList: [10, 20, 40, 50],
             loader:function(param,success,error){
+                var condition = {};
+                condition['condition'] = requestData;
+                var allParam = $.extend({},param, condition);
+                console.log(allParam);
                 $.ajax({
-                    url:'/mqms/'+ model + '/list',
-                    data:requestData,
-                    type:"get",
+                    url:'/mqms/' + model + '/list',
+                    contentType: "application/json",
+                    data: allParam,
                     dataType:"json",
                     success: function(data){
-                        console.log(param);
+                        console.log(allParam);
                         success(data);
                     }
                 })

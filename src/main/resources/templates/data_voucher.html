@@ -24,10 +24,37 @@
     <div id="tb2" class="select-area">
         <div>
             <a id="complexBtn" class="layui-btn">复杂查询</a>
-            <a href="javascript:export_record2()" class="easyui-linkbutton" iconCls="icon-save" plain="true">导出</a>
+            <a href="javascript:exportFile()" class="easyui-linkbutton" iconCls="icon-save" plain="true">导出</a>
+            <a href="javascript:importFile()" class="easyui-linkbutton" iconCls="icon-save" plain="true" title="导入excel">导入</a>
+            <a href="javascript:startFailureTrack()" class="easyui-linkbutton" iconCls="icon-save" plain="true" >发起不良跟踪</a>
+            <a href="javascript:startImportantIssue()" class="easyui-linkbutton" iconCls="icon-save" plain="true">发起重点课题</a>
         </div>
         <div id="msg2">查询条件：</div>
         <div id="result2" style="word-break:break-all;height:60px;width:500px;padding-left:50px;display: none;"></div>
+    </div>
+    <div id="upload-dlg" class="easyui-dialog" closed="true">
+        <form  method="post" enctype="multipart/form-data" id="fileForm" action="/mqms/import/proData">
+            <input id="file" class="easyui-filebox" name="file" data-options="prompt:'选择文件'">
+            <a id="upload-btn" href="javascript:fileUpload()" class="easyui-linkbutton" style="width:70%">上传文件</a>
+        </form>
+    </div>
+    <div id="failureTrack-dlg" title="发起不良跟踪" class="easyui-dialog" closed="true">
+        <table id="voucherInfo">
+            <tbody>
+            <tr>
+                <td></td><td></td><td></td><td></td><td></td><td></td>
+            </tr>
+            <tr>
+                <td></td><td></td><td></td><td></td><td></td><td></td>
+            </tr>
+            </tbody>
+        </table>
+        <form id="failureTrackForm"></form>
+    </div>
+    <div id="importantIssue-dlg" title="发起重点课题" class="easyui-dialog" closed="true">
+        <form>
+            <label>起始月份</label><input name="voucherCode">
+        </form>
     </div>
 </div>
 <script type="text/javascript">
@@ -50,6 +77,23 @@
             contentType: "application/json; charset=utf-8",//发送类型，重要，不然会报错
             success: function (result) {
                 var arr = result;
+                var table=document.getElementById('voucherInfo');
+                //动态生成voucherInfo里面的信息,每行有6格，放3个信息
+                for (var i = 0; i < arr.length/3; i++) {
+                    // tr为tab表单下行号为n的行
+                    console.log(table.rows.length);
+                    var tr=table.insertRow(table.rows.length);
+                    // insertCell() 方法用于在 HTML 表的一行的指定位置插入一个空的
+                    for(var j=0;j<3;j++){
+                        // td为插入的行的第一个td元素
+                        var labelTd=tr.insertCell(j*2);
+                        // 像刚才所获取的td中插入一个随机数值
+                        labelTd.innerHTML='<lable>' + arr[i*3+j].comment + '</lable>';
+                        var inputTd=tr.insertCell(j*2 + 1);
+                        inputTd.innerHTML="<input class='easyui-textbox' style='width: 80px' name=\'" + arr[i*3+j].columnName + "\'>"
+                    }
+                }
+
                 //动态生成dcDemo中的li
                 columns_auto_single[0] = function () {
                     var data = [];
@@ -106,6 +150,7 @@
             }
         });
     }
+    //动态给表格表头赋值，并读取数据
     function load_dynamic_records(requestData) {
         //动态加载数据
         $("#dg2").datagrid({
@@ -136,6 +181,35 @@
                 })
             }
         });
+    }
+    //打开上传文件对话框
+    function importFile() {
+        $('#upload-dlg').dialog("open", true);
+    }
+    //上传文件
+    function fileUpload() {
+        $.messager.alert('系统提示',"正在上传，上传完成后会有提示，请耐心等候");
+
+        $("#fileForm").form("submit", {
+            type: 'post',
+            url: '/mqms/import/veiData',
+            success: function (data) {
+                if (data.success == 'true') {
+                    $.messager.alert("系统提示",'上传文件成功');
+                } else {
+                    $.messager.alert("系统提示",'上传文件失败');
+                }
+                return false;
+            }
+        });
+    }
+    //开启不良追踪
+    function startFailureTrack() {
+        $('#failureTrack-dlg').dialog("open", true);
+    }
+    //开启重点课题
+    function startImportantIssue() {
+        $('#importantIssue-dlg').dialog("open", true);
     }
 </script>
 </body>

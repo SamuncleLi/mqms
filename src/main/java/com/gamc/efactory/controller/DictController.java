@@ -43,4 +43,13 @@ public class DictController {
         }
         return EasyUIUtil.formatDataToComboBox(dictMapper.queryDict(dict));
     }
+
+
+    @RequestMapping(value = "/test")
+    public String test(String msg){
+        return "收到" +msg +"\n";
+    }
+
+
+
 }

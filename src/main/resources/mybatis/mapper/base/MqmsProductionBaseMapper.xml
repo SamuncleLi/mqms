@@ -59,8 +59,8 @@
                     <if test="shortCode!=null">
                         `short_code`,
                     </if>
-                    <if test="engCode!=null">
-                        `eng_code`,
+                    <if test="engType!=null">
+                        `eng_type`,
                     </if>
                     <if test="serialCode!=null">
                         `serial_code`,
@@ -68,11 +68,11 @@
                     <if test="districtName!=null">
                         `districtName`,
                     </if>
-                    <if test="salesYear!=null">
-                        `sales_year`,
+                    <if test="productionYear!=null">
+                        `production_year`,
                     </if>
-                    <if test="salesMonth!=null">
-                        `sales_month`,
+                    <if test="productionMonth!=null">
+                        `production_month`,
                     </if>
                     <if test="transmissionShortCode!=null">
                         `transmission_short_code`,
@@ -86,8 +86,8 @@
                     <if test="carShortCode!=null">
                         `car_short_code`,
                     </if>
-                    <if test="carTypeCode!=null">
-                        `car_type_code`,
+                    <if test="carModel!=null">
+                        `car_model`,
                     </if>
                     <if test="carSimpleCode!=null">
                         `car_simple_code`,
@@ -148,8 +148,8 @@
                 <if test="shortCode!=null">
                     #{shortCode},
                 </if>
-                <if test="engCode!=null">
-                    #{engCode},
+                <if test="engType!=null">
+                    #{engType},
                 </if>
                 <if test="serialCode!=null">
                     #{serialCode},
@@ -157,11 +157,11 @@
                 <if test="districtName!=null">
                     #{districtName},
                 </if>
-                <if test="salesYear!=null">
-                    #{salesYear},
+                <if test="productionYear!=null">
+                    #{productionYear},
                 </if>
-                <if test="salesMonth!=null">
-                    #{salesMonth},
+                <if test="productionMonth!=null">
+                    #{productionMonth},
                 </if>
                 <if test="transmissionShortCode!=null">
                     #{transmissionShortCode},
@@ -175,8 +175,8 @@
                 <if test="carShortCode!=null">
                     #{carShortCode},
                 </if>
-                <if test="carTypeCode!=null">
-                    #{carTypeCode},
+                <if test="carModel!=null">
+                    #{carModel},
                 </if>
                 <if test="carSimpleCode!=null">
                     #{carSimpleCode},
@@ -240,8 +240,8 @@
             <if test="shortCode != null and shortCode!=''">
                 `short_code` = #{shortCode},
             </if>
-            <if test="engCode != null and engCode!=''">
-                `eng_code` = #{engCode},
+            <if test="engType != null and engType!=''">
+                `eng_type` = #{engType},
             </if>
             <if test="serialCode != null and serialCode!=''">
                 `serial_code` = #{serialCode},
@@ -249,11 +249,11 @@
             <if test="districtName != null and districtName!=''">
                 `districtName` = #{districtName},
             </if>
-            <if test="salesYear != null and salesYear!=''">
-                `sales_year` = #{salesYear},
+            <if test="productionYear != null and productionYear!=''">
+                `production_year` = #{productionYear},
             </if>
-            <if test="salesMonth != null and salesMonth!=''">
-                `sales_month` = #{salesMonth},
+            <if test="productionMonth != null and productionMonth!=''">
+                `production_month` = #{productionMonth},
             </if>
             <if test="transmissionShortCode != null and transmissionShortCode!=''">
                 `transmission_short_code` = #{transmissionShortCode},
@@ -267,8 +267,8 @@
             <if test="carShortCode != null and carShortCode!=''">
                 `car_short_code` = #{carShortCode},
             </if>
-            <if test="carTypeCode != null and carTypeCode!=''">
-                `car_type_code` = #{carTypeCode},
+            <if test="carModel != null and carModel!=''">
+                `car_model` = #{carModel},
             </if>
             <if test="carSimpleCode != null and carSimpleCode!=''">
                 `car_simple_code` = #{carSimpleCode},
@@ -332,8 +332,8 @@
         <if test="set.shortCode != null and set.shortCode!=''">
             `short_code` = #{set.shortCode},
         </if>
-        <if test="set.engCode != null and set.engCode!=''">
-            `eng_code` = #{set.engCode},
+        <if test="set.engType != null and set.engType!=''">
+            `eng_type` = #{set.engType},
         </if>
         <if test="set.serialCode != null and set.serialCode!=''">
             `serial_code` = #{set.serialCode},
@@ -341,11 +341,11 @@
         <if test="set.districtName != null and set.districtName!=''">
             `districtName` = #{set.districtName},
         </if>
-        <if test="set.salesYear != null and set.salesYear!=''">
-            `sales_year` = #{set.salesYear},
+        <if test="set.productionYear != null and set.productionYear!=''">
+            `production_year` = #{set.productionYear},
         </if>
-        <if test="set.salesMonth != null and set.salesMonth!=''">
-            `sales_month` = #{set.salesMonth},
+        <if test="set.productionMonth != null and set.productionMonth!=''">
+            `production_month` = #{set.productionMonth},
         </if>
         <if test="set.transmissionShortCode != null and set.transmissionShortCode!=''">
             `transmission_short_code` = #{set.transmissionShortCode},
@@ -359,8 +359,8 @@
         <if test="set.carShortCode != null and set.carShortCode!=''">
             `car_short_code` = #{set.carShortCode},
         </if>
-        <if test="set.carTypeCode != null and set.carTypeCode!=''">
-            `car_type_code` = #{set.carTypeCode},
+        <if test="set.carModel != null and set.carModel!=''">
+            `car_model` = #{set.carModel},
         </if>
         <if test="set.carSimpleCode != null and set.carSimpleCode!=''">
             `car_simple_code` = #{set.carSimpleCode},
@@ -699,23 +699,23 @@
                 </foreach>
                 ) and
             </if>
-                <if test="where.engCodeList != null">
-                    `eng_code` in
-                    <foreach collection="where.engCodeList" close=")" open="(" separator="," item="item">
+                <if test="where.engTypeList != null">
+                    `eng_type` in
+                    <foreach collection="where.engTypeList" close=")" open="(" separator="," item="item">
                         #{item}
                     </foreach> and
                 </if>
-            <if test ="where.fuzzyEngCode!=null and where.fuzzyEngCode.size()>0">
+            <if test ="where.fuzzyEngType!=null and where.fuzzyEngType.size()>0">
                 (
-                <foreach collection="where.fuzzyEngCode"  separator="or" item="item">
-                    `Eng_code` like concat('%',#{item},'%')
+                <foreach collection="where.fuzzyEngType"  separator="or" item="item">
+                    `Eng_type` like concat('%',#{item},'%')
                 </foreach>
                 ) and
             </if>
-            <if test ="where.rightFuzzyEngCode!=null and where.rightFuzzyEngCode.size()>0">
+            <if test ="where.rightFuzzyEngType!=null and where.rightFuzzyEngType.size()>0">
                 (
-                <foreach collection="where.rightFuzzyEngCode"  separator="or" item="item">
-                    `Eng_code` like concat(#{item},'%')
+                <foreach collection="where.rightFuzzyEngType"  separator="or" item="item">
+                    `Eng_type` like concat(#{item},'%')
                 </foreach>
                 ) and
             </if>
@@ -759,43 +759,43 @@
                 </foreach>
                 ) and
             </if>
-                <if test="where.salesYearList != null">
-                    `sales_year` in
-                    <foreach collection="where.salesYearList" close=")" open="(" separator="," item="item">
+                <if test="where.productionYearList != null">
+                    `production_year` in
+                    <foreach collection="where.productionYearList" close=")" open="(" separator="," item="item">
                         #{item}
                     </foreach> and
                 </if>
-            <if test ="where.fuzzySalesYear!=null and where.fuzzySalesYear.size()>0">
+            <if test ="where.fuzzyProductionYear!=null and where.fuzzyProductionYear.size()>0">
                 (
-                <foreach collection="where.fuzzySalesYear"  separator="or" item="item">
-                    `Sales_year` like concat('%',#{item},'%')
+                <foreach collection="where.fuzzyProductionYear"  separator="or" item="item">
+                    `Production_year` like concat('%',#{item},'%')
                 </foreach>
                 ) and
             </if>
-            <if test ="where.rightFuzzySalesYear!=null and where.rightFuzzySalesYear.size()>0">
+            <if test ="where.rightFuzzyProductionYear!=null and where.rightFuzzyProductionYear.size()>0">
                 (
-                <foreach collection="where.rightFuzzySalesYear"  separator="or" item="item">
-                    `Sales_year` like concat(#{item},'%')
+                <foreach collection="where.rightFuzzyProductionYear"  separator="or" item="item">
+                    `Production_year` like concat(#{item},'%')
                 </foreach>
                 ) and
             </if>
-                <if test="where.salesMonthList != null">
-                    `sales_month` in
-                    <foreach collection="where.salesMonthList" close=")" open="(" separator="," item="item">
+                <if test="where.productionMonthList != null">
+                    `production_month` in
+                    <foreach collection="where.productionMonthList" close=")" open="(" separator="," item="item">
                         #{item}
                     </foreach> and
                 </if>
-            <if test ="where.fuzzySalesMonth!=null and where.fuzzySalesMonth.size()>0">
+            <if test ="where.fuzzyProductionMonth!=null and where.fuzzyProductionMonth.size()>0">
                 (
-                <foreach collection="where.fuzzySalesMonth"  separator="or" item="item">
-                    `Sales_month` like concat('%',#{item},'%')
+                <foreach collection="where.fuzzyProductionMonth"  separator="or" item="item">
+                    `Production_month` like concat('%',#{item},'%')
                 </foreach>
                 ) and
             </if>
-            <if test ="where.rightFuzzySalesMonth!=null and where.rightFuzzySalesMonth.size()>0">
+            <if test ="where.rightFuzzyProductionMonth!=null and where.rightFuzzyProductionMonth.size()>0">
                 (
-                <foreach collection="where.rightFuzzySalesMonth"  separator="or" item="item">
-                    `Sales_month` like concat(#{item},'%')
+                <foreach collection="where.rightFuzzyProductionMonth"  separator="or" item="item">
+                    `Production_month` like concat(#{item},'%')
                 </foreach>
                 ) and
             </if>
@@ -879,23 +879,23 @@
                 </foreach>
                 ) and
             </if>
-                <if test="where.carTypeCodeList != null">
-                    `car_type_code` in
-                    <foreach collection="where.carTypeCodeList" close=")" open="(" separator="," item="item">
+                <if test="where.carModelList != null">
+                    `car_model` in
+                    <foreach collection="where.carModelList" close=")" open="(" separator="," item="item">
                         #{item}
                     </foreach> and
                 </if>
-            <if test ="where.fuzzyCarTypeCode!=null and where.fuzzyCarTypeCode.size()>0">
+            <if test ="where.fuzzyCarModel!=null and where.fuzzyCarModel.size()>0">
                 (
-                <foreach collection="where.fuzzyCarTypeCode"  separator="or" item="item">
-                    `Car_type_code` like concat('%',#{item},'%')
+                <foreach collection="where.fuzzyCarModel"  separator="or" item="item">
+                    `Car_model` like concat('%',#{item},'%')
                 </foreach>
                 ) and
             </if>
-            <if test ="where.rightFuzzyCarTypeCode!=null and where.rightFuzzyCarTypeCode.size()>0">
+            <if test ="where.rightFuzzyCarModel!=null and where.rightFuzzyCarModel.size()>0">
                 (
-                <foreach collection="where.rightFuzzyCarTypeCode"  separator="or" item="item">
-                    `Car_type_code` like concat(#{item},'%')
+                <foreach collection="where.rightFuzzyCarModel"  separator="or" item="item">
+                    `Car_model` like concat(#{item},'%')
                 </foreach>
                 ) and
             </if>
@@ -941,16 +941,16 @@
         <result property="carType" column="car_type"/>
         <result property="exportCountry" column="export_country"/>
         <result property="shortCode" column="short_code"/>
-        <result property="engCode" column="eng_code"/>
+        <result property="engType" column="eng_type"/>
         <result property="serialCode" column="serial_code"/>
         <result property="districtName" column="districtName"/>
-        <result property="salesYear" column="sales_year"/>
-        <result property="salesMonth" column="sales_month"/>
+        <result property="productionYear" column="production_year"/>
+        <result property="productionMonth" column="production_month"/>
         <result property="transmissionShortCode" column="transmission_short_code"/>
         <result property="transmissionSimpleCode" column="transmission_simple_code"/>
         <result property="transmissionType" column="transmission_type"/>
         <result property="carShortCode" column="car_short_code"/>
-        <result property="carTypeCode" column="car_type_code"/>
+        <result property="carModel" column="car_model"/>
         <result property="carSimpleCode" column="car_simple_code"/>
     </resultMap>
 
@@ -1011,8 +1011,8 @@
             <if test="shortCode != null and shortCode!=''">
                 `short_code` = #{shortCode} and
             </if>
-            <if test="engCode != null and engCode!=''">
-                `eng_code` = #{engCode} and
+            <if test="engType != null and engType!=''">
+                `eng_type` = #{engType} and
             </if>
             <if test="serialCode != null and serialCode!=''">
                 `serial_code` = #{serialCode} and
@@ -1020,11 +1020,11 @@
             <if test="districtName != null and districtName!=''">
                 `districtName` = #{districtName} and
             </if>
-            <if test="salesYear != null and salesYear!=''">
-                `sales_year` = #{salesYear} and
+            <if test="productionYear != null and productionYear!=''">
+                `production_year` = #{productionYear} and
             </if>
-            <if test="salesMonth != null and salesMonth!=''">
-                `sales_month` = #{salesMonth} and
+            <if test="productionMonth != null and productionMonth!=''">
+                `production_month` = #{productionMonth} and
             </if>
             <if test="transmissionShortCode != null and transmissionShortCode!=''">
                 `transmission_short_code` = #{transmissionShortCode} and
@@ -1038,8 +1038,8 @@
             <if test="carShortCode != null and carShortCode!=''">
                 `car_short_code` = #{carShortCode} and
             </if>
-            <if test="carTypeCode != null and carTypeCode!=''">
-                `car_type_code` = #{carTypeCode} and
+            <if test="carModel != null and carModel!=''">
+                `car_model` = #{carModel} and
             </if>
             <if test="carSimpleCode != null and carSimpleCode!=''">
                 `car_simple_code` = #{carSimpleCode} and
@@ -1377,23 +1377,23 @@
                     </foreach>
                     ) and
                 </if>
-                <if test="engCodeList != null">
-                    `eng_code` in
-                    <foreach collection="engCodeList" close=")" open="(" separator="," item="item">
+                <if test="engTypeList != null">
+                    `eng_type` in
+                    <foreach collection="engTypeList" close=")" open="(" separator="," item="item">
                         #{item}
                     </foreach> and
                 </if>
-                <if test ="fuzzyEngCode!=null and fuzzyEngCode.size()>0">
+                <if test ="fuzzyEngType!=null and fuzzyEngType.size()>0">
                     (
-                    <foreach collection="fuzzyEngCode"  separator="or" item="item">
-                        `Eng_code` like concat('%',#{item},'%')
+                    <foreach collection="fuzzyEngType"  separator="or" item="item">
+                        `Eng_type` like concat('%',#{item},'%')
                     </foreach>
                     ) and
                 </if>
-                <if test ="rightFuzzyEngCode!=null and rightFuzzyEngCode.size()>0">
+                <if test ="rightFuzzyEngType!=null and rightFuzzyEngType.size()>0">
                     (
-                    <foreach collection="rightFuzzyEngCode"  separator="or" item="item">
-                        `Eng_code` like concat(#{item},'%')
+                    <foreach collection="rightFuzzyEngType"  separator="or" item="item">
+                        `Eng_type` like concat(#{item},'%')
                     </foreach>
                     ) and
                 </if>
@@ -1437,43 +1437,43 @@
                     </foreach>
                     ) and
                 </if>
-                <if test="salesYearList != null">
-                    `sales_year` in
-                    <foreach collection="salesYearList" close=")" open="(" separator="," item="item">
+                <if test="productionYearList != null">
+                    `production_year` in
+                    <foreach collection="productionYearList" close=")" open="(" separator="," item="item">
                         #{item}
                     </foreach> and
                 </if>
-                <if test ="fuzzySalesYear!=null and fuzzySalesYear.size()>0">
+                <if test ="fuzzyProductionYear!=null and fuzzyProductionYear.size()>0">
                     (
-                    <foreach collection="fuzzySalesYear"  separator="or" item="item">
-                        `Sales_year` like concat('%',#{item},'%')
+                    <foreach collection="fuzzyProductionYear"  separator="or" item="item">
+                        `Production_year` like concat('%',#{item},'%')
                     </foreach>
                     ) and
                 </if>
-                <if test ="rightFuzzySalesYear!=null and rightFuzzySalesYear.size()>0">
+                <if test ="rightFuzzyProductionYear!=null and rightFuzzyProductionYear.size()>0">
                     (
-                    <foreach collection="rightFuzzySalesYear"  separator="or" item="item">
-                        `Sales_year` like concat(#{item},'%')
+                    <foreach collection="rightFuzzyProductionYear"  separator="or" item="item">
+                        `Production_year` like concat(#{item},'%')
                     </foreach>
                     ) and
                 </if>
-                <if test="salesMonthList != null">
-                    `sales_month` in
-                    <foreach collection="salesMonthList" close=")" open="(" separator="," item="item">
+                <if test="productionMonthList != null">
+                    `production_month` in
+                    <foreach collection="productionMonthList" close=")" open="(" separator="," item="item">
                         #{item}
                     </foreach> and
                 </if>
-                <if test ="fuzzySalesMonth!=null and fuzzySalesMonth.size()>0">
+                <if test ="fuzzyProductionMonth!=null and fuzzyProductionMonth.size()>0">
                     (
-                    <foreach collection="fuzzySalesMonth"  separator="or" item="item">
-                        `Sales_month` like concat('%',#{item},'%')
+                    <foreach collection="fuzzyProductionMonth"  separator="or" item="item">
+                        `Production_month` like concat('%',#{item},'%')
                     </foreach>
                     ) and
                 </if>
-                <if test ="rightFuzzySalesMonth!=null and rightFuzzySalesMonth.size()>0">
+                <if test ="rightFuzzyProductionMonth!=null and rightFuzzyProductionMonth.size()>0">
                     (
-                    <foreach collection="rightFuzzySalesMonth"  separator="or" item="item">
-                        `Sales_month` like concat(#{item},'%')
+                    <foreach collection="rightFuzzyProductionMonth"  separator="or" item="item">
+                        `Production_month` like concat(#{item},'%')
                     </foreach>
                     ) and
                 </if>
@@ -1557,23 +1557,23 @@
                     </foreach>
                     ) and
                 </if>
-                <if test="carTypeCodeList != null">
-                    `car_type_code` in
-                    <foreach collection="carTypeCodeList" close=")" open="(" separator="," item="item">
+                <if test="carModelList != null">
+                    `car_model` in
+                    <foreach collection="carModelList" close=")" open="(" separator="," item="item">
                         #{item}
                     </foreach> and
                 </if>
-                <if test ="fuzzyCarTypeCode!=null and fuzzyCarTypeCode.size()>0">
+                <if test ="fuzzyCarModel!=null and fuzzyCarModel.size()>0">
                     (
-                    <foreach collection="fuzzyCarTypeCode"  separator="or" item="item">
-                        `Car_type_code` like concat('%',#{item},'%')
+                    <foreach collection="fuzzyCarModel"  separator="or" item="item">
+                        `Car_model` like concat('%',#{item},'%')
                     </foreach>
                     ) and
                 </if>
-                <if test ="rightFuzzyCarTypeCode!=null and rightFuzzyCarTypeCode.size()>0">
+                <if test ="rightFuzzyCarModel!=null and rightFuzzyCarModel.size()>0">
                     (
-                    <foreach collection="rightFuzzyCarTypeCode"  separator="or" item="item">
-                        `Car_type_code` like concat(#{item},'%')
+                    <foreach collection="rightFuzzyCarModel"  separator="or" item="item">
+                        `Car_model` like concat(#{item},'%')
                     </foreach>
                     ) and
                 </if>
@@ -1657,8 +1657,8 @@
             <if test="shortCode != null and shortCode!=''">
                 `short_code` = #{shortCode} and
             </if>
-            <if test="engCode != null and engCode!=''">
-                `eng_code` = #{engCode} and
+            <if test="engType != null and engType!=''">
+                `eng_type` = #{engType} and
             </if>
             <if test="serialCode != null and serialCode!=''">
                 `serial_code` = #{serialCode} and
@@ -1666,11 +1666,11 @@
             <if test="districtName != null and districtName!=''">
                 `districtName` = #{districtName} and
             </if>
-            <if test="salesYear != null and salesYear!=''">
-                `sales_year` = #{salesYear} and
+            <if test="productionYear != null and productionYear!=''">
+                `production_year` = #{productionYear} and
             </if>
-            <if test="salesMonth != null and salesMonth!=''">
-                `sales_month` = #{salesMonth} and
+            <if test="productionMonth != null and productionMonth!=''">
+                `production_month` = #{productionMonth} and
             </if>
             <if test="transmissionShortCode != null and transmissionShortCode!=''">
                 `transmission_short_code` = #{transmissionShortCode} and
@@ -1684,8 +1684,8 @@
             <if test="carShortCode != null and carShortCode!=''">
                 `car_short_code` = #{carShortCode} and
             </if>
-            <if test="carTypeCode != null and carTypeCode!=''">
-                `car_type_code` = #{carTypeCode} and
+            <if test="carModel != null and carModel!=''">
+                `car_model` = #{carModel} and
             </if>
             <if test="carSimpleCode != null and carSimpleCode!=''">
                 `car_simple_code` = #{carSimpleCode} and
@@ -2023,23 +2023,23 @@
                     </foreach>
                     ) and
                 </if>
-                    <if test="engCodeList != null">
-                        `eng_code` in
-                        <foreach collection="engCodeList" close=")" open="(" separator="," item="item">
+                    <if test="engTypeList != null">
+                        `eng_type` in
+                        <foreach collection="engTypeList" close=")" open="(" separator="," item="item">
                             #{item}
                         </foreach> and
                     </if>
-                <if test ="fuzzyEngCode!=null and fuzzyEngCode.size()>0">
+                <if test ="fuzzyEngType!=null and fuzzyEngType.size()>0">
                     (
-                    <foreach collection="fuzzyEngCode"  separator="or" item="item">
-                        `Eng_code` like concat('%',#{item},'%')
+                    <foreach collection="fuzzyEngType"  separator="or" item="item">
+                        `Eng_type` like concat('%',#{item},'%')
                     </foreach>
                     ) and
                 </if>
-                <if test ="rightFuzzyEngCode!=null and rightFuzzyEngCode.size()>0">
+                <if test ="rightFuzzyEngType!=null and rightFuzzyEngType.size()>0">
                     (
-                    <foreach collection="rightFuzzyEngCode"  separator="or" item="item">
-                        `Eng_code` like concat(#{item},'%')
+                    <foreach collection="rightFuzzyEngType"  separator="or" item="item">
+                        `Eng_type` like concat(#{item},'%')
                     </foreach>
                     ) and
                 </if>
@@ -2083,43 +2083,43 @@
                     </foreach>
                     ) and
                 </if>
-                    <if test="salesYearList != null">
-                        `sales_year` in
-                        <foreach collection="salesYearList" close=")" open="(" separator="," item="item">
+                    <if test="productionYearList != null">
+                        `production_year` in
+                        <foreach collection="productionYearList" close=")" open="(" separator="," item="item">
                             #{item}
                         </foreach> and
                     </if>
-                <if test ="fuzzySalesYear!=null and fuzzySalesYear.size()>0">
+                <if test ="fuzzyProductionYear!=null and fuzzyProductionYear.size()>0">
                     (
-                    <foreach collection="fuzzySalesYear"  separator="or" item="item">
-                        `Sales_year` like concat('%',#{item},'%')
+                    <foreach collection="fuzzyProductionYear"  separator="or" item="item">
+                        `Production_year` like concat('%',#{item},'%')
                     </foreach>
                     ) and
                 </if>
-                <if test ="rightFuzzySalesYear!=null and rightFuzzySalesYear.size()>0">
+                <if test ="rightFuzzyProductionYear!=null and rightFuzzyProductionYear.size()>0">
                     (
-                    <foreach collection="rightFuzzySalesYear"  separator="or" item="item">
-                        `Sales_year` like concat(#{item},'%')
+                    <foreach collection="rightFuzzyProductionYear"  separator="or" item="item">
+                        `Production_year` like concat(#{item},'%')
                     </foreach>
                     ) and
                 </if>
-                    <if test="salesMonthList != null">
-                        `sales_month` in
-                        <foreach collection="salesMonthList" close=")" open="(" separator="," item="item">
+                    <if test="productionMonthList != null">
+                        `production_month` in
+                        <foreach collection="productionMonthList" close=")" open="(" separator="," item="item">
                             #{item}
                         </foreach> and
                     </if>
-                <if test ="fuzzySalesMonth!=null and fuzzySalesMonth.size()>0">
+                <if test ="fuzzyProductionMonth!=null and fuzzyProductionMonth.size()>0">
                     (
-                    <foreach collection="fuzzySalesMonth"  separator="or" item="item">
-                        `Sales_month` like concat('%',#{item},'%')
+                    <foreach collection="fuzzyProductionMonth"  separator="or" item="item">
+                        `Production_month` like concat('%',#{item},'%')
                     </foreach>
                     ) and
                 </if>
-                <if test ="rightFuzzySalesMonth!=null and rightFuzzySalesMonth.size()>0">
+                <if test ="rightFuzzyProductionMonth!=null and rightFuzzyProductionMonth.size()>0">
                     (
-                    <foreach collection="rightFuzzySalesMonth"  separator="or" item="item">
-                        `Sales_month` like concat(#{item},'%')
+                    <foreach collection="rightFuzzyProductionMonth"  separator="or" item="item">
+                        `Production_month` like concat(#{item},'%')
                     </foreach>
                     ) and
                 </if>
@@ -2203,23 +2203,23 @@
                     </foreach>
                     ) and
                 </if>
-                    <if test="carTypeCodeList != null">
-                        `car_type_code` in
-                        <foreach collection="carTypeCodeList" close=")" open="(" separator="," item="item">
+                    <if test="carModelList != null">
+                        `car_model` in
+                        <foreach collection="carModelList" close=")" open="(" separator="," item="item">
                             #{item}
                         </foreach> and
                     </if>
-                <if test ="fuzzyCarTypeCode!=null and fuzzyCarTypeCode.size()>0">
+                <if test ="fuzzyCarModel!=null and fuzzyCarModel.size()>0">
                     (
-                    <foreach collection="fuzzyCarTypeCode"  separator="or" item="item">
-                        `Car_type_code` like concat('%',#{item},'%')
+                    <foreach collection="fuzzyCarModel"  separator="or" item="item">
+                        `Car_model` like concat('%',#{item},'%')
                     </foreach>
                     ) and
                 </if>
-                <if test ="rightFuzzyCarTypeCode!=null and rightFuzzyCarTypeCode.size()>0">
+                <if test ="rightFuzzyCarModel!=null and rightFuzzyCarModel.size()>0">
                     (
-                    <foreach collection="rightFuzzyCarTypeCode"  separator="or" item="item">
-                        `Car_type_code` like concat(#{item},'%')
+                    <foreach collection="rightFuzzyCarModel"  separator="or" item="item">
+                        `Car_model` like concat(#{item},'%')
                     </foreach>
                     ) and
                 </if>
@@ -2267,16 +2267,16 @@
         `car_type`,
         `export_country`,
         `short_code`,
-        `eng_code`,
+        `eng_type`,
         `serial_code`,
         `districtName`,
-        `sales_year`,
-        `sales_month`,
+        `production_year`,
+        `production_month`,
         `transmission_short_code`,
         `transmission_simple_code`,
         `transmission_type`,
         `car_short_code`,
-        `car_type_code`,
+        `car_model`,
         `car_simple_code`,
         </trim>
     </sql>
@@ -2349,8 +2349,8 @@
                     <if test="fetchFields.fetchFields.shortCode==true">
                         `short_code`,
                     </if>
-                    <if test="fetchFields.fetchFields.engCode==true">
-                        `eng_code`,
+                    <if test="fetchFields.fetchFields.engType==true">
+                        `eng_type`,
                     </if>
                     <if test="fetchFields.fetchFields.serialCode==true">
                         `serial_code`,
@@ -2358,11 +2358,11 @@
                     <if test="fetchFields.fetchFields.districtName==true">
                         `districtName`,
                     </if>
-                    <if test="fetchFields.fetchFields.salesYear==true">
-                        `sales_year`,
+                    <if test="fetchFields.fetchFields.productionYear==true">
+                        `production_year`,
                     </if>
-                    <if test="fetchFields.fetchFields.salesMonth==true">
-                        `sales_month`,
+                    <if test="fetchFields.fetchFields.productionMonth==true">
+                        `production_month`,
                     </if>
                     <if test="fetchFields.fetchFields.transmissionShortCode==true">
                         `transmission_short_code`,
@@ -2376,8 +2376,8 @@
                     <if test="fetchFields.fetchFields.carShortCode==true">
                         `car_short_code`,
                     </if>
-                    <if test="fetchFields.fetchFields.carTypeCode==true">
-                        `car_type_code`,
+                    <if test="fetchFields.fetchFields.carModel==true">
+                        `car_model`,
                     </if>
                     <if test="fetchFields.fetchFields.carSimpleCode==true">
                         `car_simple_code`,
@@ -2435,8 +2435,8 @@
                     <if test="fetchFields.excludeFields.shortCode==null">
                         `short_code`,
                     </if>
-                    <if test="fetchFields.excludeFields.engCode==null">
-                        `eng_code`,
+                    <if test="fetchFields.excludeFields.engType==null">
+                        `eng_type`,
                     </if>
                     <if test="fetchFields.excludeFields.serialCode==null">
                         `serial_code`,
@@ -2444,11 +2444,11 @@
                     <if test="fetchFields.excludeFields.districtName==null">
                         `districtName`,
                     </if>
-                    <if test="fetchFields.excludeFields.salesYear==null">
-                        `sales_year`,
+                    <if test="fetchFields.excludeFields.productionYear==null">
+                        `production_year`,
                     </if>
-                    <if test="fetchFields.excludeFields.salesMonth==null">
-                        `sales_month`,
+                    <if test="fetchFields.excludeFields.productionMonth==null">
+                        `production_month`,
                     </if>
                     <if test="fetchFields.excludeFields.transmissionShortCode==null">
                         `transmission_short_code`,
@@ -2462,8 +2462,8 @@
                     <if test="fetchFields.excludeFields.carShortCode==null">
                         `car_short_code`,
                     </if>
-                    <if test="fetchFields.excludeFields.carTypeCode==null">
-                        `car_type_code`,
+                    <if test="fetchFields.excludeFields.carModel==null">
+                        `car_model`,
                     </if>
                     <if test="fetchFields.excludeFields.carSimpleCode==null">
                         `car_simple_code`,

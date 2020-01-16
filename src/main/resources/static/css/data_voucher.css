@@ -1,6 +1,6 @@
 .select-area{
     width: 98%;
-    height: 10%;
+    height: 12%;
 }
 body{
     width: 100%;
@@ -8,4 +8,25 @@ body{
 }
 html{
     height: 100%;
+}
+#upload-dlg{
+    width: 400px;
+    height: 200px;
+}
+#fileForm{
+    padding: 10% 10% 10% 10%;
+}
+#file{
+    width: 240px;
+}
+#upload-btn{
+    width: 80%;
+}
+#failureTrack-dlg{
+    width: 600px;
+    height: 400px;
+}
+#importantIssue-dlg{
+    width: 600px;
+    height: 400px;
 }

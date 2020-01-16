@@ -10,7 +10,7 @@ import java.util.List;
 */
 public class MqmsProduction implements Serializable {
 
-    private static final long serialVersionUID = 1578469893674L;
+    private static final long serialVersionUID = 1578885145298L;
 
 
     /**
@@ -21,37 +21,37 @@ public class MqmsProduction implements Serializable {
     private Integer productionId;
 
     /**
-    * 
+    * 工厂
     * isNullAble:1
     */
     private String factoryCode;
 
     /**
-    * 
+    * 生产批次
     * isNullAble:1
     */
     private String productionBatch;
 
     /**
-    * 
+    * vin码
     * isNullAble:1
     */
     private String vin;
 
     /**
-    * 
+    * mtoc
     * isNullAble:1
     */
     private String mtoc;
 
     /**
-    * 
+    * 站点
     * isNullAble:1
     */
     private String stationCode;
 
     /**
-    * 
+    * 通过时间
     * isNullAble:1
     */
     private String passTime;
@@ -63,13 +63,13 @@ public class MqmsProduction implements Serializable {
     private String carModelCode;
 
     /**
-    * 
+    * 生产车型名称
     * isNullAble:1
     */
     private String carModelName;
 
     /**
-    * 
+    * 工作日
     * isNullAble:1
     */
     private String productionWorktime;
@@ -81,7 +81,7 @@ public class MqmsProduction implements Serializable {
     private String egtypeCode;
 
     /**
-    * 
+    * 变速箱号
     * isNullAble:1
     */
     private String transmissionCode;
@@ -99,85 +99,85 @@ public class MqmsProduction implements Serializable {
     private String period;
 
     /**
-    * 
+    * 车辆类型
     * isNullAble:1
     */
     private String carType;
 
     /**
-    * 
+    * 出口国家
     * isNullAble:1
     */
     private String exportCountry;
 
     /**
-    * 
+    * 短码
     * isNullAble:1
     */
     private String shortCode;
 
     /**
-    * 
+    * 发动机机型
     * isNullAble:1
     */
-    private String engCode;
+    private String engType;
 
     /**
-    * 
+    * 系列
     * isNullAble:1
     */
     private String serialCode;
 
     /**
-    * 
+    * 区域
     * isNullAble:1
     */
     private String districtName;
 
     /**
-    * 
+    * 生产年
     * isNullAble:1
     */
-    private String salesYear;
+    private String productionYear;
 
     /**
-    * 
+    * 生产月
     * isNullAble:1
     */
-    private String salesMonth;
+    private String productionMonth;
 
     /**
-    * 
+    * 变速箱短码
     * isNullAble:1
     */
     private String transmissionShortCode;
 
     /**
-    * 
+    * 变速箱简码
     * isNullAble:1
     */
     private String transmissionSimpleCode;
 
     /**
-    * 
+    * 变速箱类型
     * isNullAble:1
     */
     private String transmissionType;
 
     /**
-    * 
+    * 车型简码
     * isNullAble:1
     */
     private String carShortCode;
 
     /**
-    * 
+    * 车型
     * isNullAble:1
     */
-    private String carTypeCode;
+    private String carModel;
 
     /**
-    * 
+    * 内部车型代号
     * isNullAble:1
     */
     private String carSimpleCode;
@@ -251,9 +251,9 @@ public class MqmsProduction implements Serializable {
 
     public String getShortCode(){return this.shortCode;}
 
-    public void setEngCode(String engCode){this.engCode = engCode;}
+    public void setEngType(String engType){this.engType = engType;}
 
-    public String getEngCode(){return this.engCode;}
+    public String getEngType(){return this.engType;}
 
     public void setSerialCode(String serialCode){this.serialCode = serialCode;}
 
@@ -263,13 +263,13 @@ public class MqmsProduction implements Serializable {
 
     public String getDistrictName(){return this.districtName;}
 
-    public void setSalesYear(String salesYear){this.salesYear = salesYear;}
+    public void setProductionYear(String productionYear){this.productionYear = productionYear;}
 
-    public String getSalesYear(){return this.salesYear;}
+    public String getProductionYear(){return this.productionYear;}
 
-    public void setSalesMonth(String salesMonth){this.salesMonth = salesMonth;}
+    public void setProductionMonth(String productionMonth){this.productionMonth = productionMonth;}
 
-    public String getSalesMonth(){return this.salesMonth;}
+    public String getProductionMonth(){return this.productionMonth;}
 
     public void setTransmissionShortCode(String transmissionShortCode){this.transmissionShortCode = transmissionShortCode;}
 
@@ -287,9 +287,9 @@ public class MqmsProduction implements Serializable {
 
     public String getCarShortCode(){return this.carShortCode;}
 
-    public void setCarTypeCode(String carTypeCode){this.carTypeCode = carTypeCode;}
+    public void setCarModel(String carModel){this.carModel = carModel;}
 
-    public String getCarTypeCode(){return this.carTypeCode;}
+    public String getCarModel(){return this.carModel;}
 
     public void setCarSimpleCode(String carSimpleCode){this.carSimpleCode = carSimpleCode;}
 
@@ -314,16 +314,16 @@ public class MqmsProduction implements Serializable {
                 "carType='" + carType + '\'' +
                 "exportCountry='" + exportCountry + '\'' +
                 "shortCode='" + shortCode + '\'' +
-                "engCode='" + engCode + '\'' +
+                "engType='" + engType + '\'' +
                 "serialCode='" + serialCode + '\'' +
                 "districtName='" + districtName + '\'' +
-                "salesYear='" + salesYear + '\'' +
-                "salesMonth='" + salesMonth + '\'' +
+                "productionYear='" + productionYear + '\'' +
+                "productionMonth='" + productionMonth + '\'' +
                 "transmissionShortCode='" + transmissionShortCode + '\'' +
                 "transmissionSimpleCode='" + transmissionSimpleCode + '\'' +
                 "transmissionType='" + transmissionType + '\'' +
                 "carShortCode='" + carShortCode + '\'' +
-                "carTypeCode='" + carTypeCode + '\'' +
+                "carModel='" + carModel + '\'' +
                 "carSimpleCode='" + carSimpleCode + '\'' +
             '}';
     }
@@ -577,18 +577,18 @@ public class MqmsProduction implements Serializable {
         private List<String> rightFuzzyShortCode;
 
         public List<String> getRightFuzzyShortCode(){return this.rightFuzzyShortCode;}
-        private List<String> engCodeList;
+        private List<String> engTypeList;
 
-        public List<String> getEngCodeList(){return this.engCodeList;}
+        public List<String> getEngTypeList(){return this.engTypeList;}
 
 
-        private List<String> fuzzyEngCode;
+        private List<String> fuzzyEngType;
 
-        public List<String> getFuzzyEngCode(){return this.fuzzyEngCode;}
+        public List<String> getFuzzyEngType(){return this.fuzzyEngType;}
 
-        private List<String> rightFuzzyEngCode;
+        private List<String> rightFuzzyEngType;
 
-        public List<String> getRightFuzzyEngCode(){return this.rightFuzzyEngCode;}
+        public List<String> getRightFuzzyEngType(){return this.rightFuzzyEngType;}
         private List<String> serialCodeList;
 
         public List<String> getSerialCodeList(){return this.serialCodeList;}
@@ -613,30 +613,30 @@ public class MqmsProduction implements Serializable {
         private List<String> rightFuzzyDistrictName;
 
         public List<String> getRightFuzzyDistrictName(){return this.rightFuzzyDistrictName;}
-        private List<String> salesYearList;
+        private List<String> productionYearList;
 
-        public List<String> getSalesYearList(){return this.salesYearList;}
-
-
-        private List<String> fuzzySalesYear;
-
-        public List<String> getFuzzySalesYear(){return this.fuzzySalesYear;}
-
-        private List<String> rightFuzzySalesYear;
-
-        public List<String> getRightFuzzySalesYear(){return this.rightFuzzySalesYear;}
-        private List<String> salesMonthList;
-
-        public List<String> getSalesMonthList(){return this.salesMonthList;}
+        public List<String> getProductionYearList(){return this.productionYearList;}
 
 
-        private List<String> fuzzySalesMonth;
+        private List<String> fuzzyProductionYear;
 
-        public List<String> getFuzzySalesMonth(){return this.fuzzySalesMonth;}
+        public List<String> getFuzzyProductionYear(){return this.fuzzyProductionYear;}
 
-        private List<String> rightFuzzySalesMonth;
+        private List<String> rightFuzzyProductionYear;
 
-        public List<String> getRightFuzzySalesMonth(){return this.rightFuzzySalesMonth;}
+        public List<String> getRightFuzzyProductionYear(){return this.rightFuzzyProductionYear;}
+        private List<String> productionMonthList;
+
+        public List<String> getProductionMonthList(){return this.productionMonthList;}
+
+
+        private List<String> fuzzyProductionMonth;
+
+        public List<String> getFuzzyProductionMonth(){return this.fuzzyProductionMonth;}
+
+        private List<String> rightFuzzyProductionMonth;
+
+        public List<String> getRightFuzzyProductionMonth(){return this.rightFuzzyProductionMonth;}
         private List<String> transmissionShortCodeList;
 
         public List<String> getTransmissionShortCodeList(){return this.transmissionShortCodeList;}
@@ -685,18 +685,18 @@ public class MqmsProduction implements Serializable {
         private List<String> rightFuzzyCarShortCode;
 
         public List<String> getRightFuzzyCarShortCode(){return this.rightFuzzyCarShortCode;}
-        private List<String> carTypeCodeList;
+        private List<String> carModelList;
 
-        public List<String> getCarTypeCodeList(){return this.carTypeCodeList;}
+        public List<String> getCarModelList(){return this.carModelList;}
 
 
-        private List<String> fuzzyCarTypeCode;
+        private List<String> fuzzyCarModel;
 
-        public List<String> getFuzzyCarTypeCode(){return this.fuzzyCarTypeCode;}
+        public List<String> getFuzzyCarModel(){return this.fuzzyCarModel;}
 
-        private List<String> rightFuzzyCarTypeCode;
+        private List<String> rightFuzzyCarModel;
 
-        public List<String> getRightFuzzyCarTypeCode(){return this.rightFuzzyCarTypeCode;}
+        public List<String> getRightFuzzyCarModel(){return this.rightFuzzyCarModel;}
         private List<String> carSimpleCodeList;
 
         public List<String> getCarSimpleCodeList(){return this.carSimpleCodeList;}
@@ -1474,48 +1474,48 @@ public class MqmsProduction implements Serializable {
             return this;
         }
 
-        public QueryBuilder fuzzyEngCode (List<String> fuzzyEngCode){
-            this.fuzzyEngCode = fuzzyEngCode;
+        public QueryBuilder fuzzyEngType (List<String> fuzzyEngType){
+            this.fuzzyEngType = fuzzyEngType;
             return this;
         }
 
-        public QueryBuilder fuzzyEngCode (String ... fuzzyEngCode){
-            this.fuzzyEngCode = solveNullList(fuzzyEngCode);
+        public QueryBuilder fuzzyEngType (String ... fuzzyEngType){
+            this.fuzzyEngType = solveNullList(fuzzyEngType);
             return this;
         }
 
-        public QueryBuilder rightFuzzyEngCode (List<String> rightFuzzyEngCode){
-            this.rightFuzzyEngCode = rightFuzzyEngCode;
+        public QueryBuilder rightFuzzyEngType (List<String> rightFuzzyEngType){
+            this.rightFuzzyEngType = rightFuzzyEngType;
             return this;
         }
 
-        public QueryBuilder rightFuzzyEngCode (String ... rightFuzzyEngCode){
-            this.rightFuzzyEngCode = solveNullList(rightFuzzyEngCode);
+        public QueryBuilder rightFuzzyEngType (String ... rightFuzzyEngType){
+            this.rightFuzzyEngType = solveNullList(rightFuzzyEngType);
             return this;
         }
 
-        public QueryBuilder engCode(String engCode){
-            setEngCode(engCode);
+        public QueryBuilder engType(String engType){
+            setEngType(engType);
             return this;
         }
 
-        public QueryBuilder engCodeList(String ... engCode){
-            this.engCodeList = solveNullList(engCode);
+        public QueryBuilder engTypeList(String ... engType){
+            this.engTypeList = solveNullList(engType);
             return this;
         }
 
-        public QueryBuilder engCodeList(List<String> engCode){
-            this.engCodeList = engCode;
+        public QueryBuilder engTypeList(List<String> engType){
+            this.engTypeList = engType;
             return this;
         }
 
-        public QueryBuilder fetchEngCode(){
-            setFetchFields("fetchFields","engCode");
+        public QueryBuilder fetchEngType(){
+            setFetchFields("fetchFields","engType");
             return this;
         }
 
-        public QueryBuilder excludeEngCode(){
-            setFetchFields("excludeFields","engCode");
+        public QueryBuilder excludeEngType(){
+            setFetchFields("excludeFields","engType");
             return this;
         }
 
@@ -1609,93 +1609,93 @@ public class MqmsProduction implements Serializable {
             return this;
         }
 
-        public QueryBuilder fuzzySalesYear (List<String> fuzzySalesYear){
-            this.fuzzySalesYear = fuzzySalesYear;
+        public QueryBuilder fuzzyProductionYear (List<String> fuzzyProductionYear){
+            this.fuzzyProductionYear = fuzzyProductionYear;
             return this;
         }
 
-        public QueryBuilder fuzzySalesYear (String ... fuzzySalesYear){
-            this.fuzzySalesYear = solveNullList(fuzzySalesYear);
+        public QueryBuilder fuzzyProductionYear (String ... fuzzyProductionYear){
+            this.fuzzyProductionYear = solveNullList(fuzzyProductionYear);
             return this;
         }
 
-        public QueryBuilder rightFuzzySalesYear (List<String> rightFuzzySalesYear){
-            this.rightFuzzySalesYear = rightFuzzySalesYear;
+        public QueryBuilder rightFuzzyProductionYear (List<String> rightFuzzyProductionYear){
+            this.rightFuzzyProductionYear = rightFuzzyProductionYear;
             return this;
         }
 
-        public QueryBuilder rightFuzzySalesYear (String ... rightFuzzySalesYear){
-            this.rightFuzzySalesYear = solveNullList(rightFuzzySalesYear);
+        public QueryBuilder rightFuzzyProductionYear (String ... rightFuzzyProductionYear){
+            this.rightFuzzyProductionYear = solveNullList(rightFuzzyProductionYear);
             return this;
         }
 
-        public QueryBuilder salesYear(String salesYear){
-            setSalesYear(salesYear);
+        public QueryBuilder productionYear(String productionYear){
+            setProductionYear(productionYear);
             return this;
         }
 
-        public QueryBuilder salesYearList(String ... salesYear){
-            this.salesYearList = solveNullList(salesYear);
+        public QueryBuilder productionYearList(String ... productionYear){
+            this.productionYearList = solveNullList(productionYear);
             return this;
         }
 
-        public QueryBuilder salesYearList(List<String> salesYear){
-            this.salesYearList = salesYear;
+        public QueryBuilder productionYearList(List<String> productionYear){
+            this.productionYearList = productionYear;
             return this;
         }
 
-        public QueryBuilder fetchSalesYear(){
-            setFetchFields("fetchFields","salesYear");
+        public QueryBuilder fetchProductionYear(){
+            setFetchFields("fetchFields","productionYear");
             return this;
         }
 
-        public QueryBuilder excludeSalesYear(){
-            setFetchFields("excludeFields","salesYear");
+        public QueryBuilder excludeProductionYear(){
+            setFetchFields("excludeFields","productionYear");
             return this;
         }
 
-        public QueryBuilder fuzzySalesMonth (List<String> fuzzySalesMonth){
-            this.fuzzySalesMonth = fuzzySalesMonth;
+        public QueryBuilder fuzzyProductionMonth (List<String> fuzzyProductionMonth){
+            this.fuzzyProductionMonth = fuzzyProductionMonth;
             return this;
         }
 
-        public QueryBuilder fuzzySalesMonth (String ... fuzzySalesMonth){
-            this.fuzzySalesMonth = solveNullList(fuzzySalesMonth);
+        public QueryBuilder fuzzyProductionMonth (String ... fuzzyProductionMonth){
+            this.fuzzyProductionMonth = solveNullList(fuzzyProductionMonth);
             return this;
         }
 
-        public QueryBuilder rightFuzzySalesMonth (List<String> rightFuzzySalesMonth){
-            this.rightFuzzySalesMonth = rightFuzzySalesMonth;
+        public QueryBuilder rightFuzzyProductionMonth (List<String> rightFuzzyProductionMonth){
+            this.rightFuzzyProductionMonth = rightFuzzyProductionMonth;
             return this;
         }
 
-        public QueryBuilder rightFuzzySalesMonth (String ... rightFuzzySalesMonth){
-            this.rightFuzzySalesMonth = solveNullList(rightFuzzySalesMonth);
+        public QueryBuilder rightFuzzyProductionMonth (String ... rightFuzzyProductionMonth){
+            this.rightFuzzyProductionMonth = solveNullList(rightFuzzyProductionMonth);
             return this;
         }
 
-        public QueryBuilder salesMonth(String salesMonth){
-            setSalesMonth(salesMonth);
+        public QueryBuilder productionMonth(String productionMonth){
+            setProductionMonth(productionMonth);
             return this;
         }
 
-        public QueryBuilder salesMonthList(String ... salesMonth){
-            this.salesMonthList = solveNullList(salesMonth);
+        public QueryBuilder productionMonthList(String ... productionMonth){
+            this.productionMonthList = solveNullList(productionMonth);
             return this;
         }
 
-        public QueryBuilder salesMonthList(List<String> salesMonth){
-            this.salesMonthList = salesMonth;
+        public QueryBuilder productionMonthList(List<String> productionMonth){
+            this.productionMonthList = productionMonth;
             return this;
         }
 
-        public QueryBuilder fetchSalesMonth(){
-            setFetchFields("fetchFields","salesMonth");
+        public QueryBuilder fetchProductionMonth(){
+            setFetchFields("fetchFields","productionMonth");
             return this;
         }
 
-        public QueryBuilder excludeSalesMonth(){
-            setFetchFields("excludeFields","salesMonth");
+        public QueryBuilder excludeProductionMonth(){
+            setFetchFields("excludeFields","productionMonth");
             return this;
         }
 
@@ -1879,48 +1879,48 @@ public class MqmsProduction implements Serializable {
             return this;
         }
 
-        public QueryBuilder fuzzyCarTypeCode (List<String> fuzzyCarTypeCode){
-            this.fuzzyCarTypeCode = fuzzyCarTypeCode;
+        public QueryBuilder fuzzyCarModel (List<String> fuzzyCarModel){
+            this.fuzzyCarModel = fuzzyCarModel;
             return this;
         }
 
-        public QueryBuilder fuzzyCarTypeCode (String ... fuzzyCarTypeCode){
-            this.fuzzyCarTypeCode = solveNullList(fuzzyCarTypeCode);
+        public QueryBuilder fuzzyCarModel (String ... fuzzyCarModel){
+            this.fuzzyCarModel = solveNullList(fuzzyCarModel);
             return this;
         }
 
-        public QueryBuilder rightFuzzyCarTypeCode (List<String> rightFuzzyCarTypeCode){
-            this.rightFuzzyCarTypeCode = rightFuzzyCarTypeCode;
+        public QueryBuilder rightFuzzyCarModel (List<String> rightFuzzyCarModel){
+            this.rightFuzzyCarModel = rightFuzzyCarModel;
             return this;
         }
 
-        public QueryBuilder rightFuzzyCarTypeCode (String ... rightFuzzyCarTypeCode){
-            this.rightFuzzyCarTypeCode = solveNullList(rightFuzzyCarTypeCode);
+        public QueryBuilder rightFuzzyCarModel (String ... rightFuzzyCarModel){
+            this.rightFuzzyCarModel = solveNullList(rightFuzzyCarModel);
             return this;
         }
 
-        public QueryBuilder carTypeCode(String carTypeCode){
-            setCarTypeCode(carTypeCode);
+        public QueryBuilder carModel(String carModel){
+            setCarModel(carModel);
             return this;
         }
 
-        public QueryBuilder carTypeCodeList(String ... carTypeCode){
-            this.carTypeCodeList = solveNullList(carTypeCode);
+        public QueryBuilder carModelList(String ... carModel){
+            this.carModelList = solveNullList(carModel);
             return this;
         }
 
-        public QueryBuilder carTypeCodeList(List<String> carTypeCode){
-            this.carTypeCodeList = carTypeCode;
+        public QueryBuilder carModelList(List<String> carModel){
+            this.carModelList = carModel;
             return this;
         }
 
-        public QueryBuilder fetchCarTypeCode(){
-            setFetchFields("fetchFields","carTypeCode");
+        public QueryBuilder fetchCarModel(){
+            setFetchFields("fetchFields","carModel");
             return this;
         }
 
-        public QueryBuilder excludeCarTypeCode(){
-            setFetchFields("excludeFields","carTypeCode");
+        public QueryBuilder excludeCarModel(){
+            setFetchFields("excludeFields","carModel");
             return this;
         }
 
@@ -2215,18 +2215,18 @@ public class MqmsProduction implements Serializable {
         private List<String> rightFuzzyShortCode;
 
         public List<String> getRightFuzzyShortCode(){return this.rightFuzzyShortCode;}
-        private List<String> engCodeList;
+        private List<String> engTypeList;
 
-        public List<String> getEngCodeList(){return this.engCodeList;}
+        public List<String> getEngTypeList(){return this.engTypeList;}
 
 
-        private List<String> fuzzyEngCode;
+        private List<String> fuzzyEngType;
 
-        public List<String> getFuzzyEngCode(){return this.fuzzyEngCode;}
+        public List<String> getFuzzyEngType(){return this.fuzzyEngType;}
 
-        private List<String> rightFuzzyEngCode;
+        private List<String> rightFuzzyEngType;
 
-        public List<String> getRightFuzzyEngCode(){return this.rightFuzzyEngCode;}
+        public List<String> getRightFuzzyEngType(){return this.rightFuzzyEngType;}
         private List<String> serialCodeList;
 
         public List<String> getSerialCodeList(){return this.serialCodeList;}
@@ -2251,30 +2251,30 @@ public class MqmsProduction implements Serializable {
         private List<String> rightFuzzyDistrictName;
 
         public List<String> getRightFuzzyDistrictName(){return this.rightFuzzyDistrictName;}
-        private List<String> salesYearList;
+        private List<String> productionYearList;
 
-        public List<String> getSalesYearList(){return this.salesYearList;}
-
-
-        private List<String> fuzzySalesYear;
-
-        public List<String> getFuzzySalesYear(){return this.fuzzySalesYear;}
-
-        private List<String> rightFuzzySalesYear;
-
-        public List<String> getRightFuzzySalesYear(){return this.rightFuzzySalesYear;}
-        private List<String> salesMonthList;
-
-        public List<String> getSalesMonthList(){return this.salesMonthList;}
+        public List<String> getProductionYearList(){return this.productionYearList;}
 
 
-        private List<String> fuzzySalesMonth;
+        private List<String> fuzzyProductionYear;
 
-        public List<String> getFuzzySalesMonth(){return this.fuzzySalesMonth;}
+        public List<String> getFuzzyProductionYear(){return this.fuzzyProductionYear;}
 
-        private List<String> rightFuzzySalesMonth;
+        private List<String> rightFuzzyProductionYear;
 
-        public List<String> getRightFuzzySalesMonth(){return this.rightFuzzySalesMonth;}
+        public List<String> getRightFuzzyProductionYear(){return this.rightFuzzyProductionYear;}
+        private List<String> productionMonthList;
+
+        public List<String> getProductionMonthList(){return this.productionMonthList;}
+
+
+        private List<String> fuzzyProductionMonth;
+
+        public List<String> getFuzzyProductionMonth(){return this.fuzzyProductionMonth;}
+
+        private List<String> rightFuzzyProductionMonth;
+
+        public List<String> getRightFuzzyProductionMonth(){return this.rightFuzzyProductionMonth;}
         private List<String> transmissionShortCodeList;
 
         public List<String> getTransmissionShortCodeList(){return this.transmissionShortCodeList;}
@@ -2323,18 +2323,18 @@ public class MqmsProduction implements Serializable {
         private List<String> rightFuzzyCarShortCode;
 
         public List<String> getRightFuzzyCarShortCode(){return this.rightFuzzyCarShortCode;}
-        private List<String> carTypeCodeList;
+        private List<String> carModelList;
 
-        public List<String> getCarTypeCodeList(){return this.carTypeCodeList;}
+        public List<String> getCarModelList(){return this.carModelList;}
 
 
-        private List<String> fuzzyCarTypeCode;
+        private List<String> fuzzyCarModel;
 
-        public List<String> getFuzzyCarTypeCode(){return this.fuzzyCarTypeCode;}
+        public List<String> getFuzzyCarModel(){return this.fuzzyCarModel;}
 
-        private List<String> rightFuzzyCarTypeCode;
+        private List<String> rightFuzzyCarModel;
 
-        public List<String> getRightFuzzyCarTypeCode(){return this.rightFuzzyCarTypeCode;}
+        public List<String> getRightFuzzyCarModel(){return this.rightFuzzyCarModel;}
         private List<String> carSimpleCodeList;
 
         public List<String> getCarSimpleCodeList(){return this.carSimpleCodeList;}
@@ -2854,33 +2854,33 @@ public class MqmsProduction implements Serializable {
             return this;
         }
 
-        public ConditionBuilder fuzzyEngCode (List<String> fuzzyEngCode){
-            this.fuzzyEngCode = fuzzyEngCode;
+        public ConditionBuilder fuzzyEngType (List<String> fuzzyEngType){
+            this.fuzzyEngType = fuzzyEngType;
             return this;
         }
 
-        public ConditionBuilder fuzzyEngCode (String ... fuzzyEngCode){
-            this.fuzzyEngCode = solveNullList(fuzzyEngCode);
+        public ConditionBuilder fuzzyEngType (String ... fuzzyEngType){
+            this.fuzzyEngType = solveNullList(fuzzyEngType);
             return this;
         }
 
-        public ConditionBuilder rightFuzzyEngCode (List<String> rightFuzzyEngCode){
-            this.rightFuzzyEngCode = rightFuzzyEngCode;
+        public ConditionBuilder rightFuzzyEngType (List<String> rightFuzzyEngType){
+            this.rightFuzzyEngType = rightFuzzyEngType;
             return this;
         }
 
-        public ConditionBuilder rightFuzzyEngCode (String ... rightFuzzyEngCode){
-            this.rightFuzzyEngCode = solveNullList(rightFuzzyEngCode);
+        public ConditionBuilder rightFuzzyEngType (String ... rightFuzzyEngType){
+            this.rightFuzzyEngType = solveNullList(rightFuzzyEngType);
             return this;
         }
 
-        public ConditionBuilder engCodeList(String ... engCode){
-            this.engCodeList = solveNullList(engCode);
+        public ConditionBuilder engTypeList(String ... engType){
+            this.engTypeList = solveNullList(engType);
             return this;
         }
 
-        public ConditionBuilder engCodeList(List<String> engCode){
-            this.engCodeList = engCode;
+        public ConditionBuilder engTypeList(List<String> engType){
+            this.engTypeList = engType;
             return this;
         }
 
@@ -2944,63 +2944,63 @@ public class MqmsProduction implements Serializable {
             return this;
         }
 
-        public ConditionBuilder fuzzySalesYear (List<String> fuzzySalesYear){
-            this.fuzzySalesYear = fuzzySalesYear;
+        public ConditionBuilder fuzzyProductionYear (List<String> fuzzyProductionYear){
+            this.fuzzyProductionYear = fuzzyProductionYear;
             return this;
         }
 
-        public ConditionBuilder fuzzySalesYear (String ... fuzzySalesYear){
-            this.fuzzySalesYear = solveNullList(fuzzySalesYear);
+        public ConditionBuilder fuzzyProductionYear (String ... fuzzyProductionYear){
+            this.fuzzyProductionYear = solveNullList(fuzzyProductionYear);
             return this;
         }
 
-        public ConditionBuilder rightFuzzySalesYear (List<String> rightFuzzySalesYear){
-            this.rightFuzzySalesYear = rightFuzzySalesYear;
+        public ConditionBuilder rightFuzzyProductionYear (List<String> rightFuzzyProductionYear){
+            this.rightFuzzyProductionYear = rightFuzzyProductionYear;
             return this;
         }
 
-        public ConditionBuilder rightFuzzySalesYear (String ... rightFuzzySalesYear){
-            this.rightFuzzySalesYear = solveNullList(rightFuzzySalesYear);
+        public ConditionBuilder rightFuzzyProductionYear (String ... rightFuzzyProductionYear){
+            this.rightFuzzyProductionYear = solveNullList(rightFuzzyProductionYear);
             return this;
         }
 
-        public ConditionBuilder salesYearList(String ... salesYear){
-            this.salesYearList = solveNullList(salesYear);
+        public ConditionBuilder productionYearList(String ... productionYear){
+            this.productionYearList = solveNullList(productionYear);
             return this;
         }
 
-        public ConditionBuilder salesYearList(List<String> salesYear){
-            this.salesYearList = salesYear;
+        public ConditionBuilder productionYearList(List<String> productionYear){
+            this.productionYearList = productionYear;
             return this;
         }
 
-        public ConditionBuilder fuzzySalesMonth (List<String> fuzzySalesMonth){
-            this.fuzzySalesMonth = fuzzySalesMonth;
+        public ConditionBuilder fuzzyProductionMonth (List<String> fuzzyProductionMonth){
+            this.fuzzyProductionMonth = fuzzyProductionMonth;
             return this;
         }
 
-        public ConditionBuilder fuzzySalesMonth (String ... fuzzySalesMonth){
-            this.fuzzySalesMonth = solveNullList(fuzzySalesMonth);
+        public ConditionBuilder fuzzyProductionMonth (String ... fuzzyProductionMonth){
+            this.fuzzyProductionMonth = solveNullList(fuzzyProductionMonth);
             return this;
         }
 
-        public ConditionBuilder rightFuzzySalesMonth (List<String> rightFuzzySalesMonth){
-            this.rightFuzzySalesMonth = rightFuzzySalesMonth;
+        public ConditionBuilder rightFuzzyProductionMonth (List<String> rightFuzzyProductionMonth){
+            this.rightFuzzyProductionMonth = rightFuzzyProductionMonth;
             return this;
         }
 
-        public ConditionBuilder rightFuzzySalesMonth (String ... rightFuzzySalesMonth){
-            this.rightFuzzySalesMonth = solveNullList(rightFuzzySalesMonth);
+        public ConditionBuilder rightFuzzyProductionMonth (String ... rightFuzzyProductionMonth){
+            this.rightFuzzyProductionMonth = solveNullList(rightFuzzyProductionMonth);
             return this;
         }
 
-        public ConditionBuilder salesMonthList(String ... salesMonth){
-            this.salesMonthList = solveNullList(salesMonth);
+        public ConditionBuilder productionMonthList(String ... productionMonth){
+            this.productionMonthList = solveNullList(productionMonth);
             return this;
         }
 
-        public ConditionBuilder salesMonthList(List<String> salesMonth){
-            this.salesMonthList = salesMonth;
+        public ConditionBuilder productionMonthList(List<String> productionMonth){
+            this.productionMonthList = productionMonth;
             return this;
         }
 
@@ -3124,33 +3124,33 @@ public class MqmsProduction implements Serializable {
             return this;
         }
 
-        public ConditionBuilder fuzzyCarTypeCode (List<String> fuzzyCarTypeCode){
-            this.fuzzyCarTypeCode = fuzzyCarTypeCode;
+        public ConditionBuilder fuzzyCarModel (List<String> fuzzyCarModel){
+            this.fuzzyCarModel = fuzzyCarModel;
             return this;
         }
 
-        public ConditionBuilder fuzzyCarTypeCode (String ... fuzzyCarTypeCode){
-            this.fuzzyCarTypeCode = solveNullList(fuzzyCarTypeCode);
+        public ConditionBuilder fuzzyCarModel (String ... fuzzyCarModel){
+            this.fuzzyCarModel = solveNullList(fuzzyCarModel);
             return this;
         }
 
-        public ConditionBuilder rightFuzzyCarTypeCode (List<String> rightFuzzyCarTypeCode){
-            this.rightFuzzyCarTypeCode = rightFuzzyCarTypeCode;
+        public ConditionBuilder rightFuzzyCarModel (List<String> rightFuzzyCarModel){
+            this.rightFuzzyCarModel = rightFuzzyCarModel;
             return this;
         }
 
-        public ConditionBuilder rightFuzzyCarTypeCode (String ... rightFuzzyCarTypeCode){
-            this.rightFuzzyCarTypeCode = solveNullList(rightFuzzyCarTypeCode);
+        public ConditionBuilder rightFuzzyCarModel (String ... rightFuzzyCarModel){
+            this.rightFuzzyCarModel = solveNullList(rightFuzzyCarModel);
             return this;
         }
 
-        public ConditionBuilder carTypeCodeList(String ... carTypeCode){
-            this.carTypeCodeList = solveNullList(carTypeCode);
+        public ConditionBuilder carModelList(String ... carModel){
+            this.carModelList = solveNullList(carModel);
             return this;
         }
 
-        public ConditionBuilder carTypeCodeList(List<String> carTypeCode){
-            this.carTypeCodeList = carTypeCode;
+        public ConditionBuilder carModelList(List<String> carModel){
+            this.carModelList = carModel;
             return this;
         }
 
@@ -3276,8 +3276,8 @@ public class MqmsProduction implements Serializable {
             this.obj.setShortCode(shortCode);
             return this;
         }
-        public Builder engCode(String engCode){
-            this.obj.setEngCode(engCode);
+        public Builder engType(String engType){
+            this.obj.setEngType(engType);
             return this;
         }
         public Builder serialCode(String serialCode){
@@ -3288,12 +3288,12 @@ public class MqmsProduction implements Serializable {
             this.obj.setDistrictName(districtName);
             return this;
         }
-        public Builder salesYear(String salesYear){
-            this.obj.setSalesYear(salesYear);
+        public Builder productionYear(String productionYear){
+            this.obj.setProductionYear(productionYear);
             return this;
         }
-        public Builder salesMonth(String salesMonth){
-            this.obj.setSalesMonth(salesMonth);
+        public Builder productionMonth(String productionMonth){
+            this.obj.setProductionMonth(productionMonth);
             return this;
         }
         public Builder transmissionShortCode(String transmissionShortCode){
@@ -3312,8 +3312,8 @@ public class MqmsProduction implements Serializable {
             this.obj.setCarShortCode(carShortCode);
             return this;
         }
-        public Builder carTypeCode(String carTypeCode){
-            this.obj.setCarTypeCode(carTypeCode);
+        public Builder carModel(String carModel){
+            this.obj.setCarModel(carModel);
             return this;
         }
         public Builder carSimpleCode(String carSimpleCode){
