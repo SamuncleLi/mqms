@@ -10,15 +10,15 @@ Target Server Type    : MYSQL
 Target Server Version : 50628
 File Encoding         : 65001
 
-Date: 2020-01-06 17:14:59
+Date: 2020-02-07 10:42:24
 */
 
 SET FOREIGN_KEY_CHECKS=0;
 
 -- ----------------------------
--- Table structure for mtoc_decode
+-- Table structure for mqms_mtoc_decode
 -- ----------------------------
-DROP TABLE IF EXISTS `mtoc_decode`;
+DROP TABLE IF EXISTS `mqms_mtoc_decode`;
 CREATE TABLE `mqms_mtoc_decode` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `mtoc_type` varchar(255) DEFAULT NULL COMMENT '解码类型',
@@ -26,3 +26,7 @@ CREATE TABLE `mqms_mtoc_decode` (
   `mtoc_result` varchar(255) DEFAULT NULL COMMENT 'mtoc解码结果',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='mtoc解码表';
+
+-- ----------------------------
+-- Records of mqms_mtoc_decode
+-- ----------------------------
