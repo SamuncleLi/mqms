@@ -2,6 +2,42 @@
 <!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.gamc.efactory.dao.MqmsSalesRawMapper">
-
-
+    <select id="selectByVinCode"  resultType="java.lang.Integer" >
+        SELECT COUNT(*) FROM `mqms_sales_raw`
+        WHERE  `vin_code` = #{vin_code}
+    </select>
+    <update id="updateByVinCode">
+        UPDATE `mqms_sales_raw`
+        SET
+        <trim suffixOverrides=",">
+            <if test="vinCode != null and vinCode!=''">
+                `vin_code` = #{vinCode},
+            </if>
+            <if test="salesCarType != null and salesCarType!=''">
+                `sales_car_type` = #{salesCarType},
+            </if>
+            <if test="salesState != null and salesState!=''">
+                `sales_state` = #{salesState},
+            </if>
+            <if test="dealerCode != null and dealerCode!=''">
+                `dealer_code` = #{dealerCode},
+            </if>
+            <if test="dealerName != null and dealerName!=''">
+                `dealer_name` = #{dealerName},
+            </if>
+            <if test="produceDate != null and produceDate!=''">
+                `produce_date` = #{produceDate},
+            </if>
+            <if test="firstPinDate != null and firstPinDate!=''">
+                `first_pin_date` = #{firstPinDate},
+            </if>
+            <if test="secondPinDate != null and secondPinDate!=''">
+                `second_pin_date` = #{secondPinDate},
+            </if>
+        </trim>
+        WHERE
+        <trim suffixOverrides="and">
+            `vin_code` = #{vinCode} and
+        </trim>
+    </update>
 </mapper>

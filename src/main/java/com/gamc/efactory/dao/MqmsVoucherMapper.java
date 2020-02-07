@@ -1,5 +1,6 @@
 package com.gamc.efactory.dao;
 
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
 
@@ -15,4 +16,9 @@ import com.gamc.efactory.dao.base.MqmsVoucherBaseMapper;
 public interface MqmsVoucherMapper extends MqmsVoucherBaseMapper{
     public List<TransmissionProportion> calTransmissionProportion(MqmsVoucher mqmsVoucher);
     public List<FailureTop10> failureTop10(MqmsVoucher mqmsVoucher);
+
+    int selectEngTypeCount(@Param("eng_code") String engCode,@Param("confirm_date") String confirmDate);
+    BigDecimal selectTotalCost(@Param("eng_code") String engCode, @Param("confirm_date") String confirmDate);
+    int selectByVoucherCode(@Param("voucher_code") String voucherCode);
+    int updateByVoucher(MqmsVoucher object);
 }

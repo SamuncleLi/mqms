@@ -1,16 +1,17 @@
 package com.gamc.efactory.controller;
 
-import com.alibaba.fastjson.JSONArray;
+import com.gamc.efactory.dao.MqmsSalesMapper;
 import com.gamc.efactory.dao.MqmsVoucherMapper;
 import com.gamc.efactory.model.dataObject.MqmsVoucher;
 import com.gamc.efactory.model.viewObject.FailureTop10;
 import com.gamc.efactory.model.viewObject.TransmissionProportion;
+import com.gamc.efactory.util.MqmsUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.HashMap;
+import java.text.DecimalFormat;
 import java.util.List;
 
 /**
@@ -22,6 +23,8 @@ import java.util.List;
 public class ChartsController {
     @Autowired
     MqmsVoucherMapper mqmsVoucherMapper;
+    @Autowired
+    MqmsSalesMapper mqmsSalesMapper;
     /**
      * @描述 计算发动机不良率
      * @编写人 Zeho Lee
@@ -32,14 +35,28 @@ public class ChartsController {
      * @抛出异常
     */
     @RequestMapping("engineFailureRate")
-    public String[][] calculateEngineFailureRate(@RequestParam String yearAndMonth, @RequestParam String timeSpan, @RequestParam String engType){
-        System.out.println(yearAndMonth + timeSpan + engType);
-        String[][] array = {{"机型", "2012-01", "2012-02", "2012-03", "2012-04", "2012-05", "2012-06"},
-                    {"151", "41.1", "30.4", "65.1", "53.3", "83.8", "98.7"},
-                    {"153", "86.5", "92.1", "85.7", "83.1", "73.4", "55.1"},
-                    {"131", "24.1", "67.2", "79.5", "86.4", "65.2", "82.5"},
-                    {"204", "55.2", "67.1", "69.2", "72.4", "53.9", "39.1"}};
-        return array;
+    public String[][] calculateEngineFailureRate(@RequestParam String yearAndMonth, @RequestParam String timeSpan, @RequestParam String engTypes){
+        String[] engTypeAssemble = engTypes.split(",");
+        String[][] strArray=new String[engTypeAssemble.length+1][Integer.parseInt(timeSpan)+1];
+        strArray[0][0]="机型";
+        for (int j = 0; j < Integer.parseInt(timeSpan); j++) {
+            for (int i = 0; i < engTypeAssemble.length; i++) {
+                int thisEngtypeCount = mqmsVoucherMapper.selectEngTypeCount(engTypeAssemble[i], yearAndMonth);
+//                System.out.println(thisEngtypeCount);
+                int secondPinData = mqmsSalesMapper.selectSecondSalesCount(engTypeAssemble[i], yearAndMonth);
+//                System.out.println(secondPinData);
+                float unqualifiedRate = (float) thisEngtypeCount / secondPinData;
+                DecimalFormat df = new DecimalFormat("0.00");//格式化小数
+                String strUnqualifiedRate = df.format(unqualifiedRate * 100);//返回一个String类型的两位小数
+                System.out.println(strUnqualifiedRate);
+                strArray[0][j+1]=yearAndMonth;
+                strArray[i+1][0]=engTypeAssemble[i];
+                strArray[i+1][j+1]=strUnqualifiedRate;
+
+            }
+            yearAndMonth= MqmsUtil.getDateInfor("yyyy-MM",yearAndMonth,1);
+        }
+        return strArray;
     }
 
     /**

@@ -2,6 +2,303 @@
 <!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.gamc.efactory.dao.MqmsVoucherMapper">
+    <resultMap type="com.gamc.efactory.model.dataObject.MqmsVoucher" id="MqmsVoucherMap">
+        <result property="voucherId" column="voucher_id"/>
+        <result property="voucherCode" column="voucher_code"/>
+        <result property="dealerCode" column="dealer_code"/>
+        <result property="dealerName" column="dealer_name"/>
+        <result property="veiState" column="vei_state"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="maintenanceContractCode" column="maintenance_contract_code"/>
+        <result property="maintenanceItemCode" column="maintenance_item_code"/>
+        <result property="contact" column="contact"/>
+        <result property="phoneNo" column="phone_no"/>
+        <result property="fax" column="fax"/>
+        <result property="theme" column="theme"/>
+        <result property="vinCode" column="vin_code"/>
+        <result property="vehicleType" column="vehicle_type"/>
+        <result property="egtypeCode" column="egtype_code"/>
+        <result property="transmissionType" column="transmission_type"/>
+        <result property="mileage" column="mileage"/>
+        <result property="transmissionCode" column="transmission_code"/>
+        <result property="mtoc" column="mtoc"/>
+        <result property="failureDate" column="failure_date"/>
+        <result property="failureLocationCode" column="failure_location_code"/>
+        <result property="failureLocationName" column="failure_location_name"/>
+        <result property="symptomTypeCode" column="symptom_type_code"/>
+        <result property="symptomTypeName" column="symptom_type_name"/>
+        <result property="symptomCode" column="symptom_code"/>
+        <result property="symptomName" column="symptom_name"/>
+        <result property="symptomContent" column="symptom_content"/>
+        <result property="submitDate" column="submit_date"/>
+        <result property="importantLevel" column="important_level"/>
+        <result property="carType" column="car_type"/>
+        <result property="diagnosticResult" column="diagnostic_result"/>
+        <result property="veiUserDescription" column="vei_user_description"/>
+        <result property="partsCode" column="parts_code"/>
+        <result property="partsName" column="parts_name"/>
+        <result property="manCost" column="man_cost"/>
+        <result property="materialCost" column="material_cost"/>
+        <result property="otherCost" column="other_cost"/>
+        <result property="totalCost" column="total_cost"/>
+        <result property="confirmor" column="confirmor"/>
+        <result property="confirmDate" column="confirm_date"/>
+        <result property="veiSysDescription" column="vei_sys_description"/>
+        <result property="licenseCode" column="license_code"/>
+        <result property="servicePerformance1" column="service_performance_1"/>
+        <result property="servicePerformance2" column="service_performance_2"/>
+        <result property="servicePerformance3" column="service_performance_3"/>
+        <result property="modelYear" column="model_year"/>
+        <result property="offlineDate" column="offline_date"/>
+        <result property="salesDate" column="sales_date"/>
+        <result property="engArrange" column="eng_arrange"/>
+        <result property="salesFailureTime" column="sales_failure_time"/>
+        <result property="carModel" column="car_model"/>
+        <result property="engCode" column="eng_code"/>
+        <result property="transmissionCodeRe" column="transmission_code_re"/>
+        <result property="transmissionManufacturer" column="transmission_manufacturer"/>
+        <result property="receiveTime" column="receive_time"/>
+        <result property="claimCompensation" column="claim_compensation"/>
+        <result property="productionRawDescription" column="production_raw_description"/>
+        <result property="PDI" column="PDI"/>
+        <result property="offlineFailureTime" column="offline_failure_time"/>
+        <result property="transmissionComfirmTime" column="transmission_comfirm_time"/>
+        <result property="engSettle" column="eng_settle"/>
+        <result property="shortCode" column="short_code"/>
+        <result property="faultCodeClassification" column="fault_code_classification"/>
+        <result property="transmissionProductionData" column="transmission_production_data"/>
+        <result property="failureYear" column="failure_year"/>
+        <result property="failureMonth" column="failure_month"/>
+        <result property="transmissionShortCode" column="transmission_short_code"/>
+        <result property="mileageDistribution" column="mileage_distribution"/>
+    </resultMap>
+
+    <select id="selectEngTypeCount"  resultType="java.lang.Integer" >
+        SELECT COUNT(*) FROM `mqms_voucher`
+        WHERE  `eng_code` = #{eng_code} AND  `confirm_date` LIKE  concat(#{confirm_date},'%')
+    </select>
+
+    <select id="selectTotalCost"  resultType="java.math.BigDecimal" >
+        SELECT SUM(`total_cost`) FROM `mqms_voucher`
+        WHERE  `eng_code` = #{eng_code} AND  `confirm_date` LIKE  concat(#{confirm_date},'%')
+    </select>
+
+    <select id="selectByVoucherCode"  resultType="java.lang.Integer" >
+        SELECT COUNT(*) FROM `mqms_voucher`
+        WHERE  `voucher_code` = #{voucher_code}
+    </select>
+    <update id="updateByVoucher">
+        UPDATE `mqms_voucher`
+        SET
+        <trim suffixOverrides=",">
+            <if test="voucherCode != null and voucherCode!=''">
+                `voucher_code` = #{voucherCode},
+            </if>
+            <if test="dealerCode != null and dealerCode!=''">
+                `dealer_code` = #{dealerCode},
+            </if>
+            <if test="dealerName != null and dealerName!=''">
+                `dealer_name` = #{dealerName},
+            </if>
+            <if test="veiState != null and veiState!=''">
+                `vei_state` = #{veiState},
+            </if>
+            <if test="updateTime != null and updateTime!=''">
+                `update_time` = #{updateTime},
+            </if>
+            <if test="maintenanceContractCode != null and maintenanceContractCode!=''">
+                `maintenance_contract_code` = #{maintenanceContractCode},
+            </if>
+            <if test="maintenanceItemCode != null and maintenanceItemCode!=''">
+                `maintenance_item_code` = #{maintenanceItemCode},
+            </if>
+            <if test="contact != null and contact!=''">
+                `contact` = #{contact},
+            </if>
+            <if test="phoneNo != null and phoneNo!=''">
+                `phone_no` = #{phoneNo},
+            </if>
+            <if test="fax != null and fax!=''">
+                `fax` = #{fax},
+            </if>
+            <if test="theme != null and theme!=''">
+                `theme` = #{theme},
+            </if>
+            <if test="vinCode != null and vinCode!=''">
+                `vin_code` = #{vinCode},
+            </if>
+            <if test="vehicleType != null and vehicleType!=''">
+                `vehicle_type` = #{vehicleType},
+            </if>
+            <if test="egtypeCode != null and egtypeCode!=''">
+                `egtype_code` = #{egtypeCode},
+            </if>
+            <if test="transmissionType != null and transmissionType!=''">
+                `transmission_type` = #{transmissionType},
+            </if>
+            <if test="mileage != null">
+                `mileage` = #{mileage},
+            </if>
+            <if test="transmissionCode != null and transmissionCode!=''">
+                `transmission_code` = #{transmissionCode},
+            </if>
+            <if test="mtoc != null and mtoc!=''">
+                `mtoc` = #{mtoc},
+            </if>
+            <if test="failureDate != null and failureDate!=''">
+                `failure_date` = #{failureDate},
+            </if>
+            <if test="failureLocationCode != null and failureLocationCode!=''">
+                `failure_location_code` = #{failureLocationCode},
+            </if>
+            <if test="failureLocationName != null and failureLocationName!=''">
+                `failure_location_name` = #{failureLocationName},
+            </if>
+            <if test="symptomTypeCode != null and symptomTypeCode!=''">
+                `symptom_type_code` = #{symptomTypeCode},
+            </if>
+            <if test="symptomTypeName != null and symptomTypeName!=''">
+                `symptom_type_name` = #{symptomTypeName},
+            </if>
+            <if test="symptomCode != null and symptomCode!=''">
+                `symptom_code` = #{symptomCode},
+            </if>
+            <if test="symptomName != null and symptomName!=''">
+                `symptom_name` = #{symptomName},
+            </if>
+            <if test="symptomContent != null and symptomContent!=''">
+                `symptom_content` = #{symptomContent},
+            </if>
+            <if test="submitDate != null and submitDate!=''">
+                `submit_date` = #{submitDate},
+            </if>
+            <if test="importantLevel != null and importantLevel!=''">
+                `important_level` = #{importantLevel},
+            </if>
+            <if test="carType != null and carType!=''">
+                `car_type` = #{carType},
+            </if>
+            <if test="diagnosticResult != null and diagnosticResult!=''">
+                `diagnostic_result` = #{diagnosticResult},
+            </if>
+            <if test="veiUserDescription != null and veiUserDescription!=''">
+                `vei_user_description` = #{veiUserDescription},
+            </if>
+            <if test="partsCode != null and partsCode!=''">
+                `parts_code` = #{partsCode},
+            </if>
+            <if test="partsName != null and partsName!=''">
+                `parts_name` = #{partsName},
+            </if>
+            <if test="manCost != null">
+                `man_cost` = #{manCost},
+            </if>
+            <if test="materialCost != null">
+                `material_cost` = #{materialCost},
+            </if>
+            <if test="otherCost != null">
+                `other_cost` = #{otherCost},
+            </if>
+            <if test="totalCost != null">
+                `total_cost` = #{totalCost},
+            </if>
+            <if test="confirmor != null and confirmor!=''">
+                `confirmor` = #{confirmor},
+            </if>
+            <if test="confirmDate != null and confirmDate!=''">
+                `confirm_date` = #{confirmDate},
+            </if>
+            <if test="veiSysDescription != null and veiSysDescription!=''">
+                `vei_sys_description` = #{veiSysDescription},
+            </if>
+            <if test="licenseCode != null and licenseCode!=''">
+                `license_code` = #{licenseCode},
+            </if>
+            <if test="servicePerformance1 != null and servicePerformance1!=''">
+                `service_performance_1` = #{servicePerformance1},
+            </if>
+            <if test="servicePerformance2 != null and servicePerformance2!=''">
+                `service_performance_2` = #{servicePerformance2},
+            </if>
+            <if test="servicePerformance3 != null and servicePerformance3!=''">
+                `service_performance_3` = #{servicePerformance3},
+            </if>
+            <if test="modelYear != null and modelYear!=''">
+                `model_year` = #{modelYear},
+            </if>
+            <if test="offlineDate != null and offlineDate!=''">
+                `offline_date` = #{offlineDate},
+            </if>
+            <if test="salesDate != null and salesDate!=''">
+                `sales_date` = #{salesDate},
+            </if>
+            <if test="engArrange != null and engArrange!=''">
+                `eng_arrange` = #{engArrange},
+            </if>
+            <if test="salesFailureTime != null and salesFailureTime!=''">
+                `sales_failure_time` = #{salesFailureTime},
+            </if>
+            <if test="carModel != null and carModel!=''">
+                `car_model` = #{carModel},
+            </if>
+            <if test="engCode != null and engCode!=''">
+                `eng_code` = #{engCode},
+            </if>
+            <if test="transmissionCodeRe != null and transmissionCodeRe!=''">
+                `transmission_code_re` = #{transmissionCodeRe},
+            </if>
+            <if test="transmissionManufacturer != null and transmissionManufacturer!=''">
+                `transmission_manufacturer` = #{transmissionManufacturer},
+            </if>
+            <if test="receiveTime != null and receiveTime!=''">
+                `receive_time` = #{receiveTime},
+            </if>
+            <if test="claimCompensation != null and claimCompensation!=''">
+                `claim_compensation` = #{claimCompensation},
+            </if>
+            <if test="productionRawDescription != null and productionRawDescription!=''">
+                `production_raw_description` = #{productionRawDescription},
+            </if>
+            <if test="PDI != null and PDI!=''">
+                `PDI` = #{PDI},
+            </if>
+            <if test="offlineFailureTime != null and offlineFailureTime!=''">
+                `offline_failure_time` = #{offlineFailureTime},
+            </if>
+            <if test="transmissionComfirmTime != null and transmissionComfirmTime!=''">
+                `transmission_comfirm_time` = #{transmissionComfirmTime},
+            </if>
+            <if test="engSettle != null and engSettle!=''">
+                `eng_settle` = #{engSettle},
+            </if>
+            <if test="shortCode != null and shortCode!=''">
+                `short_code` = #{shortCode},
+            </if>
+            <if test="faultCodeClassification != null and faultCodeClassification!=''">
+                `fault_code_classification` = #{faultCodeClassification},
+            </if>
+            <if test="transmissionProductionData != null and transmissionProductionData!=''">
+                `transmission_production_data` = #{transmissionProductionData},
+            </if>
+            <if test="failureYear != null and failureYear!=''">
+                `failure_year` = #{failureYear},
+            </if>
+            <if test="failureMonth != null and failureMonth!=''">
+                `failure_month` = #{failureMonth},
+            </if>
+            <if test="transmissionShortCode != null and transmissionShortCode!=''">
+                `transmission_short_code` = #{transmissionShortCode},
+            </if>
+            <if test="mileageDistribution != null and mileageDistribution!=''">
+                `mileage_distribution` = #{mileageDistribution},
+            </if>
+        </trim>
+        WHERE
+        <trim suffixOverrides="and">
+            `voucher_code` = #{voucherCode} and
+        </trim>
+    </update>
+
     <resultMap id="TransmissionProportionMap" type="TransmissionProportion">
         <result property="transmissionCodeRe" column="transmission_code_re"/>
         <result property="number" column="number"/>

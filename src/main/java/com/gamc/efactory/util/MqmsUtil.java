@@ -1,5 +1,6 @@
 package com.gamc.efactory.util;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -9,7 +10,7 @@ import java.util.Map;
 /**
  * Created by UZI on 2020/1/6.
  */
-public class MqmsUnit {
+public class MqmsUtil {
     /**
      * 此处用于获取两个日期之间的月份差值
      * @param startDate
@@ -69,5 +70,28 @@ public class MqmsUnit {
         map.put("wednesdayDate", weekBegin);
         map.put("ThursdayDate", weekEnd);
         return map;
+    }
+
+    /**
+     * 月份推移计算，字符串输入输出，
+     * @param date
+     * @param space 推移缺省值
+     * @return
+     */
+    public static String getDateInfor(String pattern, String date, int space) {
+        SimpleDateFormat sdf = new SimpleDateFormat(pattern);
+        Date dateTime = null;
+        String dateTime2="";
+        try {
+            dateTime = sdf.parse(date);
+            Calendar cd = Calendar.getInstance();
+            cd.setTime(dateTime);
+            cd.add(Calendar.MONTH,space);
+            Date date2=cd.getTime();//获取增加后的时间
+            dateTime2=sdf.format(date2);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return dateTime2;
     }
 }

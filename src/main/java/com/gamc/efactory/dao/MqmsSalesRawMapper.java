@@ -8,6 +8,7 @@ import com.gamc.efactory.dao.base.MqmsSalesRawBaseMapper;
 *  @author wangjian
 */
 public interface MqmsSalesRawMapper extends MqmsSalesRawBaseMapper{
-
+    int selectByVinCode(@Param("vin_code") String vinCode);
+    int updateByVinCode(MqmsSalesRaw object);
 
 }

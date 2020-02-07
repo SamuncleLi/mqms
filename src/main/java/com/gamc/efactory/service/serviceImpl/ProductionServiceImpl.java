@@ -68,12 +68,10 @@ public class ProductionServiceImpl implements ProductionService {
                     //相同属性复制
                     MqmsProduction mqmsProduction = new MqmsProduction();
                     BeanUtils.copyProperties(mqmsProductionRaw, mqmsProduction);
-                    String shortCode="";
-                    if(mqmsProduction.getVin().length()<=5)
-                    {
-                        shortCode=mqmsProduction.getVin().toString();
-                    }
-                    else {
+                    String shortCode = "";
+                    if (mqmsProduction.getVin().length() <= 5) {
+                        shortCode = mqmsProduction.getVin().toString();
+                    } else {
                         shortCode = mqmsProduction.getVin().substring(0, 5);
                     }
                     mqmsProduction.setShortCode(shortCode);
@@ -81,21 +79,37 @@ public class ProductionServiceImpl implements ProductionService {
 
                 }
                 for (MqmsProductionRaw mqmsProductionRawRecord : mqmsProductionRawList) {
-                    mqmsProductionRawMapper.insertMqmsProductionRaw(mqmsProductionRawRecord);
-                }
-                    for (MqmsProduction mqmsProductionRecord : mqmsProductionList) {
-                        mqmsProductionMapper.insertMqmsProduction(mqmsProductionRecord);
+                    String vin = mqmsProductionRawRecord.getVin();
+                    int cnt = mqmsProductionRawMapper.selectByVin(vin);
+                    System.out.println(cnt);
+                    if (cnt == 0) {
+                        mqmsProductionRawMapper.insertMqmsProductionRaw(mqmsProductionRawRecord);
+                        System.out.println(" 插入 " + mqmsProductionRawRecord);
+                    } else {
+                        mqmsProductionRawMapper.updateByVin(mqmsProductionRawRecord);
+                        System.out.println(" 更新 " + mqmsProductionRawRecord);
                     }
-
-
                 }
-                return true;
-            }
-        catch(Exception e){
-                e.printStackTrace();
-                return false;
-            }
+                for (MqmsProduction mqmsProductionRecord : mqmsProductionList) {
+                    String vin = mqmsProductionRecord.getVin();
+                    int cnt = mqmsProductionMapper.selectByVin(vin);
+                    if (cnt == 0) {
+                        mqmsProductionMapper.insertMqmsProduction(mqmsProductionRecord);
+                        System.out.println(" 插入 " + mqmsProductionRecord);
+                    } else {
+                        mqmsProductionMapper.updateByVin(mqmsProductionRecord);
+                        System.out.println(" 更新 " + mqmsProductionRecord);
+                    }
+                }
 
+
+            }
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
         }
+
     }
+}
 

@@ -45,4 +45,8 @@ public class DictController {
     }
 
 
+    @RequestMapping(value = "/test")
+    public String test(String msg){
+        return "收到" +msg +"\n";
+    }
 }

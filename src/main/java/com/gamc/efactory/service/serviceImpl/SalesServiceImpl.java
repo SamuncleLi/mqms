@@ -39,7 +39,8 @@ public class SalesServiceImpl implements SalesService {
                 // 说明是xlsx文件,不过这里最好限制一下
                 List<List<String>> result = ExcelUtil.importXlsx(file.getInputStream());
                 //第0行为表头
-                for (int i = 1; i < result.size(); i++) {
+
+                for (int i = 1; i < (result != null ? result.size() : 0); i++) {
                     List<String> rowData = result.get(i);
 
                     //利用反射遍历对属性赋值
@@ -71,7 +72,7 @@ public class SalesServiceImpl implements SalesService {
                     String factoryCode="";
                     if(mqmsSales.getVinCode().length()<=3)
                     {
-                        factoryCode=mqmsSales.getVinCode().toString();
+                        factoryCode=mqmsSales.getVinCode();
                     }
                     else {
                         factoryCode = mqmsSales.getVinCode().substring(0, 3);
@@ -84,19 +85,37 @@ public class SalesServiceImpl implements SalesService {
 
                 }
                 for (MqmsSalesRaw mqmsSalesRawRecord : mqmsSalesRawList) {
-                    mqmsSalesRawMapper.insertMqmsSalesRaw(mqmsSalesRawRecord);
-                }
-                    for (MqmsSales mqmsSalesRecord : mqmsSalesList) {
-                        mqmsSalesMapper.insertMqmsSales(mqmsSalesRecord);
+
+                    String vinCode=mqmsSalesRawRecord.getVinCode();
+                    int cnt = mqmsSalesRawMapper.selectByVinCode(vinCode);
+                    if (cnt == 0) {
+                        mqmsSalesRawMapper.insertMqmsSalesRaw(mqmsSalesRawRecord);
+                        System.out.println(" 插入 "+mqmsSalesRawRecord);
+                    } else {
+                        mqmsSalesRawMapper.updateByVinCode(mqmsSalesRawRecord);
+                        System.out.println(" 更新 "+mqmsSalesRawRecord);
                     }
                 }
-                return true;
-            }
-        catch(Exception e){
-                e.printStackTrace();
-                return false;
-            }
+                for (MqmsSales mqmsSalesRecord : mqmsSalesList) {
 
+                    String vinCode=mqmsSalesRecord.getVinCode();
+                    int cnt = mqmsSalesMapper.selectByVinCode(vinCode);
+                    if (cnt == 0) {
+                        mqmsSalesMapper.insertMqmsSales(mqmsSalesRecord);
+                        System.out.println(" 插入 "+mqmsSalesRecord);
+                    } else {
+                        mqmsSalesMapper.updateByVinCode(mqmsSalesRecord);
+                        System.out.println(" 更新 "+mqmsSalesRecord);
+                    }
+                }
+            }
+            return true;
         }
+        catch(Exception e){
+            e.printStackTrace();
+            return false;
+        }
+
     }
+}
 

@@ -13,6 +13,38 @@
     <script type="text/javascript" src="${req.contextPath}/static/plugin/jquery-easyui-1.5.5.4/datagrid-filter.js"></script>
     <link  href="${req.contextPath}/static/layuiExtend/layui/css/layui.css" media="all" rel="stylesheet">
     <script src="${req.contextPath}/static/layuiExtend/layui/layui.js"></script>
+
+    <style type="text/css">
+        .team3f-table tr{
+            text-align:center;
+            font-size: 15px;
+            color: #000000;
+            line-height:50px;
+            width: 100%;
+
+        }
+        .team3f-table td:last-child{
+            border-bottom: 1px solid #d0d0d0;
+            border-right: 0px solid #d0d0d0;
+        }
+        .team3f-table td{
+            border-bottom: 1px solid #d0d0d0;
+            border-right: 1px solid #d0d0d0;
+            line-height:50px;
+            overflow: auto;
+            white-space:normal;
+            word-break:break-all;
+            word-wrap:break-word;
+        }
+        .team3f-table td:nth-child(2n+1){
+            width: 15%;
+            font-weight:bold;
+        }
+        .team3f-table td:nth-child(2n){
+            width: 18.3%;
+
+        }
+    </style>
 </head>
 <body>
     <table id="dg2" class="easyui-datagrid" title="VEI数据查询" style="width:100%;height:100%"
@@ -38,18 +70,26 @@
             <a id="upload-btn" href="javascript:fileUpload()" class="easyui-linkbutton" style="width:70%">上传文件</a>
         </form>
     </div>
-    <div id="failureTrack-dlg" title="发起不良跟踪" class="easyui-dialog" closed="true">
+    <div id="failureTrack-dlg" title="发起不良跟踪" class="easyui-dialog team3f-table"  cellspacing="0" closed="true" buttons="#failureTrack-dlgbutton">
         <table id="voucherInfo">
             <tbody>
             <tr>
-                <td></td><td></td><td></td><td></td><td></td><td></td>
+                <td>单据号</td><td><input id="" name="" class="easyui-textbox"></td>
+                <td>销售点</td><td></td>
+                <td>确认时间</td><td></td>
             </tr>
             <tr>
-                <td></td><td></td><td></td><td></td><td></td><td></td>
+                <td>快递件返回时间</td><td></td>
+                <td>快递接收人</td><td></td>
+                <td>快递确认时间</td><td></td>
             </tr>
             </tbody>
         </table>
         <form id="failureTrackForm"></form>
+    </div>
+    <div id="failureTrack-dlgbutton">
+        <a href="javascript:saveFailureTrackDlg()" class="easyui-linkbutton">保存</a>
+        <a href="javascript:closeFailureTrackDlg()" class="easyui-linkbutton">关闭</a>
     </div>
     <div id="importantIssue-dlg" title="发起重点课题" class="easyui-dialog" closed="true">
         <form>
@@ -78,21 +118,6 @@
             success: function (result) {
                 var arr = result;
                 var table=document.getElementById('voucherInfo');
-                //动态生成voucherInfo里面的信息,每行有6格，放3个信息
-                for (var i = 0; i < arr.length/3; i++) {
-                    // tr为tab表单下行号为n的行
-                    console.log(table.rows.length);
-                    var tr=table.insertRow(table.rows.length);
-                    // insertCell() 方法用于在 HTML 表的一行的指定位置插入一个空的
-                    for(var j=0;j<3;j++){
-                        // td为插入的行的第一个td元素
-                        var labelTd=tr.insertCell(j*2);
-                        // 像刚才所获取的td中插入一个随机数值
-                        labelTd.innerHTML='<lable>' + arr[i*3+j].comment + '</lable>';
-                        var inputTd=tr.insertCell(j*2 + 1);
-                        inputTd.innerHTML="<input class='easyui-textbox' style='width: 80px' name=\'" + arr[i*3+j].columnName + "\'>"
-                    }
-                }
 
                 //动态生成dcDemo中的li
                 columns_auto_single[0] = function () {
@@ -205,7 +230,37 @@
     }
     //开启不良追踪
     function startFailureTrack() {
-        $('#failureTrack-dlg').dialog("open", true);
+        var selectedRows = $('#dg2').datagrid('getSelections');
+        if(selectedRows.length==0){
+            $.messager.alert("系统提示","请选择至少一行");
+            return;
+        }
+        var voucherIds=[];
+        for(var i=0;i<selectedRows.length;i++){
+            voucherIds.push(selectedRows[i].voucher_id);//以列表中的哪个字段为索引
+        }
+        var voucherIdList = voucherIds.join(",");
+        //判断是否可以开启不良追踪，如果已经开启不良追踪，则显示已开启不良追踪
+        $.post('/mqms/voucher/checkTracked',{voucherIds:voucherIdList},function (result) {
+            //如果已被安排快递处理，则提示
+            if(result.success == 'false'){
+                $.messager.alert("系统提示","以下不良已被开启追踪，请不要重复开启不良追踪<br>" + result.rows)
+            }
+            else{
+                $('#ids.failureTrack').textbox('setValue', voucherIdList);
+                $('#failureTrack-dlg').dialog("open", true);
+            }
+        })
+
+    }
+    //关闭不良追踪对话框
+    function closeFailureTrackDlg() {
+        $('#failureTrack-dlg').dialog('close');
+        $('#dlgdg').datagrid('clear');
+    }
+    //保存不良追踪对话框
+    function saveFailureTrackDlg() {
+        
     }
     //开启重点课题
     function startImportantIssue() {

@@ -2,6 +2,100 @@
 <!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.gamc.efactory.dao.MqmsProductionMapper">
-
+    <select id="selectByVin"  resultType="java.lang.Integer" >
+        SELECT COUNT(*) FROM `mqms_production`
+        WHERE  `vin` = #{vin}
+    </select>
+    <update id="updateByVin">
+        UPDATE `mqms_production`
+        SET
+        <trim suffixOverrides=",">
+            <if test="factoryCode != null and factoryCode!=''">
+                `factory_code` = #{factoryCode},
+            </if>
+            <if test="productionBatch != null and productionBatch!=''">
+                `production_batch` = #{productionBatch},
+            </if>
+            <if test="vin != null and vin!=''">
+                `vin` = #{vin},
+            </if>
+            <if test="mtoc != null and mtoc!=''">
+                `mtoc` = #{mtoc},
+            </if>
+            <if test="stationCode != null and stationCode!=''">
+                `station_code` = #{stationCode},
+            </if>
+            <if test="passTime != null and passTime!=''">
+                `pass_time` = #{passTime},
+            </if>
+            <if test="carModelCode != null and carModelCode!=''">
+                `car_model_code` = #{carModelCode},
+            </if>
+            <if test="carModelName != null and carModelName!=''">
+                `car_model_name` = #{carModelName},
+            </if>
+            <if test="productionWorktime != null and productionWorktime!=''">
+                `production_worktime` = #{productionWorktime},
+            </if>
+            <if test="egtypeCode != null and egtypeCode!=''">
+                `egtype_code` = #{egtypeCode},
+            </if>
+            <if test="transmissionCode != null and transmissionCode!=''">
+                `transmission_code` = #{transmissionCode},
+            </if>
+            <if test="carLevel != null and carLevel!=''">
+                `car_level` = #{carLevel},
+            </if>
+            <if test="period != null and period!=''">
+                `period` = #{period},
+            </if>
+            <if test="carType != null and carType!=''">
+                `car_type` = #{carType},
+            </if>
+            <if test="exportCountry != null and exportCountry!=''">
+                `export_country` = #{exportCountry},
+            </if>
+            <if test="shortCode != null and shortCode!=''">
+                `short_code` = #{shortCode},
+            </if>
+            <if test="engCode != null and engCode!=''">
+                `eng_code` = #{engCode},
+            </if>
+            <if test="serialCode != null and serialCode!=''">
+                `serial_code` = #{serialCode},
+            </if>
+            <if test="districtName != null and districtName!=''">
+                `districtName` = #{districtName},
+            </if>
+            <if test="salesYear != null and salesYear!=''">
+                `sales_year` = #{salesYear},
+            </if>
+            <if test="salesMonth != null and salesMonth!=''">
+                `sales_month` = #{salesMonth},
+            </if>
+            <if test="transmissionShortCode != null and transmissionShortCode!=''">
+                `transmission_short_code` = #{transmissionShortCode},
+            </if>
+            <if test="transmissionSimpleCode != null and transmissionSimpleCode!=''">
+                `transmission_simple_code` = #{transmissionSimpleCode},
+            </if>
+            <if test="transmissionType != null and transmissionType!=''">
+                `transmission_type` = #{transmissionType},
+            </if>
+            <if test="carShortCode != null and carShortCode!=''">
+                `car_short_code` = #{carShortCode},
+            </if>
+            <if test="carTypeCode != null and carTypeCode!=''">
+                `car_type_code` = #{carTypeCode},
+            </if>
+            <if test="carSimpleCode != null and carSimpleCode!=''">
+                `car_simple_code` = #{carSimpleCode},
+            </if>
+        </trim>
+        WHERE
+        <trim suffixOverrides="and">
+            `vin` = #{vin} and
+        </trim>
+    </update>
 
 </mapper>
