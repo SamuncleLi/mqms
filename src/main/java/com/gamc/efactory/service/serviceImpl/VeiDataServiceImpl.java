@@ -1,21 +1,17 @@
 package com.gamc.efactory.service.serviceImpl;
 
-import com.fasterxml.jackson.databind.util.BeanUtil;
 import com.gamc.efactory.dao.MqmsVoucherMapper;
 import com.gamc.efactory.dao.MqmsVoucherRawMapper;
 import com.gamc.efactory.model.dataObject.MqmsVoucher;
 import com.gamc.efactory.model.dataObject.MqmsVoucherRaw;
 import com.gamc.efactory.service.VeiDataService;
-import com.gamc.efactory.util.AttDateUtil;
 import com.gamc.efactory.util.ExcelUtil;
-import com.gamc.efactory.util.MqmsUnit;
+import com.gamc.efactory.util.MqmsUtil;
 import com.gamc.efactory.util.RangeResultUtil;
-import com.sun.xml.internal.ws.developer.Serialization;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -77,30 +73,30 @@ public class VeiDataServiceImpl implements VeiDataService {
                     MqmsVoucher mqmsVoucher = new MqmsVoucher();
                     BeanUtils.copyProperties(mqmsVoucherRaw,mqmsVoucher);
 
-                    int salesFailureMonths= MqmsUnit.getMonth(mqmsVoucher.getSalesDate(),mqmsVoucher.getFailureDate());
-                    int offlineFailureMonths=MqmsUnit.getMonth(mqmsVoucher.getOfflineDate(),mqmsVoucher.getConfirmDate());
-                    mqmsVoucher.setSalesFailureTime(Integer.toString(salesFailureMonths));
-                    mqmsVoucher.setOfflineFailureTime(Integer.toString(offlineFailureMonths));
+                    int salesFailureMonths= MqmsUtil.getMonth(mqmsVoucher.getSalesDate(),mqmsVoucher.getFailureDate());
+                    int offlineFailureMonths=MqmsUtil.getMonth(mqmsVoucher.getOfflineDate(),mqmsVoucher.getConfirmDate());
+                    mqmsVoucher.setSalesFailureTime(salesFailureMonths);
+                    mqmsVoucher.setOfflineFailureTime(offlineFailureMonths);
                     mqmsVoucher.setMileageDistribution(RangeResultUtil.rangeResult(mqmsVoucher.getMileage(),5000,100000));
                     String[] dateTime=mqmsVoucher.getFailureDate().split("-");
                     mqmsVoucher.setFailureYear(dateTime[0]);
                     mqmsVoucher.setFailureMonth(dateTime[1]);
                     Map<String, String> map = new HashMap();
-                    map=MqmsUnit.getWeekDate(mqmsVoucher.getUpdateTime());
+                    map=MqmsUtil.getWeekDate(mqmsVoucher.getUpdateTime());
                     mqmsVoucher.setReceiveTime(map.get("wednesdayDate")+"~"+map.get("ThursdayDate"));
                     mqmsVoucherList.add(mqmsVoucher);
 
                 }
-                    for(MqmsVoucherRaw mqmsVoucherRawRecord:mqmsVoucherRawList){
+                for(MqmsVoucherRaw mqmsVoucherRawRecord:mqmsVoucherRawList){
                     String voucherCode=mqmsVoucherRawRecord.getVoucherCode();
-                        int cnt = mqmsVoucherRawMapper.selectByVoucherCode(voucherCode);
-                        if (cnt == 0) {
-                            mqmsVoucherRawMapper.insertMqmsVoucherRaw(mqmsVoucherRawRecord);
-                            System.out.println(" 插入 "+mqmsVoucherRawRecord);
-                        } else {
-                            mqmsVoucherRawMapper.updateByVoucher(mqmsVoucherRawRecord);
-                            System.out.println(" 更新 "+mqmsVoucherRawRecord);
-                        }
+                    int cnt = mqmsVoucherRawMapper.selectByVoucherCode(voucherCode);
+                    if (cnt == 0) {
+                        mqmsVoucherRawMapper.insertMqmsVoucherRaw(mqmsVoucherRawRecord);
+                        System.out.println(" 插入 "+mqmsVoucherRawRecord);
+                    } else {
+                        mqmsVoucherRawMapper.updateByVoucher(mqmsVoucherRawRecord);
+                        System.out.println(" 更新 "+mqmsVoucherRawRecord);
+                    }
                 }
                 for(MqmsVoucher mqmsVoucherRecord:mqmsVoucherList){
                     String voucherCode=mqmsVoucherRecord.getVoucherCode();

@@ -10,16 +10,16 @@ Target Server Type    : MYSQL
 Target Server Version : 50628
 File Encoding         : 65001
 
-Date: 2020-01-06 17:15:17
+Date: 2020-02-07 10:42:41
 */
 
 SET FOREIGN_KEY_CHECKS=0;
 
 -- ----------------------------
--- Table structure for sales_raw
+-- Table structure for mqms_sales
 -- ----------------------------
-DROP TABLE IF EXISTS `mqms_sales_raw`;
-CREATE TABLE `sales` (
+DROP TABLE IF EXISTS `mqms_sales`;
+CREATE TABLE `mqms_sales` (
   `sales_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '销售数据id',
   `vin_code` varchar(255) DEFAULT NULL COMMENT 'vin码',
   `sales_car_type` varchar(255) DEFAULT NULL COMMENT '销售系统车型',
@@ -47,8 +47,9 @@ CREATE TABLE `sales` (
   `car_model` varchar(255) DEFAULT NULL COMMENT '车型',
   `car_model_code` varchar(255) DEFAULT NULL COMMENT '内部车型代号',
   PRIMARY KEY (`sales_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
-
-
-
+-- ----------------------------
+-- Records of mqms_sales
+-- ----------------------------
+INSERT INTO `mqms_sales` VALUES ('1', 'ABCD', '111', null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);

@@ -96,26 +96,26 @@ public class SalesServiceImpl implements SalesService {
                         System.out.println(" 更新 "+mqmsSalesRawRecord);
                     }
                 }
-                    for (MqmsSales mqmsSalesRecord : mqmsSalesList) {
+                for (MqmsSales mqmsSalesRecord : mqmsSalesList) {
 
-                        String vinCode=mqmsSalesRecord.getVinCode();
-                        int cnt = mqmsSalesMapper.selectByVinCode(vinCode);
-                        if (cnt == 0) {
-                            mqmsSalesMapper.insertMqmsSales(mqmsSalesRecord);
-                            System.out.println(" 插入 "+mqmsSalesRecord);
-                        } else {
-                            mqmsSalesMapper.updateByVinCode(mqmsSalesRecord);
-                            System.out.println(" 更新 "+mqmsSalesRecord);
-                        }
+                    String vinCode=mqmsSalesRecord.getVinCode();
+                    int cnt = mqmsSalesMapper.selectByVinCode(vinCode);
+                    if (cnt == 0) {
+                        mqmsSalesMapper.insertMqmsSales(mqmsSalesRecord);
+                        System.out.println(" 插入 "+mqmsSalesRecord);
+                    } else {
+                        mqmsSalesMapper.updateByVinCode(mqmsSalesRecord);
+                        System.out.println(" 更新 "+mqmsSalesRecord);
                     }
                 }
-                return true;
             }
-        catch(Exception e){
-                e.printStackTrace();
-                return false;
-            }
-
+            return true;
         }
+        catch(Exception e){
+            e.printStackTrace();
+            return false;
+        }
+
     }
+}
 

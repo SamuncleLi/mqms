@@ -6,11 +6,11 @@ import java.util.Map;
 import java.util.List;
 /**
 *
-*  @author wangjian
+*  @author author
 */
 public class MqmsVoucher implements Serializable {
 
-    private static final long serialVersionUID = 1578578236419L;
+    private static final long serialVersionUID = 1578886169511L;
 
 
     /**
@@ -22,7 +22,7 @@ public class MqmsVoucher implements Serializable {
 
     /**
     * 单据编号
-    * isNullAble:1
+    * isNullAble:0
     */
     private String voucherCode;
 
@@ -88,7 +88,7 @@ public class MqmsVoucher implements Serializable {
 
     /**
     * vin码
-    * isNullAble:0
+    * isNullAble:1
     */
     private String vinCode;
 
@@ -303,121 +303,127 @@ public class MqmsVoucher implements Serializable {
     private String salesDate;
 
     /**
-    * 
+    * eng整理（故障分类）
     * isNullAble:1
     */
     private String engArrange;
 
     /**
-    * 
+    * 销售至故障经过月
     * isNullAble:1
     */
-    private String salesFailureTime;
+    private Integer salesFailureTime;
 
     /**
-    * 
+    * 车型
     * isNullAble:1
     */
     private String carModel;
 
     /**
-    * 
+    * 发动机机型
     * isNullAble:1
     */
-    private String engCode;
+    private String engType;
 
     /**
-    * 
+    * 变速箱机型
     * isNullAble:1
     */
     private String transmissionCodeRe;
 
     /**
-    * 
+    * 变速箱机型（详细）
+    * isNullAble:1
+    */
+    private String tranTypeDetail;
+
+    /**
+    * 变速箱生产厂家
     * isNullAble:1
     */
     private String transmissionManufacturer;
 
     /**
-    * 
+    * 接收区间
     * isNullAble:1
     */
     private String receiveTime;
 
     /**
-    * 
+    * 是否算入索赔率统计
     * isNullAble:1
     */
     private String claimCompensation;
 
     /**
-    * 
+    * 备注1
     * isNullAble:1
     */
     private String productionRawDescription;
 
     /**
-    * 
+    * PDI
     * isNullAble:1
     */
     private String PDI;
 
     /**
-    * 
+    * 下线至确认经过月
     * isNullAble:1
     */
-    private String offlineFailureTime;
+    private Integer offlineFailureTime;
 
     /**
-    * 
+    * 变速箱使用至确认经过月
     * isNullAble:1
     */
     private String transmissionComfirmTime;
 
     /**
-    * 
+    * 发动机或变速箱
     * isNullAble:1
     */
-    private String engSettle;
+    private String engOrTran;
 
     /**
-    * 
+    * 短码
     * isNullAble:1
     */
     private String shortCode;
 
     /**
-    * 
+    * 故障码分类
     * isNullAble:1
     */
     private String faultCodeClassification;
 
     /**
-    * 
+    * 变速箱生产日期
     * isNullAble:1
     */
     private String transmissionProductionData;
 
     /**
-    * 
+    * 故障年
     * isNullAble:1
     */
     private String failureYear;
 
     /**
-    * 
+    * 故障月
     * isNullAble:1
     */
     private String failureMonth;
 
     /**
-    * 
-    * isNullAble:1
+    * 变速箱短码
+    * isNullAble:1,defaultVal:
     */
     private String transmissionShortCode;
 
     /**
-    * 
+    * 里程分布
     * isNullAble:1
     */
     private String mileageDistribution;
@@ -619,21 +625,25 @@ public class MqmsVoucher implements Serializable {
 
     public String getEngArrange(){return this.engArrange;}
 
-    public void setSalesFailureTime(String salesFailureTime){this.salesFailureTime = salesFailureTime;}
+    public void setSalesFailureTime(Integer salesFailureTime){this.salesFailureTime = salesFailureTime;}
 
-    public String getSalesFailureTime(){return this.salesFailureTime;}
+    public Integer getSalesFailureTime(){return this.salesFailureTime;}
 
     public void setCarModel(String carModel){this.carModel = carModel;}
 
     public String getCarModel(){return this.carModel;}
 
-    public void setEngCode(String engCode){this.engCode = engCode;}
+    public void setEngType(String engType){this.engType = engType;}
 
-    public String getEngCode(){return this.engCode;}
+    public String getEngType(){return this.engType;}
 
     public void setTransmissionCodeRe(String transmissionCodeRe){this.transmissionCodeRe = transmissionCodeRe;}
 
     public String getTransmissionCodeRe(){return this.transmissionCodeRe;}
+
+    public void setTranTypeDetail(String tranTypeDetail){this.tranTypeDetail = tranTypeDetail;}
+
+    public String getTranTypeDetail(){return this.tranTypeDetail;}
 
     public void setTransmissionManufacturer(String transmissionManufacturer){this.transmissionManufacturer = transmissionManufacturer;}
 
@@ -655,17 +665,17 @@ public class MqmsVoucher implements Serializable {
 
     public String getPDI(){return this.PDI;}
 
-    public void setOfflineFailureTime(String offlineFailureTime){this.offlineFailureTime = offlineFailureTime;}
+    public void setOfflineFailureTime(Integer offlineFailureTime){this.offlineFailureTime = offlineFailureTime;}
 
-    public String getOfflineFailureTime(){return this.offlineFailureTime;}
+    public Integer getOfflineFailureTime(){return this.offlineFailureTime;}
 
     public void setTransmissionComfirmTime(String transmissionComfirmTime){this.transmissionComfirmTime = transmissionComfirmTime;}
 
     public String getTransmissionComfirmTime(){return this.transmissionComfirmTime;}
 
-    public void setEngSettle(String engSettle){this.engSettle = engSettle;}
+    public void setEngOrTran(String engOrTran){this.engOrTran = engOrTran;}
 
-    public String getEngSettle(){return this.engSettle;}
+    public String getEngOrTran(){return this.engOrTran;}
 
     public void setShortCode(String shortCode){this.shortCode = shortCode;}
 
@@ -748,8 +758,9 @@ public class MqmsVoucher implements Serializable {
                 "engArrange='" + engArrange + '\'' +
                 "salesFailureTime='" + salesFailureTime + '\'' +
                 "carModel='" + carModel + '\'' +
-                "engCode='" + engCode + '\'' +
+                "engType='" + engType + '\'' +
                 "transmissionCodeRe='" + transmissionCodeRe + '\'' +
+                "tranTypeDetail='" + tranTypeDetail + '\'' +
                 "transmissionManufacturer='" + transmissionManufacturer + '\'' +
                 "receiveTime='" + receiveTime + '\'' +
                 "claimCompensation='" + claimCompensation + '\'' +
@@ -757,7 +768,7 @@ public class MqmsVoucher implements Serializable {
                 "PDI='" + PDI + '\'' +
                 "offlineFailureTime='" + offlineFailureTime + '\'' +
                 "transmissionComfirmTime='" + transmissionComfirmTime + '\'' +
-                "engSettle='" + engSettle + '\'' +
+                "engOrTran='" + engOrTran + '\'' +
                 "shortCode='" + shortCode + '\'' +
                 "faultCodeClassification='" + faultCodeClassification + '\'' +
                 "transmissionProductionData='" + transmissionProductionData + '\'' +
@@ -1401,18 +1412,18 @@ public class MqmsVoucher implements Serializable {
         private List<String> rightFuzzyEngArrange;
 
         public List<String> getRightFuzzyEngArrange(){return this.rightFuzzyEngArrange;}
-        private List<String> salesFailureTimeList;
+        private List<Integer> salesFailureTimeList;
 
-        public List<String> getSalesFailureTimeList(){return this.salesFailureTimeList;}
+        public List<Integer> getSalesFailureTimeList(){return this.salesFailureTimeList;}
 
+        private Integer salesFailureTimeSt;
 
-        private List<String> fuzzySalesFailureTime;
+        private Integer salesFailureTimeEd;
 
-        public List<String> getFuzzySalesFailureTime(){return this.fuzzySalesFailureTime;}
+        public Integer getSalesFailureTimeSt(){return this.salesFailureTimeSt;}
 
-        private List<String> rightFuzzySalesFailureTime;
+        public Integer getSalesFailureTimeEd(){return this.salesFailureTimeEd;}
 
-        public List<String> getRightFuzzySalesFailureTime(){return this.rightFuzzySalesFailureTime;}
         private List<String> carModelList;
 
         public List<String> getCarModelList(){return this.carModelList;}
@@ -1425,18 +1436,18 @@ public class MqmsVoucher implements Serializable {
         private List<String> rightFuzzyCarModel;
 
         public List<String> getRightFuzzyCarModel(){return this.rightFuzzyCarModel;}
-        private List<String> engCodeList;
+        private List<String> engTypeList;
 
-        public List<String> getEngCodeList(){return this.engCodeList;}
+        public List<String> getEngTypeList(){return this.engTypeList;}
 
 
-        private List<String> fuzzyEngCode;
+        private List<String> fuzzyEngType;
 
-        public List<String> getFuzzyEngCode(){return this.fuzzyEngCode;}
+        public List<String> getFuzzyEngType(){return this.fuzzyEngType;}
 
-        private List<String> rightFuzzyEngCode;
+        private List<String> rightFuzzyEngType;
 
-        public List<String> getRightFuzzyEngCode(){return this.rightFuzzyEngCode;}
+        public List<String> getRightFuzzyEngType(){return this.rightFuzzyEngType;}
         private List<String> transmissionCodeReList;
 
         public List<String> getTransmissionCodeReList(){return this.transmissionCodeReList;}
@@ -1449,6 +1460,18 @@ public class MqmsVoucher implements Serializable {
         private List<String> rightFuzzyTransmissionCodeRe;
 
         public List<String> getRightFuzzyTransmissionCodeRe(){return this.rightFuzzyTransmissionCodeRe;}
+        private List<String> tranTypeDetailList;
+
+        public List<String> getTranTypeDetailList(){return this.tranTypeDetailList;}
+
+
+        private List<String> fuzzyTranTypeDetail;
+
+        public List<String> getFuzzyTranTypeDetail(){return this.fuzzyTranTypeDetail;}
+
+        private List<String> rightFuzzyTranTypeDetail;
+
+        public List<String> getRightFuzzyTranTypeDetail(){return this.rightFuzzyTranTypeDetail;}
         private List<String> transmissionManufacturerList;
 
         public List<String> getTransmissionManufacturerList(){return this.transmissionManufacturerList;}
@@ -1509,18 +1532,18 @@ public class MqmsVoucher implements Serializable {
         private List<String> rightFuzzyPDI;
 
         public List<String> getRightFuzzyPDI(){return this.rightFuzzyPDI;}
-        private List<String> offlineFailureTimeList;
+        private List<Integer> offlineFailureTimeList;
 
-        public List<String> getOfflineFailureTimeList(){return this.offlineFailureTimeList;}
+        public List<Integer> getOfflineFailureTimeList(){return this.offlineFailureTimeList;}
 
+        private Integer offlineFailureTimeSt;
 
-        private List<String> fuzzyOfflineFailureTime;
+        private Integer offlineFailureTimeEd;
 
-        public List<String> getFuzzyOfflineFailureTime(){return this.fuzzyOfflineFailureTime;}
+        public Integer getOfflineFailureTimeSt(){return this.offlineFailureTimeSt;}
 
-        private List<String> rightFuzzyOfflineFailureTime;
+        public Integer getOfflineFailureTimeEd(){return this.offlineFailureTimeEd;}
 
-        public List<String> getRightFuzzyOfflineFailureTime(){return this.rightFuzzyOfflineFailureTime;}
         private List<String> transmissionComfirmTimeList;
 
         public List<String> getTransmissionComfirmTimeList(){return this.transmissionComfirmTimeList;}
@@ -1533,18 +1556,18 @@ public class MqmsVoucher implements Serializable {
         private List<String> rightFuzzyTransmissionComfirmTime;
 
         public List<String> getRightFuzzyTransmissionComfirmTime(){return this.rightFuzzyTransmissionComfirmTime;}
-        private List<String> engSettleList;
+        private List<String> engOrTranList;
 
-        public List<String> getEngSettleList(){return this.engSettleList;}
+        public List<String> getEngOrTranList(){return this.engOrTranList;}
 
 
-        private List<String> fuzzyEngSettle;
+        private List<String> fuzzyEngOrTran;
 
-        public List<String> getFuzzyEngSettle(){return this.fuzzyEngSettle;}
+        public List<String> getFuzzyEngOrTran(){return this.fuzzyEngOrTran;}
 
-        private List<String> rightFuzzyEngSettle;
+        private List<String> rightFuzzyEngOrTran;
 
-        public List<String> getRightFuzzyEngSettle(){return this.rightFuzzyEngSettle;}
+        public List<String> getRightFuzzyEngOrTran(){return this.rightFuzzyEngOrTran;}
         private List<String> shortCodeList;
 
         public List<String> getShortCodeList(){return this.shortCodeList;}
@@ -3814,37 +3837,33 @@ public class MqmsVoucher implements Serializable {
             return this;
         }
 
-        public QueryBuilder fuzzySalesFailureTime (List<String> fuzzySalesFailureTime){
-            this.fuzzySalesFailureTime = fuzzySalesFailureTime;
+        public QueryBuilder salesFailureTimeBetWeen(Integer salesFailureTimeSt,Integer salesFailureTimeEd){
+            this.salesFailureTimeSt = salesFailureTimeSt;
+            this.salesFailureTimeEd = salesFailureTimeEd;
             return this;
         }
 
-        public QueryBuilder fuzzySalesFailureTime (String ... fuzzySalesFailureTime){
-            this.fuzzySalesFailureTime = solveNullList(fuzzySalesFailureTime);
+        public QueryBuilder salesFailureTimeGreaterEqThan(Integer salesFailureTimeSt){
+            this.salesFailureTimeSt = salesFailureTimeSt;
+            return this;
+        }
+        public QueryBuilder salesFailureTimeLessEqThan(Integer salesFailureTimeEd){
+            this.salesFailureTimeEd = salesFailureTimeEd;
             return this;
         }
 
-        public QueryBuilder rightFuzzySalesFailureTime (List<String> rightFuzzySalesFailureTime){
-            this.rightFuzzySalesFailureTime = rightFuzzySalesFailureTime;
-            return this;
-        }
 
-        public QueryBuilder rightFuzzySalesFailureTime (String ... rightFuzzySalesFailureTime){
-            this.rightFuzzySalesFailureTime = solveNullList(rightFuzzySalesFailureTime);
-            return this;
-        }
-
-        public QueryBuilder salesFailureTime(String salesFailureTime){
+        public QueryBuilder salesFailureTime(Integer salesFailureTime){
             setSalesFailureTime(salesFailureTime);
             return this;
         }
 
-        public QueryBuilder salesFailureTimeList(String ... salesFailureTime){
+        public QueryBuilder salesFailureTimeList(Integer ... salesFailureTime){
             this.salesFailureTimeList = solveNullList(salesFailureTime);
             return this;
         }
 
-        public QueryBuilder salesFailureTimeList(List<String> salesFailureTime){
+        public QueryBuilder salesFailureTimeList(List<Integer> salesFailureTime){
             this.salesFailureTimeList = salesFailureTime;
             return this;
         }
@@ -3904,48 +3923,48 @@ public class MqmsVoucher implements Serializable {
             return this;
         }
 
-        public QueryBuilder fuzzyEngCode (List<String> fuzzyEngCode){
-            this.fuzzyEngCode = fuzzyEngCode;
+        public QueryBuilder fuzzyEngType (List<String> fuzzyEngType){
+            this.fuzzyEngType = fuzzyEngType;
             return this;
         }
 
-        public QueryBuilder fuzzyEngCode (String ... fuzzyEngCode){
-            this.fuzzyEngCode = solveNullList(fuzzyEngCode);
+        public QueryBuilder fuzzyEngType (String ... fuzzyEngType){
+            this.fuzzyEngType = solveNullList(fuzzyEngType);
             return this;
         }
 
-        public QueryBuilder rightFuzzyEngCode (List<String> rightFuzzyEngCode){
-            this.rightFuzzyEngCode = rightFuzzyEngCode;
+        public QueryBuilder rightFuzzyEngType (List<String> rightFuzzyEngType){
+            this.rightFuzzyEngType = rightFuzzyEngType;
             return this;
         }
 
-        public QueryBuilder rightFuzzyEngCode (String ... rightFuzzyEngCode){
-            this.rightFuzzyEngCode = solveNullList(rightFuzzyEngCode);
+        public QueryBuilder rightFuzzyEngType (String ... rightFuzzyEngType){
+            this.rightFuzzyEngType = solveNullList(rightFuzzyEngType);
             return this;
         }
 
-        public QueryBuilder engCode(String engCode){
-            setEngCode(engCode);
+        public QueryBuilder engType(String engType){
+            setEngType(engType);
             return this;
         }
 
-        public QueryBuilder engCodeList(String ... engCode){
-            this.engCodeList = solveNullList(engCode);
+        public QueryBuilder engTypeList(String ... engType){
+            this.engTypeList = solveNullList(engType);
             return this;
         }
 
-        public QueryBuilder engCodeList(List<String> engCode){
-            this.engCodeList = engCode;
+        public QueryBuilder engTypeList(List<String> engType){
+            this.engTypeList = engType;
             return this;
         }
 
-        public QueryBuilder fetchEngCode(){
-            setFetchFields("fetchFields","engCode");
+        public QueryBuilder fetchEngType(){
+            setFetchFields("fetchFields","engType");
             return this;
         }
 
-        public QueryBuilder excludeEngCode(){
-            setFetchFields("excludeFields","engCode");
+        public QueryBuilder excludeEngType(){
+            setFetchFields("excludeFields","engType");
             return this;
         }
 
@@ -3991,6 +4010,51 @@ public class MqmsVoucher implements Serializable {
 
         public QueryBuilder excludeTransmissionCodeRe(){
             setFetchFields("excludeFields","transmissionCodeRe");
+            return this;
+        }
+
+        public QueryBuilder fuzzyTranTypeDetail (List<String> fuzzyTranTypeDetail){
+            this.fuzzyTranTypeDetail = fuzzyTranTypeDetail;
+            return this;
+        }
+
+        public QueryBuilder fuzzyTranTypeDetail (String ... fuzzyTranTypeDetail){
+            this.fuzzyTranTypeDetail = solveNullList(fuzzyTranTypeDetail);
+            return this;
+        }
+
+        public QueryBuilder rightFuzzyTranTypeDetail (List<String> rightFuzzyTranTypeDetail){
+            this.rightFuzzyTranTypeDetail = rightFuzzyTranTypeDetail;
+            return this;
+        }
+
+        public QueryBuilder rightFuzzyTranTypeDetail (String ... rightFuzzyTranTypeDetail){
+            this.rightFuzzyTranTypeDetail = solveNullList(rightFuzzyTranTypeDetail);
+            return this;
+        }
+
+        public QueryBuilder tranTypeDetail(String tranTypeDetail){
+            setTranTypeDetail(tranTypeDetail);
+            return this;
+        }
+
+        public QueryBuilder tranTypeDetailList(String ... tranTypeDetail){
+            this.tranTypeDetailList = solveNullList(tranTypeDetail);
+            return this;
+        }
+
+        public QueryBuilder tranTypeDetailList(List<String> tranTypeDetail){
+            this.tranTypeDetailList = tranTypeDetail;
+            return this;
+        }
+
+        public QueryBuilder fetchTranTypeDetail(){
+            setFetchFields("fetchFields","tranTypeDetail");
+            return this;
+        }
+
+        public QueryBuilder excludeTranTypeDetail(){
+            setFetchFields("excludeFields","tranTypeDetail");
             return this;
         }
 
@@ -4219,37 +4283,33 @@ public class MqmsVoucher implements Serializable {
             return this;
         }
 
-        public QueryBuilder fuzzyOfflineFailureTime (List<String> fuzzyOfflineFailureTime){
-            this.fuzzyOfflineFailureTime = fuzzyOfflineFailureTime;
+        public QueryBuilder offlineFailureTimeBetWeen(Integer offlineFailureTimeSt,Integer offlineFailureTimeEd){
+            this.offlineFailureTimeSt = offlineFailureTimeSt;
+            this.offlineFailureTimeEd = offlineFailureTimeEd;
             return this;
         }
 
-        public QueryBuilder fuzzyOfflineFailureTime (String ... fuzzyOfflineFailureTime){
-            this.fuzzyOfflineFailureTime = solveNullList(fuzzyOfflineFailureTime);
+        public QueryBuilder offlineFailureTimeGreaterEqThan(Integer offlineFailureTimeSt){
+            this.offlineFailureTimeSt = offlineFailureTimeSt;
+            return this;
+        }
+        public QueryBuilder offlineFailureTimeLessEqThan(Integer offlineFailureTimeEd){
+            this.offlineFailureTimeEd = offlineFailureTimeEd;
             return this;
         }
 
-        public QueryBuilder rightFuzzyOfflineFailureTime (List<String> rightFuzzyOfflineFailureTime){
-            this.rightFuzzyOfflineFailureTime = rightFuzzyOfflineFailureTime;
-            return this;
-        }
 
-        public QueryBuilder rightFuzzyOfflineFailureTime (String ... rightFuzzyOfflineFailureTime){
-            this.rightFuzzyOfflineFailureTime = solveNullList(rightFuzzyOfflineFailureTime);
-            return this;
-        }
-
-        public QueryBuilder offlineFailureTime(String offlineFailureTime){
+        public QueryBuilder offlineFailureTime(Integer offlineFailureTime){
             setOfflineFailureTime(offlineFailureTime);
             return this;
         }
 
-        public QueryBuilder offlineFailureTimeList(String ... offlineFailureTime){
+        public QueryBuilder offlineFailureTimeList(Integer ... offlineFailureTime){
             this.offlineFailureTimeList = solveNullList(offlineFailureTime);
             return this;
         }
 
-        public QueryBuilder offlineFailureTimeList(List<String> offlineFailureTime){
+        public QueryBuilder offlineFailureTimeList(List<Integer> offlineFailureTime){
             this.offlineFailureTimeList = offlineFailureTime;
             return this;
         }
@@ -4309,48 +4369,48 @@ public class MqmsVoucher implements Serializable {
             return this;
         }
 
-        public QueryBuilder fuzzyEngSettle (List<String> fuzzyEngSettle){
-            this.fuzzyEngSettle = fuzzyEngSettle;
+        public QueryBuilder fuzzyEngOrTran (List<String> fuzzyEngOrTran){
+            this.fuzzyEngOrTran = fuzzyEngOrTran;
             return this;
         }
 
-        public QueryBuilder fuzzyEngSettle (String ... fuzzyEngSettle){
-            this.fuzzyEngSettle = solveNullList(fuzzyEngSettle);
+        public QueryBuilder fuzzyEngOrTran (String ... fuzzyEngOrTran){
+            this.fuzzyEngOrTran = solveNullList(fuzzyEngOrTran);
             return this;
         }
 
-        public QueryBuilder rightFuzzyEngSettle (List<String> rightFuzzyEngSettle){
-            this.rightFuzzyEngSettle = rightFuzzyEngSettle;
+        public QueryBuilder rightFuzzyEngOrTran (List<String> rightFuzzyEngOrTran){
+            this.rightFuzzyEngOrTran = rightFuzzyEngOrTran;
             return this;
         }
 
-        public QueryBuilder rightFuzzyEngSettle (String ... rightFuzzyEngSettle){
-            this.rightFuzzyEngSettle = solveNullList(rightFuzzyEngSettle);
+        public QueryBuilder rightFuzzyEngOrTran (String ... rightFuzzyEngOrTran){
+            this.rightFuzzyEngOrTran = solveNullList(rightFuzzyEngOrTran);
             return this;
         }
 
-        public QueryBuilder engSettle(String engSettle){
-            setEngSettle(engSettle);
+        public QueryBuilder engOrTran(String engOrTran){
+            setEngOrTran(engOrTran);
             return this;
         }
 
-        public QueryBuilder engSettleList(String ... engSettle){
-            this.engSettleList = solveNullList(engSettle);
+        public QueryBuilder engOrTranList(String ... engOrTran){
+            this.engOrTranList = solveNullList(engOrTran);
             return this;
         }
 
-        public QueryBuilder engSettleList(List<String> engSettle){
-            this.engSettleList = engSettle;
+        public QueryBuilder engOrTranList(List<String> engOrTran){
+            this.engOrTranList = engOrTran;
             return this;
         }
 
-        public QueryBuilder fetchEngSettle(){
-            setFetchFields("fetchFields","engSettle");
+        public QueryBuilder fetchEngOrTran(){
+            setFetchFields("fetchFields","engOrTran");
             return this;
         }
 
-        public QueryBuilder excludeEngSettle(){
-            setFetchFields("excludeFields","engSettle");
+        public QueryBuilder excludeEngOrTran(){
+            setFetchFields("excludeFields","engOrTran");
             return this;
         }
 
@@ -5299,18 +5359,18 @@ public class MqmsVoucher implements Serializable {
         private List<String> rightFuzzyEngArrange;
 
         public List<String> getRightFuzzyEngArrange(){return this.rightFuzzyEngArrange;}
-        private List<String> salesFailureTimeList;
+        private List<Integer> salesFailureTimeList;
 
-        public List<String> getSalesFailureTimeList(){return this.salesFailureTimeList;}
+        public List<Integer> getSalesFailureTimeList(){return this.salesFailureTimeList;}
 
+        private Integer salesFailureTimeSt;
 
-        private List<String> fuzzySalesFailureTime;
+        private Integer salesFailureTimeEd;
 
-        public List<String> getFuzzySalesFailureTime(){return this.fuzzySalesFailureTime;}
+        public Integer getSalesFailureTimeSt(){return this.salesFailureTimeSt;}
 
-        private List<String> rightFuzzySalesFailureTime;
+        public Integer getSalesFailureTimeEd(){return this.salesFailureTimeEd;}
 
-        public List<String> getRightFuzzySalesFailureTime(){return this.rightFuzzySalesFailureTime;}
         private List<String> carModelList;
 
         public List<String> getCarModelList(){return this.carModelList;}
@@ -5323,18 +5383,18 @@ public class MqmsVoucher implements Serializable {
         private List<String> rightFuzzyCarModel;
 
         public List<String> getRightFuzzyCarModel(){return this.rightFuzzyCarModel;}
-        private List<String> engCodeList;
+        private List<String> engTypeList;
 
-        public List<String> getEngCodeList(){return this.engCodeList;}
+        public List<String> getEngTypeList(){return this.engTypeList;}
 
 
-        private List<String> fuzzyEngCode;
+        private List<String> fuzzyEngType;
 
-        public List<String> getFuzzyEngCode(){return this.fuzzyEngCode;}
+        public List<String> getFuzzyEngType(){return this.fuzzyEngType;}
 
-        private List<String> rightFuzzyEngCode;
+        private List<String> rightFuzzyEngType;
 
-        public List<String> getRightFuzzyEngCode(){return this.rightFuzzyEngCode;}
+        public List<String> getRightFuzzyEngType(){return this.rightFuzzyEngType;}
         private List<String> transmissionCodeReList;
 
         public List<String> getTransmissionCodeReList(){return this.transmissionCodeReList;}
@@ -5347,6 +5407,18 @@ public class MqmsVoucher implements Serializable {
         private List<String> rightFuzzyTransmissionCodeRe;
 
         public List<String> getRightFuzzyTransmissionCodeRe(){return this.rightFuzzyTransmissionCodeRe;}
+        private List<String> tranTypeDetailList;
+
+        public List<String> getTranTypeDetailList(){return this.tranTypeDetailList;}
+
+
+        private List<String> fuzzyTranTypeDetail;
+
+        public List<String> getFuzzyTranTypeDetail(){return this.fuzzyTranTypeDetail;}
+
+        private List<String> rightFuzzyTranTypeDetail;
+
+        public List<String> getRightFuzzyTranTypeDetail(){return this.rightFuzzyTranTypeDetail;}
         private List<String> transmissionManufacturerList;
 
         public List<String> getTransmissionManufacturerList(){return this.transmissionManufacturerList;}
@@ -5407,18 +5479,18 @@ public class MqmsVoucher implements Serializable {
         private List<String> rightFuzzyPDI;
 
         public List<String> getRightFuzzyPDI(){return this.rightFuzzyPDI;}
-        private List<String> offlineFailureTimeList;
+        private List<Integer> offlineFailureTimeList;
 
-        public List<String> getOfflineFailureTimeList(){return this.offlineFailureTimeList;}
+        public List<Integer> getOfflineFailureTimeList(){return this.offlineFailureTimeList;}
 
+        private Integer offlineFailureTimeSt;
 
-        private List<String> fuzzyOfflineFailureTime;
+        private Integer offlineFailureTimeEd;
 
-        public List<String> getFuzzyOfflineFailureTime(){return this.fuzzyOfflineFailureTime;}
+        public Integer getOfflineFailureTimeSt(){return this.offlineFailureTimeSt;}
 
-        private List<String> rightFuzzyOfflineFailureTime;
+        public Integer getOfflineFailureTimeEd(){return this.offlineFailureTimeEd;}
 
-        public List<String> getRightFuzzyOfflineFailureTime(){return this.rightFuzzyOfflineFailureTime;}
         private List<String> transmissionComfirmTimeList;
 
         public List<String> getTransmissionComfirmTimeList(){return this.transmissionComfirmTimeList;}
@@ -5431,18 +5503,18 @@ public class MqmsVoucher implements Serializable {
         private List<String> rightFuzzyTransmissionComfirmTime;
 
         public List<String> getRightFuzzyTransmissionComfirmTime(){return this.rightFuzzyTransmissionComfirmTime;}
-        private List<String> engSettleList;
+        private List<String> engOrTranList;
 
-        public List<String> getEngSettleList(){return this.engSettleList;}
+        public List<String> getEngOrTranList(){return this.engOrTranList;}
 
 
-        private List<String> fuzzyEngSettle;
+        private List<String> fuzzyEngOrTran;
 
-        public List<String> getFuzzyEngSettle(){return this.fuzzyEngSettle;}
+        public List<String> getFuzzyEngOrTran(){return this.fuzzyEngOrTran;}
 
-        private List<String> rightFuzzyEngSettle;
+        private List<String> rightFuzzyEngOrTran;
 
-        public List<String> getRightFuzzyEngSettle(){return this.rightFuzzyEngSettle;}
+        public List<String> getRightFuzzyEngOrTran(){return this.rightFuzzyEngOrTran;}
         private List<String> shortCodeList;
 
         public List<String> getShortCodeList(){return this.shortCodeList;}
@@ -6974,32 +7046,28 @@ public class MqmsVoucher implements Serializable {
             return this;
         }
 
-        public ConditionBuilder fuzzySalesFailureTime (List<String> fuzzySalesFailureTime){
-            this.fuzzySalesFailureTime = fuzzySalesFailureTime;
+        public ConditionBuilder salesFailureTimeBetWeen(Integer salesFailureTimeSt,Integer salesFailureTimeEd){
+            this.salesFailureTimeSt = salesFailureTimeSt;
+            this.salesFailureTimeEd = salesFailureTimeEd;
             return this;
         }
 
-        public ConditionBuilder fuzzySalesFailureTime (String ... fuzzySalesFailureTime){
-            this.fuzzySalesFailureTime = solveNullList(fuzzySalesFailureTime);
+        public ConditionBuilder salesFailureTimeGreaterEqThan(Integer salesFailureTimeSt){
+            this.salesFailureTimeSt = salesFailureTimeSt;
+            return this;
+        }
+        public ConditionBuilder salesFailureTimeLessEqThan(Integer salesFailureTimeEd){
+            this.salesFailureTimeEd = salesFailureTimeEd;
             return this;
         }
 
-        public ConditionBuilder rightFuzzySalesFailureTime (List<String> rightFuzzySalesFailureTime){
-            this.rightFuzzySalesFailureTime = rightFuzzySalesFailureTime;
-            return this;
-        }
 
-        public ConditionBuilder rightFuzzySalesFailureTime (String ... rightFuzzySalesFailureTime){
-            this.rightFuzzySalesFailureTime = solveNullList(rightFuzzySalesFailureTime);
-            return this;
-        }
-
-        public ConditionBuilder salesFailureTimeList(String ... salesFailureTime){
+        public ConditionBuilder salesFailureTimeList(Integer ... salesFailureTime){
             this.salesFailureTimeList = solveNullList(salesFailureTime);
             return this;
         }
 
-        public ConditionBuilder salesFailureTimeList(List<String> salesFailureTime){
+        public ConditionBuilder salesFailureTimeList(List<Integer> salesFailureTime){
             this.salesFailureTimeList = salesFailureTime;
             return this;
         }
@@ -7034,33 +7102,33 @@ public class MqmsVoucher implements Serializable {
             return this;
         }
 
-        public ConditionBuilder fuzzyEngCode (List<String> fuzzyEngCode){
-            this.fuzzyEngCode = fuzzyEngCode;
+        public ConditionBuilder fuzzyEngType (List<String> fuzzyEngType){
+            this.fuzzyEngType = fuzzyEngType;
             return this;
         }
 
-        public ConditionBuilder fuzzyEngCode (String ... fuzzyEngCode){
-            this.fuzzyEngCode = solveNullList(fuzzyEngCode);
+        public ConditionBuilder fuzzyEngType (String ... fuzzyEngType){
+            this.fuzzyEngType = solveNullList(fuzzyEngType);
             return this;
         }
 
-        public ConditionBuilder rightFuzzyEngCode (List<String> rightFuzzyEngCode){
-            this.rightFuzzyEngCode = rightFuzzyEngCode;
+        public ConditionBuilder rightFuzzyEngType (List<String> rightFuzzyEngType){
+            this.rightFuzzyEngType = rightFuzzyEngType;
             return this;
         }
 
-        public ConditionBuilder rightFuzzyEngCode (String ... rightFuzzyEngCode){
-            this.rightFuzzyEngCode = solveNullList(rightFuzzyEngCode);
+        public ConditionBuilder rightFuzzyEngType (String ... rightFuzzyEngType){
+            this.rightFuzzyEngType = solveNullList(rightFuzzyEngType);
             return this;
         }
 
-        public ConditionBuilder engCodeList(String ... engCode){
-            this.engCodeList = solveNullList(engCode);
+        public ConditionBuilder engTypeList(String ... engType){
+            this.engTypeList = solveNullList(engType);
             return this;
         }
 
-        public ConditionBuilder engCodeList(List<String> engCode){
-            this.engCodeList = engCode;
+        public ConditionBuilder engTypeList(List<String> engType){
+            this.engTypeList = engType;
             return this;
         }
 
@@ -7091,6 +7159,36 @@ public class MqmsVoucher implements Serializable {
 
         public ConditionBuilder transmissionCodeReList(List<String> transmissionCodeRe){
             this.transmissionCodeReList = transmissionCodeRe;
+            return this;
+        }
+
+        public ConditionBuilder fuzzyTranTypeDetail (List<String> fuzzyTranTypeDetail){
+            this.fuzzyTranTypeDetail = fuzzyTranTypeDetail;
+            return this;
+        }
+
+        public ConditionBuilder fuzzyTranTypeDetail (String ... fuzzyTranTypeDetail){
+            this.fuzzyTranTypeDetail = solveNullList(fuzzyTranTypeDetail);
+            return this;
+        }
+
+        public ConditionBuilder rightFuzzyTranTypeDetail (List<String> rightFuzzyTranTypeDetail){
+            this.rightFuzzyTranTypeDetail = rightFuzzyTranTypeDetail;
+            return this;
+        }
+
+        public ConditionBuilder rightFuzzyTranTypeDetail (String ... rightFuzzyTranTypeDetail){
+            this.rightFuzzyTranTypeDetail = solveNullList(rightFuzzyTranTypeDetail);
+            return this;
+        }
+
+        public ConditionBuilder tranTypeDetailList(String ... tranTypeDetail){
+            this.tranTypeDetailList = solveNullList(tranTypeDetail);
+            return this;
+        }
+
+        public ConditionBuilder tranTypeDetailList(List<String> tranTypeDetail){
+            this.tranTypeDetailList = tranTypeDetail;
             return this;
         }
 
@@ -7244,32 +7342,28 @@ public class MqmsVoucher implements Serializable {
             return this;
         }
 
-        public ConditionBuilder fuzzyOfflineFailureTime (List<String> fuzzyOfflineFailureTime){
-            this.fuzzyOfflineFailureTime = fuzzyOfflineFailureTime;
+        public ConditionBuilder offlineFailureTimeBetWeen(Integer offlineFailureTimeSt,Integer offlineFailureTimeEd){
+            this.offlineFailureTimeSt = offlineFailureTimeSt;
+            this.offlineFailureTimeEd = offlineFailureTimeEd;
             return this;
         }
 
-        public ConditionBuilder fuzzyOfflineFailureTime (String ... fuzzyOfflineFailureTime){
-            this.fuzzyOfflineFailureTime = solveNullList(fuzzyOfflineFailureTime);
+        public ConditionBuilder offlineFailureTimeGreaterEqThan(Integer offlineFailureTimeSt){
+            this.offlineFailureTimeSt = offlineFailureTimeSt;
+            return this;
+        }
+        public ConditionBuilder offlineFailureTimeLessEqThan(Integer offlineFailureTimeEd){
+            this.offlineFailureTimeEd = offlineFailureTimeEd;
             return this;
         }
 
-        public ConditionBuilder rightFuzzyOfflineFailureTime (List<String> rightFuzzyOfflineFailureTime){
-            this.rightFuzzyOfflineFailureTime = rightFuzzyOfflineFailureTime;
-            return this;
-        }
 
-        public ConditionBuilder rightFuzzyOfflineFailureTime (String ... rightFuzzyOfflineFailureTime){
-            this.rightFuzzyOfflineFailureTime = solveNullList(rightFuzzyOfflineFailureTime);
-            return this;
-        }
-
-        public ConditionBuilder offlineFailureTimeList(String ... offlineFailureTime){
+        public ConditionBuilder offlineFailureTimeList(Integer ... offlineFailureTime){
             this.offlineFailureTimeList = solveNullList(offlineFailureTime);
             return this;
         }
 
-        public ConditionBuilder offlineFailureTimeList(List<String> offlineFailureTime){
+        public ConditionBuilder offlineFailureTimeList(List<Integer> offlineFailureTime){
             this.offlineFailureTimeList = offlineFailureTime;
             return this;
         }
@@ -7304,33 +7398,33 @@ public class MqmsVoucher implements Serializable {
             return this;
         }
 
-        public ConditionBuilder fuzzyEngSettle (List<String> fuzzyEngSettle){
-            this.fuzzyEngSettle = fuzzyEngSettle;
+        public ConditionBuilder fuzzyEngOrTran (List<String> fuzzyEngOrTran){
+            this.fuzzyEngOrTran = fuzzyEngOrTran;
             return this;
         }
 
-        public ConditionBuilder fuzzyEngSettle (String ... fuzzyEngSettle){
-            this.fuzzyEngSettle = solveNullList(fuzzyEngSettle);
+        public ConditionBuilder fuzzyEngOrTran (String ... fuzzyEngOrTran){
+            this.fuzzyEngOrTran = solveNullList(fuzzyEngOrTran);
             return this;
         }
 
-        public ConditionBuilder rightFuzzyEngSettle (List<String> rightFuzzyEngSettle){
-            this.rightFuzzyEngSettle = rightFuzzyEngSettle;
+        public ConditionBuilder rightFuzzyEngOrTran (List<String> rightFuzzyEngOrTran){
+            this.rightFuzzyEngOrTran = rightFuzzyEngOrTran;
             return this;
         }
 
-        public ConditionBuilder rightFuzzyEngSettle (String ... rightFuzzyEngSettle){
-            this.rightFuzzyEngSettle = solveNullList(rightFuzzyEngSettle);
+        public ConditionBuilder rightFuzzyEngOrTran (String ... rightFuzzyEngOrTran){
+            this.rightFuzzyEngOrTran = solveNullList(rightFuzzyEngOrTran);
             return this;
         }
 
-        public ConditionBuilder engSettleList(String ... engSettle){
-            this.engSettleList = solveNullList(engSettle);
+        public ConditionBuilder engOrTranList(String ... engOrTran){
+            this.engOrTranList = solveNullList(engOrTran);
             return this;
         }
 
-        public ConditionBuilder engSettleList(List<String> engSettle){
-            this.engSettleList = engSettle;
+        public ConditionBuilder engOrTranList(List<String> engOrTran){
+            this.engOrTranList = engOrTran;
             return this;
         }
 
@@ -7764,7 +7858,7 @@ public class MqmsVoucher implements Serializable {
             this.obj.setEngArrange(engArrange);
             return this;
         }
-        public Builder salesFailureTime(String salesFailureTime){
+        public Builder salesFailureTime(Integer salesFailureTime){
             this.obj.setSalesFailureTime(salesFailureTime);
             return this;
         }
@@ -7772,12 +7866,16 @@ public class MqmsVoucher implements Serializable {
             this.obj.setCarModel(carModel);
             return this;
         }
-        public Builder engCode(String engCode){
-            this.obj.setEngCode(engCode);
+        public Builder engType(String engType){
+            this.obj.setEngType(engType);
             return this;
         }
         public Builder transmissionCodeRe(String transmissionCodeRe){
             this.obj.setTransmissionCodeRe(transmissionCodeRe);
+            return this;
+        }
+        public Builder tranTypeDetail(String tranTypeDetail){
+            this.obj.setTranTypeDetail(tranTypeDetail);
             return this;
         }
         public Builder transmissionManufacturer(String transmissionManufacturer){
@@ -7800,7 +7898,7 @@ public class MqmsVoucher implements Serializable {
             this.obj.setPDI(PDI);
             return this;
         }
-        public Builder offlineFailureTime(String offlineFailureTime){
+        public Builder offlineFailureTime(Integer offlineFailureTime){
             this.obj.setOfflineFailureTime(offlineFailureTime);
             return this;
         }
@@ -7808,8 +7906,8 @@ public class MqmsVoucher implements Serializable {
             this.obj.setTransmissionComfirmTime(transmissionComfirmTime);
             return this;
         }
-        public Builder engSettle(String engSettle){
-            this.obj.setEngSettle(engSettle);
+        public Builder engOrTran(String engOrTran){
+            this.obj.setEngOrTran(engOrTran);
             return this;
         }
         public Builder shortCode(String shortCode){

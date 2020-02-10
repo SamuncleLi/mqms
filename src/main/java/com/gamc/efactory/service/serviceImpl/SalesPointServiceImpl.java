@@ -2,16 +2,11 @@ package com.gamc.efactory.service.serviceImpl;
 
 
 import com.gamc.efactory.dao.MqmsSalesPointMapper;
-import com.gamc.efactory.dao.MqmsSalesPointMapper;
-import com.gamc.efactory.model.dataObject.MqmsSales;
-import com.gamc.efactory.model.dataObject.MqmsSalesPoint;
 import com.gamc.efactory.model.dataObject.MqmsSalesPoint;
 import com.gamc.efactory.service.SalesPointService;
-import com.gamc.efactory.service.SalesService;
 import com.gamc.efactory.util.ExcelUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -39,7 +34,7 @@ public class SalesPointServiceImpl implements SalesPointService {
                 List<List<String>> result = ExcelUtil.importXlsx(file.getInputStream());
                 System.out.println(result);
                 if (result == null) {
-                    System.out.println("88888888888888888888888888888888");
+//                    System.out.println("88888888888888888888888888888888");
                     return false;
                 }
                 //第0行为表头
@@ -50,7 +45,7 @@ public class SalesPointServiceImpl implements SalesPointService {
                     MqmsSalesPoint mqmsSalesPoint = new MqmsSalesPoint();
                     Class cls = mqmsSalesPoint.getClass();
                     Field[] fields = cls.getDeclaredFields();
-                    System.out.println(fields.length+"111111111111111111");
+//                    System.out.println(fields.length+"111111111111111111");
                     for (int j = 2; j < fields.length; j++) {
                         Field f = fields[j];
                         f.setAccessible(true);

@@ -7,10 +7,13 @@ import com.gamc.efactory.dao.ColumnNameAndCommentMapper;
 import com.gamc.efactory.model.dataObject.ColumnNameAndComment;
 import com.gamc.efactory.service.MultiFilterService;
 import com.gamc.efactory.util.EasyUIUtil;
+import com.gamc.efactory.util.StringUtil;
+import com.github.pagehelper.PageHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.HashMap;
 import java.util.List;
@@ -54,38 +57,41 @@ public class MultiFilterServiceImpl implements MultiFilterService{
      * @返回
      * @抛出异常
      */
-    public JSONObject multiFilterQuery(String table, String condition, int page, int rows){
+    public JSONObject multiFilterQuery(String table, String condition, String page, String rows, String orderByColumn){
         JSONObject result = new JSONObject();
         JSONArray jsonArray = new JSONArray();
         JSONObject json=JSONObject.parseObject(condition);
-        int rowLength=Integer.parseInt(json.get("rowLength").toString());
+
         String str_temp="";
-        for(int i=0;i<rowLength;i++){
-            if(json.get("QueryCondition["+i+"].conditionOption").equals("equal")){
-                str_temp+=" and "+json.get("QueryCondition["+i+"].conditionField").toString()+" ='"+json.get("QueryCondition["+i+"].conditionValue").toString()+"'";
-            }else if(json.get("QueryCondition["+i+"].conditionOption").equals("like")){
-                str_temp+=" and "+json.get("QueryCondition["+i+"].conditionField").toString()+" like '%"+json.get("QueryCondition["+i+"].conditionValue").toString()+"%'";
-            }else if(json.get("QueryCondition["+i+"].conditionOption").equals("between")){
-                str_temp+=" and "+json.get("QueryCondition["+i+"].conditionField").toString()+" BETWEEN '"+json.get("QueryCondition["+i+"].conditionValueLeft").toString()+"' and '"+json.get("QueryCondition["+i+"].conditionValueRight").toString()+"' ";
-            }else if(json.get("QueryCondition["+i+"].conditionOption").equals("greater")){
-                str_temp+=" and "+json.get("QueryCondition["+i+"].conditionField").toString()+" >='"+json.get("QueryCondition["+i+"].conditionValue").toString()+"'";
-            }else if(json.get("QueryCondition["+i+"].conditionOption").equals("less")){
-                str_temp+=" and "+json.get("QueryCondition["+i+"].conditionField").toString()+" <='"+json.get("QueryCondition["+i+"].conditionValue").toString()+"'";
-            }else if(json.get("QueryCondition["+i+"].conditionOption").equals("unequal")){
-                str_temp+=" and "+json.get("QueryCondition["+i+"].conditionField").toString()+" <>'"+json.get("QueryCondition["+i+"].conditionValue").toString()+"'";
+        if(StringUtil.isNotEmpty(condition)) {
+            int rowLength = Integer.parseInt(json.get("rowLength").toString());
+            for (int i = 0; i < rowLength; i++) {
+                if (json.get("QueryCondition[" + i + "].conditionOption").equals("equal")) {
+                    str_temp += " and " + json.get("QueryCondition[" + i + "].conditionField").toString() + " ='" + json.get("QueryCondition[" + i + "].conditionValue").toString() + "'";
+                } else if (json.get("QueryCondition[" + i + "].conditionOption").equals("like")) {
+                    str_temp += " and " + json.get("QueryCondition[" + i + "].conditionField").toString() + " like '%" + json.get("QueryCondition[" + i + "].conditionValue").toString() + "%'";
+                } else if (json.get("QueryCondition[" + i + "].conditionOption").equals("between")) {
+                    str_temp += " and " + json.get("QueryCondition[" + i + "].conditionField").toString() + " BETWEEN '" + json.get("QueryCondition[" + i + "].conditionValueLeft").toString() + "' and '" + json.get("QueryCondition[" + i + "].conditionValueRight").toString() + "' ";
+                } else if (json.get("QueryCondition[" + i + "].conditionOption").equals("greater")) {
+                    str_temp += " and " + json.get("QueryCondition[" + i + "].conditionField").toString() + " >='" + json.get("QueryCondition[" + i + "].conditionValue").toString() + "'";
+                } else if (json.get("QueryCondition[" + i + "].conditionOption").equals("less")) {
+                    str_temp += " and " + json.get("QueryCondition[" + i + "].conditionField").toString() + " <='" + json.get("QueryCondition[" + i + "].conditionValue").toString() + "'";
+                } else if (json.get("QueryCondition[" + i + "].conditionOption").equals("unequal")) {
+                    str_temp += " and " + json.get("QueryCondition[" + i + "].conditionField").toString() + " <>'" + json.get("QueryCondition[" + i + "].conditionValue").toString() + "'";
+                }
             }
         }
-        StringBuffer sb=new StringBuffer("select * from "+table+" ");
-        if(!str_temp.equals("")){
-            sb.append(str_temp.replaceFirst("and", "where"));
+
+        int total = columnNameAndCommentMapper.multiFilterCount(table, str_temp);
+        if(page != null && rows != null && orderByColumn !=null){
+            PageHelper.startPage(Integer.parseInt(page), Integer.parseInt(rows),  orderByColumn + " desc");
         }
-        sb.append(" order by voucher_id DESC");
-        List<HashMap<String, String>> list = columnNameAndCommentMapper.multiFilter(table, condition, page, rows);
+        List<HashMap<String, String>> list = columnNameAndCommentMapper.multiFilter(table, str_temp);
         for(HashMap obj:list){
             JSONObject jsonObject = JSONObject.parseObject(JSON.toJSONString(obj));
             jsonArray.add(jsonObject);
         }
-        int total = columnNameAndCommentMapper.multiFilterCount(table, condition);
+
         result.put("total", total);
         result.put("rows", jsonArray);
         return result;

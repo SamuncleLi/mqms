@@ -2,9 +2,6 @@
 <!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.gamc.efactory.dao.MqmsSalesMapper">
-
-
-
     <resultMap type="com.gamc.efactory.model.dataObject.MqmsSalesRaw" id="MqmsSalesRawMap">
         <result property="salesId" column="sales_id"/>
         <result property="vinCode" column="vin_code"/>
@@ -17,8 +14,8 @@
         <result property="secondPinDate" column="second_pin_date"/>
     </resultMap>
     <select id="selectSecondSalesCount"  resultType="java.lang.Integer" >
-            SELECT COUNT(*) FROM `mqms_sales`
-            WHERE  `eng_type` = #{eng_type} AND  `second_pin_date` LIKE  concat(#{second_pin_date},'%')
+        SELECT COUNT(*) FROM `mqms_sales`
+        WHERE  `eng_type` = #{eng_type} AND  `second_pin_date` LIKE  concat(#{second_pin_date},'%')
     </select>
     <select id="selectByVinCode"  resultType="java.lang.Integer" >
         SELECT COUNT(*) FROM `mqms_sales`

@@ -1,0 +1,32 @@
+.select-area{
+    width: 98%;
+    height: 12%;
+}
+body{
+    width: 100%;
+    height: 100%;
+}
+html{
+    height: 100%;
+}
+#upload-dlg{
+    width: 400px;
+    height: 200px;
+}
+#fileForm{
+    padding: 10% 10% 10% 10%;
+}
+#file{
+    width: 240px;
+}
+#upload-btn{
+    width: 80%;
+}
+#failureTrack-dlg{
+    width: 700px;
+    height: 400px;
+}
+#importantIssue-dlg{
+    width: 700px;
+    height: 400px;
+}

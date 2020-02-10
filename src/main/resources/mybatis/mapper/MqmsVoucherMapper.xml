@@ -2,7 +2,6 @@
 <!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.gamc.efactory.dao.MqmsVoucherMapper">
-
     <resultMap type="com.gamc.efactory.model.dataObject.MqmsVoucher" id="MqmsVoucherMap">
         <result property="voucherId" column="voucher_id"/>
         <result property="voucherCode" column="voucher_code"/>
@@ -299,4 +298,46 @@
             `voucher_code` = #{voucherCode} and
         </trim>
     </update>
+
+    <resultMap id="TransmissionProportionMap" type="TransmissionProportion">
+        <result property="transmissionCodeRe" column="transmission_code_re"/>
+        <result property="number" column="number"/>
+    </resultMap>
+    <resultMap id="FailureTop10Map" type="FailureTop10">
+        <result property="engArrange" column="eng_arrange"/>
+        <result property="number" column="number"/>
+    </resultMap>
+    <select id="calTransmissionProportion" resultMap="TransmissionProportionMap" parameterType="MqmsVoucher">
+        SELECT
+            transmission_code_re,
+            count(*) as number
+        FROM
+            `mqms_voucher`
+        <trim prefix="where" suffixOverrides="and | or">
+            <if test="engType != null">
+            `eng_type` = #{engType} and
+            </if>
+        </trim>
+        GROUP BY
+            transmission_code_re;
+    </select>
+
+    <select id="failureTop10" resultMap="FailureTop10Map" parameterType="MqmsVoucher">
+        SELECT
+        eng_arrange,
+        count(*) as number
+        FROM
+        `mqms_voucher`
+        <trim prefix="where" suffixOverrides="and | or">
+            <if test="engType != null">
+                `eng_type` = #{engType} and
+            </if>
+        </trim>
+        GROUP BY
+        eng_arrange
+        ORDER BY
+        number desc
+        LIMIT 0,10;
+    </select>
+
 </mapper>

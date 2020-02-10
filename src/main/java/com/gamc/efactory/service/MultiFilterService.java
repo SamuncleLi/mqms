@@ -29,5 +29,5 @@ public interface MultiFilterService {
      * @返回
      * @抛出异常
      */
-    public JSONObject multiFilterQuery(String table, String condition, int page, int rows);
+    public JSONObject multiFilterQuery(String table, String condition, String page, String rows, String orderByColumn);
 }

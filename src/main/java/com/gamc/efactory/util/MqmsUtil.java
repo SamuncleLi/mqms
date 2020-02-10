@@ -6,12 +6,11 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.regex.Pattern;
 
 /**
  * Created by UZI on 2020/1/6.
  */
-public class MqmsUnit {
+public class MqmsUtil {
     /**
      * 此处用于获取两个日期之间的月份差值
      * @param startDate
@@ -76,10 +75,10 @@ public class MqmsUnit {
     /**
      * 月份推移计算，字符串输入输出，
      * @param date
-     * @param space
+     * @param space 推移缺省值
      * @return
      */
-    public static String getDateInfor(String pattern,String date, int space) {
+    public static String getDateInfor(String pattern, String date, int space) {
         SimpleDateFormat sdf = new SimpleDateFormat(pattern);
         Date dateTime = null;
         String dateTime2="";

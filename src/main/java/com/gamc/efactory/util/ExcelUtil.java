@@ -2,9 +2,6 @@ package com.gamc.efactory.util;
 
 import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.ss.usermodel.*;
-import org.apache.poi.xssf.usermodel.XSSFCell;
-import org.apache.poi.xssf.usermodel.XSSFRow;
-import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import java.io.FileInputStream;
@@ -154,9 +151,9 @@ public class ExcelUtil {
                         return result;
                     }
                     if (j==0)
-                    {
-                        cellNum = row.getLastCellNum();
-                        System.out.println(cellNum);
+                        {
+                            cellNum = row.getLastCellNum();
+//                        System.out.println(cellNum);
                     }
                     // 读取每一个单元格
                     for (int k = 0; k < cellNum; k++) {//处理每一个单元格

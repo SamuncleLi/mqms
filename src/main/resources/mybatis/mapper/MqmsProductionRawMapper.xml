@@ -61,5 +61,4 @@
             `vin` = #{vin} and
         </trim>
     </update>
-
 </mapper>

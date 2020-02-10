@@ -157,5 +157,4 @@
             `voucher_code` = #{voucherCode} and
         </trim>
     </update>
-
 </mapper>

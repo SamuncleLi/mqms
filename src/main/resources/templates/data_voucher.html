@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>装配数据追溯</title>
+    <script type="text/javascript" src="${req.contextPath}/static/plugin/jquery-easyui-1.5.5.4/jquery.min.js"></script>
+    <script type="text/javascript" src="${req.contextPath}/static/plugin/jquery-easyui-1.5.5.4/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="${req.contextPath}/static/plugin/jquery-easyui-1.5.5.4/locale/easyui-lang-zh_CN.js"></script>
+    <link rel="stylesheet" href="${req.contextPath}/static/plugin/jquery-easyui-1.5.5.4/themes/gray/easyui.css" type="text/css"/>
+    <link rel="stylesheet" href="${req.contextPath}/static/plugin/jquery-easyui-1.5.5.4/themes/icon.css" type="text/css"/>
+    <link rel="stylesheet" href="${req.contextPath}/static/css/data_voucher.css" type="text/css"/>
+    <script type="text/javascript" src="${req.contextPath}/static/plugin/jquery-easyui-1.5.5.4/datagrid-detailview.js"></script>
+    <script type="text/javascript" src="${req.contextPath}/static/plugin/jquery-easyui-1.5.5.4/datagrid-filter.js"></script>
+    <link  href="${req.contextPath}/static/layuiExtend/layui/css/layui.css" media="all" rel="stylesheet">
+    <script src="${req.contextPath}/static/layuiExtend/layui/layui.js"></script>
+
+    <style type="text/css">
+        .team3f-table tr{
+            text-align:center;
+            font-size: 15px;
+            color: #000000;
+            line-height:50px;
+            width: 100%;
+
+        }
+        .team3f-table td:last-child{
+            border-bottom: 1px solid #d0d0d0;
+            border-right: 0px solid #d0d0d0;
+        }
+        .team3f-table td{
+            border-bottom: 1px solid #d0d0d0;
+            border-right: 1px solid #d0d0d0;
+            line-height:50px;
+            overflow: auto;
+            white-space:normal;
+            word-break:break-all;
+            word-wrap:break-word;
+        }
+        .team3f-table td:nth-child(2n+1){
+            width: 15%;
+            font-weight:bold;
+        }
+        .team3f-table td:nth-child(2n){
+            width: 18.3%;
+
+        }
+    </style>
+</head>
+<body>
+    <table id="dg2" class="easyui-datagrid" title="VEI数据查询" style="width:100%;height:100%"
+           data-options="singleSelect:true,collapsible:true" toolbar="#tb2">
+        <thead>
+        <tr></tr>
+        </thead>
+    </table>
+    <div id="tb2" class="select-area">
+        <div>
+            <a id="complexBtn" class="layui-btn">复杂查询</a>
+            <a href="javascript:exportFile()" class="easyui-linkbutton" iconCls="icon-save" plain="true">导出</a>
+            <a href="javascript:importFile()" class="easyui-linkbutton" iconCls="icon-save" plain="true" title="导入excel">导入</a>
+            <a href="javascript:startFailureTrack()" class="easyui-linkbutton" iconCls="icon-save" plain="true" >发起不良跟踪</a>
+            <a href="javascript:startImportantIssue()" class="easyui-linkbutton" iconCls="icon-save" plain="true">发起重点课题</a>
+        </div>
+        <div id="msg2">查询条件：</div>
+        <div id="result2" style="word-break:break-all;height:60px;width:500px;padding-left:50px;display: none;"></div>
+    </div>
+    <div id="upload-dlg" class="easyui-dialog" closed="true">
+        <form  method="post" enctype="multipart/form-data" id="fileForm" action="/mqms/import/proData">
+            <input id="file" class="easyui-filebox" name="file" data-options="prompt:'选择文件'">
+            <a id="upload-btn" href="javascript:fileUpload()" class="easyui-linkbutton" style="width:70%">上传文件</a>
+        </form>
+    </div>
+    <div id="failureTrack-dlg" title="发起不良跟踪" class="easyui-dialog team3f-table"  cellspacing="0" closed="true" buttons="#failureTrack-dlgbutton">
+        <table id="voucherInfo">
+            <tbody>
+            <tr>
+                <td>单据号</td><td><input id="" name="" class="easyui-textbox"></td>
+                <td>销售点</td><td></td>
+                <td>确认时间</td><td></td>
+            </tr>
+            <tr>
+                <td>快递件返回时间</td><td></td>
+                <td>快递接收人</td><td></td>
+                <td>快递确认时间</td><td></td>
+            </tr>
+            </tbody>
+        </table>
+        <form id="failureTrackForm"></form>
+    </div>
+    <div id="failureTrack-dlgbutton">
+        <a href="javascript:saveFailureTrackDlg()" class="easyui-linkbutton">保存</a>
+        <a href="javascript:closeFailureTrackDlg()" class="easyui-linkbutton">关闭</a>
+    </div>
+    <div id="importantIssue-dlg" title="发起重点课题" class="easyui-dialog" closed="true">
+        <form>
+            <label>起始月份</label><input name="voucherCode">
+        </form>
+    </div>
+</div>
+<script type="text/javascript">
+    //初始化全局变量
+    var columns_auto_single=new Array(1);
+    var complexDc;var dynamicCondition;
+    //加载模型
+    $(function(){
+        load_dynamic();
+    });
+    //动态加载数据
+    function load_dynamic() {
+        //查询数据表头
+        $.ajax({
+            url: '/mqms/voucher/columnNameAndComment?table=mqms_voucher',
+            cache: false,
+            type: 'POST',
+            data: "",//json字符串
+            dataType: 'json',//返回类型
+            contentType: "application/json; charset=utf-8",//发送类型，重要，不然会报错
+            success: function (result) {
+                var arr = result;
+                var table=document.getElementById('voucherInfo');
+
+                //动态生成dcDemo中的li
+                columns_auto_single[0] = function () {
+                    var data = [];
+                    var dataFields = [];
+                    for (var i = 0; i < arr.length-1; i++) {
+                        var str = {
+                            "field": "" + arr[i].columnName,
+                            "title": "" + arr[i].comment,
+                            "width":150,
+                            "align": 'center'
+                        };
+                        var str2= {
+                            field: "" + arr[i].columnName,
+                            title: "" + arr[i].comment,
+                            edit:"text"
+                        };
+                        data.push(str);
+                        dataFields.push(str2);
+                    }
+                    //高级查询
+                    layui.config({
+                        base: '${req.contextPath}/static/layuiExtend/layui_exts/' //设定扩展的Layui模块的所在目录，一般用于外部模块扩展
+                    }).extend({
+                        dynamicCondition: 'dynamicCondition/dynamicCondition'
+                    }).use(['table', 'form', 'dynamicCondition'], function () {
+                        var $ = layui.$, table = layui.table, form = layui.table;
+                        dynamicCondition = layui.dynamicCondition;
+
+                        //初始化查询实例
+                        complexDc = dynamicCondition.create({
+//                    elem: "#dcDemo" //通过容器选择器传入，也可以$("#dcDemo"),或者document.getElementById("dcDemo")
+                            fields:dataFields
+                            //,tableId:"listTable" //静态页面不好演示table数据表格更新
+                            , type: "complex"  //type:"simple"/"complex"
+                            , conditionTextId: "#msg2"
+                            //当有多个动态条件查询实例时，定义instanceName属性可以通过dynamicCondition.getInstance(instanceName)获取对应的实例
+                            , instanceName: "complexInstance"
+                            , queryCallBack: function (requestData) {
+                                console.log(requestData)
+                                $("#result2").html(JSON.stringify(requestData));
+                                load_dynamic_records(JSON.stringify(requestData));
+                            }
+                        });
+                        $("#result2").html(JSON.stringify(complexDc.buildRequestData()));
+                        /**复杂查询*/
+                        $("#complexBtn").on("click", function () {
+                            dynamicCondition.getInstance("complexInstance").open();
+                        });
+                    });
+
+                    return data;
+                }();
+                load_dynamic_records("");
+            }
+        });
+    }
+    //动态给表格表头赋值，并读取数据
+    function load_dynamic_records(requestData) {
+        //动态加载数据
+        $("#dg2").datagrid({
+            toolbar:'#tb2',
+            contentType: "application/json",
+            columns:columns_auto_single,//外层ajax请求的表头json
+            rownumbers: true,// 行号
+            autoRowHeight: false,
+            pagination: true,// 分页条
+            checkOnSelect: false,
+            selectOnCheck: true,
+            pageSize: 10,
+            pageList: [10, 20, 40, 50],
+            loader:function(param,success,error){
+                var condition = {};
+                condition['condition'] = requestData;
+                var allParam = $.extend({},param, condition);
+                console.log(allParam);
+                $.ajax({
+                    url:"/mqms/voucher/list",
+                    contentType: "application/json",
+                    data: allParam,
+                    dataType:"json",
+                    success: function(data){
+                        console.log(allParam);
+                        success(data);
+                    }
+                })
+            }
+        });
+    }
+    //打开上传文件对话框
+    function importFile() {
+        $('#upload-dlg').dialog("open", true);
+    }
+    //上传文件
+    function fileUpload() {
+        $.messager.alert('系统提示',"正在上传，上传完成后会有提示，请耐心等候");
+
+        $("#fileForm").form("submit", {
+            type: 'post',
+            url: '/mqms/import/veiData',
+            success: function (data) {
+                if (data.success == 'true') {
+                    $.messager.alert("系统提示",'上传文件成功');
+                } else {
+                    $.messager.alert("系统提示",'上传文件失败');
+                }
+                return false;
+            }
+        });
+    }
+    //开启不良追踪
+    function startFailureTrack() {
+        var selectedRows = $('#dg2').datagrid('getSelections');
+        if(selectedRows.length==0){
+            $.messager.alert("系统提示","请选择至少一行");
+            return;
+        }
+        var voucherIds=[];
+        for(var i=0;i<selectedRows.length;i++){
+            voucherIds.push(selectedRows[i].voucher_id);//以列表中的哪个字段为索引
+        }
+        var voucherIdList = voucherIds.join(",");
+        //判断是否可以开启不良追踪，如果已经开启不良追踪，则显示已开启不良追踪
+        $.post('/mqms/voucher/checkTracked',{voucherIds:voucherIdList},function (result) {
+            //如果已被安排快递处理，则提示
+            if(result.success == 'false'){
+                $.messager.alert("系统提示","以下不良已被开启追踪，请不要重复开启不良追踪<br>" + result.rows)
+            }
+            else{
+                $('#ids.failureTrack').textbox('setValue', voucherIdList);
+                $('#failureTrack-dlg').dialog("open", true);
+            }
+        })
+
+    }
+    //关闭不良追踪对话框
+    function closeFailureTrackDlg() {
+        $('#failureTrack-dlg').dialog('close');
+        $('#dlgdg').datagrid('clear');
+    }
+    //保存不良追踪对话框
+    function saveFailureTrackDlg() {
+        
+    }
+    //开启重点课题
+    function startImportantIssue() {
+        $('#importantIssue-dlg').dialog("open", true);
+    }
+</script>
+</body>
+</html>

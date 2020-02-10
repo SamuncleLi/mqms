@@ -10,15 +10,15 @@ Target Server Type    : MYSQL
 Target Server Version : 50628
 File Encoding         : 65001
 
-Date: 2020-01-06 17:15:05
+Date: 2020-02-07 10:42:35
 */
 
 SET FOREIGN_KEY_CHECKS=0;
 
 -- ----------------------------
--- Table structure for production_raw
+-- Table structure for mqms_production_raw
 -- ----------------------------
-DROP TABLE IF EXISTS `production_raw`;
+DROP TABLE IF EXISTS `mqms_production_raw`;
 CREATE TABLE `mqms_production_raw` (
   `production_id` int(11) NOT NULL AUTO_INCREMENT,
   `factory_code` varchar(255) DEFAULT NULL,
@@ -37,6 +37,8 @@ CREATE TABLE `mqms_production_raw` (
   `car_type` varchar(255) DEFAULT NULL,
   `export_country` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`production_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-
+-- ----------------------------
+-- Records of mqms_production_raw
+-- ----------------------------

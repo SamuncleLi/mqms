@@ -129,21 +129,39 @@ public class ViewController {
         return "warehousingOutCheckPage";
     }
 
-    @RequestMapping(value = "voucher")
-    public String voucherView(){
-        return "voucher";
+    @RequestMapping(value = "/data_sales")
+    public String salesView(){
+        return "data_sales";
     }
 
-    @RequestMapping(value = "charts_eng_failure_rate")
+    @RequestMapping(value = "/data_production")
+    public String productionView(){
+        return "data_production";
+    }
+
+    @RequestMapping(value = "/data_voucher")
+    public String voucherView(){
+        return "data_voucher";
+    }
+
+    @RequestMapping(value = "/charts_eng_failure_rate")
     public String charts_eng_failure_rateView(){
         return "charts_eng_failure_rate";
     }
 
-    @RequestMapping(value = "charts_tran_failure_rate")
+    @RequestMapping(value = "/charts_tran_failure_rate")
     public String charts_tran_failure_rateView(){
         return "charts_tran_failure_rate";
     }
 
+    @RequestMapping(value = "/charts_eng_single_analysis")
+    public String charts_eng_single_analysisView(){
+        return "charts_eng_single_analysis";
+    }
 
+    @RequestMapping(value = "/charts_tran_single_analysis")
+    public String charts_tran_single_analysisView(){
+        return "charts_tran_single_analysis";
+    }
 
 }

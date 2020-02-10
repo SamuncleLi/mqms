@@ -10,15 +10,15 @@ Target Server Type    : MYSQL
 Target Server Version : 50628
 File Encoding         : 65001
 
-Date: 2020-01-06 17:15:17
+Date: 2020-02-07 10:42:54
 */
 
 SET FOREIGN_KEY_CHECKS=0;
 
 -- ----------------------------
--- Table structure for sales_raw
+-- Table structure for mqms_sales_raw
 -- ----------------------------
-DROP TABLE IF EXISTS `sales_raw`;
+DROP TABLE IF EXISTS `mqms_sales_raw`;
 CREATE TABLE `mqms_sales_raw` (
   `sales_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '销售数据id',
   `vin_code` varchar(255) NOT NULL COMMENT 'vin码',
@@ -46,3 +46,7 @@ CREATE TABLE `mqms_sales_raw` (
   PRIMARY KEY (`sales_id`),
   UNIQUE KEY `vin` (`vin_code`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of mqms_sales_raw
+-- ----------------------------
