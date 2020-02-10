@@ -103,6 +103,10 @@ public class ImportExcelController {
         }
         return "数据成功导入";
     }
+
+    /**
+     * test
+     */
     @Autowired
     private SalesService salesService;
     @RequestMapping(value = "/salesData")
@@ -120,6 +124,7 @@ public class ImportExcelController {
         }
         return "数据成功导入";
     }
+
     @Autowired
     private SalesPointService salesPointService;
     @RequestMapping(value = "/salesPointData")
