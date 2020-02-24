@@ -39,11 +39,14 @@ public class ChartsController {
         String[] engTypeAssemble = engType.split(",");
         String[][] strArray=new String[engTypeAssemble.length+1][Integer.parseInt(timeSpan)+1];
         strArray[0][0]="机型";
+
         for (int j = 0; j < Integer.parseInt(timeSpan); j++) {
+            int thisEngtypeCount=0;
+            int secondPinData=0;
             for (int i = 0; i < engTypeAssemble.length; i++) {
-                int thisEngtypeCount = mqmsVoucherMapper.selectEngTypeCount(engTypeAssemble[i], yearAndMonth);
+                thisEngtypeCount = mqmsVoucherMapper.selectEngTypeCount(engTypeAssemble[i], yearAndMonth)+thisEngtypeCount;
 //                System.out.println(thisEngtypeCount);
-                int secondPinData = mqmsSalesMapper.selectSecondSalesCount(engTypeAssemble[i], yearAndMonth);
+                secondPinData = mqmsSalesMapper.selectSecondSalesCount(engTypeAssemble[i], yearAndMonth)+secondPinData;
 //                System.out.println(secondPinData);
                 float unqualifiedRate = (float) thisEngtypeCount / secondPinData;
                 DecimalFormat df = new DecimalFormat("0.00");//格式化小数
