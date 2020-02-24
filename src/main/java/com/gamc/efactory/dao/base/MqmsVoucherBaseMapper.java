@@ -4,7 +4,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 import com.gamc.efactory.model.dataObject.MqmsVoucher;
 /**
-*  @author author
+*  @author wangjian
 */
 public interface MqmsVoucherBaseMapper {
 
@@ -17,5 +17,8 @@ public interface MqmsVoucherBaseMapper {
     List<MqmsVoucher> queryMqmsVoucher(MqmsVoucher object);
 
     MqmsVoucher queryMqmsVoucherLimit1(MqmsVoucher object);
+
+
+
 
 }

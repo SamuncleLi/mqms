@@ -1,8 +1,6 @@
 package com.gamc.efactory.controller;
 
-import com.gamc.efactory.service.ProductionService;
-import com.gamc.efactory.service.SalesService;
-import com.gamc.efactory.service.VeiDataService;
+import com.gamc.efactory.service.*;
 //import com.gamc.efactory.service.ProductionService;
 //import com.gamc.efactory.service.SalesService;
 import com.gamc.efactory.service.VeiDataService;
@@ -90,7 +88,7 @@ public class ImportExcelController {
     }
     @Autowired
     private ProductionService productionService;
-    @RequestMapping(value = "/proData")
+    @RequestMapping(value = "/productionData")
     public String exImportProductionData(@RequestParam()MultipartFile file, HttpSession session) {
 
         boolean a = false;
@@ -105,6 +103,10 @@ public class ImportExcelController {
         }
         return "数据成功导入";
     }
+
+    /**
+     * test
+     */
     @Autowired
     private SalesService salesService;
     @RequestMapping(value = "/salesData")
@@ -117,6 +119,24 @@ public class ImportExcelController {
 
         try {
             a = salesService.batchImport(fileName, file);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "数据成功导入";
+    }
+
+    @Autowired
+    private SalesPointService salesPointService;
+    @RequestMapping(value = "/salesPointData")
+    public String exImportSalesPointData(@RequestParam()MultipartFile file, HttpSession session) {
+
+        boolean a = false;
+
+        String fileName = file.getOriginalFilename();
+//        System.out.println(fileName);
+
+        try {
+            a = salesPointService.batchImport(fileName, file);
         } catch (Exception e) {
             e.printStackTrace();
         }
