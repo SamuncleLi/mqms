@@ -1,0 +1,872 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gamc.efactory.dao.base.MqmsFailureTrackBaseMapper">
+
+
+    <insert id="insertMqmsFailureTrack" >
+        INSERT INTO `mqms_failure_track`
+        (
+        <trim suffixOverrides=",">
+                    <if test="failureTrackId!=null">
+                        `failure_track_id`,
+                    </if>
+                    <if test="voucherCode!=null">
+                        `voucher_code`,
+                    </if>
+                    <if test="saoId!=null">
+                        `sao_id`,
+                    </if>
+                    <if test="trackBeginerId!=null">
+                        `track_beginer_id`,
+                    </if>
+                    <if test="trackBeginerNo!=null">
+                        `track_beginer_no`,
+                    </if>
+                    <if test="trackBeginerName!=null">
+                        `track_beginer_name`,
+                    </if>
+                    <if test="carTestSymbol!=null">
+                        `car_test_symbol`,
+                    </if>
+                    <if test="failureReappearPersonId!=null">
+                        `failure_reappear_person_id`,
+                    </if>
+                    <if test="failureReappearPersonName!=null">
+                        `failure_reappear_person_name`,
+                    </if>
+                    <if test="failureReappearSymbol!=null">
+                        `failure_reappear_symbol`,
+                    </if>
+        </trim>
+        )
+        VALUES
+        (
+        <trim suffixOverrides=",">
+                <if test="failureTrackId!=null">
+                    #{failureTrackId},
+                </if>
+                <if test="voucherCode!=null">
+                    #{voucherCode},
+                </if>
+                <if test="saoId!=null">
+                    #{saoId},
+                </if>
+                <if test="trackBeginerId!=null">
+                    #{trackBeginerId},
+                </if>
+                <if test="trackBeginerNo!=null">
+                    #{trackBeginerNo},
+                </if>
+                <if test="trackBeginerName!=null">
+                    #{trackBeginerName},
+                </if>
+                <if test="carTestSymbol!=null">
+                    #{carTestSymbol},
+                </if>
+                <if test="failureReappearPersonId!=null">
+                    #{failureReappearPersonId},
+                </if>
+                <if test="failureReappearPersonName!=null">
+                    #{failureReappearPersonName},
+                </if>
+                <if test="failureReappearSymbol!=null">
+                    #{failureReappearSymbol},
+                </if>
+        </trim>
+        )
+    </insert>
+
+
+
+
+    <update id="updateMqmsFailureTrack">
+        UPDATE `mqms_failure_track`
+        SET
+        <trim suffixOverrides=",">
+            <if test="failureTrackId != null">
+                `failure_track_id` = #{failureTrackId},
+            </if>
+            <if test="voucherCode != null and voucherCode!=''">
+                `voucher_code` = #{voucherCode},
+            </if>
+            <if test="saoId != null">
+                `sao_id` = #{saoId},
+            </if>
+            <if test="trackBeginerId != null">
+                `track_beginer_id` = #{trackBeginerId},
+            </if>
+            <if test="trackBeginerNo != null and trackBeginerNo!=''">
+                `track_beginer_no` = #{trackBeginerNo},
+            </if>
+            <if test="trackBeginerName != null and trackBeginerName!=''">
+                `track_beginer_name` = #{trackBeginerName},
+            </if>
+            <if test="carTestSymbol != null and carTestSymbol!=''">
+                `car_test_symbol` = #{carTestSymbol},
+            </if>
+            <if test="failureReappearPersonId != null">
+                `failure_reappear_person_id` = #{failureReappearPersonId},
+            </if>
+            <if test="failureReappearPersonName != null and failureReappearPersonName!=''">
+                `failure_reappear_person_name` = #{failureReappearPersonName},
+            </if>
+            <if test="failureReappearSymbol != null and failureReappearSymbol!=''">
+                `failure_reappear_symbol` = #{failureReappearSymbol},
+            </if>
+        </trim>
+        WHERE
+        <trim suffixOverrides="and">
+        </trim>
+    </update>
+
+    <update id="update">
+        UPDATE `mqms_failure_track`
+        SET
+        <trim suffixOverrides=",">
+        <if test="set.failureTrackId != null">
+            `failure_track_id` = #{set.failureTrackId},
+        </if>
+        <if test="set.voucherCode != null and set.voucherCode!=''">
+            `voucher_code` = #{set.voucherCode},
+        </if>
+        <if test="set.saoId != null">
+            `sao_id` = #{set.saoId},
+        </if>
+        <if test="set.trackBeginerId != null">
+            `track_beginer_id` = #{set.trackBeginerId},
+        </if>
+        <if test="set.trackBeginerNo != null and set.trackBeginerNo!=''">
+            `track_beginer_no` = #{set.trackBeginerNo},
+        </if>
+        <if test="set.trackBeginerName != null and set.trackBeginerName!=''">
+            `track_beginer_name` = #{set.trackBeginerName},
+        </if>
+        <if test="set.carTestSymbol != null and set.carTestSymbol!=''">
+            `car_test_symbol` = #{set.carTestSymbol},
+        </if>
+        <if test="set.failureReappearPersonId != null">
+            `failure_reappear_person_id` = #{set.failureReappearPersonId},
+        </if>
+        <if test="set.failureReappearPersonName != null and set.failureReappearPersonName!=''">
+            `failure_reappear_person_name` = #{set.failureReappearPersonName},
+        </if>
+        <if test="set.failureReappearSymbol != null and set.failureReappearSymbol!=''">
+            `failure_reappear_symbol` = #{set.failureReappearSymbol},
+        </if>
+        </trim>
+        <trim prefix="where" suffixOverrides="and | or">
+                <if test="where.failureTrackIdList != null">
+                    `failure_track_id` in
+                    <foreach collection="where.failureTrackIdList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test="where.failureTrackIdSt !=null">
+                `failure_track_id` >= #{where.failureTrackIdSt} and
+            </if>
+            <if test="where.failureTrackIdEd!=null">
+                `failure_track_id` &lt;= #{where.failureTrackIdEd} and
+            </if>
+                <if test="where.voucherCodeList != null">
+                    `voucher_code` in
+                    <foreach collection="where.voucherCodeList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test ="where.fuzzyVoucherCode!=null and where.fuzzyVoucherCode.size()>0">
+                (
+                <foreach collection="where.fuzzyVoucherCode"  separator="or" item="item">
+                    `Voucher_code` like concat('%',#{item},'%')
+                </foreach>
+                ) and
+            </if>
+            <if test ="where.rightFuzzyVoucherCode!=null and where.rightFuzzyVoucherCode.size()>0">
+                (
+                <foreach collection="where.rightFuzzyVoucherCode"  separator="or" item="item">
+                    `Voucher_code` like concat(#{item},'%')
+                </foreach>
+                ) and
+            </if>
+                <if test="where.saoIdList != null">
+                    `sao_id` in
+                    <foreach collection="where.saoIdList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test="where.saoIdSt !=null">
+                `sao_id` >= #{where.saoIdSt} and
+            </if>
+            <if test="where.saoIdEd!=null">
+                `sao_id` &lt;= #{where.saoIdEd} and
+            </if>
+                <if test="where.trackBeginerIdList != null">
+                    `track_beginer_id` in
+                    <foreach collection="where.trackBeginerIdList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test="where.trackBeginerIdSt !=null">
+                `track_beginer_id` >= #{where.trackBeginerIdSt} and
+            </if>
+            <if test="where.trackBeginerIdEd!=null">
+                `track_beginer_id` &lt;= #{where.trackBeginerIdEd} and
+            </if>
+                <if test="where.trackBeginerNoList != null">
+                    `track_beginer_no` in
+                    <foreach collection="where.trackBeginerNoList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test ="where.fuzzyTrackBeginerNo!=null and where.fuzzyTrackBeginerNo.size()>0">
+                (
+                <foreach collection="where.fuzzyTrackBeginerNo"  separator="or" item="item">
+                    `Track_beginer_no` like concat('%',#{item},'%')
+                </foreach>
+                ) and
+            </if>
+            <if test ="where.rightFuzzyTrackBeginerNo!=null and where.rightFuzzyTrackBeginerNo.size()>0">
+                (
+                <foreach collection="where.rightFuzzyTrackBeginerNo"  separator="or" item="item">
+                    `Track_beginer_no` like concat(#{item},'%')
+                </foreach>
+                ) and
+            </if>
+                <if test="where.trackBeginerNameList != null">
+                    `track_beginer_name` in
+                    <foreach collection="where.trackBeginerNameList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test ="where.fuzzyTrackBeginerName!=null and where.fuzzyTrackBeginerName.size()>0">
+                (
+                <foreach collection="where.fuzzyTrackBeginerName"  separator="or" item="item">
+                    `Track_beginer_name` like concat('%',#{item},'%')
+                </foreach>
+                ) and
+            </if>
+            <if test ="where.rightFuzzyTrackBeginerName!=null and where.rightFuzzyTrackBeginerName.size()>0">
+                (
+                <foreach collection="where.rightFuzzyTrackBeginerName"  separator="or" item="item">
+                    `Track_beginer_name` like concat(#{item},'%')
+                </foreach>
+                ) and
+            </if>
+                <if test="where.carTestSymbolList != null">
+                    `car_test_symbol` in
+                    <foreach collection="where.carTestSymbolList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test ="where.fuzzyCarTestSymbol!=null and where.fuzzyCarTestSymbol.size()>0">
+                (
+                <foreach collection="where.fuzzyCarTestSymbol"  separator="or" item="item">
+                    `Car_test_symbol` like concat('%',#{item},'%')
+                </foreach>
+                ) and
+            </if>
+            <if test ="where.rightFuzzyCarTestSymbol!=null and where.rightFuzzyCarTestSymbol.size()>0">
+                (
+                <foreach collection="where.rightFuzzyCarTestSymbol"  separator="or" item="item">
+                    `Car_test_symbol` like concat(#{item},'%')
+                </foreach>
+                ) and
+            </if>
+                <if test="where.failureReappearPersonIdList != null">
+                    `failure_reappear_person_id` in
+                    <foreach collection="where.failureReappearPersonIdList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test="where.failureReappearPersonIdSt !=null">
+                `failure_reappear_person_id` >= #{where.failureReappearPersonIdSt} and
+            </if>
+            <if test="where.failureReappearPersonIdEd!=null">
+                `failure_reappear_person_id` &lt;= #{where.failureReappearPersonIdEd} and
+            </if>
+                <if test="where.failureReappearPersonNameList != null">
+                    `failure_reappear_person_name` in
+                    <foreach collection="where.failureReappearPersonNameList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test ="where.fuzzyFailureReappearPersonName!=null and where.fuzzyFailureReappearPersonName.size()>0">
+                (
+                <foreach collection="where.fuzzyFailureReappearPersonName"  separator="or" item="item">
+                    `Failure_reappear_person_name` like concat('%',#{item},'%')
+                </foreach>
+                ) and
+            </if>
+            <if test ="where.rightFuzzyFailureReappearPersonName!=null and where.rightFuzzyFailureReappearPersonName.size()>0">
+                (
+                <foreach collection="where.rightFuzzyFailureReappearPersonName"  separator="or" item="item">
+                    `Failure_reappear_person_name` like concat(#{item},'%')
+                </foreach>
+                ) and
+            </if>
+                <if test="where.failureReappearSymbolList != null">
+                    `failure_reappear_symbol` in
+                    <foreach collection="where.failureReappearSymbolList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test ="where.fuzzyFailureReappearSymbol!=null and where.fuzzyFailureReappearSymbol.size()>0">
+                (
+                <foreach collection="where.fuzzyFailureReappearSymbol"  separator="or" item="item">
+                    `Failure_reappear_symbol` like concat('%',#{item},'%')
+                </foreach>
+                ) and
+            </if>
+            <if test ="where.rightFuzzyFailureReappearSymbol!=null and where.rightFuzzyFailureReappearSymbol.size()>0">
+                (
+                <foreach collection="where.rightFuzzyFailureReappearSymbol"  separator="or" item="item">
+                    `Failure_reappear_symbol` like concat(#{item},'%')
+                </foreach>
+                ) and
+            </if>
+        </trim>
+    </update>
+
+
+    <resultMap type="com.gamc.efactory.model.dataObject.MqmsFailureTrack" id="MqmsFailureTrackMap">
+        <result property="failureTrackId" column="failure_track_id"/>
+        <result property="voucherCode" column="voucher_code"/>
+        <result property="saoId" column="sao_id"/>
+        <result property="trackBeginerId" column="track_beginer_id"/>
+        <result property="trackBeginerNo" column="track_beginer_no"/>
+        <result property="trackBeginerName" column="track_beginer_name"/>
+        <result property="carTestSymbol" column="car_test_symbol"/>
+        <result property="failureReappearPersonId" column="failure_reappear_person_id"/>
+        <result property="failureReappearPersonName" column="failure_reappear_person_name"/>
+        <result property="failureReappearSymbol" column="failure_reappear_symbol"/>
+    </resultMap>
+
+
+    <select id="queryMqmsFailureTrack" resultMap="MqmsFailureTrackMap">
+        select
+        <include refid="baseResult"></include>
+        from  `mqms_failure_track`
+        <trim prefix="where" suffixOverrides="and | or">
+            <if test="failureTrackId != null">
+                `failure_track_id` = #{failureTrackId} and
+            </if>
+            <if test="voucherCode != null and voucherCode!=''">
+                `voucher_code` = #{voucherCode} and
+            </if>
+            <if test="saoId != null">
+                `sao_id` = #{saoId} and
+            </if>
+            <if test="trackBeginerId != null">
+                `track_beginer_id` = #{trackBeginerId} and
+            </if>
+            <if test="trackBeginerNo != null and trackBeginerNo!=''">
+                `track_beginer_no` = #{trackBeginerNo} and
+            </if>
+            <if test="trackBeginerName != null and trackBeginerName!=''">
+                `track_beginer_name` = #{trackBeginerName} and
+            </if>
+            <if test="carTestSymbol != null and carTestSymbol!=''">
+                `car_test_symbol` = #{carTestSymbol} and
+            </if>
+            <if test="failureReappearPersonId != null">
+                `failure_reappear_person_id` = #{failureReappearPersonId} and
+            </if>
+            <if test="failureReappearPersonName != null and failureReappearPersonName!=''">
+                `failure_reappear_person_name` = #{failureReappearPersonName} and
+            </if>
+            <if test="failureReappearSymbol != null and failureReappearSymbol!=''">
+                `failure_reappear_symbol` = #{failureReappearSymbol} and
+            </if>
+            <if test = "(_parameter instanceof com.gamc.efactory.model.dataObject.MqmsFailureTrack$QueryBuilder) == true">
+                <if test="failureTrackIdList != null">
+                    `failure_track_id` in
+                    <foreach collection="failureTrackIdList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test="failureTrackIdSt !=null">
+                    `failure_track_id` >= #{failureTrackIdSt} and
+                </if>
+                <if test="failureTrackIdEd!=null">
+                    `failure_track_id` &lt;= #{failureTrackIdEd} and
+                </if>
+                <if test="voucherCodeList != null">
+                    `voucher_code` in
+                    <foreach collection="voucherCodeList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyVoucherCode!=null and fuzzyVoucherCode.size()>0">
+                    (
+                    <foreach collection="fuzzyVoucherCode"  separator="or" item="item">
+                        `Voucher_code` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyVoucherCode!=null and rightFuzzyVoucherCode.size()>0">
+                    (
+                    <foreach collection="rightFuzzyVoucherCode"  separator="or" item="item">
+                        `Voucher_code` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="saoIdList != null">
+                    `sao_id` in
+                    <foreach collection="saoIdList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test="saoIdSt !=null">
+                    `sao_id` >= #{saoIdSt} and
+                </if>
+                <if test="saoIdEd!=null">
+                    `sao_id` &lt;= #{saoIdEd} and
+                </if>
+                <if test="trackBeginerIdList != null">
+                    `track_beginer_id` in
+                    <foreach collection="trackBeginerIdList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test="trackBeginerIdSt !=null">
+                    `track_beginer_id` >= #{trackBeginerIdSt} and
+                </if>
+                <if test="trackBeginerIdEd!=null">
+                    `track_beginer_id` &lt;= #{trackBeginerIdEd} and
+                </if>
+                <if test="trackBeginerNoList != null">
+                    `track_beginer_no` in
+                    <foreach collection="trackBeginerNoList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyTrackBeginerNo!=null and fuzzyTrackBeginerNo.size()>0">
+                    (
+                    <foreach collection="fuzzyTrackBeginerNo"  separator="or" item="item">
+                        `Track_beginer_no` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyTrackBeginerNo!=null and rightFuzzyTrackBeginerNo.size()>0">
+                    (
+                    <foreach collection="rightFuzzyTrackBeginerNo"  separator="or" item="item">
+                        `Track_beginer_no` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="trackBeginerNameList != null">
+                    `track_beginer_name` in
+                    <foreach collection="trackBeginerNameList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyTrackBeginerName!=null and fuzzyTrackBeginerName.size()>0">
+                    (
+                    <foreach collection="fuzzyTrackBeginerName"  separator="or" item="item">
+                        `Track_beginer_name` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyTrackBeginerName!=null and rightFuzzyTrackBeginerName.size()>0">
+                    (
+                    <foreach collection="rightFuzzyTrackBeginerName"  separator="or" item="item">
+                        `Track_beginer_name` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="carTestSymbolList != null">
+                    `car_test_symbol` in
+                    <foreach collection="carTestSymbolList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyCarTestSymbol!=null and fuzzyCarTestSymbol.size()>0">
+                    (
+                    <foreach collection="fuzzyCarTestSymbol"  separator="or" item="item">
+                        `Car_test_symbol` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyCarTestSymbol!=null and rightFuzzyCarTestSymbol.size()>0">
+                    (
+                    <foreach collection="rightFuzzyCarTestSymbol"  separator="or" item="item">
+                        `Car_test_symbol` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="failureReappearPersonIdList != null">
+                    `failure_reappear_person_id` in
+                    <foreach collection="failureReappearPersonIdList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test="failureReappearPersonIdSt !=null">
+                    `failure_reappear_person_id` >= #{failureReappearPersonIdSt} and
+                </if>
+                <if test="failureReappearPersonIdEd!=null">
+                    `failure_reappear_person_id` &lt;= #{failureReappearPersonIdEd} and
+                </if>
+                <if test="failureReappearPersonNameList != null">
+                    `failure_reappear_person_name` in
+                    <foreach collection="failureReappearPersonNameList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyFailureReappearPersonName!=null and fuzzyFailureReappearPersonName.size()>0">
+                    (
+                    <foreach collection="fuzzyFailureReappearPersonName"  separator="or" item="item">
+                        `Failure_reappear_person_name` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyFailureReappearPersonName!=null and rightFuzzyFailureReappearPersonName.size()>0">
+                    (
+                    <foreach collection="rightFuzzyFailureReappearPersonName"  separator="or" item="item">
+                        `Failure_reappear_person_name` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="failureReappearSymbolList != null">
+                    `failure_reappear_symbol` in
+                    <foreach collection="failureReappearSymbolList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyFailureReappearSymbol!=null and fuzzyFailureReappearSymbol.size()>0">
+                    (
+                    <foreach collection="fuzzyFailureReappearSymbol"  separator="or" item="item">
+                        `Failure_reappear_symbol` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyFailureReappearSymbol!=null and rightFuzzyFailureReappearSymbol.size()>0">
+                    (
+                    <foreach collection="rightFuzzyFailureReappearSymbol"  separator="or" item="item">
+                        `Failure_reappear_symbol` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+            </if>
+        </trim>
+    </select>
+
+    <select id="queryMqmsFailureTrackLimit1" resultMap="MqmsFailureTrackMap">
+        select
+        <include refid="baseResult"></include>
+        from  `mqms_failure_track`
+        <trim prefix="where" suffixOverrides="and | or">
+            <if test="failureTrackId != null">
+                `failure_track_id` = #{failureTrackId} and
+            </if>
+            <if test="voucherCode != null and voucherCode!=''">
+                `voucher_code` = #{voucherCode} and
+            </if>
+            <if test="saoId != null">
+                `sao_id` = #{saoId} and
+            </if>
+            <if test="trackBeginerId != null">
+                `track_beginer_id` = #{trackBeginerId} and
+            </if>
+            <if test="trackBeginerNo != null and trackBeginerNo!=''">
+                `track_beginer_no` = #{trackBeginerNo} and
+            </if>
+            <if test="trackBeginerName != null and trackBeginerName!=''">
+                `track_beginer_name` = #{trackBeginerName} and
+            </if>
+            <if test="carTestSymbol != null and carTestSymbol!=''">
+                `car_test_symbol` = #{carTestSymbol} and
+            </if>
+            <if test="failureReappearPersonId != null">
+                `failure_reappear_person_id` = #{failureReappearPersonId} and
+            </if>
+            <if test="failureReappearPersonName != null and failureReappearPersonName!=''">
+                `failure_reappear_person_name` = #{failureReappearPersonName} and
+            </if>
+            <if test="failureReappearSymbol != null and failureReappearSymbol!=''">
+                `failure_reappear_symbol` = #{failureReappearSymbol} and
+            </if>
+            <if test = "(_parameter instanceof com.gamc.efactory.model.dataObject.MqmsFailureTrack$QueryBuilder) == true">
+                    <if test="failureTrackIdList != null">
+                        `failure_track_id` in
+                        <foreach collection="failureTrackIdList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test="failureTrackIdSt !=null">
+                    `failure_track_id` >= #{failureTrackIdSt} and
+                </if>
+                <if test="failureTrackIdEd!=null">
+                    `failure_track_id` &lt;= #{failureTrackIdEd} and
+                </if>
+                    <if test="voucherCodeList != null">
+                        `voucher_code` in
+                        <foreach collection="voucherCodeList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyVoucherCode!=null and fuzzyVoucherCode.size()>0">
+                    (
+                    <foreach collection="fuzzyVoucherCode"  separator="or" item="item">
+                        `Voucher_code` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyVoucherCode!=null and rightFuzzyVoucherCode.size()>0">
+                    (
+                    <foreach collection="rightFuzzyVoucherCode"  separator="or" item="item">
+                        `Voucher_code` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                    <if test="saoIdList != null">
+                        `sao_id` in
+                        <foreach collection="saoIdList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test="saoIdSt !=null">
+                    `sao_id` >= #{saoIdSt} and
+                </if>
+                <if test="saoIdEd!=null">
+                    `sao_id` &lt;= #{saoIdEd} and
+                </if>
+                    <if test="trackBeginerIdList != null">
+                        `track_beginer_id` in
+                        <foreach collection="trackBeginerIdList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test="trackBeginerIdSt !=null">
+                    `track_beginer_id` >= #{trackBeginerIdSt} and
+                </if>
+                <if test="trackBeginerIdEd!=null">
+                    `track_beginer_id` &lt;= #{trackBeginerIdEd} and
+                </if>
+                    <if test="trackBeginerNoList != null">
+                        `track_beginer_no` in
+                        <foreach collection="trackBeginerNoList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyTrackBeginerNo!=null and fuzzyTrackBeginerNo.size()>0">
+                    (
+                    <foreach collection="fuzzyTrackBeginerNo"  separator="or" item="item">
+                        `Track_beginer_no` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyTrackBeginerNo!=null and rightFuzzyTrackBeginerNo.size()>0">
+                    (
+                    <foreach collection="rightFuzzyTrackBeginerNo"  separator="or" item="item">
+                        `Track_beginer_no` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                    <if test="trackBeginerNameList != null">
+                        `track_beginer_name` in
+                        <foreach collection="trackBeginerNameList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyTrackBeginerName!=null and fuzzyTrackBeginerName.size()>0">
+                    (
+                    <foreach collection="fuzzyTrackBeginerName"  separator="or" item="item">
+                        `Track_beginer_name` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyTrackBeginerName!=null and rightFuzzyTrackBeginerName.size()>0">
+                    (
+                    <foreach collection="rightFuzzyTrackBeginerName"  separator="or" item="item">
+                        `Track_beginer_name` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                    <if test="carTestSymbolList != null">
+                        `car_test_symbol` in
+                        <foreach collection="carTestSymbolList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyCarTestSymbol!=null and fuzzyCarTestSymbol.size()>0">
+                    (
+                    <foreach collection="fuzzyCarTestSymbol"  separator="or" item="item">
+                        `Car_test_symbol` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyCarTestSymbol!=null and rightFuzzyCarTestSymbol.size()>0">
+                    (
+                    <foreach collection="rightFuzzyCarTestSymbol"  separator="or" item="item">
+                        `Car_test_symbol` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                    <if test="failureReappearPersonIdList != null">
+                        `failure_reappear_person_id` in
+                        <foreach collection="failureReappearPersonIdList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test="failureReappearPersonIdSt !=null">
+                    `failure_reappear_person_id` >= #{failureReappearPersonIdSt} and
+                </if>
+                <if test="failureReappearPersonIdEd!=null">
+                    `failure_reappear_person_id` &lt;= #{failureReappearPersonIdEd} and
+                </if>
+                    <if test="failureReappearPersonNameList != null">
+                        `failure_reappear_person_name` in
+                        <foreach collection="failureReappearPersonNameList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyFailureReappearPersonName!=null and fuzzyFailureReappearPersonName.size()>0">
+                    (
+                    <foreach collection="fuzzyFailureReappearPersonName"  separator="or" item="item">
+                        `Failure_reappear_person_name` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyFailureReappearPersonName!=null and rightFuzzyFailureReappearPersonName.size()>0">
+                    (
+                    <foreach collection="rightFuzzyFailureReappearPersonName"  separator="or" item="item">
+                        `Failure_reappear_person_name` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                    <if test="failureReappearSymbolList != null">
+                        `failure_reappear_symbol` in
+                        <foreach collection="failureReappearSymbolList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyFailureReappearSymbol!=null and fuzzyFailureReappearSymbol.size()>0">
+                    (
+                    <foreach collection="fuzzyFailureReappearSymbol"  separator="or" item="item">
+                        `Failure_reappear_symbol` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyFailureReappearSymbol!=null and rightFuzzyFailureReappearSymbol.size()>0">
+                    (
+                    <foreach collection="rightFuzzyFailureReappearSymbol"  separator="or" item="item">
+                        `Failure_reappear_symbol` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+            </if>
+        </trim>
+        limit 1
+    </select>
+
+    <sql id="allResult">
+        <trim suffixOverrides=",">
+        `failure_track_id`,
+        `voucher_code`,
+        `sao_id`,
+        `track_beginer_id`,
+        `track_beginer_no`,
+        `track_beginer_name`,
+        `car_test_symbol`,
+        `failure_reappear_person_id`,
+        `failure_reappear_person_name`,
+        `failure_reappear_symbol`,
+        </trim>
+    </sql>
+
+
+
+    <sql id="baseResult">
+        <trim suffixOverrides=",">
+            <if test = "(_parameter instanceof com.gamc.efactory.model.dataObject.MqmsFailureTrack$QueryBuilder) == true">
+
+                <if test="fetchFields==null">
+                    <include refid="allResult"></include>
+                </if>
+                <if test="fetchFields!=null">
+                    <if test="fetchFields.AllFields !=null">
+                        <include refid="allResult"></include>
+                    </if>
+                    <if test="fetchFields.AllFields ==null and fetchFields.fetchFields==null and fetchFields.excludeFields==null and fetchFields.otherFields==null">
+                        <include refid="allResult"></include>
+                    </if>
+                    <if test="fetchFields.AllFields==null and fetchFields.fetchFields!=null">
+                    <if test="fetchFields.fetchFields.failureTrackId==true">
+                        `failure_track_id`,
+                    </if>
+                    <if test="fetchFields.fetchFields.voucherCode==true">
+                        `voucher_code`,
+                    </if>
+                    <if test="fetchFields.fetchFields.saoId==true">
+                        `sao_id`,
+                    </if>
+                    <if test="fetchFields.fetchFields.trackBeginerId==true">
+                        `track_beginer_id`,
+                    </if>
+                    <if test="fetchFields.fetchFields.trackBeginerNo==true">
+                        `track_beginer_no`,
+                    </if>
+                    <if test="fetchFields.fetchFields.trackBeginerName==true">
+                        `track_beginer_name`,
+                    </if>
+                    <if test="fetchFields.fetchFields.carTestSymbol==true">
+                        `car_test_symbol`,
+                    </if>
+                    <if test="fetchFields.fetchFields.failureReappearPersonId==true">
+                        `failure_reappear_person_id`,
+                    </if>
+                    <if test="fetchFields.fetchFields.failureReappearPersonName==true">
+                        `failure_reappear_person_name`,
+                    </if>
+                    <if test="fetchFields.fetchFields.failureReappearSymbol==true">
+                        `failure_reappear_symbol`,
+                    </if>
+                    </if>
+                    <if test="fetchFields.AllFields==null and fetchFields.excludeFields!=null">
+                    <if test="fetchFields.excludeFields.failureTrackId==null">
+                        `failure_track_id`,
+                    </if>
+                    <if test="fetchFields.excludeFields.voucherCode==null">
+                        `voucher_code`,
+                    </if>
+                    <if test="fetchFields.excludeFields.saoId==null">
+                        `sao_id`,
+                    </if>
+                    <if test="fetchFields.excludeFields.trackBeginerId==null">
+                        `track_beginer_id`,
+                    </if>
+                    <if test="fetchFields.excludeFields.trackBeginerNo==null">
+                        `track_beginer_no`,
+                    </if>
+                    <if test="fetchFields.excludeFields.trackBeginerName==null">
+                        `track_beginer_name`,
+                    </if>
+                    <if test="fetchFields.excludeFields.carTestSymbol==null">
+                        `car_test_symbol`,
+                    </if>
+                    <if test="fetchFields.excludeFields.failureReappearPersonId==null">
+                        `failure_reappear_person_id`,
+                    </if>
+                    <if test="fetchFields.excludeFields.failureReappearPersonName==null">
+                        `failure_reappear_person_name`,
+                    </if>
+                    <if test="fetchFields.excludeFields.failureReappearSymbol==null">
+                        `failure_reappear_symbol`,
+                    </if>
+                    </if>
+                    <if test="fetchFields.otherFields!=null and fetchFields.otherFields.size>0">
+                        <foreach collection="fetchFields.otherFields" index="index" item="item" separator=",">
+                        `#{item}`
+                        </foreach>
+                    </if>
+                </if>
+            </if>
+            <if test="(_parameter instanceof com.gamc.efactory.model.dataObject.MqmsFailureTrack$QueryBuilder) == false" >
+                <include refid="allResult"></include>
+            </if>
+
+        </trim>
+    </sql>
+
+
+</mapper>
