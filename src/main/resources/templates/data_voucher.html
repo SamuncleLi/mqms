@@ -21,7 +21,6 @@
             color: #000000;
             line-height:50px;
             width: 100%;
-
         }
         .team3f-table td:last-child{
             border-bottom: 1px solid #d0d0d0;
@@ -48,7 +47,7 @@
 </head>
 <body>
     <table id="dg2" class="easyui-datagrid" title="VEI数据查询" style="width:100%;height:100%"
-           data-options="singleSelect:true,collapsible:true" toolbar="#tb2">
+           data-options="collapsible:true" toolbar="#tb2">
         <thead>
         <tr></tr>
         </thead>
@@ -74,14 +73,14 @@
         <table id="voucherInfo">
             <tbody>
             <tr>
-                <td>单据号</td><td><input id="" name="" class="easyui-textbox"></td>
-                <td>销售点</td><td></td>
-                <td>确认时间</td><td></td>
+                <td>单据号</td><td><input id="voucherCodes" name="voucherCodes" class="easyui-textbox"></td>
             </tr>
             <tr>
-                <td>快递件返回时间</td><td></td>
+                <td>要求返回时间</td><td></td>
                 <td>快递接收人</td><td></td>
-                <td>快递确认时间</td><td></td>
+            </tr>
+            <tr>
+                <td>是否要求装车</td>
             </tr>
             </tbody>
         </table>
@@ -235,23 +234,29 @@
             $.messager.alert("系统提示","请选择至少一行");
             return;
         }
-        var voucherIds=[];
+        var voucherCodes=[];
         for(var i=0;i<selectedRows.length;i++){
-            voucherIds.push(selectedRows[i].voucher_id);//以列表中的哪个字段为索引
+            voucherCodes.push(selectedRows[i].voucher_code);//以列表中的哪个字段为索引
         }
-        var voucherIdList = voucherIds.join(",");
+        var voucherCodeList = voucherCodes.join(",");
         //判断是否可以开启不良追踪，如果已经开启不良追踪，则显示已开启不良追踪
-        $.post('/mqms/voucher/checkTracked',{voucherIds:voucherIdList},function (result) {
+        $.post('/mqms/voucher/checkTrack',{voucherCodes:voucherCodeList},function (result) {
             //如果已被安排快递处理，则提示
             if(result.success == 'false'){
-                $.messager.alert("系统提示","以下不良已被开启追踪，请不要重复开启不良追踪<br>" + result.rows)
+                $('#ids.failureTrack').textbox('setValue', result.voucherCodeSet);
+                $('#failureTrack-dlg').dialog("open", true);
+                $.messager.alert("系统提示","部分不良已经开启了追踪，以下仅显示未开启不良追踪的单据")
             }
-            else{
-                $('#ids.failureTrack').textbox('setValue', voucherIdList);
+            else if(result.success == 'allFalse'){
+                $.messager.alert("系统提示","所有不良已开启了不良追踪")
+            }
+            else if(result.success == 'true'){
+                $('#ids.failureTrack').textbox('setValue', result.voucherCodeSet);
                 $('#failureTrack-dlg').dialog("open", true);
             }
-        })
 
+
+        })
     }
     //关闭不良追踪对话框
     function closeFailureTrackDlg() {

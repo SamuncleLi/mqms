@@ -10,12 +10,12 @@ import java.util.List;
 */
 public class MqmsVoucher implements Serializable {
 
-    private static final long serialVersionUID = 1578886169511L;
+    private static final long serialVersionUID = 1582506470812L;
 
 
     /**
     * 主键
-    * 
+    * 序号
     * isNullAble:0
     */
     private Integer voucherId;
@@ -428,6 +428,42 @@ public class MqmsVoucher implements Serializable {
     */
     private String mileageDistribution;
 
+    /**
+    * 开启不良追踪者
+    * isNullAble:1
+    */
+    private String trackBeginer;
+
+    /**
+    * 不良追踪开启时间
+    * isNullAble:1
+    */
+    private String trackBeginTime;
+
+    /**
+    * 快递负责人
+    * isNullAble:1
+    */
+    private String deliveryPerson;
+
+    /**
+    * 
+    * isNullAble:1
+    */
+    private String deliveryDeadline;
+
+    /**
+    * 
+    * isNullAble:1
+    */
+    private String deliveryReceivedDate;
+
+    /**
+    * 
+    * isNullAble:1
+    */
+    private Integer failureTrackId;
+
 
     public void setVoucherId(Integer voucherId){this.voucherId = voucherId;}
 
@@ -704,6 +740,30 @@ public class MqmsVoucher implements Serializable {
     public void setMileageDistribution(String mileageDistribution){this.mileageDistribution = mileageDistribution;}
 
     public String getMileageDistribution(){return this.mileageDistribution;}
+
+    public void setTrackBeginer(String trackBeginer){this.trackBeginer = trackBeginer;}
+
+    public String getTrackBeginer(){return this.trackBeginer;}
+
+    public void setTrackBeginTime(String trackBeginTime){this.trackBeginTime = trackBeginTime;}
+
+    public String getTrackBeginTime(){return this.trackBeginTime;}
+
+    public void setDeliveryPerson(String deliveryPerson){this.deliveryPerson = deliveryPerson;}
+
+    public String getDeliveryPerson(){return this.deliveryPerson;}
+
+    public void setDeliveryDeadline(String deliveryDeadline){this.deliveryDeadline = deliveryDeadline;}
+
+    public String getDeliveryDeadline(){return this.deliveryDeadline;}
+
+    public void setDeliveryReceivedDate(String deliveryReceivedDate){this.deliveryReceivedDate = deliveryReceivedDate;}
+
+    public String getDeliveryReceivedDate(){return this.deliveryReceivedDate;}
+
+    public void setFailureTrackId(Integer failureTrackId){this.failureTrackId = failureTrackId;}
+
+    public Integer getFailureTrackId(){return this.failureTrackId;}
     @Override
     public String toString() {
         return "MqmsVoucher{" +
@@ -776,6 +836,12 @@ public class MqmsVoucher implements Serializable {
                 "failureMonth='" + failureMonth + '\'' +
                 "transmissionShortCode='" + transmissionShortCode + '\'' +
                 "mileageDistribution='" + mileageDistribution + '\'' +
+                "trackBeginer='" + trackBeginer + '\'' +
+                "trackBeginTime='" + trackBeginTime + '\'' +
+                "deliveryPerson='" + deliveryPerson + '\'' +
+                "deliveryDeadline='" + deliveryDeadline + '\'' +
+                "deliveryReceivedDate='" + deliveryReceivedDate + '\'' +
+                "failureTrackId='" + failureTrackId + '\'' +
             '}';
     }
 
@@ -1652,6 +1718,78 @@ public class MqmsVoucher implements Serializable {
         private List<String> rightFuzzyMileageDistribution;
 
         public List<String> getRightFuzzyMileageDistribution(){return this.rightFuzzyMileageDistribution;}
+        private List<String> trackBeginerList;
+
+        public List<String> getTrackBeginerList(){return this.trackBeginerList;}
+
+
+        private List<String> fuzzyTrackBeginer;
+
+        public List<String> getFuzzyTrackBeginer(){return this.fuzzyTrackBeginer;}
+
+        private List<String> rightFuzzyTrackBeginer;
+
+        public List<String> getRightFuzzyTrackBeginer(){return this.rightFuzzyTrackBeginer;}
+        private List<String> trackBeginTimeList;
+
+        public List<String> getTrackBeginTimeList(){return this.trackBeginTimeList;}
+
+
+        private List<String> fuzzyTrackBeginTime;
+
+        public List<String> getFuzzyTrackBeginTime(){return this.fuzzyTrackBeginTime;}
+
+        private List<String> rightFuzzyTrackBeginTime;
+
+        public List<String> getRightFuzzyTrackBeginTime(){return this.rightFuzzyTrackBeginTime;}
+        private List<String> deliveryPersonList;
+
+        public List<String> getDeliveryPersonList(){return this.deliveryPersonList;}
+
+
+        private List<String> fuzzyDeliveryPerson;
+
+        public List<String> getFuzzyDeliveryPerson(){return this.fuzzyDeliveryPerson;}
+
+        private List<String> rightFuzzyDeliveryPerson;
+
+        public List<String> getRightFuzzyDeliveryPerson(){return this.rightFuzzyDeliveryPerson;}
+        private List<String> deliveryDeadlineList;
+
+        public List<String> getDeliveryDeadlineList(){return this.deliveryDeadlineList;}
+
+
+        private List<String> fuzzyDeliveryDeadline;
+
+        public List<String> getFuzzyDeliveryDeadline(){return this.fuzzyDeliveryDeadline;}
+
+        private List<String> rightFuzzyDeliveryDeadline;
+
+        public List<String> getRightFuzzyDeliveryDeadline(){return this.rightFuzzyDeliveryDeadline;}
+        private List<String> deliveryReceivedDateList;
+
+        public List<String> getDeliveryReceivedDateList(){return this.deliveryReceivedDateList;}
+
+
+        private List<String> fuzzyDeliveryReceivedDate;
+
+        public List<String> getFuzzyDeliveryReceivedDate(){return this.fuzzyDeliveryReceivedDate;}
+
+        private List<String> rightFuzzyDeliveryReceivedDate;
+
+        public List<String> getRightFuzzyDeliveryReceivedDate(){return this.rightFuzzyDeliveryReceivedDate;}
+        private List<Integer> failureTrackIdList;
+
+        public List<Integer> getFailureTrackIdList(){return this.failureTrackIdList;}
+
+        private Integer failureTrackIdSt;
+
+        private Integer failureTrackIdEd;
+
+        public Integer getFailureTrackIdSt(){return this.failureTrackIdSt;}
+
+        public Integer getFailureTrackIdEd(){return this.failureTrackIdEd;}
+
         private QueryBuilder (){
             this.fetchFields = new HashMap<>();
         }
@@ -4728,6 +4866,272 @@ public class MqmsVoucher implements Serializable {
             setFetchFields("excludeFields","mileageDistribution");
             return this;
         }
+
+        public QueryBuilder fuzzyTrackBeginer (List<String> fuzzyTrackBeginer){
+            this.fuzzyTrackBeginer = fuzzyTrackBeginer;
+            return this;
+        }
+
+        public QueryBuilder fuzzyTrackBeginer (String ... fuzzyTrackBeginer){
+            this.fuzzyTrackBeginer = solveNullList(fuzzyTrackBeginer);
+            return this;
+        }
+
+        public QueryBuilder rightFuzzyTrackBeginer (List<String> rightFuzzyTrackBeginer){
+            this.rightFuzzyTrackBeginer = rightFuzzyTrackBeginer;
+            return this;
+        }
+
+        public QueryBuilder rightFuzzyTrackBeginer (String ... rightFuzzyTrackBeginer){
+            this.rightFuzzyTrackBeginer = solveNullList(rightFuzzyTrackBeginer);
+            return this;
+        }
+
+        public QueryBuilder trackBeginer(String trackBeginer){
+            setTrackBeginer(trackBeginer);
+            return this;
+        }
+
+        public QueryBuilder trackBeginerList(String ... trackBeginer){
+            this.trackBeginerList = solveNullList(trackBeginer);
+            return this;
+        }
+
+        public QueryBuilder trackBeginerList(List<String> trackBeginer){
+            this.trackBeginerList = trackBeginer;
+            return this;
+        }
+
+        public QueryBuilder fetchTrackBeginer(){
+            setFetchFields("fetchFields","trackBeginer");
+            return this;
+        }
+
+        public QueryBuilder excludeTrackBeginer(){
+            setFetchFields("excludeFields","trackBeginer");
+            return this;
+        }
+
+        public QueryBuilder fuzzyTrackBeginTime (List<String> fuzzyTrackBeginTime){
+            this.fuzzyTrackBeginTime = fuzzyTrackBeginTime;
+            return this;
+        }
+
+        public QueryBuilder fuzzyTrackBeginTime (String ... fuzzyTrackBeginTime){
+            this.fuzzyTrackBeginTime = solveNullList(fuzzyTrackBeginTime);
+            return this;
+        }
+
+        public QueryBuilder rightFuzzyTrackBeginTime (List<String> rightFuzzyTrackBeginTime){
+            this.rightFuzzyTrackBeginTime = rightFuzzyTrackBeginTime;
+            return this;
+        }
+
+        public QueryBuilder rightFuzzyTrackBeginTime (String ... rightFuzzyTrackBeginTime){
+            this.rightFuzzyTrackBeginTime = solveNullList(rightFuzzyTrackBeginTime);
+            return this;
+        }
+
+        public QueryBuilder trackBeginTime(String trackBeginTime){
+            setTrackBeginTime(trackBeginTime);
+            return this;
+        }
+
+        public QueryBuilder trackBeginTimeList(String ... trackBeginTime){
+            this.trackBeginTimeList = solveNullList(trackBeginTime);
+            return this;
+        }
+
+        public QueryBuilder trackBeginTimeList(List<String> trackBeginTime){
+            this.trackBeginTimeList = trackBeginTime;
+            return this;
+        }
+
+        public QueryBuilder fetchTrackBeginTime(){
+            setFetchFields("fetchFields","trackBeginTime");
+            return this;
+        }
+
+        public QueryBuilder excludeTrackBeginTime(){
+            setFetchFields("excludeFields","trackBeginTime");
+            return this;
+        }
+
+        public QueryBuilder fuzzyDeliveryPerson (List<String> fuzzyDeliveryPerson){
+            this.fuzzyDeliveryPerson = fuzzyDeliveryPerson;
+            return this;
+        }
+
+        public QueryBuilder fuzzyDeliveryPerson (String ... fuzzyDeliveryPerson){
+            this.fuzzyDeliveryPerson = solveNullList(fuzzyDeliveryPerson);
+            return this;
+        }
+
+        public QueryBuilder rightFuzzyDeliveryPerson (List<String> rightFuzzyDeliveryPerson){
+            this.rightFuzzyDeliveryPerson = rightFuzzyDeliveryPerson;
+            return this;
+        }
+
+        public QueryBuilder rightFuzzyDeliveryPerson (String ... rightFuzzyDeliveryPerson){
+            this.rightFuzzyDeliveryPerson = solveNullList(rightFuzzyDeliveryPerson);
+            return this;
+        }
+
+        public QueryBuilder deliveryPerson(String deliveryPerson){
+            setDeliveryPerson(deliveryPerson);
+            return this;
+        }
+
+        public QueryBuilder deliveryPersonList(String ... deliveryPerson){
+            this.deliveryPersonList = solveNullList(deliveryPerson);
+            return this;
+        }
+
+        public QueryBuilder deliveryPersonList(List<String> deliveryPerson){
+            this.deliveryPersonList = deliveryPerson;
+            return this;
+        }
+
+        public QueryBuilder fetchDeliveryPerson(){
+            setFetchFields("fetchFields","deliveryPerson");
+            return this;
+        }
+
+        public QueryBuilder excludeDeliveryPerson(){
+            setFetchFields("excludeFields","deliveryPerson");
+            return this;
+        }
+
+        public QueryBuilder fuzzyDeliveryDeadline (List<String> fuzzyDeliveryDeadline){
+            this.fuzzyDeliveryDeadline = fuzzyDeliveryDeadline;
+            return this;
+        }
+
+        public QueryBuilder fuzzyDeliveryDeadline (String ... fuzzyDeliveryDeadline){
+            this.fuzzyDeliveryDeadline = solveNullList(fuzzyDeliveryDeadline);
+            return this;
+        }
+
+        public QueryBuilder rightFuzzyDeliveryDeadline (List<String> rightFuzzyDeliveryDeadline){
+            this.rightFuzzyDeliveryDeadline = rightFuzzyDeliveryDeadline;
+            return this;
+        }
+
+        public QueryBuilder rightFuzzyDeliveryDeadline (String ... rightFuzzyDeliveryDeadline){
+            this.rightFuzzyDeliveryDeadline = solveNullList(rightFuzzyDeliveryDeadline);
+            return this;
+        }
+
+        public QueryBuilder deliveryDeadline(String deliveryDeadline){
+            setDeliveryDeadline(deliveryDeadline);
+            return this;
+        }
+
+        public QueryBuilder deliveryDeadlineList(String ... deliveryDeadline){
+            this.deliveryDeadlineList = solveNullList(deliveryDeadline);
+            return this;
+        }
+
+        public QueryBuilder deliveryDeadlineList(List<String> deliveryDeadline){
+            this.deliveryDeadlineList = deliveryDeadline;
+            return this;
+        }
+
+        public QueryBuilder fetchDeliveryDeadline(){
+            setFetchFields("fetchFields","deliveryDeadline");
+            return this;
+        }
+
+        public QueryBuilder excludeDeliveryDeadline(){
+            setFetchFields("excludeFields","deliveryDeadline");
+            return this;
+        }
+
+        public QueryBuilder fuzzyDeliveryReceivedDate (List<String> fuzzyDeliveryReceivedDate){
+            this.fuzzyDeliveryReceivedDate = fuzzyDeliveryReceivedDate;
+            return this;
+        }
+
+        public QueryBuilder fuzzyDeliveryReceivedDate (String ... fuzzyDeliveryReceivedDate){
+            this.fuzzyDeliveryReceivedDate = solveNullList(fuzzyDeliveryReceivedDate);
+            return this;
+        }
+
+        public QueryBuilder rightFuzzyDeliveryReceivedDate (List<String> rightFuzzyDeliveryReceivedDate){
+            this.rightFuzzyDeliveryReceivedDate = rightFuzzyDeliveryReceivedDate;
+            return this;
+        }
+
+        public QueryBuilder rightFuzzyDeliveryReceivedDate (String ... rightFuzzyDeliveryReceivedDate){
+            this.rightFuzzyDeliveryReceivedDate = solveNullList(rightFuzzyDeliveryReceivedDate);
+            return this;
+        }
+
+        public QueryBuilder deliveryReceivedDate(String deliveryReceivedDate){
+            setDeliveryReceivedDate(deliveryReceivedDate);
+            return this;
+        }
+
+        public QueryBuilder deliveryReceivedDateList(String ... deliveryReceivedDate){
+            this.deliveryReceivedDateList = solveNullList(deliveryReceivedDate);
+            return this;
+        }
+
+        public QueryBuilder deliveryReceivedDateList(List<String> deliveryReceivedDate){
+            this.deliveryReceivedDateList = deliveryReceivedDate;
+            return this;
+        }
+
+        public QueryBuilder fetchDeliveryReceivedDate(){
+            setFetchFields("fetchFields","deliveryReceivedDate");
+            return this;
+        }
+
+        public QueryBuilder excludeDeliveryReceivedDate(){
+            setFetchFields("excludeFields","deliveryReceivedDate");
+            return this;
+        }
+
+        public QueryBuilder failureTrackIdBetWeen(Integer failureTrackIdSt,Integer failureTrackIdEd){
+            this.failureTrackIdSt = failureTrackIdSt;
+            this.failureTrackIdEd = failureTrackIdEd;
+            return this;
+        }
+
+        public QueryBuilder failureTrackIdGreaterEqThan(Integer failureTrackIdSt){
+            this.failureTrackIdSt = failureTrackIdSt;
+            return this;
+        }
+        public QueryBuilder failureTrackIdLessEqThan(Integer failureTrackIdEd){
+            this.failureTrackIdEd = failureTrackIdEd;
+            return this;
+        }
+
+
+        public QueryBuilder failureTrackId(Integer failureTrackId){
+            setFailureTrackId(failureTrackId);
+            return this;
+        }
+
+        public QueryBuilder failureTrackIdList(Integer ... failureTrackId){
+            this.failureTrackIdList = solveNullList(failureTrackId);
+            return this;
+        }
+
+        public QueryBuilder failureTrackIdList(List<Integer> failureTrackId){
+            this.failureTrackIdList = failureTrackId;
+            return this;
+        }
+
+        public QueryBuilder fetchFailureTrackId(){
+            setFetchFields("fetchFields","failureTrackId");
+            return this;
+        }
+
+        public QueryBuilder excludeFailureTrackId(){
+            setFetchFields("excludeFields","failureTrackId");
+            return this;
+        }
         private <T>List<T> solveNullList(T ... objs){
             if (objs != null){
             List<T> list = new ArrayList<>();
@@ -5599,6 +6003,78 @@ public class MqmsVoucher implements Serializable {
         private List<String> rightFuzzyMileageDistribution;
 
         public List<String> getRightFuzzyMileageDistribution(){return this.rightFuzzyMileageDistribution;}
+        private List<String> trackBeginerList;
+
+        public List<String> getTrackBeginerList(){return this.trackBeginerList;}
+
+
+        private List<String> fuzzyTrackBeginer;
+
+        public List<String> getFuzzyTrackBeginer(){return this.fuzzyTrackBeginer;}
+
+        private List<String> rightFuzzyTrackBeginer;
+
+        public List<String> getRightFuzzyTrackBeginer(){return this.rightFuzzyTrackBeginer;}
+        private List<String> trackBeginTimeList;
+
+        public List<String> getTrackBeginTimeList(){return this.trackBeginTimeList;}
+
+
+        private List<String> fuzzyTrackBeginTime;
+
+        public List<String> getFuzzyTrackBeginTime(){return this.fuzzyTrackBeginTime;}
+
+        private List<String> rightFuzzyTrackBeginTime;
+
+        public List<String> getRightFuzzyTrackBeginTime(){return this.rightFuzzyTrackBeginTime;}
+        private List<String> deliveryPersonList;
+
+        public List<String> getDeliveryPersonList(){return this.deliveryPersonList;}
+
+
+        private List<String> fuzzyDeliveryPerson;
+
+        public List<String> getFuzzyDeliveryPerson(){return this.fuzzyDeliveryPerson;}
+
+        private List<String> rightFuzzyDeliveryPerson;
+
+        public List<String> getRightFuzzyDeliveryPerson(){return this.rightFuzzyDeliveryPerson;}
+        private List<String> deliveryDeadlineList;
+
+        public List<String> getDeliveryDeadlineList(){return this.deliveryDeadlineList;}
+
+
+        private List<String> fuzzyDeliveryDeadline;
+
+        public List<String> getFuzzyDeliveryDeadline(){return this.fuzzyDeliveryDeadline;}
+
+        private List<String> rightFuzzyDeliveryDeadline;
+
+        public List<String> getRightFuzzyDeliveryDeadline(){return this.rightFuzzyDeliveryDeadline;}
+        private List<String> deliveryReceivedDateList;
+
+        public List<String> getDeliveryReceivedDateList(){return this.deliveryReceivedDateList;}
+
+
+        private List<String> fuzzyDeliveryReceivedDate;
+
+        public List<String> getFuzzyDeliveryReceivedDate(){return this.fuzzyDeliveryReceivedDate;}
+
+        private List<String> rightFuzzyDeliveryReceivedDate;
+
+        public List<String> getRightFuzzyDeliveryReceivedDate(){return this.rightFuzzyDeliveryReceivedDate;}
+        private List<Integer> failureTrackIdList;
+
+        public List<Integer> getFailureTrackIdList(){return this.failureTrackIdList;}
+
+        private Integer failureTrackIdSt;
+
+        private Integer failureTrackIdEd;
+
+        public Integer getFailureTrackIdSt(){return this.failureTrackIdSt;}
+
+        public Integer getFailureTrackIdEd(){return this.failureTrackIdEd;}
+
 
         public ConditionBuilder voucherIdBetWeen(Integer voucherIdSt,Integer voucherIdEd){
             this.voucherIdSt = voucherIdSt;
@@ -7638,6 +8114,182 @@ public class MqmsVoucher implements Serializable {
             return this;
         }
 
+        public ConditionBuilder fuzzyTrackBeginer (List<String> fuzzyTrackBeginer){
+            this.fuzzyTrackBeginer = fuzzyTrackBeginer;
+            return this;
+        }
+
+        public ConditionBuilder fuzzyTrackBeginer (String ... fuzzyTrackBeginer){
+            this.fuzzyTrackBeginer = solveNullList(fuzzyTrackBeginer);
+            return this;
+        }
+
+        public ConditionBuilder rightFuzzyTrackBeginer (List<String> rightFuzzyTrackBeginer){
+            this.rightFuzzyTrackBeginer = rightFuzzyTrackBeginer;
+            return this;
+        }
+
+        public ConditionBuilder rightFuzzyTrackBeginer (String ... rightFuzzyTrackBeginer){
+            this.rightFuzzyTrackBeginer = solveNullList(rightFuzzyTrackBeginer);
+            return this;
+        }
+
+        public ConditionBuilder trackBeginerList(String ... trackBeginer){
+            this.trackBeginerList = solveNullList(trackBeginer);
+            return this;
+        }
+
+        public ConditionBuilder trackBeginerList(List<String> trackBeginer){
+            this.trackBeginerList = trackBeginer;
+            return this;
+        }
+
+        public ConditionBuilder fuzzyTrackBeginTime (List<String> fuzzyTrackBeginTime){
+            this.fuzzyTrackBeginTime = fuzzyTrackBeginTime;
+            return this;
+        }
+
+        public ConditionBuilder fuzzyTrackBeginTime (String ... fuzzyTrackBeginTime){
+            this.fuzzyTrackBeginTime = solveNullList(fuzzyTrackBeginTime);
+            return this;
+        }
+
+        public ConditionBuilder rightFuzzyTrackBeginTime (List<String> rightFuzzyTrackBeginTime){
+            this.rightFuzzyTrackBeginTime = rightFuzzyTrackBeginTime;
+            return this;
+        }
+
+        public ConditionBuilder rightFuzzyTrackBeginTime (String ... rightFuzzyTrackBeginTime){
+            this.rightFuzzyTrackBeginTime = solveNullList(rightFuzzyTrackBeginTime);
+            return this;
+        }
+
+        public ConditionBuilder trackBeginTimeList(String ... trackBeginTime){
+            this.trackBeginTimeList = solveNullList(trackBeginTime);
+            return this;
+        }
+
+        public ConditionBuilder trackBeginTimeList(List<String> trackBeginTime){
+            this.trackBeginTimeList = trackBeginTime;
+            return this;
+        }
+
+        public ConditionBuilder fuzzyDeliveryPerson (List<String> fuzzyDeliveryPerson){
+            this.fuzzyDeliveryPerson = fuzzyDeliveryPerson;
+            return this;
+        }
+
+        public ConditionBuilder fuzzyDeliveryPerson (String ... fuzzyDeliveryPerson){
+            this.fuzzyDeliveryPerson = solveNullList(fuzzyDeliveryPerson);
+            return this;
+        }
+
+        public ConditionBuilder rightFuzzyDeliveryPerson (List<String> rightFuzzyDeliveryPerson){
+            this.rightFuzzyDeliveryPerson = rightFuzzyDeliveryPerson;
+            return this;
+        }
+
+        public ConditionBuilder rightFuzzyDeliveryPerson (String ... rightFuzzyDeliveryPerson){
+            this.rightFuzzyDeliveryPerson = solveNullList(rightFuzzyDeliveryPerson);
+            return this;
+        }
+
+        public ConditionBuilder deliveryPersonList(String ... deliveryPerson){
+            this.deliveryPersonList = solveNullList(deliveryPerson);
+            return this;
+        }
+
+        public ConditionBuilder deliveryPersonList(List<String> deliveryPerson){
+            this.deliveryPersonList = deliveryPerson;
+            return this;
+        }
+
+        public ConditionBuilder fuzzyDeliveryDeadline (List<String> fuzzyDeliveryDeadline){
+            this.fuzzyDeliveryDeadline = fuzzyDeliveryDeadline;
+            return this;
+        }
+
+        public ConditionBuilder fuzzyDeliveryDeadline (String ... fuzzyDeliveryDeadline){
+            this.fuzzyDeliveryDeadline = solveNullList(fuzzyDeliveryDeadline);
+            return this;
+        }
+
+        public ConditionBuilder rightFuzzyDeliveryDeadline (List<String> rightFuzzyDeliveryDeadline){
+            this.rightFuzzyDeliveryDeadline = rightFuzzyDeliveryDeadline;
+            return this;
+        }
+
+        public ConditionBuilder rightFuzzyDeliveryDeadline (String ... rightFuzzyDeliveryDeadline){
+            this.rightFuzzyDeliveryDeadline = solveNullList(rightFuzzyDeliveryDeadline);
+            return this;
+        }
+
+        public ConditionBuilder deliveryDeadlineList(String ... deliveryDeadline){
+            this.deliveryDeadlineList = solveNullList(deliveryDeadline);
+            return this;
+        }
+
+        public ConditionBuilder deliveryDeadlineList(List<String> deliveryDeadline){
+            this.deliveryDeadlineList = deliveryDeadline;
+            return this;
+        }
+
+        public ConditionBuilder fuzzyDeliveryReceivedDate (List<String> fuzzyDeliveryReceivedDate){
+            this.fuzzyDeliveryReceivedDate = fuzzyDeliveryReceivedDate;
+            return this;
+        }
+
+        public ConditionBuilder fuzzyDeliveryReceivedDate (String ... fuzzyDeliveryReceivedDate){
+            this.fuzzyDeliveryReceivedDate = solveNullList(fuzzyDeliveryReceivedDate);
+            return this;
+        }
+
+        public ConditionBuilder rightFuzzyDeliveryReceivedDate (List<String> rightFuzzyDeliveryReceivedDate){
+            this.rightFuzzyDeliveryReceivedDate = rightFuzzyDeliveryReceivedDate;
+            return this;
+        }
+
+        public ConditionBuilder rightFuzzyDeliveryReceivedDate (String ... rightFuzzyDeliveryReceivedDate){
+            this.rightFuzzyDeliveryReceivedDate = solveNullList(rightFuzzyDeliveryReceivedDate);
+            return this;
+        }
+
+        public ConditionBuilder deliveryReceivedDateList(String ... deliveryReceivedDate){
+            this.deliveryReceivedDateList = solveNullList(deliveryReceivedDate);
+            return this;
+        }
+
+        public ConditionBuilder deliveryReceivedDateList(List<String> deliveryReceivedDate){
+            this.deliveryReceivedDateList = deliveryReceivedDate;
+            return this;
+        }
+
+        public ConditionBuilder failureTrackIdBetWeen(Integer failureTrackIdSt,Integer failureTrackIdEd){
+            this.failureTrackIdSt = failureTrackIdSt;
+            this.failureTrackIdEd = failureTrackIdEd;
+            return this;
+        }
+
+        public ConditionBuilder failureTrackIdGreaterEqThan(Integer failureTrackIdSt){
+            this.failureTrackIdSt = failureTrackIdSt;
+            return this;
+        }
+        public ConditionBuilder failureTrackIdLessEqThan(Integer failureTrackIdEd){
+            this.failureTrackIdEd = failureTrackIdEd;
+            return this;
+        }
+
+
+        public ConditionBuilder failureTrackIdList(Integer ... failureTrackId){
+            this.failureTrackIdList = solveNullList(failureTrackId);
+            return this;
+        }
+
+        public ConditionBuilder failureTrackIdList(List<Integer> failureTrackId){
+            this.failureTrackIdList = failureTrackId;
+            return this;
+        }
+
         private <T>List<T> solveNullList(T ... objs){
             if (objs != null){
             List<T> list = new ArrayList<>();
@@ -7936,6 +8588,30 @@ public class MqmsVoucher implements Serializable {
         }
         public Builder mileageDistribution(String mileageDistribution){
             this.obj.setMileageDistribution(mileageDistribution);
+            return this;
+        }
+        public Builder trackBeginer(String trackBeginer){
+            this.obj.setTrackBeginer(trackBeginer);
+            return this;
+        }
+        public Builder trackBeginTime(String trackBeginTime){
+            this.obj.setTrackBeginTime(trackBeginTime);
+            return this;
+        }
+        public Builder deliveryPerson(String deliveryPerson){
+            this.obj.setDeliveryPerson(deliveryPerson);
+            return this;
+        }
+        public Builder deliveryDeadline(String deliveryDeadline){
+            this.obj.setDeliveryDeadline(deliveryDeadline);
+            return this;
+        }
+        public Builder deliveryReceivedDate(String deliveryReceivedDate){
+            this.obj.setDeliveryReceivedDate(deliveryReceivedDate);
+            return this;
+        }
+        public Builder failureTrackId(Integer failureTrackId){
+            this.obj.setFailureTrackId(failureTrackId);
             return this;
         }
         public MqmsVoucher build(){return obj;}

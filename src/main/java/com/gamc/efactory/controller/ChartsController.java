@@ -35,8 +35,8 @@ public class ChartsController {
      * @抛出异常
     */
     @RequestMapping("engineFailureRate")
-    public String[][] calculateEngineFailureRate(@RequestParam String yearAndMonth, @RequestParam String timeSpan, @RequestParam String engTypes){
-        String[] engTypeAssemble = engTypes.split(",");
+    public String[][] calculateEngineFailureRate(@RequestParam String yearAndMonth, @RequestParam String timeSpan, @RequestParam String engType){
+        String[] engTypeAssemble = engType.split(",");
         String[][] strArray=new String[engTypeAssemble.length+1][Integer.parseInt(timeSpan)+1];
         strArray[0][0]="机型";
         for (int j = 0; j < Integer.parseInt(timeSpan); j++) {
@@ -69,7 +69,7 @@ public class ChartsController {
      * @抛出异常
     */
     @RequestMapping("transmissionFailureRate")
-    public String[][] calculateTransmissionFailureRate(@RequestParam String yearAndMonth, @RequestParam String timeSpan, @RequestParam String engTypes){
+    public String[][] calculateTransmissionFailureRate(@RequestParam String yearAndMonth, @RequestParam String timeSpan, @RequestParam String engType){
         String[][] array = {{"机型", "2012", "2013", "2014", "2015", "2016", "2017"},
                 {"151", "41.1", "30.4", "65.1", "53.3", "83.8", "98.7"},
                 {"153", "86.5", "92.1", "85.7", "83.1", "73.4", "55.1"},

@@ -54,7 +54,7 @@
         <result property="engArrange" column="eng_arrange"/>
         <result property="salesFailureTime" column="sales_failure_time"/>
         <result property="carModel" column="car_model"/>
-        <result property="engCode" column="eng_code"/>
+        <result property="engType" column="eng_type"/>
         <result property="transmissionCodeRe" column="transmission_code_re"/>
         <result property="transmissionManufacturer" column="transmission_manufacturer"/>
         <result property="receiveTime" column="receive_time"/>
@@ -63,7 +63,7 @@
         <result property="PDI" column="PDI"/>
         <result property="offlineFailureTime" column="offline_failure_time"/>
         <result property="transmissionComfirmTime" column="transmission_comfirm_time"/>
-        <result property="engSettle" column="eng_settle"/>
+        <result property="engOrTran" column="eng_or_tran"/>
         <result property="shortCode" column="short_code"/>
         <result property="faultCodeClassification" column="fault_code_classification"/>
         <result property="transmissionProductionData" column="transmission_production_data"/>
@@ -75,12 +75,12 @@
 
     <select id="selectEngTypeCount"  resultType="java.lang.Integer" >
         SELECT COUNT(*) FROM `mqms_voucher`
-        WHERE  `eng_code` = #{eng_code} AND  `confirm_date` LIKE  concat(#{confirm_date},'%')
+        WHERE  `eng_type` = #{eng_type} AND  `confirm_date` LIKE  concat(#{confirm_date},'%')
     </select>
 
     <select id="selectTotalCost"  resultType="java.math.BigDecimal" >
         SELECT SUM(`total_cost`) FROM `mqms_voucher`
-        WHERE  `eng_code` = #{eng_code} AND  `confirm_date` LIKE  concat(#{confirm_date},'%')
+        WHERE  `eng_type` = #{eng_type} AND  `confirm_date` LIKE  concat(#{confirm_date},'%')
     </select>
 
     <select id="selectByVoucherCode"  resultType="java.lang.Integer" >
@@ -242,7 +242,7 @@
                 `car_model` = #{carModel},
             </if>
             <if test="engCode != null and engCode!=''">
-                `eng_code` = #{engCode},
+                `eng_type` = #{engType},
             </if>
             <if test="transmissionCodeRe != null and transmissionCodeRe!=''">
                 `transmission_code_re` = #{transmissionCodeRe},
@@ -269,7 +269,7 @@
                 `transmission_comfirm_time` = #{transmissionComfirmTime},
             </if>
             <if test="engSettle != null and engSettle!=''">
-                `eng_settle` = #{engSettle},
+                `eng_or_tran` = #{engOrTran},
             </if>
             <if test="shortCode != null and shortCode!=''">
                 `short_code` = #{shortCode},

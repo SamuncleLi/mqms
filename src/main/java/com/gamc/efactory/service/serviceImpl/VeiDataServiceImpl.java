@@ -73,19 +73,36 @@ public class VeiDataServiceImpl implements VeiDataService {
                     MqmsVoucher mqmsVoucher = new MqmsVoucher();
                     BeanUtils.copyProperties(mqmsVoucherRaw,mqmsVoucher);
 
+                    //销售至故障经过月
                     int salesFailureMonths= MqmsUtil.getMonth(mqmsVoucher.getSalesDate(),mqmsVoucher.getFailureDate());
+                    //下线至故障经过月
                     int offlineFailureMonths=MqmsUtil.getMonth(mqmsVoucher.getOfflineDate(),mqmsVoucher.getConfirmDate());
                     mqmsVoucher.setSalesFailureTime(salesFailureMonths);
                     mqmsVoucher.setOfflineFailureTime(offlineFailureMonths);
+                    //里程区间
                     mqmsVoucher.setMileageDistribution(RangeResultUtil.rangeResult(mqmsVoucher.getMileage(),5000,100000));
                     String[] dateTime=mqmsVoucher.getFailureDate().split("-");
+                    //故障发生年
                     mqmsVoucher.setFailureYear(dateTime[0]);
+                    //故障发生月
                     mqmsVoucher.setFailureMonth(dateTime[1]);
                     Map<String, String> map = new HashMap();
                     map=MqmsUtil.getWeekDate(mqmsVoucher.getUpdateTime());
+                    //接收区间
                     mqmsVoucher.setReceiveTime(map.get("wednesdayDate")+"~"+map.get("ThursdayDate"));
-                    mqmsVoucherList.add(mqmsVoucher);
+                    //车型
 
+                    //发动机机型
+
+                    //变速箱机型
+
+                    //变速箱生产厂家
+
+                    //变速箱生产日期
+
+                    //变速箱生产至确认经过月
+
+                    mqmsVoucherList.add(mqmsVoucher);
                 }
                 for(MqmsVoucherRaw mqmsVoucherRawRecord:mqmsVoucherRawList){
                     String voucherCode=mqmsVoucherRawRecord.getVoucherCode();
