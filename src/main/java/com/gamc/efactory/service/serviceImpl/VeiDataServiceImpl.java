@@ -95,7 +95,11 @@ public class VeiDataServiceImpl implements VeiDataService {
                     //发动机机型
 
                     //变速箱机型
-
+                    String trsmCode=mqmsVoucher.getTransmissionCode().replace("+","");
+                    String trsmType=trsmCode.substring(0,5);
+                    String trsmPro=trsmCode.substring(5,10);
+                    String produDate=trsmCode.substring(11,15);
+                    System.out.println(trsmType+trsmPro+produDate);
                     //变速箱生产厂家
 
                     //变速箱生产日期
