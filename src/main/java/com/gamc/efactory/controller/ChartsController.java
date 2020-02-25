@@ -36,28 +36,37 @@ public class ChartsController {
     */
     @RequestMapping("engineFailureRate")
     public String[][] calculateEngineFailureRate(@RequestParam String yearAndMonth, @RequestParam String timeSpan, @RequestParam String engType){
+        //分离机型
         String[] engTypeAssemble = engType.split(",");
+        //创建二维数组
         String[][] strArray=new String[engTypeAssemble.length+1][Integer.parseInt(timeSpan)+1];
         strArray[0][0]="机型";
-
-        for (int j = 0; j < Integer.parseInt(timeSpan); j++) {
+        for (int i = 0; i < engTypeAssemble.length; i++) {
+            //单机型初始化信息
+            String yearAndMonthBegin= MqmsUtil.getDateInfor("yyyy-MM",yearAndMonth,-Integer.parseInt(timeSpan)+1);
             int thisEngtypeCount=0;
             int secondPinData=0;
-            for (int i = 0; i < engTypeAssemble.length; i++) {
-                thisEngtypeCount = mqmsVoucherMapper.selectEngTypeCount(engTypeAssemble[i], yearAndMonth)+thisEngtypeCount;
-//                System.out.println(thisEngtypeCount);
-                secondPinData = mqmsSalesMapper.selectSecondSalesCount(engTypeAssemble[i], yearAndMonth)+secondPinData;
-//                System.out.println(secondPinData);
-                float unqualifiedRate = (float) thisEngtypeCount / secondPinData;
+            float unqualifiedRate=0;
+            //单机型循环叠加计算不良率
+            for (int j = 0; j < Integer.parseInt(timeSpan); j++) {
+                thisEngtypeCount = mqmsVoucherMapper.selectEngTypeCount(engTypeAssemble[i], yearAndMonthBegin)+thisEngtypeCount;
+                secondPinData = mqmsSalesMapper.selectSecondSalesCount(engTypeAssemble[i], yearAndMonthBegin)+secondPinData;
+                strArray[0][j+1]=yearAndMonthBegin;
+                if(secondPinData==0)
+                {
+                    unqualifiedRate=0;
+                }
+                else{
+                    unqualifiedRate=(float) thisEngtypeCount / secondPinData;
+                }
                 DecimalFormat df = new DecimalFormat("0.00");//格式化小数
                 String strUnqualifiedRate = df.format(unqualifiedRate * 100);//返回一个String类型的两位小数
                 System.out.println(strUnqualifiedRate);
-                strArray[0][j+1]=yearAndMonth;
-                strArray[i+1][0]=engTypeAssemble[i];
                 strArray[i+1][j+1]=strUnqualifiedRate;
-
+                //月份推移
+                yearAndMonthBegin= MqmsUtil.getDateInfor("yyyy-MM",yearAndMonthBegin,1);
             }
-            yearAndMonth= MqmsUtil.getDateInfor("yyyy-MM",yearAndMonth,1);
+            strArray[i+1][0]=engTypeAssemble[i];
         }
         return strArray;
     }
