@@ -1,13 +1,14 @@
 package com.gamc.efactory.service.serviceImpl;
 
-import com.gamc.efactory.dao.MqmsVoucherMapper;
-import com.gamc.efactory.dao.MqmsVoucherRawMapper;
+import com.gamc.efactory.dao.*;
+import com.gamc.efactory.dao.base.MqmsTranYearDecodeBaseMapper;
 import com.gamc.efactory.model.dataObject.MqmsVoucher;
 import com.gamc.efactory.model.dataObject.MqmsVoucherRaw;
 import com.gamc.efactory.service.VeiDataService;
 import com.gamc.efactory.util.ExcelUtil;
 import com.gamc.efactory.util.MqmsUtil;
 import com.gamc.efactory.util.RangeResultUtil;
+import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
@@ -31,6 +32,12 @@ public class VeiDataServiceImpl implements VeiDataService {
     private MqmsVoucherRawMapper mqmsVoucherRawMapper;
     @Autowired
     private MqmsVoucherMapper mqmsVoucherMapper;
+    @Autowired
+    private MqmsTranProductionDecodeMapper mqmsTranProductionDecodeMapper;
+    @Autowired
+    private MqmsTranManufacturesDecodeMapper mqmsTranManufacturesDecodeMapper;
+    @Autowired
+    private MqmsTranYearDecodeMapper mqmsTranYearDecodeMapper;
     Logger logger = LoggerFactory.getLogger(VeiDataServiceImpl.class);
     public boolean batchImport(String fileName, MultipartFile file){
         try{
@@ -95,13 +102,29 @@ public class VeiDataServiceImpl implements VeiDataService {
                     //发动机机型
 
                     //变速箱机型
+                    String trsmCode=mqmsVoucher.getTransmissionCode().replace("+","");
+                    String trsmType=trsmCode.substring(0,5);
+                    String trsmManufacture=trsmCode.substring(5,10);
+                    String trsmProYearCode=trsmCode.substring(11,12);
+                    String trsmProMonthHex=trsmCode.substring(12,13);
 
+                    String trsmProDay=trsmCode.substring(13,15);
+                    System.out.println(trsmType+trsmManufacture+trsmProYearCode);
+                    mqmsVoucher.setTransmissionCodeRe(mqmsTranProductionDecodeMapper.selectTranProductionCode(trsmType));
                     //变速箱生产厂家
-
+                    mqmsVoucher.setTransmissionManufacturer(mqmsTranManufacturesDecodeMapper.selectTranManufacture(trsmManufacture));
                     //变速箱生产日期
-
+                    String trsmProMonth=Integer.toString(Integer.parseInt(trsmProMonthHex,16),10);
+                    if(trsmProMonth.length()<2){
+                        trsmProMonth="0"+trsmProMonth;
+                    }
+                    System.out.println(trsmProMonth);
+                    String trsmProYear=mqmsTranYearDecodeMapper.selectTranProYear(trsmProYearCode);
+                    System.out.println(trsmProYear);
+                    mqmsVoucher.setTransmissionProductionData(trsmProYear+"-"+trsmProMonth+"-"+trsmProDay);
                     //变速箱生产至确认经过月
-
+                    int proFailureMonths=MqmsUtil.getMonth(mqmsVoucher.getTransmissionProductionData(),mqmsVoucher.getConfirmDate());
+                    mqmsVoucher.setTransmissionComfirmTime(Integer.toString(proFailureMonths));
                     mqmsVoucherList.add(mqmsVoucher);
                 }
                 for(MqmsVoucherRaw mqmsVoucherRawRecord:mqmsVoucherRawList){
