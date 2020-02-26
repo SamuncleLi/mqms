@@ -18,7 +18,4 @@ public interface MqmsVoucherBaseMapper {
 
     MqmsVoucher queryMqmsVoucherLimit1(MqmsVoucher object);
 
-
-
-
 }

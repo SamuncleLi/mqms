@@ -133,8 +133,8 @@ public class ChartsController {
         array[1][0] = "台数";
         for(int i=0;i<xAxis.length;i++){
             //计算数量
-            MqmsVoucher mqmsVoucher = MqmsVoucher.QueryBuild().engType(engType).rightFuzzySalesDate();
-            List<MqmsVoucher> list = mqmsVoucherMapper.queryMqmsVoucher(mqmsVoucher);
+//            MqmsVoucher mqmsVoucher = MqmsVoucher.QueryBuild().engType(engType).rightFuzzySalesDate();
+//            List<MqmsVoucher> list = mqmsVoucherMapper.queryMqmsVoucher(mqmsVoucher);
         }
         return array;
     }
