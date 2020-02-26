@@ -1,0 +1,337 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gamc.efactory.dao.base.MqmsTranManufacturesDecodeBaseMapper">
+
+
+    <insert id="insertMqmsTranManufacturesDecode"  useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO `mqms_tran_manufactures_decode`
+        (
+        <trim suffixOverrides=",">
+                    <if test="id!=null">
+                        `id`,
+                    </if>
+                    <if test="tranManufactureModel!=null">
+                        `tran_manufacture_model`,
+                    </if>
+                    <if test="tranManufacture!=null">
+                        `tran_manufacture`,
+                    </if>
+        </trim>
+        )
+        VALUES
+        (
+        <trim suffixOverrides=",">
+                <if test="id!=null">
+                    #{id},
+                </if>
+                <if test="tranManufactureModel!=null">
+                    #{tranManufactureModel},
+                </if>
+                <if test="tranManufacture!=null">
+                    #{tranManufacture},
+                </if>
+        </trim>
+        )
+    </insert>
+
+
+
+
+    <update id="updateMqmsTranManufacturesDecode">
+        UPDATE `mqms_tran_manufactures_decode`
+        SET
+        <trim suffixOverrides=",">
+            <if test="tranManufactureModel != null and tranManufactureModel!=''">
+                `tran_manufacture_model` = #{tranManufactureModel},
+            </if>
+            <if test="tranManufacture != null and tranManufacture!=''">
+                `tran_manufacture` = #{tranManufacture},
+            </if>
+        </trim>
+        WHERE
+        <trim suffixOverrides="and">
+                `id` = #{id} and
+        </trim>
+    </update>
+
+    <update id="update">
+        UPDATE `mqms_tran_manufactures_decode`
+        SET
+        <trim suffixOverrides=",">
+        <if test="set.tranManufactureModel != null and set.tranManufactureModel!=''">
+            `tran_manufacture_model` = #{set.tranManufactureModel},
+        </if>
+        <if test="set.tranManufacture != null and set.tranManufacture!=''">
+            `tran_manufacture` = #{set.tranManufacture},
+        </if>
+        </trim>
+        <trim prefix="where" suffixOverrides="and | or">
+                <if test="where.idList != null">
+                    `id` in
+                    <foreach collection="where.idList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test="where.idSt !=null">
+                `id` >= #{where.idSt} and
+            </if>
+            <if test="where.idEd!=null">
+                `id` &lt;= #{where.idEd} and
+            </if>
+                <if test="where.tranManufactureModelList != null">
+                    `tran_manufacture_model` in
+                    <foreach collection="where.tranManufactureModelList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test ="where.fuzzyTranManufactureModel!=null and where.fuzzyTranManufactureModel.size()>0">
+                (
+                <foreach collection="where.fuzzyTranManufactureModel"  separator="or" item="item">
+                    `Tran_manufacture_model` like concat('%',#{item},'%')
+                </foreach>
+                ) and
+            </if>
+            <if test ="where.rightFuzzyTranManufactureModel!=null and where.rightFuzzyTranManufactureModel.size()>0">
+                (
+                <foreach collection="where.rightFuzzyTranManufactureModel"  separator="or" item="item">
+                    `Tran_manufacture_model` like concat(#{item},'%')
+                </foreach>
+                ) and
+            </if>
+                <if test="where.tranManufactureList != null">
+                    `tran_manufacture` in
+                    <foreach collection="where.tranManufactureList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test ="where.fuzzyTranManufacture!=null and where.fuzzyTranManufacture.size()>0">
+                (
+                <foreach collection="where.fuzzyTranManufacture"  separator="or" item="item">
+                    `Tran_manufacture` like concat('%',#{item},'%')
+                </foreach>
+                ) and
+            </if>
+            <if test ="where.rightFuzzyTranManufacture!=null and where.rightFuzzyTranManufacture.size()>0">
+                (
+                <foreach collection="where.rightFuzzyTranManufacture"  separator="or" item="item">
+                    `Tran_manufacture` like concat(#{item},'%')
+                </foreach>
+                ) and
+            </if>
+        </trim>
+    </update>
+
+
+    <resultMap type="com.gamc.efactory.model.dataObject.MqmsTranManufacturesDecode" id="MqmsTranManufacturesDecodeMap">
+        <result property="id" column="id"/>
+        <result property="tranManufactureModel" column="tran_manufacture_model"/>
+        <result property="tranManufacture" column="tran_manufacture"/>
+    </resultMap>
+
+
+    <select id="queryMqmsTranManufacturesDecode" resultMap="MqmsTranManufacturesDecodeMap">
+        select
+        <include refid="baseResult"></include>
+        from  `mqms_tran_manufactures_decode`
+        <trim prefix="where" suffixOverrides="and | or">
+            <if test="id != null">
+                `id` = #{id} and
+            </if>
+            <if test="tranManufactureModel != null and tranManufactureModel!=''">
+                `tran_manufacture_model` = #{tranManufactureModel} and
+            </if>
+            <if test="tranManufacture != null and tranManufacture!=''">
+                `tran_manufacture` = #{tranManufacture} and
+            </if>
+            <if test = "(_parameter instanceof com.gamc.efactory.model.dataObject.MqmsTranManufacturesDecode$QueryBuilder) == true">
+                <if test="idList != null">
+                    `id` in
+                    <foreach collection="idList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test="idSt !=null">
+                    `id` >= #{idSt} and
+                </if>
+                <if test="idEd!=null">
+                    `id` &lt;= #{idEd} and
+                </if>
+                <if test="tranManufactureModelList != null">
+                    `tran_manufacture_model` in
+                    <foreach collection="tranManufactureModelList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyTranManufactureModel!=null and fuzzyTranManufactureModel.size()>0">
+                    (
+                    <foreach collection="fuzzyTranManufactureModel"  separator="or" item="item">
+                        `Tran_manufacture_model` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyTranManufactureModel!=null and rightFuzzyTranManufactureModel.size()>0">
+                    (
+                    <foreach collection="rightFuzzyTranManufactureModel"  separator="or" item="item">
+                        `Tran_manufacture_model` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="tranManufactureList != null">
+                    `tran_manufacture` in
+                    <foreach collection="tranManufactureList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyTranManufacture!=null and fuzzyTranManufacture.size()>0">
+                    (
+                    <foreach collection="fuzzyTranManufacture"  separator="or" item="item">
+                        `Tran_manufacture` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyTranManufacture!=null and rightFuzzyTranManufacture.size()>0">
+                    (
+                    <foreach collection="rightFuzzyTranManufacture"  separator="or" item="item">
+                        `Tran_manufacture` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+            </if>
+        </trim>
+    </select>
+
+    <select id="queryMqmsTranManufacturesDecodeLimit1" resultMap="MqmsTranManufacturesDecodeMap">
+        select
+        <include refid="baseResult"></include>
+        from  `mqms_tran_manufactures_decode`
+        <trim prefix="where" suffixOverrides="and | or">
+            <if test="id != null">
+                `id` = #{id} and
+            </if>
+            <if test="tranManufactureModel != null and tranManufactureModel!=''">
+                `tran_manufacture_model` = #{tranManufactureModel} and
+            </if>
+            <if test="tranManufacture != null and tranManufacture!=''">
+                `tran_manufacture` = #{tranManufacture} and
+            </if>
+            <if test = "(_parameter instanceof com.gamc.efactory.model.dataObject.MqmsTranManufacturesDecode$QueryBuilder) == true">
+                    <if test="idList != null">
+                        `id` in
+                        <foreach collection="idList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test="idSt !=null">
+                    `id` >= #{idSt} and
+                </if>
+                <if test="idEd!=null">
+                    `id` &lt;= #{idEd} and
+                </if>
+                    <if test="tranManufactureModelList != null">
+                        `tran_manufacture_model` in
+                        <foreach collection="tranManufactureModelList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyTranManufactureModel!=null and fuzzyTranManufactureModel.size()>0">
+                    (
+                    <foreach collection="fuzzyTranManufactureModel"  separator="or" item="item">
+                        `Tran_manufacture_model` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyTranManufactureModel!=null and rightFuzzyTranManufactureModel.size()>0">
+                    (
+                    <foreach collection="rightFuzzyTranManufactureModel"  separator="or" item="item">
+                        `Tran_manufacture_model` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                    <if test="tranManufactureList != null">
+                        `tran_manufacture` in
+                        <foreach collection="tranManufactureList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyTranManufacture!=null and fuzzyTranManufacture.size()>0">
+                    (
+                    <foreach collection="fuzzyTranManufacture"  separator="or" item="item">
+                        `Tran_manufacture` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyTranManufacture!=null and rightFuzzyTranManufacture.size()>0">
+                    (
+                    <foreach collection="rightFuzzyTranManufacture"  separator="or" item="item">
+                        `Tran_manufacture` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+            </if>
+        </trim>
+        limit 1
+    </select>
+
+    <sql id="allResult">
+        <trim suffixOverrides=",">
+        `id`,
+        `tran_manufacture_model`,
+        `tran_manufacture`,
+        </trim>
+    </sql>
+
+
+
+    <sql id="baseResult">
+        <trim suffixOverrides=",">
+            <if test = "(_parameter instanceof com.gamc.efactory.model.dataObject.MqmsTranManufacturesDecode$QueryBuilder) == true">
+
+                <if test="fetchFields==null">
+                    <include refid="allResult"></include>
+                </if>
+                <if test="fetchFields!=null">
+                    <if test="fetchFields.AllFields !=null">
+                        <include refid="allResult"></include>
+                    </if>
+                    <if test="fetchFields.AllFields ==null and fetchFields.fetchFields==null and fetchFields.excludeFields==null and fetchFields.otherFields==null">
+                        <include refid="allResult"></include>
+                    </if>
+                    <if test="fetchFields.AllFields==null and fetchFields.fetchFields!=null">
+                    <if test="fetchFields.fetchFields.id==true">
+                        `id`,
+                    </if>
+                    <if test="fetchFields.fetchFields.tranManufactureModel==true">
+                        `tran_manufacture_model`,
+                    </if>
+                    <if test="fetchFields.fetchFields.tranManufacture==true">
+                        `tran_manufacture`,
+                    </if>
+                    </if>
+                    <if test="fetchFields.AllFields==null and fetchFields.excludeFields!=null">
+                    <if test="fetchFields.excludeFields.id==null">
+                        `id`,
+                    </if>
+                    <if test="fetchFields.excludeFields.tranManufactureModel==null">
+                        `tran_manufacture_model`,
+                    </if>
+                    <if test="fetchFields.excludeFields.tranManufacture==null">
+                        `tran_manufacture`,
+                    </if>
+                    </if>
+                    <if test="fetchFields.otherFields!=null and fetchFields.otherFields.size>0">
+                        <foreach collection="fetchFields.otherFields" index="index" item="item" separator=",">
+                        `#{item}`
+                        </foreach>
+                    </if>
+                </if>
+            </if>
+            <if test="(_parameter instanceof com.gamc.efactory.model.dataObject.MqmsTranManufacturesDecode$QueryBuilder) == false" >
+                <include refid="allResult"></include>
+            </if>
+
+        </trim>
+    </sql>
+
+
+</mapper>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gamc.efactory.dao.MqmsTranManufacturesDecodeMapper">
+    <select id="selectTranManufacture"  resultType="java.lang.String" >
+        SELECT `tran_manufacture` FROM `mqms_tran_manufactures_decode`
+        WHERE  `tran_manufacture_model` = #{tran_manufacture_model}
+    </select>
+
+</mapper>
