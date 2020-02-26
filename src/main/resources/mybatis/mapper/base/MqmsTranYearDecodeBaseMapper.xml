@@ -1,0 +1,337 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gamc.efactory.dao.base.MqmsTranYearDecodeBaseMapper">
+
+
+    <insert id="insertMqmsTranYearDecode"  useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO `mqms_tran_year_decode`
+        (
+        <trim suffixOverrides=",">
+                    <if test="id!=null">
+                        `id`,
+                    </if>
+                    <if test="tranProYearCode!=null">
+                        `tran_pro_year_code`,
+                    </if>
+                    <if test="tranProYear!=null">
+                        `tran_pro_year`,
+                    </if>
+        </trim>
+        )
+        VALUES
+        (
+        <trim suffixOverrides=",">
+                <if test="id!=null">
+                    #{id},
+                </if>
+                <if test="tranProYearCode!=null">
+                    #{tranProYearCode},
+                </if>
+                <if test="tranProYear!=null">
+                    #{tranProYear},
+                </if>
+        </trim>
+        )
+    </insert>
+
+
+
+
+    <update id="updateMqmsTranYearDecode">
+        UPDATE `mqms_tran_year_decode`
+        SET
+        <trim suffixOverrides=",">
+            <if test="tranProYearCode != null and tranProYearCode!=''">
+                `tran_pro_year_code` = #{tranProYearCode},
+            </if>
+            <if test="tranProYear != null and tranProYear!=''">
+                `tran_pro_year` = #{tranProYear},
+            </if>
+        </trim>
+        WHERE
+        <trim suffixOverrides="and">
+                `id` = #{id} and
+        </trim>
+    </update>
+
+    <update id="update">
+        UPDATE `mqms_tran_year_decode`
+        SET
+        <trim suffixOverrides=",">
+        <if test="set.tranProYearCode != null and set.tranProYearCode!=''">
+            `tran_pro_year_code` = #{set.tranProYearCode},
+        </if>
+        <if test="set.tranProYear != null and set.tranProYear!=''">
+            `tran_pro_year` = #{set.tranProYear},
+        </if>
+        </trim>
+        <trim prefix="where" suffixOverrides="and | or">
+                <if test="where.idList != null">
+                    `id` in
+                    <foreach collection="where.idList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test="where.idSt !=null">
+                `id` >= #{where.idSt} and
+            </if>
+            <if test="where.idEd!=null">
+                `id` &lt;= #{where.idEd} and
+            </if>
+                <if test="where.tranProYearCodeList != null">
+                    `tran_pro_year_code` in
+                    <foreach collection="where.tranProYearCodeList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test ="where.fuzzyTranProYearCode!=null and where.fuzzyTranProYearCode.size()>0">
+                (
+                <foreach collection="where.fuzzyTranProYearCode"  separator="or" item="item">
+                    `Tran_pro_year_code` like concat('%',#{item},'%')
+                </foreach>
+                ) and
+            </if>
+            <if test ="where.rightFuzzyTranProYearCode!=null and where.rightFuzzyTranProYearCode.size()>0">
+                (
+                <foreach collection="where.rightFuzzyTranProYearCode"  separator="or" item="item">
+                    `Tran_pro_year_code` like concat(#{item},'%')
+                </foreach>
+                ) and
+            </if>
+                <if test="where.tranProYearList != null">
+                    `tran_pro_year` in
+                    <foreach collection="where.tranProYearList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test ="where.fuzzyTranProYear!=null and where.fuzzyTranProYear.size()>0">
+                (
+                <foreach collection="where.fuzzyTranProYear"  separator="or" item="item">
+                    `Tran_pro_year` like concat('%',#{item},'%')
+                </foreach>
+                ) and
+            </if>
+            <if test ="where.rightFuzzyTranProYear!=null and where.rightFuzzyTranProYear.size()>0">
+                (
+                <foreach collection="where.rightFuzzyTranProYear"  separator="or" item="item">
+                    `Tran_pro_year` like concat(#{item},'%')
+                </foreach>
+                ) and
+            </if>
+        </trim>
+    </update>
+
+
+    <resultMap type="com.gamc.efactory.model.dataObject.MqmsTranYearDecode" id="MqmsTranYearDecodeMap">
+        <result property="id" column="id"/>
+        <result property="tranProYearCode" column="tran_pro_year_code"/>
+        <result property="tranProYear" column="tran_pro_year"/>
+    </resultMap>
+
+
+    <select id="queryMqmsTranYearDecode" resultMap="MqmsTranYearDecodeMap">
+        select
+        <include refid="baseResult"></include>
+        from  `mqms_tran_year_decode`
+        <trim prefix="where" suffixOverrides="and | or">
+            <if test="id != null">
+                `id` = #{id} and
+            </if>
+            <if test="tranProYearCode != null and tranProYearCode!=''">
+                `tran_pro_year_code` = #{tranProYearCode} and
+            </if>
+            <if test="tranProYear != null and tranProYear!=''">
+                `tran_pro_year` = #{tranProYear} and
+            </if>
+            <if test = "(_parameter instanceof com.gamc.efactory.model.dataObject.MqmsTranYearDecode$QueryBuilder) == true">
+                <if test="idList != null">
+                    `id` in
+                    <foreach collection="idList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test="idSt !=null">
+                    `id` >= #{idSt} and
+                </if>
+                <if test="idEd!=null">
+                    `id` &lt;= #{idEd} and
+                </if>
+                <if test="tranProYearCodeList != null">
+                    `tran_pro_year_code` in
+                    <foreach collection="tranProYearCodeList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyTranProYearCode!=null and fuzzyTranProYearCode.size()>0">
+                    (
+                    <foreach collection="fuzzyTranProYearCode"  separator="or" item="item">
+                        `Tran_pro_year_code` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyTranProYearCode!=null and rightFuzzyTranProYearCode.size()>0">
+                    (
+                    <foreach collection="rightFuzzyTranProYearCode"  separator="or" item="item">
+                        `Tran_pro_year_code` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="tranProYearList != null">
+                    `tran_pro_year` in
+                    <foreach collection="tranProYearList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyTranProYear!=null and fuzzyTranProYear.size()>0">
+                    (
+                    <foreach collection="fuzzyTranProYear"  separator="or" item="item">
+                        `Tran_pro_year` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyTranProYear!=null and rightFuzzyTranProYear.size()>0">
+                    (
+                    <foreach collection="rightFuzzyTranProYear"  separator="or" item="item">
+                        `Tran_pro_year` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+            </if>
+        </trim>
+    </select>
+
+    <select id="queryMqmsTranYearDecodeLimit1" resultMap="MqmsTranYearDecodeMap">
+        select
+        <include refid="baseResult"></include>
+        from  `mqms_tran_year_decode`
+        <trim prefix="where" suffixOverrides="and | or">
+            <if test="id != null">
+                `id` = #{id} and
+            </if>
+            <if test="tranProYearCode != null and tranProYearCode!=''">
+                `tran_pro_year_code` = #{tranProYearCode} and
+            </if>
+            <if test="tranProYear != null and tranProYear!=''">
+                `tran_pro_year` = #{tranProYear} and
+            </if>
+            <if test = "(_parameter instanceof com.gamc.efactory.model.dataObject.MqmsTranYearDecode$QueryBuilder) == true">
+                    <if test="idList != null">
+                        `id` in
+                        <foreach collection="idList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test="idSt !=null">
+                    `id` >= #{idSt} and
+                </if>
+                <if test="idEd!=null">
+                    `id` &lt;= #{idEd} and
+                </if>
+                    <if test="tranProYearCodeList != null">
+                        `tran_pro_year_code` in
+                        <foreach collection="tranProYearCodeList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyTranProYearCode!=null and fuzzyTranProYearCode.size()>0">
+                    (
+                    <foreach collection="fuzzyTranProYearCode"  separator="or" item="item">
+                        `Tran_pro_year_code` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyTranProYearCode!=null and rightFuzzyTranProYearCode.size()>0">
+                    (
+                    <foreach collection="rightFuzzyTranProYearCode"  separator="or" item="item">
+                        `Tran_pro_year_code` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                    <if test="tranProYearList != null">
+                        `tran_pro_year` in
+                        <foreach collection="tranProYearList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyTranProYear!=null and fuzzyTranProYear.size()>0">
+                    (
+                    <foreach collection="fuzzyTranProYear"  separator="or" item="item">
+                        `Tran_pro_year` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyTranProYear!=null and rightFuzzyTranProYear.size()>0">
+                    (
+                    <foreach collection="rightFuzzyTranProYear"  separator="or" item="item">
+                        `Tran_pro_year` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+            </if>
+        </trim>
+        limit 1
+    </select>
+
+    <sql id="allResult">
+        <trim suffixOverrides=",">
+        `id`,
+        `tran_pro_year_code`,
+        `tran_pro_year`,
+        </trim>
+    </sql>
+
+
+
+    <sql id="baseResult">
+        <trim suffixOverrides=",">
+            <if test = "(_parameter instanceof com.gamc.efactory.model.dataObject.MqmsTranYearDecode$QueryBuilder) == true">
+
+                <if test="fetchFields==null">
+                    <include refid="allResult"></include>
+                </if>
+                <if test="fetchFields!=null">
+                    <if test="fetchFields.AllFields !=null">
+                        <include refid="allResult"></include>
+                    </if>
+                    <if test="fetchFields.AllFields ==null and fetchFields.fetchFields==null and fetchFields.excludeFields==null and fetchFields.otherFields==null">
+                        <include refid="allResult"></include>
+                    </if>
+                    <if test="fetchFields.AllFields==null and fetchFields.fetchFields!=null">
+                    <if test="fetchFields.fetchFields.id==true">
+                        `id`,
+                    </if>
+                    <if test="fetchFields.fetchFields.tranProYearCode==true">
+                        `tran_pro_year_code`,
+                    </if>
+                    <if test="fetchFields.fetchFields.tranProYear==true">
+                        `tran_pro_year`,
+                    </if>
+                    </if>
+                    <if test="fetchFields.AllFields==null and fetchFields.excludeFields!=null">
+                    <if test="fetchFields.excludeFields.id==null">
+                        `id`,
+                    </if>
+                    <if test="fetchFields.excludeFields.tranProYearCode==null">
+                        `tran_pro_year_code`,
+                    </if>
+                    <if test="fetchFields.excludeFields.tranProYear==null">
+                        `tran_pro_year`,
+                    </if>
+                    </if>
+                    <if test="fetchFields.otherFields!=null and fetchFields.otherFields.size>0">
+                        <foreach collection="fetchFields.otherFields" index="index" item="item" separator=",">
+                        `#{item}`
+                        </foreach>
+                    </if>
+                </if>
+            </if>
+            <if test="(_parameter instanceof com.gamc.efactory.model.dataObject.MqmsTranYearDecode$QueryBuilder) == false" >
+                <include refid="allResult"></include>
+            </if>
+
+        </trim>
+    </sql>
+
+
+</mapper>
