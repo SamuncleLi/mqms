@@ -25,10 +25,16 @@
     <div>
         <a id="complexBtn" class="layui-btn">复杂查询</a>
         <a href="javascript:export_record2()" class="easyui-linkbutton" iconCls="icon-save" plain="true">导出</a>
+        <a href="javascript:importFile()" class="easyui-linkbutton" iconCls="icon-save" plain="true" title="导入excel">导入</a>
     </div>
     <div id="msg2">查询条件：</div>
     <div id="result2" style="word-break:break-all;height:60px;width:500px;padding-left:50px;display: none;"></div>
 </div>
+<div id="upload-dlg" class="easyui-dialog" title="上传文件" closed="true">
+    <form  method="post" enctype="multipart/form-data" id="fileForm">
+        <input id="file" class="easyui-filebox" name="file" data-options="buttonText:'选择文件',prompt:'选择文件'">
+        <a id="upload-btn" href="javascript:fileUpload()" class="easyui-linkbutton" style="width:70%">上传文件</a>
+    </form>
 </div>
 <script type="text/javascript">
     //初始化全局变量
@@ -119,8 +125,8 @@
             pagination: true,// 分页条
             checkOnSelect: false,
             selectOnCheck: true,
-            pageSize: 10,
-            pageList: [10, 20, 40, 50],
+            pageSize: 100,
+            pageList: [10, 100, 1000, 10000],
             loader:function(param,success,error){
                 var condition = {};
                 condition['condition'] = requestData;
@@ -136,6 +142,28 @@
                         success(data);
                     }
                 })
+            }
+        });
+    }
+
+    //打开上传文件对话框
+    function importFile() {
+        $('#upload-dlg').dialog("open", true);
+    }
+    //上传文件
+    function fileUpload() {
+        $.messager.alert('系统提示',"正在上传，上传完成后会有提示，请耐心等候");
+
+        $("#fileForm").form("submit", {
+            type: 'post',
+            url: '/mqms/import/productionData',
+            success: function (data) {
+                if (data == '数据成功导入') {
+                    $.messager.alert("系统提示",'上传文件成功');
+                } else {
+                    $.messager.alert("系统提示",'上传文件失败');
+                }
+                return false;
             }
         });
     }

@@ -1,6 +1,6 @@
 debug: false
 server:
- port: 8083
+ port: 8086
  servlet:
   context-path: /mqms
 spring:

@@ -241,7 +241,7 @@
             <if test="carModel != null and carModel!=''">
                 `car_model` = #{carModel},
             </if>
-            <if test="engCode != null and engCode!=''">
+            <if test="engType != null and engType!=''">
                 `eng_type` = #{engType},
             </if>
             <if test="transmissionCodeRe != null and transmissionCodeRe!=''">
@@ -268,7 +268,7 @@
             <if test="transmissionComfirmTime != null and transmissionComfirmTime!=''">
                 `transmission_comfirm_time` = #{transmissionComfirmTime},
             </if>
-            <if test="engSettle != null and engSettle!=''">
+            <if test="engOrTran != null and engOrTran!=''">
                 `eng_or_tran` = #{engOrTran},
             </if>
             <if test="shortCode != null and shortCode!=''">

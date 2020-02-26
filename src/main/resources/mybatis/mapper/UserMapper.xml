@@ -17,7 +17,7 @@
 </resultMap>
 
     <select id="queryUserLimit1" parameterType="java.lang.Integer" resultMap="User">
-        SELECT u.menberId,u.menberNo,u.menberName,u.division,u.department,u.phone,u.email FROM sgopdb.sheet1 u
+        SELECT u.menberId,u.menberNo,u.menberName,u.division,u.department,u.phone,u.email FROM gqpdb.sheet1 u
         <where>
             menberId = #{menberId}
         </where>

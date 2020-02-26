@@ -14,7 +14,7 @@ import static java.util.Collections.singletonList;
 @MapperScan("com.gamc.efactory.dao")
 //public class MqmsApplication extends SpringBootServletInitializer {
 public class MqmsApplication {
-////		war包方式启动
+//		war包方式启动
 //	@Override
 //	protected SpringApplicationBuilder configure(SpringApplicationBuilder builder){
 //		return builder.sources(MqmsApplication.class);

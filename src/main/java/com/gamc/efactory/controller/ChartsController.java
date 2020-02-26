@@ -42,10 +42,15 @@ public class ChartsController {
         for (int j = 0; j < Integer.parseInt(timeSpan); j++) {
             for (int i = 0; i < engTypeAssemble.length; i++) {
                 int thisEngtypeCount = mqmsVoucherMapper.selectEngTypeCount(engTypeAssemble[i], yearAndMonth);
-//                System.out.println(thisEngtypeCount);
                 int secondPinData = mqmsSalesMapper.selectSecondSalesCount(engTypeAssemble[i], yearAndMonth);
-//                System.out.println(secondPinData);
-                float unqualifiedRate = (float) thisEngtypeCount / secondPinData;
+                float unqualifiedRate;
+                //防止除数为0
+                if(secondPinData == 0){
+                    unqualifiedRate = 0;
+                }
+                else {
+                    unqualifiedRate = (float) thisEngtypeCount / secondPinData;
+                }
                 DecimalFormat df = new DecimalFormat("0.00");//格式化小数
                 String strUnqualifiedRate = df.format(unqualifiedRate * 100);//返回一个String类型的两位小数
                 System.out.println(strUnqualifiedRate);

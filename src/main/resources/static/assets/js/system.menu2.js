@@ -36,15 +36,24 @@ var _menus=[
     {"menuid":"31","icon":"fa-suitcase","menuname":"资料管理",parentMenu:'3',
     	"menus":[{"menuid":"311","menuname":"售后文档","icon":"fa-inbox","url":"demo/msgTip.html"},
     			{"menuid":"312","menuname":"我的文档","icon":"fa-share-alt-square","url":"demo/msgTip.html"}
-    		]
-    	},
-	{"menuid":"41","icon":"fa-dashboard","menuname":"系统仪表板",parentMenu:'4',
+        ]
+    },
+    {"menuid":"41","icon":"fa-suitcase","menuname":"配置项管理",parentMenu:'4',
+        "menus":[{"menuid":"411","menuname":"字典","icon":"fa-inbox","url":"demo/msgTip.html"},
+            {"menuid":"412","menuname":"销售点表","icon":"fa-share-alt-square","url":"demo/msgTip.html"},
+            {"menuid":"413","menuname":"vin码解码表","icon":"fa-share-alt-square","url":"demo/msgTip.html"},
+            {"menuid":"414","menuname":"变速箱号解码表","icon":"fa-share-alt-square","url":"demo/msgTip.html"},
+            {"menuid":"415","menuname":"mtoc解码表","icon":"fa-share-alt-square","url":"demo/msgTip.html"},
+            {"menuid":"416","menuname":"故障代码表","icon":"fa-share-alt-square","url":"demo/msgTip.html"},
+        ]
+    },
+	{"menuid":"42","icon":"fa-dashboard","menuname":"系统仪表板",parentMenu:'4',
 		"menus":[
-			{"menuid":"411","menuname":"系统管理","icon":"fa-id-card","url":"demo/resource.html"},
-			{"menuid":"412","menuname":"表单示例","icon":"fa-users","url":"demo/msgTip.html"},
-			{"menuid":"413","menuname":"角色管理","icon":"fa-address-card","url":"demo/msgTip.html"},
-			{"menuid":"414","menuname":"权限设置","icon":"fa-user-plus","url":"demo/msgTip.html"},
-			{"menuid":"415","menuname":"升级日志","icon":"fa-list","url":"https://blog.csdn.net/DJCBPL/article/details/80281869"}
+			{"menuid":"421","menuname":"系统管理","icon":"fa-id-card","url":"demo/resource.html"},
+			{"menuid":"422","menuname":"表单示例","icon":"fa-users","url":"demo/msgTip.html"},
+			{"menuid":"423","menuname":"角色管理","icon":"fa-address-card","url":"demo/msgTip.html"},
+			{"menuid":"424","menuname":"权限设置","icon":"fa-user-plus","url":"demo/msgTip.html"},
+			{"menuid":"425","menuname":"升级日志","icon":"fa-list","url":"https://blog.csdn.net/DJCBPL/article/details/80281869"}
 		]
 	}
 		
