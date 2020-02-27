@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>单机型市场品质数据</title>
+    <title>问题点数据深度分析</title>
     <link rel="stylesheet" type="text/css" href="${req.contextPath}/static/css/charts_eng_single_analysis.css">
     <link rel="stylesheet" type="text/css" href="${req.contextPath}/static/plugin/jquery-easyui-1.5.5.4/themes/gray/easyui.css">
     <link rel="stylesheet" type="text/css" href="${req.contextPath}/static/plugin/jquery-easyui-1.5.5.4/themes/icon.css">
@@ -150,7 +150,13 @@
                         subtext: '祺盛动力',
                         left: 'center'
                     },
-
+                    toolbox: {
+                        feature: {
+                            dataView: {show: true, readOnly: false},
+                            restore: {show: true},
+                            saveAsImage: {show: true}
+                        }
+                    },
                     tooltip: {
                         trigger: 'item',
                         formatter: '{a} <br/>{b} : {c} ({d}%)'
@@ -205,6 +211,13 @@
                             crossStyle: {
                                 color: '#999'
                             }
+                        }
+                    },
+                    toolbox: {
+                        feature: {
+                            dataView: {show: true, readOnly: false},
+                            restore: {show: true},
+                            saveAsImage: {show: true}
                         }
                     },
                     dataset: {

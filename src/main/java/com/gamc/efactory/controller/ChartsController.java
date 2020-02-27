@@ -1,5 +1,6 @@
 package com.gamc.efactory.controller;
 
+import com.gamc.efactory.dao.MqmsFailureReportMapper;
 import com.gamc.efactory.dao.MqmsSalesMapper;
 import com.gamc.efactory.dao.MqmsVoucherMapper;
 import com.gamc.efactory.model.dataObject.MqmsVoucher;
@@ -25,6 +26,8 @@ public class ChartsController {
     MqmsVoucherMapper mqmsVoucherMapper;
     @Autowired
     MqmsSalesMapper mqmsSalesMapper;
+    @Autowired
+    MqmsFailureReportMapper mqmsFailureReportMapper;
     /**
      * @描述 计算发动机不良率
      * @编写人 Zeho Lee
@@ -126,17 +129,26 @@ public class ChartsController {
      * @抛出异常
      */
     @RequestMapping("/eng/salesFailureTime")
-    public String[][] calOfflineFailureTime(@RequestParam String yearAndMonth, @RequestParam int timeSpan, @RequestParam(required = false) String engType){
+    public String[][] calOfflineFailureTime(@RequestParam String yearAndMonth, @RequestParam(required = false) String engType){
         //计算横坐标
-        String[] xAxis = {};
-        String[][] array = new String[2][xAxis.length + 1];
-        array[0][0] = "售出时间";
+        String[] xAxis = {"售出时间", "0-6","7-12","13-24","25-36","36+"};
+        String[][] array = new String[2][xAxis.length];
+        array[0] = xAxis;
         array[1][0] = "台数";
-        for(int i=0;i<xAxis.length;i++){
-            //计算数量
-            MqmsVoucher mqmsVoucher = MqmsVoucher.QueryBuild().engType(engType).rightFuzzySalesDate();
-            List<MqmsVoucher> list = mqmsVoucherMapper.queryMqmsVoucher(mqmsVoucher);
-        }
+
+        //时间推移，分为0-6个月，7-12个月，13-24个月，24-36个月，大于36个月
+        String timeSymbol6 = MqmsUtil.getDateInfor("yyyy-MM",yearAndMonth,-6);
+        String timeSymbol12 = MqmsUtil.getDateInfor("yyyy-MM",yearAndMonth,-12);
+        String timeSymbol24 = MqmsUtil.getDateInfor("yyyy-MM",yearAndMonth,-24);
+        String timeSymbol36 = MqmsUtil.getDateInfor("yyyy-MM",yearAndMonth,-36);
+        String timeSymbol1000 = MqmsUtil.getDateInfor("yyyy-MM",yearAndMonth,-1000);
+
+        array[1][1] = String.valueOf(mqmsVoucherMapper.salesFailureTimeBetween(engType, 0, 6));
+        array[1][2] = String.valueOf(mqmsVoucherMapper.salesFailureTimeBetween(engType, 7, 12));
+        array[1][3] = String.valueOf(mqmsVoucherMapper.salesFailureTimeBetween(engType, 13, 24));
+        array[1][4] = String.valueOf(mqmsVoucherMapper.salesFailureTimeBetween(engType, 25, 36));
+        array[1][5] = String.valueOf(mqmsVoucherMapper.salesFailureTimeBetween(engType, 36, 1000));
+
         return array;
     }
 
@@ -195,8 +207,24 @@ public class ChartsController {
      * @返回
      * @抛出异常
     */
-    public String[][] reportedFailure(){
-        String[][] array = {{}};
-        return array;
+    @RequestMapping("/eng/reportedFailure")
+    public String[][] reportedFailure(@RequestParam String yearAndMonth, @RequestParam String timeSpan, @RequestParam String engType){
+        //获取起始月
+        String yearAndMonthBegin= MqmsUtil.getDateInfor("yyyy-MM",yearAndMonth,-Integer.parseInt(timeSpan)+1);
+        String[][] strArray = new String[2][Integer.parseInt(timeSpan)+1];
+        //题头初始化
+        strArray[0][0] = "月份";
+        strArray[1][0] = "台数";
+        //单机型循环叠加计算不良率
+        for (int j = 0; j < Integer.parseInt(timeSpan); j++) {
+            strArray[0][j+1]=yearAndMonthBegin;
+
+            //获取每个月的市场报告的索赔发动机
+            strArray[1][j+1]=String.valueOf(mqmsFailureReportMapper.countByMonth(engType, yearAndMonthBegin));
+            //月份推移
+            yearAndMonthBegin= MqmsUtil.getDateInfor("yyyy-MM",yearAndMonthBegin,1);
+        }
+
+        return strArray;
     }
 }

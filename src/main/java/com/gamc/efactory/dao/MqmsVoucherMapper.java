@@ -21,4 +21,8 @@ public interface MqmsVoucherMapper extends MqmsVoucherBaseMapper{
     BigDecimal selectTotalCost(@Param("eng_type") String engType, @Param("confirm_date") String confirmDate);
     int selectByVoucherCode(@Param("voucher_code") String voucherCode);
     int updateByVoucher(MqmsVoucher object);
+    //左等右不等
+    int countBetweenYearAndMonth(@Param("eng_type")String engType, @Param("begin")String begin, @Param("end")String end);
+    //左右均等于
+    int salesFailureTimeBetween(@Param("eng_type")String engType, @Param("begin")int begin, @Param("end")int end);
 }

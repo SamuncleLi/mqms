@@ -340,4 +340,15 @@
         LIMIT 0,10;
     </select>
 
+    <select id="countBetweenYearAndMonth" resultType="java.lang.Integer">
+        SELECT count(*) FROM `mqms_voucher`
+        WHERE
+        eng_type = #{eng_type} and `sales_date` &gt;= #{begin} and `sales_date` &lt; #{end}
+    </select>
+    <select id="salesFailureTimeBetween" resultType="java.lang.Integer">
+        SELECT count(*) FROM `mqms_voucher`
+        WHERE
+        eng_type = #{eng_type} and `sales_failure_time` &gt;= #{begin} and `sales_failure_time` &lt;= #{end}
+    </select>
+
 </mapper>
