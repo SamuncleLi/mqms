@@ -10,7 +10,7 @@ import java.util.List;
 */
 public class MqmsVoucherRaw implements Serializable {
 
-    private static final long serialVersionUID = 1578578231095L;
+    private static final long serialVersionUID = 1582703413352L;
 
 
     /**
@@ -21,8 +21,14 @@ public class MqmsVoucherRaw implements Serializable {
     private Integer voucherId;
 
     /**
-    * 单据编号
+    * 质量反馈单号
     * isNullAble:0
+    */
+    private String qualityFeedbackCode;
+
+    /**
+    * 索赔单号
+    * isNullAble:1
     */
     private String voucherCode;
 
@@ -39,46 +45,10 @@ public class MqmsVoucherRaw implements Serializable {
     private String dealerName;
 
     /**
-    * vei系统状态
+    * 经销商简称
     * isNullAble:1
     */
-    private String veiState;
-
-    /**
-    * 更新时间
-    * isNullAble:1
-    */
-    private String updateTime;
-
-    /**
-    * 维修合同编码
-    * isNullAble:1
-    */
-    private String maintenanceContractCode;
-
-    /**
-    * 
-    * isNullAble:1
-    */
-    private String maintenanceItemCode;
-
-    /**
-    * 联系人
-    * isNullAble:1
-    */
-    private String contact;
-
-    /**
-    * 电话号码
-    * isNullAble:1
-    */
-    private String phoneNo;
-
-    /**
-    * 传真
-    * isNullAble:1
-    */
-    private String fax;
+    private String dealerShortName;
 
     /**
     * 主题
@@ -99,124 +69,46 @@ public class MqmsVoucherRaw implements Serializable {
     private String vehicleType;
 
     /**
-    * 发动机号
+    * 零部件名称
     * isNullAble:1
     */
-    private String egtypeCode;
+    private String partsName;
 
     /**
-    * 变速箱类型
+    * 一级名称
     * isNullAble:1
     */
-    private String transmissionType;
+    private String firstLevelName;
 
     /**
-    * 里程
+    * 零件简称-具体现象
     * isNullAble:1
     */
-    private Integer mileage;
+    private String partsShortNameSpecPneno;
 
     /**
-    * 变速箱号
+    * 生产日期
     * isNullAble:1
     */
-    private String transmissionCode;
+    private String manufactureDate;
 
     /**
-    * 
+    * 销售至故障经过月
     * isNullAble:1
     */
-    private String mtoc;
+    private String salesFailureTime;
 
     /**
-    * 故障日期
-    * isNullAble:1
-    */
-    private String failureDate;
-
-    /**
-    * 故障部位编号
-    * isNullAble:1
-    */
-    private String failureLocationCode;
-
-    /**
-    * 故障部位名称
-    * isNullAble:1
-    */
-    private String failureLocationName;
-
-    /**
-    * 症状分类编号
-    * isNullAble:1
-    */
-    private String symptomTypeCode;
-
-    /**
-    * 症状分类名称
-    * isNullAble:1
-    */
-    private String symptomTypeName;
-
-    /**
-    * 症状编号
-    * isNullAble:1
-    */
-    private String symptomCode;
-
-    /**
-    * 症状名称
+    * 故障描述
     * isNullAble:1
     */
     private String symptomName;
 
     /**
-    * 症状内容
+    * 诊断过程
     * isNullAble:1
     */
     private String symptomContent;
-
-    /**
-    * 提交时间
-    * isNullAble:1
-    */
-    private String submitDate;
-
-    /**
-    * 重要级别
-    * isNullAble:1
-    */
-    private String importantLevel;
-
-    /**
-    * 车种
-    * isNullAble:1
-    */
-    private String carType;
-
-    /**
-    * 诊断结果
-    * isNullAble:1
-    */
-    private String diagnosticResult;
-
-    /**
-    * vei系统备注
-    * isNullAble:1
-    */
-    private String veiUserDescription;
-
-    /**
-    * 零部件编号
-    * isNullAble:1
-    */
-    private String partsCode;
-
-    /**
-    * 
-    * isNullAble:1
-    */
-    private String partsName;
 
     /**
     * 工时费
@@ -225,10 +117,28 @@ public class MqmsVoucherRaw implements Serializable {
     private java.math.BigDecimal manCost;
 
     /**
-    * 材料费
+    * 配件金额
     * isNullAble:1
     */
-    private java.math.BigDecimal materialCost;
+    private java.math.BigDecimal partsCost;
+
+    /**
+    * 配件管理费
+    * isNullAble:1
+    */
+    private java.math.BigDecimal partsManagerCost;
+
+    /**
+    * 外出费用
+    * isNullAble:1
+    */
+    private java.math.BigDecimal outgoingCost;
+
+    /**
+    * 
+    * isNullAble:1
+    */
+    private java.math.BigDecimal maintainCost;
 
     /**
     * 其他费用
@@ -243,69 +153,37 @@ public class MqmsVoucherRaw implements Serializable {
     private java.math.BigDecimal totalCost;
 
     /**
-    * 确认者
+    * 重要级别
     * isNullAble:1
     */
-    private String confirmor;
+    private String importantLevel;
 
     /**
-    * 
+    * 变速箱类型
     * isNullAble:1
     */
-    private String confirmDate;
+    private String transmissionType;
 
     /**
-    * vei系统备注
+    * 新件绑定编号
     * isNullAble:1
     */
-    private String veiSysDescription;
+    private String newPartsBlindingNum;
 
     /**
-    * 车牌号
+    * 提交时间
     * isNullAble:1
     */
-    private String licenseCode;
-
-    /**
-    * 维修作业1
-    * isNullAble:1
-    */
-    private String servicePerformance1;
-
-    /**
-    * 维修作业2
-    * isNullAble:1
-    */
-    private String servicePerformance2;
-
-    /**
-    * 维修作业3
-    * isNullAble:1
-    */
-    private String servicePerformance3;
-
-    /**
-    * 年款
-    * isNullAble:1
-    */
-    private String modelYear;
-
-    /**
-    * 下线日期
-    * isNullAble:1
-    */
-    private String offlineDate;
-
-    /**
-    * 销售日期
-    * isNullAble:1
-    */
-    private String salesDate;
+    private String submitDate;
 
 
     public void setVoucherId(Integer voucherId){this.voucherId = voucherId;}
 
     public Integer getVoucherId(){return this.voucherId;}
+
+    public void setQualityFeedbackCode(String qualityFeedbackCode){this.qualityFeedbackCode = qualityFeedbackCode;}
+
+    public String getQualityFeedbackCode(){return this.qualityFeedbackCode;}
 
     public void setVoucherCode(String voucherCode){this.voucherCode = voucherCode;}
 
@@ -319,33 +197,9 @@ public class MqmsVoucherRaw implements Serializable {
 
     public String getDealerName(){return this.dealerName;}
 
-    public void setVeiState(String veiState){this.veiState = veiState;}
+    public void setDealerShortName(String dealerShortName){this.dealerShortName = dealerShortName;}
 
-    public String getVeiState(){return this.veiState;}
-
-    public void setUpdateTime(String updateTime){this.updateTime = updateTime;}
-
-    public String getUpdateTime(){return this.updateTime;}
-
-    public void setMaintenanceContractCode(String maintenanceContractCode){this.maintenanceContractCode = maintenanceContractCode;}
-
-    public String getMaintenanceContractCode(){return this.maintenanceContractCode;}
-
-    public void setMaintenanceItemCode(String maintenanceItemCode){this.maintenanceItemCode = maintenanceItemCode;}
-
-    public String getMaintenanceItemCode(){return this.maintenanceItemCode;}
-
-    public void setContact(String contact){this.contact = contact;}
-
-    public String getContact(){return this.contact;}
-
-    public void setPhoneNo(String phoneNo){this.phoneNo = phoneNo;}
-
-    public String getPhoneNo(){return this.phoneNo;}
-
-    public void setFax(String fax){this.fax = fax;}
-
-    public String getFax(){return this.fax;}
+    public String getDealerShortName(){return this.dealerShortName;}
 
     public void setTheme(String theme){this.theme = theme;}
 
@@ -359,49 +213,25 @@ public class MqmsVoucherRaw implements Serializable {
 
     public String getVehicleType(){return this.vehicleType;}
 
-    public void setEgtypeCode(String egtypeCode){this.egtypeCode = egtypeCode;}
+    public void setPartsName(String partsName){this.partsName = partsName;}
 
-    public String getEgtypeCode(){return this.egtypeCode;}
+    public String getPartsName(){return this.partsName;}
 
-    public void setTransmissionType(String transmissionType){this.transmissionType = transmissionType;}
+    public void setFirstLevelName(String firstLevelName){this.firstLevelName = firstLevelName;}
 
-    public String getTransmissionType(){return this.transmissionType;}
+    public String getFirstLevelName(){return this.firstLevelName;}
 
-    public void setMileage(Integer mileage){this.mileage = mileage;}
+    public void setPartsShortNameSpecPneno(String partsShortNameSpecPneno){this.partsShortNameSpecPneno = partsShortNameSpecPneno;}
 
-    public Integer getMileage(){return this.mileage;}
+    public String getPartsShortNameSpecPneno(){return this.partsShortNameSpecPneno;}
 
-    public void setTransmissionCode(String transmissionCode){this.transmissionCode = transmissionCode;}
+    public void setManufactureDate(String manufactureDate){this.manufactureDate = manufactureDate;}
 
-    public String getTransmissionCode(){return this.transmissionCode;}
+    public String getManufactureDate(){return this.manufactureDate;}
 
-    public void setMtoc(String mtoc){this.mtoc = mtoc;}
+    public void setSalesFailureTime(String salesFailureTime){this.salesFailureTime = salesFailureTime;}
 
-    public String getMtoc(){return this.mtoc;}
-
-    public void setFailureDate(String failureDate){this.failureDate = failureDate;}
-
-    public String getFailureDate(){return this.failureDate;}
-
-    public void setFailureLocationCode(String failureLocationCode){this.failureLocationCode = failureLocationCode;}
-
-    public String getFailureLocationCode(){return this.failureLocationCode;}
-
-    public void setFailureLocationName(String failureLocationName){this.failureLocationName = failureLocationName;}
-
-    public String getFailureLocationName(){return this.failureLocationName;}
-
-    public void setSymptomTypeCode(String symptomTypeCode){this.symptomTypeCode = symptomTypeCode;}
-
-    public String getSymptomTypeCode(){return this.symptomTypeCode;}
-
-    public void setSymptomTypeName(String symptomTypeName){this.symptomTypeName = symptomTypeName;}
-
-    public String getSymptomTypeName(){return this.symptomTypeName;}
-
-    public void setSymptomCode(String symptomCode){this.symptomCode = symptomCode;}
-
-    public String getSymptomCode(){return this.symptomCode;}
+    public String getSalesFailureTime(){return this.salesFailureTime;}
 
     public void setSymptomName(String symptomName){this.symptomName = symptomName;}
 
@@ -411,41 +241,25 @@ public class MqmsVoucherRaw implements Serializable {
 
     public String getSymptomContent(){return this.symptomContent;}
 
-    public void setSubmitDate(String submitDate){this.submitDate = submitDate;}
-
-    public String getSubmitDate(){return this.submitDate;}
-
-    public void setImportantLevel(String importantLevel){this.importantLevel = importantLevel;}
-
-    public String getImportantLevel(){return this.importantLevel;}
-
-    public void setCarType(String carType){this.carType = carType;}
-
-    public String getCarType(){return this.carType;}
-
-    public void setDiagnosticResult(String diagnosticResult){this.diagnosticResult = diagnosticResult;}
-
-    public String getDiagnosticResult(){return this.diagnosticResult;}
-
-    public void setVeiUserDescription(String veiUserDescription){this.veiUserDescription = veiUserDescription;}
-
-    public String getVeiUserDescription(){return this.veiUserDescription;}
-
-    public void setPartsCode(String partsCode){this.partsCode = partsCode;}
-
-    public String getPartsCode(){return this.partsCode;}
-
-    public void setPartsName(String partsName){this.partsName = partsName;}
-
-    public String getPartsName(){return this.partsName;}
-
     public void setManCost(java.math.BigDecimal manCost){this.manCost = manCost;}
 
     public java.math.BigDecimal getManCost(){return this.manCost;}
 
-    public void setMaterialCost(java.math.BigDecimal materialCost){this.materialCost = materialCost;}
+    public void setPartsCost(java.math.BigDecimal partsCost){this.partsCost = partsCost;}
 
-    public java.math.BigDecimal getMaterialCost(){return this.materialCost;}
+    public java.math.BigDecimal getPartsCost(){return this.partsCost;}
+
+    public void setPartsManagerCost(java.math.BigDecimal partsManagerCost){this.partsManagerCost = partsManagerCost;}
+
+    public java.math.BigDecimal getPartsManagerCost(){return this.partsManagerCost;}
+
+    public void setOutgoingCost(java.math.BigDecimal outgoingCost){this.outgoingCost = outgoingCost;}
+
+    public java.math.BigDecimal getOutgoingCost(){return this.outgoingCost;}
+
+    public void setMaintainCost(java.math.BigDecimal maintainCost){this.maintainCost = maintainCost;}
+
+    public java.math.BigDecimal getMaintainCost(){return this.maintainCost;}
 
     public void setOtherCost(java.math.BigDecimal otherCost){this.otherCost = otherCost;}
 
@@ -455,96 +269,51 @@ public class MqmsVoucherRaw implements Serializable {
 
     public java.math.BigDecimal getTotalCost(){return this.totalCost;}
 
-    public void setConfirmor(String confirmor){this.confirmor = confirmor;}
+    public void setImportantLevel(String importantLevel){this.importantLevel = importantLevel;}
 
-    public String getConfirmor(){return this.confirmor;}
+    public String getImportantLevel(){return this.importantLevel;}
 
-    public void setConfirmDate(String confirmDate){this.confirmDate = confirmDate;}
+    public void setTransmissionType(String transmissionType){this.transmissionType = transmissionType;}
 
-    public String getConfirmDate(){return this.confirmDate;}
+    public String getTransmissionType(){return this.transmissionType;}
 
-    public void setVeiSysDescription(String veiSysDescription){this.veiSysDescription = veiSysDescription;}
+    public void setNewPartsBlindingNum(String newPartsBlindingNum){this.newPartsBlindingNum = newPartsBlindingNum;}
 
-    public String getVeiSysDescription(){return this.veiSysDescription;}
+    public String getNewPartsBlindingNum(){return this.newPartsBlindingNum;}
 
-    public void setLicenseCode(String licenseCode){this.licenseCode = licenseCode;}
+    public void setSubmitDate(String submitDate){this.submitDate = submitDate;}
 
-    public String getLicenseCode(){return this.licenseCode;}
-
-    public void setServicePerformance1(String servicePerformance1){this.servicePerformance1 = servicePerformance1;}
-
-    public String getServicePerformance1(){return this.servicePerformance1;}
-
-    public void setServicePerformance2(String servicePerformance2){this.servicePerformance2 = servicePerformance2;}
-
-    public String getServicePerformance2(){return this.servicePerformance2;}
-
-    public void setServicePerformance3(String servicePerformance3){this.servicePerformance3 = servicePerformance3;}
-
-    public String getServicePerformance3(){return this.servicePerformance3;}
-
-    public void setModelYear(String modelYear){this.modelYear = modelYear;}
-
-    public String getModelYear(){return this.modelYear;}
-
-    public void setOfflineDate(String offlineDate){this.offlineDate = offlineDate;}
-
-    public String getOfflineDate(){return this.offlineDate;}
-
-    public void setSalesDate(String salesDate){this.salesDate = salesDate;}
-
-    public String getSalesDate(){return this.salesDate;}
+    public String getSubmitDate(){return this.submitDate;}
     @Override
     public String toString() {
         return "MqmsVoucherRaw{" +
                 "voucherId='" + voucherId + '\'' +
+                "qualityFeedbackCode='" + qualityFeedbackCode + '\'' +
                 "voucherCode='" + voucherCode + '\'' +
                 "dealerCode='" + dealerCode + '\'' +
                 "dealerName='" + dealerName + '\'' +
-                "veiState='" + veiState + '\'' +
-                "updateTime='" + updateTime + '\'' +
-                "maintenanceContractCode='" + maintenanceContractCode + '\'' +
-                "maintenanceItemCode='" + maintenanceItemCode + '\'' +
-                "contact='" + contact + '\'' +
-                "phoneNo='" + phoneNo + '\'' +
-                "fax='" + fax + '\'' +
+                "dealerShortName='" + dealerShortName + '\'' +
                 "theme='" + theme + '\'' +
                 "vinCode='" + vinCode + '\'' +
                 "vehicleType='" + vehicleType + '\'' +
-                "egtypeCode='" + egtypeCode + '\'' +
-                "transmissionType='" + transmissionType + '\'' +
-                "mileage='" + mileage + '\'' +
-                "transmissionCode='" + transmissionCode + '\'' +
-                "mtoc='" + mtoc + '\'' +
-                "failureDate='" + failureDate + '\'' +
-                "failureLocationCode='" + failureLocationCode + '\'' +
-                "failureLocationName='" + failureLocationName + '\'' +
-                "symptomTypeCode='" + symptomTypeCode + '\'' +
-                "symptomTypeName='" + symptomTypeName + '\'' +
-                "symptomCode='" + symptomCode + '\'' +
+                "partsName='" + partsName + '\'' +
+                "firstLevelName='" + firstLevelName + '\'' +
+                "partsShortNameSpecPneno='" + partsShortNameSpecPneno + '\'' +
+                "manufactureDate='" + manufactureDate + '\'' +
+                "salesFailureTime='" + salesFailureTime + '\'' +
                 "symptomName='" + symptomName + '\'' +
                 "symptomContent='" + symptomContent + '\'' +
-                "submitDate='" + submitDate + '\'' +
-                "importantLevel='" + importantLevel + '\'' +
-                "carType='" + carType + '\'' +
-                "diagnosticResult='" + diagnosticResult + '\'' +
-                "veiUserDescription='" + veiUserDescription + '\'' +
-                "partsCode='" + partsCode + '\'' +
-                "partsName='" + partsName + '\'' +
                 "manCost='" + manCost + '\'' +
-                "materialCost='" + materialCost + '\'' +
+                "partsCost='" + partsCost + '\'' +
+                "partsManagerCost='" + partsManagerCost + '\'' +
+                "outgoingCost='" + outgoingCost + '\'' +
+                "maintainCost='" + maintainCost + '\'' +
                 "otherCost='" + otherCost + '\'' +
                 "totalCost='" + totalCost + '\'' +
-                "confirmor='" + confirmor + '\'' +
-                "confirmDate='" + confirmDate + '\'' +
-                "veiSysDescription='" + veiSysDescription + '\'' +
-                "licenseCode='" + licenseCode + '\'' +
-                "servicePerformance1='" + servicePerformance1 + '\'' +
-                "servicePerformance2='" + servicePerformance2 + '\'' +
-                "servicePerformance3='" + servicePerformance3 + '\'' +
-                "modelYear='" + modelYear + '\'' +
-                "offlineDate='" + offlineDate + '\'' +
-                "salesDate='" + salesDate + '\'' +
+                "importantLevel='" + importantLevel + '\'' +
+                "transmissionType='" + transmissionType + '\'' +
+                "newPartsBlindingNum='" + newPartsBlindingNum + '\'' +
+                "submitDate='" + submitDate + '\'' +
             '}';
     }
 
@@ -605,6 +374,18 @@ public class MqmsVoucherRaw implements Serializable {
 
         public Integer getVoucherIdEd(){return this.voucherIdEd;}
 
+        private List<String> qualityFeedbackCodeList;
+
+        public List<String> getQualityFeedbackCodeList(){return this.qualityFeedbackCodeList;}
+
+
+        private List<String> fuzzyQualityFeedbackCode;
+
+        public List<String> getFuzzyQualityFeedbackCode(){return this.fuzzyQualityFeedbackCode;}
+
+        private List<String> rightFuzzyQualityFeedbackCode;
+
+        public List<String> getRightFuzzyQualityFeedbackCode(){return this.rightFuzzyQualityFeedbackCode;}
         private List<String> voucherCodeList;
 
         public List<String> getVoucherCodeList(){return this.voucherCodeList;}
@@ -641,90 +422,18 @@ public class MqmsVoucherRaw implements Serializable {
         private List<String> rightFuzzyDealerName;
 
         public List<String> getRightFuzzyDealerName(){return this.rightFuzzyDealerName;}
-        private List<String> veiStateList;
+        private List<String> dealerShortNameList;
 
-        public List<String> getVeiStateList(){return this.veiStateList;}
-
-
-        private List<String> fuzzyVeiState;
-
-        public List<String> getFuzzyVeiState(){return this.fuzzyVeiState;}
-
-        private List<String> rightFuzzyVeiState;
-
-        public List<String> getRightFuzzyVeiState(){return this.rightFuzzyVeiState;}
-        private List<String> updateTimeList;
-
-        public List<String> getUpdateTimeList(){return this.updateTimeList;}
+        public List<String> getDealerShortNameList(){return this.dealerShortNameList;}
 
 
-        private List<String> fuzzyUpdateTime;
+        private List<String> fuzzyDealerShortName;
 
-        public List<String> getFuzzyUpdateTime(){return this.fuzzyUpdateTime;}
+        public List<String> getFuzzyDealerShortName(){return this.fuzzyDealerShortName;}
 
-        private List<String> rightFuzzyUpdateTime;
+        private List<String> rightFuzzyDealerShortName;
 
-        public List<String> getRightFuzzyUpdateTime(){return this.rightFuzzyUpdateTime;}
-        private List<String> maintenanceContractCodeList;
-
-        public List<String> getMaintenanceContractCodeList(){return this.maintenanceContractCodeList;}
-
-
-        private List<String> fuzzyMaintenanceContractCode;
-
-        public List<String> getFuzzyMaintenanceContractCode(){return this.fuzzyMaintenanceContractCode;}
-
-        private List<String> rightFuzzyMaintenanceContractCode;
-
-        public List<String> getRightFuzzyMaintenanceContractCode(){return this.rightFuzzyMaintenanceContractCode;}
-        private List<String> maintenanceItemCodeList;
-
-        public List<String> getMaintenanceItemCodeList(){return this.maintenanceItemCodeList;}
-
-
-        private List<String> fuzzyMaintenanceItemCode;
-
-        public List<String> getFuzzyMaintenanceItemCode(){return this.fuzzyMaintenanceItemCode;}
-
-        private List<String> rightFuzzyMaintenanceItemCode;
-
-        public List<String> getRightFuzzyMaintenanceItemCode(){return this.rightFuzzyMaintenanceItemCode;}
-        private List<String> contactList;
-
-        public List<String> getContactList(){return this.contactList;}
-
-
-        private List<String> fuzzyContact;
-
-        public List<String> getFuzzyContact(){return this.fuzzyContact;}
-
-        private List<String> rightFuzzyContact;
-
-        public List<String> getRightFuzzyContact(){return this.rightFuzzyContact;}
-        private List<String> phoneNoList;
-
-        public List<String> getPhoneNoList(){return this.phoneNoList;}
-
-
-        private List<String> fuzzyPhoneNo;
-
-        public List<String> getFuzzyPhoneNo(){return this.fuzzyPhoneNo;}
-
-        private List<String> rightFuzzyPhoneNo;
-
-        public List<String> getRightFuzzyPhoneNo(){return this.rightFuzzyPhoneNo;}
-        private List<String> faxList;
-
-        public List<String> getFaxList(){return this.faxList;}
-
-
-        private List<String> fuzzyFax;
-
-        public List<String> getFuzzyFax(){return this.fuzzyFax;}
-
-        private List<String> rightFuzzyFax;
-
-        public List<String> getRightFuzzyFax(){return this.rightFuzzyFax;}
+        public List<String> getRightFuzzyDealerShortName(){return this.rightFuzzyDealerShortName;}
         private List<String> themeList;
 
         public List<String> getThemeList(){return this.themeList;}
@@ -761,138 +470,66 @@ public class MqmsVoucherRaw implements Serializable {
         private List<String> rightFuzzyVehicleType;
 
         public List<String> getRightFuzzyVehicleType(){return this.rightFuzzyVehicleType;}
-        private List<String> egtypeCodeList;
+        private List<String> partsNameList;
 
-        public List<String> getEgtypeCodeList(){return this.egtypeCodeList;}
+        public List<String> getPartsNameList(){return this.partsNameList;}
 
 
-        private List<String> fuzzyEgtypeCode;
+        private List<String> fuzzyPartsName;
 
-        public List<String> getFuzzyEgtypeCode(){return this.fuzzyEgtypeCode;}
+        public List<String> getFuzzyPartsName(){return this.fuzzyPartsName;}
 
-        private List<String> rightFuzzyEgtypeCode;
+        private List<String> rightFuzzyPartsName;
 
-        public List<String> getRightFuzzyEgtypeCode(){return this.rightFuzzyEgtypeCode;}
-        private List<String> transmissionTypeList;
+        public List<String> getRightFuzzyPartsName(){return this.rightFuzzyPartsName;}
+        private List<String> firstLevelNameList;
 
-        public List<String> getTransmissionTypeList(){return this.transmissionTypeList;}
+        public List<String> getFirstLevelNameList(){return this.firstLevelNameList;}
 
 
-        private List<String> fuzzyTransmissionType;
+        private List<String> fuzzyFirstLevelName;
 
-        public List<String> getFuzzyTransmissionType(){return this.fuzzyTransmissionType;}
+        public List<String> getFuzzyFirstLevelName(){return this.fuzzyFirstLevelName;}
 
-        private List<String> rightFuzzyTransmissionType;
+        private List<String> rightFuzzyFirstLevelName;
 
-        public List<String> getRightFuzzyTransmissionType(){return this.rightFuzzyTransmissionType;}
-        private List<Integer> mileageList;
+        public List<String> getRightFuzzyFirstLevelName(){return this.rightFuzzyFirstLevelName;}
+        private List<String> partsShortNameSpecPnenoList;
 
-        public List<Integer> getMileageList(){return this.mileageList;}
+        public List<String> getPartsShortNameSpecPnenoList(){return this.partsShortNameSpecPnenoList;}
 
-        private Integer mileageSt;
 
-        private Integer mileageEd;
+        private List<String> fuzzyPartsShortNameSpecPneno;
 
-        public Integer getMileageSt(){return this.mileageSt;}
+        public List<String> getFuzzyPartsShortNameSpecPneno(){return this.fuzzyPartsShortNameSpecPneno;}
 
-        public Integer getMileageEd(){return this.mileageEd;}
+        private List<String> rightFuzzyPartsShortNameSpecPneno;
 
-        private List<String> transmissionCodeList;
+        public List<String> getRightFuzzyPartsShortNameSpecPneno(){return this.rightFuzzyPartsShortNameSpecPneno;}
+        private List<String> manufactureDateList;
 
-        public List<String> getTransmissionCodeList(){return this.transmissionCodeList;}
+        public List<String> getManufactureDateList(){return this.manufactureDateList;}
 
 
-        private List<String> fuzzyTransmissionCode;
+        private List<String> fuzzyManufactureDate;
 
-        public List<String> getFuzzyTransmissionCode(){return this.fuzzyTransmissionCode;}
+        public List<String> getFuzzyManufactureDate(){return this.fuzzyManufactureDate;}
 
-        private List<String> rightFuzzyTransmissionCode;
+        private List<String> rightFuzzyManufactureDate;
 
-        public List<String> getRightFuzzyTransmissionCode(){return this.rightFuzzyTransmissionCode;}
-        private List<String> mtocList;
+        public List<String> getRightFuzzyManufactureDate(){return this.rightFuzzyManufactureDate;}
+        private List<String> salesFailureTimeList;
 
-        public List<String> getMtocList(){return this.mtocList;}
+        public List<String> getSalesFailureTimeList(){return this.salesFailureTimeList;}
 
 
-        private List<String> fuzzyMtoc;
+        private List<String> fuzzySalesFailureTime;
 
-        public List<String> getFuzzyMtoc(){return this.fuzzyMtoc;}
+        public List<String> getFuzzySalesFailureTime(){return this.fuzzySalesFailureTime;}
 
-        private List<String> rightFuzzyMtoc;
+        private List<String> rightFuzzySalesFailureTime;
 
-        public List<String> getRightFuzzyMtoc(){return this.rightFuzzyMtoc;}
-        private List<String> failureDateList;
-
-        public List<String> getFailureDateList(){return this.failureDateList;}
-
-
-        private List<String> fuzzyFailureDate;
-
-        public List<String> getFuzzyFailureDate(){return this.fuzzyFailureDate;}
-
-        private List<String> rightFuzzyFailureDate;
-
-        public List<String> getRightFuzzyFailureDate(){return this.rightFuzzyFailureDate;}
-        private List<String> failureLocationCodeList;
-
-        public List<String> getFailureLocationCodeList(){return this.failureLocationCodeList;}
-
-
-        private List<String> fuzzyFailureLocationCode;
-
-        public List<String> getFuzzyFailureLocationCode(){return this.fuzzyFailureLocationCode;}
-
-        private List<String> rightFuzzyFailureLocationCode;
-
-        public List<String> getRightFuzzyFailureLocationCode(){return this.rightFuzzyFailureLocationCode;}
-        private List<String> failureLocationNameList;
-
-        public List<String> getFailureLocationNameList(){return this.failureLocationNameList;}
-
-
-        private List<String> fuzzyFailureLocationName;
-
-        public List<String> getFuzzyFailureLocationName(){return this.fuzzyFailureLocationName;}
-
-        private List<String> rightFuzzyFailureLocationName;
-
-        public List<String> getRightFuzzyFailureLocationName(){return this.rightFuzzyFailureLocationName;}
-        private List<String> symptomTypeCodeList;
-
-        public List<String> getSymptomTypeCodeList(){return this.symptomTypeCodeList;}
-
-
-        private List<String> fuzzySymptomTypeCode;
-
-        public List<String> getFuzzySymptomTypeCode(){return this.fuzzySymptomTypeCode;}
-
-        private List<String> rightFuzzySymptomTypeCode;
-
-        public List<String> getRightFuzzySymptomTypeCode(){return this.rightFuzzySymptomTypeCode;}
-        private List<String> symptomTypeNameList;
-
-        public List<String> getSymptomTypeNameList(){return this.symptomTypeNameList;}
-
-
-        private List<String> fuzzySymptomTypeName;
-
-        public List<String> getFuzzySymptomTypeName(){return this.fuzzySymptomTypeName;}
-
-        private List<String> rightFuzzySymptomTypeName;
-
-        public List<String> getRightFuzzySymptomTypeName(){return this.rightFuzzySymptomTypeName;}
-        private List<String> symptomCodeList;
-
-        public List<String> getSymptomCodeList(){return this.symptomCodeList;}
-
-
-        private List<String> fuzzySymptomCode;
-
-        public List<String> getFuzzySymptomCode(){return this.fuzzySymptomCode;}
-
-        private List<String> rightFuzzySymptomCode;
-
-        public List<String> getRightFuzzySymptomCode(){return this.rightFuzzySymptomCode;}
+        public List<String> getRightFuzzySalesFailureTime(){return this.rightFuzzySalesFailureTime;}
         private List<String> symptomNameList;
 
         public List<String> getSymptomNameList(){return this.symptomNameList;}
@@ -917,90 +554,6 @@ public class MqmsVoucherRaw implements Serializable {
         private List<String> rightFuzzySymptomContent;
 
         public List<String> getRightFuzzySymptomContent(){return this.rightFuzzySymptomContent;}
-        private List<String> submitDateList;
-
-        public List<String> getSubmitDateList(){return this.submitDateList;}
-
-
-        private List<String> fuzzySubmitDate;
-
-        public List<String> getFuzzySubmitDate(){return this.fuzzySubmitDate;}
-
-        private List<String> rightFuzzySubmitDate;
-
-        public List<String> getRightFuzzySubmitDate(){return this.rightFuzzySubmitDate;}
-        private List<String> importantLevelList;
-
-        public List<String> getImportantLevelList(){return this.importantLevelList;}
-
-
-        private List<String> fuzzyImportantLevel;
-
-        public List<String> getFuzzyImportantLevel(){return this.fuzzyImportantLevel;}
-
-        private List<String> rightFuzzyImportantLevel;
-
-        public List<String> getRightFuzzyImportantLevel(){return this.rightFuzzyImportantLevel;}
-        private List<String> carTypeList;
-
-        public List<String> getCarTypeList(){return this.carTypeList;}
-
-
-        private List<String> fuzzyCarType;
-
-        public List<String> getFuzzyCarType(){return this.fuzzyCarType;}
-
-        private List<String> rightFuzzyCarType;
-
-        public List<String> getRightFuzzyCarType(){return this.rightFuzzyCarType;}
-        private List<String> diagnosticResultList;
-
-        public List<String> getDiagnosticResultList(){return this.diagnosticResultList;}
-
-
-        private List<String> fuzzyDiagnosticResult;
-
-        public List<String> getFuzzyDiagnosticResult(){return this.fuzzyDiagnosticResult;}
-
-        private List<String> rightFuzzyDiagnosticResult;
-
-        public List<String> getRightFuzzyDiagnosticResult(){return this.rightFuzzyDiagnosticResult;}
-        private List<String> veiUserDescriptionList;
-
-        public List<String> getVeiUserDescriptionList(){return this.veiUserDescriptionList;}
-
-
-        private List<String> fuzzyVeiUserDescription;
-
-        public List<String> getFuzzyVeiUserDescription(){return this.fuzzyVeiUserDescription;}
-
-        private List<String> rightFuzzyVeiUserDescription;
-
-        public List<String> getRightFuzzyVeiUserDescription(){return this.rightFuzzyVeiUserDescription;}
-        private List<String> partsCodeList;
-
-        public List<String> getPartsCodeList(){return this.partsCodeList;}
-
-
-        private List<String> fuzzyPartsCode;
-
-        public List<String> getFuzzyPartsCode(){return this.fuzzyPartsCode;}
-
-        private List<String> rightFuzzyPartsCode;
-
-        public List<String> getRightFuzzyPartsCode(){return this.rightFuzzyPartsCode;}
-        private List<String> partsNameList;
-
-        public List<String> getPartsNameList(){return this.partsNameList;}
-
-
-        private List<String> fuzzyPartsName;
-
-        public List<String> getFuzzyPartsName(){return this.fuzzyPartsName;}
-
-        private List<String> rightFuzzyPartsName;
-
-        public List<String> getRightFuzzyPartsName(){return this.rightFuzzyPartsName;}
         private List<java.math.BigDecimal> manCostList;
 
         public List<java.math.BigDecimal> getManCostList(){return this.manCostList;}
@@ -1013,17 +566,53 @@ public class MqmsVoucherRaw implements Serializable {
 
         public java.math.BigDecimal getManCostEd(){return this.manCostEd;}
 
-        private List<java.math.BigDecimal> materialCostList;
+        private List<java.math.BigDecimal> partsCostList;
 
-        public List<java.math.BigDecimal> getMaterialCostList(){return this.materialCostList;}
+        public List<java.math.BigDecimal> getPartsCostList(){return this.partsCostList;}
 
-        private java.math.BigDecimal materialCostSt;
+        private java.math.BigDecimal partsCostSt;
 
-        private java.math.BigDecimal materialCostEd;
+        private java.math.BigDecimal partsCostEd;
 
-        public java.math.BigDecimal getMaterialCostSt(){return this.materialCostSt;}
+        public java.math.BigDecimal getPartsCostSt(){return this.partsCostSt;}
 
-        public java.math.BigDecimal getMaterialCostEd(){return this.materialCostEd;}
+        public java.math.BigDecimal getPartsCostEd(){return this.partsCostEd;}
+
+        private List<java.math.BigDecimal> partsManagerCostList;
+
+        public List<java.math.BigDecimal> getPartsManagerCostList(){return this.partsManagerCostList;}
+
+        private java.math.BigDecimal partsManagerCostSt;
+
+        private java.math.BigDecimal partsManagerCostEd;
+
+        public java.math.BigDecimal getPartsManagerCostSt(){return this.partsManagerCostSt;}
+
+        public java.math.BigDecimal getPartsManagerCostEd(){return this.partsManagerCostEd;}
+
+        private List<java.math.BigDecimal> outgoingCostList;
+
+        public List<java.math.BigDecimal> getOutgoingCostList(){return this.outgoingCostList;}
+
+        private java.math.BigDecimal outgoingCostSt;
+
+        private java.math.BigDecimal outgoingCostEd;
+
+        public java.math.BigDecimal getOutgoingCostSt(){return this.outgoingCostSt;}
+
+        public java.math.BigDecimal getOutgoingCostEd(){return this.outgoingCostEd;}
+
+        private List<java.math.BigDecimal> maintainCostList;
+
+        public List<java.math.BigDecimal> getMaintainCostList(){return this.maintainCostList;}
+
+        private java.math.BigDecimal maintainCostSt;
+
+        private java.math.BigDecimal maintainCostEd;
+
+        public java.math.BigDecimal getMaintainCostSt(){return this.maintainCostSt;}
+
+        public java.math.BigDecimal getMaintainCostEd(){return this.maintainCostEd;}
 
         private List<java.math.BigDecimal> otherCostList;
 
@@ -1049,126 +638,54 @@ public class MqmsVoucherRaw implements Serializable {
 
         public java.math.BigDecimal getTotalCostEd(){return this.totalCostEd;}
 
-        private List<String> confirmorList;
+        private List<String> importantLevelList;
 
-        public List<String> getConfirmorList(){return this.confirmorList;}
-
-
-        private List<String> fuzzyConfirmor;
-
-        public List<String> getFuzzyConfirmor(){return this.fuzzyConfirmor;}
-
-        private List<String> rightFuzzyConfirmor;
-
-        public List<String> getRightFuzzyConfirmor(){return this.rightFuzzyConfirmor;}
-        private List<String> confirmDateList;
-
-        public List<String> getConfirmDateList(){return this.confirmDateList;}
+        public List<String> getImportantLevelList(){return this.importantLevelList;}
 
 
-        private List<String> fuzzyConfirmDate;
+        private List<String> fuzzyImportantLevel;
 
-        public List<String> getFuzzyConfirmDate(){return this.fuzzyConfirmDate;}
+        public List<String> getFuzzyImportantLevel(){return this.fuzzyImportantLevel;}
 
-        private List<String> rightFuzzyConfirmDate;
+        private List<String> rightFuzzyImportantLevel;
 
-        public List<String> getRightFuzzyConfirmDate(){return this.rightFuzzyConfirmDate;}
-        private List<String> veiSysDescriptionList;
+        public List<String> getRightFuzzyImportantLevel(){return this.rightFuzzyImportantLevel;}
+        private List<String> transmissionTypeList;
 
-        public List<String> getVeiSysDescriptionList(){return this.veiSysDescriptionList;}
-
-
-        private List<String> fuzzyVeiSysDescription;
-
-        public List<String> getFuzzyVeiSysDescription(){return this.fuzzyVeiSysDescription;}
-
-        private List<String> rightFuzzyVeiSysDescription;
-
-        public List<String> getRightFuzzyVeiSysDescription(){return this.rightFuzzyVeiSysDescription;}
-        private List<String> licenseCodeList;
-
-        public List<String> getLicenseCodeList(){return this.licenseCodeList;}
+        public List<String> getTransmissionTypeList(){return this.transmissionTypeList;}
 
 
-        private List<String> fuzzyLicenseCode;
+        private List<String> fuzzyTransmissionType;
 
-        public List<String> getFuzzyLicenseCode(){return this.fuzzyLicenseCode;}
+        public List<String> getFuzzyTransmissionType(){return this.fuzzyTransmissionType;}
 
-        private List<String> rightFuzzyLicenseCode;
+        private List<String> rightFuzzyTransmissionType;
 
-        public List<String> getRightFuzzyLicenseCode(){return this.rightFuzzyLicenseCode;}
-        private List<String> servicePerformance1List;
+        public List<String> getRightFuzzyTransmissionType(){return this.rightFuzzyTransmissionType;}
+        private List<String> newPartsBlindingNumList;
 
-        public List<String> getServicePerformance1List(){return this.servicePerformance1List;}
-
-
-        private List<String> fuzzyServicePerformance1;
-
-        public List<String> getFuzzyServicePerformance1(){return this.fuzzyServicePerformance1;}
-
-        private List<String> rightFuzzyServicePerformance1;
-
-        public List<String> getRightFuzzyServicePerformance1(){return this.rightFuzzyServicePerformance1;}
-        private List<String> servicePerformance2List;
-
-        public List<String> getServicePerformance2List(){return this.servicePerformance2List;}
+        public List<String> getNewPartsBlindingNumList(){return this.newPartsBlindingNumList;}
 
 
-        private List<String> fuzzyServicePerformance2;
+        private List<String> fuzzyNewPartsBlindingNum;
 
-        public List<String> getFuzzyServicePerformance2(){return this.fuzzyServicePerformance2;}
+        public List<String> getFuzzyNewPartsBlindingNum(){return this.fuzzyNewPartsBlindingNum;}
 
-        private List<String> rightFuzzyServicePerformance2;
+        private List<String> rightFuzzyNewPartsBlindingNum;
 
-        public List<String> getRightFuzzyServicePerformance2(){return this.rightFuzzyServicePerformance2;}
-        private List<String> servicePerformance3List;
+        public List<String> getRightFuzzyNewPartsBlindingNum(){return this.rightFuzzyNewPartsBlindingNum;}
+        private List<String> submitDateList;
 
-        public List<String> getServicePerformance3List(){return this.servicePerformance3List;}
-
-
-        private List<String> fuzzyServicePerformance3;
-
-        public List<String> getFuzzyServicePerformance3(){return this.fuzzyServicePerformance3;}
-
-        private List<String> rightFuzzyServicePerformance3;
-
-        public List<String> getRightFuzzyServicePerformance3(){return this.rightFuzzyServicePerformance3;}
-        private List<String> modelYearList;
-
-        public List<String> getModelYearList(){return this.modelYearList;}
+        public List<String> getSubmitDateList(){return this.submitDateList;}
 
 
-        private List<String> fuzzyModelYear;
+        private List<String> fuzzySubmitDate;
 
-        public List<String> getFuzzyModelYear(){return this.fuzzyModelYear;}
+        public List<String> getFuzzySubmitDate(){return this.fuzzySubmitDate;}
 
-        private List<String> rightFuzzyModelYear;
+        private List<String> rightFuzzySubmitDate;
 
-        public List<String> getRightFuzzyModelYear(){return this.rightFuzzyModelYear;}
-        private List<String> offlineDateList;
-
-        public List<String> getOfflineDateList(){return this.offlineDateList;}
-
-
-        private List<String> fuzzyOfflineDate;
-
-        public List<String> getFuzzyOfflineDate(){return this.fuzzyOfflineDate;}
-
-        private List<String> rightFuzzyOfflineDate;
-
-        public List<String> getRightFuzzyOfflineDate(){return this.rightFuzzyOfflineDate;}
-        private List<String> salesDateList;
-
-        public List<String> getSalesDateList(){return this.salesDateList;}
-
-
-        private List<String> fuzzySalesDate;
-
-        public List<String> getFuzzySalesDate(){return this.fuzzySalesDate;}
-
-        private List<String> rightFuzzySalesDate;
-
-        public List<String> getRightFuzzySalesDate(){return this.rightFuzzySalesDate;}
+        public List<String> getRightFuzzySubmitDate(){return this.rightFuzzySubmitDate;}
         private QueryBuilder (){
             this.fetchFields = new HashMap<>();
         }
@@ -1211,6 +728,51 @@ public class MqmsVoucherRaw implements Serializable {
 
         public QueryBuilder excludeVoucherId(){
             setFetchFields("excludeFields","voucherId");
+            return this;
+        }
+
+        public QueryBuilder fuzzyQualityFeedbackCode (List<String> fuzzyQualityFeedbackCode){
+            this.fuzzyQualityFeedbackCode = fuzzyQualityFeedbackCode;
+            return this;
+        }
+
+        public QueryBuilder fuzzyQualityFeedbackCode (String ... fuzzyQualityFeedbackCode){
+            this.fuzzyQualityFeedbackCode = solveNullList(fuzzyQualityFeedbackCode);
+            return this;
+        }
+
+        public QueryBuilder rightFuzzyQualityFeedbackCode (List<String> rightFuzzyQualityFeedbackCode){
+            this.rightFuzzyQualityFeedbackCode = rightFuzzyQualityFeedbackCode;
+            return this;
+        }
+
+        public QueryBuilder rightFuzzyQualityFeedbackCode (String ... rightFuzzyQualityFeedbackCode){
+            this.rightFuzzyQualityFeedbackCode = solveNullList(rightFuzzyQualityFeedbackCode);
+            return this;
+        }
+
+        public QueryBuilder qualityFeedbackCode(String qualityFeedbackCode){
+            setQualityFeedbackCode(qualityFeedbackCode);
+            return this;
+        }
+
+        public QueryBuilder qualityFeedbackCodeList(String ... qualityFeedbackCode){
+            this.qualityFeedbackCodeList = solveNullList(qualityFeedbackCode);
+            return this;
+        }
+
+        public QueryBuilder qualityFeedbackCodeList(List<String> qualityFeedbackCode){
+            this.qualityFeedbackCodeList = qualityFeedbackCode;
+            return this;
+        }
+
+        public QueryBuilder fetchQualityFeedbackCode(){
+            setFetchFields("fetchFields","qualityFeedbackCode");
+            return this;
+        }
+
+        public QueryBuilder excludeQualityFeedbackCode(){
+            setFetchFields("excludeFields","qualityFeedbackCode");
             return this;
         }
 
@@ -1349,318 +911,48 @@ public class MqmsVoucherRaw implements Serializable {
             return this;
         }
 
-        public QueryBuilder fuzzyVeiState (List<String> fuzzyVeiState){
-            this.fuzzyVeiState = fuzzyVeiState;
+        public QueryBuilder fuzzyDealerShortName (List<String> fuzzyDealerShortName){
+            this.fuzzyDealerShortName = fuzzyDealerShortName;
             return this;
         }
 
-        public QueryBuilder fuzzyVeiState (String ... fuzzyVeiState){
-            this.fuzzyVeiState = solveNullList(fuzzyVeiState);
+        public QueryBuilder fuzzyDealerShortName (String ... fuzzyDealerShortName){
+            this.fuzzyDealerShortName = solveNullList(fuzzyDealerShortName);
             return this;
         }
 
-        public QueryBuilder rightFuzzyVeiState (List<String> rightFuzzyVeiState){
-            this.rightFuzzyVeiState = rightFuzzyVeiState;
+        public QueryBuilder rightFuzzyDealerShortName (List<String> rightFuzzyDealerShortName){
+            this.rightFuzzyDealerShortName = rightFuzzyDealerShortName;
             return this;
         }
 
-        public QueryBuilder rightFuzzyVeiState (String ... rightFuzzyVeiState){
-            this.rightFuzzyVeiState = solveNullList(rightFuzzyVeiState);
+        public QueryBuilder rightFuzzyDealerShortName (String ... rightFuzzyDealerShortName){
+            this.rightFuzzyDealerShortName = solveNullList(rightFuzzyDealerShortName);
             return this;
         }
 
-        public QueryBuilder veiState(String veiState){
-            setVeiState(veiState);
+        public QueryBuilder dealerShortName(String dealerShortName){
+            setDealerShortName(dealerShortName);
             return this;
         }
 
-        public QueryBuilder veiStateList(String ... veiState){
-            this.veiStateList = solveNullList(veiState);
+        public QueryBuilder dealerShortNameList(String ... dealerShortName){
+            this.dealerShortNameList = solveNullList(dealerShortName);
             return this;
         }
 
-        public QueryBuilder veiStateList(List<String> veiState){
-            this.veiStateList = veiState;
+        public QueryBuilder dealerShortNameList(List<String> dealerShortName){
+            this.dealerShortNameList = dealerShortName;
             return this;
         }
 
-        public QueryBuilder fetchVeiState(){
-            setFetchFields("fetchFields","veiState");
+        public QueryBuilder fetchDealerShortName(){
+            setFetchFields("fetchFields","dealerShortName");
             return this;
         }
 
-        public QueryBuilder excludeVeiState(){
-            setFetchFields("excludeFields","veiState");
-            return this;
-        }
-
-        public QueryBuilder fuzzyUpdateTime (List<String> fuzzyUpdateTime){
-            this.fuzzyUpdateTime = fuzzyUpdateTime;
-            return this;
-        }
-
-        public QueryBuilder fuzzyUpdateTime (String ... fuzzyUpdateTime){
-            this.fuzzyUpdateTime = solveNullList(fuzzyUpdateTime);
-            return this;
-        }
-
-        public QueryBuilder rightFuzzyUpdateTime (List<String> rightFuzzyUpdateTime){
-            this.rightFuzzyUpdateTime = rightFuzzyUpdateTime;
-            return this;
-        }
-
-        public QueryBuilder rightFuzzyUpdateTime (String ... rightFuzzyUpdateTime){
-            this.rightFuzzyUpdateTime = solveNullList(rightFuzzyUpdateTime);
-            return this;
-        }
-
-        public QueryBuilder updateTime(String updateTime){
-            setUpdateTime(updateTime);
-            return this;
-        }
-
-        public QueryBuilder updateTimeList(String ... updateTime){
-            this.updateTimeList = solveNullList(updateTime);
-            return this;
-        }
-
-        public QueryBuilder updateTimeList(List<String> updateTime){
-            this.updateTimeList = updateTime;
-            return this;
-        }
-
-        public QueryBuilder fetchUpdateTime(){
-            setFetchFields("fetchFields","updateTime");
-            return this;
-        }
-
-        public QueryBuilder excludeUpdateTime(){
-            setFetchFields("excludeFields","updateTime");
-            return this;
-        }
-
-        public QueryBuilder fuzzyMaintenanceContractCode (List<String> fuzzyMaintenanceContractCode){
-            this.fuzzyMaintenanceContractCode = fuzzyMaintenanceContractCode;
-            return this;
-        }
-
-        public QueryBuilder fuzzyMaintenanceContractCode (String ... fuzzyMaintenanceContractCode){
-            this.fuzzyMaintenanceContractCode = solveNullList(fuzzyMaintenanceContractCode);
-            return this;
-        }
-
-        public QueryBuilder rightFuzzyMaintenanceContractCode (List<String> rightFuzzyMaintenanceContractCode){
-            this.rightFuzzyMaintenanceContractCode = rightFuzzyMaintenanceContractCode;
-            return this;
-        }
-
-        public QueryBuilder rightFuzzyMaintenanceContractCode (String ... rightFuzzyMaintenanceContractCode){
-            this.rightFuzzyMaintenanceContractCode = solveNullList(rightFuzzyMaintenanceContractCode);
-            return this;
-        }
-
-        public QueryBuilder maintenanceContractCode(String maintenanceContractCode){
-            setMaintenanceContractCode(maintenanceContractCode);
-            return this;
-        }
-
-        public QueryBuilder maintenanceContractCodeList(String ... maintenanceContractCode){
-            this.maintenanceContractCodeList = solveNullList(maintenanceContractCode);
-            return this;
-        }
-
-        public QueryBuilder maintenanceContractCodeList(List<String> maintenanceContractCode){
-            this.maintenanceContractCodeList = maintenanceContractCode;
-            return this;
-        }
-
-        public QueryBuilder fetchMaintenanceContractCode(){
-            setFetchFields("fetchFields","maintenanceContractCode");
-            return this;
-        }
-
-        public QueryBuilder excludeMaintenanceContractCode(){
-            setFetchFields("excludeFields","maintenanceContractCode");
-            return this;
-        }
-
-        public QueryBuilder fuzzyMaintenanceItemCode (List<String> fuzzyMaintenanceItemCode){
-            this.fuzzyMaintenanceItemCode = fuzzyMaintenanceItemCode;
-            return this;
-        }
-
-        public QueryBuilder fuzzyMaintenanceItemCode (String ... fuzzyMaintenanceItemCode){
-            this.fuzzyMaintenanceItemCode = solveNullList(fuzzyMaintenanceItemCode);
-            return this;
-        }
-
-        public QueryBuilder rightFuzzyMaintenanceItemCode (List<String> rightFuzzyMaintenanceItemCode){
-            this.rightFuzzyMaintenanceItemCode = rightFuzzyMaintenanceItemCode;
-            return this;
-        }
-
-        public QueryBuilder rightFuzzyMaintenanceItemCode (String ... rightFuzzyMaintenanceItemCode){
-            this.rightFuzzyMaintenanceItemCode = solveNullList(rightFuzzyMaintenanceItemCode);
-            return this;
-        }
-
-        public QueryBuilder maintenanceItemCode(String maintenanceItemCode){
-            setMaintenanceItemCode(maintenanceItemCode);
-            return this;
-        }
-
-        public QueryBuilder maintenanceItemCodeList(String ... maintenanceItemCode){
-            this.maintenanceItemCodeList = solveNullList(maintenanceItemCode);
-            return this;
-        }
-
-        public QueryBuilder maintenanceItemCodeList(List<String> maintenanceItemCode){
-            this.maintenanceItemCodeList = maintenanceItemCode;
-            return this;
-        }
-
-        public QueryBuilder fetchMaintenanceItemCode(){
-            setFetchFields("fetchFields","maintenanceItemCode");
-            return this;
-        }
-
-        public QueryBuilder excludeMaintenanceItemCode(){
-            setFetchFields("excludeFields","maintenanceItemCode");
-            return this;
-        }
-
-        public QueryBuilder fuzzyContact (List<String> fuzzyContact){
-            this.fuzzyContact = fuzzyContact;
-            return this;
-        }
-
-        public QueryBuilder fuzzyContact (String ... fuzzyContact){
-            this.fuzzyContact = solveNullList(fuzzyContact);
-            return this;
-        }
-
-        public QueryBuilder rightFuzzyContact (List<String> rightFuzzyContact){
-            this.rightFuzzyContact = rightFuzzyContact;
-            return this;
-        }
-
-        public QueryBuilder rightFuzzyContact (String ... rightFuzzyContact){
-            this.rightFuzzyContact = solveNullList(rightFuzzyContact);
-            return this;
-        }
-
-        public QueryBuilder contact(String contact){
-            setContact(contact);
-            return this;
-        }
-
-        public QueryBuilder contactList(String ... contact){
-            this.contactList = solveNullList(contact);
-            return this;
-        }
-
-        public QueryBuilder contactList(List<String> contact){
-            this.contactList = contact;
-            return this;
-        }
-
-        public QueryBuilder fetchContact(){
-            setFetchFields("fetchFields","contact");
-            return this;
-        }
-
-        public QueryBuilder excludeContact(){
-            setFetchFields("excludeFields","contact");
-            return this;
-        }
-
-        public QueryBuilder fuzzyPhoneNo (List<String> fuzzyPhoneNo){
-            this.fuzzyPhoneNo = fuzzyPhoneNo;
-            return this;
-        }
-
-        public QueryBuilder fuzzyPhoneNo (String ... fuzzyPhoneNo){
-            this.fuzzyPhoneNo = solveNullList(fuzzyPhoneNo);
-            return this;
-        }
-
-        public QueryBuilder rightFuzzyPhoneNo (List<String> rightFuzzyPhoneNo){
-            this.rightFuzzyPhoneNo = rightFuzzyPhoneNo;
-            return this;
-        }
-
-        public QueryBuilder rightFuzzyPhoneNo (String ... rightFuzzyPhoneNo){
-            this.rightFuzzyPhoneNo = solveNullList(rightFuzzyPhoneNo);
-            return this;
-        }
-
-        public QueryBuilder phoneNo(String phoneNo){
-            setPhoneNo(phoneNo);
-            return this;
-        }
-
-        public QueryBuilder phoneNoList(String ... phoneNo){
-            this.phoneNoList = solveNullList(phoneNo);
-            return this;
-        }
-
-        public QueryBuilder phoneNoList(List<String> phoneNo){
-            this.phoneNoList = phoneNo;
-            return this;
-        }
-
-        public QueryBuilder fetchPhoneNo(){
-            setFetchFields("fetchFields","phoneNo");
-            return this;
-        }
-
-        public QueryBuilder excludePhoneNo(){
-            setFetchFields("excludeFields","phoneNo");
-            return this;
-        }
-
-        public QueryBuilder fuzzyFax (List<String> fuzzyFax){
-            this.fuzzyFax = fuzzyFax;
-            return this;
-        }
-
-        public QueryBuilder fuzzyFax (String ... fuzzyFax){
-            this.fuzzyFax = solveNullList(fuzzyFax);
-            return this;
-        }
-
-        public QueryBuilder rightFuzzyFax (List<String> rightFuzzyFax){
-            this.rightFuzzyFax = rightFuzzyFax;
-            return this;
-        }
-
-        public QueryBuilder rightFuzzyFax (String ... rightFuzzyFax){
-            this.rightFuzzyFax = solveNullList(rightFuzzyFax);
-            return this;
-        }
-
-        public QueryBuilder fax(String fax){
-            setFax(fax);
-            return this;
-        }
-
-        public QueryBuilder faxList(String ... fax){
-            this.faxList = solveNullList(fax);
-            return this;
-        }
-
-        public QueryBuilder faxList(List<String> fax){
-            this.faxList = fax;
-            return this;
-        }
-
-        public QueryBuilder fetchFax(){
-            setFetchFields("fetchFields","fax");
-            return this;
-        }
-
-        public QueryBuilder excludeFax(){
-            setFetchFields("excludeFields","fax");
+        public QueryBuilder excludeDealerShortName(){
+            setFetchFields("excludeFields","dealerShortName");
             return this;
         }
 
@@ -1799,494 +1091,228 @@ public class MqmsVoucherRaw implements Serializable {
             return this;
         }
 
-        public QueryBuilder fuzzyEgtypeCode (List<String> fuzzyEgtypeCode){
-            this.fuzzyEgtypeCode = fuzzyEgtypeCode;
+        public QueryBuilder fuzzyPartsName (List<String> fuzzyPartsName){
+            this.fuzzyPartsName = fuzzyPartsName;
             return this;
         }
 
-        public QueryBuilder fuzzyEgtypeCode (String ... fuzzyEgtypeCode){
-            this.fuzzyEgtypeCode = solveNullList(fuzzyEgtypeCode);
+        public QueryBuilder fuzzyPartsName (String ... fuzzyPartsName){
+            this.fuzzyPartsName = solveNullList(fuzzyPartsName);
             return this;
         }
 
-        public QueryBuilder rightFuzzyEgtypeCode (List<String> rightFuzzyEgtypeCode){
-            this.rightFuzzyEgtypeCode = rightFuzzyEgtypeCode;
+        public QueryBuilder rightFuzzyPartsName (List<String> rightFuzzyPartsName){
+            this.rightFuzzyPartsName = rightFuzzyPartsName;
             return this;
         }
 
-        public QueryBuilder rightFuzzyEgtypeCode (String ... rightFuzzyEgtypeCode){
-            this.rightFuzzyEgtypeCode = solveNullList(rightFuzzyEgtypeCode);
+        public QueryBuilder rightFuzzyPartsName (String ... rightFuzzyPartsName){
+            this.rightFuzzyPartsName = solveNullList(rightFuzzyPartsName);
             return this;
         }
 
-        public QueryBuilder egtypeCode(String egtypeCode){
-            setEgtypeCode(egtypeCode);
+        public QueryBuilder partsName(String partsName){
+            setPartsName(partsName);
             return this;
         }
 
-        public QueryBuilder egtypeCodeList(String ... egtypeCode){
-            this.egtypeCodeList = solveNullList(egtypeCode);
+        public QueryBuilder partsNameList(String ... partsName){
+            this.partsNameList = solveNullList(partsName);
             return this;
         }
 
-        public QueryBuilder egtypeCodeList(List<String> egtypeCode){
-            this.egtypeCodeList = egtypeCode;
+        public QueryBuilder partsNameList(List<String> partsName){
+            this.partsNameList = partsName;
             return this;
         }
 
-        public QueryBuilder fetchEgtypeCode(){
-            setFetchFields("fetchFields","egtypeCode");
+        public QueryBuilder fetchPartsName(){
+            setFetchFields("fetchFields","partsName");
             return this;
         }
 
-        public QueryBuilder excludeEgtypeCode(){
-            setFetchFields("excludeFields","egtypeCode");
+        public QueryBuilder excludePartsName(){
+            setFetchFields("excludeFields","partsName");
             return this;
         }
 
-        public QueryBuilder fuzzyTransmissionType (List<String> fuzzyTransmissionType){
-            this.fuzzyTransmissionType = fuzzyTransmissionType;
+        public QueryBuilder fuzzyFirstLevelName (List<String> fuzzyFirstLevelName){
+            this.fuzzyFirstLevelName = fuzzyFirstLevelName;
             return this;
         }
 
-        public QueryBuilder fuzzyTransmissionType (String ... fuzzyTransmissionType){
-            this.fuzzyTransmissionType = solveNullList(fuzzyTransmissionType);
+        public QueryBuilder fuzzyFirstLevelName (String ... fuzzyFirstLevelName){
+            this.fuzzyFirstLevelName = solveNullList(fuzzyFirstLevelName);
             return this;
         }
 
-        public QueryBuilder rightFuzzyTransmissionType (List<String> rightFuzzyTransmissionType){
-            this.rightFuzzyTransmissionType = rightFuzzyTransmissionType;
+        public QueryBuilder rightFuzzyFirstLevelName (List<String> rightFuzzyFirstLevelName){
+            this.rightFuzzyFirstLevelName = rightFuzzyFirstLevelName;
             return this;
         }
 
-        public QueryBuilder rightFuzzyTransmissionType (String ... rightFuzzyTransmissionType){
-            this.rightFuzzyTransmissionType = solveNullList(rightFuzzyTransmissionType);
+        public QueryBuilder rightFuzzyFirstLevelName (String ... rightFuzzyFirstLevelName){
+            this.rightFuzzyFirstLevelName = solveNullList(rightFuzzyFirstLevelName);
             return this;
         }
 
-        public QueryBuilder transmissionType(String transmissionType){
-            setTransmissionType(transmissionType);
+        public QueryBuilder firstLevelName(String firstLevelName){
+            setFirstLevelName(firstLevelName);
             return this;
         }
 
-        public QueryBuilder transmissionTypeList(String ... transmissionType){
-            this.transmissionTypeList = solveNullList(transmissionType);
+        public QueryBuilder firstLevelNameList(String ... firstLevelName){
+            this.firstLevelNameList = solveNullList(firstLevelName);
             return this;
         }
 
-        public QueryBuilder transmissionTypeList(List<String> transmissionType){
-            this.transmissionTypeList = transmissionType;
+        public QueryBuilder firstLevelNameList(List<String> firstLevelName){
+            this.firstLevelNameList = firstLevelName;
             return this;
         }
 
-        public QueryBuilder fetchTransmissionType(){
-            setFetchFields("fetchFields","transmissionType");
+        public QueryBuilder fetchFirstLevelName(){
+            setFetchFields("fetchFields","firstLevelName");
             return this;
         }
 
-        public QueryBuilder excludeTransmissionType(){
-            setFetchFields("excludeFields","transmissionType");
+        public QueryBuilder excludeFirstLevelName(){
+            setFetchFields("excludeFields","firstLevelName");
             return this;
         }
 
-        public QueryBuilder mileageBetWeen(Integer mileageSt,Integer mileageEd){
-            this.mileageSt = mileageSt;
-            this.mileageEd = mileageEd;
+        public QueryBuilder fuzzyPartsShortNameSpecPneno (List<String> fuzzyPartsShortNameSpecPneno){
+            this.fuzzyPartsShortNameSpecPneno = fuzzyPartsShortNameSpecPneno;
             return this;
         }
 
-        public QueryBuilder mileageGreaterEqThan(Integer mileageSt){
-            this.mileageSt = mileageSt;
+        public QueryBuilder fuzzyPartsShortNameSpecPneno (String ... fuzzyPartsShortNameSpecPneno){
+            this.fuzzyPartsShortNameSpecPneno = solveNullList(fuzzyPartsShortNameSpecPneno);
             return this;
         }
-        public QueryBuilder mileageLessEqThan(Integer mileageEd){
-            this.mileageEd = mileageEd;
-            return this;
-        }
-
-
-        public QueryBuilder mileage(Integer mileage){
-            setMileage(mileage);
-            return this;
-        }
-
-        public QueryBuilder mileageList(Integer ... mileage){
-            this.mileageList = solveNullList(mileage);
-            return this;
-        }
-
-        public QueryBuilder mileageList(List<Integer> mileage){
-            this.mileageList = mileage;
-            return this;
-        }
-
-        public QueryBuilder fetchMileage(){
-            setFetchFields("fetchFields","mileage");
-            return this;
-        }
-
-        public QueryBuilder excludeMileage(){
-            setFetchFields("excludeFields","mileage");
-            return this;
-        }
-
-        public QueryBuilder fuzzyTransmissionCode (List<String> fuzzyTransmissionCode){
-            this.fuzzyTransmissionCode = fuzzyTransmissionCode;
-            return this;
-        }
-
-        public QueryBuilder fuzzyTransmissionCode (String ... fuzzyTransmissionCode){
-            this.fuzzyTransmissionCode = solveNullList(fuzzyTransmissionCode);
-            return this;
-        }
-
-        public QueryBuilder rightFuzzyTransmissionCode (List<String> rightFuzzyTransmissionCode){
-            this.rightFuzzyTransmissionCode = rightFuzzyTransmissionCode;
-            return this;
-        }
-
-        public QueryBuilder rightFuzzyTransmissionCode (String ... rightFuzzyTransmissionCode){
-            this.rightFuzzyTransmissionCode = solveNullList(rightFuzzyTransmissionCode);
-            return this;
-        }
-
-        public QueryBuilder transmissionCode(String transmissionCode){
-            setTransmissionCode(transmissionCode);
-            return this;
-        }
-
-        public QueryBuilder transmissionCodeList(String ... transmissionCode){
-            this.transmissionCodeList = solveNullList(transmissionCode);
-            return this;
-        }
-
-        public QueryBuilder transmissionCodeList(List<String> transmissionCode){
-            this.transmissionCodeList = transmissionCode;
-            return this;
-        }
-
-        public QueryBuilder fetchTransmissionCode(){
-            setFetchFields("fetchFields","transmissionCode");
-            return this;
-        }
-
-        public QueryBuilder excludeTransmissionCode(){
-            setFetchFields("excludeFields","transmissionCode");
-            return this;
-        }
-
-        public QueryBuilder fuzzyMtoc (List<String> fuzzyMtoc){
-            this.fuzzyMtoc = fuzzyMtoc;
-            return this;
-        }
-
-        public QueryBuilder fuzzyMtoc (String ... fuzzyMtoc){
-            this.fuzzyMtoc = solveNullList(fuzzyMtoc);
-            return this;
-        }
-
-        public QueryBuilder rightFuzzyMtoc (List<String> rightFuzzyMtoc){
-            this.rightFuzzyMtoc = rightFuzzyMtoc;
-            return this;
-        }
-
-        public QueryBuilder rightFuzzyMtoc (String ... rightFuzzyMtoc){
-            this.rightFuzzyMtoc = solveNullList(rightFuzzyMtoc);
-            return this;
-        }
-
-        public QueryBuilder mtoc(String mtoc){
-            setMtoc(mtoc);
-            return this;
-        }
-
-        public QueryBuilder mtocList(String ... mtoc){
-            this.mtocList = solveNullList(mtoc);
-            return this;
-        }
-
-        public QueryBuilder mtocList(List<String> mtoc){
-            this.mtocList = mtoc;
-            return this;
-        }
-
-        public QueryBuilder fetchMtoc(){
-            setFetchFields("fetchFields","mtoc");
-            return this;
-        }
-
-        public QueryBuilder excludeMtoc(){
-            setFetchFields("excludeFields","mtoc");
-            return this;
-        }
-
-        public QueryBuilder fuzzyFailureDate (List<String> fuzzyFailureDate){
-            this.fuzzyFailureDate = fuzzyFailureDate;
-            return this;
-        }
-
-        public QueryBuilder fuzzyFailureDate (String ... fuzzyFailureDate){
-            this.fuzzyFailureDate = solveNullList(fuzzyFailureDate);
-            return this;
-        }
-
-        public QueryBuilder rightFuzzyFailureDate (List<String> rightFuzzyFailureDate){
-            this.rightFuzzyFailureDate = rightFuzzyFailureDate;
-            return this;
-        }
-
-        public QueryBuilder rightFuzzyFailureDate (String ... rightFuzzyFailureDate){
-            this.rightFuzzyFailureDate = solveNullList(rightFuzzyFailureDate);
-            return this;
-        }
-
-        public QueryBuilder failureDate(String failureDate){
-            setFailureDate(failureDate);
-            return this;
-        }
-
-        public QueryBuilder failureDateList(String ... failureDate){
-            this.failureDateList = solveNullList(failureDate);
-            return this;
-        }
-
-        public QueryBuilder failureDateList(List<String> failureDate){
-            this.failureDateList = failureDate;
-            return this;
-        }
-
-        public QueryBuilder fetchFailureDate(){
-            setFetchFields("fetchFields","failureDate");
-            return this;
-        }
-
-        public QueryBuilder excludeFailureDate(){
-            setFetchFields("excludeFields","failureDate");
-            return this;
-        }
-
-        public QueryBuilder fuzzyFailureLocationCode (List<String> fuzzyFailureLocationCode){
-            this.fuzzyFailureLocationCode = fuzzyFailureLocationCode;
-            return this;
-        }
-
-        public QueryBuilder fuzzyFailureLocationCode (String ... fuzzyFailureLocationCode){
-            this.fuzzyFailureLocationCode = solveNullList(fuzzyFailureLocationCode);
-            return this;
-        }
-
-        public QueryBuilder rightFuzzyFailureLocationCode (List<String> rightFuzzyFailureLocationCode){
-            this.rightFuzzyFailureLocationCode = rightFuzzyFailureLocationCode;
-            return this;
-        }
-
-        public QueryBuilder rightFuzzyFailureLocationCode (String ... rightFuzzyFailureLocationCode){
-            this.rightFuzzyFailureLocationCode = solveNullList(rightFuzzyFailureLocationCode);
-            return this;
-        }
-
-        public QueryBuilder failureLocationCode(String failureLocationCode){
-            setFailureLocationCode(failureLocationCode);
-            return this;
-        }
-
-        public QueryBuilder failureLocationCodeList(String ... failureLocationCode){
-            this.failureLocationCodeList = solveNullList(failureLocationCode);
-            return this;
-        }
-
-        public QueryBuilder failureLocationCodeList(List<String> failureLocationCode){
-            this.failureLocationCodeList = failureLocationCode;
-            return this;
-        }
-
-        public QueryBuilder fetchFailureLocationCode(){
-            setFetchFields("fetchFields","failureLocationCode");
-            return this;
-        }
-
-        public QueryBuilder excludeFailureLocationCode(){
-            setFetchFields("excludeFields","failureLocationCode");
-            return this;
-        }
-
-        public QueryBuilder fuzzyFailureLocationName (List<String> fuzzyFailureLocationName){
-            this.fuzzyFailureLocationName = fuzzyFailureLocationName;
-            return this;
-        }
-
-        public QueryBuilder fuzzyFailureLocationName (String ... fuzzyFailureLocationName){
-            this.fuzzyFailureLocationName = solveNullList(fuzzyFailureLocationName);
-            return this;
-        }
-
-        public QueryBuilder rightFuzzyFailureLocationName (List<String> rightFuzzyFailureLocationName){
-            this.rightFuzzyFailureLocationName = rightFuzzyFailureLocationName;
-            return this;
-        }
-
-        public QueryBuilder rightFuzzyFailureLocationName (String ... rightFuzzyFailureLocationName){
-            this.rightFuzzyFailureLocationName = solveNullList(rightFuzzyFailureLocationName);
-            return this;
-        }
-
-        public QueryBuilder failureLocationName(String failureLocationName){
-            setFailureLocationName(failureLocationName);
-            return this;
-        }
-
-        public QueryBuilder failureLocationNameList(String ... failureLocationName){
-            this.failureLocationNameList = solveNullList(failureLocationName);
-            return this;
-        }
-
-        public QueryBuilder failureLocationNameList(List<String> failureLocationName){
-            this.failureLocationNameList = failureLocationName;
-            return this;
-        }
-
-        public QueryBuilder fetchFailureLocationName(){
-            setFetchFields("fetchFields","failureLocationName");
-            return this;
-        }
-
-        public QueryBuilder excludeFailureLocationName(){
-            setFetchFields("excludeFields","failureLocationName");
-            return this;
-        }
-
-        public QueryBuilder fuzzySymptomTypeCode (List<String> fuzzySymptomTypeCode){
-            this.fuzzySymptomTypeCode = fuzzySymptomTypeCode;
-            return this;
-        }
-
-        public QueryBuilder fuzzySymptomTypeCode (String ... fuzzySymptomTypeCode){
-            this.fuzzySymptomTypeCode = solveNullList(fuzzySymptomTypeCode);
-            return this;
-        }
 
-        public QueryBuilder rightFuzzySymptomTypeCode (List<String> rightFuzzySymptomTypeCode){
-            this.rightFuzzySymptomTypeCode = rightFuzzySymptomTypeCode;
+        public QueryBuilder rightFuzzyPartsShortNameSpecPneno (List<String> rightFuzzyPartsShortNameSpecPneno){
+            this.rightFuzzyPartsShortNameSpecPneno = rightFuzzyPartsShortNameSpecPneno;
             return this;
         }
 
-        public QueryBuilder rightFuzzySymptomTypeCode (String ... rightFuzzySymptomTypeCode){
-            this.rightFuzzySymptomTypeCode = solveNullList(rightFuzzySymptomTypeCode);
+        public QueryBuilder rightFuzzyPartsShortNameSpecPneno (String ... rightFuzzyPartsShortNameSpecPneno){
+            this.rightFuzzyPartsShortNameSpecPneno = solveNullList(rightFuzzyPartsShortNameSpecPneno);
             return this;
         }
 
-        public QueryBuilder symptomTypeCode(String symptomTypeCode){
-            setSymptomTypeCode(symptomTypeCode);
+        public QueryBuilder partsShortNameSpecPneno(String partsShortNameSpecPneno){
+            setPartsShortNameSpecPneno(partsShortNameSpecPneno);
             return this;
         }
 
-        public QueryBuilder symptomTypeCodeList(String ... symptomTypeCode){
-            this.symptomTypeCodeList = solveNullList(symptomTypeCode);
+        public QueryBuilder partsShortNameSpecPnenoList(String ... partsShortNameSpecPneno){
+            this.partsShortNameSpecPnenoList = solveNullList(partsShortNameSpecPneno);
             return this;
         }
 
-        public QueryBuilder symptomTypeCodeList(List<String> symptomTypeCode){
-            this.symptomTypeCodeList = symptomTypeCode;
+        public QueryBuilder partsShortNameSpecPnenoList(List<String> partsShortNameSpecPneno){
+            this.partsShortNameSpecPnenoList = partsShortNameSpecPneno;
             return this;
         }
 
-        public QueryBuilder fetchSymptomTypeCode(){
-            setFetchFields("fetchFields","symptomTypeCode");
+        public QueryBuilder fetchPartsShortNameSpecPneno(){
+            setFetchFields("fetchFields","partsShortNameSpecPneno");
             return this;
         }
 
-        public QueryBuilder excludeSymptomTypeCode(){
-            setFetchFields("excludeFields","symptomTypeCode");
+        public QueryBuilder excludePartsShortNameSpecPneno(){
+            setFetchFields("excludeFields","partsShortNameSpecPneno");
             return this;
         }
 
-        public QueryBuilder fuzzySymptomTypeName (List<String> fuzzySymptomTypeName){
-            this.fuzzySymptomTypeName = fuzzySymptomTypeName;
+        public QueryBuilder fuzzyManufactureDate (List<String> fuzzyManufactureDate){
+            this.fuzzyManufactureDate = fuzzyManufactureDate;
             return this;
         }
 
-        public QueryBuilder fuzzySymptomTypeName (String ... fuzzySymptomTypeName){
-            this.fuzzySymptomTypeName = solveNullList(fuzzySymptomTypeName);
+        public QueryBuilder fuzzyManufactureDate (String ... fuzzyManufactureDate){
+            this.fuzzyManufactureDate = solveNullList(fuzzyManufactureDate);
             return this;
         }
 
-        public QueryBuilder rightFuzzySymptomTypeName (List<String> rightFuzzySymptomTypeName){
-            this.rightFuzzySymptomTypeName = rightFuzzySymptomTypeName;
+        public QueryBuilder rightFuzzyManufactureDate (List<String> rightFuzzyManufactureDate){
+            this.rightFuzzyManufactureDate = rightFuzzyManufactureDate;
             return this;
         }
 
-        public QueryBuilder rightFuzzySymptomTypeName (String ... rightFuzzySymptomTypeName){
-            this.rightFuzzySymptomTypeName = solveNullList(rightFuzzySymptomTypeName);
+        public QueryBuilder rightFuzzyManufactureDate (String ... rightFuzzyManufactureDate){
+            this.rightFuzzyManufactureDate = solveNullList(rightFuzzyManufactureDate);
             return this;
         }
 
-        public QueryBuilder symptomTypeName(String symptomTypeName){
-            setSymptomTypeName(symptomTypeName);
+        public QueryBuilder manufactureDate(String manufactureDate){
+            setManufactureDate(manufactureDate);
             return this;
         }
 
-        public QueryBuilder symptomTypeNameList(String ... symptomTypeName){
-            this.symptomTypeNameList = solveNullList(symptomTypeName);
+        public QueryBuilder manufactureDateList(String ... manufactureDate){
+            this.manufactureDateList = solveNullList(manufactureDate);
             return this;
         }
 
-        public QueryBuilder symptomTypeNameList(List<String> symptomTypeName){
-            this.symptomTypeNameList = symptomTypeName;
+        public QueryBuilder manufactureDateList(List<String> manufactureDate){
+            this.manufactureDateList = manufactureDate;
             return this;
         }
 
-        public QueryBuilder fetchSymptomTypeName(){
-            setFetchFields("fetchFields","symptomTypeName");
+        public QueryBuilder fetchManufactureDate(){
+            setFetchFields("fetchFields","manufactureDate");
             return this;
         }
 
-        public QueryBuilder excludeSymptomTypeName(){
-            setFetchFields("excludeFields","symptomTypeName");
+        public QueryBuilder excludeManufactureDate(){
+            setFetchFields("excludeFields","manufactureDate");
             return this;
         }
 
-        public QueryBuilder fuzzySymptomCode (List<String> fuzzySymptomCode){
-            this.fuzzySymptomCode = fuzzySymptomCode;
+        public QueryBuilder fuzzySalesFailureTime (List<String> fuzzySalesFailureTime){
+            this.fuzzySalesFailureTime = fuzzySalesFailureTime;
             return this;
         }
 
-        public QueryBuilder fuzzySymptomCode (String ... fuzzySymptomCode){
-            this.fuzzySymptomCode = solveNullList(fuzzySymptomCode);
+        public QueryBuilder fuzzySalesFailureTime (String ... fuzzySalesFailureTime){
+            this.fuzzySalesFailureTime = solveNullList(fuzzySalesFailureTime);
             return this;
         }
 
-        public QueryBuilder rightFuzzySymptomCode (List<String> rightFuzzySymptomCode){
-            this.rightFuzzySymptomCode = rightFuzzySymptomCode;
+        public QueryBuilder rightFuzzySalesFailureTime (List<String> rightFuzzySalesFailureTime){
+            this.rightFuzzySalesFailureTime = rightFuzzySalesFailureTime;
             return this;
         }
 
-        public QueryBuilder rightFuzzySymptomCode (String ... rightFuzzySymptomCode){
-            this.rightFuzzySymptomCode = solveNullList(rightFuzzySymptomCode);
+        public QueryBuilder rightFuzzySalesFailureTime (String ... rightFuzzySalesFailureTime){
+            this.rightFuzzySalesFailureTime = solveNullList(rightFuzzySalesFailureTime);
             return this;
         }
 
-        public QueryBuilder symptomCode(String symptomCode){
-            setSymptomCode(symptomCode);
+        public QueryBuilder salesFailureTime(String salesFailureTime){
+            setSalesFailureTime(salesFailureTime);
             return this;
         }
 
-        public QueryBuilder symptomCodeList(String ... symptomCode){
-            this.symptomCodeList = solveNullList(symptomCode);
+        public QueryBuilder salesFailureTimeList(String ... salesFailureTime){
+            this.salesFailureTimeList = solveNullList(salesFailureTime);
             return this;
         }
 
-        public QueryBuilder symptomCodeList(List<String> symptomCode){
-            this.symptomCodeList = symptomCode;
+        public QueryBuilder salesFailureTimeList(List<String> salesFailureTime){
+            this.salesFailureTimeList = salesFailureTime;
             return this;
         }
 
-        public QueryBuilder fetchSymptomCode(){
-            setFetchFields("fetchFields","symptomCode");
+        public QueryBuilder fetchSalesFailureTime(){
+            setFetchFields("fetchFields","salesFailureTime");
             return this;
         }
 
-        public QueryBuilder excludeSymptomCode(){
-            setFetchFields("excludeFields","symptomCode");
+        public QueryBuilder excludeSalesFailureTime(){
+            setFetchFields("excludeFields","salesFailureTime");
             return this;
         }
 
@@ -2380,321 +1406,6 @@ public class MqmsVoucherRaw implements Serializable {
             return this;
         }
 
-        public QueryBuilder fuzzySubmitDate (List<String> fuzzySubmitDate){
-            this.fuzzySubmitDate = fuzzySubmitDate;
-            return this;
-        }
-
-        public QueryBuilder fuzzySubmitDate (String ... fuzzySubmitDate){
-            this.fuzzySubmitDate = solveNullList(fuzzySubmitDate);
-            return this;
-        }
-
-        public QueryBuilder rightFuzzySubmitDate (List<String> rightFuzzySubmitDate){
-            this.rightFuzzySubmitDate = rightFuzzySubmitDate;
-            return this;
-        }
-
-        public QueryBuilder rightFuzzySubmitDate (String ... rightFuzzySubmitDate){
-            this.rightFuzzySubmitDate = solveNullList(rightFuzzySubmitDate);
-            return this;
-        }
-
-        public QueryBuilder submitDate(String submitDate){
-            setSubmitDate(submitDate);
-            return this;
-        }
-
-        public QueryBuilder submitDateList(String ... submitDate){
-            this.submitDateList = solveNullList(submitDate);
-            return this;
-        }
-
-        public QueryBuilder submitDateList(List<String> submitDate){
-            this.submitDateList = submitDate;
-            return this;
-        }
-
-        public QueryBuilder fetchSubmitDate(){
-            setFetchFields("fetchFields","submitDate");
-            return this;
-        }
-
-        public QueryBuilder excludeSubmitDate(){
-            setFetchFields("excludeFields","submitDate");
-            return this;
-        }
-
-        public QueryBuilder fuzzyImportantLevel (List<String> fuzzyImportantLevel){
-            this.fuzzyImportantLevel = fuzzyImportantLevel;
-            return this;
-        }
-
-        public QueryBuilder fuzzyImportantLevel (String ... fuzzyImportantLevel){
-            this.fuzzyImportantLevel = solveNullList(fuzzyImportantLevel);
-            return this;
-        }
-
-        public QueryBuilder rightFuzzyImportantLevel (List<String> rightFuzzyImportantLevel){
-            this.rightFuzzyImportantLevel = rightFuzzyImportantLevel;
-            return this;
-        }
-
-        public QueryBuilder rightFuzzyImportantLevel (String ... rightFuzzyImportantLevel){
-            this.rightFuzzyImportantLevel = solveNullList(rightFuzzyImportantLevel);
-            return this;
-        }
-
-        public QueryBuilder importantLevel(String importantLevel){
-            setImportantLevel(importantLevel);
-            return this;
-        }
-
-        public QueryBuilder importantLevelList(String ... importantLevel){
-            this.importantLevelList = solveNullList(importantLevel);
-            return this;
-        }
-
-        public QueryBuilder importantLevelList(List<String> importantLevel){
-            this.importantLevelList = importantLevel;
-            return this;
-        }
-
-        public QueryBuilder fetchImportantLevel(){
-            setFetchFields("fetchFields","importantLevel");
-            return this;
-        }
-
-        public QueryBuilder excludeImportantLevel(){
-            setFetchFields("excludeFields","importantLevel");
-            return this;
-        }
-
-        public QueryBuilder fuzzyCarType (List<String> fuzzyCarType){
-            this.fuzzyCarType = fuzzyCarType;
-            return this;
-        }
-
-        public QueryBuilder fuzzyCarType (String ... fuzzyCarType){
-            this.fuzzyCarType = solveNullList(fuzzyCarType);
-            return this;
-        }
-
-        public QueryBuilder rightFuzzyCarType (List<String> rightFuzzyCarType){
-            this.rightFuzzyCarType = rightFuzzyCarType;
-            return this;
-        }
-
-        public QueryBuilder rightFuzzyCarType (String ... rightFuzzyCarType){
-            this.rightFuzzyCarType = solveNullList(rightFuzzyCarType);
-            return this;
-        }
-
-        public QueryBuilder carType(String carType){
-            setCarType(carType);
-            return this;
-        }
-
-        public QueryBuilder carTypeList(String ... carType){
-            this.carTypeList = solveNullList(carType);
-            return this;
-        }
-
-        public QueryBuilder carTypeList(List<String> carType){
-            this.carTypeList = carType;
-            return this;
-        }
-
-        public QueryBuilder fetchCarType(){
-            setFetchFields("fetchFields","carType");
-            return this;
-        }
-
-        public QueryBuilder excludeCarType(){
-            setFetchFields("excludeFields","carType");
-            return this;
-        }
-
-        public QueryBuilder fuzzyDiagnosticResult (List<String> fuzzyDiagnosticResult){
-            this.fuzzyDiagnosticResult = fuzzyDiagnosticResult;
-            return this;
-        }
-
-        public QueryBuilder fuzzyDiagnosticResult (String ... fuzzyDiagnosticResult){
-            this.fuzzyDiagnosticResult = solveNullList(fuzzyDiagnosticResult);
-            return this;
-        }
-
-        public QueryBuilder rightFuzzyDiagnosticResult (List<String> rightFuzzyDiagnosticResult){
-            this.rightFuzzyDiagnosticResult = rightFuzzyDiagnosticResult;
-            return this;
-        }
-
-        public QueryBuilder rightFuzzyDiagnosticResult (String ... rightFuzzyDiagnosticResult){
-            this.rightFuzzyDiagnosticResult = solveNullList(rightFuzzyDiagnosticResult);
-            return this;
-        }
-
-        public QueryBuilder diagnosticResult(String diagnosticResult){
-            setDiagnosticResult(diagnosticResult);
-            return this;
-        }
-
-        public QueryBuilder diagnosticResultList(String ... diagnosticResult){
-            this.diagnosticResultList = solveNullList(diagnosticResult);
-            return this;
-        }
-
-        public QueryBuilder diagnosticResultList(List<String> diagnosticResult){
-            this.diagnosticResultList = diagnosticResult;
-            return this;
-        }
-
-        public QueryBuilder fetchDiagnosticResult(){
-            setFetchFields("fetchFields","diagnosticResult");
-            return this;
-        }
-
-        public QueryBuilder excludeDiagnosticResult(){
-            setFetchFields("excludeFields","diagnosticResult");
-            return this;
-        }
-
-        public QueryBuilder fuzzyVeiUserDescription (List<String> fuzzyVeiUserDescription){
-            this.fuzzyVeiUserDescription = fuzzyVeiUserDescription;
-            return this;
-        }
-
-        public QueryBuilder fuzzyVeiUserDescription (String ... fuzzyVeiUserDescription){
-            this.fuzzyVeiUserDescription = solveNullList(fuzzyVeiUserDescription);
-            return this;
-        }
-
-        public QueryBuilder rightFuzzyVeiUserDescription (List<String> rightFuzzyVeiUserDescription){
-            this.rightFuzzyVeiUserDescription = rightFuzzyVeiUserDescription;
-            return this;
-        }
-
-        public QueryBuilder rightFuzzyVeiUserDescription (String ... rightFuzzyVeiUserDescription){
-            this.rightFuzzyVeiUserDescription = solveNullList(rightFuzzyVeiUserDescription);
-            return this;
-        }
-
-        public QueryBuilder veiUserDescription(String veiUserDescription){
-            setVeiUserDescription(veiUserDescription);
-            return this;
-        }
-
-        public QueryBuilder veiUserDescriptionList(String ... veiUserDescription){
-            this.veiUserDescriptionList = solveNullList(veiUserDescription);
-            return this;
-        }
-
-        public QueryBuilder veiUserDescriptionList(List<String> veiUserDescription){
-            this.veiUserDescriptionList = veiUserDescription;
-            return this;
-        }
-
-        public QueryBuilder fetchVeiUserDescription(){
-            setFetchFields("fetchFields","veiUserDescription");
-            return this;
-        }
-
-        public QueryBuilder excludeVeiUserDescription(){
-            setFetchFields("excludeFields","veiUserDescription");
-            return this;
-        }
-
-        public QueryBuilder fuzzyPartsCode (List<String> fuzzyPartsCode){
-            this.fuzzyPartsCode = fuzzyPartsCode;
-            return this;
-        }
-
-        public QueryBuilder fuzzyPartsCode (String ... fuzzyPartsCode){
-            this.fuzzyPartsCode = solveNullList(fuzzyPartsCode);
-            return this;
-        }
-
-        public QueryBuilder rightFuzzyPartsCode (List<String> rightFuzzyPartsCode){
-            this.rightFuzzyPartsCode = rightFuzzyPartsCode;
-            return this;
-        }
-
-        public QueryBuilder rightFuzzyPartsCode (String ... rightFuzzyPartsCode){
-            this.rightFuzzyPartsCode = solveNullList(rightFuzzyPartsCode);
-            return this;
-        }
-
-        public QueryBuilder partsCode(String partsCode){
-            setPartsCode(partsCode);
-            return this;
-        }
-
-        public QueryBuilder partsCodeList(String ... partsCode){
-            this.partsCodeList = solveNullList(partsCode);
-            return this;
-        }
-
-        public QueryBuilder partsCodeList(List<String> partsCode){
-            this.partsCodeList = partsCode;
-            return this;
-        }
-
-        public QueryBuilder fetchPartsCode(){
-            setFetchFields("fetchFields","partsCode");
-            return this;
-        }
-
-        public QueryBuilder excludePartsCode(){
-            setFetchFields("excludeFields","partsCode");
-            return this;
-        }
-
-        public QueryBuilder fuzzyPartsName (List<String> fuzzyPartsName){
-            this.fuzzyPartsName = fuzzyPartsName;
-            return this;
-        }
-
-        public QueryBuilder fuzzyPartsName (String ... fuzzyPartsName){
-            this.fuzzyPartsName = solveNullList(fuzzyPartsName);
-            return this;
-        }
-
-        public QueryBuilder rightFuzzyPartsName (List<String> rightFuzzyPartsName){
-            this.rightFuzzyPartsName = rightFuzzyPartsName;
-            return this;
-        }
-
-        public QueryBuilder rightFuzzyPartsName (String ... rightFuzzyPartsName){
-            this.rightFuzzyPartsName = solveNullList(rightFuzzyPartsName);
-            return this;
-        }
-
-        public QueryBuilder partsName(String partsName){
-            setPartsName(partsName);
-            return this;
-        }
-
-        public QueryBuilder partsNameList(String ... partsName){
-            this.partsNameList = solveNullList(partsName);
-            return this;
-        }
-
-        public QueryBuilder partsNameList(List<String> partsName){
-            this.partsNameList = partsName;
-            return this;
-        }
-
-        public QueryBuilder fetchPartsName(){
-            setFetchFields("fetchFields","partsName");
-            return this;
-        }
-
-        public QueryBuilder excludePartsName(){
-            setFetchFields("excludeFields","partsName");
-            return this;
-        }
-
         public QueryBuilder manCostBetWeen(java.math.BigDecimal manCostSt,java.math.BigDecimal manCostEd){
             this.manCostSt = manCostSt;
             this.manCostEd = manCostEd;
@@ -2736,44 +1447,167 @@ public class MqmsVoucherRaw implements Serializable {
             return this;
         }
 
-        public QueryBuilder materialCostBetWeen(java.math.BigDecimal materialCostSt,java.math.BigDecimal materialCostEd){
-            this.materialCostSt = materialCostSt;
-            this.materialCostEd = materialCostEd;
+        public QueryBuilder partsCostBetWeen(java.math.BigDecimal partsCostSt,java.math.BigDecimal partsCostEd){
+            this.partsCostSt = partsCostSt;
+            this.partsCostEd = partsCostEd;
             return this;
         }
 
-        public QueryBuilder materialCostGreaterEqThan(java.math.BigDecimal materialCostSt){
-            this.materialCostSt = materialCostSt;
+        public QueryBuilder partsCostGreaterEqThan(java.math.BigDecimal partsCostSt){
+            this.partsCostSt = partsCostSt;
             return this;
         }
-        public QueryBuilder materialCostLessEqThan(java.math.BigDecimal materialCostEd){
-            this.materialCostEd = materialCostEd;
+        public QueryBuilder partsCostLessEqThan(java.math.BigDecimal partsCostEd){
+            this.partsCostEd = partsCostEd;
+            return this;
+        }
+
+
+        public QueryBuilder partsCost(java.math.BigDecimal partsCost){
+            setPartsCost(partsCost);
+            return this;
+        }
+
+        public QueryBuilder partsCostList(java.math.BigDecimal ... partsCost){
+            this.partsCostList = solveNullList(partsCost);
+            return this;
+        }
+
+        public QueryBuilder partsCostList(List<java.math.BigDecimal> partsCost){
+            this.partsCostList = partsCost;
+            return this;
+        }
+
+        public QueryBuilder fetchPartsCost(){
+            setFetchFields("fetchFields","partsCost");
+            return this;
+        }
+
+        public QueryBuilder excludePartsCost(){
+            setFetchFields("excludeFields","partsCost");
+            return this;
+        }
+
+        public QueryBuilder partsManagerCostBetWeen(java.math.BigDecimal partsManagerCostSt,java.math.BigDecimal partsManagerCostEd){
+            this.partsManagerCostSt = partsManagerCostSt;
+            this.partsManagerCostEd = partsManagerCostEd;
+            return this;
+        }
+
+        public QueryBuilder partsManagerCostGreaterEqThan(java.math.BigDecimal partsManagerCostSt){
+            this.partsManagerCostSt = partsManagerCostSt;
+            return this;
+        }
+        public QueryBuilder partsManagerCostLessEqThan(java.math.BigDecimal partsManagerCostEd){
+            this.partsManagerCostEd = partsManagerCostEd;
             return this;
         }
 
 
-        public QueryBuilder materialCost(java.math.BigDecimal materialCost){
-            setMaterialCost(materialCost);
+        public QueryBuilder partsManagerCost(java.math.BigDecimal partsManagerCost){
+            setPartsManagerCost(partsManagerCost);
             return this;
         }
 
-        public QueryBuilder materialCostList(java.math.BigDecimal ... materialCost){
-            this.materialCostList = solveNullList(materialCost);
+        public QueryBuilder partsManagerCostList(java.math.BigDecimal ... partsManagerCost){
+            this.partsManagerCostList = solveNullList(partsManagerCost);
             return this;
         }
 
-        public QueryBuilder materialCostList(List<java.math.BigDecimal> materialCost){
-            this.materialCostList = materialCost;
+        public QueryBuilder partsManagerCostList(List<java.math.BigDecimal> partsManagerCost){
+            this.partsManagerCostList = partsManagerCost;
             return this;
         }
 
-        public QueryBuilder fetchMaterialCost(){
-            setFetchFields("fetchFields","materialCost");
+        public QueryBuilder fetchPartsManagerCost(){
+            setFetchFields("fetchFields","partsManagerCost");
             return this;
         }
 
-        public QueryBuilder excludeMaterialCost(){
-            setFetchFields("excludeFields","materialCost");
+        public QueryBuilder excludePartsManagerCost(){
+            setFetchFields("excludeFields","partsManagerCost");
+            return this;
+        }
+
+        public QueryBuilder outgoingCostBetWeen(java.math.BigDecimal outgoingCostSt,java.math.BigDecimal outgoingCostEd){
+            this.outgoingCostSt = outgoingCostSt;
+            this.outgoingCostEd = outgoingCostEd;
+            return this;
+        }
+
+        public QueryBuilder outgoingCostGreaterEqThan(java.math.BigDecimal outgoingCostSt){
+            this.outgoingCostSt = outgoingCostSt;
+            return this;
+        }
+        public QueryBuilder outgoingCostLessEqThan(java.math.BigDecimal outgoingCostEd){
+            this.outgoingCostEd = outgoingCostEd;
+            return this;
+        }
+
+
+        public QueryBuilder outgoingCost(java.math.BigDecimal outgoingCost){
+            setOutgoingCost(outgoingCost);
+            return this;
+        }
+
+        public QueryBuilder outgoingCostList(java.math.BigDecimal ... outgoingCost){
+            this.outgoingCostList = solveNullList(outgoingCost);
+            return this;
+        }
+
+        public QueryBuilder outgoingCostList(List<java.math.BigDecimal> outgoingCost){
+            this.outgoingCostList = outgoingCost;
+            return this;
+        }
+
+        public QueryBuilder fetchOutgoingCost(){
+            setFetchFields("fetchFields","outgoingCost");
+            return this;
+        }
+
+        public QueryBuilder excludeOutgoingCost(){
+            setFetchFields("excludeFields","outgoingCost");
+            return this;
+        }
+
+        public QueryBuilder maintainCostBetWeen(java.math.BigDecimal maintainCostSt,java.math.BigDecimal maintainCostEd){
+            this.maintainCostSt = maintainCostSt;
+            this.maintainCostEd = maintainCostEd;
+            return this;
+        }
+
+        public QueryBuilder maintainCostGreaterEqThan(java.math.BigDecimal maintainCostSt){
+            this.maintainCostSt = maintainCostSt;
+            return this;
+        }
+        public QueryBuilder maintainCostLessEqThan(java.math.BigDecimal maintainCostEd){
+            this.maintainCostEd = maintainCostEd;
+            return this;
+        }
+
+
+        public QueryBuilder maintainCost(java.math.BigDecimal maintainCost){
+            setMaintainCost(maintainCost);
+            return this;
+        }
+
+        public QueryBuilder maintainCostList(java.math.BigDecimal ... maintainCost){
+            this.maintainCostList = solveNullList(maintainCost);
+            return this;
+        }
+
+        public QueryBuilder maintainCostList(List<java.math.BigDecimal> maintainCost){
+            this.maintainCostList = maintainCost;
+            return this;
+        }
+
+        public QueryBuilder fetchMaintainCost(){
+            setFetchFields("fetchFields","maintainCost");
+            return this;
+        }
+
+        public QueryBuilder excludeMaintainCost(){
+            setFetchFields("excludeFields","maintainCost");
             return this;
         }
 
@@ -2859,453 +1693,183 @@ public class MqmsVoucherRaw implements Serializable {
             return this;
         }
 
-        public QueryBuilder fuzzyConfirmor (List<String> fuzzyConfirmor){
-            this.fuzzyConfirmor = fuzzyConfirmor;
+        public QueryBuilder fuzzyImportantLevel (List<String> fuzzyImportantLevel){
+            this.fuzzyImportantLevel = fuzzyImportantLevel;
             return this;
         }
 
-        public QueryBuilder fuzzyConfirmor (String ... fuzzyConfirmor){
-            this.fuzzyConfirmor = solveNullList(fuzzyConfirmor);
+        public QueryBuilder fuzzyImportantLevel (String ... fuzzyImportantLevel){
+            this.fuzzyImportantLevel = solveNullList(fuzzyImportantLevel);
             return this;
         }
 
-        public QueryBuilder rightFuzzyConfirmor (List<String> rightFuzzyConfirmor){
-            this.rightFuzzyConfirmor = rightFuzzyConfirmor;
+        public QueryBuilder rightFuzzyImportantLevel (List<String> rightFuzzyImportantLevel){
+            this.rightFuzzyImportantLevel = rightFuzzyImportantLevel;
             return this;
         }
 
-        public QueryBuilder rightFuzzyConfirmor (String ... rightFuzzyConfirmor){
-            this.rightFuzzyConfirmor = solveNullList(rightFuzzyConfirmor);
+        public QueryBuilder rightFuzzyImportantLevel (String ... rightFuzzyImportantLevel){
+            this.rightFuzzyImportantLevel = solveNullList(rightFuzzyImportantLevel);
             return this;
         }
 
-        public QueryBuilder confirmor(String confirmor){
-            setConfirmor(confirmor);
+        public QueryBuilder importantLevel(String importantLevel){
+            setImportantLevel(importantLevel);
             return this;
         }
 
-        public QueryBuilder confirmorList(String ... confirmor){
-            this.confirmorList = solveNullList(confirmor);
+        public QueryBuilder importantLevelList(String ... importantLevel){
+            this.importantLevelList = solveNullList(importantLevel);
             return this;
         }
 
-        public QueryBuilder confirmorList(List<String> confirmor){
-            this.confirmorList = confirmor;
+        public QueryBuilder importantLevelList(List<String> importantLevel){
+            this.importantLevelList = importantLevel;
             return this;
         }
 
-        public QueryBuilder fetchConfirmor(){
-            setFetchFields("fetchFields","confirmor");
+        public QueryBuilder fetchImportantLevel(){
+            setFetchFields("fetchFields","importantLevel");
             return this;
         }
 
-        public QueryBuilder excludeConfirmor(){
-            setFetchFields("excludeFields","confirmor");
+        public QueryBuilder excludeImportantLevel(){
+            setFetchFields("excludeFields","importantLevel");
             return this;
         }
 
-        public QueryBuilder fuzzyConfirmDate (List<String> fuzzyConfirmDate){
-            this.fuzzyConfirmDate = fuzzyConfirmDate;
+        public QueryBuilder fuzzyTransmissionType (List<String> fuzzyTransmissionType){
+            this.fuzzyTransmissionType = fuzzyTransmissionType;
             return this;
         }
 
-        public QueryBuilder fuzzyConfirmDate (String ... fuzzyConfirmDate){
-            this.fuzzyConfirmDate = solveNullList(fuzzyConfirmDate);
+        public QueryBuilder fuzzyTransmissionType (String ... fuzzyTransmissionType){
+            this.fuzzyTransmissionType = solveNullList(fuzzyTransmissionType);
             return this;
         }
 
-        public QueryBuilder rightFuzzyConfirmDate (List<String> rightFuzzyConfirmDate){
-            this.rightFuzzyConfirmDate = rightFuzzyConfirmDate;
+        public QueryBuilder rightFuzzyTransmissionType (List<String> rightFuzzyTransmissionType){
+            this.rightFuzzyTransmissionType = rightFuzzyTransmissionType;
             return this;
         }
 
-        public QueryBuilder rightFuzzyConfirmDate (String ... rightFuzzyConfirmDate){
-            this.rightFuzzyConfirmDate = solveNullList(rightFuzzyConfirmDate);
+        public QueryBuilder rightFuzzyTransmissionType (String ... rightFuzzyTransmissionType){
+            this.rightFuzzyTransmissionType = solveNullList(rightFuzzyTransmissionType);
             return this;
         }
 
-        public QueryBuilder confirmDate(String confirmDate){
-            setConfirmDate(confirmDate);
+        public QueryBuilder transmissionType(String transmissionType){
+            setTransmissionType(transmissionType);
             return this;
         }
 
-        public QueryBuilder confirmDateList(String ... confirmDate){
-            this.confirmDateList = solveNullList(confirmDate);
+        public QueryBuilder transmissionTypeList(String ... transmissionType){
+            this.transmissionTypeList = solveNullList(transmissionType);
             return this;
         }
 
-        public QueryBuilder confirmDateList(List<String> confirmDate){
-            this.confirmDateList = confirmDate;
+        public QueryBuilder transmissionTypeList(List<String> transmissionType){
+            this.transmissionTypeList = transmissionType;
             return this;
         }
 
-        public QueryBuilder fetchConfirmDate(){
-            setFetchFields("fetchFields","confirmDate");
+        public QueryBuilder fetchTransmissionType(){
+            setFetchFields("fetchFields","transmissionType");
             return this;
         }
 
-        public QueryBuilder excludeConfirmDate(){
-            setFetchFields("excludeFields","confirmDate");
+        public QueryBuilder excludeTransmissionType(){
+            setFetchFields("excludeFields","transmissionType");
             return this;
         }
 
-        public QueryBuilder fuzzyVeiSysDescription (List<String> fuzzyVeiSysDescription){
-            this.fuzzyVeiSysDescription = fuzzyVeiSysDescription;
+        public QueryBuilder fuzzyNewPartsBlindingNum (List<String> fuzzyNewPartsBlindingNum){
+            this.fuzzyNewPartsBlindingNum = fuzzyNewPartsBlindingNum;
             return this;
         }
 
-        public QueryBuilder fuzzyVeiSysDescription (String ... fuzzyVeiSysDescription){
-            this.fuzzyVeiSysDescription = solveNullList(fuzzyVeiSysDescription);
+        public QueryBuilder fuzzyNewPartsBlindingNum (String ... fuzzyNewPartsBlindingNum){
+            this.fuzzyNewPartsBlindingNum = solveNullList(fuzzyNewPartsBlindingNum);
             return this;
         }
 
-        public QueryBuilder rightFuzzyVeiSysDescription (List<String> rightFuzzyVeiSysDescription){
-            this.rightFuzzyVeiSysDescription = rightFuzzyVeiSysDescription;
+        public QueryBuilder rightFuzzyNewPartsBlindingNum (List<String> rightFuzzyNewPartsBlindingNum){
+            this.rightFuzzyNewPartsBlindingNum = rightFuzzyNewPartsBlindingNum;
             return this;
         }
 
-        public QueryBuilder rightFuzzyVeiSysDescription (String ... rightFuzzyVeiSysDescription){
-            this.rightFuzzyVeiSysDescription = solveNullList(rightFuzzyVeiSysDescription);
+        public QueryBuilder rightFuzzyNewPartsBlindingNum (String ... rightFuzzyNewPartsBlindingNum){
+            this.rightFuzzyNewPartsBlindingNum = solveNullList(rightFuzzyNewPartsBlindingNum);
             return this;
         }
 
-        public QueryBuilder veiSysDescription(String veiSysDescription){
-            setVeiSysDescription(veiSysDescription);
+        public QueryBuilder newPartsBlindingNum(String newPartsBlindingNum){
+            setNewPartsBlindingNum(newPartsBlindingNum);
             return this;
         }
 
-        public QueryBuilder veiSysDescriptionList(String ... veiSysDescription){
-            this.veiSysDescriptionList = solveNullList(veiSysDescription);
+        public QueryBuilder newPartsBlindingNumList(String ... newPartsBlindingNum){
+            this.newPartsBlindingNumList = solveNullList(newPartsBlindingNum);
             return this;
         }
 
-        public QueryBuilder veiSysDescriptionList(List<String> veiSysDescription){
-            this.veiSysDescriptionList = veiSysDescription;
+        public QueryBuilder newPartsBlindingNumList(List<String> newPartsBlindingNum){
+            this.newPartsBlindingNumList = newPartsBlindingNum;
             return this;
         }
 
-        public QueryBuilder fetchVeiSysDescription(){
-            setFetchFields("fetchFields","veiSysDescription");
+        public QueryBuilder fetchNewPartsBlindingNum(){
+            setFetchFields("fetchFields","newPartsBlindingNum");
             return this;
         }
 
-        public QueryBuilder excludeVeiSysDescription(){
-            setFetchFields("excludeFields","veiSysDescription");
+        public QueryBuilder excludeNewPartsBlindingNum(){
+            setFetchFields("excludeFields","newPartsBlindingNum");
             return this;
         }
 
-        public QueryBuilder fuzzyLicenseCode (List<String> fuzzyLicenseCode){
-            this.fuzzyLicenseCode = fuzzyLicenseCode;
+        public QueryBuilder fuzzySubmitDate (List<String> fuzzySubmitDate){
+            this.fuzzySubmitDate = fuzzySubmitDate;
             return this;
         }
 
-        public QueryBuilder fuzzyLicenseCode (String ... fuzzyLicenseCode){
-            this.fuzzyLicenseCode = solveNullList(fuzzyLicenseCode);
+        public QueryBuilder fuzzySubmitDate (String ... fuzzySubmitDate){
+            this.fuzzySubmitDate = solveNullList(fuzzySubmitDate);
             return this;
         }
 
-        public QueryBuilder rightFuzzyLicenseCode (List<String> rightFuzzyLicenseCode){
-            this.rightFuzzyLicenseCode = rightFuzzyLicenseCode;
+        public QueryBuilder rightFuzzySubmitDate (List<String> rightFuzzySubmitDate){
+            this.rightFuzzySubmitDate = rightFuzzySubmitDate;
             return this;
         }
 
-        public QueryBuilder rightFuzzyLicenseCode (String ... rightFuzzyLicenseCode){
-            this.rightFuzzyLicenseCode = solveNullList(rightFuzzyLicenseCode);
+        public QueryBuilder rightFuzzySubmitDate (String ... rightFuzzySubmitDate){
+            this.rightFuzzySubmitDate = solveNullList(rightFuzzySubmitDate);
             return this;
         }
 
-        public QueryBuilder licenseCode(String licenseCode){
-            setLicenseCode(licenseCode);
+        public QueryBuilder submitDate(String submitDate){
+            setSubmitDate(submitDate);
             return this;
         }
 
-        public QueryBuilder licenseCodeList(String ... licenseCode){
-            this.licenseCodeList = solveNullList(licenseCode);
+        public QueryBuilder submitDateList(String ... submitDate){
+            this.submitDateList = solveNullList(submitDate);
             return this;
         }
 
-        public QueryBuilder licenseCodeList(List<String> licenseCode){
-            this.licenseCodeList = licenseCode;
+        public QueryBuilder submitDateList(List<String> submitDate){
+            this.submitDateList = submitDate;
             return this;
         }
 
-        public QueryBuilder fetchLicenseCode(){
-            setFetchFields("fetchFields","licenseCode");
+        public QueryBuilder fetchSubmitDate(){
+            setFetchFields("fetchFields","submitDate");
             return this;
         }
 
-        public QueryBuilder excludeLicenseCode(){
-            setFetchFields("excludeFields","licenseCode");
-            return this;
-        }
-
-        public QueryBuilder fuzzyServicePerformance1 (List<String> fuzzyServicePerformance1){
-            this.fuzzyServicePerformance1 = fuzzyServicePerformance1;
-            return this;
-        }
-
-        public QueryBuilder fuzzyServicePerformance1 (String ... fuzzyServicePerformance1){
-            this.fuzzyServicePerformance1 = solveNullList(fuzzyServicePerformance1);
-            return this;
-        }
-
-        public QueryBuilder rightFuzzyServicePerformance1 (List<String> rightFuzzyServicePerformance1){
-            this.rightFuzzyServicePerformance1 = rightFuzzyServicePerformance1;
-            return this;
-        }
-
-        public QueryBuilder rightFuzzyServicePerformance1 (String ... rightFuzzyServicePerformance1){
-            this.rightFuzzyServicePerformance1 = solveNullList(rightFuzzyServicePerformance1);
-            return this;
-        }
-
-        public QueryBuilder servicePerformance1(String servicePerformance1){
-            setServicePerformance1(servicePerformance1);
-            return this;
-        }
-
-        public QueryBuilder servicePerformance1List(String ... servicePerformance1){
-            this.servicePerformance1List = solveNullList(servicePerformance1);
-            return this;
-        }
-
-        public QueryBuilder servicePerformance1List(List<String> servicePerformance1){
-            this.servicePerformance1List = servicePerformance1;
-            return this;
-        }
-
-        public QueryBuilder fetchServicePerformance1(){
-            setFetchFields("fetchFields","servicePerformance1");
-            return this;
-        }
-
-        public QueryBuilder excludeServicePerformance1(){
-            setFetchFields("excludeFields","servicePerformance1");
-            return this;
-        }
-
-        public QueryBuilder fuzzyServicePerformance2 (List<String> fuzzyServicePerformance2){
-            this.fuzzyServicePerformance2 = fuzzyServicePerformance2;
-            return this;
-        }
-
-        public QueryBuilder fuzzyServicePerformance2 (String ... fuzzyServicePerformance2){
-            this.fuzzyServicePerformance2 = solveNullList(fuzzyServicePerformance2);
-            return this;
-        }
-
-        public QueryBuilder rightFuzzyServicePerformance2 (List<String> rightFuzzyServicePerformance2){
-            this.rightFuzzyServicePerformance2 = rightFuzzyServicePerformance2;
-            return this;
-        }
-
-        public QueryBuilder rightFuzzyServicePerformance2 (String ... rightFuzzyServicePerformance2){
-            this.rightFuzzyServicePerformance2 = solveNullList(rightFuzzyServicePerformance2);
-            return this;
-        }
-
-        public QueryBuilder servicePerformance2(String servicePerformance2){
-            setServicePerformance2(servicePerformance2);
-            return this;
-        }
-
-        public QueryBuilder servicePerformance2List(String ... servicePerformance2){
-            this.servicePerformance2List = solveNullList(servicePerformance2);
-            return this;
-        }
-
-        public QueryBuilder servicePerformance2List(List<String> servicePerformance2){
-            this.servicePerformance2List = servicePerformance2;
-            return this;
-        }
-
-        public QueryBuilder fetchServicePerformance2(){
-            setFetchFields("fetchFields","servicePerformance2");
-            return this;
-        }
-
-        public QueryBuilder excludeServicePerformance2(){
-            setFetchFields("excludeFields","servicePerformance2");
-            return this;
-        }
-
-        public QueryBuilder fuzzyServicePerformance3 (List<String> fuzzyServicePerformance3){
-            this.fuzzyServicePerformance3 = fuzzyServicePerformance3;
-            return this;
-        }
-
-        public QueryBuilder fuzzyServicePerformance3 (String ... fuzzyServicePerformance3){
-            this.fuzzyServicePerformance3 = solveNullList(fuzzyServicePerformance3);
-            return this;
-        }
-
-        public QueryBuilder rightFuzzyServicePerformance3 (List<String> rightFuzzyServicePerformance3){
-            this.rightFuzzyServicePerformance3 = rightFuzzyServicePerformance3;
-            return this;
-        }
-
-        public QueryBuilder rightFuzzyServicePerformance3 (String ... rightFuzzyServicePerformance3){
-            this.rightFuzzyServicePerformance3 = solveNullList(rightFuzzyServicePerformance3);
-            return this;
-        }
-
-        public QueryBuilder servicePerformance3(String servicePerformance3){
-            setServicePerformance3(servicePerformance3);
-            return this;
-        }
-
-        public QueryBuilder servicePerformance3List(String ... servicePerformance3){
-            this.servicePerformance3List = solveNullList(servicePerformance3);
-            return this;
-        }
-
-        public QueryBuilder servicePerformance3List(List<String> servicePerformance3){
-            this.servicePerformance3List = servicePerformance3;
-            return this;
-        }
-
-        public QueryBuilder fetchServicePerformance3(){
-            setFetchFields("fetchFields","servicePerformance3");
-            return this;
-        }
-
-        public QueryBuilder excludeServicePerformance3(){
-            setFetchFields("excludeFields","servicePerformance3");
-            return this;
-        }
-
-        public QueryBuilder fuzzyModelYear (List<String> fuzzyModelYear){
-            this.fuzzyModelYear = fuzzyModelYear;
-            return this;
-        }
-
-        public QueryBuilder fuzzyModelYear (String ... fuzzyModelYear){
-            this.fuzzyModelYear = solveNullList(fuzzyModelYear);
-            return this;
-        }
-
-        public QueryBuilder rightFuzzyModelYear (List<String> rightFuzzyModelYear){
-            this.rightFuzzyModelYear = rightFuzzyModelYear;
-            return this;
-        }
-
-        public QueryBuilder rightFuzzyModelYear (String ... rightFuzzyModelYear){
-            this.rightFuzzyModelYear = solveNullList(rightFuzzyModelYear);
-            return this;
-        }
-
-        public QueryBuilder modelYear(String modelYear){
-            setModelYear(modelYear);
-            return this;
-        }
-
-        public QueryBuilder modelYearList(String ... modelYear){
-            this.modelYearList = solveNullList(modelYear);
-            return this;
-        }
-
-        public QueryBuilder modelYearList(List<String> modelYear){
-            this.modelYearList = modelYear;
-            return this;
-        }
-
-        public QueryBuilder fetchModelYear(){
-            setFetchFields("fetchFields","modelYear");
-            return this;
-        }
-
-        public QueryBuilder excludeModelYear(){
-            setFetchFields("excludeFields","modelYear");
-            return this;
-        }
-
-        public QueryBuilder fuzzyOfflineDate (List<String> fuzzyOfflineDate){
-            this.fuzzyOfflineDate = fuzzyOfflineDate;
-            return this;
-        }
-
-        public QueryBuilder fuzzyOfflineDate (String ... fuzzyOfflineDate){
-            this.fuzzyOfflineDate = solveNullList(fuzzyOfflineDate);
-            return this;
-        }
-
-        public QueryBuilder rightFuzzyOfflineDate (List<String> rightFuzzyOfflineDate){
-            this.rightFuzzyOfflineDate = rightFuzzyOfflineDate;
-            return this;
-        }
-
-        public QueryBuilder rightFuzzyOfflineDate (String ... rightFuzzyOfflineDate){
-            this.rightFuzzyOfflineDate = solveNullList(rightFuzzyOfflineDate);
-            return this;
-        }
-
-        public QueryBuilder offlineDate(String offlineDate){
-            setOfflineDate(offlineDate);
-            return this;
-        }
-
-        public QueryBuilder offlineDateList(String ... offlineDate){
-            this.offlineDateList = solveNullList(offlineDate);
-            return this;
-        }
-
-        public QueryBuilder offlineDateList(List<String> offlineDate){
-            this.offlineDateList = offlineDate;
-            return this;
-        }
-
-        public QueryBuilder fetchOfflineDate(){
-            setFetchFields("fetchFields","offlineDate");
-            return this;
-        }
-
-        public QueryBuilder excludeOfflineDate(){
-            setFetchFields("excludeFields","offlineDate");
-            return this;
-        }
-
-        public QueryBuilder fuzzySalesDate (List<String> fuzzySalesDate){
-            this.fuzzySalesDate = fuzzySalesDate;
-            return this;
-        }
-
-        public QueryBuilder fuzzySalesDate (String ... fuzzySalesDate){
-            this.fuzzySalesDate = solveNullList(fuzzySalesDate);
-            return this;
-        }
-
-        public QueryBuilder rightFuzzySalesDate (List<String> rightFuzzySalesDate){
-            this.rightFuzzySalesDate = rightFuzzySalesDate;
-            return this;
-        }
-
-        public QueryBuilder rightFuzzySalesDate (String ... rightFuzzySalesDate){
-            this.rightFuzzySalesDate = solveNullList(rightFuzzySalesDate);
-            return this;
-        }
-
-        public QueryBuilder salesDate(String salesDate){
-            setSalesDate(salesDate);
-            return this;
-        }
-
-        public QueryBuilder salesDateList(String ... salesDate){
-            this.salesDateList = solveNullList(salesDate);
-            return this;
-        }
-
-        public QueryBuilder salesDateList(List<String> salesDate){
-            this.salesDateList = salesDate;
-            return this;
-        }
-
-        public QueryBuilder fetchSalesDate(){
-            setFetchFields("fetchFields","salesDate");
-            return this;
-        }
-
-        public QueryBuilder excludeSalesDate(){
-            setFetchFields("excludeFields","salesDate");
+        public QueryBuilder excludeSubmitDate(){
+            setFetchFields("excludeFields","submitDate");
             return this;
         }
         private <T>List<T> solveNullList(T ... objs){
@@ -3363,6 +1927,18 @@ public class MqmsVoucherRaw implements Serializable {
 
         public Integer getVoucherIdEd(){return this.voucherIdEd;}
 
+        private List<String> qualityFeedbackCodeList;
+
+        public List<String> getQualityFeedbackCodeList(){return this.qualityFeedbackCodeList;}
+
+
+        private List<String> fuzzyQualityFeedbackCode;
+
+        public List<String> getFuzzyQualityFeedbackCode(){return this.fuzzyQualityFeedbackCode;}
+
+        private List<String> rightFuzzyQualityFeedbackCode;
+
+        public List<String> getRightFuzzyQualityFeedbackCode(){return this.rightFuzzyQualityFeedbackCode;}
         private List<String> voucherCodeList;
 
         public List<String> getVoucherCodeList(){return this.voucherCodeList;}
@@ -3399,90 +1975,18 @@ public class MqmsVoucherRaw implements Serializable {
         private List<String> rightFuzzyDealerName;
 
         public List<String> getRightFuzzyDealerName(){return this.rightFuzzyDealerName;}
-        private List<String> veiStateList;
+        private List<String> dealerShortNameList;
 
-        public List<String> getVeiStateList(){return this.veiStateList;}
-
-
-        private List<String> fuzzyVeiState;
-
-        public List<String> getFuzzyVeiState(){return this.fuzzyVeiState;}
-
-        private List<String> rightFuzzyVeiState;
-
-        public List<String> getRightFuzzyVeiState(){return this.rightFuzzyVeiState;}
-        private List<String> updateTimeList;
-
-        public List<String> getUpdateTimeList(){return this.updateTimeList;}
+        public List<String> getDealerShortNameList(){return this.dealerShortNameList;}
 
 
-        private List<String> fuzzyUpdateTime;
+        private List<String> fuzzyDealerShortName;
 
-        public List<String> getFuzzyUpdateTime(){return this.fuzzyUpdateTime;}
+        public List<String> getFuzzyDealerShortName(){return this.fuzzyDealerShortName;}
 
-        private List<String> rightFuzzyUpdateTime;
+        private List<String> rightFuzzyDealerShortName;
 
-        public List<String> getRightFuzzyUpdateTime(){return this.rightFuzzyUpdateTime;}
-        private List<String> maintenanceContractCodeList;
-
-        public List<String> getMaintenanceContractCodeList(){return this.maintenanceContractCodeList;}
-
-
-        private List<String> fuzzyMaintenanceContractCode;
-
-        public List<String> getFuzzyMaintenanceContractCode(){return this.fuzzyMaintenanceContractCode;}
-
-        private List<String> rightFuzzyMaintenanceContractCode;
-
-        public List<String> getRightFuzzyMaintenanceContractCode(){return this.rightFuzzyMaintenanceContractCode;}
-        private List<String> maintenanceItemCodeList;
-
-        public List<String> getMaintenanceItemCodeList(){return this.maintenanceItemCodeList;}
-
-
-        private List<String> fuzzyMaintenanceItemCode;
-
-        public List<String> getFuzzyMaintenanceItemCode(){return this.fuzzyMaintenanceItemCode;}
-
-        private List<String> rightFuzzyMaintenanceItemCode;
-
-        public List<String> getRightFuzzyMaintenanceItemCode(){return this.rightFuzzyMaintenanceItemCode;}
-        private List<String> contactList;
-
-        public List<String> getContactList(){return this.contactList;}
-
-
-        private List<String> fuzzyContact;
-
-        public List<String> getFuzzyContact(){return this.fuzzyContact;}
-
-        private List<String> rightFuzzyContact;
-
-        public List<String> getRightFuzzyContact(){return this.rightFuzzyContact;}
-        private List<String> phoneNoList;
-
-        public List<String> getPhoneNoList(){return this.phoneNoList;}
-
-
-        private List<String> fuzzyPhoneNo;
-
-        public List<String> getFuzzyPhoneNo(){return this.fuzzyPhoneNo;}
-
-        private List<String> rightFuzzyPhoneNo;
-
-        public List<String> getRightFuzzyPhoneNo(){return this.rightFuzzyPhoneNo;}
-        private List<String> faxList;
-
-        public List<String> getFaxList(){return this.faxList;}
-
-
-        private List<String> fuzzyFax;
-
-        public List<String> getFuzzyFax(){return this.fuzzyFax;}
-
-        private List<String> rightFuzzyFax;
-
-        public List<String> getRightFuzzyFax(){return this.rightFuzzyFax;}
+        public List<String> getRightFuzzyDealerShortName(){return this.rightFuzzyDealerShortName;}
         private List<String> themeList;
 
         public List<String> getThemeList(){return this.themeList;}
@@ -3519,138 +2023,66 @@ public class MqmsVoucherRaw implements Serializable {
         private List<String> rightFuzzyVehicleType;
 
         public List<String> getRightFuzzyVehicleType(){return this.rightFuzzyVehicleType;}
-        private List<String> egtypeCodeList;
+        private List<String> partsNameList;
 
-        public List<String> getEgtypeCodeList(){return this.egtypeCodeList;}
+        public List<String> getPartsNameList(){return this.partsNameList;}
 
 
-        private List<String> fuzzyEgtypeCode;
+        private List<String> fuzzyPartsName;
 
-        public List<String> getFuzzyEgtypeCode(){return this.fuzzyEgtypeCode;}
+        public List<String> getFuzzyPartsName(){return this.fuzzyPartsName;}
 
-        private List<String> rightFuzzyEgtypeCode;
+        private List<String> rightFuzzyPartsName;
 
-        public List<String> getRightFuzzyEgtypeCode(){return this.rightFuzzyEgtypeCode;}
-        private List<String> transmissionTypeList;
+        public List<String> getRightFuzzyPartsName(){return this.rightFuzzyPartsName;}
+        private List<String> firstLevelNameList;
 
-        public List<String> getTransmissionTypeList(){return this.transmissionTypeList;}
+        public List<String> getFirstLevelNameList(){return this.firstLevelNameList;}
 
 
-        private List<String> fuzzyTransmissionType;
+        private List<String> fuzzyFirstLevelName;
 
-        public List<String> getFuzzyTransmissionType(){return this.fuzzyTransmissionType;}
+        public List<String> getFuzzyFirstLevelName(){return this.fuzzyFirstLevelName;}
 
-        private List<String> rightFuzzyTransmissionType;
+        private List<String> rightFuzzyFirstLevelName;
 
-        public List<String> getRightFuzzyTransmissionType(){return this.rightFuzzyTransmissionType;}
-        private List<Integer> mileageList;
+        public List<String> getRightFuzzyFirstLevelName(){return this.rightFuzzyFirstLevelName;}
+        private List<String> partsShortNameSpecPnenoList;
 
-        public List<Integer> getMileageList(){return this.mileageList;}
+        public List<String> getPartsShortNameSpecPnenoList(){return this.partsShortNameSpecPnenoList;}
 
-        private Integer mileageSt;
 
-        private Integer mileageEd;
+        private List<String> fuzzyPartsShortNameSpecPneno;
 
-        public Integer getMileageSt(){return this.mileageSt;}
+        public List<String> getFuzzyPartsShortNameSpecPneno(){return this.fuzzyPartsShortNameSpecPneno;}
 
-        public Integer getMileageEd(){return this.mileageEd;}
+        private List<String> rightFuzzyPartsShortNameSpecPneno;
 
-        private List<String> transmissionCodeList;
+        public List<String> getRightFuzzyPartsShortNameSpecPneno(){return this.rightFuzzyPartsShortNameSpecPneno;}
+        private List<String> manufactureDateList;
 
-        public List<String> getTransmissionCodeList(){return this.transmissionCodeList;}
+        public List<String> getManufactureDateList(){return this.manufactureDateList;}
 
 
-        private List<String> fuzzyTransmissionCode;
+        private List<String> fuzzyManufactureDate;
 
-        public List<String> getFuzzyTransmissionCode(){return this.fuzzyTransmissionCode;}
+        public List<String> getFuzzyManufactureDate(){return this.fuzzyManufactureDate;}
 
-        private List<String> rightFuzzyTransmissionCode;
+        private List<String> rightFuzzyManufactureDate;
 
-        public List<String> getRightFuzzyTransmissionCode(){return this.rightFuzzyTransmissionCode;}
-        private List<String> mtocList;
+        public List<String> getRightFuzzyManufactureDate(){return this.rightFuzzyManufactureDate;}
+        private List<String> salesFailureTimeList;
 
-        public List<String> getMtocList(){return this.mtocList;}
+        public List<String> getSalesFailureTimeList(){return this.salesFailureTimeList;}
 
 
-        private List<String> fuzzyMtoc;
+        private List<String> fuzzySalesFailureTime;
 
-        public List<String> getFuzzyMtoc(){return this.fuzzyMtoc;}
+        public List<String> getFuzzySalesFailureTime(){return this.fuzzySalesFailureTime;}
 
-        private List<String> rightFuzzyMtoc;
+        private List<String> rightFuzzySalesFailureTime;
 
-        public List<String> getRightFuzzyMtoc(){return this.rightFuzzyMtoc;}
-        private List<String> failureDateList;
-
-        public List<String> getFailureDateList(){return this.failureDateList;}
-
-
-        private List<String> fuzzyFailureDate;
-
-        public List<String> getFuzzyFailureDate(){return this.fuzzyFailureDate;}
-
-        private List<String> rightFuzzyFailureDate;
-
-        public List<String> getRightFuzzyFailureDate(){return this.rightFuzzyFailureDate;}
-        private List<String> failureLocationCodeList;
-
-        public List<String> getFailureLocationCodeList(){return this.failureLocationCodeList;}
-
-
-        private List<String> fuzzyFailureLocationCode;
-
-        public List<String> getFuzzyFailureLocationCode(){return this.fuzzyFailureLocationCode;}
-
-        private List<String> rightFuzzyFailureLocationCode;
-
-        public List<String> getRightFuzzyFailureLocationCode(){return this.rightFuzzyFailureLocationCode;}
-        private List<String> failureLocationNameList;
-
-        public List<String> getFailureLocationNameList(){return this.failureLocationNameList;}
-
-
-        private List<String> fuzzyFailureLocationName;
-
-        public List<String> getFuzzyFailureLocationName(){return this.fuzzyFailureLocationName;}
-
-        private List<String> rightFuzzyFailureLocationName;
-
-        public List<String> getRightFuzzyFailureLocationName(){return this.rightFuzzyFailureLocationName;}
-        private List<String> symptomTypeCodeList;
-
-        public List<String> getSymptomTypeCodeList(){return this.symptomTypeCodeList;}
-
-
-        private List<String> fuzzySymptomTypeCode;
-
-        public List<String> getFuzzySymptomTypeCode(){return this.fuzzySymptomTypeCode;}
-
-        private List<String> rightFuzzySymptomTypeCode;
-
-        public List<String> getRightFuzzySymptomTypeCode(){return this.rightFuzzySymptomTypeCode;}
-        private List<String> symptomTypeNameList;
-
-        public List<String> getSymptomTypeNameList(){return this.symptomTypeNameList;}
-
-
-        private List<String> fuzzySymptomTypeName;
-
-        public List<String> getFuzzySymptomTypeName(){return this.fuzzySymptomTypeName;}
-
-        private List<String> rightFuzzySymptomTypeName;
-
-        public List<String> getRightFuzzySymptomTypeName(){return this.rightFuzzySymptomTypeName;}
-        private List<String> symptomCodeList;
-
-        public List<String> getSymptomCodeList(){return this.symptomCodeList;}
-
-
-        private List<String> fuzzySymptomCode;
-
-        public List<String> getFuzzySymptomCode(){return this.fuzzySymptomCode;}
-
-        private List<String> rightFuzzySymptomCode;
-
-        public List<String> getRightFuzzySymptomCode(){return this.rightFuzzySymptomCode;}
+        public List<String> getRightFuzzySalesFailureTime(){return this.rightFuzzySalesFailureTime;}
         private List<String> symptomNameList;
 
         public List<String> getSymptomNameList(){return this.symptomNameList;}
@@ -3675,90 +2107,6 @@ public class MqmsVoucherRaw implements Serializable {
         private List<String> rightFuzzySymptomContent;
 
         public List<String> getRightFuzzySymptomContent(){return this.rightFuzzySymptomContent;}
-        private List<String> submitDateList;
-
-        public List<String> getSubmitDateList(){return this.submitDateList;}
-
-
-        private List<String> fuzzySubmitDate;
-
-        public List<String> getFuzzySubmitDate(){return this.fuzzySubmitDate;}
-
-        private List<String> rightFuzzySubmitDate;
-
-        public List<String> getRightFuzzySubmitDate(){return this.rightFuzzySubmitDate;}
-        private List<String> importantLevelList;
-
-        public List<String> getImportantLevelList(){return this.importantLevelList;}
-
-
-        private List<String> fuzzyImportantLevel;
-
-        public List<String> getFuzzyImportantLevel(){return this.fuzzyImportantLevel;}
-
-        private List<String> rightFuzzyImportantLevel;
-
-        public List<String> getRightFuzzyImportantLevel(){return this.rightFuzzyImportantLevel;}
-        private List<String> carTypeList;
-
-        public List<String> getCarTypeList(){return this.carTypeList;}
-
-
-        private List<String> fuzzyCarType;
-
-        public List<String> getFuzzyCarType(){return this.fuzzyCarType;}
-
-        private List<String> rightFuzzyCarType;
-
-        public List<String> getRightFuzzyCarType(){return this.rightFuzzyCarType;}
-        private List<String> diagnosticResultList;
-
-        public List<String> getDiagnosticResultList(){return this.diagnosticResultList;}
-
-
-        private List<String> fuzzyDiagnosticResult;
-
-        public List<String> getFuzzyDiagnosticResult(){return this.fuzzyDiagnosticResult;}
-
-        private List<String> rightFuzzyDiagnosticResult;
-
-        public List<String> getRightFuzzyDiagnosticResult(){return this.rightFuzzyDiagnosticResult;}
-        private List<String> veiUserDescriptionList;
-
-        public List<String> getVeiUserDescriptionList(){return this.veiUserDescriptionList;}
-
-
-        private List<String> fuzzyVeiUserDescription;
-
-        public List<String> getFuzzyVeiUserDescription(){return this.fuzzyVeiUserDescription;}
-
-        private List<String> rightFuzzyVeiUserDescription;
-
-        public List<String> getRightFuzzyVeiUserDescription(){return this.rightFuzzyVeiUserDescription;}
-        private List<String> partsCodeList;
-
-        public List<String> getPartsCodeList(){return this.partsCodeList;}
-
-
-        private List<String> fuzzyPartsCode;
-
-        public List<String> getFuzzyPartsCode(){return this.fuzzyPartsCode;}
-
-        private List<String> rightFuzzyPartsCode;
-
-        public List<String> getRightFuzzyPartsCode(){return this.rightFuzzyPartsCode;}
-        private List<String> partsNameList;
-
-        public List<String> getPartsNameList(){return this.partsNameList;}
-
-
-        private List<String> fuzzyPartsName;
-
-        public List<String> getFuzzyPartsName(){return this.fuzzyPartsName;}
-
-        private List<String> rightFuzzyPartsName;
-
-        public List<String> getRightFuzzyPartsName(){return this.rightFuzzyPartsName;}
         private List<java.math.BigDecimal> manCostList;
 
         public List<java.math.BigDecimal> getManCostList(){return this.manCostList;}
@@ -3771,17 +2119,53 @@ public class MqmsVoucherRaw implements Serializable {
 
         public java.math.BigDecimal getManCostEd(){return this.manCostEd;}
 
-        private List<java.math.BigDecimal> materialCostList;
+        private List<java.math.BigDecimal> partsCostList;
 
-        public List<java.math.BigDecimal> getMaterialCostList(){return this.materialCostList;}
+        public List<java.math.BigDecimal> getPartsCostList(){return this.partsCostList;}
 
-        private java.math.BigDecimal materialCostSt;
+        private java.math.BigDecimal partsCostSt;
 
-        private java.math.BigDecimal materialCostEd;
+        private java.math.BigDecimal partsCostEd;
 
-        public java.math.BigDecimal getMaterialCostSt(){return this.materialCostSt;}
+        public java.math.BigDecimal getPartsCostSt(){return this.partsCostSt;}
 
-        public java.math.BigDecimal getMaterialCostEd(){return this.materialCostEd;}
+        public java.math.BigDecimal getPartsCostEd(){return this.partsCostEd;}
+
+        private List<java.math.BigDecimal> partsManagerCostList;
+
+        public List<java.math.BigDecimal> getPartsManagerCostList(){return this.partsManagerCostList;}
+
+        private java.math.BigDecimal partsManagerCostSt;
+
+        private java.math.BigDecimal partsManagerCostEd;
+
+        public java.math.BigDecimal getPartsManagerCostSt(){return this.partsManagerCostSt;}
+
+        public java.math.BigDecimal getPartsManagerCostEd(){return this.partsManagerCostEd;}
+
+        private List<java.math.BigDecimal> outgoingCostList;
+
+        public List<java.math.BigDecimal> getOutgoingCostList(){return this.outgoingCostList;}
+
+        private java.math.BigDecimal outgoingCostSt;
+
+        private java.math.BigDecimal outgoingCostEd;
+
+        public java.math.BigDecimal getOutgoingCostSt(){return this.outgoingCostSt;}
+
+        public java.math.BigDecimal getOutgoingCostEd(){return this.outgoingCostEd;}
+
+        private List<java.math.BigDecimal> maintainCostList;
+
+        public List<java.math.BigDecimal> getMaintainCostList(){return this.maintainCostList;}
+
+        private java.math.BigDecimal maintainCostSt;
+
+        private java.math.BigDecimal maintainCostEd;
+
+        public java.math.BigDecimal getMaintainCostSt(){return this.maintainCostSt;}
+
+        public java.math.BigDecimal getMaintainCostEd(){return this.maintainCostEd;}
 
         private List<java.math.BigDecimal> otherCostList;
 
@@ -3807,126 +2191,54 @@ public class MqmsVoucherRaw implements Serializable {
 
         public java.math.BigDecimal getTotalCostEd(){return this.totalCostEd;}
 
-        private List<String> confirmorList;
+        private List<String> importantLevelList;
 
-        public List<String> getConfirmorList(){return this.confirmorList;}
-
-
-        private List<String> fuzzyConfirmor;
-
-        public List<String> getFuzzyConfirmor(){return this.fuzzyConfirmor;}
-
-        private List<String> rightFuzzyConfirmor;
-
-        public List<String> getRightFuzzyConfirmor(){return this.rightFuzzyConfirmor;}
-        private List<String> confirmDateList;
-
-        public List<String> getConfirmDateList(){return this.confirmDateList;}
+        public List<String> getImportantLevelList(){return this.importantLevelList;}
 
 
-        private List<String> fuzzyConfirmDate;
+        private List<String> fuzzyImportantLevel;
 
-        public List<String> getFuzzyConfirmDate(){return this.fuzzyConfirmDate;}
+        public List<String> getFuzzyImportantLevel(){return this.fuzzyImportantLevel;}
 
-        private List<String> rightFuzzyConfirmDate;
+        private List<String> rightFuzzyImportantLevel;
 
-        public List<String> getRightFuzzyConfirmDate(){return this.rightFuzzyConfirmDate;}
-        private List<String> veiSysDescriptionList;
+        public List<String> getRightFuzzyImportantLevel(){return this.rightFuzzyImportantLevel;}
+        private List<String> transmissionTypeList;
 
-        public List<String> getVeiSysDescriptionList(){return this.veiSysDescriptionList;}
-
-
-        private List<String> fuzzyVeiSysDescription;
-
-        public List<String> getFuzzyVeiSysDescription(){return this.fuzzyVeiSysDescription;}
-
-        private List<String> rightFuzzyVeiSysDescription;
-
-        public List<String> getRightFuzzyVeiSysDescription(){return this.rightFuzzyVeiSysDescription;}
-        private List<String> licenseCodeList;
-
-        public List<String> getLicenseCodeList(){return this.licenseCodeList;}
+        public List<String> getTransmissionTypeList(){return this.transmissionTypeList;}
 
 
-        private List<String> fuzzyLicenseCode;
+        private List<String> fuzzyTransmissionType;
 
-        public List<String> getFuzzyLicenseCode(){return this.fuzzyLicenseCode;}
+        public List<String> getFuzzyTransmissionType(){return this.fuzzyTransmissionType;}
 
-        private List<String> rightFuzzyLicenseCode;
+        private List<String> rightFuzzyTransmissionType;
 
-        public List<String> getRightFuzzyLicenseCode(){return this.rightFuzzyLicenseCode;}
-        private List<String> servicePerformance1List;
+        public List<String> getRightFuzzyTransmissionType(){return this.rightFuzzyTransmissionType;}
+        private List<String> newPartsBlindingNumList;
 
-        public List<String> getServicePerformance1List(){return this.servicePerformance1List;}
-
-
-        private List<String> fuzzyServicePerformance1;
-
-        public List<String> getFuzzyServicePerformance1(){return this.fuzzyServicePerformance1;}
-
-        private List<String> rightFuzzyServicePerformance1;
-
-        public List<String> getRightFuzzyServicePerformance1(){return this.rightFuzzyServicePerformance1;}
-        private List<String> servicePerformance2List;
-
-        public List<String> getServicePerformance2List(){return this.servicePerformance2List;}
+        public List<String> getNewPartsBlindingNumList(){return this.newPartsBlindingNumList;}
 
 
-        private List<String> fuzzyServicePerformance2;
+        private List<String> fuzzyNewPartsBlindingNum;
 
-        public List<String> getFuzzyServicePerformance2(){return this.fuzzyServicePerformance2;}
+        public List<String> getFuzzyNewPartsBlindingNum(){return this.fuzzyNewPartsBlindingNum;}
 
-        private List<String> rightFuzzyServicePerformance2;
+        private List<String> rightFuzzyNewPartsBlindingNum;
 
-        public List<String> getRightFuzzyServicePerformance2(){return this.rightFuzzyServicePerformance2;}
-        private List<String> servicePerformance3List;
+        public List<String> getRightFuzzyNewPartsBlindingNum(){return this.rightFuzzyNewPartsBlindingNum;}
+        private List<String> submitDateList;
 
-        public List<String> getServicePerformance3List(){return this.servicePerformance3List;}
-
-
-        private List<String> fuzzyServicePerformance3;
-
-        public List<String> getFuzzyServicePerformance3(){return this.fuzzyServicePerformance3;}
-
-        private List<String> rightFuzzyServicePerformance3;
-
-        public List<String> getRightFuzzyServicePerformance3(){return this.rightFuzzyServicePerformance3;}
-        private List<String> modelYearList;
-
-        public List<String> getModelYearList(){return this.modelYearList;}
+        public List<String> getSubmitDateList(){return this.submitDateList;}
 
 
-        private List<String> fuzzyModelYear;
+        private List<String> fuzzySubmitDate;
 
-        public List<String> getFuzzyModelYear(){return this.fuzzyModelYear;}
+        public List<String> getFuzzySubmitDate(){return this.fuzzySubmitDate;}
 
-        private List<String> rightFuzzyModelYear;
+        private List<String> rightFuzzySubmitDate;
 
-        public List<String> getRightFuzzyModelYear(){return this.rightFuzzyModelYear;}
-        private List<String> offlineDateList;
-
-        public List<String> getOfflineDateList(){return this.offlineDateList;}
-
-
-        private List<String> fuzzyOfflineDate;
-
-        public List<String> getFuzzyOfflineDate(){return this.fuzzyOfflineDate;}
-
-        private List<String> rightFuzzyOfflineDate;
-
-        public List<String> getRightFuzzyOfflineDate(){return this.rightFuzzyOfflineDate;}
-        private List<String> salesDateList;
-
-        public List<String> getSalesDateList(){return this.salesDateList;}
-
-
-        private List<String> fuzzySalesDate;
-
-        public List<String> getFuzzySalesDate(){return this.fuzzySalesDate;}
-
-        private List<String> rightFuzzySalesDate;
-
-        public List<String> getRightFuzzySalesDate(){return this.rightFuzzySalesDate;}
+        public List<String> getRightFuzzySubmitDate(){return this.rightFuzzySubmitDate;}
 
         public ConditionBuilder voucherIdBetWeen(Integer voucherIdSt,Integer voucherIdEd){
             this.voucherIdSt = voucherIdSt;
@@ -3951,6 +2263,36 @@ public class MqmsVoucherRaw implements Serializable {
 
         public ConditionBuilder voucherIdList(List<Integer> voucherId){
             this.voucherIdList = voucherId;
+            return this;
+        }
+
+        public ConditionBuilder fuzzyQualityFeedbackCode (List<String> fuzzyQualityFeedbackCode){
+            this.fuzzyQualityFeedbackCode = fuzzyQualityFeedbackCode;
+            return this;
+        }
+
+        public ConditionBuilder fuzzyQualityFeedbackCode (String ... fuzzyQualityFeedbackCode){
+            this.fuzzyQualityFeedbackCode = solveNullList(fuzzyQualityFeedbackCode);
+            return this;
+        }
+
+        public ConditionBuilder rightFuzzyQualityFeedbackCode (List<String> rightFuzzyQualityFeedbackCode){
+            this.rightFuzzyQualityFeedbackCode = rightFuzzyQualityFeedbackCode;
+            return this;
+        }
+
+        public ConditionBuilder rightFuzzyQualityFeedbackCode (String ... rightFuzzyQualityFeedbackCode){
+            this.rightFuzzyQualityFeedbackCode = solveNullList(rightFuzzyQualityFeedbackCode);
+            return this;
+        }
+
+        public ConditionBuilder qualityFeedbackCodeList(String ... qualityFeedbackCode){
+            this.qualityFeedbackCodeList = solveNullList(qualityFeedbackCode);
+            return this;
+        }
+
+        public ConditionBuilder qualityFeedbackCodeList(List<String> qualityFeedbackCode){
+            this.qualityFeedbackCodeList = qualityFeedbackCode;
             return this;
         }
 
@@ -4044,213 +2386,33 @@ public class MqmsVoucherRaw implements Serializable {
             return this;
         }
 
-        public ConditionBuilder fuzzyVeiState (List<String> fuzzyVeiState){
-            this.fuzzyVeiState = fuzzyVeiState;
+        public ConditionBuilder fuzzyDealerShortName (List<String> fuzzyDealerShortName){
+            this.fuzzyDealerShortName = fuzzyDealerShortName;
             return this;
         }
 
-        public ConditionBuilder fuzzyVeiState (String ... fuzzyVeiState){
-            this.fuzzyVeiState = solveNullList(fuzzyVeiState);
+        public ConditionBuilder fuzzyDealerShortName (String ... fuzzyDealerShortName){
+            this.fuzzyDealerShortName = solveNullList(fuzzyDealerShortName);
             return this;
         }
 
-        public ConditionBuilder rightFuzzyVeiState (List<String> rightFuzzyVeiState){
-            this.rightFuzzyVeiState = rightFuzzyVeiState;
+        public ConditionBuilder rightFuzzyDealerShortName (List<String> rightFuzzyDealerShortName){
+            this.rightFuzzyDealerShortName = rightFuzzyDealerShortName;
             return this;
         }
 
-        public ConditionBuilder rightFuzzyVeiState (String ... rightFuzzyVeiState){
-            this.rightFuzzyVeiState = solveNullList(rightFuzzyVeiState);
+        public ConditionBuilder rightFuzzyDealerShortName (String ... rightFuzzyDealerShortName){
+            this.rightFuzzyDealerShortName = solveNullList(rightFuzzyDealerShortName);
             return this;
         }
 
-        public ConditionBuilder veiStateList(String ... veiState){
-            this.veiStateList = solveNullList(veiState);
+        public ConditionBuilder dealerShortNameList(String ... dealerShortName){
+            this.dealerShortNameList = solveNullList(dealerShortName);
             return this;
         }
 
-        public ConditionBuilder veiStateList(List<String> veiState){
-            this.veiStateList = veiState;
-            return this;
-        }
-
-        public ConditionBuilder fuzzyUpdateTime (List<String> fuzzyUpdateTime){
-            this.fuzzyUpdateTime = fuzzyUpdateTime;
-            return this;
-        }
-
-        public ConditionBuilder fuzzyUpdateTime (String ... fuzzyUpdateTime){
-            this.fuzzyUpdateTime = solveNullList(fuzzyUpdateTime);
-            return this;
-        }
-
-        public ConditionBuilder rightFuzzyUpdateTime (List<String> rightFuzzyUpdateTime){
-            this.rightFuzzyUpdateTime = rightFuzzyUpdateTime;
-            return this;
-        }
-
-        public ConditionBuilder rightFuzzyUpdateTime (String ... rightFuzzyUpdateTime){
-            this.rightFuzzyUpdateTime = solveNullList(rightFuzzyUpdateTime);
-            return this;
-        }
-
-        public ConditionBuilder updateTimeList(String ... updateTime){
-            this.updateTimeList = solveNullList(updateTime);
-            return this;
-        }
-
-        public ConditionBuilder updateTimeList(List<String> updateTime){
-            this.updateTimeList = updateTime;
-            return this;
-        }
-
-        public ConditionBuilder fuzzyMaintenanceContractCode (List<String> fuzzyMaintenanceContractCode){
-            this.fuzzyMaintenanceContractCode = fuzzyMaintenanceContractCode;
-            return this;
-        }
-
-        public ConditionBuilder fuzzyMaintenanceContractCode (String ... fuzzyMaintenanceContractCode){
-            this.fuzzyMaintenanceContractCode = solveNullList(fuzzyMaintenanceContractCode);
-            return this;
-        }
-
-        public ConditionBuilder rightFuzzyMaintenanceContractCode (List<String> rightFuzzyMaintenanceContractCode){
-            this.rightFuzzyMaintenanceContractCode = rightFuzzyMaintenanceContractCode;
-            return this;
-        }
-
-        public ConditionBuilder rightFuzzyMaintenanceContractCode (String ... rightFuzzyMaintenanceContractCode){
-            this.rightFuzzyMaintenanceContractCode = solveNullList(rightFuzzyMaintenanceContractCode);
-            return this;
-        }
-
-        public ConditionBuilder maintenanceContractCodeList(String ... maintenanceContractCode){
-            this.maintenanceContractCodeList = solveNullList(maintenanceContractCode);
-            return this;
-        }
-
-        public ConditionBuilder maintenanceContractCodeList(List<String> maintenanceContractCode){
-            this.maintenanceContractCodeList = maintenanceContractCode;
-            return this;
-        }
-
-        public ConditionBuilder fuzzyMaintenanceItemCode (List<String> fuzzyMaintenanceItemCode){
-            this.fuzzyMaintenanceItemCode = fuzzyMaintenanceItemCode;
-            return this;
-        }
-
-        public ConditionBuilder fuzzyMaintenanceItemCode (String ... fuzzyMaintenanceItemCode){
-            this.fuzzyMaintenanceItemCode = solveNullList(fuzzyMaintenanceItemCode);
-            return this;
-        }
-
-        public ConditionBuilder rightFuzzyMaintenanceItemCode (List<String> rightFuzzyMaintenanceItemCode){
-            this.rightFuzzyMaintenanceItemCode = rightFuzzyMaintenanceItemCode;
-            return this;
-        }
-
-        public ConditionBuilder rightFuzzyMaintenanceItemCode (String ... rightFuzzyMaintenanceItemCode){
-            this.rightFuzzyMaintenanceItemCode = solveNullList(rightFuzzyMaintenanceItemCode);
-            return this;
-        }
-
-        public ConditionBuilder maintenanceItemCodeList(String ... maintenanceItemCode){
-            this.maintenanceItemCodeList = solveNullList(maintenanceItemCode);
-            return this;
-        }
-
-        public ConditionBuilder maintenanceItemCodeList(List<String> maintenanceItemCode){
-            this.maintenanceItemCodeList = maintenanceItemCode;
-            return this;
-        }
-
-        public ConditionBuilder fuzzyContact (List<String> fuzzyContact){
-            this.fuzzyContact = fuzzyContact;
-            return this;
-        }
-
-        public ConditionBuilder fuzzyContact (String ... fuzzyContact){
-            this.fuzzyContact = solveNullList(fuzzyContact);
-            return this;
-        }
-
-        public ConditionBuilder rightFuzzyContact (List<String> rightFuzzyContact){
-            this.rightFuzzyContact = rightFuzzyContact;
-            return this;
-        }
-
-        public ConditionBuilder rightFuzzyContact (String ... rightFuzzyContact){
-            this.rightFuzzyContact = solveNullList(rightFuzzyContact);
-            return this;
-        }
-
-        public ConditionBuilder contactList(String ... contact){
-            this.contactList = solveNullList(contact);
-            return this;
-        }
-
-        public ConditionBuilder contactList(List<String> contact){
-            this.contactList = contact;
-            return this;
-        }
-
-        public ConditionBuilder fuzzyPhoneNo (List<String> fuzzyPhoneNo){
-            this.fuzzyPhoneNo = fuzzyPhoneNo;
-            return this;
-        }
-
-        public ConditionBuilder fuzzyPhoneNo (String ... fuzzyPhoneNo){
-            this.fuzzyPhoneNo = solveNullList(fuzzyPhoneNo);
-            return this;
-        }
-
-        public ConditionBuilder rightFuzzyPhoneNo (List<String> rightFuzzyPhoneNo){
-            this.rightFuzzyPhoneNo = rightFuzzyPhoneNo;
-            return this;
-        }
-
-        public ConditionBuilder rightFuzzyPhoneNo (String ... rightFuzzyPhoneNo){
-            this.rightFuzzyPhoneNo = solveNullList(rightFuzzyPhoneNo);
-            return this;
-        }
-
-        public ConditionBuilder phoneNoList(String ... phoneNo){
-            this.phoneNoList = solveNullList(phoneNo);
-            return this;
-        }
-
-        public ConditionBuilder phoneNoList(List<String> phoneNo){
-            this.phoneNoList = phoneNo;
-            return this;
-        }
-
-        public ConditionBuilder fuzzyFax (List<String> fuzzyFax){
-            this.fuzzyFax = fuzzyFax;
-            return this;
-        }
-
-        public ConditionBuilder fuzzyFax (String ... fuzzyFax){
-            this.fuzzyFax = solveNullList(fuzzyFax);
-            return this;
-        }
-
-        public ConditionBuilder rightFuzzyFax (List<String> rightFuzzyFax){
-            this.rightFuzzyFax = rightFuzzyFax;
-            return this;
-        }
-
-        public ConditionBuilder rightFuzzyFax (String ... rightFuzzyFax){
-            this.rightFuzzyFax = solveNullList(rightFuzzyFax);
-            return this;
-        }
-
-        public ConditionBuilder faxList(String ... fax){
-            this.faxList = solveNullList(fax);
-            return this;
-        }
-
-        public ConditionBuilder faxList(List<String> fax){
-            this.faxList = fax;
+        public ConditionBuilder dealerShortNameList(List<String> dealerShortName){
+            this.dealerShortNameList = dealerShortName;
             return this;
         }
 
@@ -4344,329 +2506,153 @@ public class MqmsVoucherRaw implements Serializable {
             return this;
         }
 
-        public ConditionBuilder fuzzyEgtypeCode (List<String> fuzzyEgtypeCode){
-            this.fuzzyEgtypeCode = fuzzyEgtypeCode;
+        public ConditionBuilder fuzzyPartsName (List<String> fuzzyPartsName){
+            this.fuzzyPartsName = fuzzyPartsName;
             return this;
         }
 
-        public ConditionBuilder fuzzyEgtypeCode (String ... fuzzyEgtypeCode){
-            this.fuzzyEgtypeCode = solveNullList(fuzzyEgtypeCode);
+        public ConditionBuilder fuzzyPartsName (String ... fuzzyPartsName){
+            this.fuzzyPartsName = solveNullList(fuzzyPartsName);
             return this;
         }
 
-        public ConditionBuilder rightFuzzyEgtypeCode (List<String> rightFuzzyEgtypeCode){
-            this.rightFuzzyEgtypeCode = rightFuzzyEgtypeCode;
+        public ConditionBuilder rightFuzzyPartsName (List<String> rightFuzzyPartsName){
+            this.rightFuzzyPartsName = rightFuzzyPartsName;
             return this;
         }
 
-        public ConditionBuilder rightFuzzyEgtypeCode (String ... rightFuzzyEgtypeCode){
-            this.rightFuzzyEgtypeCode = solveNullList(rightFuzzyEgtypeCode);
+        public ConditionBuilder rightFuzzyPartsName (String ... rightFuzzyPartsName){
+            this.rightFuzzyPartsName = solveNullList(rightFuzzyPartsName);
             return this;
         }
 
-        public ConditionBuilder egtypeCodeList(String ... egtypeCode){
-            this.egtypeCodeList = solveNullList(egtypeCode);
+        public ConditionBuilder partsNameList(String ... partsName){
+            this.partsNameList = solveNullList(partsName);
             return this;
         }
 
-        public ConditionBuilder egtypeCodeList(List<String> egtypeCode){
-            this.egtypeCodeList = egtypeCode;
+        public ConditionBuilder partsNameList(List<String> partsName){
+            this.partsNameList = partsName;
             return this;
         }
 
-        public ConditionBuilder fuzzyTransmissionType (List<String> fuzzyTransmissionType){
-            this.fuzzyTransmissionType = fuzzyTransmissionType;
+        public ConditionBuilder fuzzyFirstLevelName (List<String> fuzzyFirstLevelName){
+            this.fuzzyFirstLevelName = fuzzyFirstLevelName;
             return this;
         }
 
-        public ConditionBuilder fuzzyTransmissionType (String ... fuzzyTransmissionType){
-            this.fuzzyTransmissionType = solveNullList(fuzzyTransmissionType);
+        public ConditionBuilder fuzzyFirstLevelName (String ... fuzzyFirstLevelName){
+            this.fuzzyFirstLevelName = solveNullList(fuzzyFirstLevelName);
             return this;
         }
 
-        public ConditionBuilder rightFuzzyTransmissionType (List<String> rightFuzzyTransmissionType){
-            this.rightFuzzyTransmissionType = rightFuzzyTransmissionType;
+        public ConditionBuilder rightFuzzyFirstLevelName (List<String> rightFuzzyFirstLevelName){
+            this.rightFuzzyFirstLevelName = rightFuzzyFirstLevelName;
             return this;
         }
 
-        public ConditionBuilder rightFuzzyTransmissionType (String ... rightFuzzyTransmissionType){
-            this.rightFuzzyTransmissionType = solveNullList(rightFuzzyTransmissionType);
+        public ConditionBuilder rightFuzzyFirstLevelName (String ... rightFuzzyFirstLevelName){
+            this.rightFuzzyFirstLevelName = solveNullList(rightFuzzyFirstLevelName);
             return this;
         }
 
-        public ConditionBuilder transmissionTypeList(String ... transmissionType){
-            this.transmissionTypeList = solveNullList(transmissionType);
+        public ConditionBuilder firstLevelNameList(String ... firstLevelName){
+            this.firstLevelNameList = solveNullList(firstLevelName);
             return this;
         }
 
-        public ConditionBuilder transmissionTypeList(List<String> transmissionType){
-            this.transmissionTypeList = transmissionType;
+        public ConditionBuilder firstLevelNameList(List<String> firstLevelName){
+            this.firstLevelNameList = firstLevelName;
             return this;
         }
 
-        public ConditionBuilder mileageBetWeen(Integer mileageSt,Integer mileageEd){
-            this.mileageSt = mileageSt;
-            this.mileageEd = mileageEd;
+        public ConditionBuilder fuzzyPartsShortNameSpecPneno (List<String> fuzzyPartsShortNameSpecPneno){
+            this.fuzzyPartsShortNameSpecPneno = fuzzyPartsShortNameSpecPneno;
             return this;
         }
 
-        public ConditionBuilder mileageGreaterEqThan(Integer mileageSt){
-            this.mileageSt = mileageSt;
+        public ConditionBuilder fuzzyPartsShortNameSpecPneno (String ... fuzzyPartsShortNameSpecPneno){
+            this.fuzzyPartsShortNameSpecPneno = solveNullList(fuzzyPartsShortNameSpecPneno);
             return this;
         }
-        public ConditionBuilder mileageLessEqThan(Integer mileageEd){
-            this.mileageEd = mileageEd;
-            return this;
-        }
-
-
-        public ConditionBuilder mileageList(Integer ... mileage){
-            this.mileageList = solveNullList(mileage);
-            return this;
-        }
-
-        public ConditionBuilder mileageList(List<Integer> mileage){
-            this.mileageList = mileage;
-            return this;
-        }
-
-        public ConditionBuilder fuzzyTransmissionCode (List<String> fuzzyTransmissionCode){
-            this.fuzzyTransmissionCode = fuzzyTransmissionCode;
-            return this;
-        }
-
-        public ConditionBuilder fuzzyTransmissionCode (String ... fuzzyTransmissionCode){
-            this.fuzzyTransmissionCode = solveNullList(fuzzyTransmissionCode);
-            return this;
-        }
-
-        public ConditionBuilder rightFuzzyTransmissionCode (List<String> rightFuzzyTransmissionCode){
-            this.rightFuzzyTransmissionCode = rightFuzzyTransmissionCode;
-            return this;
-        }
-
-        public ConditionBuilder rightFuzzyTransmissionCode (String ... rightFuzzyTransmissionCode){
-            this.rightFuzzyTransmissionCode = solveNullList(rightFuzzyTransmissionCode);
-            return this;
-        }
-
-        public ConditionBuilder transmissionCodeList(String ... transmissionCode){
-            this.transmissionCodeList = solveNullList(transmissionCode);
-            return this;
-        }
-
-        public ConditionBuilder transmissionCodeList(List<String> transmissionCode){
-            this.transmissionCodeList = transmissionCode;
-            return this;
-        }
-
-        public ConditionBuilder fuzzyMtoc (List<String> fuzzyMtoc){
-            this.fuzzyMtoc = fuzzyMtoc;
-            return this;
-        }
-
-        public ConditionBuilder fuzzyMtoc (String ... fuzzyMtoc){
-            this.fuzzyMtoc = solveNullList(fuzzyMtoc);
-            return this;
-        }
-
-        public ConditionBuilder rightFuzzyMtoc (List<String> rightFuzzyMtoc){
-            this.rightFuzzyMtoc = rightFuzzyMtoc;
-            return this;
-        }
-
-        public ConditionBuilder rightFuzzyMtoc (String ... rightFuzzyMtoc){
-            this.rightFuzzyMtoc = solveNullList(rightFuzzyMtoc);
-            return this;
-        }
-
-        public ConditionBuilder mtocList(String ... mtoc){
-            this.mtocList = solveNullList(mtoc);
-            return this;
-        }
-
-        public ConditionBuilder mtocList(List<String> mtoc){
-            this.mtocList = mtoc;
-            return this;
-        }
-
-        public ConditionBuilder fuzzyFailureDate (List<String> fuzzyFailureDate){
-            this.fuzzyFailureDate = fuzzyFailureDate;
-            return this;
-        }
-
-        public ConditionBuilder fuzzyFailureDate (String ... fuzzyFailureDate){
-            this.fuzzyFailureDate = solveNullList(fuzzyFailureDate);
-            return this;
-        }
-
-        public ConditionBuilder rightFuzzyFailureDate (List<String> rightFuzzyFailureDate){
-            this.rightFuzzyFailureDate = rightFuzzyFailureDate;
-            return this;
-        }
-
-        public ConditionBuilder rightFuzzyFailureDate (String ... rightFuzzyFailureDate){
-            this.rightFuzzyFailureDate = solveNullList(rightFuzzyFailureDate);
-            return this;
-        }
-
-        public ConditionBuilder failureDateList(String ... failureDate){
-            this.failureDateList = solveNullList(failureDate);
-            return this;
-        }
-
-        public ConditionBuilder failureDateList(List<String> failureDate){
-            this.failureDateList = failureDate;
-            return this;
-        }
-
-        public ConditionBuilder fuzzyFailureLocationCode (List<String> fuzzyFailureLocationCode){
-            this.fuzzyFailureLocationCode = fuzzyFailureLocationCode;
-            return this;
-        }
-
-        public ConditionBuilder fuzzyFailureLocationCode (String ... fuzzyFailureLocationCode){
-            this.fuzzyFailureLocationCode = solveNullList(fuzzyFailureLocationCode);
-            return this;
-        }
-
-        public ConditionBuilder rightFuzzyFailureLocationCode (List<String> rightFuzzyFailureLocationCode){
-            this.rightFuzzyFailureLocationCode = rightFuzzyFailureLocationCode;
-            return this;
-        }
-
-        public ConditionBuilder rightFuzzyFailureLocationCode (String ... rightFuzzyFailureLocationCode){
-            this.rightFuzzyFailureLocationCode = solveNullList(rightFuzzyFailureLocationCode);
-            return this;
-        }
-
-        public ConditionBuilder failureLocationCodeList(String ... failureLocationCode){
-            this.failureLocationCodeList = solveNullList(failureLocationCode);
-            return this;
-        }
-
-        public ConditionBuilder failureLocationCodeList(List<String> failureLocationCode){
-            this.failureLocationCodeList = failureLocationCode;
-            return this;
-        }
-
-        public ConditionBuilder fuzzyFailureLocationName (List<String> fuzzyFailureLocationName){
-            this.fuzzyFailureLocationName = fuzzyFailureLocationName;
-            return this;
-        }
-
-        public ConditionBuilder fuzzyFailureLocationName (String ... fuzzyFailureLocationName){
-            this.fuzzyFailureLocationName = solveNullList(fuzzyFailureLocationName);
-            return this;
-        }
-
-        public ConditionBuilder rightFuzzyFailureLocationName (List<String> rightFuzzyFailureLocationName){
-            this.rightFuzzyFailureLocationName = rightFuzzyFailureLocationName;
-            return this;
-        }
-
-        public ConditionBuilder rightFuzzyFailureLocationName (String ... rightFuzzyFailureLocationName){
-            this.rightFuzzyFailureLocationName = solveNullList(rightFuzzyFailureLocationName);
-            return this;
-        }
-
-        public ConditionBuilder failureLocationNameList(String ... failureLocationName){
-            this.failureLocationNameList = solveNullList(failureLocationName);
-            return this;
-        }
-
-        public ConditionBuilder failureLocationNameList(List<String> failureLocationName){
-            this.failureLocationNameList = failureLocationName;
-            return this;
-        }
-
-        public ConditionBuilder fuzzySymptomTypeCode (List<String> fuzzySymptomTypeCode){
-            this.fuzzySymptomTypeCode = fuzzySymptomTypeCode;
-            return this;
-        }
-
-        public ConditionBuilder fuzzySymptomTypeCode (String ... fuzzySymptomTypeCode){
-            this.fuzzySymptomTypeCode = solveNullList(fuzzySymptomTypeCode);
-            return this;
-        }
 
-        public ConditionBuilder rightFuzzySymptomTypeCode (List<String> rightFuzzySymptomTypeCode){
-            this.rightFuzzySymptomTypeCode = rightFuzzySymptomTypeCode;
+        public ConditionBuilder rightFuzzyPartsShortNameSpecPneno (List<String> rightFuzzyPartsShortNameSpecPneno){
+            this.rightFuzzyPartsShortNameSpecPneno = rightFuzzyPartsShortNameSpecPneno;
             return this;
         }
 
-        public ConditionBuilder rightFuzzySymptomTypeCode (String ... rightFuzzySymptomTypeCode){
-            this.rightFuzzySymptomTypeCode = solveNullList(rightFuzzySymptomTypeCode);
+        public ConditionBuilder rightFuzzyPartsShortNameSpecPneno (String ... rightFuzzyPartsShortNameSpecPneno){
+            this.rightFuzzyPartsShortNameSpecPneno = solveNullList(rightFuzzyPartsShortNameSpecPneno);
             return this;
         }
 
-        public ConditionBuilder symptomTypeCodeList(String ... symptomTypeCode){
-            this.symptomTypeCodeList = solveNullList(symptomTypeCode);
+        public ConditionBuilder partsShortNameSpecPnenoList(String ... partsShortNameSpecPneno){
+            this.partsShortNameSpecPnenoList = solveNullList(partsShortNameSpecPneno);
             return this;
         }
 
-        public ConditionBuilder symptomTypeCodeList(List<String> symptomTypeCode){
-            this.symptomTypeCodeList = symptomTypeCode;
+        public ConditionBuilder partsShortNameSpecPnenoList(List<String> partsShortNameSpecPneno){
+            this.partsShortNameSpecPnenoList = partsShortNameSpecPneno;
             return this;
         }
 
-        public ConditionBuilder fuzzySymptomTypeName (List<String> fuzzySymptomTypeName){
-            this.fuzzySymptomTypeName = fuzzySymptomTypeName;
+        public ConditionBuilder fuzzyManufactureDate (List<String> fuzzyManufactureDate){
+            this.fuzzyManufactureDate = fuzzyManufactureDate;
             return this;
         }
 
-        public ConditionBuilder fuzzySymptomTypeName (String ... fuzzySymptomTypeName){
-            this.fuzzySymptomTypeName = solveNullList(fuzzySymptomTypeName);
+        public ConditionBuilder fuzzyManufactureDate (String ... fuzzyManufactureDate){
+            this.fuzzyManufactureDate = solveNullList(fuzzyManufactureDate);
             return this;
         }
 
-        public ConditionBuilder rightFuzzySymptomTypeName (List<String> rightFuzzySymptomTypeName){
-            this.rightFuzzySymptomTypeName = rightFuzzySymptomTypeName;
+        public ConditionBuilder rightFuzzyManufactureDate (List<String> rightFuzzyManufactureDate){
+            this.rightFuzzyManufactureDate = rightFuzzyManufactureDate;
             return this;
         }
 
-        public ConditionBuilder rightFuzzySymptomTypeName (String ... rightFuzzySymptomTypeName){
-            this.rightFuzzySymptomTypeName = solveNullList(rightFuzzySymptomTypeName);
+        public ConditionBuilder rightFuzzyManufactureDate (String ... rightFuzzyManufactureDate){
+            this.rightFuzzyManufactureDate = solveNullList(rightFuzzyManufactureDate);
             return this;
         }
 
-        public ConditionBuilder symptomTypeNameList(String ... symptomTypeName){
-            this.symptomTypeNameList = solveNullList(symptomTypeName);
+        public ConditionBuilder manufactureDateList(String ... manufactureDate){
+            this.manufactureDateList = solveNullList(manufactureDate);
             return this;
         }
 
-        public ConditionBuilder symptomTypeNameList(List<String> symptomTypeName){
-            this.symptomTypeNameList = symptomTypeName;
+        public ConditionBuilder manufactureDateList(List<String> manufactureDate){
+            this.manufactureDateList = manufactureDate;
             return this;
         }
 
-        public ConditionBuilder fuzzySymptomCode (List<String> fuzzySymptomCode){
-            this.fuzzySymptomCode = fuzzySymptomCode;
+        public ConditionBuilder fuzzySalesFailureTime (List<String> fuzzySalesFailureTime){
+            this.fuzzySalesFailureTime = fuzzySalesFailureTime;
             return this;
         }
 
-        public ConditionBuilder fuzzySymptomCode (String ... fuzzySymptomCode){
-            this.fuzzySymptomCode = solveNullList(fuzzySymptomCode);
+        public ConditionBuilder fuzzySalesFailureTime (String ... fuzzySalesFailureTime){
+            this.fuzzySalesFailureTime = solveNullList(fuzzySalesFailureTime);
             return this;
         }
 
-        public ConditionBuilder rightFuzzySymptomCode (List<String> rightFuzzySymptomCode){
-            this.rightFuzzySymptomCode = rightFuzzySymptomCode;
+        public ConditionBuilder rightFuzzySalesFailureTime (List<String> rightFuzzySalesFailureTime){
+            this.rightFuzzySalesFailureTime = rightFuzzySalesFailureTime;
             return this;
         }
 
-        public ConditionBuilder rightFuzzySymptomCode (String ... rightFuzzySymptomCode){
-            this.rightFuzzySymptomCode = solveNullList(rightFuzzySymptomCode);
+        public ConditionBuilder rightFuzzySalesFailureTime (String ... rightFuzzySalesFailureTime){
+            this.rightFuzzySalesFailureTime = solveNullList(rightFuzzySalesFailureTime);
             return this;
         }
 
-        public ConditionBuilder symptomCodeList(String ... symptomCode){
-            this.symptomCodeList = solveNullList(symptomCode);
+        public ConditionBuilder salesFailureTimeList(String ... salesFailureTime){
+            this.salesFailureTimeList = solveNullList(salesFailureTime);
             return this;
         }
 
-        public ConditionBuilder symptomCodeList(List<String> symptomCode){
-            this.symptomCodeList = symptomCode;
+        public ConditionBuilder salesFailureTimeList(List<String> salesFailureTime){
+            this.salesFailureTimeList = salesFailureTime;
             return this;
         }
 
@@ -4730,216 +2716,6 @@ public class MqmsVoucherRaw implements Serializable {
             return this;
         }
 
-        public ConditionBuilder fuzzySubmitDate (List<String> fuzzySubmitDate){
-            this.fuzzySubmitDate = fuzzySubmitDate;
-            return this;
-        }
-
-        public ConditionBuilder fuzzySubmitDate (String ... fuzzySubmitDate){
-            this.fuzzySubmitDate = solveNullList(fuzzySubmitDate);
-            return this;
-        }
-
-        public ConditionBuilder rightFuzzySubmitDate (List<String> rightFuzzySubmitDate){
-            this.rightFuzzySubmitDate = rightFuzzySubmitDate;
-            return this;
-        }
-
-        public ConditionBuilder rightFuzzySubmitDate (String ... rightFuzzySubmitDate){
-            this.rightFuzzySubmitDate = solveNullList(rightFuzzySubmitDate);
-            return this;
-        }
-
-        public ConditionBuilder submitDateList(String ... submitDate){
-            this.submitDateList = solveNullList(submitDate);
-            return this;
-        }
-
-        public ConditionBuilder submitDateList(List<String> submitDate){
-            this.submitDateList = submitDate;
-            return this;
-        }
-
-        public ConditionBuilder fuzzyImportantLevel (List<String> fuzzyImportantLevel){
-            this.fuzzyImportantLevel = fuzzyImportantLevel;
-            return this;
-        }
-
-        public ConditionBuilder fuzzyImportantLevel (String ... fuzzyImportantLevel){
-            this.fuzzyImportantLevel = solveNullList(fuzzyImportantLevel);
-            return this;
-        }
-
-        public ConditionBuilder rightFuzzyImportantLevel (List<String> rightFuzzyImportantLevel){
-            this.rightFuzzyImportantLevel = rightFuzzyImportantLevel;
-            return this;
-        }
-
-        public ConditionBuilder rightFuzzyImportantLevel (String ... rightFuzzyImportantLevel){
-            this.rightFuzzyImportantLevel = solveNullList(rightFuzzyImportantLevel);
-            return this;
-        }
-
-        public ConditionBuilder importantLevelList(String ... importantLevel){
-            this.importantLevelList = solveNullList(importantLevel);
-            return this;
-        }
-
-        public ConditionBuilder importantLevelList(List<String> importantLevel){
-            this.importantLevelList = importantLevel;
-            return this;
-        }
-
-        public ConditionBuilder fuzzyCarType (List<String> fuzzyCarType){
-            this.fuzzyCarType = fuzzyCarType;
-            return this;
-        }
-
-        public ConditionBuilder fuzzyCarType (String ... fuzzyCarType){
-            this.fuzzyCarType = solveNullList(fuzzyCarType);
-            return this;
-        }
-
-        public ConditionBuilder rightFuzzyCarType (List<String> rightFuzzyCarType){
-            this.rightFuzzyCarType = rightFuzzyCarType;
-            return this;
-        }
-
-        public ConditionBuilder rightFuzzyCarType (String ... rightFuzzyCarType){
-            this.rightFuzzyCarType = solveNullList(rightFuzzyCarType);
-            return this;
-        }
-
-        public ConditionBuilder carTypeList(String ... carType){
-            this.carTypeList = solveNullList(carType);
-            return this;
-        }
-
-        public ConditionBuilder carTypeList(List<String> carType){
-            this.carTypeList = carType;
-            return this;
-        }
-
-        public ConditionBuilder fuzzyDiagnosticResult (List<String> fuzzyDiagnosticResult){
-            this.fuzzyDiagnosticResult = fuzzyDiagnosticResult;
-            return this;
-        }
-
-        public ConditionBuilder fuzzyDiagnosticResult (String ... fuzzyDiagnosticResult){
-            this.fuzzyDiagnosticResult = solveNullList(fuzzyDiagnosticResult);
-            return this;
-        }
-
-        public ConditionBuilder rightFuzzyDiagnosticResult (List<String> rightFuzzyDiagnosticResult){
-            this.rightFuzzyDiagnosticResult = rightFuzzyDiagnosticResult;
-            return this;
-        }
-
-        public ConditionBuilder rightFuzzyDiagnosticResult (String ... rightFuzzyDiagnosticResult){
-            this.rightFuzzyDiagnosticResult = solveNullList(rightFuzzyDiagnosticResult);
-            return this;
-        }
-
-        public ConditionBuilder diagnosticResultList(String ... diagnosticResult){
-            this.diagnosticResultList = solveNullList(diagnosticResult);
-            return this;
-        }
-
-        public ConditionBuilder diagnosticResultList(List<String> diagnosticResult){
-            this.diagnosticResultList = diagnosticResult;
-            return this;
-        }
-
-        public ConditionBuilder fuzzyVeiUserDescription (List<String> fuzzyVeiUserDescription){
-            this.fuzzyVeiUserDescription = fuzzyVeiUserDescription;
-            return this;
-        }
-
-        public ConditionBuilder fuzzyVeiUserDescription (String ... fuzzyVeiUserDescription){
-            this.fuzzyVeiUserDescription = solveNullList(fuzzyVeiUserDescription);
-            return this;
-        }
-
-        public ConditionBuilder rightFuzzyVeiUserDescription (List<String> rightFuzzyVeiUserDescription){
-            this.rightFuzzyVeiUserDescription = rightFuzzyVeiUserDescription;
-            return this;
-        }
-
-        public ConditionBuilder rightFuzzyVeiUserDescription (String ... rightFuzzyVeiUserDescription){
-            this.rightFuzzyVeiUserDescription = solveNullList(rightFuzzyVeiUserDescription);
-            return this;
-        }
-
-        public ConditionBuilder veiUserDescriptionList(String ... veiUserDescription){
-            this.veiUserDescriptionList = solveNullList(veiUserDescription);
-            return this;
-        }
-
-        public ConditionBuilder veiUserDescriptionList(List<String> veiUserDescription){
-            this.veiUserDescriptionList = veiUserDescription;
-            return this;
-        }
-
-        public ConditionBuilder fuzzyPartsCode (List<String> fuzzyPartsCode){
-            this.fuzzyPartsCode = fuzzyPartsCode;
-            return this;
-        }
-
-        public ConditionBuilder fuzzyPartsCode (String ... fuzzyPartsCode){
-            this.fuzzyPartsCode = solveNullList(fuzzyPartsCode);
-            return this;
-        }
-
-        public ConditionBuilder rightFuzzyPartsCode (List<String> rightFuzzyPartsCode){
-            this.rightFuzzyPartsCode = rightFuzzyPartsCode;
-            return this;
-        }
-
-        public ConditionBuilder rightFuzzyPartsCode (String ... rightFuzzyPartsCode){
-            this.rightFuzzyPartsCode = solveNullList(rightFuzzyPartsCode);
-            return this;
-        }
-
-        public ConditionBuilder partsCodeList(String ... partsCode){
-            this.partsCodeList = solveNullList(partsCode);
-            return this;
-        }
-
-        public ConditionBuilder partsCodeList(List<String> partsCode){
-            this.partsCodeList = partsCode;
-            return this;
-        }
-
-        public ConditionBuilder fuzzyPartsName (List<String> fuzzyPartsName){
-            this.fuzzyPartsName = fuzzyPartsName;
-            return this;
-        }
-
-        public ConditionBuilder fuzzyPartsName (String ... fuzzyPartsName){
-            this.fuzzyPartsName = solveNullList(fuzzyPartsName);
-            return this;
-        }
-
-        public ConditionBuilder rightFuzzyPartsName (List<String> rightFuzzyPartsName){
-            this.rightFuzzyPartsName = rightFuzzyPartsName;
-            return this;
-        }
-
-        public ConditionBuilder rightFuzzyPartsName (String ... rightFuzzyPartsName){
-            this.rightFuzzyPartsName = solveNullList(rightFuzzyPartsName);
-            return this;
-        }
-
-        public ConditionBuilder partsNameList(String ... partsName){
-            this.partsNameList = solveNullList(partsName);
-            return this;
-        }
-
-        public ConditionBuilder partsNameList(List<String> partsName){
-            this.partsNameList = partsName;
-            return this;
-        }
-
         public ConditionBuilder manCostBetWeen(java.math.BigDecimal manCostSt,java.math.BigDecimal manCostEd){
             this.manCostSt = manCostSt;
             this.manCostEd = manCostEd;
@@ -4966,29 +2742,107 @@ public class MqmsVoucherRaw implements Serializable {
             return this;
         }
 
-        public ConditionBuilder materialCostBetWeen(java.math.BigDecimal materialCostSt,java.math.BigDecimal materialCostEd){
-            this.materialCostSt = materialCostSt;
-            this.materialCostEd = materialCostEd;
+        public ConditionBuilder partsCostBetWeen(java.math.BigDecimal partsCostSt,java.math.BigDecimal partsCostEd){
+            this.partsCostSt = partsCostSt;
+            this.partsCostEd = partsCostEd;
             return this;
         }
 
-        public ConditionBuilder materialCostGreaterEqThan(java.math.BigDecimal materialCostSt){
-            this.materialCostSt = materialCostSt;
+        public ConditionBuilder partsCostGreaterEqThan(java.math.BigDecimal partsCostSt){
+            this.partsCostSt = partsCostSt;
             return this;
         }
-        public ConditionBuilder materialCostLessEqThan(java.math.BigDecimal materialCostEd){
-            this.materialCostEd = materialCostEd;
+        public ConditionBuilder partsCostLessEqThan(java.math.BigDecimal partsCostEd){
+            this.partsCostEd = partsCostEd;
+            return this;
+        }
+
+
+        public ConditionBuilder partsCostList(java.math.BigDecimal ... partsCost){
+            this.partsCostList = solveNullList(partsCost);
+            return this;
+        }
+
+        public ConditionBuilder partsCostList(List<java.math.BigDecimal> partsCost){
+            this.partsCostList = partsCost;
+            return this;
+        }
+
+        public ConditionBuilder partsManagerCostBetWeen(java.math.BigDecimal partsManagerCostSt,java.math.BigDecimal partsManagerCostEd){
+            this.partsManagerCostSt = partsManagerCostSt;
+            this.partsManagerCostEd = partsManagerCostEd;
+            return this;
+        }
+
+        public ConditionBuilder partsManagerCostGreaterEqThan(java.math.BigDecimal partsManagerCostSt){
+            this.partsManagerCostSt = partsManagerCostSt;
+            return this;
+        }
+        public ConditionBuilder partsManagerCostLessEqThan(java.math.BigDecimal partsManagerCostEd){
+            this.partsManagerCostEd = partsManagerCostEd;
             return this;
         }
 
 
-        public ConditionBuilder materialCostList(java.math.BigDecimal ... materialCost){
-            this.materialCostList = solveNullList(materialCost);
+        public ConditionBuilder partsManagerCostList(java.math.BigDecimal ... partsManagerCost){
+            this.partsManagerCostList = solveNullList(partsManagerCost);
             return this;
         }
 
-        public ConditionBuilder materialCostList(List<java.math.BigDecimal> materialCost){
-            this.materialCostList = materialCost;
+        public ConditionBuilder partsManagerCostList(List<java.math.BigDecimal> partsManagerCost){
+            this.partsManagerCostList = partsManagerCost;
+            return this;
+        }
+
+        public ConditionBuilder outgoingCostBetWeen(java.math.BigDecimal outgoingCostSt,java.math.BigDecimal outgoingCostEd){
+            this.outgoingCostSt = outgoingCostSt;
+            this.outgoingCostEd = outgoingCostEd;
+            return this;
+        }
+
+        public ConditionBuilder outgoingCostGreaterEqThan(java.math.BigDecimal outgoingCostSt){
+            this.outgoingCostSt = outgoingCostSt;
+            return this;
+        }
+        public ConditionBuilder outgoingCostLessEqThan(java.math.BigDecimal outgoingCostEd){
+            this.outgoingCostEd = outgoingCostEd;
+            return this;
+        }
+
+
+        public ConditionBuilder outgoingCostList(java.math.BigDecimal ... outgoingCost){
+            this.outgoingCostList = solveNullList(outgoingCost);
+            return this;
+        }
+
+        public ConditionBuilder outgoingCostList(List<java.math.BigDecimal> outgoingCost){
+            this.outgoingCostList = outgoingCost;
+            return this;
+        }
+
+        public ConditionBuilder maintainCostBetWeen(java.math.BigDecimal maintainCostSt,java.math.BigDecimal maintainCostEd){
+            this.maintainCostSt = maintainCostSt;
+            this.maintainCostEd = maintainCostEd;
+            return this;
+        }
+
+        public ConditionBuilder maintainCostGreaterEqThan(java.math.BigDecimal maintainCostSt){
+            this.maintainCostSt = maintainCostSt;
+            return this;
+        }
+        public ConditionBuilder maintainCostLessEqThan(java.math.BigDecimal maintainCostEd){
+            this.maintainCostEd = maintainCostEd;
+            return this;
+        }
+
+
+        public ConditionBuilder maintainCostList(java.math.BigDecimal ... maintainCost){
+            this.maintainCostList = solveNullList(maintainCost);
+            return this;
+        }
+
+        public ConditionBuilder maintainCostList(List<java.math.BigDecimal> maintainCost){
+            this.maintainCostList = maintainCost;
             return this;
         }
 
@@ -5044,303 +2898,123 @@ public class MqmsVoucherRaw implements Serializable {
             return this;
         }
 
-        public ConditionBuilder fuzzyConfirmor (List<String> fuzzyConfirmor){
-            this.fuzzyConfirmor = fuzzyConfirmor;
+        public ConditionBuilder fuzzyImportantLevel (List<String> fuzzyImportantLevel){
+            this.fuzzyImportantLevel = fuzzyImportantLevel;
             return this;
         }
 
-        public ConditionBuilder fuzzyConfirmor (String ... fuzzyConfirmor){
-            this.fuzzyConfirmor = solveNullList(fuzzyConfirmor);
+        public ConditionBuilder fuzzyImportantLevel (String ... fuzzyImportantLevel){
+            this.fuzzyImportantLevel = solveNullList(fuzzyImportantLevel);
             return this;
         }
 
-        public ConditionBuilder rightFuzzyConfirmor (List<String> rightFuzzyConfirmor){
-            this.rightFuzzyConfirmor = rightFuzzyConfirmor;
+        public ConditionBuilder rightFuzzyImportantLevel (List<String> rightFuzzyImportantLevel){
+            this.rightFuzzyImportantLevel = rightFuzzyImportantLevel;
             return this;
         }
 
-        public ConditionBuilder rightFuzzyConfirmor (String ... rightFuzzyConfirmor){
-            this.rightFuzzyConfirmor = solveNullList(rightFuzzyConfirmor);
+        public ConditionBuilder rightFuzzyImportantLevel (String ... rightFuzzyImportantLevel){
+            this.rightFuzzyImportantLevel = solveNullList(rightFuzzyImportantLevel);
             return this;
         }
 
-        public ConditionBuilder confirmorList(String ... confirmor){
-            this.confirmorList = solveNullList(confirmor);
+        public ConditionBuilder importantLevelList(String ... importantLevel){
+            this.importantLevelList = solveNullList(importantLevel);
             return this;
         }
 
-        public ConditionBuilder confirmorList(List<String> confirmor){
-            this.confirmorList = confirmor;
+        public ConditionBuilder importantLevelList(List<String> importantLevel){
+            this.importantLevelList = importantLevel;
             return this;
         }
 
-        public ConditionBuilder fuzzyConfirmDate (List<String> fuzzyConfirmDate){
-            this.fuzzyConfirmDate = fuzzyConfirmDate;
+        public ConditionBuilder fuzzyTransmissionType (List<String> fuzzyTransmissionType){
+            this.fuzzyTransmissionType = fuzzyTransmissionType;
             return this;
         }
 
-        public ConditionBuilder fuzzyConfirmDate (String ... fuzzyConfirmDate){
-            this.fuzzyConfirmDate = solveNullList(fuzzyConfirmDate);
+        public ConditionBuilder fuzzyTransmissionType (String ... fuzzyTransmissionType){
+            this.fuzzyTransmissionType = solveNullList(fuzzyTransmissionType);
             return this;
         }
 
-        public ConditionBuilder rightFuzzyConfirmDate (List<String> rightFuzzyConfirmDate){
-            this.rightFuzzyConfirmDate = rightFuzzyConfirmDate;
+        public ConditionBuilder rightFuzzyTransmissionType (List<String> rightFuzzyTransmissionType){
+            this.rightFuzzyTransmissionType = rightFuzzyTransmissionType;
             return this;
         }
 
-        public ConditionBuilder rightFuzzyConfirmDate (String ... rightFuzzyConfirmDate){
-            this.rightFuzzyConfirmDate = solveNullList(rightFuzzyConfirmDate);
+        public ConditionBuilder rightFuzzyTransmissionType (String ... rightFuzzyTransmissionType){
+            this.rightFuzzyTransmissionType = solveNullList(rightFuzzyTransmissionType);
             return this;
         }
 
-        public ConditionBuilder confirmDateList(String ... confirmDate){
-            this.confirmDateList = solveNullList(confirmDate);
+        public ConditionBuilder transmissionTypeList(String ... transmissionType){
+            this.transmissionTypeList = solveNullList(transmissionType);
             return this;
         }
 
-        public ConditionBuilder confirmDateList(List<String> confirmDate){
-            this.confirmDateList = confirmDate;
+        public ConditionBuilder transmissionTypeList(List<String> transmissionType){
+            this.transmissionTypeList = transmissionType;
             return this;
         }
 
-        public ConditionBuilder fuzzyVeiSysDescription (List<String> fuzzyVeiSysDescription){
-            this.fuzzyVeiSysDescription = fuzzyVeiSysDescription;
+        public ConditionBuilder fuzzyNewPartsBlindingNum (List<String> fuzzyNewPartsBlindingNum){
+            this.fuzzyNewPartsBlindingNum = fuzzyNewPartsBlindingNum;
             return this;
         }
 
-        public ConditionBuilder fuzzyVeiSysDescription (String ... fuzzyVeiSysDescription){
-            this.fuzzyVeiSysDescription = solveNullList(fuzzyVeiSysDescription);
+        public ConditionBuilder fuzzyNewPartsBlindingNum (String ... fuzzyNewPartsBlindingNum){
+            this.fuzzyNewPartsBlindingNum = solveNullList(fuzzyNewPartsBlindingNum);
             return this;
         }
 
-        public ConditionBuilder rightFuzzyVeiSysDescription (List<String> rightFuzzyVeiSysDescription){
-            this.rightFuzzyVeiSysDescription = rightFuzzyVeiSysDescription;
+        public ConditionBuilder rightFuzzyNewPartsBlindingNum (List<String> rightFuzzyNewPartsBlindingNum){
+            this.rightFuzzyNewPartsBlindingNum = rightFuzzyNewPartsBlindingNum;
             return this;
         }
 
-        public ConditionBuilder rightFuzzyVeiSysDescription (String ... rightFuzzyVeiSysDescription){
-            this.rightFuzzyVeiSysDescription = solveNullList(rightFuzzyVeiSysDescription);
+        public ConditionBuilder rightFuzzyNewPartsBlindingNum (String ... rightFuzzyNewPartsBlindingNum){
+            this.rightFuzzyNewPartsBlindingNum = solveNullList(rightFuzzyNewPartsBlindingNum);
             return this;
         }
 
-        public ConditionBuilder veiSysDescriptionList(String ... veiSysDescription){
-            this.veiSysDescriptionList = solveNullList(veiSysDescription);
+        public ConditionBuilder newPartsBlindingNumList(String ... newPartsBlindingNum){
+            this.newPartsBlindingNumList = solveNullList(newPartsBlindingNum);
             return this;
         }
 
-        public ConditionBuilder veiSysDescriptionList(List<String> veiSysDescription){
-            this.veiSysDescriptionList = veiSysDescription;
+        public ConditionBuilder newPartsBlindingNumList(List<String> newPartsBlindingNum){
+            this.newPartsBlindingNumList = newPartsBlindingNum;
             return this;
         }
 
-        public ConditionBuilder fuzzyLicenseCode (List<String> fuzzyLicenseCode){
-            this.fuzzyLicenseCode = fuzzyLicenseCode;
+        public ConditionBuilder fuzzySubmitDate (List<String> fuzzySubmitDate){
+            this.fuzzySubmitDate = fuzzySubmitDate;
             return this;
         }
 
-        public ConditionBuilder fuzzyLicenseCode (String ... fuzzyLicenseCode){
-            this.fuzzyLicenseCode = solveNullList(fuzzyLicenseCode);
+        public ConditionBuilder fuzzySubmitDate (String ... fuzzySubmitDate){
+            this.fuzzySubmitDate = solveNullList(fuzzySubmitDate);
             return this;
         }
 
-        public ConditionBuilder rightFuzzyLicenseCode (List<String> rightFuzzyLicenseCode){
-            this.rightFuzzyLicenseCode = rightFuzzyLicenseCode;
+        public ConditionBuilder rightFuzzySubmitDate (List<String> rightFuzzySubmitDate){
+            this.rightFuzzySubmitDate = rightFuzzySubmitDate;
             return this;
         }
 
-        public ConditionBuilder rightFuzzyLicenseCode (String ... rightFuzzyLicenseCode){
-            this.rightFuzzyLicenseCode = solveNullList(rightFuzzyLicenseCode);
+        public ConditionBuilder rightFuzzySubmitDate (String ... rightFuzzySubmitDate){
+            this.rightFuzzySubmitDate = solveNullList(rightFuzzySubmitDate);
             return this;
         }
 
-        public ConditionBuilder licenseCodeList(String ... licenseCode){
-            this.licenseCodeList = solveNullList(licenseCode);
+        public ConditionBuilder submitDateList(String ... submitDate){
+            this.submitDateList = solveNullList(submitDate);
             return this;
         }
 
-        public ConditionBuilder licenseCodeList(List<String> licenseCode){
-            this.licenseCodeList = licenseCode;
-            return this;
-        }
-
-        public ConditionBuilder fuzzyServicePerformance1 (List<String> fuzzyServicePerformance1){
-            this.fuzzyServicePerformance1 = fuzzyServicePerformance1;
-            return this;
-        }
-
-        public ConditionBuilder fuzzyServicePerformance1 (String ... fuzzyServicePerformance1){
-            this.fuzzyServicePerformance1 = solveNullList(fuzzyServicePerformance1);
-            return this;
-        }
-
-        public ConditionBuilder rightFuzzyServicePerformance1 (List<String> rightFuzzyServicePerformance1){
-            this.rightFuzzyServicePerformance1 = rightFuzzyServicePerformance1;
-            return this;
-        }
-
-        public ConditionBuilder rightFuzzyServicePerformance1 (String ... rightFuzzyServicePerformance1){
-            this.rightFuzzyServicePerformance1 = solveNullList(rightFuzzyServicePerformance1);
-            return this;
-        }
-
-        public ConditionBuilder servicePerformance1List(String ... servicePerformance1){
-            this.servicePerformance1List = solveNullList(servicePerformance1);
-            return this;
-        }
-
-        public ConditionBuilder servicePerformance1List(List<String> servicePerformance1){
-            this.servicePerformance1List = servicePerformance1;
-            return this;
-        }
-
-        public ConditionBuilder fuzzyServicePerformance2 (List<String> fuzzyServicePerformance2){
-            this.fuzzyServicePerformance2 = fuzzyServicePerformance2;
-            return this;
-        }
-
-        public ConditionBuilder fuzzyServicePerformance2 (String ... fuzzyServicePerformance2){
-            this.fuzzyServicePerformance2 = solveNullList(fuzzyServicePerformance2);
-            return this;
-        }
-
-        public ConditionBuilder rightFuzzyServicePerformance2 (List<String> rightFuzzyServicePerformance2){
-            this.rightFuzzyServicePerformance2 = rightFuzzyServicePerformance2;
-            return this;
-        }
-
-        public ConditionBuilder rightFuzzyServicePerformance2 (String ... rightFuzzyServicePerformance2){
-            this.rightFuzzyServicePerformance2 = solveNullList(rightFuzzyServicePerformance2);
-            return this;
-        }
-
-        public ConditionBuilder servicePerformance2List(String ... servicePerformance2){
-            this.servicePerformance2List = solveNullList(servicePerformance2);
-            return this;
-        }
-
-        public ConditionBuilder servicePerformance2List(List<String> servicePerformance2){
-            this.servicePerformance2List = servicePerformance2;
-            return this;
-        }
-
-        public ConditionBuilder fuzzyServicePerformance3 (List<String> fuzzyServicePerformance3){
-            this.fuzzyServicePerformance3 = fuzzyServicePerformance3;
-            return this;
-        }
-
-        public ConditionBuilder fuzzyServicePerformance3 (String ... fuzzyServicePerformance3){
-            this.fuzzyServicePerformance3 = solveNullList(fuzzyServicePerformance3);
-            return this;
-        }
-
-        public ConditionBuilder rightFuzzyServicePerformance3 (List<String> rightFuzzyServicePerformance3){
-            this.rightFuzzyServicePerformance3 = rightFuzzyServicePerformance3;
-            return this;
-        }
-
-        public ConditionBuilder rightFuzzyServicePerformance3 (String ... rightFuzzyServicePerformance3){
-            this.rightFuzzyServicePerformance3 = solveNullList(rightFuzzyServicePerformance3);
-            return this;
-        }
-
-        public ConditionBuilder servicePerformance3List(String ... servicePerformance3){
-            this.servicePerformance3List = solveNullList(servicePerformance3);
-            return this;
-        }
-
-        public ConditionBuilder servicePerformance3List(List<String> servicePerformance3){
-            this.servicePerformance3List = servicePerformance3;
-            return this;
-        }
-
-        public ConditionBuilder fuzzyModelYear (List<String> fuzzyModelYear){
-            this.fuzzyModelYear = fuzzyModelYear;
-            return this;
-        }
-
-        public ConditionBuilder fuzzyModelYear (String ... fuzzyModelYear){
-            this.fuzzyModelYear = solveNullList(fuzzyModelYear);
-            return this;
-        }
-
-        public ConditionBuilder rightFuzzyModelYear (List<String> rightFuzzyModelYear){
-            this.rightFuzzyModelYear = rightFuzzyModelYear;
-            return this;
-        }
-
-        public ConditionBuilder rightFuzzyModelYear (String ... rightFuzzyModelYear){
-            this.rightFuzzyModelYear = solveNullList(rightFuzzyModelYear);
-            return this;
-        }
-
-        public ConditionBuilder modelYearList(String ... modelYear){
-            this.modelYearList = solveNullList(modelYear);
-            return this;
-        }
-
-        public ConditionBuilder modelYearList(List<String> modelYear){
-            this.modelYearList = modelYear;
-            return this;
-        }
-
-        public ConditionBuilder fuzzyOfflineDate (List<String> fuzzyOfflineDate){
-            this.fuzzyOfflineDate = fuzzyOfflineDate;
-            return this;
-        }
-
-        public ConditionBuilder fuzzyOfflineDate (String ... fuzzyOfflineDate){
-            this.fuzzyOfflineDate = solveNullList(fuzzyOfflineDate);
-            return this;
-        }
-
-        public ConditionBuilder rightFuzzyOfflineDate (List<String> rightFuzzyOfflineDate){
-            this.rightFuzzyOfflineDate = rightFuzzyOfflineDate;
-            return this;
-        }
-
-        public ConditionBuilder rightFuzzyOfflineDate (String ... rightFuzzyOfflineDate){
-            this.rightFuzzyOfflineDate = solveNullList(rightFuzzyOfflineDate);
-            return this;
-        }
-
-        public ConditionBuilder offlineDateList(String ... offlineDate){
-            this.offlineDateList = solveNullList(offlineDate);
-            return this;
-        }
-
-        public ConditionBuilder offlineDateList(List<String> offlineDate){
-            this.offlineDateList = offlineDate;
-            return this;
-        }
-
-        public ConditionBuilder fuzzySalesDate (List<String> fuzzySalesDate){
-            this.fuzzySalesDate = fuzzySalesDate;
-            return this;
-        }
-
-        public ConditionBuilder fuzzySalesDate (String ... fuzzySalesDate){
-            this.fuzzySalesDate = solveNullList(fuzzySalesDate);
-            return this;
-        }
-
-        public ConditionBuilder rightFuzzySalesDate (List<String> rightFuzzySalesDate){
-            this.rightFuzzySalesDate = rightFuzzySalesDate;
-            return this;
-        }
-
-        public ConditionBuilder rightFuzzySalesDate (String ... rightFuzzySalesDate){
-            this.rightFuzzySalesDate = solveNullList(rightFuzzySalesDate);
-            return this;
-        }
-
-        public ConditionBuilder salesDateList(String ... salesDate){
-            this.salesDateList = solveNullList(salesDate);
-            return this;
-        }
-
-        public ConditionBuilder salesDateList(List<String> salesDate){
-            this.salesDateList = salesDate;
+        public ConditionBuilder submitDateList(List<String> submitDate){
+            this.submitDateList = submitDate;
             return this;
         }
 
@@ -5372,6 +3046,10 @@ public class MqmsVoucherRaw implements Serializable {
             this.obj.setVoucherId(voucherId);
             return this;
         }
+        public Builder qualityFeedbackCode(String qualityFeedbackCode){
+            this.obj.setQualityFeedbackCode(qualityFeedbackCode);
+            return this;
+        }
         public Builder voucherCode(String voucherCode){
             this.obj.setVoucherCode(voucherCode);
             return this;
@@ -5384,32 +3062,8 @@ public class MqmsVoucherRaw implements Serializable {
             this.obj.setDealerName(dealerName);
             return this;
         }
-        public Builder veiState(String veiState){
-            this.obj.setVeiState(veiState);
-            return this;
-        }
-        public Builder updateTime(String updateTime){
-            this.obj.setUpdateTime(updateTime);
-            return this;
-        }
-        public Builder maintenanceContractCode(String maintenanceContractCode){
-            this.obj.setMaintenanceContractCode(maintenanceContractCode);
-            return this;
-        }
-        public Builder maintenanceItemCode(String maintenanceItemCode){
-            this.obj.setMaintenanceItemCode(maintenanceItemCode);
-            return this;
-        }
-        public Builder contact(String contact){
-            this.obj.setContact(contact);
-            return this;
-        }
-        public Builder phoneNo(String phoneNo){
-            this.obj.setPhoneNo(phoneNo);
-            return this;
-        }
-        public Builder fax(String fax){
-            this.obj.setFax(fax);
+        public Builder dealerShortName(String dealerShortName){
+            this.obj.setDealerShortName(dealerShortName);
             return this;
         }
         public Builder theme(String theme){
@@ -5424,48 +3078,24 @@ public class MqmsVoucherRaw implements Serializable {
             this.obj.setVehicleType(vehicleType);
             return this;
         }
-        public Builder egtypeCode(String egtypeCode){
-            this.obj.setEgtypeCode(egtypeCode);
+        public Builder partsName(String partsName){
+            this.obj.setPartsName(partsName);
             return this;
         }
-        public Builder transmissionType(String transmissionType){
-            this.obj.setTransmissionType(transmissionType);
+        public Builder firstLevelName(String firstLevelName){
+            this.obj.setFirstLevelName(firstLevelName);
             return this;
         }
-        public Builder mileage(Integer mileage){
-            this.obj.setMileage(mileage);
+        public Builder partsShortNameSpecPneno(String partsShortNameSpecPneno){
+            this.obj.setPartsShortNameSpecPneno(partsShortNameSpecPneno);
             return this;
         }
-        public Builder transmissionCode(String transmissionCode){
-            this.obj.setTransmissionCode(transmissionCode);
+        public Builder manufactureDate(String manufactureDate){
+            this.obj.setManufactureDate(manufactureDate);
             return this;
         }
-        public Builder mtoc(String mtoc){
-            this.obj.setMtoc(mtoc);
-            return this;
-        }
-        public Builder failureDate(String failureDate){
-            this.obj.setFailureDate(failureDate);
-            return this;
-        }
-        public Builder failureLocationCode(String failureLocationCode){
-            this.obj.setFailureLocationCode(failureLocationCode);
-            return this;
-        }
-        public Builder failureLocationName(String failureLocationName){
-            this.obj.setFailureLocationName(failureLocationName);
-            return this;
-        }
-        public Builder symptomTypeCode(String symptomTypeCode){
-            this.obj.setSymptomTypeCode(symptomTypeCode);
-            return this;
-        }
-        public Builder symptomTypeName(String symptomTypeName){
-            this.obj.setSymptomTypeName(symptomTypeName);
-            return this;
-        }
-        public Builder symptomCode(String symptomCode){
-            this.obj.setSymptomCode(symptomCode);
+        public Builder salesFailureTime(String salesFailureTime){
+            this.obj.setSalesFailureTime(salesFailureTime);
             return this;
         }
         public Builder symptomName(String symptomName){
@@ -5476,40 +3106,24 @@ public class MqmsVoucherRaw implements Serializable {
             this.obj.setSymptomContent(symptomContent);
             return this;
         }
-        public Builder submitDate(String submitDate){
-            this.obj.setSubmitDate(submitDate);
-            return this;
-        }
-        public Builder importantLevel(String importantLevel){
-            this.obj.setImportantLevel(importantLevel);
-            return this;
-        }
-        public Builder carType(String carType){
-            this.obj.setCarType(carType);
-            return this;
-        }
-        public Builder diagnosticResult(String diagnosticResult){
-            this.obj.setDiagnosticResult(diagnosticResult);
-            return this;
-        }
-        public Builder veiUserDescription(String veiUserDescription){
-            this.obj.setVeiUserDescription(veiUserDescription);
-            return this;
-        }
-        public Builder partsCode(String partsCode){
-            this.obj.setPartsCode(partsCode);
-            return this;
-        }
-        public Builder partsName(String partsName){
-            this.obj.setPartsName(partsName);
-            return this;
-        }
         public Builder manCost(java.math.BigDecimal manCost){
             this.obj.setManCost(manCost);
             return this;
         }
-        public Builder materialCost(java.math.BigDecimal materialCost){
-            this.obj.setMaterialCost(materialCost);
+        public Builder partsCost(java.math.BigDecimal partsCost){
+            this.obj.setPartsCost(partsCost);
+            return this;
+        }
+        public Builder partsManagerCost(java.math.BigDecimal partsManagerCost){
+            this.obj.setPartsManagerCost(partsManagerCost);
+            return this;
+        }
+        public Builder outgoingCost(java.math.BigDecimal outgoingCost){
+            this.obj.setOutgoingCost(outgoingCost);
+            return this;
+        }
+        public Builder maintainCost(java.math.BigDecimal maintainCost){
+            this.obj.setMaintainCost(maintainCost);
             return this;
         }
         public Builder otherCost(java.math.BigDecimal otherCost){
@@ -5520,44 +3134,20 @@ public class MqmsVoucherRaw implements Serializable {
             this.obj.setTotalCost(totalCost);
             return this;
         }
-        public Builder confirmor(String confirmor){
-            this.obj.setConfirmor(confirmor);
+        public Builder importantLevel(String importantLevel){
+            this.obj.setImportantLevel(importantLevel);
             return this;
         }
-        public Builder confirmDate(String confirmDate){
-            this.obj.setConfirmDate(confirmDate);
+        public Builder transmissionType(String transmissionType){
+            this.obj.setTransmissionType(transmissionType);
             return this;
         }
-        public Builder veiSysDescription(String veiSysDescription){
-            this.obj.setVeiSysDescription(veiSysDescription);
+        public Builder newPartsBlindingNum(String newPartsBlindingNum){
+            this.obj.setNewPartsBlindingNum(newPartsBlindingNum);
             return this;
         }
-        public Builder licenseCode(String licenseCode){
-            this.obj.setLicenseCode(licenseCode);
-            return this;
-        }
-        public Builder servicePerformance1(String servicePerformance1){
-            this.obj.setServicePerformance1(servicePerformance1);
-            return this;
-        }
-        public Builder servicePerformance2(String servicePerformance2){
-            this.obj.setServicePerformance2(servicePerformance2);
-            return this;
-        }
-        public Builder servicePerformance3(String servicePerformance3){
-            this.obj.setServicePerformance3(servicePerformance3);
-            return this;
-        }
-        public Builder modelYear(String modelYear){
-            this.obj.setModelYear(modelYear);
-            return this;
-        }
-        public Builder offlineDate(String offlineDate){
-            this.obj.setOfflineDate(offlineDate);
-            return this;
-        }
-        public Builder salesDate(String salesDate){
-            this.obj.setSalesDate(salesDate);
+        public Builder submitDate(String submitDate){
+            this.obj.setSubmitDate(submitDate);
             return this;
         }
         public MqmsVoucherRaw build(){return obj;}

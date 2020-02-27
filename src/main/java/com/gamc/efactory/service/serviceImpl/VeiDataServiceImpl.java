@@ -81,71 +81,73 @@ public class VeiDataServiceImpl implements VeiDataService {
                     BeanUtils.copyProperties(mqmsVoucherRaw,mqmsVoucher);
 
                     //销售至故障经过月
-                    int salesFailureMonths= MqmsUtil.getMonth(mqmsVoucher.getSalesDate(),mqmsVoucher.getFailureDate());
+//                    int salesFailureMonths= MqmsUtil.getMonth(mqmsVoucher.getSalesDate(),mqmsVoucher.getFailureDate());
                     //下线至故障经过月
-                    int offlineFailureMonths=MqmsUtil.getMonth(mqmsVoucher.getOfflineDate(),mqmsVoucher.getConfirmDate());
-                    mqmsVoucher.setSalesFailureTime(salesFailureMonths);
-                    mqmsVoucher.setOfflineFailureTime(offlineFailureMonths);
+//                    int offlineFailureMonths=MqmsUtil.getMonth(mqmsVoucher.getOfflineDate(),mqmsVoucher.getConfirmDate());
+//                    mqmsVoucher.setSalesFailureTime(salesFailureMonths);
+//                    mqmsVoucher.setOfflineFailureTime(offlineFailureMonths);
                     //里程区间
-                    mqmsVoucher.setMileageDistribution(RangeResultUtil.rangeResult(mqmsVoucher.getMileage(),5000,100000));
-                    String[] dateTime=mqmsVoucher.getFailureDate().split("-");
+//                    mqmsVoucher.setMileageDistribution(RangeResultUtil.rangeResult(mqmsVoucher.getMileage(),5000,100000));
+//                    String[] dateTime=mqmsVoucher.getFailureDate().split("-");
                     //故障发生年
-                    mqmsVoucher.setFailureYear(dateTime[0]);
+//                    mqmsVoucher.setFailureYear(dateTime[0]);
                     //故障发生月
-                    mqmsVoucher.setFailureMonth(dateTime[1]);
+//                    mqmsVoucher.setFailureMonth(dateTime[1]);
                     Map<String, String> map = new HashMap();
-                    map=MqmsUtil.getWeekDate(mqmsVoucher.getUpdateTime());
+                    map=MqmsUtil.getWeekDate(mqmsVoucher.getSubmitDate());
                     //接收区间
                     mqmsVoucher.setReceiveTime(map.get("wednesdayDate")+"~"+map.get("ThursdayDate"));
                     //车型
 
-                    //发动机机型
+                    //发动机号
+
+                    //发动机生产日期
 
                     //变速箱机型
-                    String trsmCode=mqmsVoucher.getTransmissionCode().replace("+","");
-                    String trsmType=trsmCode.substring(0,5);
-                    String trsmManufacture=trsmCode.substring(5,10);
-                    String trsmProYearCode=trsmCode.substring(11,12);
-                    String trsmProMonthHex=trsmCode.substring(12,13);
-
-                    String trsmProDay=trsmCode.substring(13,15);
-                    System.out.println(trsmType+trsmManufacture+trsmProYearCode);
-                    mqmsVoucher.setTransmissionCodeRe(mqmsTranProductionDecodeMapper.selectTranProductionCode(trsmType));
+//                    String trsmCode=mqmsVoucher.getTransmissionCode().replace("+","");
+//                    String trsmType=trsmCode.substring(0,5);
+//                    String trsmManufacture=trsmCode.substring(5,10);
+//                    String trsmProYearCode=trsmCode.substring(11,12);
+//                    String trsmProMonthHex=trsmCode.substring(12,13);
+//
+//                    String trsmProDay=trsmCode.substring(13,15);
+//                    System.out.println(trsmType+trsmManufacture+trsmProYearCode);
+//                    mqmsVoucher.setTransmissionCodeRe(mqmsTranProductionDecodeMapper.selectTranProductionCode(trsmType));
                     //变速箱生产厂家
-                    mqmsVoucher.setTransmissionManufacturer(mqmsTranManufacturesDecodeMapper.selectTranManufacture(trsmManufacture));
+//                    mqmsVoucher.setTransmissionManufacturer(mqmsTranManufacturesDecodeMapper.selectTranManufacture(trsmManufacture));
                     //变速箱生产日期
-                    String trsmProMonth=Integer.toString(Integer.parseInt(trsmProMonthHex,16),10);
-                    if(trsmProMonth.length()<2){
-                        trsmProMonth="0"+trsmProMonth;
-                    }
-                    System.out.println(trsmProMonth);
-                    String trsmProYear=mqmsTranYearDecodeMapper.selectTranProYear(trsmProYearCode);
-                    System.out.println(trsmProYear);
-                    mqmsVoucher.setTransmissionProductionData(trsmProYear+"-"+trsmProMonth+"-"+trsmProDay);
+//                    String trsmProMonth=Integer.toString(Integer.parseInt(trsmProMonthHex,16),10);
+//                    if(trsmProMonth.length()<2){
+//                        trsmProMonth="0"+trsmProMonth;
+//                    }
+//                    System.out.println(trsmProMonth);
+//                    String trsmProYear=mqmsTranYearDecodeMapper.selectTranProYear(trsmProYearCode);
+//                    System.out.println(trsmProYear);
+//                    mqmsVoucher.setTransmissionProductionData(trsmProYear+"-"+trsmProMonth+"-"+trsmProDay);
                     //变速箱生产至确认经过月
-                    int proFailureMonths=MqmsUtil.getMonth(mqmsVoucher.getTransmissionProductionData(),mqmsVoucher.getConfirmDate());
-                    mqmsVoucher.setTransmissionComfirmTime(Integer.toString(proFailureMonths));
+//                    int proFailureMonths=MqmsUtil.getMonth(mqmsVoucher.getTransmissionProductionData(),mqmsVoucher.getConfirmDate());
+//                    mqmsVoucher.setTransmissionComfirmTime(Integer.toString(proFailureMonths));
                     mqmsVoucherList.add(mqmsVoucher);
                 }
                 for(MqmsVoucherRaw mqmsVoucherRawRecord:mqmsVoucherRawList){
-                    String voucherCode=mqmsVoucherRawRecord.getVoucherCode();
-                    int cnt = mqmsVoucherRawMapper.selectByVoucherCode(voucherCode);
+                    String qualityFeedbackCode=mqmsVoucherRawRecord.getQualityFeedbackCode();
+                    int cnt = mqmsVoucherRawMapper.selectByQualityFeedbackCode(qualityFeedbackCode);
                     if (cnt == 0) {
                         mqmsVoucherRawMapper.insertMqmsVoucherRaw(mqmsVoucherRawRecord);
                         System.out.println(" 插入 "+mqmsVoucherRawRecord);
                     } else {
-                        mqmsVoucherRawMapper.updateByVoucher(mqmsVoucherRawRecord);
+                        mqmsVoucherRawMapper.updateByQualityFeedbackCode(mqmsVoucherRawRecord);
                         System.out.println(" 更新 "+mqmsVoucherRawRecord);
                     }
                 }
                 for(MqmsVoucher mqmsVoucherRecord:mqmsVoucherList){
-                    String voucherCode=mqmsVoucherRecord.getVoucherCode();
-                    int cnt = mqmsVoucherMapper.selectByVoucherCode(voucherCode);
+                    String qualityFeedbackCode=mqmsVoucherRecord.getQualityFeedbackCode();
+                    int cnt = mqmsVoucherMapper.selectByQualityFeedbackCode(qualityFeedbackCode);
                     if (cnt == 0) {
                         mqmsVoucherMapper.insertMqmsVoucher(mqmsVoucherRecord);
                         System.out.println(" 插入 "+mqmsVoucherRecord);
                     } else {
-                        mqmsVoucherMapper.updateByVoucher(mqmsVoucherRecord);
+                        mqmsVoucherMapper.updateByQualityFeedbackCode(mqmsVoucherRecord);
                         System.out.println(" 更新 "+mqmsVoucherRecord);
                     }
                 }
