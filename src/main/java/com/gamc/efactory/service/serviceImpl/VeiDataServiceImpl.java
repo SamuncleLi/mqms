@@ -1,5 +1,6 @@
 package com.gamc.efactory.service.serviceImpl;
 
+import com.google.common.util.concurrent.ThreadFactoryBuilder;
 import com.gamc.efactory.dao.*;
 import com.gamc.efactory.dao.base.MqmsTranYearDecodeBaseMapper;
 import com.gamc.efactory.model.dataObject.MqmsVoucher;
@@ -8,6 +9,7 @@ import com.gamc.efactory.service.VeiDataService;
 import com.gamc.efactory.util.ExcelUtil;
 import com.gamc.efactory.util.MqmsUtil;
 import com.gamc.efactory.util.RangeResultUtil;
+import com.gamc.efactory.util.StringUtil;
 import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,6 +24,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.*;
 
 /**
  * Created by Zeho Lee on 2020/1/3.
@@ -39,9 +42,17 @@ public class VeiDataServiceImpl implements VeiDataService {
     @Autowired
     private MqmsTranYearDecodeMapper mqmsTranYearDecodeMapper;
     Logger logger = LoggerFactory.getLogger(VeiDataServiceImpl.class);
+
+    private class ImportCall implements Runnable {
+        @Override
+        public void run() {
+            System.out.println("good time");
+        }
+    }
+
     public boolean batchImport(String fileName, MultipartFile file){
         try{
-            if (fileName.endsWith(".xlsx")) {
+            if (fileName.endsWith(".xlsx") || fileName.endsWith(".xls") ) {
                 List<MqmsVoucherRaw> mqmsVoucherRawList = new ArrayList<>();
                 List<MqmsVoucher> mqmsVoucherList = new ArrayList<>();
                 // 说明是xlsx文件,不过这里最好限制一下
@@ -61,8 +72,12 @@ public class VeiDataServiceImpl implements VeiDataService {
                             f.set(mqmsVoucherRaw, rowData.get(j-2));
                         }
                         else if(f.getType().equals(BigDecimal.class)){
-
-                            f.set(mqmsVoucherRaw, new BigDecimal(rowData.get(j-2)));
+                            if(StringUtil.isEmpty(rowData.get(j-2))){
+                                f.set(mqmsVoucherRaw, new BigDecimal(0.0));
+                            }
+                            else {
+                                f.set(mqmsVoucherRaw, new BigDecimal(Double.parseDouble(rowData.get(j-2))));
+                            }
                         }
                         else if(f.getType().equals(Integer.class)){
                             //来自前面的坑，EXCEL导出整数变成字符多了小数点，例2838(Int),2838.0(String)
@@ -76,6 +91,8 @@ public class VeiDataServiceImpl implements VeiDataService {
                         }
                     }
                     mqmsVoucherRawList.add(mqmsVoucherRaw);
+
+                    //开新线程解析
                     //相同属性复制，避免重复性Get/Set
                     MqmsVoucher mqmsVoucher = new MqmsVoucher();
                     BeanUtils.copyProperties(mqmsVoucherRaw,mqmsVoucher);
@@ -93,10 +110,10 @@ public class VeiDataServiceImpl implements VeiDataService {
 //                    mqmsVoucher.setFailureYear(dateTime[0]);
                     //故障发生月
 //                    mqmsVoucher.setFailureMonth(dateTime[1]);
-                    Map<String, String> map = new HashMap();
-                    map=MqmsUtil.getWeekDate(mqmsVoucher.getSubmitDate());
-                    //接收区间
-                    mqmsVoucher.setReceiveTime(map.get("wednesdayDate")+"~"+map.get("ThursdayDate"));
+//                    Map<String, String> map = new HashMap();
+//                    map=MqmsUtil.getWeekDate(mqmsVoucher.getSubmitDate());
+//                    //接收区间
+//                    mqmsVoucher.setReceiveTime(map.get("wednesdayDate")+"~"+map.get("ThursdayDate"));
                     //车型
 
                     //发动机号
@@ -129,28 +146,35 @@ public class VeiDataServiceImpl implements VeiDataService {
 //                    mqmsVoucher.setTransmissionComfirmTime(Integer.toString(proFailureMonths));
                     mqmsVoucherList.add(mqmsVoucher);
                 }
+
+                ThreadFactory threadFactory = new ThreadFactoryBuilder().setNameFormat("sendEmailImmediately-pool-%d").build();
+                ExecutorService executorService = new ThreadPoolExecutor(2, 4, 1000, TimeUnit.MILLISECONDS, new SynchronousQueue<Runnable>(),threadFactory,new ThreadPoolExecutor.AbortPolicy());
                 for(MqmsVoucherRaw mqmsVoucherRawRecord:mqmsVoucherRawList){
-                    String qualityFeedbackCode=mqmsVoucherRawRecord.getQualityFeedbackCode();
-                    int cnt = mqmsVoucherRawMapper.selectByQualityFeedbackCode(qualityFeedbackCode);
-                    if (cnt == 0) {
+//                    String qualityFeedbackCode=mqmsVoucherRawRecord.();
+//                    int cnt = mqmsVoucherRawMapper.selectByQualityFeedbackCode(qualityFeedbackCode);
+//                    if (cnt == 0) {
                         mqmsVoucherRawMapper.insertMqmsVoucherRaw(mqmsVoucherRawRecord);
                         System.out.println(" 插入 "+mqmsVoucherRawRecord);
-                    } else {
-                        mqmsVoucherRawMapper.updateByQualityFeedbackCode(mqmsVoucherRawRecord);
-                        System.out.println(" 更新 "+mqmsVoucherRawRecord);
-                    }
+
+                    //使用线程池
+                    ImportCall importCall = new ImportCall();
+                    executorService.execute(importCall);
+//                    } else {
+//                        mqmsVoucherRawMapper.updateByQualityFeedbackCode(mqmsVoucherRawRecord);
+//                        System.out.println(" 更新 "+mqmsVoucherRawRecord);
+//                    }
                 }
-                for(MqmsVoucher mqmsVoucherRecord:mqmsVoucherList){
-                    String qualityFeedbackCode=mqmsVoucherRecord.getQualityFeedbackCode();
-                    int cnt = mqmsVoucherMapper.selectByQualityFeedbackCode(qualityFeedbackCode);
-                    if (cnt == 0) {
-                        mqmsVoucherMapper.insertMqmsVoucher(mqmsVoucherRecord);
-                        System.out.println(" 插入 "+mqmsVoucherRecord);
-                    } else {
-                        mqmsVoucherMapper.updateByQualityFeedbackCode(mqmsVoucherRecord);
-                        System.out.println(" 更新 "+mqmsVoucherRecord);
-                    }
-                }
+//                for(MqmsVoucher mqmsVoucherRecord:mqmsVoucherList){
+//                    String qualityFeedbackCode=mqmsVoucherRecord.getQualityFeedbackCode();
+//                    int cnt = mqmsVoucherMapper.selectByQualityFeedbackCode(qualityFeedbackCode);
+//                    if (cnt == 0) {
+//                        mqmsVoucherMapper.insertMqmsVoucher(mqmsVoucherRecord);
+//                        System.out.println(" 插入 "+mqmsVoucherRecord);
+//                    } else {
+//                        mqmsVoucherMapper.updateByQualityFeedbackCode(mqmsVoucherRecord);
+//                        System.out.println(" 更新 "+mqmsVoucherRecord);
+//                    }
+//                }
 
 
             }

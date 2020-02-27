@@ -168,7 +168,7 @@ public class ExcelUtil {
                                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                                 rowList.add(sdf.format(HSSFDateUtil.getJavaDate(cell.getNumericCellValue())));
                             }
-                            else if(Arrays.asList(176,177,182,183,185,186).contains(formatType)){
+                            else if(Arrays.asList(176,177,182,183,186).contains(formatType)){
                                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                                 rowList.add(sdf.format(HSSFDateUtil.getJavaDate(cell.getNumericCellValue())));
                             }
