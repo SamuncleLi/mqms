@@ -1,0 +1,509 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gamc.efactory.dao.base.MqmsFailureReportBaseMapper">
+
+
+    <insert id="insertMqmsFailureReport"  useGeneratedKeys="true" keyProperty="failureReportId">
+        INSERT INTO `mqms_failure_report`
+        (
+        <trim suffixOverrides=",">
+                    <if test="failureReportId!=null">
+                        `failure_report_id`,
+                    </if>
+                    <if test="voucherCode!=null">
+                        `voucher_code`,
+                    </if>
+                    <if test="engType!=null">
+                        `eng_type`,
+                    </if>
+                    <if test="happenDate!=null">
+                        `happen_date`,
+                    </if>
+                    <if test="engArrange!=null">
+                        `eng_arrange`,
+                    </if>
+        </trim>
+        )
+        VALUES
+        (
+        <trim suffixOverrides=",">
+                <if test="failureReportId!=null">
+                    #{failureReportId},
+                </if>
+                <if test="voucherCode!=null">
+                    #{voucherCode},
+                </if>
+                <if test="engType!=null">
+                    #{engType},
+                </if>
+                <if test="happenDate!=null">
+                    #{happenDate},
+                </if>
+                <if test="engArrange!=null">
+                    #{engArrange},
+                </if>
+        </trim>
+        )
+    </insert>
+
+
+
+
+    <update id="updateMqmsFailureReport">
+        UPDATE `mqms_failure_report`
+        SET
+        <trim suffixOverrides=",">
+            <if test="voucherCode != null and voucherCode!=''">
+                `voucher_code` = #{voucherCode},
+            </if>
+            <if test="engType != null and engType!=''">
+                `eng_type` = #{engType},
+            </if>
+            <if test="happenDate != null and happenDate!=''">
+                `happen_date` = #{happenDate},
+            </if>
+            <if test="engArrange != null and engArrange!=''">
+                `eng_arrange` = #{engArrange},
+            </if>
+        </trim>
+        WHERE
+        <trim suffixOverrides="and">
+                `failure_report_id` = #{failureReportId} and
+        </trim>
+    </update>
+
+    <update id="update">
+        UPDATE `mqms_failure_report`
+        SET
+        <trim suffixOverrides=",">
+        <if test="set.voucherCode != null and set.voucherCode!=''">
+            `voucher_code` = #{set.voucherCode},
+        </if>
+        <if test="set.engType != null and set.engType!=''">
+            `eng_type` = #{set.engType},
+        </if>
+        <if test="set.happenDate != null and set.happenDate!=''">
+            `happen_date` = #{set.happenDate},
+        </if>
+        <if test="set.engArrange != null and set.engArrange!=''">
+            `eng_arrange` = #{set.engArrange},
+        </if>
+        </trim>
+        <trim prefix="where" suffixOverrides="and | or">
+                <if test="where.failureReportIdList != null">
+                    `failure_report_id` in
+                    <foreach collection="where.failureReportIdList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test="where.failureReportIdSt !=null">
+                `failure_report_id` >= #{where.failureReportIdSt} and
+            </if>
+            <if test="where.failureReportIdEd!=null">
+                `failure_report_id` &lt;= #{where.failureReportIdEd} and
+            </if>
+                <if test="where.voucherCodeList != null">
+                    `voucher_code` in
+                    <foreach collection="where.voucherCodeList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test ="where.fuzzyVoucherCode!=null and where.fuzzyVoucherCode.size()>0">
+                (
+                <foreach collection="where.fuzzyVoucherCode"  separator="or" item="item">
+                    `Voucher_code` like concat('%',#{item},'%')
+                </foreach>
+                ) and
+            </if>
+            <if test ="where.rightFuzzyVoucherCode!=null and where.rightFuzzyVoucherCode.size()>0">
+                (
+                <foreach collection="where.rightFuzzyVoucherCode"  separator="or" item="item">
+                    `Voucher_code` like concat(#{item},'%')
+                </foreach>
+                ) and
+            </if>
+                <if test="where.engTypeList != null">
+                    `eng_type` in
+                    <foreach collection="where.engTypeList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test ="where.fuzzyEngType!=null and where.fuzzyEngType.size()>0">
+                (
+                <foreach collection="where.fuzzyEngType"  separator="or" item="item">
+                    `Eng_type` like concat('%',#{item},'%')
+                </foreach>
+                ) and
+            </if>
+            <if test ="where.rightFuzzyEngType!=null and where.rightFuzzyEngType.size()>0">
+                (
+                <foreach collection="where.rightFuzzyEngType"  separator="or" item="item">
+                    `Eng_type` like concat(#{item},'%')
+                </foreach>
+                ) and
+            </if>
+                <if test="where.happenDateList != null">
+                    `happen_date` in
+                    <foreach collection="where.happenDateList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test ="where.fuzzyHappenDate!=null and where.fuzzyHappenDate.size()>0">
+                (
+                <foreach collection="where.fuzzyHappenDate"  separator="or" item="item">
+                    `Happen_date` like concat('%',#{item},'%')
+                </foreach>
+                ) and
+            </if>
+            <if test ="where.rightFuzzyHappenDate!=null and where.rightFuzzyHappenDate.size()>0">
+                (
+                <foreach collection="where.rightFuzzyHappenDate"  separator="or" item="item">
+                    `Happen_date` like concat(#{item},'%')
+                </foreach>
+                ) and
+            </if>
+                <if test="where.engArrangeList != null">
+                    `eng_arrange` in
+                    <foreach collection="where.engArrangeList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test ="where.fuzzyEngArrange!=null and where.fuzzyEngArrange.size()>0">
+                (
+                <foreach collection="where.fuzzyEngArrange"  separator="or" item="item">
+                    `Eng_arrange` like concat('%',#{item},'%')
+                </foreach>
+                ) and
+            </if>
+            <if test ="where.rightFuzzyEngArrange!=null and where.rightFuzzyEngArrange.size()>0">
+                (
+                <foreach collection="where.rightFuzzyEngArrange"  separator="or" item="item">
+                    `Eng_arrange` like concat(#{item},'%')
+                </foreach>
+                ) and
+            </if>
+        </trim>
+    </update>
+
+
+    <resultMap type="com.gamc.efactory.model.dataObject.MqmsFailureReport" id="MqmsFailureReportMap">
+        <result property="failureReportId" column="failure_report_id"/>
+        <result property="voucherCode" column="voucher_code"/>
+        <result property="engType" column="eng_type"/>
+        <result property="happenDate" column="happen_date"/>
+        <result property="engArrange" column="eng_arrange"/>
+    </resultMap>
+
+
+    <select id="queryMqmsFailureReport" resultMap="MqmsFailureReportMap">
+        select
+        <include refid="baseResult"></include>
+        from  `mqms_failure_report`
+        <trim prefix="where" suffixOverrides="and | or">
+            <if test="failureReportId != null">
+                `failure_report_id` = #{failureReportId} and
+            </if>
+            <if test="voucherCode != null and voucherCode!=''">
+                `voucher_code` = #{voucherCode} and
+            </if>
+            <if test="engType != null and engType!=''">
+                `eng_type` = #{engType} and
+            </if>
+            <if test="happenDate != null and happenDate!=''">
+                `happen_date` = #{happenDate} and
+            </if>
+            <if test="engArrange != null and engArrange!=''">
+                `eng_arrange` = #{engArrange} and
+            </if>
+            <if test = "(_parameter instanceof com.gamc.efactory.model.dataObject.MqmsFailureReport$QueryBuilder) == true">
+                <if test="failureReportIdList != null">
+                    `failure_report_id` in
+                    <foreach collection="failureReportIdList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test="failureReportIdSt !=null">
+                    `failure_report_id` >= #{failureReportIdSt} and
+                </if>
+                <if test="failureReportIdEd!=null">
+                    `failure_report_id` &lt;= #{failureReportIdEd} and
+                </if>
+                <if test="voucherCodeList != null">
+                    `voucher_code` in
+                    <foreach collection="voucherCodeList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyVoucherCode!=null and fuzzyVoucherCode.size()>0">
+                    (
+                    <foreach collection="fuzzyVoucherCode"  separator="or" item="item">
+                        `Voucher_code` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyVoucherCode!=null and rightFuzzyVoucherCode.size()>0">
+                    (
+                    <foreach collection="rightFuzzyVoucherCode"  separator="or" item="item">
+                        `Voucher_code` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="engTypeList != null">
+                    `eng_type` in
+                    <foreach collection="engTypeList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyEngType!=null and fuzzyEngType.size()>0">
+                    (
+                    <foreach collection="fuzzyEngType"  separator="or" item="item">
+                        `Eng_type` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyEngType!=null and rightFuzzyEngType.size()>0">
+                    (
+                    <foreach collection="rightFuzzyEngType"  separator="or" item="item">
+                        `Eng_type` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="happenDateList != null">
+                    `happen_date` in
+                    <foreach collection="happenDateList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyHappenDate!=null and fuzzyHappenDate.size()>0">
+                    (
+                    <foreach collection="fuzzyHappenDate"  separator="or" item="item">
+                        `Happen_date` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyHappenDate!=null and rightFuzzyHappenDate.size()>0">
+                    (
+                    <foreach collection="rightFuzzyHappenDate"  separator="or" item="item">
+                        `Happen_date` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="engArrangeList != null">
+                    `eng_arrange` in
+                    <foreach collection="engArrangeList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyEngArrange!=null and fuzzyEngArrange.size()>0">
+                    (
+                    <foreach collection="fuzzyEngArrange"  separator="or" item="item">
+                        `Eng_arrange` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyEngArrange!=null and rightFuzzyEngArrange.size()>0">
+                    (
+                    <foreach collection="rightFuzzyEngArrange"  separator="or" item="item">
+                        `Eng_arrange` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+            </if>
+        </trim>
+    </select>
+
+    <select id="queryMqmsFailureReportLimit1" resultMap="MqmsFailureReportMap">
+        select
+        <include refid="baseResult"></include>
+        from  `mqms_failure_report`
+        <trim prefix="where" suffixOverrides="and | or">
+            <if test="failureReportId != null">
+                `failure_report_id` = #{failureReportId} and
+            </if>
+            <if test="voucherCode != null and voucherCode!=''">
+                `voucher_code` = #{voucherCode} and
+            </if>
+            <if test="engType != null and engType!=''">
+                `eng_type` = #{engType} and
+            </if>
+            <if test="happenDate != null and happenDate!=''">
+                `happen_date` = #{happenDate} and
+            </if>
+            <if test="engArrange != null and engArrange!=''">
+                `eng_arrange` = #{engArrange} and
+            </if>
+            <if test = "(_parameter instanceof com.gamc.efactory.model.dataObject.MqmsFailureReport$QueryBuilder) == true">
+                    <if test="failureReportIdList != null">
+                        `failure_report_id` in
+                        <foreach collection="failureReportIdList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test="failureReportIdSt !=null">
+                    `failure_report_id` >= #{failureReportIdSt} and
+                </if>
+                <if test="failureReportIdEd!=null">
+                    `failure_report_id` &lt;= #{failureReportIdEd} and
+                </if>
+                    <if test="voucherCodeList != null">
+                        `voucher_code` in
+                        <foreach collection="voucherCodeList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyVoucherCode!=null and fuzzyVoucherCode.size()>0">
+                    (
+                    <foreach collection="fuzzyVoucherCode"  separator="or" item="item">
+                        `Voucher_code` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyVoucherCode!=null and rightFuzzyVoucherCode.size()>0">
+                    (
+                    <foreach collection="rightFuzzyVoucherCode"  separator="or" item="item">
+                        `Voucher_code` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                    <if test="engTypeList != null">
+                        `eng_type` in
+                        <foreach collection="engTypeList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyEngType!=null and fuzzyEngType.size()>0">
+                    (
+                    <foreach collection="fuzzyEngType"  separator="or" item="item">
+                        `Eng_type` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyEngType!=null and rightFuzzyEngType.size()>0">
+                    (
+                    <foreach collection="rightFuzzyEngType"  separator="or" item="item">
+                        `Eng_type` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                    <if test="happenDateList != null">
+                        `happen_date` in
+                        <foreach collection="happenDateList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyHappenDate!=null and fuzzyHappenDate.size()>0">
+                    (
+                    <foreach collection="fuzzyHappenDate"  separator="or" item="item">
+                        `Happen_date` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyHappenDate!=null and rightFuzzyHappenDate.size()>0">
+                    (
+                    <foreach collection="rightFuzzyHappenDate"  separator="or" item="item">
+                        `Happen_date` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                    <if test="engArrangeList != null">
+                        `eng_arrange` in
+                        <foreach collection="engArrangeList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyEngArrange!=null and fuzzyEngArrange.size()>0">
+                    (
+                    <foreach collection="fuzzyEngArrange"  separator="or" item="item">
+                        `Eng_arrange` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyEngArrange!=null and rightFuzzyEngArrange.size()>0">
+                    (
+                    <foreach collection="rightFuzzyEngArrange"  separator="or" item="item">
+                        `Eng_arrange` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+            </if>
+        </trim>
+        limit 1
+    </select>
+
+    <sql id="allResult">
+        <trim suffixOverrides=",">
+        `failure_report_id`,
+        `voucher_code`,
+        `eng_type`,
+        `happen_date`,
+        `eng_arrange`,
+        </trim>
+    </sql>
+
+
+
+    <sql id="baseResult">
+        <trim suffixOverrides=",">
+            <if test = "(_parameter instanceof com.gamc.efactory.model.dataObject.MqmsFailureReport$QueryBuilder) == true">
+
+                <if test="fetchFields==null">
+                    <include refid="allResult"></include>
+                </if>
+                <if test="fetchFields!=null">
+                    <if test="fetchFields.AllFields !=null">
+                        <include refid="allResult"></include>
+                    </if>
+                    <if test="fetchFields.AllFields ==null and fetchFields.fetchFields==null and fetchFields.excludeFields==null and fetchFields.otherFields==null">
+                        <include refid="allResult"></include>
+                    </if>
+                    <if test="fetchFields.AllFields==null and fetchFields.fetchFields!=null">
+                    <if test="fetchFields.fetchFields.failureReportId==true">
+                        `failure_report_id`,
+                    </if>
+                    <if test="fetchFields.fetchFields.voucherCode==true">
+                        `voucher_code`,
+                    </if>
+                    <if test="fetchFields.fetchFields.engType==true">
+                        `eng_type`,
+                    </if>
+                    <if test="fetchFields.fetchFields.happenDate==true">
+                        `happen_date`,
+                    </if>
+                    <if test="fetchFields.fetchFields.engArrange==true">
+                        `eng_arrange`,
+                    </if>
+                    </if>
+                    <if test="fetchFields.AllFields==null and fetchFields.excludeFields!=null">
+                    <if test="fetchFields.excludeFields.failureReportId==null">
+                        `failure_report_id`,
+                    </if>
+                    <if test="fetchFields.excludeFields.voucherCode==null">
+                        `voucher_code`,
+                    </if>
+                    <if test="fetchFields.excludeFields.engType==null">
+                        `eng_type`,
+                    </if>
+                    <if test="fetchFields.excludeFields.happenDate==null">
+                        `happen_date`,
+                    </if>
+                    <if test="fetchFields.excludeFields.engArrange==null">
+                        `eng_arrange`,
+                    </if>
+                    </if>
+                    <if test="fetchFields.otherFields!=null and fetchFields.otherFields.size>0">
+                        <foreach collection="fetchFields.otherFields" index="index" item="item" separator=",">
+                        `#{item}`
+                        </foreach>
+                    </if>
+                </if>
+            </if>
+            <if test="(_parameter instanceof com.gamc.efactory.model.dataObject.MqmsFailureReport$QueryBuilder) == false" >
+                <include refid="allResult"></include>
+            </if>
+
+        </trim>
+    </sql>
+
+
+</mapper>
