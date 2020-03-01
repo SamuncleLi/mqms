@@ -1,13 +1,15 @@
 package com.gamc.efactory.service.serviceImpl;
 
 
-import com.gamc.efactory.dao.MqmsSalesMapper;
-import com.gamc.efactory.dao.MqmsSalesRawMapper;
+import com.gamc.efactory.dao.*;
 
+import com.gamc.efactory.model.dataObject.MqmsProduction;
 import com.gamc.efactory.model.dataObject.MqmsSales;
 import com.gamc.efactory.model.dataObject.MqmsSalesRaw;
+import com.gamc.efactory.model.dataObject.MqmsVinDecode;
 import com.gamc.efactory.service.SalesService;
 import com.gamc.efactory.util.ExcelUtil;
+import com.google.common.util.concurrent.ThreadFactoryBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
@@ -19,6 +21,7 @@ import java.lang.reflect.Field;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.*;
 
 /**
  * Created by Jian Wang on 2020/1/5.
@@ -29,8 +32,65 @@ public class SalesServiceImpl implements SalesService {
     private MqmsSalesRawMapper mqmsSalesRawMapper;
     @Autowired
     private MqmsSalesMapper mqmsSalesMapper;
+    @Autowired
+    private MqmsTranProductionDecodeMapper mqmsTranProductionDecodeMapper;
+    @Autowired
+    private MqmsTranManufacturesDecodeMapper mqmsTranManufacturesDecodeMapper;
+    @Autowired
+    private MqmsTranYearDecodeMapper mqmsTranYearDecodeMapper;
+    @Autowired
+    private MqmsVinDecodeMapper mqmsVinDecodeMapper;
+    @Autowired
+    private MqmsFaultDecodeMapper mqmsFaultDecodeMapper;
+    @Autowired
+    private MqmsProductionMapper mqmsProductionMapper;
     Logger logger = LoggerFactory.getLogger(SalesServiceImpl.class);
+    private class ImportCall implements Runnable {
+        //构造函数传递参数
+        private List<MqmsSales> mqmsSalesList;
+        public void setMqmsSalesList(List<MqmsSales> mqmsSalesList)
+        {
+            this.mqmsSalesList = mqmsSalesList;
+        }
+        @Override
+        public void run() {
 
+            for (MqmsSales mqmsSalesRecord : mqmsSalesList) {
+                //mtoc码
+                String mtoc= mqmsProductionMapper.selectByVin(mqmsSalesRecord.getVinCode()).getMtoc();
+                mqmsSalesRecord.setMtoc(mtoc);
+
+                //机型
+                String vinShortCOde=mqmsSalesRecord.getVinCode().substring(0,5);
+                MqmsVinDecode mqmsVinDecode=mqmsVinDecodeMapper.vinDecode(vinShortCOde);
+                mqmsSalesRecord.setEngType(mqmsVinDecode.getVinEngType());
+                //系列
+                mqmsSalesRecord.setEngSeries(mqmsVinDecode.getVinSeries());
+                //车型简码
+                mqmsSalesRecord.setCarShortCode(vinShortCOde.substring(3,5));
+                //车型
+                mqmsSalesRecord.setCarModel(mqmsVinDecode.getVinCarType());
+                //内部车型号
+                mqmsSalesRecord.setCarModelCode(mqmsVinDecode.getVinCarType());
+               //销售年
+                String[] dateTime=mqmsSalesRecord.getSecondPinDate().split("-");
+                mqmsSalesRecord.setSalesYear(dateTime[0]);
+               //销售月
+                mqmsSalesRecord.setSalesMonth(dateTime[1]);
+                //变速箱短码
+                mqmsSalesRecord.setTranShortCode(mqmsSalesRecord.getVinCode().substring(6,7));
+                //变速箱类型
+                String trsmCode=mqmsSalesRecord.getTransmissionCode().replace("+","");
+                String trsmType=trsmCode.substring(0,5);
+                mqmsSalesRecord.setTranType(mqmsTranProductionDecodeMapper.selectTranProductionCode(trsmType));
+                //变速箱系列
+
+
+                mqmsSalesMapper.insertMqmsSales(mqmsSalesRecord);
+
+            }
+        }
+    }
     public boolean batchImport(String fileName, MultipartFile file) {
         try {
             if (fileName.endsWith(".xlsx")) {
@@ -69,45 +129,30 @@ public class SalesServiceImpl implements SalesService {
                     //相同属性复制
                     MqmsSales mqmsSales = new MqmsSales();
                     BeanUtils.copyProperties(mqmsSalesRaw, mqmsSales);
-                    String factoryCode="";
-                    if(mqmsSales.getVinCode().length()<=3)
-                    {
-                        factoryCode=mqmsSales.getVinCode();
-                    }
-                    else {
-                        factoryCode = mqmsSales.getVinCode().substring(0, 3);
-                    }
-                    mqmsSales.setFactoryCode(factoryCode);
-                    String[] dateTime=mqmsSales.getSecondPinDate().split("-");
-                    mqmsSales.setSalesYear(dateTime[0]);
-                    mqmsSales.setSalesMonth(dateTime[1]);
                     mqmsSalesList.add(mqmsSales);
 
                 }
                 for (MqmsSalesRaw mqmsSalesRawRecord : mqmsSalesRawList) {
 
-                    String vinCode=mqmsSalesRawRecord.getVinCode();
-                    int cnt = mqmsSalesRawMapper.selectByVinCode(vinCode);
-                    if (cnt == 0) {
+//                    String vinCode=mqmsSalesRawRecord.getVinCode();
+//                    int cnt = mqmsSalesRawMapper.selectByVinCode(vinCode);
+//                    if (cnt == 0) {
                         mqmsSalesRawMapper.insertMqmsSalesRaw(mqmsSalesRawRecord);
-                        System.out.println(" 插入 "+mqmsSalesRawRecord);
-                    } else {
-                        mqmsSalesRawMapper.updateByVinCode(mqmsSalesRawRecord);
-                        System.out.println(" 更新 "+mqmsSalesRawRecord);
-                    }
+//                        System.out.println(" 插入 "+mqmsSalesRawRecord);
+//                    } else {
+//                        mqmsSalesRawMapper.updateByVinCode(mqmsSalesRawRecord);
+//                        System.out.println(" 更新 "+mqmsSalesRawRecord);
+//                    }
                 }
-                for (MqmsSales mqmsSalesRecord : mqmsSalesList) {
 
-                    String vinCode=mqmsSalesRecord.getVinCode();
-                    int cnt = mqmsSalesMapper.selectByVinCode(vinCode);
-                    if (cnt == 0) {
-                        mqmsSalesMapper.insertMqmsSales(mqmsSalesRecord);
-                        System.out.println(" 插入 "+mqmsSalesRecord);
-                    } else {
-                        mqmsSalesMapper.updateByVinCode(mqmsSalesRecord);
-                        System.out.println(" 更新 "+mqmsSalesRecord);
-                    }
-                }
+
+                ThreadFactory threadFactory = new ThreadFactoryBuilder().setNameFormat("sendEmailImmediately-pool-%d").build();
+                ExecutorService executorService = new ThreadPoolExecutor(2, 4, 1000, TimeUnit.MILLISECONDS, new SynchronousQueue<Runnable>(),threadFactory,new ThreadPoolExecutor.AbortPolicy());
+                //使用线程池
+                ImportCall importCall = new ImportCall();
+                executorService.execute(importCall);
+                //构造函数传参
+                importCall.setMqmsSalesList(mqmsSalesList);
             }
             return true;
         }

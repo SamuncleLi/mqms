@@ -6,6 +6,8 @@ import com.gamc.efactory.service.ProductionService;
 import com.gamc.efactory.util.AttDateUtil;
 import com.gamc.efactory.util.ExcelUtil;
 import com.gamc.efactory.util.RangeResultUtil;
+import com.google.common.util.concurrent.ThreadFactoryBuilder;
+import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
@@ -19,6 +21,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.*;
 
 /**
  * Created by Jian Wang on 2020/1/5.
@@ -29,8 +32,73 @@ public class ProductionServiceImpl implements ProductionService {
     private MqmsProductionRawMapper mqmsProductionRawMapper;
     @Autowired
     private MqmsProductionMapper mqmsProductionMapper;
+    @Autowired
+    private MqmsTranProductionDecodeMapper mqmsTranProductionDecodeMapper;
+    @Autowired
+    private MqmsTranManufacturesDecodeMapper mqmsTranManufacturesDecodeMapper;
+    @Autowired
+    private MqmsTranYearDecodeMapper mqmsTranYearDecodeMapper;
+    @Autowired
+    private MqmsVinDecodeMapper mqmsVinDecodeMapper;
+    @Autowired
+    private MqmsFaultDecodeMapper mqmsFaultDecodeMapper;
+    @Autowired
+    private MqmsSalesMapper mqmsSalesMapper;
     Logger logger = LoggerFactory.getLogger(ProductionServiceImpl.class);
+    private class ImportCall implements Runnable {
+        //构造函数传递参数
+        private List<MqmsProduction> mqmsProductionList;
+        public void setMqmsProductionList(List<MqmsProduction> mqmsProductionList)
+        {
+            this.mqmsProductionList = mqmsProductionList;
+        }
+        @Override
+        public void run() {
 
+            for (MqmsProduction mqmsProductionRecord : mqmsProductionList) {
+                //短码
+                String vinShortCOde=mqmsProductionRecord.getVin().substring(0,5);
+                mqmsProductionRecord.setShortCode(vinShortCOde);
+                //机型
+                MqmsVinDecode mqmsVinDecode=new MqmsVinDecode();
+                mqmsVinDecode=mqmsVinDecodeMapper.vinDecode(vinShortCOde);
+                mqmsProductionRecord.setEngType(mqmsVinDecode.getVinEngType());
+                //系列
+                mqmsProductionRecord.setSerialCode(mqmsVinDecode.getVinSeries());
+                //车型简码
+                mqmsProductionRecord.setCarShortCode(vinShortCOde.substring(3,5));
+                //车型
+                mqmsProductionRecord.setCarModel(mqmsVinDecode.getVinCarType());
+                //内部车型代号
+                mqmsProductionRecord.setCarSimpleCode(mqmsVinDecode.getVinCarType());
+                //销售年/月
+
+                if (mqmsSalesMapper.selectVinCodeCount(mqmsProductionRecord.getVin())!=0){
+                    MqmsSales mqmsSales=mqmsSalesMapper.selectByVinCode(mqmsProductionRecord.getVin());
+                    mqmsProductionRecord.setProductionYear(mqmsSales.getSalesYear());
+                    mqmsProductionRecord.setProductionMonth(mqmsSales.getSalesMonth());
+                }
+                else
+                {
+                    mqmsProductionRecord.setProductionYear("");
+                    mqmsProductionRecord.setProductionMonth("");
+                }
+
+                //变速箱短码
+                mqmsProductionRecord.setTransmissionShortCode(mqmsProductionRecord.getVin().substring(6,7));
+                //变速箱简码
+                String trsmCode=mqmsProductionRecord.getTransmissionCode().replace("+","");
+
+                String trsmType=trsmCode.substring(0,5);
+                mqmsProductionRecord.setTransmissionSimpleCode(trsmType);
+                //变速箱类型
+                mqmsProductionRecord.setTransmissionType(mqmsTranProductionDecodeMapper.selectTranProductionCode(trsmType));
+                //插入操作
+                mqmsProductionMapper.insertMqmsProduction(mqmsProductionRecord);
+
+                    }
+            }
+        }
     public boolean batchImport(String fileName, MultipartFile file) {
         try {
             if (fileName.endsWith(".xlsx")) {
@@ -68,40 +136,35 @@ public class ProductionServiceImpl implements ProductionService {
                     //相同属性复制
                     MqmsProduction mqmsProduction = new MqmsProduction();
                     BeanUtils.copyProperties(mqmsProductionRaw, mqmsProduction);
-                    String shortCode = "";
-                    if (mqmsProduction.getVin().length() <= 5) {
-                        shortCode = mqmsProduction.getVin().toString();
-                    } else {
-                        shortCode = mqmsProduction.getVin().substring(0, 5);
-                    }
-                    mqmsProduction.setShortCode(shortCode);
+//                    String shortCode = "";
+//                    if (mqmsProduction.getVin().length() <= 5) {
+//                        shortCode = mqmsProduction.getVin().toString();
+//                    } else {
+//                        shortCode = mqmsProduction.getVin().substring(0, 5);
+//                    }
+//                    mqmsProduction.setShortCode(shortCode);
                     mqmsProductionList.add(mqmsProduction);
 
                 }
                 for (MqmsProductionRaw mqmsProductionRawRecord : mqmsProductionRawList) {
-                    String vin = mqmsProductionRawRecord.getVin();
-                    int cnt = mqmsProductionRawMapper.selectByVin(vin);
-                    System.out.println(cnt);
-                    if (cnt == 0) {
+//                    String vin = mqmsProductionRawRecord.getVin();
+//                    int cnt = mqmsProductionRawMapper.selectByVin(vin);
+//                    System.out.println(cnt);
+//                    if (cnt == 0) {
                         mqmsProductionRawMapper.insertMqmsProductionRaw(mqmsProductionRawRecord);
                         System.out.println(" 插入 " + mqmsProductionRawRecord);
-                    } else {
-                        mqmsProductionRawMapper.updateByVin(mqmsProductionRawRecord);
-                        System.out.println(" 更新 " + mqmsProductionRawRecord);
-                    }
+//                    } else {
+//                        mqmsProductionRawMapper.updateByVin(mqmsProductionRawRecord);
+//                        System.out.println(" 更新 " + mqmsProductionRawRecord);
+//                    }
                 }
-                for (MqmsProduction mqmsProductionRecord : mqmsProductionList) {
-                    String vin = mqmsProductionRecord.getVin();
-                    int cnt = mqmsProductionMapper.selectByVin(vin);
-                    if (cnt == 0) {
-                        mqmsProductionMapper.insertMqmsProduction(mqmsProductionRecord);
-                        System.out.println(" 插入 " + mqmsProductionRecord);
-                    } else {
-                        mqmsProductionMapper.updateByVin(mqmsProductionRecord);
-                        System.out.println(" 更新 " + mqmsProductionRecord);
-                    }
-                }
-
+                ThreadFactory threadFactory = new ThreadFactoryBuilder().setNameFormat("sendEmailImmediately-pool-%d").build();
+                ExecutorService executorService = new ThreadPoolExecutor(2, 4, 1000, TimeUnit.MILLISECONDS, new SynchronousQueue<Runnable>(),threadFactory,new ThreadPoolExecutor.AbortPolicy());
+                //使用线程池
+                ImportCall importCall = new ImportCall();
+                executorService.execute(importCall);
+                //构造函数传参
+                importCall.setMqmsProductionList(mqmsProductionList);
 
             }
             return true;

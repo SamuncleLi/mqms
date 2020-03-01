@@ -165,11 +165,13 @@ public class ExcelUtil {
                         else if (cell.getCellType() == Cell.CELL_TYPE_NUMERIC) {
                             int formatType=cell.getCellStyle().getDataFormat();
                             if (HSSFDateUtil.isCellDateFormatted(cell)) {
-                                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//                                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
                                 rowList.add(sdf.format(HSSFDateUtil.getJavaDate(cell.getNumericCellValue())));
                             }
                             else if(Arrays.asList(176,177,182,183,186).contains(formatType)){
-                                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//                                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
                                 rowList.add(sdf.format(HSSFDateUtil.getJavaDate(cell.getNumericCellValue())));
                             }
                             else {
