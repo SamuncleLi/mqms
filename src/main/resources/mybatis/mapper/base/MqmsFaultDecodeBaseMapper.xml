@@ -1,0 +1,509 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gamc.efactory.dao.base.MqmsFaultDecodeBaseMapper">
+
+
+    <insert id="insertMqmsFaultDecode"  useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO `mqms_fault_decode`
+        (
+        <trim suffixOverrides=",">
+                    <if test="id!=null">
+                        `id`,
+                    </if>
+                    <if test="faultPartCode!=null">
+                        `fault_part_code`,
+                    </if>
+                    <if test="faultPartName!=null">
+                        `fault_part_name`,
+                    </if>
+                    <if test="faultSymptomPhoeno!=null">
+                        `fault_symptom_phoeno`,
+                    </if>
+                    <if test="faultSymptomCode!=null">
+                        `fault_symptom_code`,
+                    </if>
+        </trim>
+        )
+        VALUES
+        (
+        <trim suffixOverrides=",">
+                <if test="id!=null">
+                    #{id},
+                </if>
+                <if test="faultPartCode!=null">
+                    #{faultPartCode},
+                </if>
+                <if test="faultPartName!=null">
+                    #{faultPartName},
+                </if>
+                <if test="faultSymptomPhoeno!=null">
+                    #{faultSymptomPhoeno},
+                </if>
+                <if test="faultSymptomCode!=null">
+                    #{faultSymptomCode},
+                </if>
+        </trim>
+        )
+    </insert>
+
+
+
+
+    <update id="updateMqmsFaultDecode">
+        UPDATE `mqms_fault_decode`
+        SET
+        <trim suffixOverrides=",">
+            <if test="faultPartCode != null and faultPartCode!=''">
+                `fault_part_code` = #{faultPartCode},
+            </if>
+            <if test="faultPartName != null and faultPartName!=''">
+                `fault_part_name` = #{faultPartName},
+            </if>
+            <if test="faultSymptomPhoeno != null and faultSymptomPhoeno!=''">
+                `fault_symptom_phoeno` = #{faultSymptomPhoeno},
+            </if>
+            <if test="faultSymptomCode != null and faultSymptomCode!=''">
+                `fault_symptom_code` = #{faultSymptomCode},
+            </if>
+        </trim>
+        WHERE
+        <trim suffixOverrides="and">
+                `id` = #{id} and
+        </trim>
+    </update>
+
+    <update id="update">
+        UPDATE `mqms_fault_decode`
+        SET
+        <trim suffixOverrides=",">
+        <if test="set.faultPartCode != null and set.faultPartCode!=''">
+            `fault_part_code` = #{set.faultPartCode},
+        </if>
+        <if test="set.faultPartName != null and set.faultPartName!=''">
+            `fault_part_name` = #{set.faultPartName},
+        </if>
+        <if test="set.faultSymptomPhoeno != null and set.faultSymptomPhoeno!=''">
+            `fault_symptom_phoeno` = #{set.faultSymptomPhoeno},
+        </if>
+        <if test="set.faultSymptomCode != null and set.faultSymptomCode!=''">
+            `fault_symptom_code` = #{set.faultSymptomCode},
+        </if>
+        </trim>
+        <trim prefix="where" suffixOverrides="and | or">
+                <if test="where.idList != null">
+                    `id` in
+                    <foreach collection="where.idList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test="where.idSt !=null">
+                `id` >= #{where.idSt} and
+            </if>
+            <if test="where.idEd!=null">
+                `id` &lt;= #{where.idEd} and
+            </if>
+                <if test="where.faultPartCodeList != null">
+                    `fault_part_code` in
+                    <foreach collection="where.faultPartCodeList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test ="where.fuzzyFaultPartCode!=null and where.fuzzyFaultPartCode.size()>0">
+                (
+                <foreach collection="where.fuzzyFaultPartCode"  separator="or" item="item">
+                    `Fault_part_code` like concat('%',#{item},'%')
+                </foreach>
+                ) and
+            </if>
+            <if test ="where.rightFuzzyFaultPartCode!=null and where.rightFuzzyFaultPartCode.size()>0">
+                (
+                <foreach collection="where.rightFuzzyFaultPartCode"  separator="or" item="item">
+                    `Fault_part_code` like concat(#{item},'%')
+                </foreach>
+                ) and
+            </if>
+                <if test="where.faultPartNameList != null">
+                    `fault_part_name` in
+                    <foreach collection="where.faultPartNameList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test ="where.fuzzyFaultPartName!=null and where.fuzzyFaultPartName.size()>0">
+                (
+                <foreach collection="where.fuzzyFaultPartName"  separator="or" item="item">
+                    `Fault_part_name` like concat('%',#{item},'%')
+                </foreach>
+                ) and
+            </if>
+            <if test ="where.rightFuzzyFaultPartName!=null and where.rightFuzzyFaultPartName.size()>0">
+                (
+                <foreach collection="where.rightFuzzyFaultPartName"  separator="or" item="item">
+                    `Fault_part_name` like concat(#{item},'%')
+                </foreach>
+                ) and
+            </if>
+                <if test="where.faultSymptomPhoenoList != null">
+                    `fault_symptom_phoeno` in
+                    <foreach collection="where.faultSymptomPhoenoList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test ="where.fuzzyFaultSymptomPhoeno!=null and where.fuzzyFaultSymptomPhoeno.size()>0">
+                (
+                <foreach collection="where.fuzzyFaultSymptomPhoeno"  separator="or" item="item">
+                    `Fault_symptom_phoeno` like concat('%',#{item},'%')
+                </foreach>
+                ) and
+            </if>
+            <if test ="where.rightFuzzyFaultSymptomPhoeno!=null and where.rightFuzzyFaultSymptomPhoeno.size()>0">
+                (
+                <foreach collection="where.rightFuzzyFaultSymptomPhoeno"  separator="or" item="item">
+                    `Fault_symptom_phoeno` like concat(#{item},'%')
+                </foreach>
+                ) and
+            </if>
+                <if test="where.faultSymptomCodeList != null">
+                    `fault_symptom_code` in
+                    <foreach collection="where.faultSymptomCodeList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test ="where.fuzzyFaultSymptomCode!=null and where.fuzzyFaultSymptomCode.size()>0">
+                (
+                <foreach collection="where.fuzzyFaultSymptomCode"  separator="or" item="item">
+                    `Fault_symptom_code` like concat('%',#{item},'%')
+                </foreach>
+                ) and
+            </if>
+            <if test ="where.rightFuzzyFaultSymptomCode!=null and where.rightFuzzyFaultSymptomCode.size()>0">
+                (
+                <foreach collection="where.rightFuzzyFaultSymptomCode"  separator="or" item="item">
+                    `Fault_symptom_code` like concat(#{item},'%')
+                </foreach>
+                ) and
+            </if>
+        </trim>
+    </update>
+
+
+    <resultMap type="com.gamc.efactory.model.dataObject.MqmsFaultDecode" id="MqmsFaultDecodeMap">
+        <result property="id" column="id"/>
+        <result property="faultPartCode" column="fault_part_code"/>
+        <result property="faultPartName" column="fault_part_name"/>
+        <result property="faultSymptomPhoeno" column="fault_symptom_phoeno"/>
+        <result property="faultSymptomCode" column="fault_symptom_code"/>
+    </resultMap>
+
+
+    <select id="queryMqmsFaultDecode" resultMap="MqmsFaultDecodeMap">
+        select
+        <include refid="baseResult"></include>
+        from  `mqms_fault_decode`
+        <trim prefix="where" suffixOverrides="and | or">
+            <if test="id != null">
+                `id` = #{id} and
+            </if>
+            <if test="faultPartCode != null and faultPartCode!=''">
+                `fault_part_code` = #{faultPartCode} and
+            </if>
+            <if test="faultPartName != null and faultPartName!=''">
+                `fault_part_name` = #{faultPartName} and
+            </if>
+            <if test="faultSymptomPhoeno != null and faultSymptomPhoeno!=''">
+                `fault_symptom_phoeno` = #{faultSymptomPhoeno} and
+            </if>
+            <if test="faultSymptomCode != null and faultSymptomCode!=''">
+                `fault_symptom_code` = #{faultSymptomCode} and
+            </if>
+            <if test = "(_parameter instanceof com.gamc.efactory.model.dataObject.MqmsFaultDecode$QueryBuilder) == true">
+                <if test="idList != null">
+                    `id` in
+                    <foreach collection="idList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test="idSt !=null">
+                    `id` >= #{idSt} and
+                </if>
+                <if test="idEd!=null">
+                    `id` &lt;= #{idEd} and
+                </if>
+                <if test="faultPartCodeList != null">
+                    `fault_part_code` in
+                    <foreach collection="faultPartCodeList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyFaultPartCode!=null and fuzzyFaultPartCode.size()>0">
+                    (
+                    <foreach collection="fuzzyFaultPartCode"  separator="or" item="item">
+                        `Fault_part_code` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyFaultPartCode!=null and rightFuzzyFaultPartCode.size()>0">
+                    (
+                    <foreach collection="rightFuzzyFaultPartCode"  separator="or" item="item">
+                        `Fault_part_code` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="faultPartNameList != null">
+                    `fault_part_name` in
+                    <foreach collection="faultPartNameList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyFaultPartName!=null and fuzzyFaultPartName.size()>0">
+                    (
+                    <foreach collection="fuzzyFaultPartName"  separator="or" item="item">
+                        `Fault_part_name` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyFaultPartName!=null and rightFuzzyFaultPartName.size()>0">
+                    (
+                    <foreach collection="rightFuzzyFaultPartName"  separator="or" item="item">
+                        `Fault_part_name` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="faultSymptomPhoenoList != null">
+                    `fault_symptom_phoeno` in
+                    <foreach collection="faultSymptomPhoenoList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyFaultSymptomPhoeno!=null and fuzzyFaultSymptomPhoeno.size()>0">
+                    (
+                    <foreach collection="fuzzyFaultSymptomPhoeno"  separator="or" item="item">
+                        `Fault_symptom_phoeno` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyFaultSymptomPhoeno!=null and rightFuzzyFaultSymptomPhoeno.size()>0">
+                    (
+                    <foreach collection="rightFuzzyFaultSymptomPhoeno"  separator="or" item="item">
+                        `Fault_symptom_phoeno` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="faultSymptomCodeList != null">
+                    `fault_symptom_code` in
+                    <foreach collection="faultSymptomCodeList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyFaultSymptomCode!=null and fuzzyFaultSymptomCode.size()>0">
+                    (
+                    <foreach collection="fuzzyFaultSymptomCode"  separator="or" item="item">
+                        `Fault_symptom_code` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyFaultSymptomCode!=null and rightFuzzyFaultSymptomCode.size()>0">
+                    (
+                    <foreach collection="rightFuzzyFaultSymptomCode"  separator="or" item="item">
+                        `Fault_symptom_code` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+            </if>
+        </trim>
+    </select>
+
+    <select id="queryMqmsFaultDecodeLimit1" resultMap="MqmsFaultDecodeMap">
+        select
+        <include refid="baseResult"></include>
+        from  `mqms_fault_decode`
+        <trim prefix="where" suffixOverrides="and | or">
+            <if test="id != null">
+                `id` = #{id} and
+            </if>
+            <if test="faultPartCode != null and faultPartCode!=''">
+                `fault_part_code` = #{faultPartCode} and
+            </if>
+            <if test="faultPartName != null and faultPartName!=''">
+                `fault_part_name` = #{faultPartName} and
+            </if>
+            <if test="faultSymptomPhoeno != null and faultSymptomPhoeno!=''">
+                `fault_symptom_phoeno` = #{faultSymptomPhoeno} and
+            </if>
+            <if test="faultSymptomCode != null and faultSymptomCode!=''">
+                `fault_symptom_code` = #{faultSymptomCode} and
+            </if>
+            <if test = "(_parameter instanceof com.gamc.efactory.model.dataObject.MqmsFaultDecode$QueryBuilder) == true">
+                    <if test="idList != null">
+                        `id` in
+                        <foreach collection="idList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test="idSt !=null">
+                    `id` >= #{idSt} and
+                </if>
+                <if test="idEd!=null">
+                    `id` &lt;= #{idEd} and
+                </if>
+                    <if test="faultPartCodeList != null">
+                        `fault_part_code` in
+                        <foreach collection="faultPartCodeList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyFaultPartCode!=null and fuzzyFaultPartCode.size()>0">
+                    (
+                    <foreach collection="fuzzyFaultPartCode"  separator="or" item="item">
+                        `Fault_part_code` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyFaultPartCode!=null and rightFuzzyFaultPartCode.size()>0">
+                    (
+                    <foreach collection="rightFuzzyFaultPartCode"  separator="or" item="item">
+                        `Fault_part_code` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                    <if test="faultPartNameList != null">
+                        `fault_part_name` in
+                        <foreach collection="faultPartNameList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyFaultPartName!=null and fuzzyFaultPartName.size()>0">
+                    (
+                    <foreach collection="fuzzyFaultPartName"  separator="or" item="item">
+                        `Fault_part_name` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyFaultPartName!=null and rightFuzzyFaultPartName.size()>0">
+                    (
+                    <foreach collection="rightFuzzyFaultPartName"  separator="or" item="item">
+                        `Fault_part_name` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                    <if test="faultSymptomPhoenoList != null">
+                        `fault_symptom_phoeno` in
+                        <foreach collection="faultSymptomPhoenoList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyFaultSymptomPhoeno!=null and fuzzyFaultSymptomPhoeno.size()>0">
+                    (
+                    <foreach collection="fuzzyFaultSymptomPhoeno"  separator="or" item="item">
+                        `Fault_symptom_phoeno` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyFaultSymptomPhoeno!=null and rightFuzzyFaultSymptomPhoeno.size()>0">
+                    (
+                    <foreach collection="rightFuzzyFaultSymptomPhoeno"  separator="or" item="item">
+                        `Fault_symptom_phoeno` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                    <if test="faultSymptomCodeList != null">
+                        `fault_symptom_code` in
+                        <foreach collection="faultSymptomCodeList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyFaultSymptomCode!=null and fuzzyFaultSymptomCode.size()>0">
+                    (
+                    <foreach collection="fuzzyFaultSymptomCode"  separator="or" item="item">
+                        `Fault_symptom_code` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyFaultSymptomCode!=null and rightFuzzyFaultSymptomCode.size()>0">
+                    (
+                    <foreach collection="rightFuzzyFaultSymptomCode"  separator="or" item="item">
+                        `Fault_symptom_code` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+            </if>
+        </trim>
+        limit 1
+    </select>
+
+    <sql id="allResult">
+        <trim suffixOverrides=",">
+        `id`,
+        `fault_part_code`,
+        `fault_part_name`,
+        `fault_symptom_phoeno`,
+        `fault_symptom_code`,
+        </trim>
+    </sql>
+
+
+
+    <sql id="baseResult">
+        <trim suffixOverrides=",">
+            <if test = "(_parameter instanceof com.gamc.efactory.model.dataObject.MqmsFaultDecode$QueryBuilder) == true">
+
+                <if test="fetchFields==null">
+                    <include refid="allResult"></include>
+                </if>
+                <if test="fetchFields!=null">
+                    <if test="fetchFields.AllFields !=null">
+                        <include refid="allResult"></include>
+                    </if>
+                    <if test="fetchFields.AllFields ==null and fetchFields.fetchFields==null and fetchFields.excludeFields==null and fetchFields.otherFields==null">
+                        <include refid="allResult"></include>
+                    </if>
+                    <if test="fetchFields.AllFields==null and fetchFields.fetchFields!=null">
+                    <if test="fetchFields.fetchFields.id==true">
+                        `id`,
+                    </if>
+                    <if test="fetchFields.fetchFields.faultPartCode==true">
+                        `fault_part_code`,
+                    </if>
+                    <if test="fetchFields.fetchFields.faultPartName==true">
+                        `fault_part_name`,
+                    </if>
+                    <if test="fetchFields.fetchFields.faultSymptomPhoeno==true">
+                        `fault_symptom_phoeno`,
+                    </if>
+                    <if test="fetchFields.fetchFields.faultSymptomCode==true">
+                        `fault_symptom_code`,
+                    </if>
+                    </if>
+                    <if test="fetchFields.AllFields==null and fetchFields.excludeFields!=null">
+                    <if test="fetchFields.excludeFields.id==null">
+                        `id`,
+                    </if>
+                    <if test="fetchFields.excludeFields.faultPartCode==null">
+                        `fault_part_code`,
+                    </if>
+                    <if test="fetchFields.excludeFields.faultPartName==null">
+                        `fault_part_name`,
+                    </if>
+                    <if test="fetchFields.excludeFields.faultSymptomPhoeno==null">
+                        `fault_symptom_phoeno`,
+                    </if>
+                    <if test="fetchFields.excludeFields.faultSymptomCode==null">
+                        `fault_symptom_code`,
+                    </if>
+                    </if>
+                    <if test="fetchFields.otherFields!=null and fetchFields.otherFields.size>0">
+                        <foreach collection="fetchFields.otherFields" index="index" item="item" separator=",">
+                        `#{item}`
+                        </foreach>
+                    </if>
+                </if>
+            </if>
+            <if test="(_parameter instanceof com.gamc.efactory.model.dataObject.MqmsFaultDecode$QueryBuilder) == false" >
+                <include refid="allResult"></include>
+            </if>
+
+        </trim>
+    </sql>
+
+
+</mapper>

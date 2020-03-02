@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gamc.efactory.dao.MqmsVinDecodeMapper">
+
+    <resultMap type="com.gamc.efactory.model.dataObject.MqmsVinDecode" id="MqmsVinDecodeMap">
+        <result property="id" column="id"/>
+        <result property="vinShortCode" column="vin_short_code"/>
+        <result property="vinSimCode" column="vin_sim_code"/>
+        <result property="vinEngType" column="vin_eng_type"/>
+        <result property="vinSeries" column="vin_series"/>
+        <result property="vinEngShortCode" column="vin_eng_short_code"/>
+        <result property="vinTransmShortCode" column="vin_transm_short_code"/>
+        <result property="vinCarShortCode" column="vin_car_short_code"/>
+        <result property="vinCarType" column="vin_car_type"/>
+        <result property="vinTransmType" column="vin_transm_type"/>
+    </resultMap>
+    <select id="vinDecode"  resultMap="MqmsVinDecodeMap" >
+        select *from  `mqms_vin_decode`
+        WHERE  `vin_short_code` = #{vin_short_code}
+    </select>
+
+</mapper>
