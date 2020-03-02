@@ -2,22 +2,46 @@
 <!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.gamc.efactory.dao.MqmsSalesMapper">
-    <resultMap type="com.gamc.efactory.model.dataObject.MqmsSalesRaw" id="MqmsSalesRawMap">
-        <result property="salesId" column="sales_id"/>
-        <result property="vinCode" column="vin_code"/>
-        <result property="salesCarType" column="sales_car_type"/>
-        <result property="salesState" column="sales_state"/>
-        <result property="dealerCode" column="dealer_code"/>
-        <result property="dealerName" column="dealer_name"/>
-        <result property="produceDate" column="produce_date"/>
-        <result property="firstPinDate" column="first_pin_date"/>
-        <result property="secondPinDate" column="second_pin_date"/>
-    </resultMap>
+
+
+        <resultMap type="com.gamc.efactory.model.dataObject.MqmsSales" id="MqmsSalesMap">
+            <result property="salesId" column="sales_id"/>
+            <result property="vinCode" column="vin_code"/>
+            <result property="salesCarType" column="sales_car_type"/>
+            <result property="salesState" column="sales_state"/>
+            <result property="dealerCode" column="dealer_code"/>
+            <result property="dealerName" column="dealer_name"/>
+            <result property="produceDate" column="produce_date"/>
+            <result property="firstPinDate" column="first_pin_date"/>
+            <result property="secondPinDate" column="second_pin_date"/>
+            <result property="mtoc" column="mtoc"/>
+            <result property="carType" column="car_type"/>
+            <result property="transmissionCode" column="transmission_code"/>
+            <result property="factoryCode" column="factory_code"/>
+            <result property="factoryArea" column="factory_area"/>
+            <result property="engShortCode" column="eng_short_code"/>
+            <result property="engType" column="eng_type"/>
+            <result property="engSeries" column="eng_series"/>
+            <result property="salesArea" column="sales_area"/>
+            <result property="salesYear" column="sales_year"/>
+            <result property="salesMonth" column="sales_month"/>
+            <result property="tranShortCode" column="tran_short_code"/>
+            <result property="tranType" column="tran_type"/>
+            <result property="tranSeries" column="tran_series"/>
+            <result property="carShortCode" column="car_short_code"/>
+            <result property="carModel" column="car_model"/>
+            <result property="carModelCode" column="car_model_code"/>
+        </resultMap>
+
     <select id="selectSecondSalesCount"  resultType="java.lang.Integer" >
         SELECT COUNT(*) FROM `mqms_sales`
         WHERE  `eng_type` = #{eng_type} AND  `second_pin_date` LIKE  concat(#{second_pin_date},'%')
     </select>
-    <select id="selectByVinCode"  resultType="java.lang.Integer" >
+    <select id="selectByVinCode"  resultMap="MqmsSalesMap" >
+        SELECT * FROM `mqms_sales`
+        WHERE  `vin_code` = #{vin_code}
+    </select>
+    <select id="selectVinCodeCount"  resultType="java.lang.Integer" >
         SELECT COUNT(*) FROM `mqms_sales`
         WHERE  `vin_code` = #{vin_code}
     </select>

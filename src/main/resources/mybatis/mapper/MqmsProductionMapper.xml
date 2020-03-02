@@ -2,8 +2,38 @@
 <!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.gamc.efactory.dao.MqmsProductionMapper">
-    <select id="selectByVin"  resultType="java.lang.Integer" >
-        SELECT COUNT(*) FROM `mqms_production`
+    <resultMap type="com.gamc.efactory.model.dataObject.MqmsProduction" id="MqmsProductionMap">
+        <result property="productionId" column="production_id"/>
+        <result property="factoryCode" column="factory_code"/>
+        <result property="productionBatch" column="production_batch"/>
+        <result property="vin" column="vin"/>
+        <result property="mtoc" column="mtoc"/>
+        <result property="stationCode" column="station_code"/>
+        <result property="passTime" column="pass_time"/>
+        <result property="carModelCode" column="car_model_code"/>
+        <result property="carModelName" column="car_model_name"/>
+        <result property="productionWorktime" column="production_worktime"/>
+        <result property="egtypeCode" column="egtype_code"/>
+        <result property="transmissionCode" column="transmission_code"/>
+        <result property="carLevel" column="car_level"/>
+        <result property="period" column="period"/>
+        <result property="carType" column="car_type"/>
+        <result property="exportCountry" column="export_country"/>
+        <result property="shortCode" column="short_code"/>
+        <result property="engType" column="eng_type"/>
+        <result property="serialCode" column="serial_code"/>
+        <result property="districtName" column="districtName"/>
+        <result property="productionYear" column="production_year"/>
+        <result property="productionMonth" column="production_month"/>
+        <result property="transmissionShortCode" column="transmission_short_code"/>
+        <result property="transmissionSimpleCode" column="transmission_simple_code"/>
+        <result property="transmissionType" column="transmission_type"/>
+        <result property="carShortCode" column="car_short_code"/>
+        <result property="carModel" column="car_model"/>
+        <result property="carSimpleCode" column="car_simple_code"/>
+    </resultMap>
+    <select id="selectByVin"  resultMap="MqmsProductionMap" >
+        SELECT * FROM `mqms_production`
         WHERE  `vin` = #{vin}
     </select>
     <update id="updateByVin">

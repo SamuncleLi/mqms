@@ -9,6 +9,7 @@ import com.gamc.efactory.dao.base.MqmsSalesBaseMapper;
 */
 public interface MqmsSalesMapper extends MqmsSalesBaseMapper{
     int selectSecondSalesCount(@Param("eng_type") String engCode,@Param("second_pin_date") String secondPinDate);
-    int selectByVinCode(@Param("vin_code") String vinCode);
+    MqmsSales selectByVinCode(@Param("vin_code") String vinCode);
+    int selectVinCodeCount(@Param("vin_code") String vinCode);
     int updateByVinCode(MqmsSales object);
 }
