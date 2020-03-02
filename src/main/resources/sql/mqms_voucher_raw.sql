@@ -50,9 +50,9 @@ CREATE TABLE `mqms_voucher_raw` (
   `man_cost` decimal(65,2) DEFAULT NULL COMMENT '工时费',
   `material_cost` decimal(65,2) DEFAULT NULL COMMENT '材料费',
   `material_management_cost` decimal(65,2) DEFAULT NULL COMMENT '配件管理费用',
-  `go_out_cost` decimal(65,2) DEFAULT NULL COMMENT '其他费用',
-  `maintaining_cost` decimal(65,2) DEFAULT NULL,
-  `other_cost` decimal(65,2) DEFAULT NULL,
+  `go_out_cost` decimal(65,2) DEFAULT NULL COMMENT '外出费用',
+  `maintaining_cost` decimal(65,2) DEFAULT NULL,'维持费用'
+  `other_cost` decimal(65,2) DEFAULT NULL,'其他费用'
   `total_cost` decimal(65,2) DEFAULT NULL COMMENT '总费用',
   `important_level` varchar(255) DEFAULT NULL COMMENT '重要级别',
   `transmission_type` varchar(255) DEFAULT NULL COMMENT '变速箱类型',
