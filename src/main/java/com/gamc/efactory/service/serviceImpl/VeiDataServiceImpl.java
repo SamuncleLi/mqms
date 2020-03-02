@@ -72,42 +72,47 @@ public class VeiDataServiceImpl implements VeiDataService {
                 mqmsVoucherRecord.setShortCode(mqmsVoucherRecord.getVehicleType().substring(0,2));
                 //机型、车型及变速箱类型
                 String vinShortCOde=mqmsVoucherRecord.getVinCode().substring(0,5);
-                mqmsVoucherRecord.setEngType(mqmsVinDecodeMapper.vinDecode(vinShortCOde).getVinEngType());
+                mqmsVoucherRecord.setEngType(mqmsVinDecodeMapper.vinDecode(vinShortCOde).getVinEngShortCode());
                 mqmsVoucherRecord.setCarModel(mqmsVinDecodeMapper.vinDecode(vinShortCOde).getVinCarType());
 //                mqmsVoucherRecord.setTransmissionCodeRe(mqmsVinDecodeMapper.vinDecode(vinShortCOde).getVinTransmShortCode());
                 mqmsVoucherRecord.setTranTypeDetail(mqmsVinDecodeMapper.vinDecode(vinShortCOde).getVinTransmType());
-                //变速箱机型
-                String trsmCode=mqmsVoucherRecord.getTransmissionCode().replace("+","");
-                String trsmType=trsmCode.substring(0,5);
-                String trsmManufacture=trsmCode.substring(5,10);
-                String trsmProYearCode=trsmCode.substring(11,12);
-                String trsmProMonthHex=trsmCode.substring(12,13);
-                String trsmProDay=trsmCode.substring(13,15);
-                System.out.println(trsmType+trsmManufacture+trsmProYearCode);
-                mqmsVoucherRecord.setTransmissionCodeRe(mqmsTranProductionDecodeMapper.selectTranProductionCode(trsmType));
-                //变速箱生产厂家
-                mqmsVoucherRecord.setTransmissionManufacturer(mqmsTranManufacturesDecodeMapper.selectTranManufacture(trsmManufacture));
-                //变速箱生产日期
-                String trsmProMonth=Integer.toString(Integer.parseInt(trsmProMonthHex,16),10);
-                if(trsmProMonth.length()<2){
-                    trsmProMonth="0"+trsmProMonth;
-                }
-                System.out.println(trsmProMonth);
-                String trsmProYear=mqmsTranYearDecodeMapper.selectTranProYear(trsmProYearCode);
-                System.out.println(trsmProYear);
-                mqmsVoucherRecord.setTransmissionProductionData(trsmProYear+"-"+trsmProMonth+"-"+trsmProDay);
-                //变速箱生产至确认经过月
-                int proFailureMonths= 0;
-                try {
-                    System.out.println(mqmsVoucherRecord.getTransmissionProductionData());
-                    System.out.println(mqmsVoucherRecord.getConfirmDate());
-                    proFailureMonths = MqmsUtil.getMonth(mqmsVoucherRecord.getTransmissionProductionData(),mqmsVoucherRecord.getConfirmDate());
-                    System.out.println(proFailureMonths);
+                //变速箱机型（需要先判断有没有变速箱号）
+                if(StringUtil.isNotEmpty(mqmsVoucherRecord.getTransmissionCode())){
+                    String trsmCode=mqmsVoucherRecord.getTransmissionCode().replace("+","");
+                    String trsmType=trsmCode.substring(0,5);
+                    String trsmManufacture=trsmCode.substring(5,10);
+                    String trsmProYearCode=trsmCode.substring(11,12);
+                    String trsmProMonthHex=trsmCode.substring(12,13);
+                    String trsmProDay=trsmCode.substring(13,15);
+                    System.out.println(trsmType+trsmManufacture+trsmProYearCode);
+                    mqmsVoucherRecord.setTransmissionCodeRe(mqmsTranProductionDecodeMapper.selectTranProductionCode(trsmType));
+                    //变速箱生产厂家
+                    mqmsVoucherRecord.setTransmissionManufacturer(mqmsTranManufacturesDecodeMapper.selectTranManufacture(trsmManufacture));
+                    //变速箱生产日期
+                    String trsmProMonth=Integer.toString(Integer.parseInt(trsmProMonthHex,16),10);
+                    if(trsmProMonth.length()<2){
+                        trsmProMonth="0"+trsmProMonth;
+                    }
+                    System.out.println(trsmProMonth);
+                    String trsmProYear=mqmsTranYearDecodeMapper.selectTranProYear(trsmProYearCode);
+                    System.out.println(trsmProYear);
+                    mqmsVoucherRecord.setTransmissionProductionData(trsmProYear+"-"+trsmProMonth+"-"+trsmProDay);
 
-                } catch (Exception e) {
-                    e.printStackTrace();
+                    //变速箱生产至确认经过月
+                    int proFailureMonths= 0;
+                    try {
+                        System.out.println(mqmsVoucherRecord.getTransmissionProductionData());
+                        System.out.println(mqmsVoucherRecord.getConfirmDate());
+                        proFailureMonths = MqmsUtil.getMonth(mqmsVoucherRecord.getTransmissionProductionData(),mqmsVoucherRecord.getConfirmDate());
+                        System.out.println(proFailureMonths);
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
+                    mqmsVoucherRecord.setTransmissionComfirmTime(Integer.toString(proFailureMonths));
                 }
-                mqmsVoucherRecord.setTransmissionComfirmTime(Integer.toString(proFailureMonths));
+
                 //销售至故障经过月
                 int salesFailureMonths= 0;
                 try {
@@ -118,7 +123,7 @@ public class VeiDataServiceImpl implements VeiDataService {
                 //下线至故障经过月
                 int offlineFailureMonths= 0;
                 try {
-                    offlineFailureMonths = MqmsUtil.getMonth(mqmsVoucherRecord.getOfflineDate(),mqmsVoucherRecord.getConfirmDate());
+                    offlineFailureMonths = MqmsUtil.getMonth(mqmsVoucherRecord.getOfflineDate(),mqmsVoucherRecord.getFailureDate());
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
