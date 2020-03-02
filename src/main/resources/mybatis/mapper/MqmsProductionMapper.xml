@@ -32,7 +32,11 @@
         <result property="carModel" column="car_model"/>
         <result property="carSimpleCode" column="car_simple_code"/>
     </resultMap>
-    <select id="selectByVin"  resultMap="MqmsProductionMap" >
+    <select id="selectInforByVin"  resultMap="MqmsProductionMap" >
+        SELECT * FROM `mqms_production`
+        WHERE  `vin` = #{vin}
+    </select>
+    <select id="selectByVin"  resultType="java.lang.Integer" >
         SELECT * FROM `mqms_production`
         WHERE  `vin` = #{vin}
     </select>
@@ -88,8 +92,8 @@
             <if test="shortCode != null and shortCode!=''">
                 `short_code` = #{shortCode},
             </if>
-            <if test="engCode != null and engCode!=''">
-                `eng_code` = #{engCode},
+            <if test="engType != null and engType!=''">
+                `eng_type` = #{engType},
             </if>
             <if test="serialCode != null and serialCode!=''">
                 `serial_code` = #{serialCode},
@@ -97,11 +101,11 @@
             <if test="districtName != null and districtName!=''">
                 `districtName` = #{districtName},
             </if>
-            <if test="salesYear != null and salesYear!=''">
-                `sales_year` = #{salesYear},
+            <if test="productionYear != null and productionYear!=''">
+                `production_year` = #{productionYear},
             </if>
-            <if test="salesMonth != null and salesMonth!=''">
-                `sales_month` = #{salesMonth},
+            <if test="productionMonth != null and productionMonth!=''">
+                `production_month` = #{productionMonth},
             </if>
             <if test="transmissionShortCode != null and transmissionShortCode!=''">
                 `transmission_short_code` = #{transmissionShortCode},
@@ -115,8 +119,8 @@
             <if test="carShortCode != null and carShortCode!=''">
                 `car_short_code` = #{carShortCode},
             </if>
-            <if test="carTypeCode != null and carTypeCode!=''">
-                `car_type_code` = #{carTypeCode},
+            <if test="carModel != null and carModel!=''">
+                `car_model` = #{carModel},
             </if>
             <if test="carSimpleCode != null and carSimpleCode!=''">
                 `car_simple_code` = #{carSimpleCode},

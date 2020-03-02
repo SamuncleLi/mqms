@@ -20,7 +20,7 @@ public interface MqmsVoucherMapper extends MqmsVoucherBaseMapper{
     int selectEngTypeCount(@Param("eng_type") String engType,@Param("confirm_date") String confirmDate);
     BigDecimal selectTotalCost(@Param("eng_type") String engType, @Param("confirm_date") String confirmDate);
     int selectByVoucherCode(@Param("voucher_code") String voucherCode);
-    int updateByVoucher(MqmsVoucher object);
+    int updateMqmsVoucher(MqmsVoucher object);
     //左等右不等
     int countBetweenYearAndMonth(@Param("eng_type")String engType, @Param("begin")String begin, @Param("end")String end);
     //左右均等于
