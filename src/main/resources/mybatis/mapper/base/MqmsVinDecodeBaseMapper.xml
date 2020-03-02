@@ -1,0 +1,939 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gamc.efactory.dao.base.MqmsVinDecodeBaseMapper">
+
+
+    <insert id="insertMqmsVinDecode"  useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO `mqms_vin_decode`
+        (
+        <trim suffixOverrides=",">
+                    <if test="id!=null">
+                        `id`,
+                    </if>
+                    <if test="vinShortCode!=null">
+                        `vin_short_code`,
+                    </if>
+                    <if test="vinSimCode!=null">
+                        `vin_sim_code`,
+                    </if>
+                    <if test="vinEngType!=null">
+                        `vin_eng_type`,
+                    </if>
+                    <if test="vinSeries!=null">
+                        `vin_series`,
+                    </if>
+                    <if test="vinEngShortCode!=null">
+                        `vin_eng_short_code`,
+                    </if>
+                    <if test="vinTransmShortCode!=null">
+                        `vin_transm_short_code`,
+                    </if>
+                    <if test="vinCarShortCode!=null">
+                        `vin_car_short_code`,
+                    </if>
+                    <if test="vinCarType!=null">
+                        `vin_car_type`,
+                    </if>
+                    <if test="vinTransmType!=null">
+                        `vin_transm_type`,
+                    </if>
+        </trim>
+        )
+        VALUES
+        (
+        <trim suffixOverrides=",">
+                <if test="id!=null">
+                    #{id},
+                </if>
+                <if test="vinShortCode!=null">
+                    #{vinShortCode},
+                </if>
+                <if test="vinSimCode!=null">
+                    #{vinSimCode},
+                </if>
+                <if test="vinEngType!=null">
+                    #{vinEngType},
+                </if>
+                <if test="vinSeries!=null">
+                    #{vinSeries},
+                </if>
+                <if test="vinEngShortCode!=null">
+                    #{vinEngShortCode},
+                </if>
+                <if test="vinTransmShortCode!=null">
+                    #{vinTransmShortCode},
+                </if>
+                <if test="vinCarShortCode!=null">
+                    #{vinCarShortCode},
+                </if>
+                <if test="vinCarType!=null">
+                    #{vinCarType},
+                </if>
+                <if test="vinTransmType!=null">
+                    #{vinTransmType},
+                </if>
+        </trim>
+        )
+    </insert>
+
+
+
+
+    <update id="updateMqmsVinDecode">
+        UPDATE `mqms_vin_decode`
+        SET
+        <trim suffixOverrides=",">
+            <if test="vinShortCode != null and vinShortCode!=''">
+                `vin_short_code` = #{vinShortCode},
+            </if>
+            <if test="vinSimCode != null and vinSimCode!=''">
+                `vin_sim_code` = #{vinSimCode},
+            </if>
+            <if test="vinEngType != null and vinEngType!=''">
+                `vin_eng_type` = #{vinEngType},
+            </if>
+            <if test="vinSeries != null and vinSeries!=''">
+                `vin_series` = #{vinSeries},
+            </if>
+            <if test="vinEngShortCode != null and vinEngShortCode!=''">
+                `vin_eng_short_code` = #{vinEngShortCode},
+            </if>
+            <if test="vinTransmShortCode != null and vinTransmShortCode!=''">
+                `vin_transm_short_code` = #{vinTransmShortCode},
+            </if>
+            <if test="vinCarShortCode != null and vinCarShortCode!=''">
+                `vin_car_short_code` = #{vinCarShortCode},
+            </if>
+            <if test="vinCarType != null and vinCarType!=''">
+                `vin_car_type` = #{vinCarType},
+            </if>
+            <if test="vinTransmType != null and vinTransmType!=''">
+                `vin_transm_type` = #{vinTransmType},
+            </if>
+        </trim>
+        WHERE
+        <trim suffixOverrides="and">
+                `id` = #{id} and
+        </trim>
+    </update>
+
+    <update id="update">
+        UPDATE `mqms_vin_decode`
+        SET
+        <trim suffixOverrides=",">
+        <if test="set.vinShortCode != null and set.vinShortCode!=''">
+            `vin_short_code` = #{set.vinShortCode},
+        </if>
+        <if test="set.vinSimCode != null and set.vinSimCode!=''">
+            `vin_sim_code` = #{set.vinSimCode},
+        </if>
+        <if test="set.vinEngType != null and set.vinEngType!=''">
+            `vin_eng_type` = #{set.vinEngType},
+        </if>
+        <if test="set.vinSeries != null and set.vinSeries!=''">
+            `vin_series` = #{set.vinSeries},
+        </if>
+        <if test="set.vinEngShortCode != null and set.vinEngShortCode!=''">
+            `vin_eng_short_code` = #{set.vinEngShortCode},
+        </if>
+        <if test="set.vinTransmShortCode != null and set.vinTransmShortCode!=''">
+            `vin_transm_short_code` = #{set.vinTransmShortCode},
+        </if>
+        <if test="set.vinCarShortCode != null and set.vinCarShortCode!=''">
+            `vin_car_short_code` = #{set.vinCarShortCode},
+        </if>
+        <if test="set.vinCarType != null and set.vinCarType!=''">
+            `vin_car_type` = #{set.vinCarType},
+        </if>
+        <if test="set.vinTransmType != null and set.vinTransmType!=''">
+            `vin_transm_type` = #{set.vinTransmType},
+        </if>
+        </trim>
+        <trim prefix="where" suffixOverrides="and | or">
+                <if test="where.idList != null">
+                    `id` in
+                    <foreach collection="where.idList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test="where.idSt !=null">
+                `id` >= #{where.idSt} and
+            </if>
+            <if test="where.idEd!=null">
+                `id` &lt;= #{where.idEd} and
+            </if>
+                <if test="where.vinShortCodeList != null">
+                    `vin_short_code` in
+                    <foreach collection="where.vinShortCodeList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test ="where.fuzzyVinShortCode!=null and where.fuzzyVinShortCode.size()>0">
+                (
+                <foreach collection="where.fuzzyVinShortCode"  separator="or" item="item">
+                    `Vin_short_code` like concat('%',#{item},'%')
+                </foreach>
+                ) and
+            </if>
+            <if test ="where.rightFuzzyVinShortCode!=null and where.rightFuzzyVinShortCode.size()>0">
+                (
+                <foreach collection="where.rightFuzzyVinShortCode"  separator="or" item="item">
+                    `Vin_short_code` like concat(#{item},'%')
+                </foreach>
+                ) and
+            </if>
+                <if test="where.vinSimCodeList != null">
+                    `vin_sim_code` in
+                    <foreach collection="where.vinSimCodeList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test ="where.fuzzyVinSimCode!=null and where.fuzzyVinSimCode.size()>0">
+                (
+                <foreach collection="where.fuzzyVinSimCode"  separator="or" item="item">
+                    `Vin_sim_code` like concat('%',#{item},'%')
+                </foreach>
+                ) and
+            </if>
+            <if test ="where.rightFuzzyVinSimCode!=null and where.rightFuzzyVinSimCode.size()>0">
+                (
+                <foreach collection="where.rightFuzzyVinSimCode"  separator="or" item="item">
+                    `Vin_sim_code` like concat(#{item},'%')
+                </foreach>
+                ) and
+            </if>
+                <if test="where.vinEngTypeList != null">
+                    `vin_eng_type` in
+                    <foreach collection="where.vinEngTypeList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test ="where.fuzzyVinEngType!=null and where.fuzzyVinEngType.size()>0">
+                (
+                <foreach collection="where.fuzzyVinEngType"  separator="or" item="item">
+                    `Vin_eng_type` like concat('%',#{item},'%')
+                </foreach>
+                ) and
+            </if>
+            <if test ="where.rightFuzzyVinEngType!=null and where.rightFuzzyVinEngType.size()>0">
+                (
+                <foreach collection="where.rightFuzzyVinEngType"  separator="or" item="item">
+                    `Vin_eng_type` like concat(#{item},'%')
+                </foreach>
+                ) and
+            </if>
+                <if test="where.vinSeriesList != null">
+                    `vin_series` in
+                    <foreach collection="where.vinSeriesList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test ="where.fuzzyVinSeries!=null and where.fuzzyVinSeries.size()>0">
+                (
+                <foreach collection="where.fuzzyVinSeries"  separator="or" item="item">
+                    `Vin_series` like concat('%',#{item},'%')
+                </foreach>
+                ) and
+            </if>
+            <if test ="where.rightFuzzyVinSeries!=null and where.rightFuzzyVinSeries.size()>0">
+                (
+                <foreach collection="where.rightFuzzyVinSeries"  separator="or" item="item">
+                    `Vin_series` like concat(#{item},'%')
+                </foreach>
+                ) and
+            </if>
+                <if test="where.vinEngShortCodeList != null">
+                    `vin_eng_short_code` in
+                    <foreach collection="where.vinEngShortCodeList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test ="where.fuzzyVinEngShortCode!=null and where.fuzzyVinEngShortCode.size()>0">
+                (
+                <foreach collection="where.fuzzyVinEngShortCode"  separator="or" item="item">
+                    `Vin_eng_short_code` like concat('%',#{item},'%')
+                </foreach>
+                ) and
+            </if>
+            <if test ="where.rightFuzzyVinEngShortCode!=null and where.rightFuzzyVinEngShortCode.size()>0">
+                (
+                <foreach collection="where.rightFuzzyVinEngShortCode"  separator="or" item="item">
+                    `Vin_eng_short_code` like concat(#{item},'%')
+                </foreach>
+                ) and
+            </if>
+                <if test="where.vinTransmShortCodeList != null">
+                    `vin_transm_short_code` in
+                    <foreach collection="where.vinTransmShortCodeList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test ="where.fuzzyVinTransmShortCode!=null and where.fuzzyVinTransmShortCode.size()>0">
+                (
+                <foreach collection="where.fuzzyVinTransmShortCode"  separator="or" item="item">
+                    `Vin_transm_short_code` like concat('%',#{item},'%')
+                </foreach>
+                ) and
+            </if>
+            <if test ="where.rightFuzzyVinTransmShortCode!=null and where.rightFuzzyVinTransmShortCode.size()>0">
+                (
+                <foreach collection="where.rightFuzzyVinTransmShortCode"  separator="or" item="item">
+                    `Vin_transm_short_code` like concat(#{item},'%')
+                </foreach>
+                ) and
+            </if>
+                <if test="where.vinCarShortCodeList != null">
+                    `vin_car_short_code` in
+                    <foreach collection="where.vinCarShortCodeList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test ="where.fuzzyVinCarShortCode!=null and where.fuzzyVinCarShortCode.size()>0">
+                (
+                <foreach collection="where.fuzzyVinCarShortCode"  separator="or" item="item">
+                    `Vin_car_short_code` like concat('%',#{item},'%')
+                </foreach>
+                ) and
+            </if>
+            <if test ="where.rightFuzzyVinCarShortCode!=null and where.rightFuzzyVinCarShortCode.size()>0">
+                (
+                <foreach collection="where.rightFuzzyVinCarShortCode"  separator="or" item="item">
+                    `Vin_car_short_code` like concat(#{item},'%')
+                </foreach>
+                ) and
+            </if>
+                <if test="where.vinCarTypeList != null">
+                    `vin_car_type` in
+                    <foreach collection="where.vinCarTypeList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test ="where.fuzzyVinCarType!=null and where.fuzzyVinCarType.size()>0">
+                (
+                <foreach collection="where.fuzzyVinCarType"  separator="or" item="item">
+                    `Vin_car_type` like concat('%',#{item},'%')
+                </foreach>
+                ) and
+            </if>
+            <if test ="where.rightFuzzyVinCarType!=null and where.rightFuzzyVinCarType.size()>0">
+                (
+                <foreach collection="where.rightFuzzyVinCarType"  separator="or" item="item">
+                    `Vin_car_type` like concat(#{item},'%')
+                </foreach>
+                ) and
+            </if>
+                <if test="where.vinTransmTypeList != null">
+                    `vin_transm_type` in
+                    <foreach collection="where.vinTransmTypeList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test ="where.fuzzyVinTransmType!=null and where.fuzzyVinTransmType.size()>0">
+                (
+                <foreach collection="where.fuzzyVinTransmType"  separator="or" item="item">
+                    `Vin_transm_type` like concat('%',#{item},'%')
+                </foreach>
+                ) and
+            </if>
+            <if test ="where.rightFuzzyVinTransmType!=null and where.rightFuzzyVinTransmType.size()>0">
+                (
+                <foreach collection="where.rightFuzzyVinTransmType"  separator="or" item="item">
+                    `Vin_transm_type` like concat(#{item},'%')
+                </foreach>
+                ) and
+            </if>
+        </trim>
+    </update>
+
+
+    <resultMap type="com.gamc.efactory.model.dataObject.MqmsVinDecode" id="MqmsVinDecodeMap">
+        <result property="id" column="id"/>
+        <result property="vinShortCode" column="vin_short_code"/>
+        <result property="vinSimCode" column="vin_sim_code"/>
+        <result property="vinEngType" column="vin_eng_type"/>
+        <result property="vinSeries" column="vin_series"/>
+        <result property="vinEngShortCode" column="vin_eng_short_code"/>
+        <result property="vinTransmShortCode" column="vin_transm_short_code"/>
+        <result property="vinCarShortCode" column="vin_car_short_code"/>
+        <result property="vinCarType" column="vin_car_type"/>
+        <result property="vinTransmType" column="vin_transm_type"/>
+    </resultMap>
+
+
+    <select id="queryMqmsVinDecode" resultMap="MqmsVinDecodeMap">
+        select
+        <include refid="baseResult"></include>
+        from  `mqms_vin_decode`
+        <trim prefix="where" suffixOverrides="and | or">
+            <if test="id != null">
+                `id` = #{id} and
+            </if>
+            <if test="vinShortCode != null and vinShortCode!=''">
+                `vin_short_code` = #{vinShortCode} and
+            </if>
+            <if test="vinSimCode != null and vinSimCode!=''">
+                `vin_sim_code` = #{vinSimCode} and
+            </if>
+            <if test="vinEngType != null and vinEngType!=''">
+                `vin_eng_type` = #{vinEngType} and
+            </if>
+            <if test="vinSeries != null and vinSeries!=''">
+                `vin_series` = #{vinSeries} and
+            </if>
+            <if test="vinEngShortCode != null and vinEngShortCode!=''">
+                `vin_eng_short_code` = #{vinEngShortCode} and
+            </if>
+            <if test="vinTransmShortCode != null and vinTransmShortCode!=''">
+                `vin_transm_short_code` = #{vinTransmShortCode} and
+            </if>
+            <if test="vinCarShortCode != null and vinCarShortCode!=''">
+                `vin_car_short_code` = #{vinCarShortCode} and
+            </if>
+            <if test="vinCarType != null and vinCarType!=''">
+                `vin_car_type` = #{vinCarType} and
+            </if>
+            <if test="vinTransmType != null and vinTransmType!=''">
+                `vin_transm_type` = #{vinTransmType} and
+            </if>
+            <if test = "(_parameter instanceof com.gamc.efactory.model.dataObject.MqmsVinDecode$QueryBuilder) == true">
+                <if test="idList != null">
+                    `id` in
+                    <foreach collection="idList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test="idSt !=null">
+                    `id` >= #{idSt} and
+                </if>
+                <if test="idEd!=null">
+                    `id` &lt;= #{idEd} and
+                </if>
+                <if test="vinShortCodeList != null">
+                    `vin_short_code` in
+                    <foreach collection="vinShortCodeList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyVinShortCode!=null and fuzzyVinShortCode.size()>0">
+                    (
+                    <foreach collection="fuzzyVinShortCode"  separator="or" item="item">
+                        `Vin_short_code` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyVinShortCode!=null and rightFuzzyVinShortCode.size()>0">
+                    (
+                    <foreach collection="rightFuzzyVinShortCode"  separator="or" item="item">
+                        `Vin_short_code` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="vinSimCodeList != null">
+                    `vin_sim_code` in
+                    <foreach collection="vinSimCodeList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyVinSimCode!=null and fuzzyVinSimCode.size()>0">
+                    (
+                    <foreach collection="fuzzyVinSimCode"  separator="or" item="item">
+                        `Vin_sim_code` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyVinSimCode!=null and rightFuzzyVinSimCode.size()>0">
+                    (
+                    <foreach collection="rightFuzzyVinSimCode"  separator="or" item="item">
+                        `Vin_sim_code` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="vinEngTypeList != null">
+                    `vin_eng_type` in
+                    <foreach collection="vinEngTypeList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyVinEngType!=null and fuzzyVinEngType.size()>0">
+                    (
+                    <foreach collection="fuzzyVinEngType"  separator="or" item="item">
+                        `Vin_eng_type` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyVinEngType!=null and rightFuzzyVinEngType.size()>0">
+                    (
+                    <foreach collection="rightFuzzyVinEngType"  separator="or" item="item">
+                        `Vin_eng_type` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="vinSeriesList != null">
+                    `vin_series` in
+                    <foreach collection="vinSeriesList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyVinSeries!=null and fuzzyVinSeries.size()>0">
+                    (
+                    <foreach collection="fuzzyVinSeries"  separator="or" item="item">
+                        `Vin_series` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyVinSeries!=null and rightFuzzyVinSeries.size()>0">
+                    (
+                    <foreach collection="rightFuzzyVinSeries"  separator="or" item="item">
+                        `Vin_series` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="vinEngShortCodeList != null">
+                    `vin_eng_short_code` in
+                    <foreach collection="vinEngShortCodeList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyVinEngShortCode!=null and fuzzyVinEngShortCode.size()>0">
+                    (
+                    <foreach collection="fuzzyVinEngShortCode"  separator="or" item="item">
+                        `Vin_eng_short_code` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyVinEngShortCode!=null and rightFuzzyVinEngShortCode.size()>0">
+                    (
+                    <foreach collection="rightFuzzyVinEngShortCode"  separator="or" item="item">
+                        `Vin_eng_short_code` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="vinTransmShortCodeList != null">
+                    `vin_transm_short_code` in
+                    <foreach collection="vinTransmShortCodeList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyVinTransmShortCode!=null and fuzzyVinTransmShortCode.size()>0">
+                    (
+                    <foreach collection="fuzzyVinTransmShortCode"  separator="or" item="item">
+                        `Vin_transm_short_code` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyVinTransmShortCode!=null and rightFuzzyVinTransmShortCode.size()>0">
+                    (
+                    <foreach collection="rightFuzzyVinTransmShortCode"  separator="or" item="item">
+                        `Vin_transm_short_code` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="vinCarShortCodeList != null">
+                    `vin_car_short_code` in
+                    <foreach collection="vinCarShortCodeList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyVinCarShortCode!=null and fuzzyVinCarShortCode.size()>0">
+                    (
+                    <foreach collection="fuzzyVinCarShortCode"  separator="or" item="item">
+                        `Vin_car_short_code` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyVinCarShortCode!=null and rightFuzzyVinCarShortCode.size()>0">
+                    (
+                    <foreach collection="rightFuzzyVinCarShortCode"  separator="or" item="item">
+                        `Vin_car_short_code` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="vinCarTypeList != null">
+                    `vin_car_type` in
+                    <foreach collection="vinCarTypeList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyVinCarType!=null and fuzzyVinCarType.size()>0">
+                    (
+                    <foreach collection="fuzzyVinCarType"  separator="or" item="item">
+                        `Vin_car_type` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyVinCarType!=null and rightFuzzyVinCarType.size()>0">
+                    (
+                    <foreach collection="rightFuzzyVinCarType"  separator="or" item="item">
+                        `Vin_car_type` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="vinTransmTypeList != null">
+                    `vin_transm_type` in
+                    <foreach collection="vinTransmTypeList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyVinTransmType!=null and fuzzyVinTransmType.size()>0">
+                    (
+                    <foreach collection="fuzzyVinTransmType"  separator="or" item="item">
+                        `Vin_transm_type` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyVinTransmType!=null and rightFuzzyVinTransmType.size()>0">
+                    (
+                    <foreach collection="rightFuzzyVinTransmType"  separator="or" item="item">
+                        `Vin_transm_type` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+            </if>
+        </trim>
+    </select>
+
+    <select id="queryMqmsVinDecodeLimit1" resultMap="MqmsVinDecodeMap">
+        select
+        <include refid="baseResult"></include>
+        from  `mqms_vin_decode`
+        <trim prefix="where" suffixOverrides="and | or">
+            <if test="id != null">
+                `id` = #{id} and
+            </if>
+            <if test="vinShortCode != null and vinShortCode!=''">
+                `vin_short_code` = #{vinShortCode} and
+            </if>
+            <if test="vinSimCode != null and vinSimCode!=''">
+                `vin_sim_code` = #{vinSimCode} and
+            </if>
+            <if test="vinEngType != null and vinEngType!=''">
+                `vin_eng_type` = #{vinEngType} and
+            </if>
+            <if test="vinSeries != null and vinSeries!=''">
+                `vin_series` = #{vinSeries} and
+            </if>
+            <if test="vinEngShortCode != null and vinEngShortCode!=''">
+                `vin_eng_short_code` = #{vinEngShortCode} and
+            </if>
+            <if test="vinTransmShortCode != null and vinTransmShortCode!=''">
+                `vin_transm_short_code` = #{vinTransmShortCode} and
+            </if>
+            <if test="vinCarShortCode != null and vinCarShortCode!=''">
+                `vin_car_short_code` = #{vinCarShortCode} and
+            </if>
+            <if test="vinCarType != null and vinCarType!=''">
+                `vin_car_type` = #{vinCarType} and
+            </if>
+            <if test="vinTransmType != null and vinTransmType!=''">
+                `vin_transm_type` = #{vinTransmType} and
+            </if>
+            <if test = "(_parameter instanceof com.gamc.efactory.model.dataObject.MqmsVinDecode$QueryBuilder) == true">
+                    <if test="idList != null">
+                        `id` in
+                        <foreach collection="idList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test="idSt !=null">
+                    `id` >= #{idSt} and
+                </if>
+                <if test="idEd!=null">
+                    `id` &lt;= #{idEd} and
+                </if>
+                    <if test="vinShortCodeList != null">
+                        `vin_short_code` in
+                        <foreach collection="vinShortCodeList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyVinShortCode!=null and fuzzyVinShortCode.size()>0">
+                    (
+                    <foreach collection="fuzzyVinShortCode"  separator="or" item="item">
+                        `Vin_short_code` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyVinShortCode!=null and rightFuzzyVinShortCode.size()>0">
+                    (
+                    <foreach collection="rightFuzzyVinShortCode"  separator="or" item="item">
+                        `Vin_short_code` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                    <if test="vinSimCodeList != null">
+                        `vin_sim_code` in
+                        <foreach collection="vinSimCodeList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyVinSimCode!=null and fuzzyVinSimCode.size()>0">
+                    (
+                    <foreach collection="fuzzyVinSimCode"  separator="or" item="item">
+                        `Vin_sim_code` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyVinSimCode!=null and rightFuzzyVinSimCode.size()>0">
+                    (
+                    <foreach collection="rightFuzzyVinSimCode"  separator="or" item="item">
+                        `Vin_sim_code` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                    <if test="vinEngTypeList != null">
+                        `vin_eng_type` in
+                        <foreach collection="vinEngTypeList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyVinEngType!=null and fuzzyVinEngType.size()>0">
+                    (
+                    <foreach collection="fuzzyVinEngType"  separator="or" item="item">
+                        `Vin_eng_type` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyVinEngType!=null and rightFuzzyVinEngType.size()>0">
+                    (
+                    <foreach collection="rightFuzzyVinEngType"  separator="or" item="item">
+                        `Vin_eng_type` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                    <if test="vinSeriesList != null">
+                        `vin_series` in
+                        <foreach collection="vinSeriesList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyVinSeries!=null and fuzzyVinSeries.size()>0">
+                    (
+                    <foreach collection="fuzzyVinSeries"  separator="or" item="item">
+                        `Vin_series` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyVinSeries!=null and rightFuzzyVinSeries.size()>0">
+                    (
+                    <foreach collection="rightFuzzyVinSeries"  separator="or" item="item">
+                        `Vin_series` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                    <if test="vinEngShortCodeList != null">
+                        `vin_eng_short_code` in
+                        <foreach collection="vinEngShortCodeList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyVinEngShortCode!=null and fuzzyVinEngShortCode.size()>0">
+                    (
+                    <foreach collection="fuzzyVinEngShortCode"  separator="or" item="item">
+                        `Vin_eng_short_code` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyVinEngShortCode!=null and rightFuzzyVinEngShortCode.size()>0">
+                    (
+                    <foreach collection="rightFuzzyVinEngShortCode"  separator="or" item="item">
+                        `Vin_eng_short_code` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                    <if test="vinTransmShortCodeList != null">
+                        `vin_transm_short_code` in
+                        <foreach collection="vinTransmShortCodeList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyVinTransmShortCode!=null and fuzzyVinTransmShortCode.size()>0">
+                    (
+                    <foreach collection="fuzzyVinTransmShortCode"  separator="or" item="item">
+                        `Vin_transm_short_code` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyVinTransmShortCode!=null and rightFuzzyVinTransmShortCode.size()>0">
+                    (
+                    <foreach collection="rightFuzzyVinTransmShortCode"  separator="or" item="item">
+                        `Vin_transm_short_code` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                    <if test="vinCarShortCodeList != null">
+                        `vin_car_short_code` in
+                        <foreach collection="vinCarShortCodeList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyVinCarShortCode!=null and fuzzyVinCarShortCode.size()>0">
+                    (
+                    <foreach collection="fuzzyVinCarShortCode"  separator="or" item="item">
+                        `Vin_car_short_code` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyVinCarShortCode!=null and rightFuzzyVinCarShortCode.size()>0">
+                    (
+                    <foreach collection="rightFuzzyVinCarShortCode"  separator="or" item="item">
+                        `Vin_car_short_code` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                    <if test="vinCarTypeList != null">
+                        `vin_car_type` in
+                        <foreach collection="vinCarTypeList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyVinCarType!=null and fuzzyVinCarType.size()>0">
+                    (
+                    <foreach collection="fuzzyVinCarType"  separator="or" item="item">
+                        `Vin_car_type` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyVinCarType!=null and rightFuzzyVinCarType.size()>0">
+                    (
+                    <foreach collection="rightFuzzyVinCarType"  separator="or" item="item">
+                        `Vin_car_type` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                    <if test="vinTransmTypeList != null">
+                        `vin_transm_type` in
+                        <foreach collection="vinTransmTypeList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyVinTransmType!=null and fuzzyVinTransmType.size()>0">
+                    (
+                    <foreach collection="fuzzyVinTransmType"  separator="or" item="item">
+                        `Vin_transm_type` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyVinTransmType!=null and rightFuzzyVinTransmType.size()>0">
+                    (
+                    <foreach collection="rightFuzzyVinTransmType"  separator="or" item="item">
+                        `Vin_transm_type` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+            </if>
+        </trim>
+        limit 1
+    </select>
+
+    <sql id="allResult">
+        <trim suffixOverrides=",">
+        `id`,
+        `vin_short_code`,
+        `vin_sim_code`,
+        `vin_eng_type`,
+        `vin_series`,
+        `vin_eng_short_code`,
+        `vin_transm_short_code`,
+        `vin_car_short_code`,
+        `vin_car_type`,
+        `vin_transm_type`,
+        </trim>
+    </sql>
+
+
+
+    <sql id="baseResult">
+        <trim suffixOverrides=",">
+            <if test = "(_parameter instanceof com.gamc.efactory.model.dataObject.MqmsVinDecode$QueryBuilder) == true">
+
+                <if test="fetchFields==null">
+                    <include refid="allResult"></include>
+                </if>
+                <if test="fetchFields!=null">
+                    <if test="fetchFields.AllFields !=null">
+                        <include refid="allResult"></include>
+                    </if>
+                    <if test="fetchFields.AllFields ==null and fetchFields.fetchFields==null and fetchFields.excludeFields==null and fetchFields.otherFields==null">
+                        <include refid="allResult"></include>
+                    </if>
+                    <if test="fetchFields.AllFields==null and fetchFields.fetchFields!=null">
+                    <if test="fetchFields.fetchFields.id==true">
+                        `id`,
+                    </if>
+                    <if test="fetchFields.fetchFields.vinShortCode==true">
+                        `vin_short_code`,
+                    </if>
+                    <if test="fetchFields.fetchFields.vinSimCode==true">
+                        `vin_sim_code`,
+                    </if>
+                    <if test="fetchFields.fetchFields.vinEngType==true">
+                        `vin_eng_type`,
+                    </if>
+                    <if test="fetchFields.fetchFields.vinSeries==true">
+                        `vin_series`,
+                    </if>
+                    <if test="fetchFields.fetchFields.vinEngShortCode==true">
+                        `vin_eng_short_code`,
+                    </if>
+                    <if test="fetchFields.fetchFields.vinTransmShortCode==true">
+                        `vin_transm_short_code`,
+                    </if>
+                    <if test="fetchFields.fetchFields.vinCarShortCode==true">
+                        `vin_car_short_code`,
+                    </if>
+                    <if test="fetchFields.fetchFields.vinCarType==true">
+                        `vin_car_type`,
+                    </if>
+                    <if test="fetchFields.fetchFields.vinTransmType==true">
+                        `vin_transm_type`,
+                    </if>
+                    </if>
+                    <if test="fetchFields.AllFields==null and fetchFields.excludeFields!=null">
+                    <if test="fetchFields.excludeFields.id==null">
+                        `id`,
+                    </if>
+                    <if test="fetchFields.excludeFields.vinShortCode==null">
+                        `vin_short_code`,
+                    </if>
+                    <if test="fetchFields.excludeFields.vinSimCode==null">
+                        `vin_sim_code`,
+                    </if>
+                    <if test="fetchFields.excludeFields.vinEngType==null">
+                        `vin_eng_type`,
+                    </if>
+                    <if test="fetchFields.excludeFields.vinSeries==null">
+                        `vin_series`,
+                    </if>
+                    <if test="fetchFields.excludeFields.vinEngShortCode==null">
+                        `vin_eng_short_code`,
+                    </if>
+                    <if test="fetchFields.excludeFields.vinTransmShortCode==null">
+                        `vin_transm_short_code`,
+                    </if>
+                    <if test="fetchFields.excludeFields.vinCarShortCode==null">
+                        `vin_car_short_code`,
+                    </if>
+                    <if test="fetchFields.excludeFields.vinCarType==null">
+                        `vin_car_type`,
+                    </if>
+                    <if test="fetchFields.excludeFields.vinTransmType==null">
+                        `vin_transm_type`,
+                    </if>
+                    </if>
+                    <if test="fetchFields.otherFields!=null and fetchFields.otherFields.size>0">
+                        <foreach collection="fetchFields.otherFields" index="index" item="item" separator=",">
+                        `#{item}`
+                        </foreach>
+                    </if>
+                </if>
+            </if>
+            <if test="(_parameter instanceof com.gamc.efactory.model.dataObject.MqmsVinDecode$QueryBuilder) == false" >
+                <include refid="allResult"></include>
+            </if>
+
+        </trim>
+    </sql>
+
+
+</mapper>
