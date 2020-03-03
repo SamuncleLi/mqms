@@ -37,7 +37,7 @@
         WHERE  `vin` = #{vin}
     </select>
     <select id="selectByVin"  resultType="java.lang.Integer" >
-        SELECT * FROM `mqms_production`
+        SELECT COUNT(*) FROM `mqms_production`
         WHERE  `vin` = #{vin}
     </select>
     <update id="updateByVin">

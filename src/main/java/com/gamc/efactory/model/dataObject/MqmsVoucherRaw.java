@@ -10,7 +10,7 @@ import java.util.List;
 */
 public class MqmsVoucherRaw implements Serializable {
 
-    private static final long serialVersionUID = 1583201931778L;
+    private static final long serialVersionUID = 1583236751977L;
 
 
     /**
@@ -249,10 +249,22 @@ public class MqmsVoucherRaw implements Serializable {
     private String egtypeCode;
 
     /**
+    * 发动机生产日期
+    * isNullAble:1
+    */
+    private String engProductionDate;
+
+    /**
     * 变速箱号
     * isNullAble:1
     */
     private String transmissionCode;
+
+    /**
+    * 变速箱生产日期
+    * isNullAble:1
+    */
+    private String transmissionProductionDate;
 
     /**
     * 
@@ -429,9 +441,17 @@ public class MqmsVoucherRaw implements Serializable {
 
     public String getEgtypeCode(){return this.egtypeCode;}
 
+    public void setEngProductionDate(String engProductionDate){this.engProductionDate = engProductionDate;}
+
+    public String getEngProductionDate(){return this.engProductionDate;}
+
     public void setTransmissionCode(String transmissionCode){this.transmissionCode = transmissionCode;}
 
     public String getTransmissionCode(){return this.transmissionCode;}
+
+    public void setTransmissionProductionDate(String transmissionProductionDate){this.transmissionProductionDate = transmissionProductionDate;}
+
+    public String getTransmissionProductionDate(){return this.transmissionProductionDate;}
 
     public void setApplierId(Integer applierId){this.applierId = applierId;}
 
@@ -486,7 +506,9 @@ public class MqmsVoucherRaw implements Serializable {
                 "newPartsBond='" + newPartsBond + '\'' +
                 "submitDate='" + submitDate + '\'' +
                 "egtypeCode='" + egtypeCode + '\'' +
+                "engProductionDate='" + engProductionDate + '\'' +
                 "transmissionCode='" + transmissionCode + '\'' +
+                "transmissionProductionDate='" + transmissionProductionDate + '\'' +
                 "applierId='" + applierId + '\'' +
                 "applierName='" + applierName + '\'' +
                 "applyTime='" + applyTime + '\'' +
@@ -1006,6 +1028,18 @@ public class MqmsVoucherRaw implements Serializable {
         private List<String> rightFuzzyEgtypeCode;
 
         public List<String> getRightFuzzyEgtypeCode(){return this.rightFuzzyEgtypeCode;}
+        private List<String> engProductionDateList;
+
+        public List<String> getEngProductionDateList(){return this.engProductionDateList;}
+
+
+        private List<String> fuzzyEngProductionDate;
+
+        public List<String> getFuzzyEngProductionDate(){return this.fuzzyEngProductionDate;}
+
+        private List<String> rightFuzzyEngProductionDate;
+
+        public List<String> getRightFuzzyEngProductionDate(){return this.rightFuzzyEngProductionDate;}
         private List<String> transmissionCodeList;
 
         public List<String> getTransmissionCodeList(){return this.transmissionCodeList;}
@@ -1018,6 +1052,18 @@ public class MqmsVoucherRaw implements Serializable {
         private List<String> rightFuzzyTransmissionCode;
 
         public List<String> getRightFuzzyTransmissionCode(){return this.rightFuzzyTransmissionCode;}
+        private List<String> transmissionProductionDateList;
+
+        public List<String> getTransmissionProductionDateList(){return this.transmissionProductionDateList;}
+
+
+        private List<String> fuzzyTransmissionProductionDate;
+
+        public List<String> getFuzzyTransmissionProductionDate(){return this.fuzzyTransmissionProductionDate;}
+
+        private List<String> rightFuzzyTransmissionProductionDate;
+
+        public List<String> getRightFuzzyTransmissionProductionDate(){return this.rightFuzzyTransmissionProductionDate;}
         private List<Integer> applierIdList;
 
         public List<Integer> getApplierIdList(){return this.applierIdList;}
@@ -2773,6 +2819,51 @@ public class MqmsVoucherRaw implements Serializable {
             return this;
         }
 
+        public QueryBuilder fuzzyEngProductionDate (List<String> fuzzyEngProductionDate){
+            this.fuzzyEngProductionDate = fuzzyEngProductionDate;
+            return this;
+        }
+
+        public QueryBuilder fuzzyEngProductionDate (String ... fuzzyEngProductionDate){
+            this.fuzzyEngProductionDate = solveNullList(fuzzyEngProductionDate);
+            return this;
+        }
+
+        public QueryBuilder rightFuzzyEngProductionDate (List<String> rightFuzzyEngProductionDate){
+            this.rightFuzzyEngProductionDate = rightFuzzyEngProductionDate;
+            return this;
+        }
+
+        public QueryBuilder rightFuzzyEngProductionDate (String ... rightFuzzyEngProductionDate){
+            this.rightFuzzyEngProductionDate = solveNullList(rightFuzzyEngProductionDate);
+            return this;
+        }
+
+        public QueryBuilder engProductionDate(String engProductionDate){
+            setEngProductionDate(engProductionDate);
+            return this;
+        }
+
+        public QueryBuilder engProductionDateList(String ... engProductionDate){
+            this.engProductionDateList = solveNullList(engProductionDate);
+            return this;
+        }
+
+        public QueryBuilder engProductionDateList(List<String> engProductionDate){
+            this.engProductionDateList = engProductionDate;
+            return this;
+        }
+
+        public QueryBuilder fetchEngProductionDate(){
+            setFetchFields("fetchFields","engProductionDate");
+            return this;
+        }
+
+        public QueryBuilder excludeEngProductionDate(){
+            setFetchFields("excludeFields","engProductionDate");
+            return this;
+        }
+
         public QueryBuilder fuzzyTransmissionCode (List<String> fuzzyTransmissionCode){
             this.fuzzyTransmissionCode = fuzzyTransmissionCode;
             return this;
@@ -2815,6 +2906,51 @@ public class MqmsVoucherRaw implements Serializable {
 
         public QueryBuilder excludeTransmissionCode(){
             setFetchFields("excludeFields","transmissionCode");
+            return this;
+        }
+
+        public QueryBuilder fuzzyTransmissionProductionDate (List<String> fuzzyTransmissionProductionDate){
+            this.fuzzyTransmissionProductionDate = fuzzyTransmissionProductionDate;
+            return this;
+        }
+
+        public QueryBuilder fuzzyTransmissionProductionDate (String ... fuzzyTransmissionProductionDate){
+            this.fuzzyTransmissionProductionDate = solveNullList(fuzzyTransmissionProductionDate);
+            return this;
+        }
+
+        public QueryBuilder rightFuzzyTransmissionProductionDate (List<String> rightFuzzyTransmissionProductionDate){
+            this.rightFuzzyTransmissionProductionDate = rightFuzzyTransmissionProductionDate;
+            return this;
+        }
+
+        public QueryBuilder rightFuzzyTransmissionProductionDate (String ... rightFuzzyTransmissionProductionDate){
+            this.rightFuzzyTransmissionProductionDate = solveNullList(rightFuzzyTransmissionProductionDate);
+            return this;
+        }
+
+        public QueryBuilder transmissionProductionDate(String transmissionProductionDate){
+            setTransmissionProductionDate(transmissionProductionDate);
+            return this;
+        }
+
+        public QueryBuilder transmissionProductionDateList(String ... transmissionProductionDate){
+            this.transmissionProductionDateList = solveNullList(transmissionProductionDate);
+            return this;
+        }
+
+        public QueryBuilder transmissionProductionDateList(List<String> transmissionProductionDate){
+            this.transmissionProductionDateList = transmissionProductionDate;
+            return this;
+        }
+
+        public QueryBuilder fetchTransmissionProductionDate(){
+            setFetchFields("fetchFields","transmissionProductionDate");
+            return this;
+        }
+
+        public QueryBuilder excludeTransmissionProductionDate(){
+            setFetchFields("excludeFields","transmissionProductionDate");
             return this;
         }
 
@@ -3459,6 +3595,18 @@ public class MqmsVoucherRaw implements Serializable {
         private List<String> rightFuzzyEgtypeCode;
 
         public List<String> getRightFuzzyEgtypeCode(){return this.rightFuzzyEgtypeCode;}
+        private List<String> engProductionDateList;
+
+        public List<String> getEngProductionDateList(){return this.engProductionDateList;}
+
+
+        private List<String> fuzzyEngProductionDate;
+
+        public List<String> getFuzzyEngProductionDate(){return this.fuzzyEngProductionDate;}
+
+        private List<String> rightFuzzyEngProductionDate;
+
+        public List<String> getRightFuzzyEngProductionDate(){return this.rightFuzzyEngProductionDate;}
         private List<String> transmissionCodeList;
 
         public List<String> getTransmissionCodeList(){return this.transmissionCodeList;}
@@ -3471,6 +3619,18 @@ public class MqmsVoucherRaw implements Serializable {
         private List<String> rightFuzzyTransmissionCode;
 
         public List<String> getRightFuzzyTransmissionCode(){return this.rightFuzzyTransmissionCode;}
+        private List<String> transmissionProductionDateList;
+
+        public List<String> getTransmissionProductionDateList(){return this.transmissionProductionDateList;}
+
+
+        private List<String> fuzzyTransmissionProductionDate;
+
+        public List<String> getFuzzyTransmissionProductionDate(){return this.fuzzyTransmissionProductionDate;}
+
+        private List<String> rightFuzzyTransmissionProductionDate;
+
+        public List<String> getRightFuzzyTransmissionProductionDate(){return this.rightFuzzyTransmissionProductionDate;}
         private List<Integer> applierIdList;
 
         public List<Integer> getApplierIdList(){return this.applierIdList;}
@@ -4638,6 +4798,36 @@ public class MqmsVoucherRaw implements Serializable {
             return this;
         }
 
+        public ConditionBuilder fuzzyEngProductionDate (List<String> fuzzyEngProductionDate){
+            this.fuzzyEngProductionDate = fuzzyEngProductionDate;
+            return this;
+        }
+
+        public ConditionBuilder fuzzyEngProductionDate (String ... fuzzyEngProductionDate){
+            this.fuzzyEngProductionDate = solveNullList(fuzzyEngProductionDate);
+            return this;
+        }
+
+        public ConditionBuilder rightFuzzyEngProductionDate (List<String> rightFuzzyEngProductionDate){
+            this.rightFuzzyEngProductionDate = rightFuzzyEngProductionDate;
+            return this;
+        }
+
+        public ConditionBuilder rightFuzzyEngProductionDate (String ... rightFuzzyEngProductionDate){
+            this.rightFuzzyEngProductionDate = solveNullList(rightFuzzyEngProductionDate);
+            return this;
+        }
+
+        public ConditionBuilder engProductionDateList(String ... engProductionDate){
+            this.engProductionDateList = solveNullList(engProductionDate);
+            return this;
+        }
+
+        public ConditionBuilder engProductionDateList(List<String> engProductionDate){
+            this.engProductionDateList = engProductionDate;
+            return this;
+        }
+
         public ConditionBuilder fuzzyTransmissionCode (List<String> fuzzyTransmissionCode){
             this.fuzzyTransmissionCode = fuzzyTransmissionCode;
             return this;
@@ -4665,6 +4855,36 @@ public class MqmsVoucherRaw implements Serializable {
 
         public ConditionBuilder transmissionCodeList(List<String> transmissionCode){
             this.transmissionCodeList = transmissionCode;
+            return this;
+        }
+
+        public ConditionBuilder fuzzyTransmissionProductionDate (List<String> fuzzyTransmissionProductionDate){
+            this.fuzzyTransmissionProductionDate = fuzzyTransmissionProductionDate;
+            return this;
+        }
+
+        public ConditionBuilder fuzzyTransmissionProductionDate (String ... fuzzyTransmissionProductionDate){
+            this.fuzzyTransmissionProductionDate = solveNullList(fuzzyTransmissionProductionDate);
+            return this;
+        }
+
+        public ConditionBuilder rightFuzzyTransmissionProductionDate (List<String> rightFuzzyTransmissionProductionDate){
+            this.rightFuzzyTransmissionProductionDate = rightFuzzyTransmissionProductionDate;
+            return this;
+        }
+
+        public ConditionBuilder rightFuzzyTransmissionProductionDate (String ... rightFuzzyTransmissionProductionDate){
+            this.rightFuzzyTransmissionProductionDate = solveNullList(rightFuzzyTransmissionProductionDate);
+            return this;
+        }
+
+        public ConditionBuilder transmissionProductionDateList(String ... transmissionProductionDate){
+            this.transmissionProductionDateList = solveNullList(transmissionProductionDate);
+            return this;
+        }
+
+        public ConditionBuilder transmissionProductionDateList(List<String> transmissionProductionDate){
+            this.transmissionProductionDateList = transmissionProductionDate;
             return this;
         }
 
@@ -4934,8 +5154,16 @@ public class MqmsVoucherRaw implements Serializable {
             this.obj.setEgtypeCode(egtypeCode);
             return this;
         }
+        public Builder engProductionDate(String engProductionDate){
+            this.obj.setEngProductionDate(engProductionDate);
+            return this;
+        }
         public Builder transmissionCode(String transmissionCode){
             this.obj.setTransmissionCode(transmissionCode);
+            return this;
+        }
+        public Builder transmissionProductionDate(String transmissionProductionDate){
+            this.obj.setTransmissionProductionDate(transmissionProductionDate);
             return this;
         }
         public Builder applierId(Integer applierId){

@@ -124,8 +124,23 @@
             <if test="egtypeCode != null and egtypeCode!=''">
                 `egtype_code` = #{egtypeCode},
             </if>
+            <if test="engProductionDate != null and engProductionDate!=''">
+                `eng_production_date` = #{engProductionDate},
+            </if>
             <if test="transmissionCode != null and transmissionCode!=''">
                 `transmission_code` = #{transmissionCode},
+            </if>
+            <if test="transmissionProductionDate != null and transmissionProductionDate!=''">
+                `transmission_production_date` = #{transmissionProductionDate},
+            </if>
+            <if test="applierId != null">
+                `applier_id` = #{applierId},
+            </if>
+            <if test="applierName != null and applierName!=''">
+                `applier_name` = #{applierName},
+            </if>
+            <if test="applyTime != null and applyTime!=''">
+                `apply_time` = #{applyTime},
             </if>
         </trim>
         WHERE

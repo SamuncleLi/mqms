@@ -41,7 +41,7 @@ public class SalesServiceImpl implements SalesService {
     @Autowired
     private MqmsVinDecodeMapper mqmsVinDecodeMapper;
     @Autowired
-    private MqmsFaultDecodeMapper mqmsFaultDecodeMapper;
+    private MqmsSalesPointMapper mqmsSalesPointMapper;
     @Autowired
     private MqmsProductionMapper mqmsProductionMapper;
     Logger logger = LoggerFactory.getLogger(SalesServiceImpl.class);
@@ -60,7 +60,8 @@ public class SalesServiceImpl implements SalesService {
                 //mtoc码
                 String mtoc = mqmsProductionMapper.selectInforByVin(mqmsSalesRecord.getVinCode()).getMtoc();
                 mqmsSalesRecord.setMtoc(mtoc);
-
+                //区域
+                mqmsSalesRecord.setSalesArea(mqmsSalesPointMapper.selectSalesPointInfor(mqmsSalesRecord.getDealerCode()));
                 //机型
                 String vinShortCOde = mqmsSalesRecord.getVinCode().substring(0, 5);
                 MqmsVinDecode mqmsVinDecode = mqmsVinDecodeMapper.vinDecode(vinShortCOde);
@@ -113,7 +114,7 @@ public class SalesServiceImpl implements SalesService {
                         MqmsSalesRaw mqmsSalesRaw = new MqmsSalesRaw();
                         Class cls = mqmsSalesRaw.getClass();
                         Field[] fields = cls.getDeclaredFields();
-                        for (int j = 2; j < fields.length; j++) {
+                        for (int j = 2; j < fields.length-3; j++) {
                             Field f = fields[j];
                             f.setAccessible(true);
                             if (f.getType().equals(String.class)) {

@@ -20,7 +20,7 @@ SET FOREIGN_KEY_CHECKS=0;
 -- ----------------------------
 DROP TABLE IF EXISTS `mqms_voucher_raw`;
 CREATE TABLE `mqms_voucher_raw` (
-  `voucher_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '系统id号',
+ `voucher_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '系统id号',
   `voucher_code` varchar(255) NOT NULL COMMENT '单据编号',
   `claim_code` varchar(255) DEFAULT NULL COMMENT '索赔单号',
   `dealer_code` varchar(255) DEFAULT NULL COMMENT '经销商代码',
@@ -46,7 +46,7 @@ CREATE TABLE `mqms_voucher_raw` (
   `shop_arrival_date` varchar(255) DEFAULT NULL COMMENT '车辆到店时间',
   `sales_failure_time` int(11) DEFAULT NULL COMMENT '销售至故障经过月',
   `failure_desc` varchar(255) DEFAULT NULL COMMENT '故障描述',
-  `diagnostic_result` varchar(255) DEFAULT NULL COMMENT '诊断过程',
+  `diagnostic_result` varchar(2000) DEFAULT NULL COMMENT '诊断过程',
   `man_cost` decimal(65,2) DEFAULT NULL COMMENT '工时金额',
   `material_cost` decimal(65,2) DEFAULT NULL COMMENT '配件金额',
   `material_management_cost` decimal(65,2) DEFAULT NULL COMMENT '配件管理费用',
@@ -59,10 +59,12 @@ CREATE TABLE `mqms_voucher_raw` (
   `new_parts_bond` varchar(255) DEFAULT NULL COMMENT '新件绑定号',
   `submit_date` varchar(255) DEFAULT NULL COMMENT '提交时间',
   `egtype_code` varchar(255) DEFAULT NULL COMMENT '发动机号',
+  `eng_production_date` varchar(255) DEFAULT NULL COMMENT '发动机生产日期',
   `transmission_code` varchar(255) DEFAULT NULL COMMENT '变速箱号',
+  `transmission_production_date` varchar(255) DEFAULT NULL COMMENT '变速箱生产日期',
   `applier_id` int(11) DEFAULT NULL,
   `applier_name` varchar(255) DEFAULT NULL,
   `apply_time` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`voucher_id`),
   UNIQUE KEY `voucher_code` (`voucher_code`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=880 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8;

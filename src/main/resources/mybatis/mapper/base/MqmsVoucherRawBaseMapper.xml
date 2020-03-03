@@ -125,8 +125,14 @@
                     <if test="egtypeCode!=null">
                         `egtype_code`,
                     </if>
+                    <if test="engProductionDate!=null">
+                        `eng_production_date`,
+                    </if>
                     <if test="transmissionCode!=null">
                         `transmission_code`,
+                    </if>
+                    <if test="transmissionProductionDate!=null">
+                        `transmission_production_date`,
                     </if>
                     <if test="applierId!=null">
                         `applier_id`,
@@ -259,8 +265,14 @@
                 <if test="egtypeCode!=null">
                     #{egtypeCode},
                 </if>
+                <if test="engProductionDate!=null">
+                    #{engProductionDate},
+                </if>
                 <if test="transmissionCode!=null">
                     #{transmissionCode},
+                </if>
+                <if test="transmissionProductionDate!=null">
+                    #{transmissionProductionDate},
                 </if>
                 <if test="applierId!=null">
                     #{applierId},
@@ -396,8 +408,14 @@
             <if test="egtypeCode != null and egtypeCode!=''">
                 `egtype_code` = #{egtypeCode},
             </if>
+            <if test="engProductionDate != null and engProductionDate!=''">
+                `eng_production_date` = #{engProductionDate},
+            </if>
             <if test="transmissionCode != null and transmissionCode!=''">
                 `transmission_code` = #{transmissionCode},
+            </if>
+            <if test="transmissionProductionDate != null and transmissionProductionDate!=''">
+                `transmission_production_date` = #{transmissionProductionDate},
             </if>
             <if test="applierId != null">
                 `applier_id` = #{applierId},
@@ -533,8 +551,14 @@
         <if test="set.egtypeCode != null and set.egtypeCode!=''">
             `egtype_code` = #{set.egtypeCode},
         </if>
+        <if test="set.engProductionDate != null and set.engProductionDate!=''">
+            `eng_production_date` = #{set.engProductionDate},
+        </if>
         <if test="set.transmissionCode != null and set.transmissionCode!=''">
             `transmission_code` = #{set.transmissionCode},
+        </if>
+        <if test="set.transmissionProductionDate != null and set.transmissionProductionDate!=''">
+            `transmission_production_date` = #{set.transmissionProductionDate},
         </if>
         <if test="set.applierId != null">
             `applier_id` = #{set.applierId},
@@ -1247,6 +1271,26 @@
                 </foreach>
                 ) and
             </if>
+                <if test="where.engProductionDateList != null">
+                    `eng_production_date` in
+                    <foreach collection="where.engProductionDateList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test ="where.fuzzyEngProductionDate!=null and where.fuzzyEngProductionDate.size()>0">
+                (
+                <foreach collection="where.fuzzyEngProductionDate"  separator="or" item="item">
+                    `Eng_production_date` like concat('%',#{item},'%')
+                </foreach>
+                ) and
+            </if>
+            <if test ="where.rightFuzzyEngProductionDate!=null and where.rightFuzzyEngProductionDate.size()>0">
+                (
+                <foreach collection="where.rightFuzzyEngProductionDate"  separator="or" item="item">
+                    `Eng_production_date` like concat(#{item},'%')
+                </foreach>
+                ) and
+            </if>
                 <if test="where.transmissionCodeList != null">
                     `transmission_code` in
                     <foreach collection="where.transmissionCodeList" close=")" open="(" separator="," item="item">
@@ -1264,6 +1308,26 @@
                 (
                 <foreach collection="where.rightFuzzyTransmissionCode"  separator="or" item="item">
                     `Transmission_code` like concat(#{item},'%')
+                </foreach>
+                ) and
+            </if>
+                <if test="where.transmissionProductionDateList != null">
+                    `transmission_production_date` in
+                    <foreach collection="where.transmissionProductionDateList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test ="where.fuzzyTransmissionProductionDate!=null and where.fuzzyTransmissionProductionDate.size()>0">
+                (
+                <foreach collection="where.fuzzyTransmissionProductionDate"  separator="or" item="item">
+                    `Transmission_production_date` like concat('%',#{item},'%')
+                </foreach>
+                ) and
+            </if>
+            <if test ="where.rightFuzzyTransmissionProductionDate!=null and where.rightFuzzyTransmissionProductionDate.size()>0">
+                (
+                <foreach collection="where.rightFuzzyTransmissionProductionDate"  separator="or" item="item">
+                    `Transmission_production_date` like concat(#{item},'%')
                 </foreach>
                 ) and
             </if>
@@ -1363,7 +1427,9 @@
         <result property="newPartsBond" column="new_parts_bond"/>
         <result property="submitDate" column="submit_date"/>
         <result property="egtypeCode" column="egtype_code"/>
+        <result property="engProductionDate" column="eng_production_date"/>
         <result property="transmissionCode" column="transmission_code"/>
+        <result property="transmissionProductionDate" column="transmission_production_date"/>
         <result property="applierId" column="applier_id"/>
         <result property="applierName" column="applier_name"/>
         <result property="applyTime" column="apply_time"/>
@@ -1492,8 +1558,14 @@
             <if test="egtypeCode != null and egtypeCode!=''">
                 `egtype_code` = #{egtypeCode} and
             </if>
+            <if test="engProductionDate != null and engProductionDate!=''">
+                `eng_production_date` = #{engProductionDate} and
+            </if>
             <if test="transmissionCode != null and transmissionCode!=''">
                 `transmission_code` = #{transmissionCode} and
+            </if>
+            <if test="transmissionProductionDate != null and transmissionProductionDate!=''">
+                `transmission_production_date` = #{transmissionProductionDate} and
             </if>
             <if test="applierId != null">
                 `applier_id` = #{applierId} and
@@ -2205,6 +2277,26 @@
                     </foreach>
                     ) and
                 </if>
+                <if test="engProductionDateList != null">
+                    `eng_production_date` in
+                    <foreach collection="engProductionDateList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyEngProductionDate!=null and fuzzyEngProductionDate.size()>0">
+                    (
+                    <foreach collection="fuzzyEngProductionDate"  separator="or" item="item">
+                        `Eng_production_date` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyEngProductionDate!=null and rightFuzzyEngProductionDate.size()>0">
+                    (
+                    <foreach collection="rightFuzzyEngProductionDate"  separator="or" item="item">
+                        `Eng_production_date` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
                 <if test="transmissionCodeList != null">
                     `transmission_code` in
                     <foreach collection="transmissionCodeList" close=")" open="(" separator="," item="item">
@@ -2222,6 +2314,26 @@
                     (
                     <foreach collection="rightFuzzyTransmissionCode"  separator="or" item="item">
                         `Transmission_code` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="transmissionProductionDateList != null">
+                    `transmission_production_date` in
+                    <foreach collection="transmissionProductionDateList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyTransmissionProductionDate!=null and fuzzyTransmissionProductionDate.size()>0">
+                    (
+                    <foreach collection="fuzzyTransmissionProductionDate"  separator="or" item="item">
+                        `Transmission_production_date` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyTransmissionProductionDate!=null and rightFuzzyTransmissionProductionDate.size()>0">
+                    (
+                    <foreach collection="rightFuzzyTransmissionProductionDate"  separator="or" item="item">
+                        `Transmission_production_date` like concat(#{item},'%')
                     </foreach>
                     ) and
                 </if>
@@ -2403,8 +2515,14 @@
             <if test="egtypeCode != null and egtypeCode!=''">
                 `egtype_code` = #{egtypeCode} and
             </if>
+            <if test="engProductionDate != null and engProductionDate!=''">
+                `eng_production_date` = #{engProductionDate} and
+            </if>
             <if test="transmissionCode != null and transmissionCode!=''">
                 `transmission_code` = #{transmissionCode} and
+            </if>
+            <if test="transmissionProductionDate != null and transmissionProductionDate!=''">
+                `transmission_production_date` = #{transmissionProductionDate} and
             </if>
             <if test="applierId != null">
                 `applier_id` = #{applierId} and
@@ -3116,6 +3234,26 @@
                     </foreach>
                     ) and
                 </if>
+                    <if test="engProductionDateList != null">
+                        `eng_production_date` in
+                        <foreach collection="engProductionDateList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyEngProductionDate!=null and fuzzyEngProductionDate.size()>0">
+                    (
+                    <foreach collection="fuzzyEngProductionDate"  separator="or" item="item">
+                        `Eng_production_date` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyEngProductionDate!=null and rightFuzzyEngProductionDate.size()>0">
+                    (
+                    <foreach collection="rightFuzzyEngProductionDate"  separator="or" item="item">
+                        `Eng_production_date` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
                     <if test="transmissionCodeList != null">
                         `transmission_code` in
                         <foreach collection="transmissionCodeList" close=")" open="(" separator="," item="item">
@@ -3133,6 +3271,26 @@
                     (
                     <foreach collection="rightFuzzyTransmissionCode"  separator="or" item="item">
                         `Transmission_code` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                    <if test="transmissionProductionDateList != null">
+                        `transmission_production_date` in
+                        <foreach collection="transmissionProductionDateList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyTransmissionProductionDate!=null and fuzzyTransmissionProductionDate.size()>0">
+                    (
+                    <foreach collection="fuzzyTransmissionProductionDate"  separator="or" item="item">
+                        `Transmission_production_date` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyTransmissionProductionDate!=null and rightFuzzyTransmissionProductionDate.size()>0">
+                    (
+                    <foreach collection="rightFuzzyTransmissionProductionDate"  separator="or" item="item">
+                        `Transmission_production_date` like concat(#{item},'%')
                     </foreach>
                     ) and
                 </if>
@@ -3234,7 +3392,9 @@
         `new_parts_bond`,
         `submit_date`,
         `egtype_code`,
+        `eng_production_date`,
         `transmission_code`,
+        `transmission_production_date`,
         `applier_id`,
         `applier_name`,
         `apply_time`,
@@ -3375,8 +3535,14 @@
                     <if test="fetchFields.fetchFields.egtypeCode==true">
                         `egtype_code`,
                     </if>
+                    <if test="fetchFields.fetchFields.engProductionDate==true">
+                        `eng_production_date`,
+                    </if>
                     <if test="fetchFields.fetchFields.transmissionCode==true">
                         `transmission_code`,
+                    </if>
+                    <if test="fetchFields.fetchFields.transmissionProductionDate==true">
+                        `transmission_production_date`,
                     </if>
                     <if test="fetchFields.fetchFields.applierId==true">
                         `applier_id`,
@@ -3506,8 +3672,14 @@
                     <if test="fetchFields.excludeFields.egtypeCode==null">
                         `egtype_code`,
                     </if>
+                    <if test="fetchFields.excludeFields.engProductionDate==null">
+                        `eng_production_date`,
+                    </if>
                     <if test="fetchFields.excludeFields.transmissionCode==null">
                         `transmission_code`,
+                    </if>
+                    <if test="fetchFields.excludeFields.transmissionProductionDate==null">
+                        `transmission_production_date`,
                     </if>
                     <if test="fetchFields.excludeFields.applierId==null">
                         `applier_id`,

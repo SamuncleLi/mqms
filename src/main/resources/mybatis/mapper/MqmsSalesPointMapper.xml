@@ -3,5 +3,9 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.gamc.efactory.dao.MqmsSalesPointMapper">
 
+    <select id="selectSalesPointInfor"  resultType="java.lang.String" >
+        SELECT `sales_point_area` FROM `mqms_sales_point`
+        WHERE  `sales_point_code` = #{salesPointCode}
+    </select>
 
 </mapper>
