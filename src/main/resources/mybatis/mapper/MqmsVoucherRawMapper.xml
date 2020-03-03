@@ -2,5 +2,135 @@
 <!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.gamc.efactory.dao.MqmsVoucherRawMapper">
-
+    <select id="selectByVoucherCode"  resultType="java.lang.Integer" >
+        SELECT COUNT(*) FROM `mqms_voucher_raw`
+        WHERE  `voucher_code` = #{voucherCode}
+    </select>
+    <update id="updateMqmsVoucherRaw">
+        UPDATE `mqms_voucher_raw`
+        SET
+        <trim suffixOverrides=",">
+            <if test="voucherCode != null and voucherCode!=''">
+                `voucher_code` = #{voucherCode},
+            </if>
+            <if test="claimCode != null and claimCode!=''">
+                `claim_code` = #{claimCode},
+            </if>
+            <if test="dealerCode != null and dealerCode!=''">
+                `dealer_code` = #{dealerCode},
+            </if>
+            <if test="dealerName != null and dealerName!=''">
+                `dealer_name` = #{dealerName},
+            </if>
+            <if test="dealerShortName != null and dealerShortName!=''">
+                `dealer_short_name` = #{dealerShortName},
+            </if>
+            <if test="theme != null and theme!=''">
+                `theme` = #{theme},
+            </if>
+            <if test="vinCode != null and vinCode!=''">
+                `vin_code` = #{vinCode},
+            </if>
+            <if test="vehicleType != null and vehicleType!=''">
+                `vehicle_type` = #{vehicleType},
+            </if>
+            <if test="productionCode != null and productionCode!=''">
+                `production_code` = #{productionCode},
+            </if>
+            <if test="partsCode != null and partsCode!=''">
+                `parts_code` = #{partsCode},
+            </if>
+            <if test="partsName != null and partsName!=''">
+                `parts_name` = #{partsName},
+            </if>
+            <if test="divisionLevel1 != null and divisionLevel1!=''">
+                `division_level_1` = #{divisionLevel1},
+            </if>
+            <if test="divisionLevel2 != null and divisionLevel2!=''">
+                `division_level_2` = #{divisionLevel2},
+            </if>
+            <if test="divisionLevel3 != null and divisionLevel3!=''">
+                `division_level_3` = #{divisionLevel3},
+            </if>
+            <if test="partsAndSymptom != null and partsAndSymptom!=''">
+                `parts_and_symptom` = #{partsAndSymptom},
+            </if>
+            <if test="offlineDate != null and offlineDate!=''">
+                `offline_date` = #{offlineDate},
+            </if>
+            <if test="salesDate != null and salesDate!=''">
+                `sales_date` = #{salesDate},
+            </if>
+            <if test="failureDate != null and failureDate!=''">
+                `failure_date` = #{failureDate},
+            </if>
+            <if test="mileage != null">
+                `mileage` = #{mileage},
+            </if>
+            <if test="confirmDate != null and confirmDate!=''">
+                `confirm_date` = #{confirmDate},
+            </if>
+            <if test="warehousingDate != null and warehousingDate!=''">
+                `warehousing_date` = #{warehousingDate},
+            </if>
+            <if test="transportDate != null and transportDate!=''">
+                `transport_date` = #{transportDate},
+            </if>
+            <if test="shopArrivalDate != null and shopArrivalDate!=''">
+                `shop_arrival_date` = #{shopArrivalDate},
+            </if>
+            <if test="salesFailureTime != null">
+                `sales_failure_time` = #{salesFailureTime},
+            </if>
+            <if test="failureDesc != null and failureDesc!=''">
+                `failure_desc` = #{failureDesc},
+            </if>
+            <if test="diagnosticResult != null and diagnosticResult!=''">
+                `diagnostic_result` = #{diagnosticResult},
+            </if>
+            <if test="manCost != null">
+                `man_cost` = #{manCost},
+            </if>
+            <if test="materialCost != null">
+                `material_cost` = #{materialCost},
+            </if>
+            <if test="materialManagementCost != null">
+                `material_management_cost` = #{materialManagementCost},
+            </if>
+            <if test="goOutCost != null">
+                `go_out_cost` = #{goOutCost},
+            </if>
+            <if test="maintainingCost != null">
+                `maintaining_cost` = #{maintainingCost},
+            </if>
+            <if test="otherCost != null">
+                `other_cost` = #{otherCost},
+            </if>
+            <if test="totalCost != null">
+                `total_cost` = #{totalCost},
+            </if>
+            <if test="importantLevel != null and importantLevel!=''">
+                `important_level` = #{importantLevel},
+            </if>
+            <if test="transmissionType != null and transmissionType!=''">
+                `transmission_type` = #{transmissionType},
+            </if>
+            <if test="newPartsBond != null and newPartsBond!=''">
+                `new_parts_bond` = #{newPartsBond},
+            </if>
+            <if test="submitDate != null and submitDate!=''">
+                `submit_date` = #{submitDate},
+            </if>
+            <if test="egtypeCode != null and egtypeCode!=''">
+                `egtype_code` = #{egtypeCode},
+            </if>
+            <if test="transmissionCode != null and transmissionCode!=''">
+                `transmission_code` = #{transmissionCode},
+            </if>
+        </trim>
+        WHERE
+        <trim suffixOverrides="and">
+            `voucher_code` = #{voucherCode} and
+        </trim>
+    </update>
 </mapper>

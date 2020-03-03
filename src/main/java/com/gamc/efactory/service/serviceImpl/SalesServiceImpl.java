@@ -48,119 +48,125 @@ public class SalesServiceImpl implements SalesService {
     private class ImportCall implements Runnable {
         //构造函数传递参数
         private List<MqmsSales> mqmsSalesList;
-        public void setMqmsSalesList(List<MqmsSales> mqmsSalesList)
-        {
+
+        public void setMqmsSalesList(List<MqmsSales> mqmsSalesList) {
             this.mqmsSalesList = mqmsSalesList;
         }
+
         @Override
         public void run() {
 
             for (MqmsSales mqmsSalesRecord : mqmsSalesList) {
                 //mtoc码
-                String mtoc= mqmsProductionMapper.selectByVin(mqmsSalesRecord.getVinCode()).getMtoc();
+                String mtoc = mqmsProductionMapper.selectInforByVin(mqmsSalesRecord.getVinCode()).getMtoc();
                 mqmsSalesRecord.setMtoc(mtoc);
 
                 //机型
-                String vinShortCOde=mqmsSalesRecord.getVinCode().substring(0,5);
-                MqmsVinDecode mqmsVinDecode=mqmsVinDecodeMapper.vinDecode(vinShortCOde);
+                String vinShortCOde = mqmsSalesRecord.getVinCode().substring(0, 5);
+                MqmsVinDecode mqmsVinDecode = mqmsVinDecodeMapper.vinDecode(vinShortCOde);
                 mqmsSalesRecord.setEngType(mqmsVinDecode.getVinEngType());
                 //系列
                 mqmsSalesRecord.setEngSeries(mqmsVinDecode.getVinSeries());
                 //车型简码
-                mqmsSalesRecord.setCarShortCode(vinShortCOde.substring(3,5));
+                mqmsSalesRecord.setCarShortCode(vinShortCOde.substring(3, 5));
                 //车型
                 mqmsSalesRecord.setCarModel(mqmsVinDecode.getVinCarType());
                 //内部车型号
                 mqmsSalesRecord.setCarModelCode(mqmsVinDecode.getVinCarType());
-               //销售年
-                String[] dateTime=mqmsSalesRecord.getSecondPinDate().split("-");
+                //销售年
+                String[] dateTime = mqmsSalesRecord.getSecondPinDate().split("-");
                 mqmsSalesRecord.setSalesYear(dateTime[0]);
-               //销售月
+                //销售月
                 mqmsSalesRecord.setSalesMonth(dateTime[1]);
                 //变速箱短码
-                mqmsSalesRecord.setTranShortCode(mqmsSalesRecord.getVinCode().substring(6,7));
+                mqmsSalesRecord.setTranShortCode(mqmsSalesRecord.getVinCode().substring(6, 7));
                 //变速箱类型
-                String trsmCode=mqmsSalesRecord.getTransmissionCode().replace("+","");
-                String trsmType=trsmCode.substring(0,5);
+                String trsmCode = mqmsSalesRecord.getTransmissionCode().replace("+", "");
+                String trsmType = trsmCode.substring(0, 5);
                 mqmsSalesRecord.setTranType(mqmsTranProductionDecodeMapper.selectTranProductionCode(trsmType));
                 //变速箱系列
 
+                String vinCode = mqmsSalesRecord.getVinCode();
+                int cnt = mqmsSalesMapper.selectVinCodeCount(vinCode);
+                if (cnt == 0) {
+                    mqmsSalesMapper.insertMqmsSales(mqmsSalesRecord);
 
-                mqmsSalesMapper.insertMqmsSales(mqmsSalesRecord);
-
+                } else {
+                    mqmsSalesMapper.updateByVinCode(mqmsSalesRecord);
+                }
             }
         }
     }
-    public boolean batchImport(String fileName, MultipartFile file) {
-        try {
-            if (fileName.endsWith(".xlsx")) {
-                List<MqmsSalesRaw> mqmsSalesRawList = new ArrayList<>();
-                List<MqmsSales> mqmsSalesList= new ArrayList<>();
-                // 说明是xlsx文件,不过这里最好限制一下
-                List<List<String>> result = ExcelUtil.importXlsx(file.getInputStream());
-                //第0行为表头
+        public boolean batchImport(String fileName, MultipartFile file) {
+            try {
+                if (fileName.endsWith(".xlsx")) {
+                    List<MqmsSalesRaw> mqmsSalesRawList = new ArrayList<>();
+                    List<MqmsSales> mqmsSalesList= new ArrayList<>();
+                    // 说明是xlsx文件,不过这里最好限制一下
+                    List<List<String>> result = ExcelUtil.importXlsx(file.getInputStream());
+                    //第0行为表头
 
-                for (int i = 1; i < (result != null ? result.size() : 0); i++) {
-                    List<String> rowData = result.get(i);
+                    for (int i = 1; i < (result != null ? result.size() : 0); i++) {
+                        List<String> rowData = result.get(i);
 
-                    //利用反射遍历对属性赋值
-                    MqmsSalesRaw mqmsSalesRaw = new MqmsSalesRaw();
-                    Class cls = mqmsSalesRaw.getClass();
-                    Field[] fields = cls.getDeclaredFields();
-                    for (int j = 2; j < fields.length; j++) {
-                        Field f = fields[j];
-                        f.setAccessible(true);
-                        if (f.getType().equals(String.class)) {
-                            f.set(mqmsSalesRaw, rowData.get(j - 2));
-                        } else if (f.getType().equals(BigDecimal.class)) {
+                        //利用反射遍历对属性赋值
+                        MqmsSalesRaw mqmsSalesRaw = new MqmsSalesRaw();
+                        Class cls = mqmsSalesRaw.getClass();
+                        Field[] fields = cls.getDeclaredFields();
+                        for (int j = 2; j < fields.length; j++) {
+                            Field f = fields[j];
+                            f.setAccessible(true);
+                            if (f.getType().equals(String.class)) {
+                                f.set(mqmsSalesRaw, rowData.get(j - 2));
+                            } else if (f.getType().equals(BigDecimal.class)) {
 
-                            f.set(mqmsSalesRaw, new BigDecimal(rowData.get(j - 2)));
-                        } else if (f.getType().equals(Integer.class)) {
-                            //来自前面的坑，EXCEL导出整数变成字符多了小数点，例2838(Int),2838.0(String
-                            String str = rowData.get(j - 2);
-                            if (str.contains(".")) {
-                                int indexOf = str.indexOf(".");
-                                str = str.substring(0, indexOf);
+                                f.set(mqmsSalesRaw, new BigDecimal(rowData.get(j - 2)));
+                            } else if (f.getType().equals(Integer.class)) {
+                                //来自前面的坑，EXCEL导出整数变成字符多了小数点，例2838(Int),2838.0(String
+                                String str = rowData.get(j - 2);
+                                if (str.contains(".")) {
+                                    int indexOf = str.indexOf(".");
+                                    str = str.substring(0, indexOf);
+                                }
+                                f.set(mqmsSalesRaw, Integer.parseInt(str));
                             }
-                            f.set(mqmsSalesRaw, Integer.parseInt(str));
+                        }
+                        mqmsSalesRawList.add(mqmsSalesRaw);
+                        //相同属性复制
+                        MqmsSales mqmsSales = new MqmsSales();
+                        BeanUtils.copyProperties(mqmsSalesRaw, mqmsSales);
+                        mqmsSalesList.add(mqmsSales);
+
+                    }
+                    for (MqmsSalesRaw mqmsSalesRawRecord : mqmsSalesRawList) {
+
+                        String vinCode=mqmsSalesRawRecord.getVinCode();
+                        int cnt = mqmsSalesRawMapper.selectByVinCode(vinCode);
+                        if (cnt == 0) {
+                            mqmsSalesRawMapper.insertMqmsSalesRaw(mqmsSalesRawRecord);
+//                        System.out.println(" 插入 "+mqmsSalesRawRecord);
+                        } else {
+                            mqmsSalesRawMapper.updateByVinCode(mqmsSalesRawRecord);
+//                        System.out.println(" 更新 "+mqmsSalesRawRecord);
                         }
                     }
-                    mqmsSalesRawList.add(mqmsSalesRaw);
-                    //相同属性复制
-                    MqmsSales mqmsSales = new MqmsSales();
-                    BeanUtils.copyProperties(mqmsSalesRaw, mqmsSales);
-                    mqmsSalesList.add(mqmsSales);
 
+
+                    ThreadFactory threadFactory = new ThreadFactoryBuilder().setNameFormat("sendEmailImmediately-pool-%d").build();
+                    ExecutorService executorService = new ThreadPoolExecutor(2, 4, 1000, TimeUnit.MILLISECONDS, new SynchronousQueue<Runnable>(),threadFactory,new ThreadPoolExecutor.AbortPolicy());
+                    //使用线程池
+                    ImportCall importCall = new ImportCall();
+                    executorService.execute(importCall);
+                    //构造函数传参
+                    importCall.setMqmsSalesList(mqmsSalesList);
                 }
-                for (MqmsSalesRaw mqmsSalesRawRecord : mqmsSalesRawList) {
-
-//                    String vinCode=mqmsSalesRawRecord.getVinCode();
-//                    int cnt = mqmsSalesRawMapper.selectByVinCode(vinCode);
-//                    if (cnt == 0) {
-                        mqmsSalesRawMapper.insertMqmsSalesRaw(mqmsSalesRawRecord);
-//                        System.out.println(" 插入 "+mqmsSalesRawRecord);
-//                    } else {
-//                        mqmsSalesRawMapper.updateByVinCode(mqmsSalesRawRecord);
-//                        System.out.println(" 更新 "+mqmsSalesRawRecord);
-//                    }
-                }
-
-
-                ThreadFactory threadFactory = new ThreadFactoryBuilder().setNameFormat("sendEmailImmediately-pool-%d").build();
-                ExecutorService executorService = new ThreadPoolExecutor(2, 4, 1000, TimeUnit.MILLISECONDS, new SynchronousQueue<Runnable>(),threadFactory,new ThreadPoolExecutor.AbortPolicy());
-                //使用线程池
-                ImportCall importCall = new ImportCall();
-                executorService.execute(importCall);
-                //构造函数传参
-                importCall.setMqmsSalesList(mqmsSalesList);
+                return true;
             }
-            return true;
-        }
-        catch(Exception e){
-            e.printStackTrace();
-            return false;
-        }
+            catch(Exception e){
+                e.printStackTrace();
+                return false;
+            }
 
+        }
     }
-}
 

@@ -8,6 +8,7 @@ import com.gamc.efactory.dao.base.MqmsProductionBaseMapper;
 *  @author wangjian
 */
 public interface MqmsProductionMapper extends MqmsProductionBaseMapper{
-    MqmsProduction selectByVin(@Param("vin") String vin);
+    MqmsProduction selectInforByVin(@Param("vin") String vin);
+    int selectByVin(@Param("vin") String vin);
     int updateByVin(MqmsProduction object);
 }

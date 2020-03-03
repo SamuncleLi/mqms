@@ -81,10 +81,12 @@ public class ImportExcelController {
 
         try {
             a = veiDataService.batchImport(fileName, file);
+            return "数据成功导入";
         } catch (Exception e) {
             e.printStackTrace();
+            return "数据导入失败";
         }
-        return "数据成功导入";
+
     }
     @Autowired
     private ProductionService productionService;
