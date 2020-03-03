@@ -210,7 +210,7 @@
 
     function analysis() {
         $.ajax({
-            url:"/mqms/charts/engineFailureRate?yearAndMonth=" + $('#yearAndMonth').datebox('getValue') + "&timeSpan=" + $('#timeSpan').numberspinner('getValue') + "&engType="+ $('#engType').combobox('getValues'),
+            url:"/mqms/charts/engineFailureRate?yearAndMonth=" + $('#yearAndMonth').datebox('getValue') + "&timeSpan=" + $('#timeSpan').numberspinner('getValue') + "&engType="+ $('#engType').combobox('getValues') + "&monthType=6",
             success:function (result) {
                 console.log(result);
 
@@ -224,7 +224,7 @@
                         radius: '60%',
                         center: ['88%', '50%'],
                         label: {
-                            formatter: '{b}: {@2012} ({d}%)',
+                            formatter: '{b}: ({d}%)',
                             position: 'inner'
                         },
                         encode: {
@@ -252,13 +252,6 @@
                         showContent: false
                     },
                     dataset: {
-//                        source: [
-//                            ['product', '2020-01', '2020-02', '2020-03', '2020-04', '2020-05', '2020-06'],
-//                            ['131', 41.1, 30.4, 65.1, 53.3, 83.8, 98.7],
-//                            ['151', 86.5, 92.1, 85.7, 83.1, 73.4, 55.1],
-//                            ['132', 24.1, 67.2, 79.5, 86.4, 65.2, 82.5],
-//                            ['183', 55.2, 67.1, 69.2, 72.4, 53.9, 39.1]
-//                        ]
                         source:result
                     },
                     xAxis: {type: 'category'},
@@ -292,10 +285,162 @@
                 });
 
                 charts_1.setOption(option_1);
+            }
+        })
 
-                charts_2.setOption(option_1);
+        $.ajax({
+            url: "/mqms/charts/engineFailureRate?yearAndMonth=" + $('#yearAndMonth').datebox('getValue') + "&timeSpan=" + $('#timeSpan').numberspinner('getValue') + "&engType=" + $('#engType').combobox('getValues') + "&monthType=12",
+            success: function (result) {
+                console.log(result);
 
-                charts_3.setOption(option_1);
+                var engType = $("#engType").combobox("getValues");
+
+                //添加相当于机型数量的折线
+                var series = [
+                    {
+                        type: 'pie',
+                        id: 'pie',
+                        radius: '60%',
+                        center: ['88%', '50%'],
+                        label: {
+                            formatter: '{b}: ({d}%)',
+                            position: 'inner'
+                        },
+                        encode: {
+                            itemName: '机型',
+                            value: $('#yearAndMonth').datebox('getValue'),
+                            tooltip: $('#yearAndMonth').datebox('getValue')
+                        }
+                    }];
+                for (var i = 0; i < engType.length; i++) {
+                    var line = {type: 'line', seriesLayoutBy: 'row', itemStyle: {normal: {label: {show: true}}}};
+                    series.push(line)
+                }
+
+                var option_2 = {
+                    toolbox: {
+                        feature: {
+                            dataView: {show: true, readOnly: false},
+                            restore: {show: true},
+                            saveAsImage: {show: true}
+                        }
+                    },
+                    legend: {},
+                    tooltip: {
+                        trigger: 'axis',
+                        showContent: false
+                    },
+                    dataset: {
+                        source: result
+                    },
+                    xAxis: {type: 'category'},
+                    yAxis: {
+                        name: '台',
+                        gridIndex: 0
+                    },
+                    grid: {left: '5%', right: '30%'},
+                    series: series
+                };
+
+
+                charts_2.on('updateAxisPointer', function (event) {
+                    var xAxisInfo = event.axesInfo[0];
+                    if (xAxisInfo) {
+                        var dimension = xAxisInfo.value + 1;
+                        charts_2.setOption({
+                            series: {
+                                id: 'pie',
+                                label: {
+                                    formatter: '{b}: {@[' + dimension + ']} ({d}%)'
+                                },
+                                encode: {
+                                    value: dimension,
+                                    tooltip: dimension
+                                }
+                            }
+                        });
+                    }
+                });
+
+                charts_2.setOption(option_2);
+            }
+        })
+
+        $.ajax({
+            url: "/mqms/charts/engineFailureRate?yearAndMonth=" + $('#yearAndMonth').datebox('getValue') + "&timeSpan=" + $('#timeSpan').numberspinner('getValue') + "&engType=" + $('#engType').combobox('getValues') + "&monthType=24",
+            success: function (result) {
+                console.log(result);
+
+                var engType = $("#engType").combobox("getValues");
+
+                //添加相当于机型数量的折线
+                var series = [
+                    {
+                        type: 'pie',
+                        id: 'pie',
+                        radius: '60%',
+                        center: ['88%', '50%'],
+                        label: {
+                            formatter: '{b}: ({d}%)',
+                            position: 'inner'
+                        },
+                        encode: {
+                            itemName: '机型',
+                            value: $('#yearAndMonth').datebox('getValue'),
+                            tooltip: $('#yearAndMonth').datebox('getValue')
+                        }
+                    }];
+                for (var i = 0; i < engType.length; i++) {
+                    var line = {type: 'line', seriesLayoutBy: 'row', itemStyle: {normal: {label: {show: true}}}};
+                    series.push(line)
+                }
+
+                var option_3 = {
+                    toolbox: {
+                        feature: {
+                            dataView: {show: true, readOnly: false},
+                            restore: {show: true},
+                            saveAsImage: {show: true}
+                        }
+                    },
+                    legend: {},
+                    tooltip: {
+                        trigger: 'axis',
+                        showContent: false
+                    },
+                    dataset: {
+                        source: result
+                    },
+                    xAxis: {type: 'category'},
+                    yAxis: {
+                        name: '台',
+                        gridIndex: 0
+                    },
+                    grid: {left: '5%', right: '30%'},
+                    series: series
+                };
+
+
+                charts_3.on('updateAxisPointer', function (event) {
+                    var xAxisInfo = event.axesInfo[0];
+                    if (xAxisInfo) {
+                        var dimension = xAxisInfo.value + 1;
+                        charts_2.setOption({
+                            series: {
+                                id: 'pie',
+                                label: {
+                                    formatter: '{b}: {@[' + dimension + ']} ({d}%)'
+                                },
+                                encode: {
+                                    value: dimension,
+                                    tooltip: dimension
+                                }
+                            }
+                        });
+                    }
+                });
+
+                charts_3.setOption(option_3);
             }
         })
     }
