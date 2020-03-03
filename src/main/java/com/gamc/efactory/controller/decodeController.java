@@ -27,4 +27,28 @@ public class decodeController{
         String orderByColumn = "id";
         return multiFilterService.multiFilterQuery(table,condition,page,rows, orderByColumn);
     }
+    @RequestMapping("/transManu")
+    public JSONObject transCodeDecode(@RequestParam(required = false)String page, @RequestParam(required = false) String rows, @RequestParam(required = false) String condition){
+        String table = "mqms_tran_manufactures_decode";
+        String orderByColumn = "id";
+        return multiFilterService.multiFilterQuery(table,condition,page,rows, orderByColumn);
+    }
+    @RequestMapping("/transType")
+    public JSONObject transTypeDecode(@RequestParam(required = false)String page, @RequestParam(required = false) String rows, @RequestParam(required = false) String condition){
+        String table = "mqms_tran_production_decode";
+        String orderByColumn = "id";
+        return multiFilterService.multiFilterQuery(table,condition,page,rows, orderByColumn);
+    }
+    @RequestMapping("/transYear")
+    public JSONObject transYearDecode(@RequestParam(required = false)String page, @RequestParam(required = false) String rows, @RequestParam(required = false) String condition){
+        String table = "mqms_tran_year_decode";
+        String orderByColumn = "id";
+        return multiFilterService.multiFilterQuery(table,condition,page,rows, orderByColumn);
+    }
+    @RequestMapping("/faultCode")
+    public JSONObject faultCodeDecode(@RequestParam(required = false)String page, @RequestParam(required = false) String rows, @RequestParam(required = false) String condition){
+        String table = "mqms_fault_decode";
+        String orderByColumn = "id";
+        return multiFilterService.multiFilterQuery(table,condition,page,rows, orderByColumn);
+    }
 }

@@ -170,7 +170,23 @@ public class ViewController {
         return "vin_decode";
     }
     @RequestMapping(value = "/salesPointDecode")
-    public String salesPointdDecodeView(){
+    public String salesPointDecodeView(){
         return "sales_point_decode";
+    }
+    @RequestMapping(value = "/transManDecode")
+    public String transManDecodeView(){
+        return "trans_man_decode";
+    }
+    @RequestMapping(value = "/transTypeDecode")
+    public String transTypeDecodeView(){
+        return "trans_type_decode";
+    }
+    @RequestMapping(value = "/transYearDecode")
+    public String transYearDecodeView(){
+        return "trans_year_decode";
+    }
+    @RequestMapping(value = "/faultCodeDecode")
+    public String faultCodeDecodeView(){
+        return "fault_code_decode";
     }
 }
