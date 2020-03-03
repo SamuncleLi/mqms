@@ -6,11 +6,11 @@ import java.util.Map;
 import java.util.List;
 /**
 *
-*  @author author
+*  @author lizeh
 */
 public class MqmsProductionRaw implements Serializable {
 
-    private static final long serialVersionUID = 1578469899580L;
+    private static final long serialVersionUID = 1583200483153L;
 
 
     /**
@@ -110,6 +110,24 @@ public class MqmsProductionRaw implements Serializable {
     */
     private String exportCountry;
 
+    /**
+    * 
+    * isNullAble:1
+    */
+    private Integer applierId;
+
+    /**
+    * 
+    * isNullAble:1
+    */
+    private String applierName;
+
+    /**
+    * 
+    * isNullAble:1
+    */
+    private String applyTime;
+
 
     public void setProductionId(Integer productionId){this.productionId = productionId;}
 
@@ -174,6 +192,18 @@ public class MqmsProductionRaw implements Serializable {
     public void setExportCountry(String exportCountry){this.exportCountry = exportCountry;}
 
     public String getExportCountry(){return this.exportCountry;}
+
+    public void setApplierId(Integer applierId){this.applierId = applierId;}
+
+    public Integer getApplierId(){return this.applierId;}
+
+    public void setApplierName(String applierName){this.applierName = applierName;}
+
+    public String getApplierName(){return this.applierName;}
+
+    public void setApplyTime(String applyTime){this.applyTime = applyTime;}
+
+    public String getApplyTime(){return this.applyTime;}
     @Override
     public String toString() {
         return "MqmsProductionRaw{" +
@@ -193,6 +223,9 @@ public class MqmsProductionRaw implements Serializable {
                 "period='" + period + '\'' +
                 "carType='" + carType + '\'' +
                 "exportCountry='" + exportCountry + '\'' +
+                "applierId='" + applierId + '\'' +
+                "applierName='" + applierName + '\'' +
+                "applyTime='" + applyTime + '\'' +
             '}';
     }
 
@@ -433,6 +466,42 @@ public class MqmsProductionRaw implements Serializable {
         private List<String> rightFuzzyExportCountry;
 
         public List<String> getRightFuzzyExportCountry(){return this.rightFuzzyExportCountry;}
+        private List<Integer> applierIdList;
+
+        public List<Integer> getApplierIdList(){return this.applierIdList;}
+
+        private Integer applierIdSt;
+
+        private Integer applierIdEd;
+
+        public Integer getApplierIdSt(){return this.applierIdSt;}
+
+        public Integer getApplierIdEd(){return this.applierIdEd;}
+
+        private List<String> applierNameList;
+
+        public List<String> getApplierNameList(){return this.applierNameList;}
+
+
+        private List<String> fuzzyApplierName;
+
+        public List<String> getFuzzyApplierName(){return this.fuzzyApplierName;}
+
+        private List<String> rightFuzzyApplierName;
+
+        public List<String> getRightFuzzyApplierName(){return this.rightFuzzyApplierName;}
+        private List<String> applyTimeList;
+
+        public List<String> getApplyTimeList(){return this.applyTimeList;}
+
+
+        private List<String> fuzzyApplyTime;
+
+        public List<String> getFuzzyApplyTime(){return this.fuzzyApplyTime;}
+
+        private List<String> rightFuzzyApplyTime;
+
+        public List<String> getRightFuzzyApplyTime(){return this.rightFuzzyApplyTime;}
         private QueryBuilder (){
             this.fetchFields = new HashMap<>();
         }
@@ -1152,6 +1221,137 @@ public class MqmsProductionRaw implements Serializable {
             setFetchFields("excludeFields","exportCountry");
             return this;
         }
+
+        public QueryBuilder applierIdBetWeen(Integer applierIdSt,Integer applierIdEd){
+            this.applierIdSt = applierIdSt;
+            this.applierIdEd = applierIdEd;
+            return this;
+        }
+
+        public QueryBuilder applierIdGreaterEqThan(Integer applierIdSt){
+            this.applierIdSt = applierIdSt;
+            return this;
+        }
+        public QueryBuilder applierIdLessEqThan(Integer applierIdEd){
+            this.applierIdEd = applierIdEd;
+            return this;
+        }
+
+
+        public QueryBuilder applierId(Integer applierId){
+            setApplierId(applierId);
+            return this;
+        }
+
+        public QueryBuilder applierIdList(Integer ... applierId){
+            this.applierIdList = solveNullList(applierId);
+            return this;
+        }
+
+        public QueryBuilder applierIdList(List<Integer> applierId){
+            this.applierIdList = applierId;
+            return this;
+        }
+
+        public QueryBuilder fetchApplierId(){
+            setFetchFields("fetchFields","applierId");
+            return this;
+        }
+
+        public QueryBuilder excludeApplierId(){
+            setFetchFields("excludeFields","applierId");
+            return this;
+        }
+
+        public QueryBuilder fuzzyApplierName (List<String> fuzzyApplierName){
+            this.fuzzyApplierName = fuzzyApplierName;
+            return this;
+        }
+
+        public QueryBuilder fuzzyApplierName (String ... fuzzyApplierName){
+            this.fuzzyApplierName = solveNullList(fuzzyApplierName);
+            return this;
+        }
+
+        public QueryBuilder rightFuzzyApplierName (List<String> rightFuzzyApplierName){
+            this.rightFuzzyApplierName = rightFuzzyApplierName;
+            return this;
+        }
+
+        public QueryBuilder rightFuzzyApplierName (String ... rightFuzzyApplierName){
+            this.rightFuzzyApplierName = solveNullList(rightFuzzyApplierName);
+            return this;
+        }
+
+        public QueryBuilder applierName(String applierName){
+            setApplierName(applierName);
+            return this;
+        }
+
+        public QueryBuilder applierNameList(String ... applierName){
+            this.applierNameList = solveNullList(applierName);
+            return this;
+        }
+
+        public QueryBuilder applierNameList(List<String> applierName){
+            this.applierNameList = applierName;
+            return this;
+        }
+
+        public QueryBuilder fetchApplierName(){
+            setFetchFields("fetchFields","applierName");
+            return this;
+        }
+
+        public QueryBuilder excludeApplierName(){
+            setFetchFields("excludeFields","applierName");
+            return this;
+        }
+
+        public QueryBuilder fuzzyApplyTime (List<String> fuzzyApplyTime){
+            this.fuzzyApplyTime = fuzzyApplyTime;
+            return this;
+        }
+
+        public QueryBuilder fuzzyApplyTime (String ... fuzzyApplyTime){
+            this.fuzzyApplyTime = solveNullList(fuzzyApplyTime);
+            return this;
+        }
+
+        public QueryBuilder rightFuzzyApplyTime (List<String> rightFuzzyApplyTime){
+            this.rightFuzzyApplyTime = rightFuzzyApplyTime;
+            return this;
+        }
+
+        public QueryBuilder rightFuzzyApplyTime (String ... rightFuzzyApplyTime){
+            this.rightFuzzyApplyTime = solveNullList(rightFuzzyApplyTime);
+            return this;
+        }
+
+        public QueryBuilder applyTime(String applyTime){
+            setApplyTime(applyTime);
+            return this;
+        }
+
+        public QueryBuilder applyTimeList(String ... applyTime){
+            this.applyTimeList = solveNullList(applyTime);
+            return this;
+        }
+
+        public QueryBuilder applyTimeList(List<String> applyTime){
+            this.applyTimeList = applyTime;
+            return this;
+        }
+
+        public QueryBuilder fetchApplyTime(){
+            setFetchFields("fetchFields","applyTime");
+            return this;
+        }
+
+        public QueryBuilder excludeApplyTime(){
+            setFetchFields("excludeFields","applyTime");
+            return this;
+        }
         private <T>List<T> solveNullList(T ... objs){
             if (objs != null){
             List<T> list = new ArrayList<>();
@@ -1387,6 +1587,42 @@ public class MqmsProductionRaw implements Serializable {
         private List<String> rightFuzzyExportCountry;
 
         public List<String> getRightFuzzyExportCountry(){return this.rightFuzzyExportCountry;}
+        private List<Integer> applierIdList;
+
+        public List<Integer> getApplierIdList(){return this.applierIdList;}
+
+        private Integer applierIdSt;
+
+        private Integer applierIdEd;
+
+        public Integer getApplierIdSt(){return this.applierIdSt;}
+
+        public Integer getApplierIdEd(){return this.applierIdEd;}
+
+        private List<String> applierNameList;
+
+        public List<String> getApplierNameList(){return this.applierNameList;}
+
+
+        private List<String> fuzzyApplierName;
+
+        public List<String> getFuzzyApplierName(){return this.fuzzyApplierName;}
+
+        private List<String> rightFuzzyApplierName;
+
+        public List<String> getRightFuzzyApplierName(){return this.rightFuzzyApplierName;}
+        private List<String> applyTimeList;
+
+        public List<String> getApplyTimeList(){return this.applyTimeList;}
+
+
+        private List<String> fuzzyApplyTime;
+
+        public List<String> getFuzzyApplyTime(){return this.fuzzyApplyTime;}
+
+        private List<String> rightFuzzyApplyTime;
+
+        public List<String> getRightFuzzyApplyTime(){return this.rightFuzzyApplyTime;}
 
         public ConditionBuilder productionIdBetWeen(Integer productionIdSt,Integer productionIdEd){
             this.productionIdSt = productionIdSt;
@@ -1864,6 +2100,92 @@ public class MqmsProductionRaw implements Serializable {
             return this;
         }
 
+        public ConditionBuilder applierIdBetWeen(Integer applierIdSt,Integer applierIdEd){
+            this.applierIdSt = applierIdSt;
+            this.applierIdEd = applierIdEd;
+            return this;
+        }
+
+        public ConditionBuilder applierIdGreaterEqThan(Integer applierIdSt){
+            this.applierIdSt = applierIdSt;
+            return this;
+        }
+        public ConditionBuilder applierIdLessEqThan(Integer applierIdEd){
+            this.applierIdEd = applierIdEd;
+            return this;
+        }
+
+
+        public ConditionBuilder applierIdList(Integer ... applierId){
+            this.applierIdList = solveNullList(applierId);
+            return this;
+        }
+
+        public ConditionBuilder applierIdList(List<Integer> applierId){
+            this.applierIdList = applierId;
+            return this;
+        }
+
+        public ConditionBuilder fuzzyApplierName (List<String> fuzzyApplierName){
+            this.fuzzyApplierName = fuzzyApplierName;
+            return this;
+        }
+
+        public ConditionBuilder fuzzyApplierName (String ... fuzzyApplierName){
+            this.fuzzyApplierName = solveNullList(fuzzyApplierName);
+            return this;
+        }
+
+        public ConditionBuilder rightFuzzyApplierName (List<String> rightFuzzyApplierName){
+            this.rightFuzzyApplierName = rightFuzzyApplierName;
+            return this;
+        }
+
+        public ConditionBuilder rightFuzzyApplierName (String ... rightFuzzyApplierName){
+            this.rightFuzzyApplierName = solveNullList(rightFuzzyApplierName);
+            return this;
+        }
+
+        public ConditionBuilder applierNameList(String ... applierName){
+            this.applierNameList = solveNullList(applierName);
+            return this;
+        }
+
+        public ConditionBuilder applierNameList(List<String> applierName){
+            this.applierNameList = applierName;
+            return this;
+        }
+
+        public ConditionBuilder fuzzyApplyTime (List<String> fuzzyApplyTime){
+            this.fuzzyApplyTime = fuzzyApplyTime;
+            return this;
+        }
+
+        public ConditionBuilder fuzzyApplyTime (String ... fuzzyApplyTime){
+            this.fuzzyApplyTime = solveNullList(fuzzyApplyTime);
+            return this;
+        }
+
+        public ConditionBuilder rightFuzzyApplyTime (List<String> rightFuzzyApplyTime){
+            this.rightFuzzyApplyTime = rightFuzzyApplyTime;
+            return this;
+        }
+
+        public ConditionBuilder rightFuzzyApplyTime (String ... rightFuzzyApplyTime){
+            this.rightFuzzyApplyTime = solveNullList(rightFuzzyApplyTime);
+            return this;
+        }
+
+        public ConditionBuilder applyTimeList(String ... applyTime){
+            this.applyTimeList = solveNullList(applyTime);
+            return this;
+        }
+
+        public ConditionBuilder applyTimeList(List<String> applyTime){
+            this.applyTimeList = applyTime;
+            return this;
+        }
+
         private <T>List<T> solveNullList(T ... objs){
             if (objs != null){
             List<T> list = new ArrayList<>();
@@ -1950,6 +2272,18 @@ public class MqmsProductionRaw implements Serializable {
         }
         public Builder exportCountry(String exportCountry){
             this.obj.setExportCountry(exportCountry);
+            return this;
+        }
+        public Builder applierId(Integer applierId){
+            this.obj.setApplierId(applierId);
+            return this;
+        }
+        public Builder applierName(String applierName){
+            this.obj.setApplierName(applierName);
+            return this;
+        }
+        public Builder applyTime(String applyTime){
+            this.obj.setApplyTime(applyTime);
             return this;
         }
         public MqmsProductionRaw build(){return obj;}

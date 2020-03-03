@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50628
 File Encoding         : 65001
 
-Date: 2020-02-07 10:42:35
+Date: 2020-03-03 09:53:03
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -36,9 +36,8 @@ CREATE TABLE `mqms_production_raw` (
   `period` varchar(255) DEFAULT NULL COMMENT '阶段',
   `car_type` varchar(255) DEFAULT NULL,
   `export_country` varchar(255) DEFAULT NULL,
+  `applier_id` int(11) DEFAULT NULL,
+  `applier_name` varchar(255) DEFAULT NULL,
+  `apply_time` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`production_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Records of mqms_production_raw
--- ----------------------------

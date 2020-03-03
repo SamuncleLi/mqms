@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50628
 File Encoding         : 65001
 
-Date: 2020-02-07 10:42:30
+Date: 2020-03-03 09:52:50
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -48,11 +48,8 @@ CREATE TABLE `mqms_production` (
   `car_short_code` varchar(255) DEFAULT NULL COMMENT '车型简码',
   `car_model` varchar(255) DEFAULT NULL COMMENT '车型',
   `car_simple_code` varchar(255) DEFAULT NULL COMMENT '内部车型代号',
+  `applier_id` int(11) DEFAULT NULL,
+  `applier_name` varchar(255) DEFAULT NULL,
+  `apply_time` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`production_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Records of mqms_production
--- ----------------------------
-INSERT INTO `mqms_production` VALUES ('1', '杭州', null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
-INSERT INTO `mqms_production` VALUES ('2', '广州', null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);

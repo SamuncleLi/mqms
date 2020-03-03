@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50628
 File Encoding         : 65001
 
-Date: 2020-02-07 10:42:41
+Date: 2020-03-03 09:53:16
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -28,7 +28,7 @@ CREATE TABLE `mqms_sales` (
   `dealer_name` varchar(255) DEFAULT NULL COMMENT '经销商名称',
   `produce_date` varchar(255) DEFAULT NULL COMMENT '生产日期',
   `first_pin_date` varchar(255) DEFAULT NULL COMMENT '一次实销日期',
-  `second_pin_date` varchar(255) DEFAULT NULL COMMENT '二次实效日期',
+  `second_pin_date` varchar(255) DEFAULT NULL COMMENT '二次实销日期',
   `mtoc` varchar(255) DEFAULT NULL COMMENT 'MTOC',
   `car_type` varchar(255) DEFAULT NULL COMMENT '车型',
   `transmission_code` varchar(255) DEFAULT NULL COMMENT '变速箱号',
@@ -46,10 +46,8 @@ CREATE TABLE `mqms_sales` (
   `car_short_code` varchar(255) DEFAULT NULL COMMENT '车辆短码',
   `car_model` varchar(255) DEFAULT NULL COMMENT '车型',
   `car_model_code` varchar(255) DEFAULT NULL COMMENT '内部车型代号',
+  `applier_id` int(11) DEFAULT NULL,
+  `applier_name` varchar(255) DEFAULT NULL,
+  `apply_time` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`sales_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Records of mqms_sales
--- ----------------------------
-INSERT INTO `mqms_sales` VALUES ('1', 'ABCD', '111', null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+) ENGINE=InnoDB AUTO_INCREMENT=153 DEFAULT CHARSET=utf8;
