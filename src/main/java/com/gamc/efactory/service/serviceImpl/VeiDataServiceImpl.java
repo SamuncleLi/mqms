@@ -110,7 +110,6 @@ public class VeiDataServiceImpl implements VeiDataService {
                     String trsmProYearCode = trsmCode.substring(11, 12);
                     String trsmProMonthHex = trsmCode.substring(12, 13);
                     String trsmProDay = trsmCode.substring(13, 15);
-//                    mqmsVoucherRecord.setTransmissionCodeRe(mqmsTranProductionDecodeMapper.selectTranProductionCode(trsmType));
 //                    mqmsVoucherRecord.setTranTypeDetail(mqmsVinDecodeMapper.vinDecode(vinShortCOde).getVinTransmType());
                     mqmsVoucherRecord.setTranTypeDetail(mqmsTranProductionDecodeMapper.selectTranProductionCode(trsmType));
                     //变速箱生产厂家
