@@ -96,7 +96,9 @@
             <label>起始月份</label><input name="voucherCode">
         </form>
     </div>
-</div>
+    <div id="mdf-dlg">
+
+    </div>
 <script type="text/javascript">
     //初始化全局变量
     var columns_auto_single=new Array(1);
@@ -276,6 +278,34 @@
     //导出
     function exportFile() {
         $('#dg2').datagrid('toExcel', "品质不良数据.xls")
+    }
+
+    //打开修改对话框
+    function openModifyDlg(){
+        var info = $('#dg2').datagrid("getSelections");
+        if(info.size() != 1){
+            $.messager.alert("系统提示", "请选择一条信息")
+        }
+        else{
+            $('#mdf-fm').form('load', info)
+        }
+        $('#mdf-dlg').dialog("open", "补充数据")
+    }
+
+    //修改
+    function modify(){
+        $("#mdf-fm").form("submit", {//form({})相当于表单的构造函数
+            //easyui提交数据给后台是通过jQuery ajax中的序列化将数据提交给后台
+            url : "/mqms/voucher/modify?voucher="+$(this).serialize(),
+            onSubmit : function() {
+                //表单验证
+                return $(this).form("validate");
+            },
+            success : function() {
+                //刷新页面
+                $('#dg2').dialog("reload")
+            }
+        });
     }
 </script>
 </body>
