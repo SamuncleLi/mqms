@@ -5,6 +5,8 @@ import com.gamc.efactory.dao.UserMapper;
 import com.gamc.efactory.model.dataObject.Auth;
 import com.gamc.efactory.model.dataObject.Role;
 import com.gamc.efactory.model.dataObject.User;
+import com.gamc.efactory.service.VeiDataService;
+import com.gamc.efactory.service.serviceImpl.VeiDataServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -163,5 +165,12 @@ public class ViewController {
     public String charts_tran_single_analysisView(){
         return "charts_tran_single_analysis";
     }
-
+    @RequestMapping(value = "/vinDecode")
+    public String vinDecodeView(){
+        return "vin_decode";
+    }
+    @RequestMapping(value = "/salesPointDecode")
+    public String salesPointdDecodeView(){
+        return "sales_point_decode";
+    }
 }

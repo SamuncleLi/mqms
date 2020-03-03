@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>销售点解码表</title>
+    <link rel="stylesheet" type="text/css" href="${req.contextPath}/static/plugin/jquery-easyui-1.5.5.4/themes/bootstrap/easyui.css">
+    <link rel="stylesheet" type="text/css" href="${req.contextPath}/static/plugin/jquery-easyui-1.5.5.4/themes/icon.css">
+    <script type="text/javascript" src="${req.contextPath}/static/plugin/jquery-easyui-1.5.5.4/jquery.min.js"></script>
+    <script type="text/javascript" src="${req.contextPath}/static/plugin/jquery-easyui-1.5.5.4/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="${req.contextPath}/static/plugin/jquery-easyui-1.5.5.4/locale/easyui-lang-zh_CN.js"></script>
+    <style type="text/css">
+        html { overflow-y:hidden; }
+        td{
+            padding: 5px;
+        }
+        .easyui-textbox{
+            width: 135px;
+        }
+        .easyui-combobox{
+            width: 135px;
+        }
+    </style>
+    <script type="text/javascript">
+        var system = "mqms";
+        var module = "decode";
+        var moduleDesc = "VIN"
+        $(function () {
+
+            //列表展示
+            $("#vinDecode").datagrid({
+                url:"/" + system + "/" + module + "/vin",
+                method:"GET",
+                title: moduleDesc + "解码"
+            })
+
+        })
+    </script>
+</head>
+<body style="overflow-y: hidden">
+
+<table id="vinDecode" title="VIN解码" class="easyui-datagrid" fitColumns="false"
+       pagination="true" rownumbers="true" fit="true" toolbar="#tb" method="GET">
+    <thead>
+    <tr>
+        <th field="id" align="center">ID</th>
+        <th field="vin_short_code" align="center">短码</th>
+        <th field="vin_sim_code" align="center">简码</th>
+        <th field="vin_eng_type" align="center">机型</th>
+        <th field="vin_series" align="center">系列号</th>
+        <th field="vin_eng_short_code" align="center">机型简码</th>
+        <th field="vin_transm_short_code" align="center">简码</th>
+        <th field="vin_car_short_code" align="center">车型简码</th>
+        <th field="vin_car_type" align="center">车型</th>
+        <th field="vin_transm_type" align="center">变速箱类型</th>
+    </tr>
+    </thead>
+</table>
+
+
+</body>
+</html>

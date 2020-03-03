@@ -50,7 +50,10 @@ public class VeiDataServiceImpl implements VeiDataService {
     private MqmsVinDecodeMapper mqmsVinDecodeMapper;
     @Autowired
     private MqmsFaultDecodeMapper mqmsFaultDecodeMapper;
+
     Logger logger = LoggerFactory.getLogger(VeiDataServiceImpl.class);
+    //构造函数传递session
+    SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
 
     private class ImportCall implements Runnable {
         //构造函数传递参数
@@ -59,17 +62,22 @@ public class VeiDataServiceImpl implements VeiDataService {
         public void setMqmsVoucherList(List<MqmsVoucher> mqmsVoucherList) {
             this.mqmsVoucherList = mqmsVoucherList;
         }
+        //构造函数,传递session
+
+
 
         @Override
         public void run() {
 
 //            HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
-//            SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
+
+
 
             for (MqmsVoucher mqmsVoucherRecord : mqmsVoucherList) {
 
-//                mqmsVoucherRecord.setUploader(request.getSession().getAttribute("user").toString());
-//                mqmsVoucherRecord.setUploadingTime(df.format(new Date()));
+//                mqmsVoucherRecord.setApplierId((User) request.getSession().getAttribute("user"); )
+//                mqmsVoucherRecord.setApplierName((String) session.getAttribute("user"));
+                mqmsVoucherRecord.setApplyTime(df.format(new Date()));
 
                 //接收区间
                 Map<String, String> map = new HashMap();
@@ -161,6 +169,7 @@ public class VeiDataServiceImpl implements VeiDataService {
         }
     }
 
+
     public boolean batchImport(String fileName, MultipartFile file) {
         try {
             if (fileName.endsWith(".xlsx") || fileName.endsWith(".xls")) {
@@ -176,7 +185,7 @@ public class VeiDataServiceImpl implements VeiDataService {
                     MqmsVoucherRaw mqmsVoucherRaw = new MqmsVoucherRaw();
                     Class cls = mqmsVoucherRaw.getClass();
                     Field[] fields = cls.getDeclaredFields();
-                    for (int j = 2; j < fields.length; j++) {
+                    for (int j = 2; j < fields.length-3; j++) {
                         Field f = fields[j];
                         f.setAccessible(true);
                         if (f.getType().equals(String.class)) {
@@ -257,6 +266,10 @@ public class VeiDataServiceImpl implements VeiDataService {
 
 
                 for (MqmsVoucherRaw mqmsVoucherRawRecord : mqmsVoucherRawList) {
+//                    System.out.println(session.getAttribute("user"));
+//                    mqmsVoucherRawRecord.setApplierId((Integer) session.getAttribute("userId"));
+//                    mqmsVoucherRawRecord.setApplierName((String) session.getAttribute("user"));
+                    mqmsVoucherRawRecord.setApplyTime(df.format(new Date()));
                     String voucherCode = mqmsVoucherRawRecord.getVoucherCode();
                     int cnt = mqmsVoucherRawMapper.selectByVoucherCode(voucherCode);
                     if (cnt == 0) {

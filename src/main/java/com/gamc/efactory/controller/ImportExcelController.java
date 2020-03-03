@@ -1,5 +1,6 @@
 package com.gamc.efactory.controller;
 
+import com.gamc.efactory.model.dataObject.User;
 import com.gamc.efactory.service.*;
 //import com.gamc.efactory.service.ProductionService;
 //import com.gamc.efactory.service.SalesService;
