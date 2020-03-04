@@ -80,21 +80,28 @@ public class VeiDataServiceImpl implements VeiDataService {
                 mqmsVoucherRecord.setApplyTime(df.format(new Date()));
 
                 //接收区间
-                Map<String, String> map = new HashMap();
-                try {
-                    map = MqmsUtil.getWeekDate(mqmsVoucherRecord.getSubmitDate());
-                } catch (ParseException e) {
-                    e.printStackTrace();
+                if (mqmsVoucherRecord.getSubmitDate()!="") {
+                    Map<String, String> map = new HashMap();
+                    try {
+                        map = MqmsUtil.getWeekDate(mqmsVoucherRecord.getSubmitDate());
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+
+                    mqmsVoucherRecord.setReceiveTime(map.get("wednesdayDate") + "~" + map.get("ThursdayDate"));
                 }
-                mqmsVoucherRecord.setReceiveTime(map.get("wednesdayDate") + "~" + map.get("ThursdayDate"));
+                else{
+                    mqmsVoucherRecord.setReceiveTime("");
+                }
                 //车型简码
                 mqmsVoucherRecord.setShortCode(mqmsVoucherRecord.getVehicleType().substring(0, 2));
                 //机型、车型及变速箱类型
                 String vinShortCOde = mqmsVoucherRecord.getVinCode().substring(0, 5);
                 mqmsVoucherRecord.setEngType(mqmsVinDecodeMapper.vinDecode(vinShortCOde).getVinEngShortCode());
                 mqmsVoucherRecord.setCarModel(mqmsVinDecodeMapper.vinDecode(vinShortCOde).getVinCarType());
-//                mqmsVoucherRecord.setTransmissionCodeRe(mqmsVinDecodeMapper.vinDecode(vinShortCOde).getVinTransmShortCode());
-                mqmsVoucherRecord.setTranTypeDetail(mqmsVinDecodeMapper.vinDecode(vinShortCOde).getVinTransmType());
+                //变速箱类型暂时空着
+//                mqmsVoucherRecord.setTransmissionCodeRe("");
+
                 //变速箱机型
                 if(StringUtil.isNotEmpty(mqmsVoucherRecord.getTransmissionCode())){
                     String trsmCode = mqmsVoucherRecord.getTransmissionCode().replace("+", "");
@@ -103,10 +110,11 @@ public class VeiDataServiceImpl implements VeiDataService {
                     String trsmProYearCode = trsmCode.substring(11, 12);
                     String trsmProMonthHex = trsmCode.substring(12, 13);
                     String trsmProDay = trsmCode.substring(13, 15);
-                    mqmsVoucherRecord.setTransmissionCodeRe(mqmsTranProductionDecodeMapper.selectTranProductionCode(trsmType));
+                    mqmsVoucherRecord.setTranTypeDetail(mqmsVinDecodeMapper.vinDecode(vinShortCOde).getVinTransmType());
+                    mqmsVoucherRecord.setTranTypeDetail(mqmsTranProductionDecodeMapper.selectTranProductionCode(trsmType));
                     //变速箱生产厂家
                     mqmsVoucherRecord.setTransmissionManufacturer(mqmsTranManufacturesDecodeMapper.selectTranManufacture(trsmManufacture));
-                    //变速箱生产日期
+                   //变速箱生产日期
                     String trsmProMonth = Integer.toString(Integer.parseInt(trsmProMonthHex, 16), 10);
                     if (trsmProMonth.length() < 2) {
                         trsmProMonth = "0" + trsmProMonth;
@@ -118,10 +126,10 @@ public class VeiDataServiceImpl implements VeiDataService {
                     //变速箱生产至确认经过月
                     int proFailureMonths = 0;
                     try {
-//                    System.out.println(mqmsVoucherRecord.getTransmissionProductionData());
-//                    System.out.println(mqmsVoucherRecord.getConfirmDate());
+                    System.out.println(mqmsVoucherRecord.getTransmissionProductionData());
+                    System.out.println(mqmsVoucherRecord.getConfirmDate());
                         proFailureMonths = MqmsUtil.getMonth(mqmsVoucherRecord.getTransmissionProductionData(), mqmsVoucherRecord.getConfirmDate());
-//                    System.out.println(proFailureMonths);
+                    System.out.println(proFailureMonths);
 
                     } catch (Exception e) {
                         e.printStackTrace();

@@ -21,6 +21,7 @@ import java.lang.reflect.Field;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.*;
 
 /**
@@ -41,7 +42,7 @@ public class SalesServiceImpl implements SalesService {
     @Autowired
     private MqmsVinDecodeMapper mqmsVinDecodeMapper;
     @Autowired
-    private MqmsFaultDecodeMapper mqmsFaultDecodeMapper;
+    private MqmsSalesPointMapper mqmsSalesPointMapper;
     @Autowired
     private MqmsProductionMapper mqmsProductionMapper;
     Logger logger = LoggerFactory.getLogger(SalesServiceImpl.class);
@@ -58,9 +59,15 @@ public class SalesServiceImpl implements SalesService {
 
             for (MqmsSales mqmsSalesRecord : mqmsSalesList) {
                 //mtoc码
-                String mtoc = mqmsProductionMapper.selectInforByVin(mqmsSalesRecord.getVinCode()).getMtoc();
-                mqmsSalesRecord.setMtoc(mtoc);
-
+                if (mqmsProductionMapper.selectByVin(mqmsSalesRecord.getVinCode())!=0) {
+                    String mtoc = mqmsProductionMapper.selectInforByVin(mqmsSalesRecord.getVinCode()).getMtoc();
+                    mqmsSalesRecord.setMtoc(mtoc);
+                }
+                else{
+                    mqmsSalesRecord.setMtoc("");
+                }
+                //区域
+                mqmsSalesRecord.setSalesArea(mqmsSalesPointMapper.selectSalesPointInfor(mqmsSalesRecord.getDealerCode()));
                 //机型
                 String vinShortCOde = mqmsSalesRecord.getVinCode().substring(0, 5);
                 MqmsVinDecode mqmsVinDecode = mqmsVinDecodeMapper.vinDecode(vinShortCOde);
@@ -81,9 +88,20 @@ public class SalesServiceImpl implements SalesService {
                 //变速箱短码
                 mqmsSalesRecord.setTranShortCode(mqmsSalesRecord.getVinCode().substring(6, 7));
                 //变速箱类型
-                String trsmCode = mqmsSalesRecord.getTransmissionCode().replace("+", "");
-                String trsmType = trsmCode.substring(0, 5);
+                String trsmCode="";
+                if (!Objects.equals(mqmsSalesRecord.getTransmissionCode(), null)) {
+                    if (Objects.equals(mqmsSalesRecord.getTransmissionCode().substring(0, 1), "+")) {
+                        trsmCode = mqmsSalesRecord.getTransmissionCode().replace("+", "");
+                    } else {
+                        trsmCode = mqmsSalesRecord.getTransmissionCode();
+                    }
+                    String trsmType = trsmCode.substring(0, 5);
+
                 mqmsSalesRecord.setTranType(mqmsTranProductionDecodeMapper.selectTranProductionCode(trsmType));
+                }
+                else{
+                    mqmsSalesRecord.setTranType("");
+                }
                 //变速箱系列
 
                 String vinCode = mqmsSalesRecord.getVinCode();
@@ -97,76 +115,76 @@ public class SalesServiceImpl implements SalesService {
             }
         }
     }
-        public boolean batchImport(String fileName, MultipartFile file) {
-            try {
-                if (fileName.endsWith(".xlsx")) {
-                    List<MqmsSalesRaw> mqmsSalesRawList = new ArrayList<>();
-                    List<MqmsSales> mqmsSalesList= new ArrayList<>();
-                    // 说明是xlsx文件,不过这里最好限制一下
-                    List<List<String>> result = ExcelUtil.importXlsx(file.getInputStream());
-                    //第0行为表头
+    public boolean batchImport(String fileName, MultipartFile file) {
+        try {
+            if ((fileName.endsWith(".xlsx")||fileName.endsWith(".xls"))) {
+                List<MqmsSalesRaw> mqmsSalesRawList = new ArrayList<>();
+                List<MqmsSales> mqmsSalesList= new ArrayList<>();
+                // 说明是xlsx文件,不过这里最好限制一下
+                List<List<String>> result = ExcelUtil.importXlsx(file.getInputStream());
+                //第0行为表头
 
-                    for (int i = 1; i < (result != null ? result.size() : 0); i++) {
-                        List<String> rowData = result.get(i);
+                for (int i = 1; i < (result != null ? result.size() : 0); i++) {
+                    List<String> rowData = result.get(i);
 
-                        //利用反射遍历对属性赋值
-                        MqmsSalesRaw mqmsSalesRaw = new MqmsSalesRaw();
-                        Class cls = mqmsSalesRaw.getClass();
-                        Field[] fields = cls.getDeclaredFields();
-                        for (int j = 2; j < fields.length; j++) {
-                            Field f = fields[j];
-                            f.setAccessible(true);
-                            if (f.getType().equals(String.class)) {
-                                f.set(mqmsSalesRaw, rowData.get(j - 2));
-                            } else if (f.getType().equals(BigDecimal.class)) {
+                    //利用反射遍历对属性赋值
+                    MqmsSalesRaw mqmsSalesRaw = new MqmsSalesRaw();
+                    Class cls = mqmsSalesRaw.getClass();
+                    Field[] fields = cls.getDeclaredFields();
+                    for (int j = 2; j < fields.length-3; j++) {
+                        Field f = fields[j];
+                        f.setAccessible(true);
+                        if (f.getType().equals(String.class)) {
+                            f.set(mqmsSalesRaw, rowData.get(j - 2));
+                        } else if (f.getType().equals(BigDecimal.class)) {
 
-                                f.set(mqmsSalesRaw, new BigDecimal(rowData.get(j - 2)));
-                            } else if (f.getType().equals(Integer.class)) {
-                                //来自前面的坑，EXCEL导出整数变成字符多了小数点，例2838(Int),2838.0(String
-                                String str = rowData.get(j - 2);
-                                if (str.contains(".")) {
-                                    int indexOf = str.indexOf(".");
-                                    str = str.substring(0, indexOf);
-                                }
-                                f.set(mqmsSalesRaw, Integer.parseInt(str));
+                            f.set(mqmsSalesRaw, new BigDecimal(rowData.get(j - 2)));
+                        } else if (f.getType().equals(Integer.class)) {
+                            //来自前面的坑，EXCEL导出整数变成字符多了小数点，例2838(Int),2838.0(String
+                            String str = rowData.get(j - 2);
+                            if (str.contains(".")) {
+                                int indexOf = str.indexOf(".");
+                                str = str.substring(0, indexOf);
                             }
-                        }
-                        mqmsSalesRawList.add(mqmsSalesRaw);
-                        //相同属性复制
-                        MqmsSales mqmsSales = new MqmsSales();
-                        BeanUtils.copyProperties(mqmsSalesRaw, mqmsSales);
-                        mqmsSalesList.add(mqmsSales);
-
-                    }
-                    for (MqmsSalesRaw mqmsSalesRawRecord : mqmsSalesRawList) {
-
-                        String vinCode=mqmsSalesRawRecord.getVinCode();
-                        int cnt = mqmsSalesRawMapper.selectByVinCode(vinCode);
-                        if (cnt == 0) {
-                            mqmsSalesRawMapper.insertMqmsSalesRaw(mqmsSalesRawRecord);
-//                        System.out.println(" 插入 "+mqmsSalesRawRecord);
-                        } else {
-                            mqmsSalesRawMapper.updateByVinCode(mqmsSalesRawRecord);
-//                        System.out.println(" 更新 "+mqmsSalesRawRecord);
+                            f.set(mqmsSalesRaw, Integer.parseInt(str));
                         }
                     }
+                    mqmsSalesRawList.add(mqmsSalesRaw);
+                    //相同属性复制
+                    MqmsSales mqmsSales = new MqmsSales();
+                    BeanUtils.copyProperties(mqmsSalesRaw, mqmsSales);
+                    mqmsSalesList.add(mqmsSales);
 
-
-                    ThreadFactory threadFactory = new ThreadFactoryBuilder().setNameFormat("sendEmailImmediately-pool-%d").build();
-                    ExecutorService executorService = new ThreadPoolExecutor(2, 4, 1000, TimeUnit.MILLISECONDS, new SynchronousQueue<Runnable>(),threadFactory,new ThreadPoolExecutor.AbortPolicy());
-                    //使用线程池
-                    ImportCall importCall = new ImportCall();
-                    executorService.execute(importCall);
-                    //构造函数传参
-                    importCall.setMqmsSalesList(mqmsSalesList);
                 }
-                return true;
-            }
-            catch(Exception e){
-                e.printStackTrace();
-                return false;
-            }
+                for (MqmsSalesRaw mqmsSalesRawRecord : mqmsSalesRawList) {
 
+                    String vinCode=mqmsSalesRawRecord.getVinCode();
+                    int cnt = mqmsSalesRawMapper.selectByVinCode(vinCode);
+                    if (cnt == 0) {
+                        mqmsSalesRawMapper.insertMqmsSalesRaw(mqmsSalesRawRecord);
+//                        System.out.println(" 插入 "+mqmsSalesRawRecord);
+                    } else {
+                        mqmsSalesRawMapper.updateByVinCode(mqmsSalesRawRecord);
+//                        System.out.println(" 更新 "+mqmsSalesRawRecord);
+                    }
+                }
+
+
+                ThreadFactory threadFactory = new ThreadFactoryBuilder().setNameFormat("sendEmailImmediately-pool-%d").build();
+                ExecutorService executorService = new ThreadPoolExecutor(2, 4, 1000, TimeUnit.MILLISECONDS, new SynchronousQueue<Runnable>(),threadFactory,new ThreadPoolExecutor.AbortPolicy());
+                //使用线程池
+                ImportCall importCall = new ImportCall();
+                executorService.execute(importCall);
+                //构造函数传参
+                importCall.setMqmsSalesList(mqmsSalesList);
+            }
+            return true;
         }
+        catch(Exception e){
+            e.printStackTrace();
+            return false;
+        }
+
     }
+}
 

@@ -10,7 +10,7 @@ import java.util.List;
 */
 public class MqmsSalesPoint implements Serializable {
 
-    private static final long serialVersionUID = 1583219592515L;
+    private static final long serialVersionUID = 1583220067859L;
 
 
     /**
@@ -21,7 +21,7 @@ public class MqmsSalesPoint implements Serializable {
     private Integer id;
 
     /**
-    * 销售点代码
+    * 销售点名称
     * isNullAble:1
     */
     private String salesPointName;
@@ -33,7 +33,7 @@ public class MqmsSalesPoint implements Serializable {
     private String salesPointArea;
 
     /**
-    * 
+    * 销售点代码
     * isNullAble:1
     */
     private String salesPointCode;

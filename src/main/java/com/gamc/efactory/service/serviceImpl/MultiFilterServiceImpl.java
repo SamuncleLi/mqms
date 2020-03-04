@@ -84,7 +84,7 @@ public class MultiFilterServiceImpl implements MultiFilterService{
 
         int total = columnNameAndCommentMapper.multiFilterCount(table, str_temp);
         if(page != null && rows != null && orderByColumn !=null){
-            PageHelper.startPage(Integer.parseInt(page), Integer.parseInt(rows),  orderByColumn + " desc");
+            PageHelper.startPage(Integer.parseInt(page), Integer.parseInt(rows),  orderByColumn + " asc");
         }
         List<HashMap<String, String>> list = columnNameAndCommentMapper.multiFilter(table, str_temp);
         for(HashMap obj:list){

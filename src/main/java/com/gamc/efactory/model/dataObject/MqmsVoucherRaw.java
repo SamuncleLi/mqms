@@ -10,7 +10,7 @@ import java.util.List;
 */
 public class MqmsVoucherRaw implements Serializable {
 
-    private static final long serialVersionUID = 1583201931778L;
+    private static final long serialVersionUID = 1583292385830L;
 
 
     /**

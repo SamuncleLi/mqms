@@ -42,9 +42,12 @@ var _menus=[
         "menus":[{"menuid":"411","menuname":"字典","icon":"fa-inbox","url":"demo/msgTip.html"},
             {"menuid":"412","menuname":"销售点表","icon":"fa-share-alt-square","url":"/mqms/view/salesPointDecode"},
             {"menuid":"413","menuname":"vin码解码表","icon":"fa-share-alt-square","url":"/mqms/view/vinDecode"},
-            {"menuid":"414","menuname":"变速箱号解码表","icon":"fa-share-alt-square","url":"/mqms/view/transCodeDecode"},
-            {"menuid":"415","menuname":"mtoc解码表","icon":"fa-share-alt-square","url":"demo/msgTip.html"},
-            {"menuid":"416","menuname":"故障代码表","icon":"fa-share-alt-square","url":"/mqms/view/faultCodeDecode"},
+            {"menuid":"414","menuname":"变速箱厂家解码表","icon":"fa-share-alt-square","url":"/mqms/view/transManDecode"},
+            {"menuid":"415","menuname":"变速箱类型解码表","icon":"fa-share-alt-square","url":"/mqms/view/transTypeDecode"},
+            {"menuid":"416","menuname":"变速箱年份解码表","icon":"fa-share-alt-square","url":"/mqms/view/transYearDecode"},
+
+            // {"menuid":"416","menuname":"mtoc解码表","icon":"fa-share-alt-square","url":"demo/msgTip.html"},
+            {"menuid":"417","menuname":"故障代码表","icon":"fa-share-alt-square","url":"/mqms/view/faultCodeDecode"},
         ]
     },
 	{"menuid":"42","icon":"fa-dashboard","menuname":"系统仪表板",parentMenu:'4',

@@ -60,8 +60,10 @@ public class ProductionServiceImpl implements ProductionService {
                 //短码
                 String vinShortCOde = mqmsProductionRecord.getVin().substring(0, 5);
                 mqmsProductionRecord.setShortCode(vinShortCOde);
+                //地域
+
                 //机型
-                MqmsVinDecode mqmsVinDecode = new MqmsVinDecode();
+                MqmsVinDecode mqmsVinDecode;
                 mqmsVinDecode = mqmsVinDecodeMapper.vinDecode(vinShortCOde);
                 mqmsProductionRecord.setEngType(mqmsVinDecode.getVinEngType());
                 //系列
@@ -78,9 +80,11 @@ public class ProductionServiceImpl implements ProductionService {
                     MqmsSales mqmsSales = mqmsSalesMapper.selectByVinCode(mqmsProductionRecord.getVin());
                     mqmsProductionRecord.setProductionYear(mqmsSales.getSalesYear());
                     mqmsProductionRecord.setProductionMonth(mqmsSales.getSalesMonth());
+                    mqmsProductionRecord.setDistrictName(mqmsSales.getSalesArea());
                 } else {
                     mqmsProductionRecord.setProductionYear("");
                     mqmsProductionRecord.setProductionMonth("");
+                    mqmsProductionRecord.setDistrictName("");
                 }
 
                 //变速箱短码
@@ -120,7 +124,7 @@ public class ProductionServiceImpl implements ProductionService {
                         MqmsProductionRaw mqmsProductionRaw = new MqmsProductionRaw();
                         Class cls = mqmsProductionRaw.getClass();
                         Field[] fields = cls.getDeclaredFields();
-                        for (int j = 2; j < fields.length; j++) {
+                        for (int j = 2; j < fields.length-3; j++) {
                             Field f = fields[j];
                             f.setAccessible(true);
                             if (f.getType().equals(String.class)) {

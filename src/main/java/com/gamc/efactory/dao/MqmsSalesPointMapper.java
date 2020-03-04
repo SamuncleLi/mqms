@@ -9,5 +9,6 @@ import com.gamc.efactory.dao.base.MqmsSalesPointBaseMapper;
 */
 public interface MqmsSalesPointMapper extends MqmsSalesPointBaseMapper{
 
+    String selectSalesPointInfor(@Param("salesPointCode") String salesPointCode);
 
 }

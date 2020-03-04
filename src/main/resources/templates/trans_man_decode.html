@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>变速箱厂家解码表</title>
+    <link rel="stylesheet" type="text/css" href="${req.contextPath}/static/plugin/jquery-easyui-1.5.5.4/themes/bootstrap/easyui.css">
+    <link rel="stylesheet" type="text/css" href="${req.contextPath}/static/plugin/jquery-easyui-1.5.5.4/themes/icon.css">
+    <script type="text/javascript" src="${req.contextPath}/static/plugin/jquery-easyui-1.5.5.4/jquery.min.js"></script>
+    <script type="text/javascript" src="${req.contextPath}/static/plugin/jquery-easyui-1.5.5.4/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="${req.contextPath}/static/plugin/jquery-easyui-1.5.5.4/locale/easyui-lang-zh_CN.js"></script>
+    <style type="text/css">
+        html { overflow-y:hidden; }
+        td{
+            padding: 5px;
+        }
+        .easyui-textbox{
+            width: 135px;
+        }
+        .easyui-combobox{
+            width: 135px;
+        }
+    </style>
+    <script type="text/javascript">
+        var system = "mqms";
+        var module = "decode";
+        var moduleDesc = "变速箱厂家"
+        $(function () {
+
+            //列表展示
+            $("#transManuDecode").datagrid({
+                url:"/" + system + "/" + module + "/transManu",
+//                sortOrder:"ASC",
+                method:"GET",
+
+                title: moduleDesc + "解码"
+            })
+
+        })
+    </script>
+</head>
+<body style="overflow-y: hidden">
+
+<table id="transManuDecode" title="变速箱厂家解码" class="easyui-datagrid" fitColumns="false"
+       pagination="true" rownumbers="true" fit="true" toolbar="#tb" method="GET">
+    <thead>
+    <tr>
+        <th field="id" align="center">ID</th>
+        <th field="tran_manufacture_model" align="center">变速箱厂家代码</th>
+        <th field="tran_manufacture" align="center">变速箱厂家</th>
+    </tr>
+    </thead>
+</table>
+
+
+</body>
+</html>

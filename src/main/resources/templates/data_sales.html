@@ -156,7 +156,7 @@
 
         $("#fileForm").form("submit", {
             type: 'post',
-            url: '/mqms/import/productionData',
+            url: '/mqms/import/salesData',
             success: function (data) {
                 if (data == '数据成功导入') {
                     $.messager.alert("系统提示",'上传文件成功');

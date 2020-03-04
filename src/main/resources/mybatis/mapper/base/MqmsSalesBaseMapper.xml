@@ -17,8 +17,11 @@
                     <if test="salesCarType!=null">
                         `sales_car_type`,
                     </if>
-                    <if test="salesState!=null">
-                        `sales_state`,
+                    <if test="salesCarTypeDetail!=null">
+                        `sales_car_type_detail`,
+                    </if>
+                    <if test="salesCarTypeCn!=null">
+                        `sales_car_type_cn`,
                     </if>
                     <if test="dealerCode!=null">
                         `dealer_code`,
@@ -34,6 +37,9 @@
                     </if>
                     <if test="secondPinDate!=null">
                         `second_pin_date`,
+                    </if>
+                    <if test="state!=null">
+                        `state`,
                     </if>
                     <if test="mtoc!=null">
                         `mtoc`,
@@ -109,8 +115,11 @@
                 <if test="salesCarType!=null">
                     #{salesCarType},
                 </if>
-                <if test="salesState!=null">
-                    #{salesState},
+                <if test="salesCarTypeDetail!=null">
+                    #{salesCarTypeDetail},
+                </if>
+                <if test="salesCarTypeCn!=null">
+                    #{salesCarTypeCn},
                 </if>
                 <if test="dealerCode!=null">
                     #{dealerCode},
@@ -126,6 +135,9 @@
                 </if>
                 <if test="secondPinDate!=null">
                     #{secondPinDate},
+                </if>
+                <if test="state!=null">
+                    #{state},
                 </if>
                 <if test="mtoc!=null">
                     #{mtoc},
@@ -204,8 +216,11 @@
             <if test="salesCarType != null and salesCarType!=''">
                 `sales_car_type` = #{salesCarType},
             </if>
-            <if test="salesState != null and salesState!=''">
-                `sales_state` = #{salesState},
+            <if test="salesCarTypeDetail != null and salesCarTypeDetail!=''">
+                `sales_car_type_detail` = #{salesCarTypeDetail},
+            </if>
+            <if test="salesCarTypeCn != null and salesCarTypeCn!=''">
+                `sales_car_type_cn` = #{salesCarTypeCn},
             </if>
             <if test="dealerCode != null and dealerCode!=''">
                 `dealer_code` = #{dealerCode},
@@ -221,6 +236,9 @@
             </if>
             <if test="secondPinDate != null and secondPinDate!=''">
                 `second_pin_date` = #{secondPinDate},
+            </if>
+            <if test="state != null and state!=''">
+                `state` = #{state},
             </if>
             <if test="mtoc != null and mtoc!=''">
                 `mtoc` = #{mtoc},
@@ -299,8 +317,11 @@
         <if test="set.salesCarType != null and set.salesCarType!=''">
             `sales_car_type` = #{set.salesCarType},
         </if>
-        <if test="set.salesState != null and set.salesState!=''">
-            `sales_state` = #{set.salesState},
+        <if test="set.salesCarTypeDetail != null and set.salesCarTypeDetail!=''">
+            `sales_car_type_detail` = #{set.salesCarTypeDetail},
+        </if>
+        <if test="set.salesCarTypeCn != null and set.salesCarTypeCn!=''">
+            `sales_car_type_cn` = #{set.salesCarTypeCn},
         </if>
         <if test="set.dealerCode != null and set.dealerCode!=''">
             `dealer_code` = #{set.dealerCode},
@@ -316,6 +337,9 @@
         </if>
         <if test="set.secondPinDate != null and set.secondPinDate!=''">
             `second_pin_date` = #{set.secondPinDate},
+        </if>
+        <if test="set.state != null and set.state!=''">
+            `state` = #{set.state},
         </if>
         <if test="set.mtoc != null and set.mtoc!=''">
             `mtoc` = #{set.mtoc},
@@ -431,23 +455,43 @@
                 </foreach>
                 ) and
             </if>
-                <if test="where.salesStateList != null">
-                    `sales_state` in
-                    <foreach collection="where.salesStateList" close=")" open="(" separator="," item="item">
+                <if test="where.salesCarTypeDetailList != null">
+                    `sales_car_type_detail` in
+                    <foreach collection="where.salesCarTypeDetailList" close=")" open="(" separator="," item="item">
                         #{item}
                     </foreach> and
                 </if>
-            <if test ="where.fuzzySalesState!=null and where.fuzzySalesState.size()>0">
+            <if test ="where.fuzzySalesCarTypeDetail!=null and where.fuzzySalesCarTypeDetail.size()>0">
                 (
-                <foreach collection="where.fuzzySalesState"  separator="or" item="item">
-                    `Sales_state` like concat('%',#{item},'%')
+                <foreach collection="where.fuzzySalesCarTypeDetail"  separator="or" item="item">
+                    `Sales_car_type_detail` like concat('%',#{item},'%')
                 </foreach>
                 ) and
             </if>
-            <if test ="where.rightFuzzySalesState!=null and where.rightFuzzySalesState.size()>0">
+            <if test ="where.rightFuzzySalesCarTypeDetail!=null and where.rightFuzzySalesCarTypeDetail.size()>0">
                 (
-                <foreach collection="where.rightFuzzySalesState"  separator="or" item="item">
-                    `Sales_state` like concat(#{item},'%')
+                <foreach collection="where.rightFuzzySalesCarTypeDetail"  separator="or" item="item">
+                    `Sales_car_type_detail` like concat(#{item},'%')
+                </foreach>
+                ) and
+            </if>
+                <if test="where.salesCarTypeCnList != null">
+                    `sales_car_type_cn` in
+                    <foreach collection="where.salesCarTypeCnList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test ="where.fuzzySalesCarTypeCn!=null and where.fuzzySalesCarTypeCn.size()>0">
+                (
+                <foreach collection="where.fuzzySalesCarTypeCn"  separator="or" item="item">
+                    `Sales_car_type_cn` like concat('%',#{item},'%')
+                </foreach>
+                ) and
+            </if>
+            <if test ="where.rightFuzzySalesCarTypeCn!=null and where.rightFuzzySalesCarTypeCn.size()>0">
+                (
+                <foreach collection="where.rightFuzzySalesCarTypeCn"  separator="or" item="item">
+                    `Sales_car_type_cn` like concat(#{item},'%')
                 </foreach>
                 ) and
             </if>
@@ -548,6 +592,26 @@
                 (
                 <foreach collection="where.rightFuzzySecondPinDate"  separator="or" item="item">
                     `Second_pin_date` like concat(#{item},'%')
+                </foreach>
+                ) and
+            </if>
+                <if test="where.stateList != null">
+                    `state` in
+                    <foreach collection="where.stateList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test ="where.fuzzyState!=null and where.fuzzyState.size()>0">
+                (
+                <foreach collection="where.fuzzyState"  separator="or" item="item">
+                    `State` like concat('%',#{item},'%')
+                </foreach>
+                ) and
+            </if>
+            <if test ="where.rightFuzzyState!=null and where.rightFuzzyState.size()>0">
+                (
+                <foreach collection="where.rightFuzzyState"  separator="or" item="item">
+                    `State` like concat(#{item},'%')
                 </foreach>
                 ) and
             </if>
@@ -951,12 +1015,14 @@
         <result property="salesId" column="sales_id"/>
         <result property="vinCode" column="vin_code"/>
         <result property="salesCarType" column="sales_car_type"/>
-        <result property="salesState" column="sales_state"/>
+        <result property="salesCarTypeDetail" column="sales_car_type_detail"/>
+        <result property="salesCarTypeCn" column="sales_car_type_cn"/>
         <result property="dealerCode" column="dealer_code"/>
         <result property="dealerName" column="dealer_name"/>
         <result property="produceDate" column="produce_date"/>
         <result property="firstPinDate" column="first_pin_date"/>
         <result property="secondPinDate" column="second_pin_date"/>
+        <result property="state" column="state"/>
         <result property="mtoc" column="mtoc"/>
         <result property="carType" column="car_type"/>
         <result property="transmissionCode" column="transmission_code"/>
@@ -994,8 +1060,11 @@
             <if test="salesCarType != null and salesCarType!=''">
                 `sales_car_type` = #{salesCarType} and
             </if>
-            <if test="salesState != null and salesState!=''">
-                `sales_state` = #{salesState} and
+            <if test="salesCarTypeDetail != null and salesCarTypeDetail!=''">
+                `sales_car_type_detail` = #{salesCarTypeDetail} and
+            </if>
+            <if test="salesCarTypeCn != null and salesCarTypeCn!=''">
+                `sales_car_type_cn` = #{salesCarTypeCn} and
             </if>
             <if test="dealerCode != null and dealerCode!=''">
                 `dealer_code` = #{dealerCode} and
@@ -1011,6 +1080,9 @@
             </if>
             <if test="secondPinDate != null and secondPinDate!=''">
                 `second_pin_date` = #{secondPinDate} and
+            </if>
+            <if test="state != null and state!=''">
+                `state` = #{state} and
             </if>
             <if test="mtoc != null and mtoc!=''">
                 `mtoc` = #{mtoc} and
@@ -1125,23 +1197,43 @@
                     </foreach>
                     ) and
                 </if>
-                <if test="salesStateList != null">
-                    `sales_state` in
-                    <foreach collection="salesStateList" close=")" open="(" separator="," item="item">
+                <if test="salesCarTypeDetailList != null">
+                    `sales_car_type_detail` in
+                    <foreach collection="salesCarTypeDetailList" close=")" open="(" separator="," item="item">
                         #{item}
                     </foreach> and
                 </if>
-                <if test ="fuzzySalesState!=null and fuzzySalesState.size()>0">
+                <if test ="fuzzySalesCarTypeDetail!=null and fuzzySalesCarTypeDetail.size()>0">
                     (
-                    <foreach collection="fuzzySalesState"  separator="or" item="item">
-                        `Sales_state` like concat('%',#{item},'%')
+                    <foreach collection="fuzzySalesCarTypeDetail"  separator="or" item="item">
+                        `Sales_car_type_detail` like concat('%',#{item},'%')
                     </foreach>
                     ) and
                 </if>
-                <if test ="rightFuzzySalesState!=null and rightFuzzySalesState.size()>0">
+                <if test ="rightFuzzySalesCarTypeDetail!=null and rightFuzzySalesCarTypeDetail.size()>0">
                     (
-                    <foreach collection="rightFuzzySalesState"  separator="or" item="item">
-                        `Sales_state` like concat(#{item},'%')
+                    <foreach collection="rightFuzzySalesCarTypeDetail"  separator="or" item="item">
+                        `Sales_car_type_detail` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="salesCarTypeCnList != null">
+                    `sales_car_type_cn` in
+                    <foreach collection="salesCarTypeCnList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzySalesCarTypeCn!=null and fuzzySalesCarTypeCn.size()>0">
+                    (
+                    <foreach collection="fuzzySalesCarTypeCn"  separator="or" item="item">
+                        `Sales_car_type_cn` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzySalesCarTypeCn!=null and rightFuzzySalesCarTypeCn.size()>0">
+                    (
+                    <foreach collection="rightFuzzySalesCarTypeCn"  separator="or" item="item">
+                        `Sales_car_type_cn` like concat(#{item},'%')
                     </foreach>
                     ) and
                 </if>
@@ -1242,6 +1334,26 @@
                     (
                     <foreach collection="rightFuzzySecondPinDate"  separator="or" item="item">
                         `Second_pin_date` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="stateList != null">
+                    `state` in
+                    <foreach collection="stateList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyState!=null and fuzzyState.size()>0">
+                    (
+                    <foreach collection="fuzzyState"  separator="or" item="item">
+                        `State` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyState!=null and rightFuzzyState.size()>0">
+                    (
+                    <foreach collection="rightFuzzyState"  separator="or" item="item">
+                        `State` like concat(#{item},'%')
                     </foreach>
                     ) and
                 </if>
@@ -1655,8 +1767,11 @@
             <if test="salesCarType != null and salesCarType!=''">
                 `sales_car_type` = #{salesCarType} and
             </if>
-            <if test="salesState != null and salesState!=''">
-                `sales_state` = #{salesState} and
+            <if test="salesCarTypeDetail != null and salesCarTypeDetail!=''">
+                `sales_car_type_detail` = #{salesCarTypeDetail} and
+            </if>
+            <if test="salesCarTypeCn != null and salesCarTypeCn!=''">
+                `sales_car_type_cn` = #{salesCarTypeCn} and
             </if>
             <if test="dealerCode != null and dealerCode!=''">
                 `dealer_code` = #{dealerCode} and
@@ -1672,6 +1787,9 @@
             </if>
             <if test="secondPinDate != null and secondPinDate!=''">
                 `second_pin_date` = #{secondPinDate} and
+            </if>
+            <if test="state != null and state!=''">
+                `state` = #{state} and
             </if>
             <if test="mtoc != null and mtoc!=''">
                 `mtoc` = #{mtoc} and
@@ -1786,23 +1904,43 @@
                     </foreach>
                     ) and
                 </if>
-                    <if test="salesStateList != null">
-                        `sales_state` in
-                        <foreach collection="salesStateList" close=")" open="(" separator="," item="item">
+                    <if test="salesCarTypeDetailList != null">
+                        `sales_car_type_detail` in
+                        <foreach collection="salesCarTypeDetailList" close=")" open="(" separator="," item="item">
                             #{item}
                         </foreach> and
                     </if>
-                <if test ="fuzzySalesState!=null and fuzzySalesState.size()>0">
+                <if test ="fuzzySalesCarTypeDetail!=null and fuzzySalesCarTypeDetail.size()>0">
                     (
-                    <foreach collection="fuzzySalesState"  separator="or" item="item">
-                        `Sales_state` like concat('%',#{item},'%')
+                    <foreach collection="fuzzySalesCarTypeDetail"  separator="or" item="item">
+                        `Sales_car_type_detail` like concat('%',#{item},'%')
                     </foreach>
                     ) and
                 </if>
-                <if test ="rightFuzzySalesState!=null and rightFuzzySalesState.size()>0">
+                <if test ="rightFuzzySalesCarTypeDetail!=null and rightFuzzySalesCarTypeDetail.size()>0">
                     (
-                    <foreach collection="rightFuzzySalesState"  separator="or" item="item">
-                        `Sales_state` like concat(#{item},'%')
+                    <foreach collection="rightFuzzySalesCarTypeDetail"  separator="or" item="item">
+                        `Sales_car_type_detail` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                    <if test="salesCarTypeCnList != null">
+                        `sales_car_type_cn` in
+                        <foreach collection="salesCarTypeCnList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzySalesCarTypeCn!=null and fuzzySalesCarTypeCn.size()>0">
+                    (
+                    <foreach collection="fuzzySalesCarTypeCn"  separator="or" item="item">
+                        `Sales_car_type_cn` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzySalesCarTypeCn!=null and rightFuzzySalesCarTypeCn.size()>0">
+                    (
+                    <foreach collection="rightFuzzySalesCarTypeCn"  separator="or" item="item">
+                        `Sales_car_type_cn` like concat(#{item},'%')
                     </foreach>
                     ) and
                 </if>
@@ -1903,6 +2041,26 @@
                     (
                     <foreach collection="rightFuzzySecondPinDate"  separator="or" item="item">
                         `Second_pin_date` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                    <if test="stateList != null">
+                        `state` in
+                        <foreach collection="stateList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyState!=null and fuzzyState.size()>0">
+                    (
+                    <foreach collection="fuzzyState"  separator="or" item="item">
+                        `State` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyState!=null and rightFuzzyState.size()>0">
+                    (
+                    <foreach collection="rightFuzzyState"  separator="or" item="item">
+                        `State` like concat(#{item},'%')
                     </foreach>
                     ) and
                 </if>
@@ -2308,12 +2466,14 @@
         `sales_id`,
         `vin_code`,
         `sales_car_type`,
-        `sales_state`,
+        `sales_car_type_detail`,
+        `sales_car_type_cn`,
         `dealer_code`,
         `dealer_name`,
         `produce_date`,
         `first_pin_date`,
         `second_pin_date`,
+        `state`,
         `mtoc`,
         `car_type`,
         `transmission_code`,
@@ -2363,8 +2523,11 @@
                     <if test="fetchFields.fetchFields.salesCarType==true">
                         `sales_car_type`,
                     </if>
-                    <if test="fetchFields.fetchFields.salesState==true">
-                        `sales_state`,
+                    <if test="fetchFields.fetchFields.salesCarTypeDetail==true">
+                        `sales_car_type_detail`,
+                    </if>
+                    <if test="fetchFields.fetchFields.salesCarTypeCn==true">
+                        `sales_car_type_cn`,
                     </if>
                     <if test="fetchFields.fetchFields.dealerCode==true">
                         `dealer_code`,
@@ -2380,6 +2543,9 @@
                     </if>
                     <if test="fetchFields.fetchFields.secondPinDate==true">
                         `second_pin_date`,
+                    </if>
+                    <if test="fetchFields.fetchFields.state==true">
+                        `state`,
                     </if>
                     <if test="fetchFields.fetchFields.mtoc==true">
                         `mtoc`,
@@ -2452,8 +2618,11 @@
                     <if test="fetchFields.excludeFields.salesCarType==null">
                         `sales_car_type`,
                     </if>
-                    <if test="fetchFields.excludeFields.salesState==null">
-                        `sales_state`,
+                    <if test="fetchFields.excludeFields.salesCarTypeDetail==null">
+                        `sales_car_type_detail`,
+                    </if>
+                    <if test="fetchFields.excludeFields.salesCarTypeCn==null">
+                        `sales_car_type_cn`,
                     </if>
                     <if test="fetchFields.excludeFields.dealerCode==null">
                         `dealer_code`,
@@ -2469,6 +2638,9 @@
                     </if>
                     <if test="fetchFields.excludeFields.secondPinDate==null">
                         `second_pin_date`,
+                    </if>
+                    <if test="fetchFields.excludeFields.state==null">
+                        `state`,
                     </if>
                     <if test="fetchFields.excludeFields.mtoc==null">
                         `mtoc`,

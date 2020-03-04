@@ -16,8 +16,11 @@
             <if test="salesCarType != null and salesCarType!=''">
                 `sales_car_type` = #{salesCarType},
             </if>
-            <if test="salesState != null and salesState!=''">
-                `sales_state` = #{salesState},
+            <if test="salesCarTypeDetail != null and salesCarTypeDetail!=''">
+                `sales_car_type_detail` = #{salesCarTypeDetail},
+            </if>
+            <if test="salesCarTypeCn != null and salesCarTypeCn!=''">
+                `sales_car_type_cn` = #{salesCarTypeCn},
             </if>
             <if test="dealerCode != null and dealerCode!=''">
                 `dealer_code` = #{dealerCode},
@@ -33,6 +36,18 @@
             </if>
             <if test="secondPinDate != null and secondPinDate!=''">
                 `second_pin_date` = #{secondPinDate},
+            </if>
+            <if test="state != null and state!=''">
+                `state` = #{state},
+            </if>
+            <if test="applierId != null">
+                `applier_id` = #{applierId},
+            </if>
+            <if test="applierName != null and applierName!=''">
+                `applier_name` = #{applierName},
+            </if>
+            <if test="applyTime != null and applyTime!=''">
+                `apply_time` = #{applyTime},
             </if>
         </trim>
         WHERE
