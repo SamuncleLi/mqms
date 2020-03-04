@@ -9,5 +9,5 @@ import javax.servlet.http.HttpSession;
  * Created by Zeho Lee on 2020/1/3.
  */
 public interface VeiDataService {
-    boolean batchImport(String fileName, MultipartFile file);
+    boolean batchImport(String fileName, MultipartFile file,HttpSession session);
 }

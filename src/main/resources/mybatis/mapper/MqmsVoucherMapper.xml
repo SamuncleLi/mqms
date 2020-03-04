@@ -215,6 +215,15 @@
             <if test="failureTrackId != null">
                 `failure_track_id` = #{failureTrackId},
             </if>
+            <if test="applierId != null">
+                `applier_id` = #{applierId},
+            </if>
+            <if test="applierName != null and applierName!=''">
+                `applier_name` = #{applierName},
+            </if>
+            <if test="applyTime != null and applyTime!=''">
+                `apply_time` = #{applyTime},
+            </if>
         </trim>
         WHERE
         <trim suffixOverrides="and">
