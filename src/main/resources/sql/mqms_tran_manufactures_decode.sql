@@ -29,7 +29,7 @@ CREATE TABLE `mqms_tran_manufactures_decode` (
 -- ----------------------------
 -- Records of mqms_tran_manufactures_decode
 -- ----------------------------
-INSERT INTO `mqms_tran_manufactures_decode` VALUES ('1', 'WJ101', '日本爱信');
+INSERT INTO `mqms_tran_manufactures_decode` VALUES ('1', 'VJ101', '日本爱信');
 INSERT INTO `mqms_tran_manufactures_decode` VALUES ('2', 'VD163', '杭维柯');
 INSERT INTO `mqms_tran_manufactures_decode` VALUES ('3', 'VZ210', '格特拉特');
 INSERT INTO `mqms_tran_manufactures_decode` VALUES ('4', 'VB105', '唐山爱信');
