@@ -55,6 +55,15 @@
             <if test="exportCountry != null and exportCountry!=''">
                 `export_country` = #{exportCountry},
             </if>
+            <if test="applierId != null">
+                `applier_id` = #{applierId},
+            </if>
+            <if test="applierName != null and applierName!=''">
+                `applier_name` = #{applierName},
+            </if>
+            <if test="applyTime != null and applyTime!=''">
+                `apply_time` = #{applyTime},
+            </if>
         </trim>
         WHERE
         <trim suffixOverrides="and">

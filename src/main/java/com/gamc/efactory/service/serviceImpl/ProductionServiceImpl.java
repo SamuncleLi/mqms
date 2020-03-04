@@ -15,12 +15,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpSession;
 import java.lang.reflect.Field;
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.text.SimpleDateFormat;
+import java.util.*;
 import java.util.concurrent.*;
 
 /**
@@ -109,43 +108,48 @@ public class ProductionServiceImpl implements ProductionService {
         }
     }
 
-        public boolean batchImport(String fileName, MultipartFile file) {
-            try {
-                if (fileName.endsWith(".xlsx")) {
-                    List<MqmsProductionRaw> mqmsProductionRawList = new ArrayList<>();
-                    List<MqmsProduction> mqmsProductionList = new ArrayList<>();
-                    // 说明是xlsx文件,不过这里最好限制一下
-                    List<List<String>> result = ExcelUtil.importXlsx(file.getInputStream());
-                    //第0行为表头
-                    for (int i = 1; i < result.size(); i++) {
-                        List<String> rowData = result.get(i);
+    public boolean batchImport(String fileName, MultipartFile file, HttpSession session) {
+        try {
+            if (fileName.endsWith(".xlsx")) {
+                List<MqmsProductionRaw> mqmsProductionRawList = new ArrayList<>();
+                List<MqmsProduction> mqmsProductionList = new ArrayList<>();
+                User user=(User)session.getAttribute("user");
+                SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
+                // 说明是xlsx文件,不过这里最好限制一下
+                List<List<String>> result = ExcelUtil.importXlsx(file.getInputStream());
+                //第0行为表头
+                for (int i = 1; i < result.size(); i++) {
+                    List<String> rowData = result.get(i);
 
-                        //利用反射遍历对属性赋值
-                        MqmsProductionRaw mqmsProductionRaw = new MqmsProductionRaw();
-                        Class cls = mqmsProductionRaw.getClass();
-                        Field[] fields = cls.getDeclaredFields();
-                        for (int j = 2; j < fields.length-3; j++) {
-                            Field f = fields[j];
-                            f.setAccessible(true);
-                            if (f.getType().equals(String.class)) {
-                                f.set(mqmsProductionRaw, rowData.get(j - 2));
-                            } else if (f.getType().equals(BigDecimal.class)) {
+                    //利用反射遍历对属性赋值
+                    MqmsProductionRaw mqmsProductionRaw = new MqmsProductionRaw();
+                    Class cls = mqmsProductionRaw.getClass();
+                    Field[] fields = cls.getDeclaredFields();
+                    for (int j = 2; j < fields.length-3; j++) {
+                        Field f = fields[j];
+                        f.setAccessible(true);
+                        if (f.getType().equals(String.class)) {
+                            f.set(mqmsProductionRaw, rowData.get(j - 2));
+                        } else if (f.getType().equals(BigDecimal.class)) {
 
-                                f.set(mqmsProductionRaw, new BigDecimal(rowData.get(j - 2)));
-                            } else if (f.getType().equals(Integer.class)) {
-                                //来自前面的坑，EXCEL导出整数变成字符多了小数点，例2838(Int),2838.0(String
-                                String str = rowData.get(j - 2);
-                                if (str.contains(".")) {
-                                    int indexOf = str.indexOf(".");
-                                    str = str.substring(0, indexOf);
-                                }
-                                f.set(mqmsProductionRaw, Integer.parseInt(str));
+                            f.set(mqmsProductionRaw, new BigDecimal(rowData.get(j - 2)));
+                        } else if (f.getType().equals(Integer.class)) {
+                            //来自前面的坑，EXCEL导出整数变成字符多了小数点，例2838(Int),2838.0(String
+                            String str = rowData.get(j - 2);
+                            if (str.contains(".")) {
+                                int indexOf = str.indexOf(".");
+                                str = str.substring(0, indexOf);
                             }
+                            f.set(mqmsProductionRaw, Integer.parseInt(str));
                         }
-                        mqmsProductionRawList.add(mqmsProductionRaw);
-                        //相同属性复制
-                        MqmsProduction mqmsProduction = new MqmsProduction();
-                        BeanUtils.copyProperties(mqmsProductionRaw, mqmsProduction);
+                        mqmsProductionRaw.setApplierId(user.getUserId());
+                        mqmsProductionRaw.setApplierName(user.getUserName());
+                        mqmsProductionRaw.setApplyTime(df.format(new Date()));
+                    }
+                    mqmsProductionRawList.add(mqmsProductionRaw);
+                    //相同属性复制
+                    MqmsProduction mqmsProduction = new MqmsProduction();
+                    BeanUtils.copyProperties(mqmsProductionRaw, mqmsProduction);
 //                    String shortCode = "";
 //                    if (mqmsProduction.getVin().length() <= 5) {
 //                        shortCode = mqmsProduction.getVin().toString();
@@ -153,35 +157,35 @@ public class ProductionServiceImpl implements ProductionService {
 //                        shortCode = mqmsProduction.getVin().substring(0, 5);
 //                    }
 //                    mqmsProduction.setShortCode(shortCode);
-                        mqmsProductionList.add(mqmsProduction);
-
-                    }
-                    for (MqmsProductionRaw mqmsProductionRawRecord : mqmsProductionRawList) {
-                        String vin = mqmsProductionRawRecord.getVin();
-                        int cnt = mqmsProductionRawMapper.selectByVin(vin);
-                        if (cnt == 0) {
-                            mqmsProductionRawMapper.insertMqmsProductionRaw(mqmsProductionRawRecord);
-//                        System.out.println(" 插入 " + mqmsProductionRawRecord);
-                        } else {
-                            mqmsProductionRawMapper.updateByVin(mqmsProductionRawRecord);
-//                        System.out.println(" 更新 " + mqmsProductionRawRecord);
-                        }
-                    }
-                    ThreadFactory threadFactory = new ThreadFactoryBuilder().setNameFormat("sendEmailImmediately-pool-%d").build();
-                    ExecutorService executorService = new ThreadPoolExecutor(2, 4, 1000, TimeUnit.MILLISECONDS, new SynchronousQueue<Runnable>(), threadFactory, new ThreadPoolExecutor.AbortPolicy());
-                    //使用线程池
-                    ImportCall importCall = new ImportCall();
-                    executorService.execute(importCall);
-                    //构造函数传参
-                    importCall.setMqmsProductionList(mqmsProductionList);
+                    mqmsProductionList.add(mqmsProduction);
 
                 }
-                return true;
-            } catch (Exception e) {
-                e.printStackTrace();
-                return false;
-            }
+                for (MqmsProductionRaw mqmsProductionRawRecord : mqmsProductionRawList) {
+                    String vin = mqmsProductionRawRecord.getVin();
+                    int cnt = mqmsProductionRawMapper.selectByVin(vin);
+                    if (cnt == 0) {
+                        mqmsProductionRawMapper.insertMqmsProductionRaw(mqmsProductionRawRecord);
+//                        System.out.println(" 插入 " + mqmsProductionRawRecord);
+                    } else {
+                        mqmsProductionRawMapper.updateByVin(mqmsProductionRawRecord);
+//                        System.out.println(" 更新 " + mqmsProductionRawRecord);
+                    }
+                }
+                ThreadFactory threadFactory = new ThreadFactoryBuilder().setNameFormat("sendEmailImmediately-pool-%d").build();
+                ExecutorService executorService = new ThreadPoolExecutor(2, 4, 1000, TimeUnit.MILLISECONDS, new SynchronousQueue<Runnable>(), threadFactory, new ThreadPoolExecutor.AbortPolicy());
+                //使用线程池
+                ImportCall importCall = new ImportCall();
+                executorService.execute(importCall);
+                //构造函数传参
+                importCall.setMqmsProductionList(mqmsProductionList);
 
+            }
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
         }
+
     }
+}
 

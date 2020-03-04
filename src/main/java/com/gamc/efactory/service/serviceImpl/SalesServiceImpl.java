@@ -3,10 +3,7 @@ package com.gamc.efactory.service.serviceImpl;
 
 import com.gamc.efactory.dao.*;
 
-import com.gamc.efactory.model.dataObject.MqmsProduction;
-import com.gamc.efactory.model.dataObject.MqmsSales;
-import com.gamc.efactory.model.dataObject.MqmsSalesRaw;
-import com.gamc.efactory.model.dataObject.MqmsVinDecode;
+import com.gamc.efactory.model.dataObject.*;
 import com.gamc.efactory.service.SalesService;
 import com.gamc.efactory.util.ExcelUtil;
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
@@ -17,9 +14,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpSession;
 import java.lang.reflect.Field;
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.*;
@@ -115,11 +115,13 @@ public class SalesServiceImpl implements SalesService {
             }
         }
     }
-    public boolean batchImport(String fileName, MultipartFile file) {
+    public boolean batchImport(String fileName, MultipartFile file ,HttpSession session) {
         try {
             if ((fileName.endsWith(".xlsx")||fileName.endsWith(".xls"))) {
                 List<MqmsSalesRaw> mqmsSalesRawList = new ArrayList<>();
                 List<MqmsSales> mqmsSalesList= new ArrayList<>();
+                User user=(User)session.getAttribute("user");
+                SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
                 // 说明是xlsx文件,不过这里最好限制一下
                 List<List<String>> result = ExcelUtil.importXlsx(file.getInputStream());
                 //第0行为表头
@@ -148,6 +150,9 @@ public class SalesServiceImpl implements SalesService {
                             }
                             f.set(mqmsSalesRaw, Integer.parseInt(str));
                         }
+                        mqmsSalesRaw.setApplierId(user.getUserId());
+                        mqmsSalesRaw.setApplierName(user.getUserName());
+                        mqmsSalesRaw.setApplyTime(df.format(new Date()));
                     }
                     mqmsSalesRawList.add(mqmsSalesRaw);
                     //相同属性复制

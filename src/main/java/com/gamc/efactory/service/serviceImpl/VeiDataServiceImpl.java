@@ -52,8 +52,8 @@ public class VeiDataServiceImpl implements VeiDataService {
     private MqmsFaultDecodeMapper mqmsFaultDecodeMapper;
 
     Logger logger = LoggerFactory.getLogger(VeiDataServiceImpl.class);
-    //构造函数传递session
-    SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
+
+
 
     private class ImportCall implements Runnable {
         //构造函数传递参数
@@ -69,15 +69,7 @@ public class VeiDataServiceImpl implements VeiDataService {
         @Override
         public void run() {
 
-//            HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
-
-
-
             for (MqmsVoucher mqmsVoucherRecord : mqmsVoucherList) {
-
-//                mqmsVoucherRecord.setApplierId((User) request.getSession().getAttribute("user"); )
-//                mqmsVoucherRecord.setApplierName((String) session.getAttribute("user"));
-                mqmsVoucherRecord.setApplyTime(df.format(new Date()));
 
                 //接收区间
                 if (mqmsVoucherRecord.getSubmitDate()!="") {
@@ -100,7 +92,7 @@ public class VeiDataServiceImpl implements VeiDataService {
                 mqmsVoucherRecord.setEngType(mqmsVinDecodeMapper.vinDecode(vinShortCOde).getVinEngShortCode());
                 mqmsVoucherRecord.setCarModel(mqmsVinDecodeMapper.vinDecode(vinShortCOde).getVinCarType());
                 //变速箱类型暂时空着
-//                mqmsVoucherRecord.setTransmissionCodeRe("");
+                mqmsVoucherRecord.setTransmissionCodeRe("");
 
                 //变速箱机型
                 if(StringUtil.isNotEmpty(mqmsVoucherRecord.getTransmissionCode())){
@@ -114,7 +106,7 @@ public class VeiDataServiceImpl implements VeiDataService {
                     mqmsVoucherRecord.setTranTypeDetail(mqmsTranProductionDecodeMapper.selectTranProductionCode(trsmType));
                     //变速箱生产厂家
                     mqmsVoucherRecord.setTransmissionManufacturer(mqmsTranManufacturesDecodeMapper.selectTranManufacture(trsmManufacture));
-                   //变速箱生产日期
+                    //变速箱生产日期
                     String trsmProMonth = Integer.toString(Integer.parseInt(trsmProMonthHex, 16), 10);
                     if (trsmProMonth.length() < 2) {
                         trsmProMonth = "0" + trsmProMonth;
@@ -126,10 +118,10 @@ public class VeiDataServiceImpl implements VeiDataService {
                     //变速箱生产至确认经过月
                     int proFailureMonths = 0;
                     try {
-                    System.out.println(mqmsVoucherRecord.getTransmissionProductionData());
-                    System.out.println(mqmsVoucherRecord.getConfirmDate());
+                        System.out.println(mqmsVoucherRecord.getTransmissionProductionData());
+                        System.out.println(mqmsVoucherRecord.getConfirmDate());
                         proFailureMonths = MqmsUtil.getMonth(mqmsVoucherRecord.getTransmissionProductionData(), mqmsVoucherRecord.getConfirmDate());
-                    System.out.println(proFailureMonths);
+                        System.out.println(proFailureMonths);
 
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -178,11 +170,13 @@ public class VeiDataServiceImpl implements VeiDataService {
     }
 
 
-    public boolean batchImport(String fileName, MultipartFile file) {
+    public boolean batchImport(String fileName, MultipartFile file,HttpSession session) {
         try {
             if (fileName.endsWith(".xlsx") || fileName.endsWith(".xls")) {
                 List<MqmsVoucherRaw> mqmsVoucherRawList = new ArrayList<>();
                 List<MqmsVoucher> mqmsVoucherList = new ArrayList<>();
+                User user=(User)session.getAttribute("user");
+                SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
                 // 说明是xlsx文件,不过这里最好限制一下
                 List<List<String>> result = ExcelUtil.importXlsx(file.getInputStream());
                 //第0行为表头
@@ -214,6 +208,9 @@ public class VeiDataServiceImpl implements VeiDataService {
                             }
                             f.set(mqmsVoucherRaw, Integer.parseInt(str));
                         }
+                        mqmsVoucherRaw.setApplierId(user.getUserId());
+                        mqmsVoucherRaw.setApplierName(user.getUserName());
+                        mqmsVoucherRaw.setApplyTime(df.format(new Date()));
                     }
 
                     mqmsVoucherRawList.add(mqmsVoucherRaw);
@@ -274,10 +271,8 @@ public class VeiDataServiceImpl implements VeiDataService {
 
 
                 for (MqmsVoucherRaw mqmsVoucherRawRecord : mqmsVoucherRawList) {
-//                    System.out.println(session.getAttribute("user"));
-//                    mqmsVoucherRawRecord.setApplierId((Integer) session.getAttribute("userId"));
-//                    mqmsVoucherRawRecord.setApplierName((String) session.getAttribute("user"));
-                    mqmsVoucherRawRecord.setApplyTime(df.format(new Date()));
+
+
                     String voucherCode = mqmsVoucherRawRecord.getVoucherCode();
                     int cnt = mqmsVoucherRawMapper.selectByVoucherCode(voucherCode);
                     if (cnt == 0) {
@@ -286,13 +281,14 @@ public class VeiDataServiceImpl implements VeiDataService {
                         mqmsVoucherRawMapper.updateMqmsVoucherRaw(mqmsVoucherRawRecord);
                         System.out.println(" 更新 " + mqmsVoucherRawRecord);
                     }
-                    ThreadFactory threadFactory = new ThreadFactoryBuilder().setNameFormat("sendEmailImmediately-pool-%d").build();
-                    ExecutorService executorService = new ThreadPoolExecutor(2, 4, 1000, TimeUnit.MILLISECONDS, new SynchronousQueue<Runnable>(), threadFactory, new ThreadPoolExecutor.AbortPolicy());
-                    //使用线程池
-                    ImportCall importCall = new ImportCall();
-                    executorService.execute(importCall);
-                    //构造函数传参
-                    importCall.setMqmsVoucherList(mqmsVoucherList);
+                }
+                ThreadFactory threadFactory = new ThreadFactoryBuilder().setNameFormat("sendEmailImmediately-pool-%d").build();
+                ExecutorService executorService = new ThreadPoolExecutor(2, 4, 1000, TimeUnit.MILLISECONDS, new SynchronousQueue<Runnable>(), threadFactory, new ThreadPoolExecutor.AbortPolicy());
+                //使用线程池
+                ImportCall importCall = new ImportCall();
+                executorService.execute(importCall);
+                //构造函数传参
+                importCall.setMqmsVoucherList(mqmsVoucherList);
 
 
 //                for(MqmsVoucher mqmsVoucherRecord:mqmsVoucherList){
@@ -305,7 +301,7 @@ public class VeiDataServiceImpl implements VeiDataService {
 //                        mqmsVoucherMapper.updateByQualityFeedbackCode(mqmsVoucherRecord);
 //                        System.out.println(" 更新 "+mqmsVoucherRecord);
 //                    }
-                }
+
             }
             return true;
         } catch (Exception e) {
