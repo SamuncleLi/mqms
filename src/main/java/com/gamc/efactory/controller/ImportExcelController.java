@@ -118,6 +118,7 @@ public class ImportExcelController {
         boolean a = false;
 
         String fileName = file.getOriginalFilename();
+        System.out.println("111111111111111111111111111111111111111111");
 //        System.out.println(fileName);
 
         try {
@@ -136,7 +137,7 @@ public class ImportExcelController {
         boolean a = false;
 
         String fileName = file.getOriginalFilename();
-//        System.out.println(fileName);
+//        System.out.println((User)session.getAttribute("user"));
 
         try {
             a = salesPointService.batchImport(fileName, file);

@@ -23,12 +23,14 @@ CREATE TABLE `mqms_sales` (
   `sales_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '销售数据id',
   `vin_code` varchar(255) DEFAULT NULL COMMENT 'vin码',
   `sales_car_type` varchar(255) DEFAULT NULL COMMENT '销售系统车型',
-  `sales_state` varchar(255) DEFAULT NULL COMMENT '销售系统状态',
+  `sales_car_type_detail` varchar(255) DEFAULT NULL COMMENT '车型细分',
+  `sales_car_type_cn` varchar(255) DEFAULT NULL COMMENT '车型中文名',
   `dealer_code` varchar(255) DEFAULT NULL COMMENT '经销商编号',
   `dealer_name` varchar(255) DEFAULT NULL COMMENT '经销商名称',
   `produce_date` varchar(255) DEFAULT NULL COMMENT '生产日期',
   `first_pin_date` varchar(255) DEFAULT NULL COMMENT '一次实销日期',
   `second_pin_date` varchar(255) DEFAULT NULL COMMENT '二次实销日期',
+  `state` varchar(255) DEFAULT NULL COMMENT '状态',
   `mtoc` varchar(255) DEFAULT NULL COMMENT 'MTOC',
   `car_type` varchar(255) DEFAULT NULL COMMENT '车型',
   `transmission_code` varchar(255) DEFAULT NULL COMMENT '变速箱号',
@@ -50,4 +52,4 @@ CREATE TABLE `mqms_sales` (
   `applier_name` varchar(255) DEFAULT NULL,
   `apply_time` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`sales_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=153 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8;

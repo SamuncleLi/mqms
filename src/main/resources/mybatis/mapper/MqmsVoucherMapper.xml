@@ -2,91 +2,6 @@
 <!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.gamc.efactory.dao.MqmsVoucherMapper">
-    <resultMap type="com.gamc.efactory.model.dataObject.MqmsVoucher" id="MqmsVoucherMap">
-        <result property="voucherId" column="voucher_id"/>
-        <result property="voucherCode" column="voucher_code"/>
-        <result property="claimCode" column="claim_code"/>
-        <result property="dealerCode" column="dealer_code"/>
-        <result property="dealerName" column="dealer_name"/>
-        <result property="dealerShortName" column="dealer_short_name"/>
-        <result property="theme" column="theme"/>
-        <result property="vinCode" column="vin_code"/>
-        <result property="vehicleType" column="vehicle_type"/>
-        <result property="productionCode" column="production_code"/>
-        <result property="partsCode" column="parts_code"/>
-        <result property="partsName" column="parts_name"/>
-        <result property="divisionLevel1" column="division_level_1"/>
-        <result property="divisionLevel2" column="division_level_2"/>
-        <result property="divisionLevel3" column="division_level_3"/>
-        <result property="partsAndSymptom" column="parts_and_symptom"/>
-        <result property="offlineDate" column="offline_date"/>
-        <result property="salesDate" column="sales_date"/>
-        <result property="failureDate" column="failure_date"/>
-        <result property="mileage" column="mileage"/>
-        <result property="confirmDate" column="confirm_date"/>
-        <result property="warehousingDate" column="warehousing_date"/>
-        <result property="transportDate" column="transport_date"/>
-        <result property="shopArrivalDate" column="shop_arrival_date"/>
-        <result property="salesFailureTime" column="sales_failure_time"/>
-        <result property="failureDesc" column="failure_desc"/>
-        <result property="diagnosticResult" column="diagnostic_result"/>
-        <result property="manCost" column="man_cost"/>
-        <result property="materialCost" column="material_cost"/>
-        <result property="materialManagementCost" column="material_management_cost"/>
-        <result property="goOutCost" column="go_out_cost"/>
-        <result property="maintainingCost" column="maintaining_cost"/>
-        <result property="otherCost" column="other_cost"/>
-        <result property="totalCost" column="total_cost"/>
-        <result property="importantLevel" column="important_level"/>
-        <result property="transmissionType" column="transmission_type"/>
-        <result property="newPartsBond" column="new_parts_bond"/>
-        <result property="submitDate" column="submit_date"/>
-        <result property="egtypeCode" column="egtype_code"/>
-        <result property="engProductionDate" column="eng_production_date"/>
-        <result property="transmissionCode" column="transmission_code"/>
-        <result property="transmissionProductionDate" column="transmission_production_date"/>
-        <result property="engArrange" column="eng_arrange"/>
-        <result property="carModel" column="car_model"/>
-        <result property="engType" column="eng_type"/>
-        <result property="receiveTime" column="receive_time"/>
-        <result property="claimCompensation" column="claim_compensation"/>
-        <result property="productionRawDescription" column="production_raw_description"/>
-        <result property="PDI" column="PDI"/>
-        <result property="offlineFailureTime" column="offline_failure_time"/>
-        <result property="engOrTran" column="eng_or_tran"/>
-        <result property="carSeriesCode" column="car_series_code"/>
-        <result property="shortCode" column="short_code"/>
-        <result property="faultCodeClassification" column="fault_code_classification"/>
-        <result property="failureYear" column="failure_year"/>
-        <result property="failureMonth" column="failure_month"/>
-        <result property="transmissionShortCode" column="transmission_short_code"/>
-        <result property="mileageDistribution" column="mileage_distribution"/>
-        <result property="returnRequest" column="return_request"/>
-        <result property="returnDate" column="return_date"/>
-        <result property="arriveDate" column="arrive_date"/>
-        <result property="loadingVerification" column="loading_verification"/>
-        <result property="faultReconstructioner" column="fault_reconstructioner"/>
-        <result property="loadingDate" column="loading_date"/>
-        <result property="faultReconstruction" column="fault_reconstruction"/>
-        <result property="faultReconstructionDate" column="fault_reconstruction_date"/>
-        <result property="transferDate1" column="transfer_date1"/>
-        <result property="responsible1" column="responsible1"/>
-        <result property="transferDate2" column="transfer_date2"/>
-        <result property="responsible2" column="responsible2"/>
-        <result property="estimateMeetingDate" column="estimate_meeting_date"/>
-        <result property="submitReport" column="submit_report"/>
-        <result property="reason" column="reason"/>
-        <result property="countermeasure" column="countermeasure"/>
-        <result property="reportSubmit" column="report_submit"/>
-        <result property="claimIndemnity" column="claim_indemnity"/>
-        <result property="questionType" column="question_type"/>
-        <result property="questionState" column="question_state"/>
-        <result property="responsibleDepartment" column="responsible_department"/>
-        <result property="applierId" column="applier_id"/>
-        <result property="applierName" column="applier_name"/>
-        <result property="applyTime" column="apply_time"/>
-    </resultMap>
-
     <select id="selectEngTypeCount"  resultType="java.lang.Integer" >
         SELECT COUNT(*) FROM `mqms_voucher`
         WHERE  `eng_type` = #{eng_type} AND  `confirm_date` LIKE  concat(#{confirm_date},'%')
@@ -219,14 +134,8 @@
             <if test="egtypeCode != null and egtypeCode!=''">
                 `egtype_code` = #{egtypeCode},
             </if>
-            <if test="engProductionDate != null and engProductionDate!=''">
-                `eng_production_date` = #{engProductionDate},
-            </if>
             <if test="transmissionCode != null and transmissionCode!=''">
                 `transmission_code` = #{transmissionCode},
-            </if>
-            <if test="transmissionProductionDate != null and transmissionProductionDate!=''">
-                `transmission_production_date` = #{transmissionProductionDate},
             </if>
             <if test="engArrange != null and engArrange!=''">
                 `eng_arrange` = #{engArrange},
@@ -236,6 +145,15 @@
             </if>
             <if test="engType != null and engType!=''">
                 `eng_type` = #{engType},
+            </if>
+            <if test="transmissionCodeRe != null and transmissionCodeRe!=''">
+                `transmission_code_re` = #{transmissionCodeRe},
+            </if>
+            <if test="tranTypeDetail != null and tranTypeDetail!=''">
+                `tran_type_detail` = #{tranTypeDetail},
+            </if>
+            <if test="transmissionManufacturer != null and transmissionManufacturer!=''">
+                `transmission_manufacturer` = #{transmissionManufacturer},
             </if>
             <if test="receiveTime != null and receiveTime!=''">
                 `receive_time` = #{receiveTime},
@@ -252,17 +170,20 @@
             <if test="offlineFailureTime != null">
                 `offline_failure_time` = #{offlineFailureTime},
             </if>
+            <if test="transmissionComfirmTime != null and transmissionComfirmTime!=''">
+                `transmission_comfirm_time` = #{transmissionComfirmTime},
+            </if>
             <if test="engOrTran != null and engOrTran!=''">
                 `eng_or_tran` = #{engOrTran},
-            </if>
-            <if test="carSeriesCode != null and carSeriesCode!=''">
-                `car_series_code` = #{carSeriesCode},
             </if>
             <if test="shortCode != null and shortCode!=''">
                 `short_code` = #{shortCode},
             </if>
             <if test="faultCodeClassification != null and faultCodeClassification!=''">
                 `fault_code_classification` = #{faultCodeClassification},
+            </if>
+            <if test="transmissionProductionData != null and transmissionProductionData!=''">
+                `transmission_production_data` = #{transmissionProductionData},
             </if>
             <if test="failureYear != null and failureYear!=''">
                 `failure_year` = #{failureYear},
@@ -276,77 +197,23 @@
             <if test="mileageDistribution != null and mileageDistribution!=''">
                 `mileage_distribution` = #{mileageDistribution},
             </if>
-            <if test="returnRequest != null and returnRequest!=''">
-                `return_request` = #{returnRequest},
+            <if test="trackBeginer != null and trackBeginer!=''">
+                `track_beginer` = #{trackBeginer},
             </if>
-            <if test="returnDate != null and returnDate!=''">
-                `return_date` = #{returnDate},
+            <if test="trackBeginTime != null and trackBeginTime!=''">
+                `track_begin_time` = #{trackBeginTime},
             </if>
-            <if test="arriveDate != null and arriveDate!=''">
-                `arrive_date` = #{arriveDate},
+            <if test="deliveryPerson != null and deliveryPerson!=''">
+                `delivery_person` = #{deliveryPerson},
             </if>
-            <if test="loadingVerification != null and loadingVerification!=''">
-                `loading_verification` = #{loadingVerification},
+            <if test="deliveryDeadline != null and deliveryDeadline!=''">
+                `delivery_deadline` = #{deliveryDeadline},
             </if>
-            <if test="faultReconstructioner != null and faultReconstructioner!=''">
-                `fault_reconstructioner` = #{faultReconstructioner},
+            <if test="deliveryReceivedDate != null and deliveryReceivedDate!=''">
+                `delivery_received_date` = #{deliveryReceivedDate},
             </if>
-            <if test="loadingDate != null and loadingDate!=''">
-                `loading_date` = #{loadingDate},
-            </if>
-            <if test="faultReconstruction != null and faultReconstruction!=''">
-                `fault_reconstruction` = #{faultReconstruction},
-            </if>
-            <if test="faultReconstructionDate != null and faultReconstructionDate!=''">
-                `fault_reconstruction_date` = #{faultReconstructionDate},
-            </if>
-            <if test="transferDate1 != null and transferDate1!=''">
-                `transfer_date1` = #{transferDate1},
-            </if>
-            <if test="responsible1 != null and responsible1!=''">
-                `responsible1` = #{responsible1},
-            </if>
-            <if test="transferDate2 != null and transferDate2!=''">
-                `transfer_date2` = #{transferDate2},
-            </if>
-            <if test="responsible2 != null and responsible2!=''">
-                `responsible2` = #{responsible2},
-            </if>
-            <if test="estimateMeetingDate != null and estimateMeetingDate!=''">
-                `estimate_meeting_date` = #{estimateMeetingDate},
-            </if>
-            <if test="submitReport != null and submitReport!=''">
-                `submit_report` = #{submitReport},
-            </if>
-            <if test="reason != null and reason!=''">
-                `reason` = #{reason},
-            </if>
-            <if test="countermeasure != null and countermeasure!=''">
-                `countermeasure` = #{countermeasure},
-            </if>
-            <if test="reportSubmit != null and reportSubmit!=''">
-                `report_submit` = #{reportSubmit},
-            </if>
-            <if test="claimIndemnity != null and claimIndemnity!=''">
-                `claim_indemnity` = #{claimIndemnity},
-            </if>
-            <if test="questionType != null and questionType!=''">
-                `question_type` = #{questionType},
-            </if>
-            <if test="questionState != null and questionState!=''">
-                `question_state` = #{questionState},
-            </if>
-            <if test="responsibleDepartment != null and responsibleDepartment!=''">
-                `responsible_department` = #{responsibleDepartment},
-            </if>
-            <if test="applierId != null">
-                `applier_id` = #{applierId},
-            </if>
-            <if test="applierName != null and applierName!=''">
-                `applier_name` = #{applierName},
-            </if>
-            <if test="applyTime != null and applyTime!=''">
-                `apply_time` = #{applyTime},
+            <if test="failureTrackId != null">
+                `failure_track_id` = #{failureTrackId},
             </if>
         </trim>
         WHERE

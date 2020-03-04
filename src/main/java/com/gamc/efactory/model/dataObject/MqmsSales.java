@@ -10,7 +10,7 @@ import java.util.List;
 */
 public class MqmsSales implements Serializable {
 
-    private static final long serialVersionUID = 1583227518865L;
+    private static final long serialVersionUID = 1583286343045L;
 
 
     /**
@@ -33,10 +33,16 @@ public class MqmsSales implements Serializable {
     private String salesCarType;
 
     /**
-    * 销售系统状态
+    * 车型细分
     * isNullAble:1
     */
-    private String salesState;
+    private String salesCarTypeDetail;
+
+    /**
+    * 车型中文名
+    * isNullAble:1
+    */
+    private String salesCarTypeCn;
 
     /**
     * 经销商编号
@@ -67,6 +73,12 @@ public class MqmsSales implements Serializable {
     * isNullAble:1
     */
     private String secondPinDate;
+
+    /**
+    * 状态
+    * isNullAble:1
+    */
+    private String state;
 
     /**
     * MTOC
@@ -201,9 +213,13 @@ public class MqmsSales implements Serializable {
 
     public String getSalesCarType(){return this.salesCarType;}
 
-    public void setSalesState(String salesState){this.salesState = salesState;}
+    public void setSalesCarTypeDetail(String salesCarTypeDetail){this.salesCarTypeDetail = salesCarTypeDetail;}
 
-    public String getSalesState(){return this.salesState;}
+    public String getSalesCarTypeDetail(){return this.salesCarTypeDetail;}
+
+    public void setSalesCarTypeCn(String salesCarTypeCn){this.salesCarTypeCn = salesCarTypeCn;}
+
+    public String getSalesCarTypeCn(){return this.salesCarTypeCn;}
 
     public void setDealerCode(String dealerCode){this.dealerCode = dealerCode;}
 
@@ -224,6 +240,10 @@ public class MqmsSales implements Serializable {
     public void setSecondPinDate(String secondPinDate){this.secondPinDate = secondPinDate;}
 
     public String getSecondPinDate(){return this.secondPinDate;}
+
+    public void setState(String state){this.state = state;}
+
+    public String getState(){return this.state;}
 
     public void setMtoc(String mtoc){this.mtoc = mtoc;}
 
@@ -310,12 +330,14 @@ public class MqmsSales implements Serializable {
                 "salesId='" + salesId + '\'' +
                 "vinCode='" + vinCode + '\'' +
                 "salesCarType='" + salesCarType + '\'' +
-                "salesState='" + salesState + '\'' +
+                "salesCarTypeDetail='" + salesCarTypeDetail + '\'' +
+                "salesCarTypeCn='" + salesCarTypeCn + '\'' +
                 "dealerCode='" + dealerCode + '\'' +
                 "dealerName='" + dealerName + '\'' +
                 "produceDate='" + produceDate + '\'' +
                 "firstPinDate='" + firstPinDate + '\'' +
                 "secondPinDate='" + secondPinDate + '\'' +
+                "state='" + state + '\'' +
                 "mtoc='" + mtoc + '\'' +
                 "carType='" + carType + '\'' +
                 "transmissionCode='" + transmissionCode + '\'' +
@@ -420,18 +442,30 @@ public class MqmsSales implements Serializable {
         private List<String> rightFuzzySalesCarType;
 
         public List<String> getRightFuzzySalesCarType(){return this.rightFuzzySalesCarType;}
-        private List<String> salesStateList;
+        private List<String> salesCarTypeDetailList;
 
-        public List<String> getSalesStateList(){return this.salesStateList;}
+        public List<String> getSalesCarTypeDetailList(){return this.salesCarTypeDetailList;}
 
 
-        private List<String> fuzzySalesState;
+        private List<String> fuzzySalesCarTypeDetail;
 
-        public List<String> getFuzzySalesState(){return this.fuzzySalesState;}
+        public List<String> getFuzzySalesCarTypeDetail(){return this.fuzzySalesCarTypeDetail;}
 
-        private List<String> rightFuzzySalesState;
+        private List<String> rightFuzzySalesCarTypeDetail;
 
-        public List<String> getRightFuzzySalesState(){return this.rightFuzzySalesState;}
+        public List<String> getRightFuzzySalesCarTypeDetail(){return this.rightFuzzySalesCarTypeDetail;}
+        private List<String> salesCarTypeCnList;
+
+        public List<String> getSalesCarTypeCnList(){return this.salesCarTypeCnList;}
+
+
+        private List<String> fuzzySalesCarTypeCn;
+
+        public List<String> getFuzzySalesCarTypeCn(){return this.fuzzySalesCarTypeCn;}
+
+        private List<String> rightFuzzySalesCarTypeCn;
+
+        public List<String> getRightFuzzySalesCarTypeCn(){return this.rightFuzzySalesCarTypeCn;}
         private List<String> dealerCodeList;
 
         public List<String> getDealerCodeList(){return this.dealerCodeList;}
@@ -492,6 +526,18 @@ public class MqmsSales implements Serializable {
         private List<String> rightFuzzySecondPinDate;
 
         public List<String> getRightFuzzySecondPinDate(){return this.rightFuzzySecondPinDate;}
+        private List<String> stateList;
+
+        public List<String> getStateList(){return this.stateList;}
+
+
+        private List<String> fuzzyState;
+
+        public List<String> getFuzzyState(){return this.fuzzyState;}
+
+        private List<String> rightFuzzyState;
+
+        public List<String> getRightFuzzyState(){return this.rightFuzzyState;}
         private List<String> mtocList;
 
         public List<String> getMtocList(){return this.mtocList;}
@@ -867,48 +913,93 @@ public class MqmsSales implements Serializable {
             return this;
         }
 
-        public QueryBuilder fuzzySalesState (List<String> fuzzySalesState){
-            this.fuzzySalesState = fuzzySalesState;
+        public QueryBuilder fuzzySalesCarTypeDetail (List<String> fuzzySalesCarTypeDetail){
+            this.fuzzySalesCarTypeDetail = fuzzySalesCarTypeDetail;
             return this;
         }
 
-        public QueryBuilder fuzzySalesState (String ... fuzzySalesState){
-            this.fuzzySalesState = solveNullList(fuzzySalesState);
+        public QueryBuilder fuzzySalesCarTypeDetail (String ... fuzzySalesCarTypeDetail){
+            this.fuzzySalesCarTypeDetail = solveNullList(fuzzySalesCarTypeDetail);
             return this;
         }
 
-        public QueryBuilder rightFuzzySalesState (List<String> rightFuzzySalesState){
-            this.rightFuzzySalesState = rightFuzzySalesState;
+        public QueryBuilder rightFuzzySalesCarTypeDetail (List<String> rightFuzzySalesCarTypeDetail){
+            this.rightFuzzySalesCarTypeDetail = rightFuzzySalesCarTypeDetail;
             return this;
         }
 
-        public QueryBuilder rightFuzzySalesState (String ... rightFuzzySalesState){
-            this.rightFuzzySalesState = solveNullList(rightFuzzySalesState);
+        public QueryBuilder rightFuzzySalesCarTypeDetail (String ... rightFuzzySalesCarTypeDetail){
+            this.rightFuzzySalesCarTypeDetail = solveNullList(rightFuzzySalesCarTypeDetail);
             return this;
         }
 
-        public QueryBuilder salesState(String salesState){
-            setSalesState(salesState);
+        public QueryBuilder salesCarTypeDetail(String salesCarTypeDetail){
+            setSalesCarTypeDetail(salesCarTypeDetail);
             return this;
         }
 
-        public QueryBuilder salesStateList(String ... salesState){
-            this.salesStateList = solveNullList(salesState);
+        public QueryBuilder salesCarTypeDetailList(String ... salesCarTypeDetail){
+            this.salesCarTypeDetailList = solveNullList(salesCarTypeDetail);
             return this;
         }
 
-        public QueryBuilder salesStateList(List<String> salesState){
-            this.salesStateList = salesState;
+        public QueryBuilder salesCarTypeDetailList(List<String> salesCarTypeDetail){
+            this.salesCarTypeDetailList = salesCarTypeDetail;
             return this;
         }
 
-        public QueryBuilder fetchSalesState(){
-            setFetchFields("fetchFields","salesState");
+        public QueryBuilder fetchSalesCarTypeDetail(){
+            setFetchFields("fetchFields","salesCarTypeDetail");
             return this;
         }
 
-        public QueryBuilder excludeSalesState(){
-            setFetchFields("excludeFields","salesState");
+        public QueryBuilder excludeSalesCarTypeDetail(){
+            setFetchFields("excludeFields","salesCarTypeDetail");
+            return this;
+        }
+
+        public QueryBuilder fuzzySalesCarTypeCn (List<String> fuzzySalesCarTypeCn){
+            this.fuzzySalesCarTypeCn = fuzzySalesCarTypeCn;
+            return this;
+        }
+
+        public QueryBuilder fuzzySalesCarTypeCn (String ... fuzzySalesCarTypeCn){
+            this.fuzzySalesCarTypeCn = solveNullList(fuzzySalesCarTypeCn);
+            return this;
+        }
+
+        public QueryBuilder rightFuzzySalesCarTypeCn (List<String> rightFuzzySalesCarTypeCn){
+            this.rightFuzzySalesCarTypeCn = rightFuzzySalesCarTypeCn;
+            return this;
+        }
+
+        public QueryBuilder rightFuzzySalesCarTypeCn (String ... rightFuzzySalesCarTypeCn){
+            this.rightFuzzySalesCarTypeCn = solveNullList(rightFuzzySalesCarTypeCn);
+            return this;
+        }
+
+        public QueryBuilder salesCarTypeCn(String salesCarTypeCn){
+            setSalesCarTypeCn(salesCarTypeCn);
+            return this;
+        }
+
+        public QueryBuilder salesCarTypeCnList(String ... salesCarTypeCn){
+            this.salesCarTypeCnList = solveNullList(salesCarTypeCn);
+            return this;
+        }
+
+        public QueryBuilder salesCarTypeCnList(List<String> salesCarTypeCn){
+            this.salesCarTypeCnList = salesCarTypeCn;
+            return this;
+        }
+
+        public QueryBuilder fetchSalesCarTypeCn(){
+            setFetchFields("fetchFields","salesCarTypeCn");
+            return this;
+        }
+
+        public QueryBuilder excludeSalesCarTypeCn(){
+            setFetchFields("excludeFields","salesCarTypeCn");
             return this;
         }
 
@@ -1134,6 +1225,51 @@ public class MqmsSales implements Serializable {
 
         public QueryBuilder excludeSecondPinDate(){
             setFetchFields("excludeFields","secondPinDate");
+            return this;
+        }
+
+        public QueryBuilder fuzzyState (List<String> fuzzyState){
+            this.fuzzyState = fuzzyState;
+            return this;
+        }
+
+        public QueryBuilder fuzzyState (String ... fuzzyState){
+            this.fuzzyState = solveNullList(fuzzyState);
+            return this;
+        }
+
+        public QueryBuilder rightFuzzyState (List<String> rightFuzzyState){
+            this.rightFuzzyState = rightFuzzyState;
+            return this;
+        }
+
+        public QueryBuilder rightFuzzyState (String ... rightFuzzyState){
+            this.rightFuzzyState = solveNullList(rightFuzzyState);
+            return this;
+        }
+
+        public QueryBuilder state(String state){
+            setState(state);
+            return this;
+        }
+
+        public QueryBuilder stateList(String ... state){
+            this.stateList = solveNullList(state);
+            return this;
+        }
+
+        public QueryBuilder stateList(List<String> state){
+            this.stateList = state;
+            return this;
+        }
+
+        public QueryBuilder fetchState(){
+            setFetchFields("fetchFields","state");
+            return this;
+        }
+
+        public QueryBuilder excludeState(){
+            setFetchFields("excludeFields","state");
             return this;
         }
 
@@ -2111,18 +2247,30 @@ public class MqmsSales implements Serializable {
         private List<String> rightFuzzySalesCarType;
 
         public List<String> getRightFuzzySalesCarType(){return this.rightFuzzySalesCarType;}
-        private List<String> salesStateList;
+        private List<String> salesCarTypeDetailList;
 
-        public List<String> getSalesStateList(){return this.salesStateList;}
+        public List<String> getSalesCarTypeDetailList(){return this.salesCarTypeDetailList;}
 
 
-        private List<String> fuzzySalesState;
+        private List<String> fuzzySalesCarTypeDetail;
 
-        public List<String> getFuzzySalesState(){return this.fuzzySalesState;}
+        public List<String> getFuzzySalesCarTypeDetail(){return this.fuzzySalesCarTypeDetail;}
 
-        private List<String> rightFuzzySalesState;
+        private List<String> rightFuzzySalesCarTypeDetail;
 
-        public List<String> getRightFuzzySalesState(){return this.rightFuzzySalesState;}
+        public List<String> getRightFuzzySalesCarTypeDetail(){return this.rightFuzzySalesCarTypeDetail;}
+        private List<String> salesCarTypeCnList;
+
+        public List<String> getSalesCarTypeCnList(){return this.salesCarTypeCnList;}
+
+
+        private List<String> fuzzySalesCarTypeCn;
+
+        public List<String> getFuzzySalesCarTypeCn(){return this.fuzzySalesCarTypeCn;}
+
+        private List<String> rightFuzzySalesCarTypeCn;
+
+        public List<String> getRightFuzzySalesCarTypeCn(){return this.rightFuzzySalesCarTypeCn;}
         private List<String> dealerCodeList;
 
         public List<String> getDealerCodeList(){return this.dealerCodeList;}
@@ -2183,6 +2331,18 @@ public class MqmsSales implements Serializable {
         private List<String> rightFuzzySecondPinDate;
 
         public List<String> getRightFuzzySecondPinDate(){return this.rightFuzzySecondPinDate;}
+        private List<String> stateList;
+
+        public List<String> getStateList(){return this.stateList;}
+
+
+        private List<String> fuzzyState;
+
+        public List<String> getFuzzyState(){return this.fuzzyState;}
+
+        private List<String> rightFuzzyState;
+
+        public List<String> getRightFuzzyState(){return this.rightFuzzyState;}
         private List<String> mtocList;
 
         public List<String> getMtocList(){return this.mtocList;}
@@ -2510,33 +2670,63 @@ public class MqmsSales implements Serializable {
             return this;
         }
 
-        public ConditionBuilder fuzzySalesState (List<String> fuzzySalesState){
-            this.fuzzySalesState = fuzzySalesState;
+        public ConditionBuilder fuzzySalesCarTypeDetail (List<String> fuzzySalesCarTypeDetail){
+            this.fuzzySalesCarTypeDetail = fuzzySalesCarTypeDetail;
             return this;
         }
 
-        public ConditionBuilder fuzzySalesState (String ... fuzzySalesState){
-            this.fuzzySalesState = solveNullList(fuzzySalesState);
+        public ConditionBuilder fuzzySalesCarTypeDetail (String ... fuzzySalesCarTypeDetail){
+            this.fuzzySalesCarTypeDetail = solveNullList(fuzzySalesCarTypeDetail);
             return this;
         }
 
-        public ConditionBuilder rightFuzzySalesState (List<String> rightFuzzySalesState){
-            this.rightFuzzySalesState = rightFuzzySalesState;
+        public ConditionBuilder rightFuzzySalesCarTypeDetail (List<String> rightFuzzySalesCarTypeDetail){
+            this.rightFuzzySalesCarTypeDetail = rightFuzzySalesCarTypeDetail;
             return this;
         }
 
-        public ConditionBuilder rightFuzzySalesState (String ... rightFuzzySalesState){
-            this.rightFuzzySalesState = solveNullList(rightFuzzySalesState);
+        public ConditionBuilder rightFuzzySalesCarTypeDetail (String ... rightFuzzySalesCarTypeDetail){
+            this.rightFuzzySalesCarTypeDetail = solveNullList(rightFuzzySalesCarTypeDetail);
             return this;
         }
 
-        public ConditionBuilder salesStateList(String ... salesState){
-            this.salesStateList = solveNullList(salesState);
+        public ConditionBuilder salesCarTypeDetailList(String ... salesCarTypeDetail){
+            this.salesCarTypeDetailList = solveNullList(salesCarTypeDetail);
             return this;
         }
 
-        public ConditionBuilder salesStateList(List<String> salesState){
-            this.salesStateList = salesState;
+        public ConditionBuilder salesCarTypeDetailList(List<String> salesCarTypeDetail){
+            this.salesCarTypeDetailList = salesCarTypeDetail;
+            return this;
+        }
+
+        public ConditionBuilder fuzzySalesCarTypeCn (List<String> fuzzySalesCarTypeCn){
+            this.fuzzySalesCarTypeCn = fuzzySalesCarTypeCn;
+            return this;
+        }
+
+        public ConditionBuilder fuzzySalesCarTypeCn (String ... fuzzySalesCarTypeCn){
+            this.fuzzySalesCarTypeCn = solveNullList(fuzzySalesCarTypeCn);
+            return this;
+        }
+
+        public ConditionBuilder rightFuzzySalesCarTypeCn (List<String> rightFuzzySalesCarTypeCn){
+            this.rightFuzzySalesCarTypeCn = rightFuzzySalesCarTypeCn;
+            return this;
+        }
+
+        public ConditionBuilder rightFuzzySalesCarTypeCn (String ... rightFuzzySalesCarTypeCn){
+            this.rightFuzzySalesCarTypeCn = solveNullList(rightFuzzySalesCarTypeCn);
+            return this;
+        }
+
+        public ConditionBuilder salesCarTypeCnList(String ... salesCarTypeCn){
+            this.salesCarTypeCnList = solveNullList(salesCarTypeCn);
+            return this;
+        }
+
+        public ConditionBuilder salesCarTypeCnList(List<String> salesCarTypeCn){
+            this.salesCarTypeCnList = salesCarTypeCn;
             return this;
         }
 
@@ -2687,6 +2877,36 @@ public class MqmsSales implements Serializable {
 
         public ConditionBuilder secondPinDateList(List<String> secondPinDate){
             this.secondPinDateList = secondPinDate;
+            return this;
+        }
+
+        public ConditionBuilder fuzzyState (List<String> fuzzyState){
+            this.fuzzyState = fuzzyState;
+            return this;
+        }
+
+        public ConditionBuilder fuzzyState (String ... fuzzyState){
+            this.fuzzyState = solveNullList(fuzzyState);
+            return this;
+        }
+
+        public ConditionBuilder rightFuzzyState (List<String> rightFuzzyState){
+            this.rightFuzzyState = rightFuzzyState;
+            return this;
+        }
+
+        public ConditionBuilder rightFuzzyState (String ... rightFuzzyState){
+            this.rightFuzzyState = solveNullList(rightFuzzyState);
+            return this;
+        }
+
+        public ConditionBuilder stateList(String ... state){
+            this.stateList = solveNullList(state);
+            return this;
+        }
+
+        public ConditionBuilder stateList(List<String> state){
+            this.stateList = state;
             return this;
         }
 
@@ -3322,8 +3542,12 @@ public class MqmsSales implements Serializable {
             this.obj.setSalesCarType(salesCarType);
             return this;
         }
-        public Builder salesState(String salesState){
-            this.obj.setSalesState(salesState);
+        public Builder salesCarTypeDetail(String salesCarTypeDetail){
+            this.obj.setSalesCarTypeDetail(salesCarTypeDetail);
+            return this;
+        }
+        public Builder salesCarTypeCn(String salesCarTypeCn){
+            this.obj.setSalesCarTypeCn(salesCarTypeCn);
             return this;
         }
         public Builder dealerCode(String dealerCode){
@@ -3344,6 +3568,10 @@ public class MqmsSales implements Serializable {
         }
         public Builder secondPinDate(String secondPinDate){
             this.obj.setSecondPinDate(secondPinDate);
+            return this;
+        }
+        public Builder state(String state){
+            this.obj.setState(state);
             return this;
         }
         public Builder mtoc(String mtoc){

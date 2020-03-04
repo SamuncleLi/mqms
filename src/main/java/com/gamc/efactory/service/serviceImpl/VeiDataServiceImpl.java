@@ -103,39 +103,39 @@ public class VeiDataServiceImpl implements VeiDataService {
 //                mqmsVoucherRecord.setTransmissionCodeRe("");
 
                 //变速箱机型
-//                if(StringUtil.isNotEmpty(mqmsVoucherRecord.getTransmissionCode())){
-//                    String trsmCode = mqmsVoucherRecord.getTransmissionCode().replace("+", "");
-//                    String trsmType = trsmCode.substring(0, 5);
-//                    String trsmManufacture = trsmCode.substring(5, 10);
-//                    String trsmProYearCode = trsmCode.substring(11, 12);
-//                    String trsmProMonthHex = trsmCode.substring(12, 13);
-//                    String trsmProDay = trsmCode.substring(13, 15);
-//                    mqmsVoucherRecord.setTranTypeDetail(mqmsVinDecodeMapper.vinDecode(vinShortCOde).getVinTransmType());
-//                    mqmsVoucherRecord.setTranTypeDetail(mqmsTranProductionDecodeMapper.selectTranProductionCode(trsmType));
+                if(StringUtil.isNotEmpty(mqmsVoucherRecord.getTransmissionCode())){
+                    String trsmCode = mqmsVoucherRecord.getTransmissionCode().replace("+", "");
+                    String trsmType = trsmCode.substring(0, 5);
+                    String trsmManufacture = trsmCode.substring(5, 10);
+                    String trsmProYearCode = trsmCode.substring(11, 12);
+                    String trsmProMonthHex = trsmCode.substring(12, 13);
+                    String trsmProDay = trsmCode.substring(13, 15);
+                    mqmsVoucherRecord.setTranTypeDetail(mqmsVinDecodeMapper.vinDecode(vinShortCOde).getVinTransmType());
+                    mqmsVoucherRecord.setTranTypeDetail(mqmsTranProductionDecodeMapper.selectTranProductionCode(trsmType));
                     //变速箱生产厂家
-//                    mqmsVoucherRecord.setTransmissionManufacturer(mqmsTranManufacturesDecodeMapper.selectTranManufacture(trsmManufacture));
-                    //变速箱生产日期
-//                    String trsmProMonth = Integer.toString(Integer.parseInt(trsmProMonthHex, 16), 10);
-//                    if (trsmProMonth.length() < 2) {
-//                        trsmProMonth = "0" + trsmProMonth;
-//                    }
-//                    System.out.println(trsmProMonth);
-//                    String trsmProYear = mqmsTranYearDecodeMapper.selectTranProYear(trsmProYearCode);
-//                    System.out.println(trsmProYear);
-//                    mqmsVoucherRecord.setTransmissionProductionData(trsmProYear + "-" + trsmProMonth + "-" + trsmProDay);
+                    mqmsVoucherRecord.setTransmissionManufacturer(mqmsTranManufacturesDecodeMapper.selectTranManufacture(trsmManufacture));
+                   //变速箱生产日期
+                    String trsmProMonth = Integer.toString(Integer.parseInt(trsmProMonthHex, 16), 10);
+                    if (trsmProMonth.length() < 2) {
+                        trsmProMonth = "0" + trsmProMonth;
+                    }
+                    System.out.println(trsmProMonth);
+                    String trsmProYear = mqmsTranYearDecodeMapper.selectTranProYear(trsmProYearCode);
+                    System.out.println(trsmProYear);
+                    mqmsVoucherRecord.setTransmissionProductionData(trsmProYear + "-" + trsmProMonth + "-" + trsmProDay);
                     //变速箱生产至确认经过月
-//                    int proFailureMonths = 0;
-//                    try {
-//                    System.out.println(mqmsVoucherRecord.getTransmissionProductionData());
-//                    System.out.println(mqmsVoucherRecord.getConfirmDate());
-//                        proFailureMonths = MqmsUtil.getMonth(mqmsVoucherRecord.getTransmissionProductionData(), mqmsVoucherRecord.getConfirmDate());
-//                    System.out.println(proFailureMonths);
+                    int proFailureMonths = 0;
+                    try {
+                    System.out.println(mqmsVoucherRecord.getTransmissionProductionData());
+                    System.out.println(mqmsVoucherRecord.getConfirmDate());
+                        proFailureMonths = MqmsUtil.getMonth(mqmsVoucherRecord.getTransmissionProductionData(), mqmsVoucherRecord.getConfirmDate());
+                    System.out.println(proFailureMonths);
 
-//                    } catch (Exception e) {
-//                        e.printStackTrace();
-//                    }
-//                    mqmsVoucherRecord.setTransmissionComfirmTime(Integer.toString(proFailureMonths));
-//                }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    mqmsVoucherRecord.setTransmissionComfirmTime(Integer.toString(proFailureMonths));
+                }
                 //销售至故障经过月
                 int salesFailureMonths = 0;
                 try {
