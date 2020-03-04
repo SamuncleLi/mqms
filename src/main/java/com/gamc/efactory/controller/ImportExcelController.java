@@ -78,8 +78,8 @@ public class ImportExcelController {
         boolean a = false;
 
         String fileName = file.getOriginalFilename();
-        User user=(User)session.getAttribute("user");
-        System.out.println(user.getUserName()+"11111111111111111111111111111111111111111111111");
+//        User user=(User)session.getAttribute("user");
+//        System.out.println(user.getUserName()+"11111111111111111111111111111111111111111111111");
         try {
             a = veiDataService.batchImport(fileName, file, session);
             return "数据成功导入";
@@ -101,7 +101,7 @@ public class ImportExcelController {
 //        System.out.println(user.getUserName()+"111111111111111111111111");
 
         try {
-            a = productionService.batchImport(fileName, file);
+            a = productionService.batchImport(fileName, file, session);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -119,11 +119,11 @@ public class ImportExcelController {
         boolean a = false;
 
         String fileName = file.getOriginalFilename();
-        System.out.println("111111111111111111111111111111111111111111");
+//        System.out.println("111111111111111111111111111111111111111111");
 //        System.out.println(fileName);
 
         try {
-            a = salesService.batchImport(fileName, file);
+            a = salesService.batchImport(fileName, file, session);
         } catch (Exception e) {
             e.printStackTrace();
         }
