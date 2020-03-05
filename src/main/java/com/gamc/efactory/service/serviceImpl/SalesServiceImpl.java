@@ -125,7 +125,6 @@ public class SalesServiceImpl implements SalesService {
                 // 说明是xlsx文件,不过这里最好限制一下
                 List<List<String>> result = ExcelUtil.importXlsx(file.getInputStream());
                 //第0行为表头
-
                 for (int i = 1; i < (result != null ? result.size() : 0); i++) {
                     List<String> rowData = result.get(i);
 
