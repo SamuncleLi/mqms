@@ -8,16 +8,17 @@ import com.gamc.efactory.service.VeiDataService;
 import com.gamc.efactory.util.ExcelUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.MultipartConfigFactory;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -113,22 +114,79 @@ public class ImportExcelController {
      */
     @Autowired
     private SalesService salesService;
+//    @PostMapping(value = "/salesData", consumes = "multipart/*", headers = "content-type=multipart/form-data")
     @RequestMapping(value = "/salesData")
-    public String exImportSalesData(@RequestParam()MultipartFile file, HttpSession session) {
+    public String addBlacklist(@RequestParam("file") MultipartFile multipartFile, HttpServletRequest request
 
-        boolean a = false;
+        ) {
+            //判断上传内容是否符合要求
+            String fileName = multipartFile.getOriginalFilename();
+            if (!fileName.matches("^.+\\.(?i)(xls)$") && !fileName.matches("^.+\\.(?i)(xlsx)$")) {
+                return "上传的文件格式不正确";
+            }
 
-        String fileName = file.getOriginalFilename();
-//        System.out.println("111111111111111111111111111111111111111111");
-//        System.out.println(fileName);
-
-        try {
-            a = salesService.batchImport(fileName, file, session);
-        } catch (Exception e) {
-            e.printStackTrace();
+            String files = saveFile(multipartFile, request);
+            int result = 0;
+            try {
+//            System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+                result =  salesService.addBlackLists(files,request);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }finally {
+                File file = new File(files);
+                System.gc();
+                boolean delSuccess = file.delete();
+                if(delSuccess){
+                    System.out.println("删除文件成功");
+                }else{
+                    System.out.println("删除文件失败");
+                }
+            }
+            if(result==1){
+                return "文件上传成功";}
+            else{
+                return "文件上传失败";}
         }
-        return "数据成功导入";
-    }
+
+//    public String exImportSalesData(@RequestParam()MultipartFile file, HttpSession session) {
+//
+//        boolean a = false;
+//
+//        String fileName = file.getOriginalFilename();
+////        System.out.println("111111111111111111111111111111111111111111");
+////        System.out.println(fileName);
+//
+//        try {
+//            a = salesService.batchImport(fileName, file, session);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//        return "数据成功导入";
+
+        private String saveFile(MultipartFile multipartFile, HttpServletRequest request) {
+            String path;
+            String fileName = multipartFile.getOriginalFilename();
+            // 判断文件类型
+            String realPath = request.getSession().getServletContext().getRealPath("/");
+            SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");//设置日期格式
+            String trueFileName = fileName+df.format(new Date());
+            // 设置存放Excel文件的路径
+            path = realPath + trueFileName;
+            //C:\Users\UZI\AppData\Local\Temp\tomcat-docbase.3729691707234394010.8086\
+            File file = new File(path);
+            if (file.exists() && file.isFile()) {
+                file.delete();
+            }
+            try {
+                multipartFile.transferTo(new File(path));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            return path;
+        }
+
+
 
     @Autowired
     private SalesPointService salesPointService;

@@ -3,6 +3,8 @@ package com.gamc.efactory.util;
 import org.apache.poi.hssf.usermodel.HSSFDateUtil;
 import org.apache.poi.openxml4j.exceptions.OpenXML4JException;
 import org.apache.poi.openxml4j.opc.OPCPackage;
+import org.apache.poi.ss.usermodel.BuiltinFormats;
+import org.apache.poi.ss.usermodel.DataFormatter;
 import org.apache.poi.xssf.eventusermodel.XSSFReader;
 import org.apache.poi.xssf.model.SharedStringsTable;
 import org.apache.poi.xssf.model.StylesTable;
@@ -22,14 +24,14 @@ import java.util.*;
 public abstract class BigExcelReader {
 
     enum xssfDataType {
-        BOOL, ERROR, FORMULA, INLINESTR, SSTINDEX, NUMBER,
+        BOOL, ERROR, FORMULA, INLINESTR, SSTINDEX, NUMBER,DATE,Null
     }
 
-    public static final int ERROR = 1;
-    public static final int BOOLEAN = 1;
-    public static final int NUMBER = 2;
-    public static final int STRING = 3;
-    public static final int DATE = 4;
+    private static final int ERROR = 1;
+    private static final int BOOLEAN = 1;
+    private static final int NUMBER = 2;
+    private static final int STRING = 3;
+    private static final int DATE = 4;
     public static final String DATE_FORMAT_STR = "yyyy-MM-dd HH:mm:ss";
 
 
@@ -47,7 +49,7 @@ public abstract class BigExcelReader {
      * @throws SAXException
      */
     //@param maxColNum 读取的最大列数
-    public BigExcelReader(String filename) throws IOException, OpenXML4JException, SAXException {
+    protected BigExcelReader(String filename) throws IOException, OpenXML4JException, SAXException {
         OPCPackage pkg = OPCPackage.open(filename);
         init(pkg);
     }
@@ -62,7 +64,9 @@ public abstract class BigExcelReader {
      */
     //@param maxColNum 读取的最大列数
     public BigExcelReader(File file) throws IOException, OpenXML4JException, SAXException {
+
         OPCPackage pkg = OPCPackage.open(file);
+//        System.out.println(file.getPath()+"3333333333333333333333333333333333333333333");
         init(pkg);
     }
 
@@ -115,9 +119,7 @@ public abstract class BigExcelReader {
     public int parse() {
         try {
             parser.parse(sheetSource);
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (SAXException e) {
+        } catch (IOException | SAXException e) {
             e.printStackTrace();
         } finally {
             if (sheet != null) {
@@ -146,15 +148,17 @@ public abstract class BigExcelReader {
             parserRid.setContentHandler(new DefaultHandler() {
                 @Override
                 public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
-                    System.out.println(qName);
+                    System.out.println(qName+"vvvvvvvvvvvvvvvvvvvvvvvv");
                     if (qName.equals("sheet")) {
                         //获取rid的值
                         String sheetIndex = attributes.getValue("sheetId");
-                        if("1".equals(sheetIndex)){
+                        System.out.println(sheetIndex+"wwwwwwwwwwwwwwwwwwwwwwwwwwwww");
+                        //sheet不一定是第一个，所以暂时先屏蔽
+//                        if("1".equals(sheetIndex)){
                             String rid = attributes.getValue("r:id");
                             map.put("rid", rid);
                             System.out.println(rid);
-                        }
+//                        }
 
                     }
                 }
@@ -184,8 +188,9 @@ public abstract class BigExcelReader {
         private int[] rowTypes;// 存放一行中所有数据类型
         private int colIdx;// 当前所在列
 
-        private short formatIndex;
-        //    private String formatString;// 对数值型的数据直接读为数值，不对其格式化，所以隐掉此处
+        private int formatIndex;
+        private String formatString;// 对数值型的数据直接读为数值，不对其格式化，所以隐掉此处
+        private final DataFormatter formatter = new DataFormatter();
         //解析结果保存
         private List<String[]> container =  new LinkedList<>();
 
@@ -227,11 +232,51 @@ public abstract class BigExcelReader {
                     this.dataType = xssfDataType.SSTINDEX;
                 } else if ("str".equals(cellType)) {
                     this.dataType = xssfDataType.FORMULA;
-                } else if (cellStyle != null) {
+                }
+                //原版无法正确解析日期
+                else if (cellStyle != null) { //处理日期
+                    System.out.println("8888888888888888888888888888888888888888");
                     int styleIndex = Integer.parseInt(cellStyle);
+                    System.out.println(styleIndex);
                     XSSFCellStyle style = stylesTable.getStyleAt(styleIndex);
-                    this.formatIndex = style.getDataFormat();
+                    formatIndex = style.getDataFormat();
+                    System.out.println(formatIndex);
+                    formatString = style.getDataFormatString();
+                    System.out.println(formatString);
+//                    if (formatString.contains("m/d/yy") || formatString.contains("yyyy/mm/dd") || formatString.contains("yyyy/m/d")|| formatString.contains("yyyy-mm-dd")) {
+//                        this.dataType = xssfDataType.DATE;
+//                        System.out.println("9999999999999999999999999999999999");
+//                        formatString = "yyyy-mm-dd";
+//                    }
+                    if (Arrays.asList(176,177,182,183,186).contains(formatIndex)){
+                        this.dataType = xssfDataType.DATE;
+                        System.out.println("99999999999999999999999999999999999999");
+                        formatString = "yyyy-MM-dd";
+                    }
+
+                   else if (formatString == null) {
+                        this.dataType = xssfDataType.Null;
+                        System.out.println("cccccccccccccccccccccccccccccccccccccc");
+                        formatString = BuiltinFormats.getBuiltinFormat(formatIndex);
+                    }
+
+//                    if (cellStyle != null) {
+//                    int styleIndex = Integer.parseInt(cellStyle);
+//                    XSSFCellStyle style = stylesTable.getStyleAt(styleIndex);
+//                    this.formatIndex = style.getDataFormat();
 //                this.formatString = style.getDataFormatString();
+////                    if ("m/d/yy" == formatString){
+////
+////                    }
+//                    if (formatString == null){
+//                        this.dataType = xssfDataType.Null;
+//                        formatString = BuiltinFormats.getBuiltinFormat(formatIndex);
+//                    }
+                    else {
+                        this.dataType = xssfDataType.DATE;
+                        //full format is "yyyy-MM-dd hh:mm:ss.SSS";
+                        formatString = "yyyy-MM-dd";
+                    }
                 }
             }
             // 解析到一行的开始处时，初始化数组
@@ -254,7 +299,7 @@ public abstract class BigExcelReader {
                         break;
                     }
                     case ERROR: {
-                        rowDatas[colIdx] = "ERROR:" + readValue.toString();
+                        rowDatas[colIdx] = "ERROR:" + readValue;
                         rowTypes[colIdx] = ERROR;
                         break;
                     }
@@ -275,23 +320,33 @@ public abstract class BigExcelReader {
                         break;
                     }
                     case NUMBER: {
-                        // 判断是否是日期格式
-                        if (HSSFDateUtil.isADateFormat(formatIndex, readValue)) {
-                            Double d = Double.parseDouble(readValue);
-                            Date date = HSSFDateUtil.getJavaDate(d);
-                            rowDatas[colIdx] = formateDateToString(date);
-                            rowTypes[colIdx] = DATE;
-                        }
-//                   else if (formatString != null){
-//                      cellData.value = formatter.formatRawCellContents(Double.parseDouble(cellValue), formatIndex, formatString);
-//                      cellData.dataType = NUMBER;
-//                   }
+//                        // 判断是否是日期格式
+//                        if (HSSFDateUtil.isADateFormat(formatIndex, readValue)) {
+//                            Double d = Double.parseDouble(readValue);
+//                            Date date = HSSFDateUtil.getJavaDate(d);
+//                            rowDatas[colIdx] = formateDateToString(date);
+//                            rowTypes[colIdx] = DATE;
+//                        }
+                    if (formatString != null){
+                        rowDatas[colIdx]= formatter.formatRawCellContents(Double.parseDouble(readValue), formatIndex, formatString);
+                        rowTypes[colIdx] = NUMBER;
+                   }
                         else {
                             rowDatas[colIdx] = readValue;
                             rowTypes[colIdx] = NUMBER;
                         }
                         break;
                     }
+                    case DATE:
+                        try{
+                            rowDatas[colIdx]  = formatter.formatRawCellContents(Double.parseDouble(readValue), formatIndex, formatString);
+                            rowTypes[colIdx] = DATE;
+                        }catch(NumberFormatException ex){
+                            rowDatas[colIdx] = readValue;
+                        }
+                        rowDatas[colIdx] = rowDatas[colIdx].replace(" ", "");
+                        break;
+
                 }
             }
             // 当解析的一行的末尾时，输出数组中的数据

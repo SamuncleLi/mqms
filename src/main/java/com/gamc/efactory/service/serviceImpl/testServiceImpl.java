@@ -32,13 +32,13 @@ public class testServiceImpl implements TestService {
     @Transactional
     public int addBlackLists(String file) throws ExecutionException, InterruptedException {
         try {
+            System.out.println("5555555555555555555555555555555");
             BigExcelReader bigExcelReader = new BigExcelReader(file) {
-
                 @Override
                 public void outputAllRow(List<String[]> lists) throws IllegalAccessException {
+
+
                     List<List<Object>> lists1 = new LinkedList<>();
-
-
                     //执行保存
                     for(String[] row : lists){
                         Map<String, Object> map = new HashMap<String, Object>();
@@ -73,7 +73,7 @@ public class testServiceImpl implements TestService {
     private void saveAll(List<List<Object>> lists) throws IllegalAccessException {
         if(lists.size() > 0){
 
-//            System.out.println(lists.size());
+            System.out.println(lists.size());
             List<MqmsSalesRaw> mqmsSalesRawList = new ArrayList<>();
             for (int i = 1; i < lists.size(); i++) {
 //                System.out.println("222222222222222222222222222");

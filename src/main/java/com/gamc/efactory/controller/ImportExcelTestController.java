@@ -12,6 +12,8 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * Created by UZI on 2020/3/5.
@@ -34,6 +36,7 @@ public class ImportExcelTestController {
         String files = saveFile(multipartFile, request);
         int result = 0;
         try {
+//            System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
             result =  testService.addBlackLists(files);
         } catch (Exception e) {
             e.printStackTrace();
@@ -47,7 +50,10 @@ public class ImportExcelTestController {
                 System.out.println("删除文件失败");
             }
         }
-        return String.valueOf(result);
+        if(result==1){
+            return "文件上传成功";}
+        else{
+            return "文件上传失败";}
     }
 
 
@@ -57,10 +63,10 @@ public class ImportExcelTestController {
         String fileName = multipartFile.getOriginalFilename();
         // 判断文件类型
         String realPath = request.getSession().getServletContext().getRealPath("/");
-        String trueFileName = fileName;
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");//设置日期格式
+        String trueFileName = fileName+df.format(new Date());
         // 设置存放Excel文件的路径
         path = realPath + trueFileName;
-        System.out.println(path+"11111111111111111111111111111111111111111111111111111111");
         //C:\Users\UZI\AppData\Local\Temp\tomcat-docbase.3729691707234394010.8086\
         File file = new File(path);
         if (file.exists() && file.isFile()) {
