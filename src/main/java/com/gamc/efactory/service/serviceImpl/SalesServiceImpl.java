@@ -75,18 +75,24 @@ public class SalesServiceImpl implements SalesService {
                 //销售年
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
                 Calendar c = Calendar.getInstance();
-                String secondSalesDate=mqmsSalesRecord.getSecondPinDate();
-                System.out.println(secondSalesDate);
-                try {
-                    c.setTime(sdf.parse(secondSalesDate));
-                } catch (ParseException e) {
-                    e.printStackTrace();
+                if (mqmsSalesRecord.getSecondPinDate()!=null) {
+                    String secondSalesDate = mqmsSalesRecord.getSecondPinDate();
+                    System.out.println(secondSalesDate);
+                    try {
+                        c.setTime(sdf.parse(secondSalesDate));
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                    int secondSalesYear = c.get(Calendar.YEAR);
+                    int secondSalesMonth = c.get(Calendar.MONTH);
+                    mqmsSalesRecord.setSalesYear(Integer.toString(secondSalesYear));
+                    //销售月
+                    mqmsSalesRecord.setSalesMonth(Integer.toString(secondSalesMonth));
                 }
-                int secondSalesYear = c.get(Calendar.YEAR);
-                int secondSalesMonth = c.get(Calendar.MONTH);
-                mqmsSalesRecord.setSalesYear(Integer.toString(secondSalesYear));
-                //销售月
-                mqmsSalesRecord.setSalesMonth(Integer.toString(secondSalesMonth));
+                else{
+                    mqmsSalesRecord.setSalesYear("");
+                    mqmsSalesRecord.setSalesMonth("");
+                }
 
                 //变速箱类型
                 String trsmCode = "";
