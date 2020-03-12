@@ -189,4 +189,8 @@ public class ViewController {
     public String faultCodeDecodeView(){
         return "fault_code_decode";
     }
+    @RequestMapping(value = "/data_delivery")
+    public String dataDelivery(){
+        return "data_delivery";
+    }
 }

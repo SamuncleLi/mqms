@@ -24,7 +24,7 @@ var _menus=[
     },
 	{"menuid":"21","icon":"fa-plug","menuname":"不良跟踪",parentMenu:'2',
 		"menus":[
-            {"menuid":"210","menuname":"快递件到货情况","icon":"fa-toggle-down","url":"demo/msgTip.html"},
+            {"menuid":"210","menuname":"快递件到货情况","icon":"fa-toggle-down","url":"/mqms/view/data_delivery"},
             {"menuid":"211","menuname":"不良报告","icon":"fa-puzzle-piece","url":"demo/msgTip.html"}
 		]
 	},
