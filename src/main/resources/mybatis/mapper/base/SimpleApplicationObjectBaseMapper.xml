@@ -1,0 +1,2023 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gamc.efactory.dao.base.SimpleApplicationObjectBaseMapper">
+
+
+    <insert id="insertSimpleApplicationObject"  useGeneratedKeys="true" keyProperty="simpleApplicationObjectId">
+        INSERT INTO `simple_application_object`
+        (
+        <trim suffixOverrides=",">
+                    <if test="simpleApplicationObjectId!=null">
+                        `simple_application_object_id`,
+                    </if>
+                    <if test="processName!=null">
+                        `process_name`,
+                    </if>
+                    <if test="processDefId!=null">
+                        `process_def_id`,
+                    </if>
+                    <if test="processInstId!=null">
+                        `process_inst_id`,
+                    </if>
+                    <if test="taskId!=null">
+                        `task_id`,
+                    </if>
+                    <if test="taskName!=null">
+                        `task_name`,
+                    </if>
+                    <if test="assigneeId!=null">
+                        `assignee_id`,
+                    </if>
+                    <if test="assigneeName!=null">
+                        `assignee_name`,
+                    </if>
+                    <if test="userId!=null">
+                        `user_id`,
+                    </if>
+                    <if test="userName!=null">
+                        `user_name`,
+                    </if>
+                    <if test="applierUserId!=null">
+                        `applier_user_id`,
+                    </if>
+                    <if test="applierUserName!=null">
+                        `applier_user_name`,
+                    </if>
+                    <if test="applyTime!=null">
+                        `apply_time`,
+                    </if>
+                    <if test="formName!=null">
+                        `form_name`,
+                    </if>
+                    <if test="formId!=null">
+                        `form_id`,
+                    </if>
+                    <if test="simpleReason!=null">
+                        `simple_reason`,
+                    </if>
+                    <if test="link!=null">
+                        `link`,
+                    </if>
+                    <if test="auditorComment!=null">
+                        `auditor_comment`,
+                    </if>
+                    <if test="variables!=null">
+                        `variables`,
+                    </if>
+                    <if test="processInstTitle!=null">
+                        `process_inst_title`,
+                    </if>
+                    <if test="tbd5!=null">
+                        `tbd5`,
+                    </if>
+                    <if test="mobileLink!=null">
+                        `mobile_link`,
+                    </if>
+                    <if test="formDataUrl!=null">
+                        `form_data_url`,
+                    </if>
+                    <if test="formData!=null">
+                        `form_data`,
+                    </if>
+        </trim>
+        )
+        VALUES
+        (
+        <trim suffixOverrides=",">
+                <if test="simpleApplicationObjectId!=null">
+                    #{simpleApplicationObjectId},
+                </if>
+                <if test="processName!=null">
+                    #{processName},
+                </if>
+                <if test="processDefId!=null">
+                    #{processDefId},
+                </if>
+                <if test="processInstId!=null">
+                    #{processInstId},
+                </if>
+                <if test="taskId!=null">
+                    #{taskId},
+                </if>
+                <if test="taskName!=null">
+                    #{taskName},
+                </if>
+                <if test="assigneeId!=null">
+                    #{assigneeId},
+                </if>
+                <if test="assigneeName!=null">
+                    #{assigneeName},
+                </if>
+                <if test="userId!=null">
+                    #{userId},
+                </if>
+                <if test="userName!=null">
+                    #{userName},
+                </if>
+                <if test="applierUserId!=null">
+                    #{applierUserId},
+                </if>
+                <if test="applierUserName!=null">
+                    #{applierUserName},
+                </if>
+                <if test="applyTime!=null">
+                    #{applyTime},
+                </if>
+                <if test="formName!=null">
+                    #{formName},
+                </if>
+                <if test="formId!=null">
+                    #{formId},
+                </if>
+                <if test="simpleReason!=null">
+                    #{simpleReason},
+                </if>
+                <if test="link!=null">
+                    #{link},
+                </if>
+                <if test="auditorComment!=null">
+                    #{auditorComment},
+                </if>
+                <if test="variables!=null">
+                    #{variables},
+                </if>
+                <if test="processInstTitle!=null">
+                    #{processInstTitle},
+                </if>
+                <if test="tbd5!=null">
+                    #{tbd5},
+                </if>
+                <if test="mobileLink!=null">
+                    #{mobileLink},
+                </if>
+                <if test="formDataUrl!=null">
+                    #{formDataUrl},
+                </if>
+                <if test="formData!=null">
+                    #{formData},
+                </if>
+        </trim>
+        )
+    </insert>
+
+
+
+
+    <update id="updateSimpleApplicationObject">
+        UPDATE `simple_application_object`
+        SET
+        <trim suffixOverrides=",">
+            <if test="processName != null and processName!=''">
+                `process_name` = #{processName},
+            </if>
+            <if test="processDefId != null and processDefId!=''">
+                `process_def_id` = #{processDefId},
+            </if>
+            <if test="processInstId != null and processInstId!=''">
+                `process_inst_id` = #{processInstId},
+            </if>
+            <if test="taskId != null and taskId!=''">
+                `task_id` = #{taskId},
+            </if>
+            <if test="taskName != null and taskName!=''">
+                `task_name` = #{taskName},
+            </if>
+            <if test="assigneeId != null">
+                `assignee_id` = #{assigneeId},
+            </if>
+            <if test="assigneeName != null and assigneeName!=''">
+                `assignee_name` = #{assigneeName},
+            </if>
+            <if test="userId != null">
+                `user_id` = #{userId},
+            </if>
+            <if test="userName != null and userName!=''">
+                `user_name` = #{userName},
+            </if>
+            <if test="applierUserId != null">
+                `applier_user_id` = #{applierUserId},
+            </if>
+            <if test="applierUserName != null and applierUserName!=''">
+                `applier_user_name` = #{applierUserName},
+            </if>
+            <if test="applyTime != null">
+                `apply_time` = #{applyTime},
+            </if>
+            <if test="formName != null and formName!=''">
+                `form_name` = #{formName},
+            </if>
+            <if test="formId != null">
+                `form_id` = #{formId},
+            </if>
+            <if test="simpleReason != null and simpleReason!=''">
+                `simple_reason` = #{simpleReason},
+            </if>
+            <if test="link != null and link!=''">
+                `link` = #{link},
+            </if>
+            <if test="auditorComment != null and auditorComment!=''">
+                `auditor_comment` = #{auditorComment},
+            </if>
+            <if test="variables != null and variables!=''">
+                `variables` = #{variables},
+            </if>
+            <if test="processInstTitle != null and processInstTitle!=''">
+                `process_inst_title` = #{processInstTitle},
+            </if>
+            <if test="tbd5 != null and tbd5!=''">
+                `tbd5` = #{tbd5},
+            </if>
+            <if test="mobileLink != null and mobileLink!=''">
+                `mobile_link` = #{mobileLink},
+            </if>
+            <if test="formDataUrl != null and formDataUrl!=''">
+                `form_data_url` = #{formDataUrl},
+            </if>
+            <if test="formData != null and formData!=''">
+                `form_data` = #{formData},
+            </if>
+        </trim>
+        WHERE
+        <trim suffixOverrides="and">
+                `simple_application_object_id` = #{simpleApplicationObjectId} and
+        </trim>
+    </update>
+
+    <update id="update">
+        UPDATE `simple_application_object`
+        SET
+        <trim suffixOverrides=",">
+        <if test="set.processName != null and set.processName!=''">
+            `process_name` = #{set.processName},
+        </if>
+        <if test="set.processDefId != null and set.processDefId!=''">
+            `process_def_id` = #{set.processDefId},
+        </if>
+        <if test="set.processInstId != null and set.processInstId!=''">
+            `process_inst_id` = #{set.processInstId},
+        </if>
+        <if test="set.taskId != null and set.taskId!=''">
+            `task_id` = #{set.taskId},
+        </if>
+        <if test="set.taskName != null and set.taskName!=''">
+            `task_name` = #{set.taskName},
+        </if>
+        <if test="set.assigneeId != null">
+            `assignee_id` = #{set.assigneeId},
+        </if>
+        <if test="set.assigneeName != null and set.assigneeName!=''">
+            `assignee_name` = #{set.assigneeName},
+        </if>
+        <if test="set.userId != null">
+            `user_id` = #{set.userId},
+        </if>
+        <if test="set.userName != null and set.userName!=''">
+            `user_name` = #{set.userName},
+        </if>
+        <if test="set.applierUserId != null">
+            `applier_user_id` = #{set.applierUserId},
+        </if>
+        <if test="set.applierUserName != null and set.applierUserName!=''">
+            `applier_user_name` = #{set.applierUserName},
+        </if>
+        <if test="set.applyTime != null">
+            `apply_time` = #{set.applyTime},
+        </if>
+        <if test="set.formName != null and set.formName!=''">
+            `form_name` = #{set.formName},
+        </if>
+        <if test="set.formId != null">
+            `form_id` = #{set.formId},
+        </if>
+        <if test="set.simpleReason != null and set.simpleReason!=''">
+            `simple_reason` = #{set.simpleReason},
+        </if>
+        <if test="set.link != null and set.link!=''">
+            `link` = #{set.link},
+        </if>
+        <if test="set.auditorComment != null and set.auditorComment!=''">
+            `auditor_comment` = #{set.auditorComment},
+        </if>
+        <if test="set.variables != null and set.variables!=''">
+            `variables` = #{set.variables},
+        </if>
+        <if test="set.processInstTitle != null and set.processInstTitle!=''">
+            `process_inst_title` = #{set.processInstTitle},
+        </if>
+        <if test="set.tbd5 != null and set.tbd5!=''">
+            `tbd5` = #{set.tbd5},
+        </if>
+        <if test="set.mobileLink != null and set.mobileLink!=''">
+            `mobile_link` = #{set.mobileLink},
+        </if>
+        <if test="set.formDataUrl != null and set.formDataUrl!=''">
+            `form_data_url` = #{set.formDataUrl},
+        </if>
+        <if test="set.formData != null and set.formData!=''">
+            `form_data` = #{set.formData},
+        </if>
+        </trim>
+        <trim prefix="where" suffixOverrides="and | or">
+                <if test="where.simpleApplicationObjectIdList != null">
+                    `simple_application_object_id` in
+                    <foreach collection="where.simpleApplicationObjectIdList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test="where.simpleApplicationObjectIdSt !=null">
+                `simple_application_object_id` >= #{where.simpleApplicationObjectIdSt} and
+            </if>
+            <if test="where.simpleApplicationObjectIdEd!=null">
+                `simple_application_object_id` &lt;= #{where.simpleApplicationObjectIdEd} and
+            </if>
+                <if test="where.processNameList != null">
+                    `process_name` in
+                    <foreach collection="where.processNameList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test ="where.fuzzyProcessName!=null and where.fuzzyProcessName.size()>0">
+                (
+                <foreach collection="where.fuzzyProcessName"  separator="or" item="item">
+                    `Process_name` like concat('%',#{item},'%')
+                </foreach>
+                ) and
+            </if>
+            <if test ="where.rightFuzzyProcessName!=null and where.rightFuzzyProcessName.size()>0">
+                (
+                <foreach collection="where.rightFuzzyProcessName"  separator="or" item="item">
+                    `Process_name` like concat(#{item},'%')
+                </foreach>
+                ) and
+            </if>
+                <if test="where.processDefIdList != null">
+                    `process_def_id` in
+                    <foreach collection="where.processDefIdList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test ="where.fuzzyProcessDefId!=null and where.fuzzyProcessDefId.size()>0">
+                (
+                <foreach collection="where.fuzzyProcessDefId"  separator="or" item="item">
+                    `Process_def_id` like concat('%',#{item},'%')
+                </foreach>
+                ) and
+            </if>
+            <if test ="where.rightFuzzyProcessDefId!=null and where.rightFuzzyProcessDefId.size()>0">
+                (
+                <foreach collection="where.rightFuzzyProcessDefId"  separator="or" item="item">
+                    `Process_def_id` like concat(#{item},'%')
+                </foreach>
+                ) and
+            </if>
+                <if test="where.processInstIdList != null">
+                    `process_inst_id` in
+                    <foreach collection="where.processInstIdList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test ="where.fuzzyProcessInstId!=null and where.fuzzyProcessInstId.size()>0">
+                (
+                <foreach collection="where.fuzzyProcessInstId"  separator="or" item="item">
+                    `Process_inst_id` like concat('%',#{item},'%')
+                </foreach>
+                ) and
+            </if>
+            <if test ="where.rightFuzzyProcessInstId!=null and where.rightFuzzyProcessInstId.size()>0">
+                (
+                <foreach collection="where.rightFuzzyProcessInstId"  separator="or" item="item">
+                    `Process_inst_id` like concat(#{item},'%')
+                </foreach>
+                ) and
+            </if>
+                <if test="where.taskIdList != null">
+                    `task_id` in
+                    <foreach collection="where.taskIdList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test ="where.fuzzyTaskId!=null and where.fuzzyTaskId.size()>0">
+                (
+                <foreach collection="where.fuzzyTaskId"  separator="or" item="item">
+                    `Task_id` like concat('%',#{item},'%')
+                </foreach>
+                ) and
+            </if>
+            <if test ="where.rightFuzzyTaskId!=null and where.rightFuzzyTaskId.size()>0">
+                (
+                <foreach collection="where.rightFuzzyTaskId"  separator="or" item="item">
+                    `Task_id` like concat(#{item},'%')
+                </foreach>
+                ) and
+            </if>
+                <if test="where.taskNameList != null">
+                    `task_name` in
+                    <foreach collection="where.taskNameList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test ="where.fuzzyTaskName!=null and where.fuzzyTaskName.size()>0">
+                (
+                <foreach collection="where.fuzzyTaskName"  separator="or" item="item">
+                    `Task_name` like concat('%',#{item},'%')
+                </foreach>
+                ) and
+            </if>
+            <if test ="where.rightFuzzyTaskName!=null and where.rightFuzzyTaskName.size()>0">
+                (
+                <foreach collection="where.rightFuzzyTaskName"  separator="or" item="item">
+                    `Task_name` like concat(#{item},'%')
+                </foreach>
+                ) and
+            </if>
+                <if test="where.assigneeIdList != null">
+                    `assignee_id` in
+                    <foreach collection="where.assigneeIdList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test="where.assigneeIdSt !=null">
+                `assignee_id` >= #{where.assigneeIdSt} and
+            </if>
+            <if test="where.assigneeIdEd!=null">
+                `assignee_id` &lt;= #{where.assigneeIdEd} and
+            </if>
+                <if test="where.assigneeNameList != null">
+                    `assignee_name` in
+                    <foreach collection="where.assigneeNameList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test ="where.fuzzyAssigneeName!=null and where.fuzzyAssigneeName.size()>0">
+                (
+                <foreach collection="where.fuzzyAssigneeName"  separator="or" item="item">
+                    `Assignee_name` like concat('%',#{item},'%')
+                </foreach>
+                ) and
+            </if>
+            <if test ="where.rightFuzzyAssigneeName!=null and where.rightFuzzyAssigneeName.size()>0">
+                (
+                <foreach collection="where.rightFuzzyAssigneeName"  separator="or" item="item">
+                    `Assignee_name` like concat(#{item},'%')
+                </foreach>
+                ) and
+            </if>
+                <if test="where.userIdList != null">
+                    `user_id` in
+                    <foreach collection="where.userIdList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test="where.userIdSt !=null">
+                `user_id` >= #{where.userIdSt} and
+            </if>
+            <if test="where.userIdEd!=null">
+                `user_id` &lt;= #{where.userIdEd} and
+            </if>
+                <if test="where.userNameList != null">
+                    `user_name` in
+                    <foreach collection="where.userNameList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test ="where.fuzzyUserName!=null and where.fuzzyUserName.size()>0">
+                (
+                <foreach collection="where.fuzzyUserName"  separator="or" item="item">
+                    `User_name` like concat('%',#{item},'%')
+                </foreach>
+                ) and
+            </if>
+            <if test ="where.rightFuzzyUserName!=null and where.rightFuzzyUserName.size()>0">
+                (
+                <foreach collection="where.rightFuzzyUserName"  separator="or" item="item">
+                    `User_name` like concat(#{item},'%')
+                </foreach>
+                ) and
+            </if>
+                <if test="where.applierUserIdList != null">
+                    `applier_user_id` in
+                    <foreach collection="where.applierUserIdList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test="where.applierUserIdSt !=null">
+                `applier_user_id` >= #{where.applierUserIdSt} and
+            </if>
+            <if test="where.applierUserIdEd!=null">
+                `applier_user_id` &lt;= #{where.applierUserIdEd} and
+            </if>
+                <if test="where.applierUserNameList != null">
+                    `applier_user_name` in
+                    <foreach collection="where.applierUserNameList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test ="where.fuzzyApplierUserName!=null and where.fuzzyApplierUserName.size()>0">
+                (
+                <foreach collection="where.fuzzyApplierUserName"  separator="or" item="item">
+                    `Applier_user_name` like concat('%',#{item},'%')
+                </foreach>
+                ) and
+            </if>
+            <if test ="where.rightFuzzyApplierUserName!=null and where.rightFuzzyApplierUserName.size()>0">
+                (
+                <foreach collection="where.rightFuzzyApplierUserName"  separator="or" item="item">
+                    `Applier_user_name` like concat(#{item},'%')
+                </foreach>
+                ) and
+            </if>
+                <if test="where.applyTimeList != null">
+                    `apply_time` in
+                    <foreach collection="where.applyTimeList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test="where.applyTimeSt !=null">
+                `apply_time` >= #{where.applyTimeSt} and
+            </if>
+            <if test="where.applyTimeEd!=null">
+                `apply_time` &lt;= #{where.applyTimeEd} and
+            </if>
+                <if test="where.formNameList != null">
+                    `form_name` in
+                    <foreach collection="where.formNameList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test ="where.fuzzyFormName!=null and where.fuzzyFormName.size()>0">
+                (
+                <foreach collection="where.fuzzyFormName"  separator="or" item="item">
+                    `Form_name` like concat('%',#{item},'%')
+                </foreach>
+                ) and
+            </if>
+            <if test ="where.rightFuzzyFormName!=null and where.rightFuzzyFormName.size()>0">
+                (
+                <foreach collection="where.rightFuzzyFormName"  separator="or" item="item">
+                    `Form_name` like concat(#{item},'%')
+                </foreach>
+                ) and
+            </if>
+                <if test="where.formIdList != null">
+                    `form_id` in
+                    <foreach collection="where.formIdList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test="where.formIdSt !=null">
+                `form_id` >= #{where.formIdSt} and
+            </if>
+            <if test="where.formIdEd!=null">
+                `form_id` &lt;= #{where.formIdEd} and
+            </if>
+                <if test="where.simpleReasonList != null">
+                    `simple_reason` in
+                    <foreach collection="where.simpleReasonList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test ="where.fuzzySimpleReason!=null and where.fuzzySimpleReason.size()>0">
+                (
+                <foreach collection="where.fuzzySimpleReason"  separator="or" item="item">
+                    `Simple_reason` like concat('%',#{item},'%')
+                </foreach>
+                ) and
+            </if>
+            <if test ="where.rightFuzzySimpleReason!=null and where.rightFuzzySimpleReason.size()>0">
+                (
+                <foreach collection="where.rightFuzzySimpleReason"  separator="or" item="item">
+                    `Simple_reason` like concat(#{item},'%')
+                </foreach>
+                ) and
+            </if>
+                <if test="where.linkList != null">
+                    `link` in
+                    <foreach collection="where.linkList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test ="where.fuzzyLink!=null and where.fuzzyLink.size()>0">
+                (
+                <foreach collection="where.fuzzyLink"  separator="or" item="item">
+                    `Link` like concat('%',#{item},'%')
+                </foreach>
+                ) and
+            </if>
+            <if test ="where.rightFuzzyLink!=null and where.rightFuzzyLink.size()>0">
+                (
+                <foreach collection="where.rightFuzzyLink"  separator="or" item="item">
+                    `Link` like concat(#{item},'%')
+                </foreach>
+                ) and
+            </if>
+                <if test="where.auditorCommentList != null">
+                    `auditor_comment` in
+                    <foreach collection="where.auditorCommentList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test ="where.fuzzyAuditorComment!=null and where.fuzzyAuditorComment.size()>0">
+                (
+                <foreach collection="where.fuzzyAuditorComment"  separator="or" item="item">
+                    `Auditor_comment` like concat('%',#{item},'%')
+                </foreach>
+                ) and
+            </if>
+            <if test ="where.rightFuzzyAuditorComment!=null and where.rightFuzzyAuditorComment.size()>0">
+                (
+                <foreach collection="where.rightFuzzyAuditorComment"  separator="or" item="item">
+                    `Auditor_comment` like concat(#{item},'%')
+                </foreach>
+                ) and
+            </if>
+                <if test="where.variablesList != null">
+                    `variables` in
+                    <foreach collection="where.variablesList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test ="where.fuzzyVariables!=null and where.fuzzyVariables.size()>0">
+                (
+                <foreach collection="where.fuzzyVariables"  separator="or" item="item">
+                    `Variables` like concat('%',#{item},'%')
+                </foreach>
+                ) and
+            </if>
+            <if test ="where.rightFuzzyVariables!=null and where.rightFuzzyVariables.size()>0">
+                (
+                <foreach collection="where.rightFuzzyVariables"  separator="or" item="item">
+                    `Variables` like concat(#{item},'%')
+                </foreach>
+                ) and
+            </if>
+                <if test="where.processInstTitleList != null">
+                    `process_inst_title` in
+                    <foreach collection="where.processInstTitleList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test ="where.fuzzyProcessInstTitle!=null and where.fuzzyProcessInstTitle.size()>0">
+                (
+                <foreach collection="where.fuzzyProcessInstTitle"  separator="or" item="item">
+                    `Process_inst_title` like concat('%',#{item},'%')
+                </foreach>
+                ) and
+            </if>
+            <if test ="where.rightFuzzyProcessInstTitle!=null and where.rightFuzzyProcessInstTitle.size()>0">
+                (
+                <foreach collection="where.rightFuzzyProcessInstTitle"  separator="or" item="item">
+                    `Process_inst_title` like concat(#{item},'%')
+                </foreach>
+                ) and
+            </if>
+                <if test="where.tbd5List != null">
+                    `tbd5` in
+                    <foreach collection="where.tbd5List" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test ="where.fuzzyTbd5!=null and where.fuzzyTbd5.size()>0">
+                (
+                <foreach collection="where.fuzzyTbd5"  separator="or" item="item">
+                    `Tbd5` like concat('%',#{item},'%')
+                </foreach>
+                ) and
+            </if>
+            <if test ="where.rightFuzzyTbd5!=null and where.rightFuzzyTbd5.size()>0">
+                (
+                <foreach collection="where.rightFuzzyTbd5"  separator="or" item="item">
+                    `Tbd5` like concat(#{item},'%')
+                </foreach>
+                ) and
+            </if>
+                <if test="where.mobileLinkList != null">
+                    `mobile_link` in
+                    <foreach collection="where.mobileLinkList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test ="where.fuzzyMobileLink!=null and where.fuzzyMobileLink.size()>0">
+                (
+                <foreach collection="where.fuzzyMobileLink"  separator="or" item="item">
+                    `Mobile_link` like concat('%',#{item},'%')
+                </foreach>
+                ) and
+            </if>
+            <if test ="where.rightFuzzyMobileLink!=null and where.rightFuzzyMobileLink.size()>0">
+                (
+                <foreach collection="where.rightFuzzyMobileLink"  separator="or" item="item">
+                    `Mobile_link` like concat(#{item},'%')
+                </foreach>
+                ) and
+            </if>
+                <if test="where.formDataUrlList != null">
+                    `form_data_url` in
+                    <foreach collection="where.formDataUrlList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test ="where.fuzzyFormDataUrl!=null and where.fuzzyFormDataUrl.size()>0">
+                (
+                <foreach collection="where.fuzzyFormDataUrl"  separator="or" item="item">
+                    `Form_data_url` like concat('%',#{item},'%')
+                </foreach>
+                ) and
+            </if>
+            <if test ="where.rightFuzzyFormDataUrl!=null and where.rightFuzzyFormDataUrl.size()>0">
+                (
+                <foreach collection="where.rightFuzzyFormDataUrl"  separator="or" item="item">
+                    `Form_data_url` like concat(#{item},'%')
+                </foreach>
+                ) and
+            </if>
+                <if test="where.formDataList != null">
+                    `form_data` in
+                    <foreach collection="where.formDataList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test ="where.fuzzyFormData!=null and where.fuzzyFormData.size()>0">
+                (
+                <foreach collection="where.fuzzyFormData"  separator="or" item="item">
+                    `Form_data` like concat('%',#{item},'%')
+                </foreach>
+                ) and
+            </if>
+            <if test ="where.rightFuzzyFormData!=null and where.rightFuzzyFormData.size()>0">
+                (
+                <foreach collection="where.rightFuzzyFormData"  separator="or" item="item">
+                    `Form_data` like concat(#{item},'%')
+                </foreach>
+                ) and
+            </if>
+        </trim>
+    </update>
+
+
+    <resultMap type="com.gamc.efactory.model.dataObject.SimpleApplicationObject" id="SimpleApplicationObjectMap">
+        <result property="simpleApplicationObjectId" column="simple_application_object_id"/>
+        <result property="processName" column="process_name"/>
+        <result property="processDefId" column="process_def_id"/>
+        <result property="processInstId" column="process_inst_id"/>
+        <result property="taskId" column="task_id"/>
+        <result property="taskName" column="task_name"/>
+        <result property="assigneeId" column="assignee_id"/>
+        <result property="assigneeName" column="assignee_name"/>
+        <result property="userId" column="user_id"/>
+        <result property="userName" column="user_name"/>
+        <result property="applierUserId" column="applier_user_id"/>
+        <result property="applierUserName" column="applier_user_name"/>
+        <result property="applyTime" column="apply_time"/>
+        <result property="formName" column="form_name"/>
+        <result property="formId" column="form_id"/>
+        <result property="simpleReason" column="simple_reason"/>
+        <result property="link" column="link"/>
+        <result property="auditorComment" column="auditor_comment"/>
+        <result property="variables" column="variables"/>
+        <result property="processInstTitle" column="process_inst_title"/>
+        <result property="tbd5" column="tbd5"/>
+        <result property="mobileLink" column="mobile_link"/>
+        <result property="formDataUrl" column="form_data_url"/>
+        <result property="formData" column="form_data"/>
+    </resultMap>
+
+
+    <select id="querySimpleApplicationObject" resultMap="SimpleApplicationObjectMap">
+        select
+        <include refid="baseResult"></include>
+        from  `simple_application_object`
+        <trim prefix="where" suffixOverrides="and | or">
+            <if test="simpleApplicationObjectId != null">
+                `simple_application_object_id` = #{simpleApplicationObjectId} and
+            </if>
+            <if test="processName != null and processName!=''">
+                `process_name` = #{processName} and
+            </if>
+            <if test="processDefId != null and processDefId!=''">
+                `process_def_id` = #{processDefId} and
+            </if>
+            <if test="processInstId != null and processInstId!=''">
+                `process_inst_id` = #{processInstId} and
+            </if>
+            <if test="taskId != null and taskId!=''">
+                `task_id` = #{taskId} and
+            </if>
+            <if test="taskName != null and taskName!=''">
+                `task_name` = #{taskName} and
+            </if>
+            <if test="assigneeId != null">
+                `assignee_id` = #{assigneeId} and
+            </if>
+            <if test="assigneeName != null and assigneeName!=''">
+                `assignee_name` = #{assigneeName} and
+            </if>
+            <if test="userId != null">
+                `user_id` = #{userId} and
+            </if>
+            <if test="userName != null and userName!=''">
+                `user_name` = #{userName} and
+            </if>
+            <if test="applierUserId != null">
+                `applier_user_id` = #{applierUserId} and
+            </if>
+            <if test="applierUserName != null and applierUserName!=''">
+                `applier_user_name` = #{applierUserName} and
+            </if>
+            <if test="applyTime != null">
+                `apply_time` = #{applyTime} and
+            </if>
+            <if test="formName != null and formName!=''">
+                `form_name` = #{formName} and
+            </if>
+            <if test="formId != null">
+                `form_id` = #{formId} and
+            </if>
+            <if test="simpleReason != null and simpleReason!=''">
+                `simple_reason` = #{simpleReason} and
+            </if>
+            <if test="link != null and link!=''">
+                `link` = #{link} and
+            </if>
+            <if test="auditorComment != null and auditorComment!=''">
+                `auditor_comment` = #{auditorComment} and
+            </if>
+            <if test="variables != null and variables!=''">
+                `variables` = #{variables} and
+            </if>
+            <if test="processInstTitle != null and processInstTitle!=''">
+                `process_inst_title` = #{processInstTitle} and
+            </if>
+            <if test="tbd5 != null and tbd5!=''">
+                `tbd5` = #{tbd5} and
+            </if>
+            <if test="mobileLink != null and mobileLink!=''">
+                `mobile_link` = #{mobileLink} and
+            </if>
+            <if test="formDataUrl != null and formDataUrl!=''">
+                `form_data_url` = #{formDataUrl} and
+            </if>
+            <if test="formData != null and formData!=''">
+                `form_data` = #{formData} and
+            </if>
+            <if test = "(_parameter instanceof com.gamc.efactory.model.dataObject.SimpleApplicationObject$QueryBuilder) == true">
+                <if test="simpleApplicationObjectIdList != null">
+                    `simple_application_object_id` in
+                    <foreach collection="simpleApplicationObjectIdList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test="simpleApplicationObjectIdSt !=null">
+                    `simple_application_object_id` >= #{simpleApplicationObjectIdSt} and
+                </if>
+                <if test="simpleApplicationObjectIdEd!=null">
+                    `simple_application_object_id` &lt;= #{simpleApplicationObjectIdEd} and
+                </if>
+                <if test="processNameList != null">
+                    `process_name` in
+                    <foreach collection="processNameList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyProcessName!=null and fuzzyProcessName.size()>0">
+                    (
+                    <foreach collection="fuzzyProcessName"  separator="or" item="item">
+                        `Process_name` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyProcessName!=null and rightFuzzyProcessName.size()>0">
+                    (
+                    <foreach collection="rightFuzzyProcessName"  separator="or" item="item">
+                        `Process_name` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="processDefIdList != null">
+                    `process_def_id` in
+                    <foreach collection="processDefIdList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyProcessDefId!=null and fuzzyProcessDefId.size()>0">
+                    (
+                    <foreach collection="fuzzyProcessDefId"  separator="or" item="item">
+                        `Process_def_id` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyProcessDefId!=null and rightFuzzyProcessDefId.size()>0">
+                    (
+                    <foreach collection="rightFuzzyProcessDefId"  separator="or" item="item">
+                        `Process_def_id` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="processInstIdList != null">
+                    `process_inst_id` in
+                    <foreach collection="processInstIdList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyProcessInstId!=null and fuzzyProcessInstId.size()>0">
+                    (
+                    <foreach collection="fuzzyProcessInstId"  separator="or" item="item">
+                        `Process_inst_id` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyProcessInstId!=null and rightFuzzyProcessInstId.size()>0">
+                    (
+                    <foreach collection="rightFuzzyProcessInstId"  separator="or" item="item">
+                        `Process_inst_id` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="taskIdList != null">
+                    `task_id` in
+                    <foreach collection="taskIdList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyTaskId!=null and fuzzyTaskId.size()>0">
+                    (
+                    <foreach collection="fuzzyTaskId"  separator="or" item="item">
+                        `Task_id` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyTaskId!=null and rightFuzzyTaskId.size()>0">
+                    (
+                    <foreach collection="rightFuzzyTaskId"  separator="or" item="item">
+                        `Task_id` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="taskNameList != null">
+                    `task_name` in
+                    <foreach collection="taskNameList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyTaskName!=null and fuzzyTaskName.size()>0">
+                    (
+                    <foreach collection="fuzzyTaskName"  separator="or" item="item">
+                        `Task_name` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyTaskName!=null and rightFuzzyTaskName.size()>0">
+                    (
+                    <foreach collection="rightFuzzyTaskName"  separator="or" item="item">
+                        `Task_name` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="assigneeIdList != null">
+                    `assignee_id` in
+                    <foreach collection="assigneeIdList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test="assigneeIdSt !=null">
+                    `assignee_id` >= #{assigneeIdSt} and
+                </if>
+                <if test="assigneeIdEd!=null">
+                    `assignee_id` &lt;= #{assigneeIdEd} and
+                </if>
+                <if test="assigneeNameList != null">
+                    `assignee_name` in
+                    <foreach collection="assigneeNameList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyAssigneeName!=null and fuzzyAssigneeName.size()>0">
+                    (
+                    <foreach collection="fuzzyAssigneeName"  separator="or" item="item">
+                        `Assignee_name` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyAssigneeName!=null and rightFuzzyAssigneeName.size()>0">
+                    (
+                    <foreach collection="rightFuzzyAssigneeName"  separator="or" item="item">
+                        `Assignee_name` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="userIdList != null">
+                    `user_id` in
+                    <foreach collection="userIdList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test="userIdSt !=null">
+                    `user_id` >= #{userIdSt} and
+                </if>
+                <if test="userIdEd!=null">
+                    `user_id` &lt;= #{userIdEd} and
+                </if>
+                <if test="userNameList != null">
+                    `user_name` in
+                    <foreach collection="userNameList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyUserName!=null and fuzzyUserName.size()>0">
+                    (
+                    <foreach collection="fuzzyUserName"  separator="or" item="item">
+                        `User_name` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyUserName!=null and rightFuzzyUserName.size()>0">
+                    (
+                    <foreach collection="rightFuzzyUserName"  separator="or" item="item">
+                        `User_name` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="applierUserIdList != null">
+                    `applier_user_id` in
+                    <foreach collection="applierUserIdList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test="applierUserIdSt !=null">
+                    `applier_user_id` >= #{applierUserIdSt} and
+                </if>
+                <if test="applierUserIdEd!=null">
+                    `applier_user_id` &lt;= #{applierUserIdEd} and
+                </if>
+                <if test="applierUserNameList != null">
+                    `applier_user_name` in
+                    <foreach collection="applierUserNameList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyApplierUserName!=null and fuzzyApplierUserName.size()>0">
+                    (
+                    <foreach collection="fuzzyApplierUserName"  separator="or" item="item">
+                        `Applier_user_name` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyApplierUserName!=null and rightFuzzyApplierUserName.size()>0">
+                    (
+                    <foreach collection="rightFuzzyApplierUserName"  separator="or" item="item">
+                        `Applier_user_name` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="applyTimeList != null">
+                    `apply_time` in
+                    <foreach collection="applyTimeList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test="applyTimeSt !=null">
+                    `apply_time` >= #{applyTimeSt} and
+                </if>
+                <if test="applyTimeEd!=null">
+                    `apply_time` &lt;= #{applyTimeEd} and
+                </if>
+                <if test="formNameList != null">
+                    `form_name` in
+                    <foreach collection="formNameList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyFormName!=null and fuzzyFormName.size()>0">
+                    (
+                    <foreach collection="fuzzyFormName"  separator="or" item="item">
+                        `Form_name` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyFormName!=null and rightFuzzyFormName.size()>0">
+                    (
+                    <foreach collection="rightFuzzyFormName"  separator="or" item="item">
+                        `Form_name` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="formIdList != null">
+                    `form_id` in
+                    <foreach collection="formIdList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test="formIdSt !=null">
+                    `form_id` >= #{formIdSt} and
+                </if>
+                <if test="formIdEd!=null">
+                    `form_id` &lt;= #{formIdEd} and
+                </if>
+                <if test="simpleReasonList != null">
+                    `simple_reason` in
+                    <foreach collection="simpleReasonList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzySimpleReason!=null and fuzzySimpleReason.size()>0">
+                    (
+                    <foreach collection="fuzzySimpleReason"  separator="or" item="item">
+                        `Simple_reason` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzySimpleReason!=null and rightFuzzySimpleReason.size()>0">
+                    (
+                    <foreach collection="rightFuzzySimpleReason"  separator="or" item="item">
+                        `Simple_reason` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="linkList != null">
+                    `link` in
+                    <foreach collection="linkList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyLink!=null and fuzzyLink.size()>0">
+                    (
+                    <foreach collection="fuzzyLink"  separator="or" item="item">
+                        `Link` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyLink!=null and rightFuzzyLink.size()>0">
+                    (
+                    <foreach collection="rightFuzzyLink"  separator="or" item="item">
+                        `Link` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="auditorCommentList != null">
+                    `auditor_comment` in
+                    <foreach collection="auditorCommentList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyAuditorComment!=null and fuzzyAuditorComment.size()>0">
+                    (
+                    <foreach collection="fuzzyAuditorComment"  separator="or" item="item">
+                        `Auditor_comment` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyAuditorComment!=null and rightFuzzyAuditorComment.size()>0">
+                    (
+                    <foreach collection="rightFuzzyAuditorComment"  separator="or" item="item">
+                        `Auditor_comment` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="variablesList != null">
+                    `variables` in
+                    <foreach collection="variablesList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyVariables!=null and fuzzyVariables.size()>0">
+                    (
+                    <foreach collection="fuzzyVariables"  separator="or" item="item">
+                        `Variables` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyVariables!=null and rightFuzzyVariables.size()>0">
+                    (
+                    <foreach collection="rightFuzzyVariables"  separator="or" item="item">
+                        `Variables` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="processInstTitleList != null">
+                    `process_inst_title` in
+                    <foreach collection="processInstTitleList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyProcessInstTitle!=null and fuzzyProcessInstTitle.size()>0">
+                    (
+                    <foreach collection="fuzzyProcessInstTitle"  separator="or" item="item">
+                        `Process_inst_title` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyProcessInstTitle!=null and rightFuzzyProcessInstTitle.size()>0">
+                    (
+                    <foreach collection="rightFuzzyProcessInstTitle"  separator="or" item="item">
+                        `Process_inst_title` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="tbd5List != null">
+                    `tbd5` in
+                    <foreach collection="tbd5List" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyTbd5!=null and fuzzyTbd5.size()>0">
+                    (
+                    <foreach collection="fuzzyTbd5"  separator="or" item="item">
+                        `Tbd5` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyTbd5!=null and rightFuzzyTbd5.size()>0">
+                    (
+                    <foreach collection="rightFuzzyTbd5"  separator="or" item="item">
+                        `Tbd5` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="mobileLinkList != null">
+                    `mobile_link` in
+                    <foreach collection="mobileLinkList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyMobileLink!=null and fuzzyMobileLink.size()>0">
+                    (
+                    <foreach collection="fuzzyMobileLink"  separator="or" item="item">
+                        `Mobile_link` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyMobileLink!=null and rightFuzzyMobileLink.size()>0">
+                    (
+                    <foreach collection="rightFuzzyMobileLink"  separator="or" item="item">
+                        `Mobile_link` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="formDataUrlList != null">
+                    `form_data_url` in
+                    <foreach collection="formDataUrlList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyFormDataUrl!=null and fuzzyFormDataUrl.size()>0">
+                    (
+                    <foreach collection="fuzzyFormDataUrl"  separator="or" item="item">
+                        `Form_data_url` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyFormDataUrl!=null and rightFuzzyFormDataUrl.size()>0">
+                    (
+                    <foreach collection="rightFuzzyFormDataUrl"  separator="or" item="item">
+                        `Form_data_url` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="formDataList != null">
+                    `form_data` in
+                    <foreach collection="formDataList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyFormData!=null and fuzzyFormData.size()>0">
+                    (
+                    <foreach collection="fuzzyFormData"  separator="or" item="item">
+                        `Form_data` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyFormData!=null and rightFuzzyFormData.size()>0">
+                    (
+                    <foreach collection="rightFuzzyFormData"  separator="or" item="item">
+                        `Form_data` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+            </if>
+        </trim>
+    </select>
+
+    <select id="querySimpleApplicationObjectLimit1" resultMap="SimpleApplicationObjectMap">
+        select
+        <include refid="baseResult"></include>
+        from  `simple_application_object`
+        <trim prefix="where" suffixOverrides="and | or">
+            <if test="simpleApplicationObjectId != null">
+                `simple_application_object_id` = #{simpleApplicationObjectId} and
+            </if>
+            <if test="processName != null and processName!=''">
+                `process_name` = #{processName} and
+            </if>
+            <if test="processDefId != null and processDefId!=''">
+                `process_def_id` = #{processDefId} and
+            </if>
+            <if test="processInstId != null and processInstId!=''">
+                `process_inst_id` = #{processInstId} and
+            </if>
+            <if test="taskId != null and taskId!=''">
+                `task_id` = #{taskId} and
+            </if>
+            <if test="taskName != null and taskName!=''">
+                `task_name` = #{taskName} and
+            </if>
+            <if test="assigneeId != null">
+                `assignee_id` = #{assigneeId} and
+            </if>
+            <if test="assigneeName != null and assigneeName!=''">
+                `assignee_name` = #{assigneeName} and
+            </if>
+            <if test="userId != null">
+                `user_id` = #{userId} and
+            </if>
+            <if test="userName != null and userName!=''">
+                `user_name` = #{userName} and
+            </if>
+            <if test="applierUserId != null">
+                `applier_user_id` = #{applierUserId} and
+            </if>
+            <if test="applierUserName != null and applierUserName!=''">
+                `applier_user_name` = #{applierUserName} and
+            </if>
+            <if test="applyTime != null">
+                `apply_time` = #{applyTime} and
+            </if>
+            <if test="formName != null and formName!=''">
+                `form_name` = #{formName} and
+            </if>
+            <if test="formId != null">
+                `form_id` = #{formId} and
+            </if>
+            <if test="simpleReason != null and simpleReason!=''">
+                `simple_reason` = #{simpleReason} and
+            </if>
+            <if test="link != null and link!=''">
+                `link` = #{link} and
+            </if>
+            <if test="auditorComment != null and auditorComment!=''">
+                `auditor_comment` = #{auditorComment} and
+            </if>
+            <if test="variables != null and variables!=''">
+                `variables` = #{variables} and
+            </if>
+            <if test="processInstTitle != null and processInstTitle!=''">
+                `process_inst_title` = #{processInstTitle} and
+            </if>
+            <if test="tbd5 != null and tbd5!=''">
+                `tbd5` = #{tbd5} and
+            </if>
+            <if test="mobileLink != null and mobileLink!=''">
+                `mobile_link` = #{mobileLink} and
+            </if>
+            <if test="formDataUrl != null and formDataUrl!=''">
+                `form_data_url` = #{formDataUrl} and
+            </if>
+            <if test="formData != null and formData!=''">
+                `form_data` = #{formData} and
+            </if>
+            <if test = "(_parameter instanceof com.gamc.efactory.model.dataObject.SimpleApplicationObject$QueryBuilder) == true">
+                    <if test="simpleApplicationObjectIdList != null">
+                        `simple_application_object_id` in
+                        <foreach collection="simpleApplicationObjectIdList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test="simpleApplicationObjectIdSt !=null">
+                    `simple_application_object_id` >= #{simpleApplicationObjectIdSt} and
+                </if>
+                <if test="simpleApplicationObjectIdEd!=null">
+                    `simple_application_object_id` &lt;= #{simpleApplicationObjectIdEd} and
+                </if>
+                    <if test="processNameList != null">
+                        `process_name` in
+                        <foreach collection="processNameList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyProcessName!=null and fuzzyProcessName.size()>0">
+                    (
+                    <foreach collection="fuzzyProcessName"  separator="or" item="item">
+                        `Process_name` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyProcessName!=null and rightFuzzyProcessName.size()>0">
+                    (
+                    <foreach collection="rightFuzzyProcessName"  separator="or" item="item">
+                        `Process_name` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                    <if test="processDefIdList != null">
+                        `process_def_id` in
+                        <foreach collection="processDefIdList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyProcessDefId!=null and fuzzyProcessDefId.size()>0">
+                    (
+                    <foreach collection="fuzzyProcessDefId"  separator="or" item="item">
+                        `Process_def_id` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyProcessDefId!=null and rightFuzzyProcessDefId.size()>0">
+                    (
+                    <foreach collection="rightFuzzyProcessDefId"  separator="or" item="item">
+                        `Process_def_id` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                    <if test="processInstIdList != null">
+                        `process_inst_id` in
+                        <foreach collection="processInstIdList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyProcessInstId!=null and fuzzyProcessInstId.size()>0">
+                    (
+                    <foreach collection="fuzzyProcessInstId"  separator="or" item="item">
+                        `Process_inst_id` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyProcessInstId!=null and rightFuzzyProcessInstId.size()>0">
+                    (
+                    <foreach collection="rightFuzzyProcessInstId"  separator="or" item="item">
+                        `Process_inst_id` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                    <if test="taskIdList != null">
+                        `task_id` in
+                        <foreach collection="taskIdList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyTaskId!=null and fuzzyTaskId.size()>0">
+                    (
+                    <foreach collection="fuzzyTaskId"  separator="or" item="item">
+                        `Task_id` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyTaskId!=null and rightFuzzyTaskId.size()>0">
+                    (
+                    <foreach collection="rightFuzzyTaskId"  separator="or" item="item">
+                        `Task_id` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                    <if test="taskNameList != null">
+                        `task_name` in
+                        <foreach collection="taskNameList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyTaskName!=null and fuzzyTaskName.size()>0">
+                    (
+                    <foreach collection="fuzzyTaskName"  separator="or" item="item">
+                        `Task_name` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyTaskName!=null and rightFuzzyTaskName.size()>0">
+                    (
+                    <foreach collection="rightFuzzyTaskName"  separator="or" item="item">
+                        `Task_name` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                    <if test="assigneeIdList != null">
+                        `assignee_id` in
+                        <foreach collection="assigneeIdList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test="assigneeIdSt !=null">
+                    `assignee_id` >= #{assigneeIdSt} and
+                </if>
+                <if test="assigneeIdEd!=null">
+                    `assignee_id` &lt;= #{assigneeIdEd} and
+                </if>
+                    <if test="assigneeNameList != null">
+                        `assignee_name` in
+                        <foreach collection="assigneeNameList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyAssigneeName!=null and fuzzyAssigneeName.size()>0">
+                    (
+                    <foreach collection="fuzzyAssigneeName"  separator="or" item="item">
+                        `Assignee_name` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyAssigneeName!=null and rightFuzzyAssigneeName.size()>0">
+                    (
+                    <foreach collection="rightFuzzyAssigneeName"  separator="or" item="item">
+                        `Assignee_name` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                    <if test="userIdList != null">
+                        `user_id` in
+                        <foreach collection="userIdList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test="userIdSt !=null">
+                    `user_id` >= #{userIdSt} and
+                </if>
+                <if test="userIdEd!=null">
+                    `user_id` &lt;= #{userIdEd} and
+                </if>
+                    <if test="userNameList != null">
+                        `user_name` in
+                        <foreach collection="userNameList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyUserName!=null and fuzzyUserName.size()>0">
+                    (
+                    <foreach collection="fuzzyUserName"  separator="or" item="item">
+                        `User_name` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyUserName!=null and rightFuzzyUserName.size()>0">
+                    (
+                    <foreach collection="rightFuzzyUserName"  separator="or" item="item">
+                        `User_name` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                    <if test="applierUserIdList != null">
+                        `applier_user_id` in
+                        <foreach collection="applierUserIdList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test="applierUserIdSt !=null">
+                    `applier_user_id` >= #{applierUserIdSt} and
+                </if>
+                <if test="applierUserIdEd!=null">
+                    `applier_user_id` &lt;= #{applierUserIdEd} and
+                </if>
+                    <if test="applierUserNameList != null">
+                        `applier_user_name` in
+                        <foreach collection="applierUserNameList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyApplierUserName!=null and fuzzyApplierUserName.size()>0">
+                    (
+                    <foreach collection="fuzzyApplierUserName"  separator="or" item="item">
+                        `Applier_user_name` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyApplierUserName!=null and rightFuzzyApplierUserName.size()>0">
+                    (
+                    <foreach collection="rightFuzzyApplierUserName"  separator="or" item="item">
+                        `Applier_user_name` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                    <if test="applyTimeList != null">
+                        `apply_time` in
+                        <foreach collection="applyTimeList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test="applyTimeSt !=null">
+                    `apply_time` >= #{applyTimeSt} and
+                </if>
+                <if test="applyTimeEd!=null">
+                    `apply_time` &lt;= #{applyTimeEd} and
+                </if>
+                    <if test="formNameList != null">
+                        `form_name` in
+                        <foreach collection="formNameList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyFormName!=null and fuzzyFormName.size()>0">
+                    (
+                    <foreach collection="fuzzyFormName"  separator="or" item="item">
+                        `Form_name` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyFormName!=null and rightFuzzyFormName.size()>0">
+                    (
+                    <foreach collection="rightFuzzyFormName"  separator="or" item="item">
+                        `Form_name` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                    <if test="formIdList != null">
+                        `form_id` in
+                        <foreach collection="formIdList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test="formIdSt !=null">
+                    `form_id` >= #{formIdSt} and
+                </if>
+                <if test="formIdEd!=null">
+                    `form_id` &lt;= #{formIdEd} and
+                </if>
+                    <if test="simpleReasonList != null">
+                        `simple_reason` in
+                        <foreach collection="simpleReasonList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzySimpleReason!=null and fuzzySimpleReason.size()>0">
+                    (
+                    <foreach collection="fuzzySimpleReason"  separator="or" item="item">
+                        `Simple_reason` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzySimpleReason!=null and rightFuzzySimpleReason.size()>0">
+                    (
+                    <foreach collection="rightFuzzySimpleReason"  separator="or" item="item">
+                        `Simple_reason` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                    <if test="linkList != null">
+                        `link` in
+                        <foreach collection="linkList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyLink!=null and fuzzyLink.size()>0">
+                    (
+                    <foreach collection="fuzzyLink"  separator="or" item="item">
+                        `Link` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyLink!=null and rightFuzzyLink.size()>0">
+                    (
+                    <foreach collection="rightFuzzyLink"  separator="or" item="item">
+                        `Link` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                    <if test="auditorCommentList != null">
+                        `auditor_comment` in
+                        <foreach collection="auditorCommentList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyAuditorComment!=null and fuzzyAuditorComment.size()>0">
+                    (
+                    <foreach collection="fuzzyAuditorComment"  separator="or" item="item">
+                        `Auditor_comment` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyAuditorComment!=null and rightFuzzyAuditorComment.size()>0">
+                    (
+                    <foreach collection="rightFuzzyAuditorComment"  separator="or" item="item">
+                        `Auditor_comment` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                    <if test="variablesList != null">
+                        `variables` in
+                        <foreach collection="variablesList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyVariables!=null and fuzzyVariables.size()>0">
+                    (
+                    <foreach collection="fuzzyVariables"  separator="or" item="item">
+                        `Variables` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyVariables!=null and rightFuzzyVariables.size()>0">
+                    (
+                    <foreach collection="rightFuzzyVariables"  separator="or" item="item">
+                        `Variables` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                    <if test="processInstTitleList != null">
+                        `process_inst_title` in
+                        <foreach collection="processInstTitleList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyProcessInstTitle!=null and fuzzyProcessInstTitle.size()>0">
+                    (
+                    <foreach collection="fuzzyProcessInstTitle"  separator="or" item="item">
+                        `Process_inst_title` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyProcessInstTitle!=null and rightFuzzyProcessInstTitle.size()>0">
+                    (
+                    <foreach collection="rightFuzzyProcessInstTitle"  separator="or" item="item">
+                        `Process_inst_title` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                    <if test="tbd5List != null">
+                        `tbd5` in
+                        <foreach collection="tbd5List" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyTbd5!=null and fuzzyTbd5.size()>0">
+                    (
+                    <foreach collection="fuzzyTbd5"  separator="or" item="item">
+                        `Tbd5` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyTbd5!=null and rightFuzzyTbd5.size()>0">
+                    (
+                    <foreach collection="rightFuzzyTbd5"  separator="or" item="item">
+                        `Tbd5` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                    <if test="mobileLinkList != null">
+                        `mobile_link` in
+                        <foreach collection="mobileLinkList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyMobileLink!=null and fuzzyMobileLink.size()>0">
+                    (
+                    <foreach collection="fuzzyMobileLink"  separator="or" item="item">
+                        `Mobile_link` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyMobileLink!=null and rightFuzzyMobileLink.size()>0">
+                    (
+                    <foreach collection="rightFuzzyMobileLink"  separator="or" item="item">
+                        `Mobile_link` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                    <if test="formDataUrlList != null">
+                        `form_data_url` in
+                        <foreach collection="formDataUrlList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyFormDataUrl!=null and fuzzyFormDataUrl.size()>0">
+                    (
+                    <foreach collection="fuzzyFormDataUrl"  separator="or" item="item">
+                        `Form_data_url` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyFormDataUrl!=null and rightFuzzyFormDataUrl.size()>0">
+                    (
+                    <foreach collection="rightFuzzyFormDataUrl"  separator="or" item="item">
+                        `Form_data_url` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                    <if test="formDataList != null">
+                        `form_data` in
+                        <foreach collection="formDataList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyFormData!=null and fuzzyFormData.size()>0">
+                    (
+                    <foreach collection="fuzzyFormData"  separator="or" item="item">
+                        `Form_data` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyFormData!=null and rightFuzzyFormData.size()>0">
+                    (
+                    <foreach collection="rightFuzzyFormData"  separator="or" item="item">
+                        `Form_data` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+            </if>
+        </trim>
+        limit 1
+    </select>
+
+    <sql id="allResult">
+        <trim suffixOverrides=",">
+        `simple_application_object_id`,
+        `process_name`,
+        `process_def_id`,
+        `process_inst_id`,
+        `task_id`,
+        `task_name`,
+        `assignee_id`,
+        `assignee_name`,
+        `user_id`,
+        `user_name`,
+        `applier_user_id`,
+        `applier_user_name`,
+        `apply_time`,
+        `form_name`,
+        `form_id`,
+        `simple_reason`,
+        `link`,
+        `auditor_comment`,
+        `variables`,
+        `process_inst_title`,
+        `tbd5`,
+        `mobile_link`,
+        `form_data_url`,
+        `form_data`,
+        </trim>
+    </sql>
+
+
+
+    <sql id="baseResult">
+        <trim suffixOverrides=",">
+            <if test = "(_parameter instanceof com.gamc.efactory.model.dataObject.SimpleApplicationObject$QueryBuilder) == true">
+
+                <if test="fetchFields==null">
+                    <include refid="allResult"></include>
+                </if>
+                <if test="fetchFields!=null">
+                    <if test="fetchFields.AllFields !=null">
+                        <include refid="allResult"></include>
+                    </if>
+                    <if test="fetchFields.AllFields ==null and fetchFields.fetchFields==null and fetchFields.excludeFields==null and fetchFields.otherFields==null">
+                        <include refid="allResult"></include>
+                    </if>
+                    <if test="fetchFields.AllFields==null and fetchFields.fetchFields!=null">
+                    <if test="fetchFields.fetchFields.simpleApplicationObjectId==true">
+                        `simple_application_object_id`,
+                    </if>
+                    <if test="fetchFields.fetchFields.processName==true">
+                        `process_name`,
+                    </if>
+                    <if test="fetchFields.fetchFields.processDefId==true">
+                        `process_def_id`,
+                    </if>
+                    <if test="fetchFields.fetchFields.processInstId==true">
+                        `process_inst_id`,
+                    </if>
+                    <if test="fetchFields.fetchFields.taskId==true">
+                        `task_id`,
+                    </if>
+                    <if test="fetchFields.fetchFields.taskName==true">
+                        `task_name`,
+                    </if>
+                    <if test="fetchFields.fetchFields.assigneeId==true">
+                        `assignee_id`,
+                    </if>
+                    <if test="fetchFields.fetchFields.assigneeName==true">
+                        `assignee_name`,
+                    </if>
+                    <if test="fetchFields.fetchFields.userId==true">
+                        `user_id`,
+                    </if>
+                    <if test="fetchFields.fetchFields.userName==true">
+                        `user_name`,
+                    </if>
+                    <if test="fetchFields.fetchFields.applierUserId==true">
+                        `applier_user_id`,
+                    </if>
+                    <if test="fetchFields.fetchFields.applierUserName==true">
+                        `applier_user_name`,
+                    </if>
+                    <if test="fetchFields.fetchFields.applyTime==true">
+                        `apply_time`,
+                    </if>
+                    <if test="fetchFields.fetchFields.formName==true">
+                        `form_name`,
+                    </if>
+                    <if test="fetchFields.fetchFields.formId==true">
+                        `form_id`,
+                    </if>
+                    <if test="fetchFields.fetchFields.simpleReason==true">
+                        `simple_reason`,
+                    </if>
+                    <if test="fetchFields.fetchFields.link==true">
+                        `link`,
+                    </if>
+                    <if test="fetchFields.fetchFields.auditorComment==true">
+                        `auditor_comment`,
+                    </if>
+                    <if test="fetchFields.fetchFields.variables==true">
+                        `variables`,
+                    </if>
+                    <if test="fetchFields.fetchFields.processInstTitle==true">
+                        `process_inst_title`,
+                    </if>
+                    <if test="fetchFields.fetchFields.tbd5==true">
+                        `tbd5`,
+                    </if>
+                    <if test="fetchFields.fetchFields.mobileLink==true">
+                        `mobile_link`,
+                    </if>
+                    <if test="fetchFields.fetchFields.formDataUrl==true">
+                        `form_data_url`,
+                    </if>
+                    <if test="fetchFields.fetchFields.formData==true">
+                        `form_data`,
+                    </if>
+                    </if>
+                    <if test="fetchFields.AllFields==null and fetchFields.excludeFields!=null">
+                    <if test="fetchFields.excludeFields.simpleApplicationObjectId==null">
+                        `simple_application_object_id`,
+                    </if>
+                    <if test="fetchFields.excludeFields.processName==null">
+                        `process_name`,
+                    </if>
+                    <if test="fetchFields.excludeFields.processDefId==null">
+                        `process_def_id`,
+                    </if>
+                    <if test="fetchFields.excludeFields.processInstId==null">
+                        `process_inst_id`,
+                    </if>
+                    <if test="fetchFields.excludeFields.taskId==null">
+                        `task_id`,
+                    </if>
+                    <if test="fetchFields.excludeFields.taskName==null">
+                        `task_name`,
+                    </if>
+                    <if test="fetchFields.excludeFields.assigneeId==null">
+                        `assignee_id`,
+                    </if>
+                    <if test="fetchFields.excludeFields.assigneeName==null">
+                        `assignee_name`,
+                    </if>
+                    <if test="fetchFields.excludeFields.userId==null">
+                        `user_id`,
+                    </if>
+                    <if test="fetchFields.excludeFields.userName==null">
+                        `user_name`,
+                    </if>
+                    <if test="fetchFields.excludeFields.applierUserId==null">
+                        `applier_user_id`,
+                    </if>
+                    <if test="fetchFields.excludeFields.applierUserName==null">
+                        `applier_user_name`,
+                    </if>
+                    <if test="fetchFields.excludeFields.applyTime==null">
+                        `apply_time`,
+                    </if>
+                    <if test="fetchFields.excludeFields.formName==null">
+                        `form_name`,
+                    </if>
+                    <if test="fetchFields.excludeFields.formId==null">
+                        `form_id`,
+                    </if>
+                    <if test="fetchFields.excludeFields.simpleReason==null">
+                        `simple_reason`,
+                    </if>
+                    <if test="fetchFields.excludeFields.link==null">
+                        `link`,
+                    </if>
+                    <if test="fetchFields.excludeFields.auditorComment==null">
+                        `auditor_comment`,
+                    </if>
+                    <if test="fetchFields.excludeFields.variables==null">
+                        `variables`,
+                    </if>
+                    <if test="fetchFields.excludeFields.processInstTitle==null">
+                        `process_inst_title`,
+                    </if>
+                    <if test="fetchFields.excludeFields.tbd5==null">
+                        `tbd5`,
+                    </if>
+                    <if test="fetchFields.excludeFields.mobileLink==null">
+                        `mobile_link`,
+                    </if>
+                    <if test="fetchFields.excludeFields.formDataUrl==null">
+                        `form_data_url`,
+                    </if>
+                    <if test="fetchFields.excludeFields.formData==null">
+                        `form_data`,
+                    </if>
+                    </if>
+                    <if test="fetchFields.otherFields!=null and fetchFields.otherFields.size>0">
+                        <foreach collection="fetchFields.otherFields" index="index" item="item" separator=",">
+                        `#{item}`
+                        </foreach>
+                    </if>
+                </if>
+            </if>
+            <if test="(_parameter instanceof com.gamc.efactory.model.dataObject.SimpleApplicationObject$QueryBuilder) == false" >
+                <include refid="allResult"></include>
+            </if>
+
+        </trim>
+    </sql>
+
+
+</mapper>

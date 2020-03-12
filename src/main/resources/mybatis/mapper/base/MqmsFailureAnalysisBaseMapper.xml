@@ -1,0 +1,547 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gamc.efactory.dao.base.MqmsFailureAnalysisBaseMapper">
+
+
+    <insert id="insertMqmsFailureAnalysis"  useGeneratedKeys="true" keyProperty="failureAnalysisId">
+        INSERT INTO `mqms_failure_analysis`
+        (
+        <trim suffixOverrides=",">
+                    <if test="failureAnalysisId!=null">
+                        `failure_analysis_id`,
+                    </if>
+                    <if test="failureTrackId!=null">
+                        `failure_track_id`,
+                    </if>
+                    <if test="failureAnalystId!=null">
+                        `failure_analyst_id`,
+                    </if>
+                    <if test="failureAnalystName!=null">
+                        `failure_analyst_name`,
+                    </if>
+                    <if test="failureAnalystDepartment!=null">
+                        `failure_analyst_department`,
+                    </if>
+                    <if test="failureAnalystComment!=null">
+                        `failure_analyst_comment`,
+                    </if>
+        </trim>
+        )
+        VALUES
+        (
+        <trim suffixOverrides=",">
+                <if test="failureAnalysisId!=null">
+                    #{failureAnalysisId},
+                </if>
+                <if test="failureTrackId!=null">
+                    #{failureTrackId},
+                </if>
+                <if test="failureAnalystId!=null">
+                    #{failureAnalystId},
+                </if>
+                <if test="failureAnalystName!=null">
+                    #{failureAnalystName},
+                </if>
+                <if test="failureAnalystDepartment!=null">
+                    #{failureAnalystDepartment},
+                </if>
+                <if test="failureAnalystComment!=null">
+                    #{failureAnalystComment},
+                </if>
+        </trim>
+        )
+    </insert>
+
+
+
+
+    <update id="updateMqmsFailureAnalysis">
+        UPDATE `mqms_failure_analysis`
+        SET
+        <trim suffixOverrides=",">
+            <if test="failureTrackId != null">
+                `failure_track_id` = #{failureTrackId},
+            </if>
+            <if test="failureAnalystId != null">
+                `failure_analyst_id` = #{failureAnalystId},
+            </if>
+            <if test="failureAnalystName != null and failureAnalystName!=''">
+                `failure_analyst_name` = #{failureAnalystName},
+            </if>
+            <if test="failureAnalystDepartment != null and failureAnalystDepartment!=''">
+                `failure_analyst_department` = #{failureAnalystDepartment},
+            </if>
+            <if test="failureAnalystComment != null and failureAnalystComment!=''">
+                `failure_analyst_comment` = #{failureAnalystComment},
+            </if>
+        </trim>
+        WHERE
+        <trim suffixOverrides="and">
+                `failure_analysis_id` = #{failureAnalysisId} and
+        </trim>
+    </update>
+
+    <update id="update">
+        UPDATE `mqms_failure_analysis`
+        SET
+        <trim suffixOverrides=",">
+        <if test="set.failureTrackId != null">
+            `failure_track_id` = #{set.failureTrackId},
+        </if>
+        <if test="set.failureAnalystId != null">
+            `failure_analyst_id` = #{set.failureAnalystId},
+        </if>
+        <if test="set.failureAnalystName != null and set.failureAnalystName!=''">
+            `failure_analyst_name` = #{set.failureAnalystName},
+        </if>
+        <if test="set.failureAnalystDepartment != null and set.failureAnalystDepartment!=''">
+            `failure_analyst_department` = #{set.failureAnalystDepartment},
+        </if>
+        <if test="set.failureAnalystComment != null and set.failureAnalystComment!=''">
+            `failure_analyst_comment` = #{set.failureAnalystComment},
+        </if>
+        </trim>
+        <trim prefix="where" suffixOverrides="and | or">
+                <if test="where.failureAnalysisIdList != null">
+                    `failure_analysis_id` in
+                    <foreach collection="where.failureAnalysisIdList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test="where.failureAnalysisIdSt !=null">
+                `failure_analysis_id` >= #{where.failureAnalysisIdSt} and
+            </if>
+            <if test="where.failureAnalysisIdEd!=null">
+                `failure_analysis_id` &lt;= #{where.failureAnalysisIdEd} and
+            </if>
+                <if test="where.failureTrackIdList != null">
+                    `failure_track_id` in
+                    <foreach collection="where.failureTrackIdList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test="where.failureTrackIdSt !=null">
+                `failure_track_id` >= #{where.failureTrackIdSt} and
+            </if>
+            <if test="where.failureTrackIdEd!=null">
+                `failure_track_id` &lt;= #{where.failureTrackIdEd} and
+            </if>
+                <if test="where.failureAnalystIdList != null">
+                    `failure_analyst_id` in
+                    <foreach collection="where.failureAnalystIdList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test="where.failureAnalystIdSt !=null">
+                `failure_analyst_id` >= #{where.failureAnalystIdSt} and
+            </if>
+            <if test="where.failureAnalystIdEd!=null">
+                `failure_analyst_id` &lt;= #{where.failureAnalystIdEd} and
+            </if>
+                <if test="where.failureAnalystNameList != null">
+                    `failure_analyst_name` in
+                    <foreach collection="where.failureAnalystNameList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test ="where.fuzzyFailureAnalystName!=null and where.fuzzyFailureAnalystName.size()>0">
+                (
+                <foreach collection="where.fuzzyFailureAnalystName"  separator="or" item="item">
+                    `Failure_analyst_name` like concat('%',#{item},'%')
+                </foreach>
+                ) and
+            </if>
+            <if test ="where.rightFuzzyFailureAnalystName!=null and where.rightFuzzyFailureAnalystName.size()>0">
+                (
+                <foreach collection="where.rightFuzzyFailureAnalystName"  separator="or" item="item">
+                    `Failure_analyst_name` like concat(#{item},'%')
+                </foreach>
+                ) and
+            </if>
+                <if test="where.failureAnalystDepartmentList != null">
+                    `failure_analyst_department` in
+                    <foreach collection="where.failureAnalystDepartmentList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test ="where.fuzzyFailureAnalystDepartment!=null and where.fuzzyFailureAnalystDepartment.size()>0">
+                (
+                <foreach collection="where.fuzzyFailureAnalystDepartment"  separator="or" item="item">
+                    `Failure_analyst_department` like concat('%',#{item},'%')
+                </foreach>
+                ) and
+            </if>
+            <if test ="where.rightFuzzyFailureAnalystDepartment!=null and where.rightFuzzyFailureAnalystDepartment.size()>0">
+                (
+                <foreach collection="where.rightFuzzyFailureAnalystDepartment"  separator="or" item="item">
+                    `Failure_analyst_department` like concat(#{item},'%')
+                </foreach>
+                ) and
+            </if>
+                <if test="where.failureAnalystCommentList != null">
+                    `failure_analyst_comment` in
+                    <foreach collection="where.failureAnalystCommentList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test ="where.fuzzyFailureAnalystComment!=null and where.fuzzyFailureAnalystComment.size()>0">
+                (
+                <foreach collection="where.fuzzyFailureAnalystComment"  separator="or" item="item">
+                    `Failure_analyst_comment` like concat('%',#{item},'%')
+                </foreach>
+                ) and
+            </if>
+            <if test ="where.rightFuzzyFailureAnalystComment!=null and where.rightFuzzyFailureAnalystComment.size()>0">
+                (
+                <foreach collection="where.rightFuzzyFailureAnalystComment"  separator="or" item="item">
+                    `Failure_analyst_comment` like concat(#{item},'%')
+                </foreach>
+                ) and
+            </if>
+        </trim>
+    </update>
+
+
+    <resultMap type="com.gamc.efactory.model.dataObject.MqmsFailureAnalysis" id="MqmsFailureAnalysisMap">
+        <result property="failureAnalysisId" column="failure_analysis_id"/>
+        <result property="failureTrackId" column="failure_track_id"/>
+        <result property="failureAnalystId" column="failure_analyst_id"/>
+        <result property="failureAnalystName" column="failure_analyst_name"/>
+        <result property="failureAnalystDepartment" column="failure_analyst_department"/>
+        <result property="failureAnalystComment" column="failure_analyst_comment"/>
+    </resultMap>
+
+
+    <select id="queryMqmsFailureAnalysis" resultMap="MqmsFailureAnalysisMap">
+        select
+        <include refid="baseResult"></include>
+        from  `mqms_failure_analysis`
+        <trim prefix="where" suffixOverrides="and | or">
+            <if test="failureAnalysisId != null">
+                `failure_analysis_id` = #{failureAnalysisId} and
+            </if>
+            <if test="failureTrackId != null">
+                `failure_track_id` = #{failureTrackId} and
+            </if>
+            <if test="failureAnalystId != null">
+                `failure_analyst_id` = #{failureAnalystId} and
+            </if>
+            <if test="failureAnalystName != null and failureAnalystName!=''">
+                `failure_analyst_name` = #{failureAnalystName} and
+            </if>
+            <if test="failureAnalystDepartment != null and failureAnalystDepartment!=''">
+                `failure_analyst_department` = #{failureAnalystDepartment} and
+            </if>
+            <if test="failureAnalystComment != null and failureAnalystComment!=''">
+                `failure_analyst_comment` = #{failureAnalystComment} and
+            </if>
+            <if test = "(_parameter instanceof com.gamc.efactory.model.dataObject.MqmsFailureAnalysis$QueryBuilder) == true">
+                <if test="failureAnalysisIdList != null">
+                    `failure_analysis_id` in
+                    <foreach collection="failureAnalysisIdList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test="failureAnalysisIdSt !=null">
+                    `failure_analysis_id` >= #{failureAnalysisIdSt} and
+                </if>
+                <if test="failureAnalysisIdEd!=null">
+                    `failure_analysis_id` &lt;= #{failureAnalysisIdEd} and
+                </if>
+                <if test="failureTrackIdList != null">
+                    `failure_track_id` in
+                    <foreach collection="failureTrackIdList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test="failureTrackIdSt !=null">
+                    `failure_track_id` >= #{failureTrackIdSt} and
+                </if>
+                <if test="failureTrackIdEd!=null">
+                    `failure_track_id` &lt;= #{failureTrackIdEd} and
+                </if>
+                <if test="failureAnalystIdList != null">
+                    `failure_analyst_id` in
+                    <foreach collection="failureAnalystIdList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test="failureAnalystIdSt !=null">
+                    `failure_analyst_id` >= #{failureAnalystIdSt} and
+                </if>
+                <if test="failureAnalystIdEd!=null">
+                    `failure_analyst_id` &lt;= #{failureAnalystIdEd} and
+                </if>
+                <if test="failureAnalystNameList != null">
+                    `failure_analyst_name` in
+                    <foreach collection="failureAnalystNameList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyFailureAnalystName!=null and fuzzyFailureAnalystName.size()>0">
+                    (
+                    <foreach collection="fuzzyFailureAnalystName"  separator="or" item="item">
+                        `Failure_analyst_name` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyFailureAnalystName!=null and rightFuzzyFailureAnalystName.size()>0">
+                    (
+                    <foreach collection="rightFuzzyFailureAnalystName"  separator="or" item="item">
+                        `Failure_analyst_name` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="failureAnalystDepartmentList != null">
+                    `failure_analyst_department` in
+                    <foreach collection="failureAnalystDepartmentList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyFailureAnalystDepartment!=null and fuzzyFailureAnalystDepartment.size()>0">
+                    (
+                    <foreach collection="fuzzyFailureAnalystDepartment"  separator="or" item="item">
+                        `Failure_analyst_department` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyFailureAnalystDepartment!=null and rightFuzzyFailureAnalystDepartment.size()>0">
+                    (
+                    <foreach collection="rightFuzzyFailureAnalystDepartment"  separator="or" item="item">
+                        `Failure_analyst_department` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="failureAnalystCommentList != null">
+                    `failure_analyst_comment` in
+                    <foreach collection="failureAnalystCommentList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyFailureAnalystComment!=null and fuzzyFailureAnalystComment.size()>0">
+                    (
+                    <foreach collection="fuzzyFailureAnalystComment"  separator="or" item="item">
+                        `Failure_analyst_comment` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyFailureAnalystComment!=null and rightFuzzyFailureAnalystComment.size()>0">
+                    (
+                    <foreach collection="rightFuzzyFailureAnalystComment"  separator="or" item="item">
+                        `Failure_analyst_comment` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+            </if>
+        </trim>
+    </select>
+
+    <select id="queryMqmsFailureAnalysisLimit1" resultMap="MqmsFailureAnalysisMap">
+        select
+        <include refid="baseResult"></include>
+        from  `mqms_failure_analysis`
+        <trim prefix="where" suffixOverrides="and | or">
+            <if test="failureAnalysisId != null">
+                `failure_analysis_id` = #{failureAnalysisId} and
+            </if>
+            <if test="failureTrackId != null">
+                `failure_track_id` = #{failureTrackId} and
+            </if>
+            <if test="failureAnalystId != null">
+                `failure_analyst_id` = #{failureAnalystId} and
+            </if>
+            <if test="failureAnalystName != null and failureAnalystName!=''">
+                `failure_analyst_name` = #{failureAnalystName} and
+            </if>
+            <if test="failureAnalystDepartment != null and failureAnalystDepartment!=''">
+                `failure_analyst_department` = #{failureAnalystDepartment} and
+            </if>
+            <if test="failureAnalystComment != null and failureAnalystComment!=''">
+                `failure_analyst_comment` = #{failureAnalystComment} and
+            </if>
+            <if test = "(_parameter instanceof com.gamc.efactory.model.dataObject.MqmsFailureAnalysis$QueryBuilder) == true">
+                    <if test="failureAnalysisIdList != null">
+                        `failure_analysis_id` in
+                        <foreach collection="failureAnalysisIdList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test="failureAnalysisIdSt !=null">
+                    `failure_analysis_id` >= #{failureAnalysisIdSt} and
+                </if>
+                <if test="failureAnalysisIdEd!=null">
+                    `failure_analysis_id` &lt;= #{failureAnalysisIdEd} and
+                </if>
+                    <if test="failureTrackIdList != null">
+                        `failure_track_id` in
+                        <foreach collection="failureTrackIdList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test="failureTrackIdSt !=null">
+                    `failure_track_id` >= #{failureTrackIdSt} and
+                </if>
+                <if test="failureTrackIdEd!=null">
+                    `failure_track_id` &lt;= #{failureTrackIdEd} and
+                </if>
+                    <if test="failureAnalystIdList != null">
+                        `failure_analyst_id` in
+                        <foreach collection="failureAnalystIdList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test="failureAnalystIdSt !=null">
+                    `failure_analyst_id` >= #{failureAnalystIdSt} and
+                </if>
+                <if test="failureAnalystIdEd!=null">
+                    `failure_analyst_id` &lt;= #{failureAnalystIdEd} and
+                </if>
+                    <if test="failureAnalystNameList != null">
+                        `failure_analyst_name` in
+                        <foreach collection="failureAnalystNameList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyFailureAnalystName!=null and fuzzyFailureAnalystName.size()>0">
+                    (
+                    <foreach collection="fuzzyFailureAnalystName"  separator="or" item="item">
+                        `Failure_analyst_name` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyFailureAnalystName!=null and rightFuzzyFailureAnalystName.size()>0">
+                    (
+                    <foreach collection="rightFuzzyFailureAnalystName"  separator="or" item="item">
+                        `Failure_analyst_name` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                    <if test="failureAnalystDepartmentList != null">
+                        `failure_analyst_department` in
+                        <foreach collection="failureAnalystDepartmentList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyFailureAnalystDepartment!=null and fuzzyFailureAnalystDepartment.size()>0">
+                    (
+                    <foreach collection="fuzzyFailureAnalystDepartment"  separator="or" item="item">
+                        `Failure_analyst_department` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyFailureAnalystDepartment!=null and rightFuzzyFailureAnalystDepartment.size()>0">
+                    (
+                    <foreach collection="rightFuzzyFailureAnalystDepartment"  separator="or" item="item">
+                        `Failure_analyst_department` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                    <if test="failureAnalystCommentList != null">
+                        `failure_analyst_comment` in
+                        <foreach collection="failureAnalystCommentList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyFailureAnalystComment!=null and fuzzyFailureAnalystComment.size()>0">
+                    (
+                    <foreach collection="fuzzyFailureAnalystComment"  separator="or" item="item">
+                        `Failure_analyst_comment` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyFailureAnalystComment!=null and rightFuzzyFailureAnalystComment.size()>0">
+                    (
+                    <foreach collection="rightFuzzyFailureAnalystComment"  separator="or" item="item">
+                        `Failure_analyst_comment` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+            </if>
+        </trim>
+        limit 1
+    </select>
+
+    <sql id="allResult">
+        <trim suffixOverrides=",">
+        `failure_analysis_id`,
+        `failure_track_id`,
+        `failure_analyst_id`,
+        `failure_analyst_name`,
+        `failure_analyst_department`,
+        `failure_analyst_comment`,
+        </trim>
+    </sql>
+
+
+
+    <sql id="baseResult">
+        <trim suffixOverrides=",">
+            <if test = "(_parameter instanceof com.gamc.efactory.model.dataObject.MqmsFailureAnalysis$QueryBuilder) == true">
+
+                <if test="fetchFields==null">
+                    <include refid="allResult"></include>
+                </if>
+                <if test="fetchFields!=null">
+                    <if test="fetchFields.AllFields !=null">
+                        <include refid="allResult"></include>
+                    </if>
+                    <if test="fetchFields.AllFields ==null and fetchFields.fetchFields==null and fetchFields.excludeFields==null and fetchFields.otherFields==null">
+                        <include refid="allResult"></include>
+                    </if>
+                    <if test="fetchFields.AllFields==null and fetchFields.fetchFields!=null">
+                    <if test="fetchFields.fetchFields.failureAnalysisId==true">
+                        `failure_analysis_id`,
+                    </if>
+                    <if test="fetchFields.fetchFields.failureTrackId==true">
+                        `failure_track_id`,
+                    </if>
+                    <if test="fetchFields.fetchFields.failureAnalystId==true">
+                        `failure_analyst_id`,
+                    </if>
+                    <if test="fetchFields.fetchFields.failureAnalystName==true">
+                        `failure_analyst_name`,
+                    </if>
+                    <if test="fetchFields.fetchFields.failureAnalystDepartment==true">
+                        `failure_analyst_department`,
+                    </if>
+                    <if test="fetchFields.fetchFields.failureAnalystComment==true">
+                        `failure_analyst_comment`,
+                    </if>
+                    </if>
+                    <if test="fetchFields.AllFields==null and fetchFields.excludeFields!=null">
+                    <if test="fetchFields.excludeFields.failureAnalysisId==null">
+                        `failure_analysis_id`,
+                    </if>
+                    <if test="fetchFields.excludeFields.failureTrackId==null">
+                        `failure_track_id`,
+                    </if>
+                    <if test="fetchFields.excludeFields.failureAnalystId==null">
+                        `failure_analyst_id`,
+                    </if>
+                    <if test="fetchFields.excludeFields.failureAnalystName==null">
+                        `failure_analyst_name`,
+                    </if>
+                    <if test="fetchFields.excludeFields.failureAnalystDepartment==null">
+                        `failure_analyst_department`,
+                    </if>
+                    <if test="fetchFields.excludeFields.failureAnalystComment==null">
+                        `failure_analyst_comment`,
+                    </if>
+                    </if>
+                    <if test="fetchFields.otherFields!=null and fetchFields.otherFields.size>0">
+                        <foreach collection="fetchFields.otherFields" index="index" item="item" separator=",">
+                        `#{item}`
+                        </foreach>
+                    </if>
+                </if>
+            </if>
+            <if test="(_parameter instanceof com.gamc.efactory.model.dataObject.MqmsFailureAnalysis$QueryBuilder) == false" >
+                <include refid="allResult"></include>
+            </if>
+
+        </trim>
+    </sql>
+
+
+</mapper>
