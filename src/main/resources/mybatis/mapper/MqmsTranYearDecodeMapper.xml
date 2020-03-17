@@ -6,5 +6,9 @@
         SELECT `tran_pro_year` FROM `mqms_tran_year_decode`
         WHERE  `tran_pro_year_code` = #{tran_pro_year_code}
     </select>
+    <delete id="deleteTransYearById"  >
+        DELETE  FROM `mqms_tran_year_decode`
+        WHERE  `id` = #{id}
+    </delete>
 
 </mapper>

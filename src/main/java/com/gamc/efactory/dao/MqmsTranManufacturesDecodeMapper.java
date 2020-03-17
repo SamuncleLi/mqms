@@ -10,4 +10,5 @@ import com.gamc.efactory.dao.base.MqmsTranManufacturesDecodeBaseMapper;
 public interface MqmsTranManufacturesDecodeMapper extends MqmsTranManufacturesDecodeBaseMapper{
 
     String selectTranManufacture(@Param("tran_manufacture_model") String tranManufactureModel);
+    int deleteTransManuById(@Param("id") String id);
 }

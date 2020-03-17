@@ -19,5 +19,22 @@
         select *from  `mqms_vin_decode`
         WHERE  `vin_short_code` = #{vin_short_code}
     </select>
+    <delete id="deleteVinById"  >
+        DELETE  FROM `mqms_vin_decode`
+        WHERE  `id` = #{id}
+    </delete>
+    <select id="searchVinInfor"  resultType="java.util.HashMap" >
+        SELECT * FROM `mqms_vin_decode`
+        WHERE
+        `vin_short_code`  like concat('%',#{vinShortCode},'%') and
+        `vin_sim_code`  like concat('%',#{vinSimCode},'%') and
+        `vin_eng_type`  like concat('%',#{vinEngType},'%') and
+        `vin_series`  like concat('%',#{vinSeries},'%') and
+        `vin_eng_short_code`  like concat('%',#{vinEngShortCode},'%') and
+        `vin_transm_short_code`  like concat('%',#{vinTransmShortCode},'%') and
+        `vin_car_short_code`  like concat('%',#{vinCarShortCode},'%') and
+        `vin_car_type`  like concat('%',#{vinCarType},'%') and
+        `vin_transm_type`  like concat('%',#{vinTransmType},'%')
+    </select>
 
 </mapper>

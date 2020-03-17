@@ -3,9 +3,20 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.gamc.efactory.dao.MqmsSalesPointMapper">
 
-    <select id="selectSalesPointInfor"  resultType="java.lang.String" >
+    <select id="selectSalesPointInfor"  resultType="java.lang.Object" >
         SELECT `sales_point_area` FROM `mqms_sales_point`
         WHERE  `sales_point_code` = #{salesPointCode}
+    </select>
+    <delete id="deleteSalesPointById"  >
+        DELETE  FROM `mqms_sales_point`
+        WHERE  `id` = #{id}
+    </delete>
+
+    <select id="searchSalesPointInfor"  resultType="java.util.HashMap" >
+        SELECT * FROM `mqms_sales_point`
+        WHERE `sales_point_name`  like concat('%',#{salesPointName},'%') and
+              `sales_point_area`  like concat('%',#{salesPointArea},'%') and
+              `sales_point_code`  like concat('%',#{salesPointCode},'%')
     </select>
 
 </mapper>

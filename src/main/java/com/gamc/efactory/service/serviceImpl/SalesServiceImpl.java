@@ -139,9 +139,8 @@ public class SalesServiceImpl implements SalesService {
     }
 
     @Transactional
-    public int addBlackLists(String file, HttpServletRequest request) throws ExecutionException, InterruptedException {
+    public int addLists(String file, HttpServletRequest request) throws ExecutionException, InterruptedException {
         try {
-//            System.out.println("5555555555555555555555555555555");
             BigExcelReader bigExcelReader = new BigExcelReader(file) {
                 @Override
                 public void outputAllRow(List<String[]> lists) throws IllegalAccessException {
@@ -158,10 +157,8 @@ public class SalesServiceImpl implements SalesService {
 //                            System.out.print(cell+",");
                             list2.add(cell);
                         }
-
                         lists1.add(list2);
                         //list2= new ArrayList<Object>();
-
 //                        System.out.println("]");
                     }
                     saveAll(lists1, request);
@@ -170,14 +167,12 @@ public class SalesServiceImpl implements SalesService {
             // 执行解析
             bigExcelReader.parse();
             //File files = new File(file);
-
+            System.out.println("0000000000000000000000000000000000000000000000");
+            return 1;
 
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-
-        return 1;
-
     }
 
 
@@ -232,7 +227,7 @@ public class SalesServiceImpl implements SalesService {
                 ImportCall importCall = new ImportCall();
                 importCall.setMqmsSalesList(mqmsSalesList);
                 executorService.execute(importCall);
-                System.out.println("nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn");
+//                System.out.println("nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn");
                 //构造函数传参
 
 

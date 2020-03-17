@@ -36,9 +36,131 @@
             })
 
         })
+        function reviseDecodeInfor() {
+            var selectedRows = $('#transTypeDecode').datagrid('getSelections');
+            if(selectedRows.length==0){
+                $.messager.alert("系统提示","请选择一行");
+                return;
+            }
+            else if (selectedRows.length>1){
+                $.messager.alert("系统提示","请选择一行");
+                return;
+            }
+
+            var data;
+            for(var i=0;i<selectedRows.length;i++) {
+                data=selectedRows[i];
+//                console.log(data);
+            }
+            setFromValues($('#selectionInfor'),data);
+            $('#reviseInfor').dialog("open", true);
+        }
+        //        同列名自动复制
+        function setFromValues(el, data)
+        {
+            for (var p in data)
+            {
+                el.find(":input[name='" + p + "']").val(data[p]);
+            }
+        }
+        function cancelDialog() {
+            $('#reviseInfor').dialog("close", true);
+        }
+        function  saveInfor() {
+            $('#selectionInfor').form("submit",{
+                type: 'post',
+                url: '/mqms/decode/transTypeRevise',
+                onSubmit : function() {
+                    //表单验证
+                    return $(this).form("validate");
+                },
+                success : function(data) {
+                    if (data == '数据操作成功') {
+                        $.messager.alert("系统提示",'操作已成功');
+                        //关闭DIALOG并刷新页面
+                        cancelDialog();
+                        $("#transTypeDecode").datagrid('reload');
+                    } else {
+                        $.messager.alert("系统提示",'操作失败,请重新提交');
+                    }
+
+                }
+            });
+        }
+        function  addDecodeInfor() {
+            document.getElementById('idReadOnly').value="默认值";
+            $('#reviseInfor').dialog("open", true);
+        }
+        function deleteDecodeInfor(){
+            var selectedRows = $('#transTypeDecode').datagrid('getSelections');
+            if(selectedRows.length==0){
+                $.messager.alert("系统提示","请选择至少一行");
+                return;
+            }
+            var data=[];
+            for(var i=0;i<selectedRows.length;i++) {
+                data.push(selectedRows[i]['id']);
+            }
+            $.ajax({
+                type: 'post',
+                url: '/mqms/decode/transTypeDelete',
+                data: {ids:data},
+                traditional:true,
+                success : function(data) {
+                    if (data == '数据删除成功') {
+                        $.messager.alert("系统提示",'操作已成功');
+                        //关闭DIALOG并刷新页面
+                        cancelDialog();
+                        $("#transTypeDecode").datagrid('reload');
+                    } else {
+                        $.messager.alert("系统提示",'操作失败,请重新提交');
+                    }
+
+                }
+            })
+        }
+        //信息查询
+        function querryDecodeInfor() {
+            //前端过滤，暂时不玩，后面再说
+//            var dg = $('#salesPointDecode');
+//            dg.datagrid('enableFilter');
+            var tranProModel=document.getElementById("tranProModel");
+            var tranShortCode=document.getElementById("tranShortCode");
+            $.ajax({
+                type: 'post',
+                url: "/" + system + "/" + module +"/transTypeInfor",
+                data: {
+                    "tranProModel":tranProModel.value,
+                    "tranShortCode":tranShortCode.value
+                },
+                traditional:true,
+                async : true, //异步
+                success : function(data) {
+                    $("#transTypeDecode").datagrid('loadData',data);
+                }
+            })
+        }
+        //table刷新
+        function refreshDecodeInfor() {
+
+            $("#transTypeDecode").datagrid('reload');
+        }
     </script>
 </head>
 <body style="overflow-y: hidden">
+<div id="tb1" class="select-area">
+    <div>
+        <label>变速箱型号代码</label><input id="tranProModel" class="easyui-combobox">
+        <label>变速箱型号</label><input id="tranShortCode" class="easyui-combobox" >
+    </div>
+    <div>
+        <a href="javascript:addDecodeInfor()" class="easyui-linkbutton" iconCls="icon-add" plain="true">增加</a>
+        <a href="javascript:deleteDecodeInfor()" class="easyui-linkbutton" iconCls="icon-remove" plain="true" >删除</a>
+        <a href="javascript:reviseDecodeInfor()" class="easyui-linkbutton" iconCls="icon-edit" plain="true" >修改</a>
+        <a href="javascript:querryDecodeInfor()" class="easyui-linkbutton" iconCls="icon-save" plain="true" >查询</a>
+        <a href="javascript:refreshDecodeInfor()" class="easyui-linkbutton" iconCls="icon-reload" plain="true" >刷新</a>
+    </div>
+</div>
 
 <table id="transTypeDecode" title="变速箱类型解码" class="easyui-datagrid" fitColumns="false"
        pagination="true" rownumbers="true" fit="true" toolbar="#tb" method="GET">
@@ -50,7 +172,20 @@
     </tr>
     </thead>
 </table>
-
+<div id="reviseInfor" title="变速箱型号信息修改" class="easyui-dialog" closed="true">
+    <form id="selectionInfor">
+        <label>ID:</label><input id="idReadOnly" name="id" style="width:50px;" readonly="true" >
+        <label>变速箱型号代码:</label><input name="tran_pro_model" style="width:200px;" onkeydown="if(event.keyCode==13)saveInfor()">
+        <label>变速箱型号:</label><input name="tran_shortCode"  onkeydown="if(event.keyCode==13)saveInfor()">
+        <a href="javascript:saveInfor()" class="easyui-linkbutton" iconCls="icon-save" plain="true" >保存</a>
+        <a href="javascript:cancelDialog()" class="easyui-linkbutton" iconCls="icon-cancel" plain="true">取消</a>
+    </form>
+    <!--看使用习惯，功能键放在下面还是后面好呢-->
+    <!--<div class="select-area" align="center">-->
+    <!--<a href="javascript:saveInfor()" class="easyui-linkbutton" iconCls="icon-save" plain="true">保存</a>-->
+    <!--<a href="javascript:cancelDialog()" class="easyui-linkbutton" iconCls="icon-cancel" plain="true">取消</a>-->
+    <!--</div>-->
+</div>
 
 </body>
 </html>

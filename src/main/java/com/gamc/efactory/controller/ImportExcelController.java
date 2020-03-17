@@ -71,46 +71,82 @@ public class ImportExcelController {
 //        }
 //        return "数据成功导入";
 //    }
+    /**
+     * VEI数导入
+     */
     @Autowired
     private VeiDataService veiDataService;
     @RequestMapping(value = "/veiData")
-    public String exImportVeiData(@RequestParam()MultipartFile file, HttpSession session) {
+    public String exImportVeiData(@RequestParam("file")MultipartFile multipartFile,HttpServletRequest request) {
 
-        boolean a = false;
-
-        String fileName = file.getOriginalFilename();
-//        User user=(User)session.getAttribute("user");
-//        System.out.println(user.getUserName()+"11111111111111111111111111111111111111111111111");
-        try {
-            a = veiDataService.batchImport(fileName, file, session);
-            return "数据成功导入";
-        } catch (Exception e) {
-            e.printStackTrace();
-            return "数据导入失败";
+        //判断上传内容是否符合要求
+        String fileName = multipartFile.getOriginalFilename();
+        if (!fileName.matches("^.+\\.(?i)(xls)$") && !fileName.matches("^.+\\.(?i)(xlsx)$")) {
+            return "上传的文件格式不正确";
         }
 
-    }
-    @Autowired
-    private ProductionService productionService;
-    @RequestMapping(value = "/productionData")
-    public String exImportProductionData(@RequestParam()MultipartFile file, HttpSession session) {
-
-        boolean a = false;
-
-        String fileName = file.getOriginalFilename();
-//       User user=(User)session.getAttribute("user");
-//        System.out.println(user.getUserName()+"111111111111111111111111");
-
+        String files = saveFile(multipartFile, request);
+        int result = 0;
         try {
-            a = productionService.batchImport(fileName, file, session);
+            result =  veiDataService.addLists(files,request);
+            System.out.println(result+"555555555555555555555555555555555555555555555555555555555");
         } catch (Exception e) {
             e.printStackTrace();
+        }finally {
+            File file = new File(files);
+            System.gc();
+            boolean delSuccess = file.delete();
+            if(delSuccess){
+                System.out.println("删除文件成功");
+            }else{
+                System.out.println("删除文件失败");
+            }
         }
-        return "数据成功导入";
+        if(result==1){
+            return "文件上传成功";}
+        else{
+            return "文件上传失败";}
     }
 
     /**
-     * test
+     * 生产数据导入
+     */
+    @Autowired
+    private ProductionService productionService;
+    @RequestMapping(value = "/productionData")
+    public String exImportProductionData(@RequestParam("file")MultipartFile multipartFile,HttpServletRequest request) {
+
+
+            //判断上传内容是否符合要求
+            String fileName = multipartFile.getOriginalFilename();
+            if (!fileName.matches("^.+\\.(?i)(xls)$") && !fileName.matches("^.+\\.(?i)(xlsx)$")) {
+                return "上传的文件格式不正确";
+            }
+
+            String files = saveFile(multipartFile, request);
+            int result = 0;
+            try {
+                result =  productionService.addLists(files,request);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }finally {
+                File file = new File(files);
+                System.gc();
+                boolean delSuccess = file.delete();
+                if(delSuccess){
+                    System.out.println("删除文件成功");
+                }else{
+                    System.out.println("删除文件失败");
+                }
+            }
+            if(result==1){
+                return "文件上传成功";}
+            else{
+                return "文件上传失败";}
+        }
+
+    /**
+     * 销售数据导入
      */
     @Autowired
     private SalesService salesService;
@@ -129,7 +165,8 @@ public class ImportExcelController {
             int result = 0;
             try {
 //            System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
-                result =  salesService.addBlackLists(files,request);
+                result =  salesService.addLists(files,request);
+                System.out.println(result+"555555555555555555555555555555555555555555555555555555555");
             } catch (Exception e) {
                 e.printStackTrace();
             }finally {
@@ -163,6 +200,12 @@ public class ImportExcelController {
 //        }
 //        return "数据成功导入";
 
+    /**
+     * 复制文件到服务器本地
+     * @param multipartFile
+     * @param request
+     * @return
+     */
         private String saveFile(MultipartFile multipartFile, HttpServletRequest request) {
             String path;
             String fileName = multipartFile.getOriginalFilename();

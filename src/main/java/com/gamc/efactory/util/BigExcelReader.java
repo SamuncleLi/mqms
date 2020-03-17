@@ -64,9 +64,8 @@ public abstract class BigExcelReader {
      */
     //@param maxColNum 读取的最大列数
     public BigExcelReader(File file) throws IOException, OpenXML4JException, SAXException {
-
+        //取得文件的读写权限
         OPCPackage pkg = OPCPackage.open(file);
-//        System.out.println(file.getPath()+"3333333333333333333333333333333333333333333");
         init(pkg);
     }
 
@@ -92,20 +91,15 @@ public abstract class BigExcelReader {
      * @throws SAXException
      */
     private void init(OPCPackage pkg) throws IOException, OpenXML4JException, SAXException {
-        XSSFReader xssfReader = new XSSFReader(pkg);
-        SharedStringsTable sharedStringsTable = xssfReader.getSharedStringsTable();
-        StylesTable stylesTable = xssfReader.getStylesTable();
-        //解析文件，得到rid
-
-        String rid = getRid(xssfReader);
-
+        XSSFReader xssfReader = new XSSFReader(pkg);//实例化xssfReader
+        SharedStringsTable sharedStringsTable = xssfReader.getSharedStringsTable();//获取当前Excel所有Sheet中字符串
+        StylesTable stylesTable = xssfReader.getStylesTable();//获取当前Excel所有Sheet中单元格样式
+        String rid = getRid(xssfReader);//解析文件，得到rid
         if(rid == null){
             throw new RuntimeException("解析xml出错了，rid获取失败");
         }
-
-
-        //sheet = xssfReader.getSheet("rId"+ sheetId);只遍历一个电子表格，其中sheetId为要遍历的sheet索引，从1开始，1-3
-        //sheet = xssfReader.getSheet("rId3");
+//        sheet = xssfReader.getSheet("rId"+ sheetId);只遍历一个电子表格，其中sheetId为要遍历的sheet索引，从1开始，1-3
+//        sheet = xssfReader.getSheet("rId3");
         sheet = xssfReader.getSheet(rid);
         parser = fetchSheetParser(sharedStringsTable, stylesTable);
         sheetSource = new InputSource(sheet);
@@ -142,7 +136,7 @@ public abstract class BigExcelReader {
 
     private String getRid(XSSFReader xssfReader){
         try {
-            InputStream wbIn = xssfReader.getWorkbookData();
+            InputStream wbIn = xssfReader.getWorkbookData();//输入流
             final Map<String, String> map = new HashMap<>();
             XMLReader parserRid = XMLReaderFactory.createXMLReader("org.apache.xerces.parsers.SAXParser");
             parserRid.setContentHandler(new DefaultHandler() {
@@ -155,9 +149,9 @@ public abstract class BigExcelReader {
                         System.out.println(sheetIndex+"wwwwwwwwwwwwwwwwwwwwwwwwwwwww");
                         //sheet不一定是第一个，所以暂时先屏蔽
 //                        if("1".equals(sheetIndex)){
-                            String rid = attributes.getValue("r:id");
-                            map.put("rid", rid);
-                            System.out.println(rid);
+                        String rid = attributes.getValue("r:id");
+                        map.put("rid", rid);
+                        System.out.println(rid);
 //                        }
 
                     }
@@ -235,7 +229,6 @@ public abstract class BigExcelReader {
                 }
                 //原版无法正确解析日期
                 else if (cellStyle != null) { //处理日期
-                    System.out.println("8888888888888888888888888888888888888888");
                     int styleIndex = Integer.parseInt(cellStyle);
                     System.out.println(styleIndex);
                     XSSFCellStyle style = stylesTable.getStyleAt(styleIndex);
@@ -254,7 +247,7 @@ public abstract class BigExcelReader {
                         formatString = "yyyy-MM-dd";
                     }
 
-                   else if (formatString == null) {
+                    else if (formatString == null) {
                         this.dataType = xssfDataType.Null;
                         System.out.println("cccccccccccccccccccccccccccccccccccccc");
                         formatString = BuiltinFormats.getBuiltinFormat(formatIndex);
@@ -327,10 +320,10 @@ public abstract class BigExcelReader {
 //                            rowDatas[colIdx] = formateDateToString(date);
 //                            rowTypes[colIdx] = DATE;
 //                        }
-                    if (formatString != null){
-                        rowDatas[colIdx]= formatter.formatRawCellContents(Double.parseDouble(readValue), formatIndex, formatString);
-                        rowTypes[colIdx] = NUMBER;
-                   }
+                        if (formatString != null){
+                            rowDatas[colIdx]= formatter.formatRawCellContents(Double.parseDouble(readValue), formatIndex, formatString);
+                            rowTypes[colIdx] = NUMBER;
+                        }
                         else {
                             rowDatas[colIdx] = readValue;
                             rowTypes[colIdx] = NUMBER;

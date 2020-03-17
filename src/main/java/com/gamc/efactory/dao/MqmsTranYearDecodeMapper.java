@@ -10,4 +10,6 @@ import com.gamc.efactory.dao.base.MqmsTranYearDecodeBaseMapper;
 public interface MqmsTranYearDecodeMapper extends MqmsTranYearDecodeBaseMapper{
 
     String selectTranProYear(@Param("tran_pro_year_code") String tranProYearCode);
+
+    int deleteTransYearById(@Param("id") String id);
 }
