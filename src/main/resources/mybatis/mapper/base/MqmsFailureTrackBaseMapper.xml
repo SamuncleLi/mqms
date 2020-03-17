@@ -4,7 +4,7 @@
 <mapper namespace="com.gamc.efactory.dao.base.MqmsFailureTrackBaseMapper">
 
 
-    <insert id="insertMqmsFailureTrack" >
+    <insert id="insertMqmsFailureTrack"  useGeneratedKeys="true" keyProperty="failureTrackId">
         INSERT INTO `mqms_failure_track`
         (
         <trim suffixOverrides=",">
@@ -26,6 +26,24 @@
                     <if test="trackBeginerName!=null">
                         `track_beginer_name`,
                     </if>
+                    <if test="deliveryPersonId!=null">
+                        `delivery_person_id`,
+                    </if>
+                    <if test="deliveryPersonName!=null">
+                        `delivery_person_name`,
+                    </if>
+                    <if test="deliveryState!=null">
+                        `delivery_state`,
+                    </if>
+                    <if test="deliveryDeadline!=null">
+                        `delivery_deadline`,
+                    </if>
+                    <if test="deliveryReceivedDate!=null">
+                        `delivery_received_date`,
+                    </if>
+                    <if test="deliveryCode!=null">
+                        `delivery_code`,
+                    </if>
                     <if test="carTestSymbol!=null">
                         `car_test_symbol`,
                     </if>
@@ -37,6 +55,15 @@
                     </if>
                     <if test="failureReappearSymbol!=null">
                         `failure_reappear_symbol`,
+                    </if>
+                    <if test="failureReappearDate!=null">
+                        `failure_reappear_date`,
+                    </if>
+                    <if test="failureReappearSituation!=null">
+                        `failure_reappear_situation`,
+                    </if>
+                    <if test="failureReappearResult!=null">
+                        `failure_reappear_result`,
                     </if>
         </trim>
         )
@@ -61,6 +88,24 @@
                 <if test="trackBeginerName!=null">
                     #{trackBeginerName},
                 </if>
+                <if test="deliveryPersonId!=null">
+                    #{deliveryPersonId},
+                </if>
+                <if test="deliveryPersonName!=null">
+                    #{deliveryPersonName},
+                </if>
+                <if test="deliveryState!=null">
+                    #{deliveryState},
+                </if>
+                <if test="deliveryDeadline!=null">
+                    #{deliveryDeadline},
+                </if>
+                <if test="deliveryReceivedDate!=null">
+                    #{deliveryReceivedDate},
+                </if>
+                <if test="deliveryCode!=null">
+                    #{deliveryCode},
+                </if>
                 <if test="carTestSymbol!=null">
                     #{carTestSymbol},
                 </if>
@@ -73,6 +118,15 @@
                 <if test="failureReappearSymbol!=null">
                     #{failureReappearSymbol},
                 </if>
+                <if test="failureReappearDate!=null">
+                    #{failureReappearDate},
+                </if>
+                <if test="failureReappearSituation!=null">
+                    #{failureReappearSituation},
+                </if>
+                <if test="failureReappearResult!=null">
+                    #{failureReappearResult},
+                </if>
         </trim>
         )
     </insert>
@@ -84,9 +138,6 @@
         UPDATE `mqms_failure_track`
         SET
         <trim suffixOverrides=",">
-            <if test="failureTrackId != null">
-                `failure_track_id` = #{failureTrackId},
-            </if>
             <if test="voucherCode != null and voucherCode!=''">
                 `voucher_code` = #{voucherCode},
             </if>
@@ -102,6 +153,24 @@
             <if test="trackBeginerName != null and trackBeginerName!=''">
                 `track_beginer_name` = #{trackBeginerName},
             </if>
+            <if test="deliveryPersonId != null">
+                `delivery_person_id` = #{deliveryPersonId},
+            </if>
+            <if test="deliveryPersonName != null and deliveryPersonName!=''">
+                `delivery_person_name` = #{deliveryPersonName},
+            </if>
+            <if test="deliveryState != null and deliveryState!=''">
+                `delivery_state` = #{deliveryState},
+            </if>
+            <if test="deliveryDeadline != null and deliveryDeadline!=''">
+                `delivery_deadline` = #{deliveryDeadline},
+            </if>
+            <if test="deliveryReceivedDate != null and deliveryReceivedDate!=''">
+                `delivery_received_date` = #{deliveryReceivedDate},
+            </if>
+            <if test="deliveryCode != null and deliveryCode!=''">
+                `delivery_code` = #{deliveryCode},
+            </if>
             <if test="carTestSymbol != null and carTestSymbol!=''">
                 `car_test_symbol` = #{carTestSymbol},
             </if>
@@ -114,9 +183,19 @@
             <if test="failureReappearSymbol != null and failureReappearSymbol!=''">
                 `failure_reappear_symbol` = #{failureReappearSymbol},
             </if>
+            <if test="failureReappearDate != null and failureReappearDate!=''">
+                `failure_reappear_date` = #{failureReappearDate},
+            </if>
+            <if test="failureReappearSituation != null and failureReappearSituation!=''">
+                `failure_reappear_situation` = #{failureReappearSituation},
+            </if>
+            <if test="failureReappearResult != null and failureReappearResult!=''">
+                `failure_reappear_result` = #{failureReappearResult},
+            </if>
         </trim>
         WHERE
         <trim suffixOverrides="and">
+                `failure_track_id` = #{failureTrackId} and
         </trim>
     </update>
 
@@ -124,9 +203,6 @@
         UPDATE `mqms_failure_track`
         SET
         <trim suffixOverrides=",">
-        <if test="set.failureTrackId != null">
-            `failure_track_id` = #{set.failureTrackId},
-        </if>
         <if test="set.voucherCode != null and set.voucherCode!=''">
             `voucher_code` = #{set.voucherCode},
         </if>
@@ -142,6 +218,24 @@
         <if test="set.trackBeginerName != null and set.trackBeginerName!=''">
             `track_beginer_name` = #{set.trackBeginerName},
         </if>
+        <if test="set.deliveryPersonId != null">
+            `delivery_person_id` = #{set.deliveryPersonId},
+        </if>
+        <if test="set.deliveryPersonName != null and set.deliveryPersonName!=''">
+            `delivery_person_name` = #{set.deliveryPersonName},
+        </if>
+        <if test="set.deliveryState != null and set.deliveryState!=''">
+            `delivery_state` = #{set.deliveryState},
+        </if>
+        <if test="set.deliveryDeadline != null and set.deliveryDeadline!=''">
+            `delivery_deadline` = #{set.deliveryDeadline},
+        </if>
+        <if test="set.deliveryReceivedDate != null and set.deliveryReceivedDate!=''">
+            `delivery_received_date` = #{set.deliveryReceivedDate},
+        </if>
+        <if test="set.deliveryCode != null and set.deliveryCode!=''">
+            `delivery_code` = #{set.deliveryCode},
+        </if>
         <if test="set.carTestSymbol != null and set.carTestSymbol!=''">
             `car_test_symbol` = #{set.carTestSymbol},
         </if>
@@ -153,6 +247,15 @@
         </if>
         <if test="set.failureReappearSymbol != null and set.failureReappearSymbol!=''">
             `failure_reappear_symbol` = #{set.failureReappearSymbol},
+        </if>
+        <if test="set.failureReappearDate != null and set.failureReappearDate!=''">
+            `failure_reappear_date` = #{set.failureReappearDate},
+        </if>
+        <if test="set.failureReappearSituation != null and set.failureReappearSituation!=''">
+            `failure_reappear_situation` = #{set.failureReappearSituation},
+        </if>
+        <if test="set.failureReappearResult != null and set.failureReappearResult!=''">
+            `failure_reappear_result` = #{set.failureReappearResult},
         </if>
         </trim>
         <trim prefix="where" suffixOverrides="and | or">
@@ -252,6 +355,118 @@
                 </foreach>
                 ) and
             </if>
+                <if test="where.deliveryPersonIdList != null">
+                    `delivery_person_id` in
+                    <foreach collection="where.deliveryPersonIdList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test="where.deliveryPersonIdSt !=null">
+                `delivery_person_id` >= #{where.deliveryPersonIdSt} and
+            </if>
+            <if test="where.deliveryPersonIdEd!=null">
+                `delivery_person_id` &lt;= #{where.deliveryPersonIdEd} and
+            </if>
+                <if test="where.deliveryPersonNameList != null">
+                    `delivery_person_name` in
+                    <foreach collection="where.deliveryPersonNameList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test ="where.fuzzyDeliveryPersonName!=null and where.fuzzyDeliveryPersonName.size()>0">
+                (
+                <foreach collection="where.fuzzyDeliveryPersonName"  separator="or" item="item">
+                    `Delivery_person_name` like concat('%',#{item},'%')
+                </foreach>
+                ) and
+            </if>
+            <if test ="where.rightFuzzyDeliveryPersonName!=null and where.rightFuzzyDeliveryPersonName.size()>0">
+                (
+                <foreach collection="where.rightFuzzyDeliveryPersonName"  separator="or" item="item">
+                    `Delivery_person_name` like concat(#{item},'%')
+                </foreach>
+                ) and
+            </if>
+                <if test="where.deliveryStateList != null">
+                    `delivery_state` in
+                    <foreach collection="where.deliveryStateList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test ="where.fuzzyDeliveryState!=null and where.fuzzyDeliveryState.size()>0">
+                (
+                <foreach collection="where.fuzzyDeliveryState"  separator="or" item="item">
+                    `Delivery_state` like concat('%',#{item},'%')
+                </foreach>
+                ) and
+            </if>
+            <if test ="where.rightFuzzyDeliveryState!=null and where.rightFuzzyDeliveryState.size()>0">
+                (
+                <foreach collection="where.rightFuzzyDeliveryState"  separator="or" item="item">
+                    `Delivery_state` like concat(#{item},'%')
+                </foreach>
+                ) and
+            </if>
+                <if test="where.deliveryDeadlineList != null">
+                    `delivery_deadline` in
+                    <foreach collection="where.deliveryDeadlineList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test ="where.fuzzyDeliveryDeadline!=null and where.fuzzyDeliveryDeadline.size()>0">
+                (
+                <foreach collection="where.fuzzyDeliveryDeadline"  separator="or" item="item">
+                    `Delivery_deadline` like concat('%',#{item},'%')
+                </foreach>
+                ) and
+            </if>
+            <if test ="where.rightFuzzyDeliveryDeadline!=null and where.rightFuzzyDeliveryDeadline.size()>0">
+                (
+                <foreach collection="where.rightFuzzyDeliveryDeadline"  separator="or" item="item">
+                    `Delivery_deadline` like concat(#{item},'%')
+                </foreach>
+                ) and
+            </if>
+                <if test="where.deliveryReceivedDateList != null">
+                    `delivery_received_date` in
+                    <foreach collection="where.deliveryReceivedDateList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test ="where.fuzzyDeliveryReceivedDate!=null and where.fuzzyDeliveryReceivedDate.size()>0">
+                (
+                <foreach collection="where.fuzzyDeliveryReceivedDate"  separator="or" item="item">
+                    `Delivery_received_date` like concat('%',#{item},'%')
+                </foreach>
+                ) and
+            </if>
+            <if test ="where.rightFuzzyDeliveryReceivedDate!=null and where.rightFuzzyDeliveryReceivedDate.size()>0">
+                (
+                <foreach collection="where.rightFuzzyDeliveryReceivedDate"  separator="or" item="item">
+                    `Delivery_received_date` like concat(#{item},'%')
+                </foreach>
+                ) and
+            </if>
+                <if test="where.deliveryCodeList != null">
+                    `delivery_code` in
+                    <foreach collection="where.deliveryCodeList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test ="where.fuzzyDeliveryCode!=null and where.fuzzyDeliveryCode.size()>0">
+                (
+                <foreach collection="where.fuzzyDeliveryCode"  separator="or" item="item">
+                    `Delivery_code` like concat('%',#{item},'%')
+                </foreach>
+                ) and
+            </if>
+            <if test ="where.rightFuzzyDeliveryCode!=null and where.rightFuzzyDeliveryCode.size()>0">
+                (
+                <foreach collection="where.rightFuzzyDeliveryCode"  separator="or" item="item">
+                    `Delivery_code` like concat(#{item},'%')
+                </foreach>
+                ) and
+            </if>
                 <if test="where.carTestSymbolList != null">
                     `car_test_symbol` in
                     <foreach collection="where.carTestSymbolList" close=")" open="(" separator="," item="item">
@@ -324,6 +539,66 @@
                 </foreach>
                 ) and
             </if>
+                <if test="where.failureReappearDateList != null">
+                    `failure_reappear_date` in
+                    <foreach collection="where.failureReappearDateList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test ="where.fuzzyFailureReappearDate!=null and where.fuzzyFailureReappearDate.size()>0">
+                (
+                <foreach collection="where.fuzzyFailureReappearDate"  separator="or" item="item">
+                    `Failure_reappear_date` like concat('%',#{item},'%')
+                </foreach>
+                ) and
+            </if>
+            <if test ="where.rightFuzzyFailureReappearDate!=null and where.rightFuzzyFailureReappearDate.size()>0">
+                (
+                <foreach collection="where.rightFuzzyFailureReappearDate"  separator="or" item="item">
+                    `Failure_reappear_date` like concat(#{item},'%')
+                </foreach>
+                ) and
+            </if>
+                <if test="where.failureReappearSituationList != null">
+                    `failure_reappear_situation` in
+                    <foreach collection="where.failureReappearSituationList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test ="where.fuzzyFailureReappearSituation!=null and where.fuzzyFailureReappearSituation.size()>0">
+                (
+                <foreach collection="where.fuzzyFailureReappearSituation"  separator="or" item="item">
+                    `Failure_reappear_situation` like concat('%',#{item},'%')
+                </foreach>
+                ) and
+            </if>
+            <if test ="where.rightFuzzyFailureReappearSituation!=null and where.rightFuzzyFailureReappearSituation.size()>0">
+                (
+                <foreach collection="where.rightFuzzyFailureReappearSituation"  separator="or" item="item">
+                    `Failure_reappear_situation` like concat(#{item},'%')
+                </foreach>
+                ) and
+            </if>
+                <if test="where.failureReappearResultList != null">
+                    `failure_reappear_result` in
+                    <foreach collection="where.failureReappearResultList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test ="where.fuzzyFailureReappearResult!=null and where.fuzzyFailureReappearResult.size()>0">
+                (
+                <foreach collection="where.fuzzyFailureReappearResult"  separator="or" item="item">
+                    `Failure_reappear_result` like concat('%',#{item},'%')
+                </foreach>
+                ) and
+            </if>
+            <if test ="where.rightFuzzyFailureReappearResult!=null and where.rightFuzzyFailureReappearResult.size()>0">
+                (
+                <foreach collection="where.rightFuzzyFailureReappearResult"  separator="or" item="item">
+                    `Failure_reappear_result` like concat(#{item},'%')
+                </foreach>
+                ) and
+            </if>
         </trim>
     </update>
 
@@ -335,10 +610,19 @@
         <result property="trackBeginerId" column="track_beginer_id"/>
         <result property="trackBeginerNo" column="track_beginer_no"/>
         <result property="trackBeginerName" column="track_beginer_name"/>
+        <result property="deliveryPersonId" column="delivery_person_id"/>
+        <result property="deliveryPersonName" column="delivery_person_name"/>
+        <result property="deliveryState" column="delivery_state"/>
+        <result property="deliveryDeadline" column="delivery_deadline"/>
+        <result property="deliveryReceivedDate" column="delivery_received_date"/>
+        <result property="deliveryCode" column="delivery_code"/>
         <result property="carTestSymbol" column="car_test_symbol"/>
         <result property="failureReappearPersonId" column="failure_reappear_person_id"/>
         <result property="failureReappearPersonName" column="failure_reappear_person_name"/>
         <result property="failureReappearSymbol" column="failure_reappear_symbol"/>
+        <result property="failureReappearDate" column="failure_reappear_date"/>
+        <result property="failureReappearSituation" column="failure_reappear_situation"/>
+        <result property="failureReappearResult" column="failure_reappear_result"/>
     </resultMap>
 
 
@@ -365,6 +649,24 @@
             <if test="trackBeginerName != null and trackBeginerName!=''">
                 `track_beginer_name` = #{trackBeginerName} and
             </if>
+            <if test="deliveryPersonId != null">
+                `delivery_person_id` = #{deliveryPersonId} and
+            </if>
+            <if test="deliveryPersonName != null and deliveryPersonName!=''">
+                `delivery_person_name` = #{deliveryPersonName} and
+            </if>
+            <if test="deliveryState != null and deliveryState!=''">
+                `delivery_state` = #{deliveryState} and
+            </if>
+            <if test="deliveryDeadline != null and deliveryDeadline!=''">
+                `delivery_deadline` = #{deliveryDeadline} and
+            </if>
+            <if test="deliveryReceivedDate != null and deliveryReceivedDate!=''">
+                `delivery_received_date` = #{deliveryReceivedDate} and
+            </if>
+            <if test="deliveryCode != null and deliveryCode!=''">
+                `delivery_code` = #{deliveryCode} and
+            </if>
             <if test="carTestSymbol != null and carTestSymbol!=''">
                 `car_test_symbol` = #{carTestSymbol} and
             </if>
@@ -376,6 +678,15 @@
             </if>
             <if test="failureReappearSymbol != null and failureReappearSymbol!=''">
                 `failure_reappear_symbol` = #{failureReappearSymbol} and
+            </if>
+            <if test="failureReappearDate != null and failureReappearDate!=''">
+                `failure_reappear_date` = #{failureReappearDate} and
+            </if>
+            <if test="failureReappearSituation != null and failureReappearSituation!=''">
+                `failure_reappear_situation` = #{failureReappearSituation} and
+            </if>
+            <if test="failureReappearResult != null and failureReappearResult!=''">
+                `failure_reappear_result` = #{failureReappearResult} and
             </if>
             <if test = "(_parameter instanceof com.gamc.efactory.model.dataObject.MqmsFailureTrack$QueryBuilder) == true">
                 <if test="failureTrackIdList != null">
@@ -474,6 +785,118 @@
                     </foreach>
                     ) and
                 </if>
+                <if test="deliveryPersonIdList != null">
+                    `delivery_person_id` in
+                    <foreach collection="deliveryPersonIdList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test="deliveryPersonIdSt !=null">
+                    `delivery_person_id` >= #{deliveryPersonIdSt} and
+                </if>
+                <if test="deliveryPersonIdEd!=null">
+                    `delivery_person_id` &lt;= #{deliveryPersonIdEd} and
+                </if>
+                <if test="deliveryPersonNameList != null">
+                    `delivery_person_name` in
+                    <foreach collection="deliveryPersonNameList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyDeliveryPersonName!=null and fuzzyDeliveryPersonName.size()>0">
+                    (
+                    <foreach collection="fuzzyDeliveryPersonName"  separator="or" item="item">
+                        `Delivery_person_name` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyDeliveryPersonName!=null and rightFuzzyDeliveryPersonName.size()>0">
+                    (
+                    <foreach collection="rightFuzzyDeliveryPersonName"  separator="or" item="item">
+                        `Delivery_person_name` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="deliveryStateList != null">
+                    `delivery_state` in
+                    <foreach collection="deliveryStateList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyDeliveryState!=null and fuzzyDeliveryState.size()>0">
+                    (
+                    <foreach collection="fuzzyDeliveryState"  separator="or" item="item">
+                        `Delivery_state` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyDeliveryState!=null and rightFuzzyDeliveryState.size()>0">
+                    (
+                    <foreach collection="rightFuzzyDeliveryState"  separator="or" item="item">
+                        `Delivery_state` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="deliveryDeadlineList != null">
+                    `delivery_deadline` in
+                    <foreach collection="deliveryDeadlineList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyDeliveryDeadline!=null and fuzzyDeliveryDeadline.size()>0">
+                    (
+                    <foreach collection="fuzzyDeliveryDeadline"  separator="or" item="item">
+                        `Delivery_deadline` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyDeliveryDeadline!=null and rightFuzzyDeliveryDeadline.size()>0">
+                    (
+                    <foreach collection="rightFuzzyDeliveryDeadline"  separator="or" item="item">
+                        `Delivery_deadline` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="deliveryReceivedDateList != null">
+                    `delivery_received_date` in
+                    <foreach collection="deliveryReceivedDateList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyDeliveryReceivedDate!=null and fuzzyDeliveryReceivedDate.size()>0">
+                    (
+                    <foreach collection="fuzzyDeliveryReceivedDate"  separator="or" item="item">
+                        `Delivery_received_date` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyDeliveryReceivedDate!=null and rightFuzzyDeliveryReceivedDate.size()>0">
+                    (
+                    <foreach collection="rightFuzzyDeliveryReceivedDate"  separator="or" item="item">
+                        `Delivery_received_date` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="deliveryCodeList != null">
+                    `delivery_code` in
+                    <foreach collection="deliveryCodeList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyDeliveryCode!=null and fuzzyDeliveryCode.size()>0">
+                    (
+                    <foreach collection="fuzzyDeliveryCode"  separator="or" item="item">
+                        `Delivery_code` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyDeliveryCode!=null and rightFuzzyDeliveryCode.size()>0">
+                    (
+                    <foreach collection="rightFuzzyDeliveryCode"  separator="or" item="item">
+                        `Delivery_code` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
                 <if test="carTestSymbolList != null">
                     `car_test_symbol` in
                     <foreach collection="carTestSymbolList" close=")" open="(" separator="," item="item">
@@ -546,6 +969,66 @@
                     </foreach>
                     ) and
                 </if>
+                <if test="failureReappearDateList != null">
+                    `failure_reappear_date` in
+                    <foreach collection="failureReappearDateList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyFailureReappearDate!=null and fuzzyFailureReappearDate.size()>0">
+                    (
+                    <foreach collection="fuzzyFailureReappearDate"  separator="or" item="item">
+                        `Failure_reappear_date` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyFailureReappearDate!=null and rightFuzzyFailureReappearDate.size()>0">
+                    (
+                    <foreach collection="rightFuzzyFailureReappearDate"  separator="or" item="item">
+                        `Failure_reappear_date` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="failureReappearSituationList != null">
+                    `failure_reappear_situation` in
+                    <foreach collection="failureReappearSituationList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyFailureReappearSituation!=null and fuzzyFailureReappearSituation.size()>0">
+                    (
+                    <foreach collection="fuzzyFailureReappearSituation"  separator="or" item="item">
+                        `Failure_reappear_situation` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyFailureReappearSituation!=null and rightFuzzyFailureReappearSituation.size()>0">
+                    (
+                    <foreach collection="rightFuzzyFailureReappearSituation"  separator="or" item="item">
+                        `Failure_reappear_situation` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="failureReappearResultList != null">
+                    `failure_reappear_result` in
+                    <foreach collection="failureReappearResultList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyFailureReappearResult!=null and fuzzyFailureReappearResult.size()>0">
+                    (
+                    <foreach collection="fuzzyFailureReappearResult"  separator="or" item="item">
+                        `Failure_reappear_result` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyFailureReappearResult!=null and rightFuzzyFailureReappearResult.size()>0">
+                    (
+                    <foreach collection="rightFuzzyFailureReappearResult"  separator="or" item="item">
+                        `Failure_reappear_result` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
             </if>
         </trim>
     </select>
@@ -573,6 +1056,24 @@
             <if test="trackBeginerName != null and trackBeginerName!=''">
                 `track_beginer_name` = #{trackBeginerName} and
             </if>
+            <if test="deliveryPersonId != null">
+                `delivery_person_id` = #{deliveryPersonId} and
+            </if>
+            <if test="deliveryPersonName != null and deliveryPersonName!=''">
+                `delivery_person_name` = #{deliveryPersonName} and
+            </if>
+            <if test="deliveryState != null and deliveryState!=''">
+                `delivery_state` = #{deliveryState} and
+            </if>
+            <if test="deliveryDeadline != null and deliveryDeadline!=''">
+                `delivery_deadline` = #{deliveryDeadline} and
+            </if>
+            <if test="deliveryReceivedDate != null and deliveryReceivedDate!=''">
+                `delivery_received_date` = #{deliveryReceivedDate} and
+            </if>
+            <if test="deliveryCode != null and deliveryCode!=''">
+                `delivery_code` = #{deliveryCode} and
+            </if>
             <if test="carTestSymbol != null and carTestSymbol!=''">
                 `car_test_symbol` = #{carTestSymbol} and
             </if>
@@ -584,6 +1085,15 @@
             </if>
             <if test="failureReappearSymbol != null and failureReappearSymbol!=''">
                 `failure_reappear_symbol` = #{failureReappearSymbol} and
+            </if>
+            <if test="failureReappearDate != null and failureReappearDate!=''">
+                `failure_reappear_date` = #{failureReappearDate} and
+            </if>
+            <if test="failureReappearSituation != null and failureReappearSituation!=''">
+                `failure_reappear_situation` = #{failureReappearSituation} and
+            </if>
+            <if test="failureReappearResult != null and failureReappearResult!=''">
+                `failure_reappear_result` = #{failureReappearResult} and
             </if>
             <if test = "(_parameter instanceof com.gamc.efactory.model.dataObject.MqmsFailureTrack$QueryBuilder) == true">
                     <if test="failureTrackIdList != null">
@@ -682,6 +1192,118 @@
                     </foreach>
                     ) and
                 </if>
+                    <if test="deliveryPersonIdList != null">
+                        `delivery_person_id` in
+                        <foreach collection="deliveryPersonIdList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test="deliveryPersonIdSt !=null">
+                    `delivery_person_id` >= #{deliveryPersonIdSt} and
+                </if>
+                <if test="deliveryPersonIdEd!=null">
+                    `delivery_person_id` &lt;= #{deliveryPersonIdEd} and
+                </if>
+                    <if test="deliveryPersonNameList != null">
+                        `delivery_person_name` in
+                        <foreach collection="deliveryPersonNameList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyDeliveryPersonName!=null and fuzzyDeliveryPersonName.size()>0">
+                    (
+                    <foreach collection="fuzzyDeliveryPersonName"  separator="or" item="item">
+                        `Delivery_person_name` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyDeliveryPersonName!=null and rightFuzzyDeliveryPersonName.size()>0">
+                    (
+                    <foreach collection="rightFuzzyDeliveryPersonName"  separator="or" item="item">
+                        `Delivery_person_name` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                    <if test="deliveryStateList != null">
+                        `delivery_state` in
+                        <foreach collection="deliveryStateList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyDeliveryState!=null and fuzzyDeliveryState.size()>0">
+                    (
+                    <foreach collection="fuzzyDeliveryState"  separator="or" item="item">
+                        `Delivery_state` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyDeliveryState!=null and rightFuzzyDeliveryState.size()>0">
+                    (
+                    <foreach collection="rightFuzzyDeliveryState"  separator="or" item="item">
+                        `Delivery_state` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                    <if test="deliveryDeadlineList != null">
+                        `delivery_deadline` in
+                        <foreach collection="deliveryDeadlineList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyDeliveryDeadline!=null and fuzzyDeliveryDeadline.size()>0">
+                    (
+                    <foreach collection="fuzzyDeliveryDeadline"  separator="or" item="item">
+                        `Delivery_deadline` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyDeliveryDeadline!=null and rightFuzzyDeliveryDeadline.size()>0">
+                    (
+                    <foreach collection="rightFuzzyDeliveryDeadline"  separator="or" item="item">
+                        `Delivery_deadline` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                    <if test="deliveryReceivedDateList != null">
+                        `delivery_received_date` in
+                        <foreach collection="deliveryReceivedDateList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyDeliveryReceivedDate!=null and fuzzyDeliveryReceivedDate.size()>0">
+                    (
+                    <foreach collection="fuzzyDeliveryReceivedDate"  separator="or" item="item">
+                        `Delivery_received_date` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyDeliveryReceivedDate!=null and rightFuzzyDeliveryReceivedDate.size()>0">
+                    (
+                    <foreach collection="rightFuzzyDeliveryReceivedDate"  separator="or" item="item">
+                        `Delivery_received_date` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                    <if test="deliveryCodeList != null">
+                        `delivery_code` in
+                        <foreach collection="deliveryCodeList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyDeliveryCode!=null and fuzzyDeliveryCode.size()>0">
+                    (
+                    <foreach collection="fuzzyDeliveryCode"  separator="or" item="item">
+                        `Delivery_code` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyDeliveryCode!=null and rightFuzzyDeliveryCode.size()>0">
+                    (
+                    <foreach collection="rightFuzzyDeliveryCode"  separator="or" item="item">
+                        `Delivery_code` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
                     <if test="carTestSymbolList != null">
                         `car_test_symbol` in
                         <foreach collection="carTestSymbolList" close=")" open="(" separator="," item="item">
@@ -754,6 +1376,66 @@
                     </foreach>
                     ) and
                 </if>
+                    <if test="failureReappearDateList != null">
+                        `failure_reappear_date` in
+                        <foreach collection="failureReappearDateList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyFailureReappearDate!=null and fuzzyFailureReappearDate.size()>0">
+                    (
+                    <foreach collection="fuzzyFailureReappearDate"  separator="or" item="item">
+                        `Failure_reappear_date` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyFailureReappearDate!=null and rightFuzzyFailureReappearDate.size()>0">
+                    (
+                    <foreach collection="rightFuzzyFailureReappearDate"  separator="or" item="item">
+                        `Failure_reappear_date` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                    <if test="failureReappearSituationList != null">
+                        `failure_reappear_situation` in
+                        <foreach collection="failureReappearSituationList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyFailureReappearSituation!=null and fuzzyFailureReappearSituation.size()>0">
+                    (
+                    <foreach collection="fuzzyFailureReappearSituation"  separator="or" item="item">
+                        `Failure_reappear_situation` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyFailureReappearSituation!=null and rightFuzzyFailureReappearSituation.size()>0">
+                    (
+                    <foreach collection="rightFuzzyFailureReappearSituation"  separator="or" item="item">
+                        `Failure_reappear_situation` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                    <if test="failureReappearResultList != null">
+                        `failure_reappear_result` in
+                        <foreach collection="failureReappearResultList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyFailureReappearResult!=null and fuzzyFailureReappearResult.size()>0">
+                    (
+                    <foreach collection="fuzzyFailureReappearResult"  separator="or" item="item">
+                        `Failure_reappear_result` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyFailureReappearResult!=null and rightFuzzyFailureReappearResult.size()>0">
+                    (
+                    <foreach collection="rightFuzzyFailureReappearResult"  separator="or" item="item">
+                        `Failure_reappear_result` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
             </if>
         </trim>
         limit 1
@@ -767,10 +1449,19 @@
         `track_beginer_id`,
         `track_beginer_no`,
         `track_beginer_name`,
+        `delivery_person_id`,
+        `delivery_person_name`,
+        `delivery_state`,
+        `delivery_deadline`,
+        `delivery_received_date`,
+        `delivery_code`,
         `car_test_symbol`,
         `failure_reappear_person_id`,
         `failure_reappear_person_name`,
         `failure_reappear_symbol`,
+        `failure_reappear_date`,
+        `failure_reappear_situation`,
+        `failure_reappear_result`,
         </trim>
     </sql>
 
@@ -809,6 +1500,24 @@
                     <if test="fetchFields.fetchFields.trackBeginerName==true">
                         `track_beginer_name`,
                     </if>
+                    <if test="fetchFields.fetchFields.deliveryPersonId==true">
+                        `delivery_person_id`,
+                    </if>
+                    <if test="fetchFields.fetchFields.deliveryPersonName==true">
+                        `delivery_person_name`,
+                    </if>
+                    <if test="fetchFields.fetchFields.deliveryState==true">
+                        `delivery_state`,
+                    </if>
+                    <if test="fetchFields.fetchFields.deliveryDeadline==true">
+                        `delivery_deadline`,
+                    </if>
+                    <if test="fetchFields.fetchFields.deliveryReceivedDate==true">
+                        `delivery_received_date`,
+                    </if>
+                    <if test="fetchFields.fetchFields.deliveryCode==true">
+                        `delivery_code`,
+                    </if>
                     <if test="fetchFields.fetchFields.carTestSymbol==true">
                         `car_test_symbol`,
                     </if>
@@ -820,6 +1529,15 @@
                     </if>
                     <if test="fetchFields.fetchFields.failureReappearSymbol==true">
                         `failure_reappear_symbol`,
+                    </if>
+                    <if test="fetchFields.fetchFields.failureReappearDate==true">
+                        `failure_reappear_date`,
+                    </if>
+                    <if test="fetchFields.fetchFields.failureReappearSituation==true">
+                        `failure_reappear_situation`,
+                    </if>
+                    <if test="fetchFields.fetchFields.failureReappearResult==true">
+                        `failure_reappear_result`,
                     </if>
                     </if>
                     <if test="fetchFields.AllFields==null and fetchFields.excludeFields!=null">
@@ -841,6 +1559,24 @@
                     <if test="fetchFields.excludeFields.trackBeginerName==null">
                         `track_beginer_name`,
                     </if>
+                    <if test="fetchFields.excludeFields.deliveryPersonId==null">
+                        `delivery_person_id`,
+                    </if>
+                    <if test="fetchFields.excludeFields.deliveryPersonName==null">
+                        `delivery_person_name`,
+                    </if>
+                    <if test="fetchFields.excludeFields.deliveryState==null">
+                        `delivery_state`,
+                    </if>
+                    <if test="fetchFields.excludeFields.deliveryDeadline==null">
+                        `delivery_deadline`,
+                    </if>
+                    <if test="fetchFields.excludeFields.deliveryReceivedDate==null">
+                        `delivery_received_date`,
+                    </if>
+                    <if test="fetchFields.excludeFields.deliveryCode==null">
+                        `delivery_code`,
+                    </if>
                     <if test="fetchFields.excludeFields.carTestSymbol==null">
                         `car_test_symbol`,
                     </if>
@@ -852,6 +1588,15 @@
                     </if>
                     <if test="fetchFields.excludeFields.failureReappearSymbol==null">
                         `failure_reappear_symbol`,
+                    </if>
+                    <if test="fetchFields.excludeFields.failureReappearDate==null">
+                        `failure_reappear_date`,
+                    </if>
+                    <if test="fetchFields.excludeFields.failureReappearSituation==null">
+                        `failure_reappear_situation`,
+                    </if>
+                    <if test="fetchFields.excludeFields.failureReappearResult==null">
+                        `failure_reappear_result`,
                     </if>
                     </if>
                     <if test="fetchFields.otherFields!=null and fetchFields.otherFields.size>0">

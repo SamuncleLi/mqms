@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>装配数据追溯</title>
+    <title>不良追踪查询</title>
     <script type="text/javascript" src="${req.contextPath}/static/plugin/jquery-easyui-1.5.5.4/jquery.min.js"></script>
     <script type="text/javascript" src="${req.contextPath}/static/plugin/jquery-easyui-1.5.5.4/jquery.easyui.min.js"></script>
     <script type="text/javascript" src="${req.contextPath}/static/plugin/jquery-easyui-1.5.5.4/locale/easyui-lang-zh_CN.js"></script>
@@ -11,10 +11,8 @@
     <link rel="stylesheet" href="${req.contextPath}/static/css/data_voucher.css" type="text/css"/>
     <script type="text/javascript" src="${req.contextPath}/static/plugin/jquery-easyui-1.5.5.4/datagrid-detailview.js"></script>
     <script type="text/javascript" src="${req.contextPath}/static/plugin/jquery-easyui-1.5.5.4/datagrid-filter.js"></script>
-    <script type="text/javascript" src="${req.contextPath}/static/datagrid-export/datagrid-export.js"></script>
     <link  href="${req.contextPath}/static/layuiExtend/layui/css/layui.css" media="all" rel="stylesheet">
     <script src="${req.contextPath}/static/layuiExtend/layui/layui.js"></script>
-
     <style type="text/css">
         .team3f-table tr{
             text-align:center;
@@ -46,31 +44,28 @@
     </style>
 </head>
 <body>
-    <table id="dg2" class="easyui-datagrid" title="VEI数据查询" style="width:100%;height:100%"
-           data-options="collapsible:true" toolbar="#tb2" pageList="[10, 100, 1000, 1000]" pageSize="100">
-        <thead>
-        <tr></tr>
-        </thead>
-    </table>
-    <div id="tb2" class="select-area">
-        <div>
-            <a id="complexBtn" class="layui-btn">复杂查询</a>
-            <a href="javascript:exportFile()" class="easyui-linkbutton" iconCls="icon-save" plain="true">导出</a>
-            <a href="javascript:importFile()" class="easyui-linkbutton" iconCls="icon-save" plain="true" title="导入excel">导入</a>
-            <a href="javascript:startFailureTrack()" class="easyui-linkbutton" iconCls="icon-save" plain="true" >发起不良跟踪</a>
-            <a href="javascript:startImportantIssue()" class="easyui-linkbutton" iconCls="icon-save" plain="true">发起重点课题</a>
-        </div>
-        <div id="msg2">查询条件：</div>
-        <div id="result2" style="word-break:break-all;height:60px;width:500px;padding-left:50px;display: none;"></div>
+<table id="dg2" class="easyui-datagrid" title="不良追踪查询" style="width:100%;height:100%"
+       data-options="singleSelect:true,collapsible:true" toolbar="#tb2">
+    <thead>
+    <tr></tr>
+    </thead>
+</table>
+<div id="tb2" class="select-area">
+    <div>
+        <a id="complexBtn" class="layui-btn">复杂查询</a>
+        <a href="javascript:delivery_modify()" class="easyui-linkbutton" iconCls="icon-save" plain="true">快递到货</a>
     </div>
-    <div id="upload-dlg" class="easyui-dialog" title="上传文件" closed="true">
-        <form  method="post" enctype="multipart/form-data" id="fileForm">
-            <input id="file" class="easyui-filebox" name="file" data-options="buttonText:'选择文件',prompt:'选择文件'">
-            <a id="upload-btn" href="javascript:fileUpload()" class="easyui-linkbutton" style="width:70%">上传文件</a>
-        </form>
-    </div>
-    <div id="failureTrack-dlg" title="发起不良跟踪" class="easyui-dialog"  cellspacing="0" closed="true" buttons="#failureTrack-dlgbutton">
-        <form id="failureTrackForm">
+    <div id="msg2">查询条件：</div>
+    <div id="result2" style="word-break:break-all;height:60px;width:500px;padding-left:50px;display: none;"></div>
+</div>
+<div id="upload-dlg" class="easyui-dialog" title="上传文件" closed="true">
+    <form  method="post" enctype="multipart/form-data" id="fileForm">
+        <input id="file" class="easyui-filebox" name="file" data-options="buttonText:'选择文件',prompt:'选择文件'">
+        <a id="upload-btn" href="javascript:fileUpload()" class="easyui-linkbutton" style="width:70%">上传文件</a>
+    </form>
+</div>
+<div id="failureTrack-dlg" title="不良跟踪快递信息" class="easyui-dialog"  cellspacing="0" closed="true" buttons="#failureTrack-dlgbutton">
+    <form id="failureTrackForm">
         <table id="voucherInfo" class="team3f-table">
             <tbody>
             <tr>
@@ -78,29 +73,23 @@
                 <td>要求返回时间</td><td><input id="deliveryDeadline" name="deliveryDeadline" class="easyui-datebox"></td>
             </tr>
             <tr>
-                <td>快递接收人工号</td><td><input id="deliveryPersonNo" name="deliveryPersonNo" class="easyui-textbox"></td>
-                <td>快递接收人姓名</td><td><input id="deliveryPersonName" name="deliveryPersonName" class="easyui-textbox"></td>
+                <td>实际返回时间</td><td><input id="deliveryReceivedDate" name="deliveryReceivedDate" class="easyui-datebox"></td>
+                <td>快递单号</td><td><input id="deliveryCode" name="deliveryCode" class="easyui-textbox"></td>
             </tr>
             </tbody>
         </table>
-        </form>
-    </div>
-    <div id="failureTrack-dlgbutton">
-        <a href="javascript:saveFailureTrackDlg()" class="easyui-linkbutton">保存</a>
-        <a href="javascript:closeFailureTrackDlg()" class="easyui-linkbutton">关闭</a>
-    </div>
-    <div id="importantIssue-dlg" title="发起重点课题" class="easyui-dialog" closed="true">
-        <form>
-            <label>起始月份</label><input name="voucherCode">
-        </form>
-    </div>
-    <div id="mdf-dlg">
-
-    </div>
+    </form>
+</div>
+<div id="failureTrack-dlgbutton">
+    <a href="javascript:saveFailureTrackDlg()" class="easyui-linkbutton">保存</a>
+    <a href="javascript:closeFailureTrackDlg()" class="easyui-linkbutton">关闭</a>
+</div>
 <script type="text/javascript">
     //初始化全局变量
     var columns_auto_single=new Array(1);
     var complexDc;var dynamicCondition;
+    var system = "mqms";
+    var model = "failure_track";
     //加载模型
     $(function(){
         load_dynamic();
@@ -109,7 +98,7 @@
     function load_dynamic() {
         //查询数据表头
         $.ajax({
-            url: '/mqms/voucher/columnNameAndComment?table=mqms_voucher',
+            url: '/mqms/' + model +'/columnNameAndComment?table=mqms_' + model,
             cache: false,
             type: 'POST',
             data: "",//json字符串
@@ -117,8 +106,6 @@
             contentType: "application/json; charset=utf-8",//发送类型，重要，不然会报错
             success: function (result) {
                 var arr = result;
-                var table=document.getElementById('voucherInfo');
-
                 //动态生成dcDemo中的li
                 columns_auto_single[0] = function () {
                     var data = [];
@@ -175,7 +162,6 @@
             }
         });
     }
-    //动态给表格表头赋值，并读取数据
     function load_dynamic_records(requestData) {
         //动态加载数据
         $("#dg2").datagrid({
@@ -195,7 +181,7 @@
                 var allParam = $.extend({},param, condition);
                 console.log(allParam);
                 $.ajax({
-                    url:"/mqms/voucher/list",
+                    url:'/mqms/' + model + '/list',
                     contentType: "application/json",
                     data: allParam,
                     dataType:"json",
@@ -207,29 +193,9 @@
             }
         });
     }
-    //打开上传文件对话框
-    function importFile() {
-        $('#upload-dlg').dialog("open", true);
-    }
-    //上传文件
-    function fileUpload() {
-        $.messager.alert('系统提示',"正在上传，上传完成后会有提示，请耐心等候");
 
-        $("#fileForm").form("submit", {
-            type: 'post',
-            url: '/mqms/import/veiData',
-            success: function (data) {
-                if (data == '文件上传成功') {
-                    $.messager.alert("系统提示",'上传文件成功');
-                } else {
-                    $.messager.alert("系统提示",'上传文件失败');
-                }
-                return false;
-            }
-        });
-    }
-    //开启不良追踪
-    function startFailureTrack() {
+    //补充快递信息
+    function delivery_modify() {
         var selectedRows = $('#dg2').datagrid('getSelections');
         if(selectedRows.length==0){
             $.messager.alert("系统提示","请选择至少一行");
@@ -241,29 +207,15 @@
         }
         var voucherCodeList = voucherCodes.join(",");
         //判断是否可以开启不良追踪，如果已经开启不良追踪，则显示已开启不良追踪
-        $.post('/mqms/voucher/checkTrack',{voucherCodes:voucherCodeList},function (result) {
-            //如果已被安排快递处理，则提示
-            if(result.success == 'false'){
-                $('#voucherCodes').textbox('setValue', result.voucherCodeSet);
-                $('#failureTrack-dlg').dialog("open", true);
-                $.messager.alert("系统提示","部分不良已经开启了追踪，以下仅显示未开启不良追踪的单据")
-            }
-            else if(result.success == 'allFalse'){
-                $.messager.alert("系统提示","所有不良已开启了不良追踪")
-            }
-            else if(result.success == 'true'){
-                $('#voucherCodes').textbox('setValue', result.voucherCodeSet);
-                $('#failureTrack-dlg').dialog("open", true);
-            }
-        })
+        $('#failureTrack-dlg').dialog("open", true);
     }
     //关闭不良追踪对话框
-    function closeFailureTrackDlg() {
+    function close_delivery_modify_dlg() {
         $('#failureTrack-dlg').dialog('close');
         $('#dlgdg').datagrid('clear');
     }
     //保存不良追踪对话框
-    function saveFailureTrackDlg() {
+    function save_delivery_modify_dlg() {
         $('#failureTrackForm').form('submit', {
             url: "/mqms/failure_track/add",
             onSubmit: function(){
@@ -278,43 +230,7 @@
             }
         });
     }
-    //开启重点课题
-    function startImportantIssue() {
-        $('#importantIssue-dlg').dialog("open", true);
-    }
 
-    //导出
-    function exportFile() {
-        $('#dg2').datagrid('toExcel', "品质不良数据.xls")
-    }
-
-    //打开修改对话框
-    function openModifyDlg(){
-        var info = $('#dg2').datagrid("getSelections");
-        if(info.size() != 1){
-            $.messager.alert("系统提示", "请选择一条信息")
-        }
-        else{
-            $('#mdf-fm').form('load', info)
-        }
-        $('#mdf-dlg').dialog("open", "补充数据")
-    }
-
-    //修改
-    function modify(){
-        $("#mdf-fm").form("submit", {//form({})相当于表单的构造函数
-            //easyui提交数据给后台是通过jQuery ajax中的序列化将数据提交给后台
-            url : "/mqms/voucher/modify?voucher="+$(this).serialize(),
-            onSubmit : function() {
-                //表单验证
-                return $(this).form("validate");
-            },
-            success : function() {
-                //刷新页面
-                $('#dg2').dialog("reload")
-            }
-        });
-    }
 </script>
 </body>
 </html>

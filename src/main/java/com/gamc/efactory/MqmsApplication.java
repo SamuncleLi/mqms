@@ -19,7 +19,6 @@ public class MqmsApplication {
 //	protected SpringApplicationBuilder configure(SpringApplicationBuilder builder){
 //		return builder.sources(MqmsApplication.class);
 //	}
-
 	public static void main(String[] args) {
 		SpringApplication.run(MqmsApplication.class, args);
 	}

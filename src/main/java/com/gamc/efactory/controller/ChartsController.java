@@ -38,7 +38,7 @@ public class ChartsController {
      * @抛出异常
     */
     @RequestMapping("engineFailureRate")
-    public String[][] calculateEngineFailureRate(@RequestParam String yearAndMonth, @RequestParam String timeSpan, @RequestParam String engType){
+    public String[][] calculateEngineFailureRate(@RequestParam String yearAndMonth, @RequestParam String timeSpan, @RequestParam String engType, @RequestParam int monthType){
         //分离机型
         String[] engTypeAssemble = engType.split(",");
         //创建二维数组
