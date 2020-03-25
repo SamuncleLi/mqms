@@ -17,7 +17,8 @@ public interface MqmsVoucherMapper extends MqmsVoucherBaseMapper{
     public List<TransmissionProportion> calTransmissionProportion(MqmsVoucher mqmsVoucher);
     public List<FailureTop10> failureTop10(MqmsVoucher mqmsVoucher);
 
-    int selectEngTypeCount(@Param("eng_type") String engType,@Param("confirm_date") String confirmDate);
+    int selectClaimCount(@Param("engType") String engType,@Param("beginData") String beginData,@Param("endData") String endData);
+    int selectTransClaimCount(@Param("tranTypeDetail") String transTypeDetail,@Param("beginData") String beginData,@Param("endData") String endData);
     BigDecimal selectTotalCost(@Param("eng_type") String engType, @Param("confirm_date") String confirmDate);
     int selectByVoucherCode(@Param("voucher_code") String voucherCode);
     int updateMqmsVoucher(MqmsVoucher object);
@@ -25,4 +26,7 @@ public interface MqmsVoucherMapper extends MqmsVoucherBaseMapper{
     int countBetweenYearAndMonth(@Param("eng_type")String engType, @Param("begin")String begin, @Param("end")String end);
     //左右均等于
     int salesFailureTimeBetween(@Param("eng_type")String engType, @Param("begin")int begin, @Param("end")int end);
+    int salesTransFailureTimeBetween(@Param("tranTypeDetail")String tranTypeDetail, @Param("begin")int begin, @Param("end")int end);
+    public List<FailureTop10> transFailureTop10(MqmsVoucher mqmsVoucher);
+
 }

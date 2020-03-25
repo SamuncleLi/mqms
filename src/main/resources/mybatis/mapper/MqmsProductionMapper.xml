@@ -31,6 +31,9 @@
         <result property="carShortCode" column="car_short_code"/>
         <result property="carModel" column="car_model"/>
         <result property="carSimpleCode" column="car_simple_code"/>
+        <result property="applierId" column="applier_id"/>
+        <result property="applierName" column="applier_name"/>
+        <result property="applyTime" column="apply_time"/>
     </resultMap>
     <select id="selectInforByVin"  resultMap="MqmsProductionMap" >
         SELECT * FROM `mqms_production`
@@ -134,6 +137,7 @@
             <if test="applyTime != null and applyTime!=''">
                 `apply_time` = #{applyTime},
             </if>
+
         </trim>
         WHERE
         <trim suffixOverrides="and">

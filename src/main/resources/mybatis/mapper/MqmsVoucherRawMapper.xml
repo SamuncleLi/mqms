@@ -127,6 +127,9 @@
             <if test="transmissionCode != null and transmissionCode!=''">
                 `transmission_code` = #{transmissionCode},
             </if>
+            <if test="set.engArrange != null and set.engArrange!=''">
+                `eng_arrange` = #{set.engArrange},
+            </if>
             <if test="applierId != null">
                 `applier_id` = #{applierId},
             </if>

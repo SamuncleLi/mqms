@@ -32,16 +32,16 @@ import java.util.concurrent.*;
  */
 @Service
 public class SalesServiceImpl implements SalesService {
+    private ThreadFactory threadFactory = new ThreadFactoryBuilder().setNameFormat("sendEmailImmediately-pool-%d").build();
+//    private ExecutorService executorService = new ThreadPoolExecutor(8, 40, 1000, TimeUnit.MILLISECONDS, new SynchronousQueue<Runnable>(),threadFactory,new ThreadPoolExecutor.AbortPolicy());
+
+    private ExecutorService executorService = new ThreadPoolExecutor(8, 40, 1000, TimeUnit.MILLISECONDS,    new LinkedBlockingQueue<Runnable>(30),threadFactory,new ThreadPoolExecutor.AbortPolicy());
     @Autowired
     private MqmsSalesRawMapper mqmsSalesRawMapper;
     @Autowired
     private MqmsSalesMapper mqmsSalesMapper;
     @Autowired
     private MqmsTranProductionDecodeMapper mqmsTranProductionDecodeMapper;
-    @Autowired
-    private MqmsTranManufacturesDecodeMapper mqmsTranManufacturesDecodeMapper;
-    @Autowired
-    private MqmsTranYearDecodeMapper mqmsTranYearDecodeMapper;
     @Autowired
     private MqmsVinDecodeMapper mqmsVinDecodeMapper;
     @Autowired
@@ -50,6 +50,119 @@ public class SalesServiceImpl implements SalesService {
     private MqmsProductionMapper mqmsProductionMapper;
     Logger logger = LoggerFactory.getLogger(SalesServiceImpl.class);
 
+
+        @Transactional
+    public int addLists(String file, HttpServletRequest request) throws ExecutionException, InterruptedException {
+        try {
+            BigExcelReader bigExcelReader = new BigExcelReader(file) {
+                @Override
+                public void outputAllRow(List<String[]> lists) throws IllegalAccessException {
+
+
+                    List<List<Object>> lists1 = new LinkedList<>();
+                    //执行保存
+                    for (String[] row : lists) {
+                        Map<String, Object> map = new HashMap<String, Object>();
+                        //map.put("", row);
+                        List<Object> list2 = new ArrayList<>();
+//                        System.out.print("[");
+                        for (String cell : row) {
+//                            System.out.print(cell+",");
+                            list2.add(cell);
+                        }
+                        lists1.add(list2);
+                        //list2= new ArrayList<Object>();
+//                        System.out.println("]");
+                    }
+                    saveAll(lists1, request);
+
+                }
+            };
+            // 执行解析
+            bigExcelReader.parse();
+
+            //File files = new File(file);
+
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+            return 1;
+
+    }
+
+
+    private void saveAll(List<List<Object>> lists, HttpServletRequest request) throws IllegalAccessException {
+        try {
+            if (lists.size() > 0) {
+
+                List<MqmsSalesRaw> mqmsSalesRawList = new ArrayList<>();
+                List<MqmsSales> mqmsSalesList = new ArrayList<>();
+                SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
+                User user = (User) request.getSession().getAttribute("user");
+                for (int i = 1; i < lists.size(); i++) {
+                    List<Object> rowData = lists.get(i);
+                    //利用反射遍历对属性赋值
+                    MqmsSalesRaw mqmsSalesRaw = new MqmsSalesRaw();
+                    MqmsSales mqmsSales = new MqmsSales();
+                    Class cls = mqmsSalesRaw.getClass();
+                    Field[] fields = cls.getDeclaredFields();
+                    for (int j = 2; j < fields.length - 3; j++) {
+                        Field f = fields[j];
+                        f.setAccessible(true);
+                        if (f.getType().equals(String.class)) {
+                            f.set(mqmsSalesRaw, rowData.get(j - 2));
+                        } else if (f.getType().equals(BigDecimal.class)) {
+
+                            f.set(mqmsSalesRaw, new BigDecimal(rowData.get(j - 2).toString()));
+                        } else if (f.getType().equals(Integer.class)) {
+                            //来自前面的坑，EXCEL导出整数变成字符多了小数点，例2838(Int),2838.0(String
+                            String str = rowData.get(j - 2).toString();
+                            if (str.contains(".")) {
+                                int indexOf = str.indexOf(".");
+                                str = str.substring(0, indexOf);
+                            }
+                            f.set(mqmsSalesRaw, Integer.parseInt(str));
+                        }
+                        mqmsSalesRaw.setApplierId(user.getUserId());
+                        mqmsSalesRaw.setApplierName(user.getUserName());
+                        mqmsSalesRaw.setApplyTime(df.format(new Date()));
+
+                    }
+                    mqmsSalesRawList.add(mqmsSalesRaw);
+                    //相同属性复制
+                    BeanUtils.copyProperties(mqmsSalesRaw, mqmsSales);
+                    mqmsSalesList.add(mqmsSales);
+                }
+
+
+                //使用线程池
+                ImportCall importCall = new ImportCall();
+                ImportCallRaw importCallRaw = new ImportCallRaw();
+                importCall.setMqmsSalesList(mqmsSalesList);
+                importCallRaw.setMqmsSalesRawList(mqmsSalesRawList);
+                executorService.execute(importCall);
+                executorService.execute(importCallRaw);
+
+
+//                for (MqmsSalesRaw mqmsSalesRawRecord : mqmsSalesRawList) {
+//                    String vinCode = mqmsSalesRawRecord.getVinCode();
+//                    if (vinCode != null) {
+//                        int cnt = mqmsSalesRawMapper.selectByVinCode(vinCode);
+//                        if (cnt == 0) {
+//                            mqmsSalesRawMapper.insertMqmsSalesRaw(mqmsSalesRawRecord);
+//                        } else {
+//                            mqmsSalesRawMapper.updateByVinCode(mqmsSalesRawRecord);
+//                        }
+//                    }
+//                }
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+
+        }
+    }
     private class ImportCall implements Runnable {
         //构造函数传递参数
         private List<MqmsSales> mqmsSalesList;
@@ -62,13 +175,7 @@ public class SalesServiceImpl implements SalesService {
         public void run() {
 
             for (MqmsSales mqmsSalesRecord : mqmsSalesList) {
-                //mtoc码
-                if (mqmsProductionMapper.selectByVin(mqmsSalesRecord.getVinCode()) != 0) {
-                    String mtoc = mqmsProductionMapper.selectInforByVin(mqmsSalesRecord.getVinCode()).getMtoc();
-                    mqmsSalesRecord.setMtoc(mtoc);
-                } else {
-                    mqmsSalesRecord.setMtoc("");
-                }
+
                 //区域
                 mqmsSalesRecord.setSalesArea(mqmsSalesPointMapper.selectSalesPointInfor(mqmsSalesRecord.getDealerCode()));
 
@@ -77,7 +184,7 @@ public class SalesServiceImpl implements SalesService {
                 Calendar c = Calendar.getInstance();
                 if (mqmsSalesRecord.getSecondPinDate()!=null) {
                     String secondSalesDate = mqmsSalesRecord.getSecondPinDate();
-                    System.out.println(secondSalesDate);
+//                    System.out.println(secondSalesDate);
                     try {
                         c.setTime(sdf.parse(secondSalesDate));
                     } catch (ParseException e) {
@@ -112,20 +219,61 @@ public class SalesServiceImpl implements SalesService {
 
                 String vinCode = mqmsSalesRecord.getVinCode();
                 if (vinCode != null) {
+
                     //变速箱短码
                     mqmsSalesRecord.setTranShortCode(mqmsSalesRecord.getVinCode().substring(6, 7));
                     //机型
-                    String vinShortCOde = vinCode.substring(0, 5);
-                    MqmsVinDecode mqmsVinDecode = mqmsVinDecodeMapper.vinDecode(vinShortCOde);
-                    mqmsSalesRecord.setEngType(mqmsVinDecode.getVinEngType());
+                    String vinShortCode = vinCode.substring(0, 5);
+                    MqmsVinDecode mqmsVinDecode = mqmsVinDecodeMapper.vinDecode(vinShortCode);
+                    if (mqmsVinDecode.getVinCarType()!=null){
+                        mqmsSalesRecord.setCarType(mqmsVinDecode.getVinCarType());
+                    }
+                    else
+                    {
+                        mqmsSalesRecord.setCarType("");
+                    }
+                    if(mqmsVinDecode.getVinEngType()!=null) {
+                        mqmsSalesRecord.setEngType(mqmsVinDecode.getVinEngType());
+                    }
+                    else
+                    {
+                        mqmsSalesRecord.setEngType("");
+                    }
                     //系列
-                    mqmsSalesRecord.setEngSeries(mqmsVinDecode.getVinSeries());
+                    if(mqmsVinDecode.getVinSeries()!=null) {
+                        mqmsSalesRecord.setEngSeries(mqmsVinDecode.getVinSeries());
+                    }
+                    else
+                    {
+                        mqmsSalesRecord.setEngSeries("");
+                    }
+                    //发动机型短码
+                    if(mqmsVinDecode.getVinEngShortCode()!=null) {
+                        mqmsSalesRecord.setEngShortCode(mqmsVinDecode.getVinEngShortCode());
+                    }
+                    else
+                    {
+                        mqmsSalesRecord.setEngShortCode("");
+                    }
                     //车型简码
-                    mqmsSalesRecord.setCarShortCode(vinShortCOde.substring(3, 5));
+                    mqmsSalesRecord.setCarShortCode(vinShortCode.substring(3, 5));
                     //车型
-                    mqmsSalesRecord.setCarModel(mqmsVinDecode.getVinCarType());
+                    if (mqmsVinDecode.getVinCarType()!=null) {
+                        mqmsSalesRecord.setCarModel(mqmsVinDecode.getVinCarType());
+                    }
+                    else{
+                        mqmsSalesRecord.setCarModel("");
+                    }
                     //内部车型号
-                    mqmsSalesRecord.setCarModelCode(mqmsVinDecode.getVinCarType());
+                    if (mqmsVinDecode.getVinCarType()!=null)
+                    {
+                        mqmsSalesRecord.setCarModelCode(mqmsVinDecode.getVinCarType());
+                    }
+                    else
+                    {
+
+                        mqmsSalesRecord.setCarModelCode("");
+                    }
                     int cnt = mqmsSalesMapper.selectVinCodeCount(vinCode);
                     if (cnt == 0) {
                         mqmsSalesMapper.insertMqmsSales(mqmsSalesRecord);
@@ -137,117 +285,28 @@ public class SalesServiceImpl implements SalesService {
             }
         }
     }
+    private class ImportCallRaw implements Runnable {
+        //构造函数传递参数
+        private List<MqmsSalesRaw> mqmsSalesRawList;
 
-    @Transactional
-    public int addLists(String file, HttpServletRequest request) throws ExecutionException, InterruptedException {
-        try {
-            BigExcelReader bigExcelReader = new BigExcelReader(file) {
-                @Override
-                public void outputAllRow(List<String[]> lists) throws IllegalAccessException {
-
-
-                    List<List<Object>> lists1 = new LinkedList<>();
-                    //执行保存
-                    for (String[] row : lists) {
-                        Map<String, Object> map = new HashMap<String, Object>();
-                        //map.put("", row);
-                        List<Object> list2 = new ArrayList<>();
-//                        System.out.print("[");
-                        for (String cell : row) {
-//                            System.out.print(cell+",");
-                            list2.add(cell);
-                        }
-                        lists1.add(list2);
-                        //list2= new ArrayList<Object>();
-//                        System.out.println("]");
-                    }
-                    saveAll(lists1, request);
-                }
-            };
-            // 执行解析
-            bigExcelReader.parse();
-            //File files = new File(file);
-            System.out.println("0000000000000000000000000000000000000000000000");
-            return 1;
-
-        } catch (Exception e) {
-            throw new RuntimeException(e);
+        void setMqmsSalesRawList(List<MqmsSalesRaw> mqmsSalesRawList) {
+            this.mqmsSalesRawList = mqmsSalesRawList;
         }
-    }
 
-
-    private void saveAll(List<List<Object>> lists, HttpServletRequest request) throws IllegalAccessException {
-        try {
-            if (lists.size() > 0) {
-
-//            System.out.println(lists.size());
-                List<MqmsSalesRaw> mqmsSalesRawList = new ArrayList<>();
-                List<MqmsSales> mqmsSalesList = new ArrayList<>();
-                SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
-                User user = (User) request.getSession().getAttribute("user");
-                for (int i = 1; i < lists.size(); i++) {
-//                System.out.println("222222222222222222222222222");
-                    List<Object> rowData = lists.get(i);
-                    //利用反射遍历对属性赋值
-                    MqmsSalesRaw mqmsSalesRaw = new MqmsSalesRaw();
-                    Class cls = mqmsSalesRaw.getClass();
-                    Field[] fields = cls.getDeclaredFields();
-                    for (int j = 2; j < fields.length - 3; j++) {
-                        Field f = fields[j];
-                        f.setAccessible(true);
-                        if (f.getType().equals(String.class)) {
-                            f.set(mqmsSalesRaw, rowData.get(j - 2));
-                        } else if (f.getType().equals(BigDecimal.class)) {
-
-                            f.set(mqmsSalesRaw, new BigDecimal(rowData.get(j - 2).toString()));
-                        } else if (f.getType().equals(Integer.class)) {
-                            //来自前面的坑，EXCEL导出整数变成字符多了小数点，例2838(Int),2838.0(String
-                            String str = rowData.get(j - 2).toString();
-                            if (str.contains(".")) {
-                                int indexOf = str.indexOf(".");
-                                str = str.substring(0, indexOf);
-                            }
-                            f.set(mqmsSalesRaw, Integer.parseInt(str));
-                        }
-                        mqmsSalesRaw.setApplierId(user.getUserId());
-                        mqmsSalesRaw.setApplierName(user.getUserName());
-                        mqmsSalesRaw.setApplyTime(df.format(new Date()));
-
-                    }
-                    mqmsSalesRawList.add(mqmsSalesRaw);
-                    //相同属性复制
-                    MqmsSales mqmsSales = new MqmsSales();
-                    BeanUtils.copyProperties(mqmsSalesRaw, mqmsSales);
-                    mqmsSalesList.add(mqmsSales);
-                }
-
-                ThreadFactory threadFactory = new ThreadFactoryBuilder().setNameFormat("sendEmailImmediately-pool-%d").build();
-                ExecutorService executorService = new ThreadPoolExecutor(2, 4, 1000, TimeUnit.MILLISECONDS, new SynchronousQueue<Runnable>(),threadFactory,new ThreadPoolExecutor.AbortPolicy());
-                //使用线程池
-                ImportCall importCall = new ImportCall();
-                importCall.setMqmsSalesList(mqmsSalesList);
-                executorService.execute(importCall);
-//                System.out.println("nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn");
-                //构造函数传参
-
-
-                for (MqmsSalesRaw mqmsSalesRawRecord : mqmsSalesRawList) {
-
-                    String vinCode = mqmsSalesRawRecord.getVinCode();
-                    if (vinCode != null) {
-                        int cnt = mqmsSalesRawMapper.selectByVinCode(vinCode);
-                        if (cnt == 0) {
-                            mqmsSalesRawMapper.insertMqmsSalesRaw(mqmsSalesRawRecord);
-                        } else {
-                            mqmsSalesRawMapper.updateByVinCode(mqmsSalesRawRecord);
-//                        System.out.println(" 更新 "+mqmsSalesRawRecord);
-                        }
+        @Override
+        public void run() {
+            for (MqmsSalesRaw mqmsSalesRawRecord : mqmsSalesRawList) {
+                String vinCode = mqmsSalesRawRecord.getVinCode();
+                if (vinCode != null) {
+                    int cnt = mqmsSalesRawMapper.selectByVinCode(vinCode);
+                    if (cnt == 0) {
+                        mqmsSalesRawMapper.insertMqmsSalesRaw(mqmsSalesRawRecord);
+                    } else {
+                        mqmsSalesRawMapper.updateByVinCode(mqmsSalesRawRecord);
                     }
                 }
             }
 
-        } catch (Exception e) {
-            e.printStackTrace();
 
         }
     }

@@ -10,7 +10,7 @@ import java.util.List;
 */
 public class MqmsVoucherRaw implements Serializable {
 
-    private static final long serialVersionUID = 1583292385830L;
+    private static final long serialVersionUID = 1585115208406L;
 
 
     /**
@@ -255,6 +255,12 @@ public class MqmsVoucherRaw implements Serializable {
     private String transmissionCode;
 
     /**
+    * eng整理（故障分类）
+    * isNullAble:1
+    */
+    private String engArrange;
+
+    /**
     * 
     * isNullAble:1
     */
@@ -433,6 +439,10 @@ public class MqmsVoucherRaw implements Serializable {
 
     public String getTransmissionCode(){return this.transmissionCode;}
 
+    public void setEngArrange(String engArrange){this.engArrange = engArrange;}
+
+    public String getEngArrange(){return this.engArrange;}
+
     public void setApplierId(Integer applierId){this.applierId = applierId;}
 
     public Integer getApplierId(){return this.applierId;}
@@ -487,6 +497,7 @@ public class MqmsVoucherRaw implements Serializable {
                 "submitDate='" + submitDate + '\'' +
                 "egtypeCode='" + egtypeCode + '\'' +
                 "transmissionCode='" + transmissionCode + '\'' +
+                "engArrange='" + engArrange + '\'' +
                 "applierId='" + applierId + '\'' +
                 "applierName='" + applierName + '\'' +
                 "applyTime='" + applyTime + '\'' +
@@ -1018,6 +1029,18 @@ public class MqmsVoucherRaw implements Serializable {
         private List<String> rightFuzzyTransmissionCode;
 
         public List<String> getRightFuzzyTransmissionCode(){return this.rightFuzzyTransmissionCode;}
+        private List<String> engArrangeList;
+
+        public List<String> getEngArrangeList(){return this.engArrangeList;}
+
+
+        private List<String> fuzzyEngArrange;
+
+        public List<String> getFuzzyEngArrange(){return this.fuzzyEngArrange;}
+
+        private List<String> rightFuzzyEngArrange;
+
+        public List<String> getRightFuzzyEngArrange(){return this.rightFuzzyEngArrange;}
         private List<Integer> applierIdList;
 
         public List<Integer> getApplierIdList(){return this.applierIdList;}
@@ -2818,6 +2841,51 @@ public class MqmsVoucherRaw implements Serializable {
             return this;
         }
 
+        public QueryBuilder fuzzyEngArrange (List<String> fuzzyEngArrange){
+            this.fuzzyEngArrange = fuzzyEngArrange;
+            return this;
+        }
+
+        public QueryBuilder fuzzyEngArrange (String ... fuzzyEngArrange){
+            this.fuzzyEngArrange = solveNullList(fuzzyEngArrange);
+            return this;
+        }
+
+        public QueryBuilder rightFuzzyEngArrange (List<String> rightFuzzyEngArrange){
+            this.rightFuzzyEngArrange = rightFuzzyEngArrange;
+            return this;
+        }
+
+        public QueryBuilder rightFuzzyEngArrange (String ... rightFuzzyEngArrange){
+            this.rightFuzzyEngArrange = solveNullList(rightFuzzyEngArrange);
+            return this;
+        }
+
+        public QueryBuilder engArrange(String engArrange){
+            setEngArrange(engArrange);
+            return this;
+        }
+
+        public QueryBuilder engArrangeList(String ... engArrange){
+            this.engArrangeList = solveNullList(engArrange);
+            return this;
+        }
+
+        public QueryBuilder engArrangeList(List<String> engArrange){
+            this.engArrangeList = engArrange;
+            return this;
+        }
+
+        public QueryBuilder fetchEngArrange(){
+            setFetchFields("fetchFields","engArrange");
+            return this;
+        }
+
+        public QueryBuilder excludeEngArrange(){
+            setFetchFields("excludeFields","engArrange");
+            return this;
+        }
+
         public QueryBuilder applierIdBetWeen(Integer applierIdSt,Integer applierIdEd){
             this.applierIdSt = applierIdSt;
             this.applierIdEd = applierIdEd;
@@ -3471,6 +3539,18 @@ public class MqmsVoucherRaw implements Serializable {
         private List<String> rightFuzzyTransmissionCode;
 
         public List<String> getRightFuzzyTransmissionCode(){return this.rightFuzzyTransmissionCode;}
+        private List<String> engArrangeList;
+
+        public List<String> getEngArrangeList(){return this.engArrangeList;}
+
+
+        private List<String> fuzzyEngArrange;
+
+        public List<String> getFuzzyEngArrange(){return this.fuzzyEngArrange;}
+
+        private List<String> rightFuzzyEngArrange;
+
+        public List<String> getRightFuzzyEngArrange(){return this.rightFuzzyEngArrange;}
         private List<Integer> applierIdList;
 
         public List<Integer> getApplierIdList(){return this.applierIdList;}
@@ -4668,6 +4748,36 @@ public class MqmsVoucherRaw implements Serializable {
             return this;
         }
 
+        public ConditionBuilder fuzzyEngArrange (List<String> fuzzyEngArrange){
+            this.fuzzyEngArrange = fuzzyEngArrange;
+            return this;
+        }
+
+        public ConditionBuilder fuzzyEngArrange (String ... fuzzyEngArrange){
+            this.fuzzyEngArrange = solveNullList(fuzzyEngArrange);
+            return this;
+        }
+
+        public ConditionBuilder rightFuzzyEngArrange (List<String> rightFuzzyEngArrange){
+            this.rightFuzzyEngArrange = rightFuzzyEngArrange;
+            return this;
+        }
+
+        public ConditionBuilder rightFuzzyEngArrange (String ... rightFuzzyEngArrange){
+            this.rightFuzzyEngArrange = solveNullList(rightFuzzyEngArrange);
+            return this;
+        }
+
+        public ConditionBuilder engArrangeList(String ... engArrange){
+            this.engArrangeList = solveNullList(engArrange);
+            return this;
+        }
+
+        public ConditionBuilder engArrangeList(List<String> engArrange){
+            this.engArrangeList = engArrange;
+            return this;
+        }
+
         public ConditionBuilder applierIdBetWeen(Integer applierIdSt,Integer applierIdEd){
             this.applierIdSt = applierIdSt;
             this.applierIdEd = applierIdEd;
@@ -4936,6 +5046,10 @@ public class MqmsVoucherRaw implements Serializable {
         }
         public Builder transmissionCode(String transmissionCode){
             this.obj.setTransmissionCode(transmissionCode);
+            return this;
+        }
+        public Builder engArrange(String engArrange){
+            this.obj.setEngArrange(engArrange);
             return this;
         }
         public Builder applierId(Integer applierId){

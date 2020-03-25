@@ -40,7 +40,15 @@
 
     <select id="selectSecondSalesCount"  resultType="java.lang.Integer" >
         SELECT COUNT(*) FROM `mqms_sales`
-        WHERE  `eng_type` = #{eng_type} AND  `second_pin_date` LIKE  concat(#{second_pin_date},'%')
+        WHERE  `eng_short_code` = #{engShortCode}
+        AND  `second_pin_date` &gt;= #{beginData}
+        AND  `second_pin_date` &lt;= #{endData}
+    </select>
+    <select id="selectTranSecondSalesCount"  resultType="java.lang.Integer" >
+        SELECT COUNT(*) FROM `mqms_sales`
+        WHERE  `tran_type` = #{tranType}
+        AND  `second_pin_date` &gt;= #{beginData}
+        AND  `second_pin_date` &lt;= #{endData}
     </select>
     <select id="selectByVinCode"  resultMap="MqmsSalesMap" >
         SELECT * FROM `mqms_sales`
@@ -144,6 +152,7 @@
             <if test="applyTime != null and applyTime!=''">
                 `apply_time` = #{applyTime},
             </if>
+
 
         </trim>
         WHERE

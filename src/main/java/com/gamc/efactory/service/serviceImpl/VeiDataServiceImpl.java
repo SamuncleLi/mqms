@@ -32,6 +32,9 @@ import java.util.concurrent.*;
  */
 @Service
 public class VeiDataServiceImpl implements VeiDataService {
+
+    private ThreadFactory threadFactory = new ThreadFactoryBuilder().setNameFormat("sendEmailImmediately-pool-%d").build();
+    private ExecutorService executorService = new ThreadPoolExecutor(16, 24, 1000, TimeUnit.MILLISECONDS, new SynchronousQueue<Runnable>(), threadFactory, new ThreadPoolExecutor.AbortPolicy());
     @Autowired
     private MqmsVoucherRawMapper mqmsVoucherRawMapper;
     @Autowired
@@ -98,7 +101,9 @@ public class VeiDataServiceImpl implements VeiDataService {
                     String trsmProYearCode = trsmCode.substring(11, 12);
                     String trsmProMonthHex = trsmCode.substring(12, 13);
                     String trsmProDay = trsmCode.substring(13, 15);
-                    mqmsVoucherRecord.setTranTypeDetail(mqmsVinDecodeMapper.vinDecode(vinShortCOde).getVinTransmType());
+                    //暂定不通过vin码查询变速箱类型
+//                    mqmsVoucherRecord.setTranTypeDetail(mqmsVinDecodeMapper.vinDecode(vinShortCOde).getVinTransmType());
+                    //通过变速箱号查询变速箱类型
                     mqmsVoucherRecord.setTranTypeDetail(mqmsTranProductionDecodeMapper.selectTranProductionCode(trsmType));
                     //变速箱生产厂家
                     mqmsVoucherRecord.setTransmissionManufacturer(mqmsTranManufacturesDecodeMapper.selectTranManufacture(trsmManufacture));
@@ -114,10 +119,10 @@ public class VeiDataServiceImpl implements VeiDataService {
                     //变速箱生产至确认经过月
                     int proFailureMonths = 0;
                     try {
-                        System.out.println(mqmsVoucherRecord.getTransmissionProductionData());
-                        System.out.println(mqmsVoucherRecord.getConfirmDate());
+//                        System.out.println(mqmsVoucherRecord.getTransmissionProductionData());
+//                        System.out.println(mqmsVoucherRecord.getConfirmDate());
                         proFailureMonths = MqmsUtil.getMonth(mqmsVoucherRecord.getTransmissionProductionData(), mqmsVoucherRecord.getConfirmDate());
-                        System.out.println(proFailureMonths);
+//                        System.out.println(proFailureMonths);
 
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -125,32 +130,53 @@ public class VeiDataServiceImpl implements VeiDataService {
                     mqmsVoucherRecord.setTransmissionComfirmTime(Integer.toString(proFailureMonths));
                 }
                 //销售至故障经过月
-                int salesFailureMonths = 0;
-                try {
-                    salesFailureMonths = MqmsUtil.getMonth(mqmsVoucherRecord.getSalesDate(), mqmsVoucherRecord.getFailureDate());
-                } catch (Exception e) {
-                    e.printStackTrace();
+                int salesFailureMonths=0;
+                if (mqmsVoucherRecord.getSalesDate()!=null&& mqmsVoucherRecord.getFailureDate()!=null) {
+                    try {
+                        salesFailureMonths = MqmsUtil.getMonth(mqmsVoucherRecord.getSalesDate(), mqmsVoucherRecord.getFailureDate());
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 }
+
                 //下线至故障经过月
                 int offlineFailureMonths = 0;
-                try {
-                    offlineFailureMonths = MqmsUtil.getMonth(mqmsVoucherRecord.getOfflineDate(), mqmsVoucherRecord. getFailureDate());
-                } catch (Exception e) {
-                    e.printStackTrace();
+                if (mqmsVoucherRecord.getOfflineDate()!=null&&mqmsVoucherRecord. getFailureDate()!=null) {
+                    try {
+                        offlineFailureMonths = MqmsUtil.getMonth(mqmsVoucherRecord.getOfflineDate(), mqmsVoucherRecord.getFailureDate());
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    mqmsVoucherRecord.setSalesFailureTime(salesFailureMonths);
+                    mqmsVoucherRecord.setOfflineFailureTime(offlineFailureMonths);
                 }
-                mqmsVoucherRecord.setSalesFailureTime(salesFailureMonths);
-                mqmsVoucherRecord.setOfflineFailureTime(offlineFailureMonths);
+
                 //里程区间
-                try {
-                    mqmsVoucherRecord.setMileageDistribution(RangeResultUtil.rangeResult(mqmsVoucherRecord.getMileage(), 5000, 100000));
-                } catch (Exception e) {
-                    e.printStackTrace();
+                if (mqmsVoucherRecord.getMileage()!=null) {
+                    try {
+                        mqmsVoucherRecord.setMileageDistribution(RangeResultUtil.rangeResult(mqmsVoucherRecord.getMileage(), 5000, 100000));
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 }
-                String[] dateTime = mqmsVoucherRecord.getFailureDate().split("-");
-                //故障发生年
-                mqmsVoucherRecord.setFailureYear(dateTime[0]);
-                //故障发生月
-                mqmsVoucherRecord.setFailureMonth(dateTime[1]);
+                else
+                {
+                    mqmsVoucherRecord.setMileageDistribution(null);
+                }
+                if (mqmsVoucherRecord.getFailureDate()!=null) {
+                    String[] dateTime = mqmsVoucherRecord.getFailureDate().split("-");
+                    //故障发生年
+                    mqmsVoucherRecord.setFailureYear(dateTime[0]);
+                    //故障发生月
+                    mqmsVoucherRecord.setFailureMonth(dateTime[1]);
+                }
+                else
+                {
+                    //故障发生年
+                    mqmsVoucherRecord.setFailureYear("");
+                    //故障发生月
+                    mqmsVoucherRecord.setFailureMonth("");
+                }
                 //故障代码
                 mqmsVoucherRecord.setFaultCodeClassification(mqmsFaultDecodeMapper.selectFaultCode(mqmsVoucherRecord.getPartsAndSymptom()));
                 String voucherCode = mqmsVoucherRecord.getVoucherCode();
@@ -180,14 +206,14 @@ public class VeiDataServiceImpl implements VeiDataService {
                         Map<String, Object> map = new HashMap<String, Object>();
                         //map.put("", row);
                         List<Object> list2 = new ArrayList<>();
-//                        System.out.print("[");
+                        System.out.print("[");
                         for (String cell : row) {
-//                            System.out.print(cell+",");
+                            System.out.print(cell+",");
                             list2.add(cell);
                         }
                         lists1.add(list2);
                         //list2= new ArrayList<Object>();
-//                        System.out.println("]");
+                        System.out.println("]");
                     }
                     saveAll(lists1, request);
                 }
@@ -195,7 +221,7 @@ public class VeiDataServiceImpl implements VeiDataService {
             // 执行解析
             bigExcelReader.parse();
             //File files = new File(file);
-            System.out.println("0000000000000000000000000000000000000000000000");
+//            System.out.println("0000000000000000000000000000000000000000000000");
             return 1;
 
         } catch (Exception e) {
@@ -222,22 +248,37 @@ public class VeiDataServiceImpl implements VeiDataService {
                         Field f = fields[j];
                         f.setAccessible(true);
                         if (f.getType().equals(String.class)) {
-                            f.set(mqmsVoucherRaw, rowData.get(j - 2));
+                            if (rowData.get(j - 2)!=null) {
+                                f.set(mqmsVoucherRaw, rowData.get(j - 2));
+                            }
+                            else{
+                                f.set(mqmsVoucherRaw, null);
+                            }
                         } else if (f.getType().equals(BigDecimal.class)) {
-                            if (StringUtil.isEmpty(rowData.get(j - 2).toString())) {
-                                f.set(mqmsVoucherRaw, new BigDecimal(0.0));
-                            } else {
-                                f.set(mqmsVoucherRaw, new BigDecimal(Double.parseDouble(rowData.get(j - 2).toString())));
+                            if (rowData.get(j - 2)!=null) {
+                                if (StringUtil.isEmpty(rowData.get(j - 2).toString())) {
+                                    f.set(mqmsVoucherRaw, new BigDecimal(0.0));
+                                } else {
+                                    f.set(mqmsVoucherRaw, new BigDecimal(Double.parseDouble(rowData.get(j - 2).toString())));
+                                }
+                            }
+                            else{
+                                f.set(mqmsVoucherRaw,null);
                             }
                         } else if (f.getType().equals(Integer.class)) {
                             //来自前面的坑，EXCEL导出整数变成字符多了小数点，例2838(Int),2838.0(String)
-                            String str = rowData.get(j - 2).toString();
-                            System.out.println(str);
-                            if (str.contains(".")) {
-                                int indexOf = str.indexOf(".");
-                                str = str.substring(0, indexOf);
+                            if (rowData.get(j - 2)!=null) {
+                                String str = rowData.get(j - 2).toString();
+                                System.out.println(str + "'" + f.getName() + "'" + "'" + j + "'");
+                                if (str.contains(".")) {
+                                    int indexOf = str.indexOf(".");
+                                    str = str.substring(0, indexOf);
+                                }
+                                f.set(mqmsVoucherRaw, Integer.parseInt(str));
                             }
-                            f.set(mqmsVoucherRaw, Integer.parseInt(str));
+                            else{
+                                f.set(mqmsVoucherRaw,null);
+                            }
                         }
                         mqmsVoucherRaw.setApplierId(user.getUserId());
                         mqmsVoucherRaw.setApplierName(user.getUserName());
@@ -300,8 +341,6 @@ public class VeiDataServiceImpl implements VeiDataService {
 //                    mqmsVoucher.setTransmissionComfirmTime(Integer.toString(proFailureMonths));
                 }
 
-                ThreadFactory threadFactory = new ThreadFactoryBuilder().setNameFormat("sendEmailImmediately-pool-%d").build();
-                ExecutorService executorService = new ThreadPoolExecutor(2, 4, 1000, TimeUnit.MILLISECONDS, new SynchronousQueue<Runnable>(), threadFactory, new ThreadPoolExecutor.AbortPolicy());
                 //使用线程池
                 ImportCall importCall = new ImportCall();
                 executorService.execute(importCall);

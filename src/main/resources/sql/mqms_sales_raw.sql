@@ -31,9 +31,9 @@ CREATE TABLE `mqms_sales_raw` (
   `first_pin_date` varchar(255) DEFAULT NULL COMMENT '一次实销日期',
   `second_pin_date` varchar(255) DEFAULT NULL COMMENT '二次实效日期',
      `state` varchar(255) DEFAULT NULL COMMENT '状态',
-  `applier_id` int(11) DEFAULT NULL,
-  `applier_name` varchar(255) DEFAULT NULL,
-  `apply_time` varchar(255) DEFAULT NULL,
+    `applier_id` int(11) DEFAULT NULL COMMENT 'UserID',
+  `applier_name` varchar(255) DEFAULT NULL COMMENT '上传人',
+  `apply_time` varchar(255) DEFAULT NULL COMMENT '上传时间',
   PRIMARY KEY (`sales_id`),
   UNIQUE KEY `vin` (`vin_code`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;

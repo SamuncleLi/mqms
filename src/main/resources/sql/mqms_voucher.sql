@@ -86,9 +86,9 @@ CREATE TABLE `mqms_voucher` (
   `delivery_deadline` varchar(255) DEFAULT NULL,
   `delivery_received_date` varchar(255) DEFAULT NULL,
   `failure_track_id` int(11) DEFAULT NULL,
-  `applier_id` int(11) DEFAULT NULL,
-  `applier_name` varchar(255) DEFAULT NULL,
-  `apply_time` varchar(255) DEFAULT NULL,
+  `applier_id` int(11) DEFAULT NULL COMMENT 'UserID',
+  `applier_name` varchar(255) DEFAULT NULL COMMENT '上传人',
+  `apply_time` varchar(255) DEFAULT NULL COMMENT '上传时间',
   PRIMARY KEY (`voucher_id`),
   UNIQUE KEY `voucher_code` (`voucher_code`) USING BTREE
 ) ENGINE=InnoDB AUTO_INCREMENT=1704 DEFAULT CHARSET=utf8 COMMENT='vei系统导出表的拓展信息表';

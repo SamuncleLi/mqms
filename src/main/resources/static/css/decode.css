@@ -1,0 +1,89 @@
+.select-area{
+    width: 98%;
+    height: 12%;
+}
+body{
+    width: 100%;
+    height: 100%;
+}
+html{
+    height: 100%;
+}
+#upload-dlg{
+    width: 400px;
+    height: 200px;
+}
+#fileForm{
+    padding: 10% 10% 10% 10%;
+}
+#file{
+    width: 240px;
+}
+#upload-btn{
+    width: 80%;
+}
+#failureTrack-dlg{
+    width: 700px;
+    height: 400px;
+}
+#reviseInfor{
+    width: 800px;
+    height: 400px;
+}
+
+/*#selectionInfor .fieldset{*/
+    /*background-color: #f1f1f1;*/
+    /*border: none;*/
+    /*border-radius: 2px;*/
+    /*margin-bottom: 12px;*/
+    /*overflow: hidden;*/
+    /*padding: 0 .625em;*/
+/*}*/
+
+/*#selectionInfor .label{*/
+    /*cursor: pointer;*/
+    /*display: inline-block;*/
+    /*padding: 7px 6px;*/
+    /*text-align: right;*/
+    /*width: 150px;*/
+    /*vertical-align: top;*/
+    /*font-family: "华文楷体";*/
+/*}*/
+
+/*#selectionInfor .input{*/
+    /*border: 1px solid #ccc;*/
+    /*padding: 7px 0px;*/
+    /*border-radius: 3px;*/
+    /*padding-left:5px;*/
+    /*-webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);*/
+    /*box-shadow: inset 0 1px 1px rgba(0,0,0,.075);*/
+    /*-webkit-transition: border-color ease-in-out .15s,-webkit-box-shadow ease-in-out .15s;*/
+    /*-o-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;*/
+    /*transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s*/
+/*}*/
+/*#selectionInfor .input:focus{*/
+    /*border-color: #66afe9;*/
+    /*outline: 0;*/
+    /*-webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(102,175,233,.6);*/
+    /*box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(102,175,233,.6)*/
+/*}*/
+/*#searchItems .label{*/
+    /*cursor: pointer;*/
+    /*display: inline-block;*/
+    /*padding: 7px 6px;*/
+    /*text-align: right;*/
+    /*width: 150px;*/
+    /*vertical-align: top;*/
+/*}*/
+/*#searchItems .input{*/
+    /*border: 1px solid #ccc;*/
+    /*padding: 7px 0px;*/
+    /*border-radius: 3px;*/
+    /*padding-left:5px;*/
+    /*-webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);*/
+    /*box-shadow: inset 0 1px 1px rgba(0,0,0,.075);*/
+    /*-webkit-transition: border-color ease-in-out .15s,-webkit-box-shadow ease-in-out .15s;*/
+    /*-o-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;*/
+    /*transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s*/
+/*}*/
+/*body { font-family:宋体,MS Sans Serif; font-size:9pt; word-break:break-all; }*/

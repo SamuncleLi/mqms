@@ -3,8 +3,540 @@
 <head>
     <meta charset="UTF-8">
     <title>变速箱不良率</title>
+    <link rel="stylesheet" type="text/css" href="${req.contextPath}/static/css/charts.css">
+    <link rel="stylesheet" type="text/css" href="${req.contextPath}/static/plugin/jquery-easyui-1.5.5.4/themes/gray/easyui.css">
+    <link rel="stylesheet" type="text/css" href="${req.contextPath}/static/plugin/jquery-easyui-1.5.5.4/themes/icon.css">
+    <script type="text/javascript" src="${req.contextPath}/static/plugin/jquery-easyui-1.5.5.4/jquery.min.js"></script>
+    <script type="text/javascript" src="${req.contextPath}/static/plugin/jquery-easyui-1.5.5.4/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="${req.contextPath}/static/plugin/jquery-easyui-1.5.5.4/locale/easyui-lang-zh_CN.js"></script>
+    <script type="text/javascript" src="${req.contextPath}/static/echart/echarts.js"></script>
 </head>
 <body>
+<div title="选择区" data-options="region:'north',split:false,border:false" class="select-area">
+    <label for="yearAndMonth">起始月份</label><input id="yearAndMonth" class="easyui-datebox">
+    <label for="timeSpan">时间跨度/月</label><input id="timeSpan" class="easyui-numberspinner" value="12">
+    <label for="transType">机型</label><input id="transType" class="easyui-combobox liselectoptions">
+    <a id="asy" href="javascript:analysis()" class="easyui-linkbutton" data-options="iconCls:'icon-search'">分析</a>
+</div>
 
+<div title="图表区" data-options="region:'south',split:false,border:false" class="charts-area">
+    <div title="6个月" id="charts_1" class="mqmscharts"></div>
+    <div title="12个月" id="charts_2" class="mqmscharts"></div>
+    <div title="24个月" id="charts_3" class="mqmscharts"></div>
+    <div title="36个月" id="charts_4" class="mqmscharts"></div>
+</div>
+
+<script type="text/javascript">
+    //初始化选择区域
+    $(function () {
+        //多选框
+        $('#transType').combobox({
+            url:'/mqms/transType/listInArray',
+            textField:'transType',
+            valueField:'transType',
+            multiple:true
+        })
+
+        //年月选择控件
+        $('#yearAndMonth').datebox({
+            onShowPanel: function () {// 显示日趋选择对象后再触发弹出月份层的事件，初始化时没有生成月份层
+                span.trigger('click'); // 触发click事件弹出月份层
+                if (!tds)
+                    setTimeout(function () {// 延时触发获取月份对象，因为上面的事件触发和对象生成有时间间隔
+                        tds = p.find('div.calendar-menu-month-inner td');
+                        tds.click(function (e) {
+                            e.stopPropagation(); // 禁止冒泡执行easyui给月份绑定的事件
+                            var year = /\d{4}/.exec(span.html())[0]// 得到年份
+                                , month = parseInt($(this).attr('abbr'), 10) + 1; // 月份
+                            $('#yearAndMonth').datebox('hidePanel')// 隐藏日期对象
+                                .datebox('setValue', year + '-' + month); // 设置日期的值
+                        });
+                    }, 0);
+            },
+            parser: function (s) {// 配置parser，返回选择的日期
+                if (!s)
+                    return new Date();
+                var arr = s.split('-');
+                return new Date(parseInt(arr[0], 10), parseInt(arr[1], 10) - 1, 1);
+            },
+            formatter: function (d) {
+                var month = d.getMonth();
+                if (month < 10) {
+                    month = "0" + month;
+                }
+                if (d.getMonth() == 0) {
+                    return d.getFullYear() - 1 + '-' + 12;
+                } else {
+                    return d.getFullYear() + '-' + month;
+                }
+            }// 配置formatter，只返回年月
+        });
+        var p = $('#yearAndMonth').datebox('panel'), // 日期选择对象
+            tds = false, // 日期选择对象中月份
+            span = p.find('span.calendar-text'); // 显示月份层的触发控件
+        //初始化年月选择器
+        var date = new Date();
+        var stryear = date.getFullYear();
+        var strmonth = date.getMonth() + 2;
+        var strYM = stryear + '-' + (strmonth.toString().length < 2 ? '0' + strmonth : strmonth);
+        $('#yearAndMonth').datebox('setValue', strYM);
+
+        $('#yearAndMonth_top10').datebox({
+            onShowPanel: function () {// 显示日趋选择对象后再触发弹出月份层的事件，初始化时没有生成月份层
+                span.trigger('click'); // 触发click事件弹出月份层
+                if (!tds)
+                    setTimeout(function () {// 延时触发获取月份对象，因为上面的事件触发和对象生成有时间间隔
+                        tds = p.find('div.calendar-menu-month-inner td');
+                        tds.click(function (e) {
+                            e.stopPropagation(); // 禁止冒泡执行easyui给月份绑定的事件
+                            var year = /\d{4}/.exec(span.html())[0]// 得到年份
+                                , month = parseInt($(this).attr('abbr'), 10) + 1; // 月份
+                            $('#yearAndMonth_top10').datebox('hidePanel')// 隐藏日期对象
+                                .datebox('setValue', year + '-' + month); // 设置日期的值
+                        });
+                    }, 0);
+            },
+            parser: function (s) {// 配置parser，返回选择的日期
+                if (!s)
+                    return new Date();
+                var arr = s.split('-');
+                return new Date(parseInt(arr[0], 10), parseInt(arr[1], 10) - 1, 1);
+            },
+            formatter: function (d) {
+                var month = d.getMonth();
+                if (month < 10) {
+                    month = "0" + month;
+                }
+                if (d.getMonth() == 0) {
+                    return d.getFullYear() - 1 + '-' + 12;
+                } else {
+                    return d.getFullYear() + '-' + month;
+                }
+            }// 配置formatter，只返回年月
+        });
+        var p = $('#yearAndMonth').datebox('panel'), // 日期选择对象
+            tds = false, // 日期选择对象中月份
+            span = p.find('span.calendar-text'); // 显示月份层的触发控件
+        //初始化年月选择器
+        var date = new Date();
+        var stryear = date.getFullYear();
+        var strmonth = date.getMonth() + 2;
+        var strYM = stryear + '-' + (strmonth.toString().length < 2 ? '0' + strmonth : strmonth);
+        $('#yearAndMonth').datebox('setValue', strYM);
+
+    })
+
+    //绘制图表
+    $(function () {
+        charts_1 = echarts.init(document.getElementById('charts_1'));
+        charts_2 = echarts.init(document.getElementById('charts_2'));
+        charts_3 = echarts.init(document.getElementById('charts_3'));
+        charts_4 = echarts.init(document.getElementById('charts_4'));
+
+//        var option = {
+//            toolbox: {
+//                feature: {
+//                    dataView: {show: true, readOnly: false},
+//                    restore: {show: true},
+//                    saveAsImage: {show: true}
+//                }
+//            },
+//            legend: {},
+//            tooltip: {
+//                trigger: 'axis',
+//                showContent: false
+//            },
+//            dataset: {
+//                source: [
+//                    ['机型', '2012', '2013', '2014', '2015', '2016', '2017'],
+//                    ['151', '41.1', '30.4', '65.1', '53.3', '83.8', '98.7'],
+//                    ['153', 86.5, 92.1, 85.7, 83.1, 73.4, 55.1],
+//                    ['131', 24.1, 67.2, 79.5, 86.4, 65.2, 82.5],
+//                    ['204', 55.2, 67.1, 69.2, 72.4, 53.9, 39.1]
+//                ]
+//            },
+//            xAxis: {type: 'category'},
+//            yAxis: {
+//                name: '台',
+//                gridIndex: 0
+//            },
+//            grid: {left:'5%', right: '30%'},
+//            series: [
+//                {
+//                    type: 'pie',
+//                    id: 'pie',
+//                    radius: '60%',
+//                    center: ['88%', '50%'],
+//                    label: {
+//                        formatter: '{b}: {@2012} ({d}%)',
+//                        position: 'inner'
+//                    },
+//                    encode: {
+//                        itemName: '机型',
+//                        value: '2012',
+//                        tooltip: '2012'
+//                    }
+//                },
+//                {type: 'line', seriesLayoutBy: 'row',itemStyle: { normal: {label: {show: true}}}},
+//                {type: 'line', seriesLayoutBy: 'row',itemStyle: { normal: {label: {show: true}}}},
+//                {type: 'line', seriesLayoutBy: 'row',itemStyle: { normal: {label: {show: true}}}},
+//                {type: 'line', seriesLayoutBy: 'row',itemStyle: { normal: {label: {show: true}}}}
+//            ]
+//        };
+//
+//
+//
+//        charts_1.on('updateAxisPointer', function (event) {
+//            var xAxisInfo = event.axesInfo[0];
+//            if (xAxisInfo) {
+//                var dimension = xAxisInfo.value + 1;
+//                charts_1.setOption({
+//                    series: {
+//                        id: 'pie',
+//                        label: {
+//                            formatter: '{b}: {@[' + dimension + ']} ({d}%)'
+//                        },
+//                        encode: {
+//                            value: dimension,
+//                            tooltip: dimension
+//                        }
+//                    }
+//                });
+//            }
+//        });
+//
+//        charts_1.setOption(option);
+    })
+
+    function analysis() {
+        $.ajax({
+            url:"/mqms/charts/transmissionFailureRate?yearAndMonth=" + $('#yearAndMonth').datebox('getValue') + "&timeSpan=" + $('#timeSpan').numberspinner('getValue') + "&transType="+ $('#transType').combobox('getValues') + "&monthType=6",
+            success:function (result) {
+                console.log(result);
+
+                var transType = $("#transType").combobox("getValues");
+
+                //添加相当于机型数量的折线
+                var series = [
+                    {
+                        type: 'pie',
+                        id: 'pie',
+                        radius: '60%',
+                        center: ['88%', '50%'],
+                        label: {
+                            formatter: '{b}: ({d}%)',
+                            position: 'inner'
+                        },
+                        encode: {
+                            itemName: '机型',
+                            value: $('#yearAndMonth').datebox('getValue'),
+                            tooltip: $('#yearAndMonth').datebox('getValue')
+                        }
+                    }];
+                for(var i=0;i<transType.length;i++){
+                    var line = {type: 'line', seriesLayoutBy: 'row',itemStyle: { normal: {label: {show: true}}}};
+                    series.push(line)
+                }
+
+                var option_1 = {
+                    title: {
+                        text: '6个月不良率',
+                        subtext: '祺盛动力'
+                    },
+                    toolbox: {
+                        feature: {
+                            dataView: {show: true, readOnly: false},
+                            restore: {show: true},
+                            saveAsImage: {show: true}
+                        }
+                    },
+                    legend: {},
+                    tooltip: {
+                        trigger: 'axis',
+                        showContent: false
+                    },
+                    dataset: {
+                        source:result
+                    },
+                    xAxis: {type: 'category'},
+                    yAxis: {
+                        name: '台',
+                        gridIndex: 0
+                    },
+                    grid: {left:'5%', right: '30%'},
+                    series:series
+                };
+
+
+
+                charts_1.on('updateAxisPointer', function (event) {
+                    var xAxisInfo = event.axesInfo[0];
+                    if (xAxisInfo) {
+                        var dimension = xAxisInfo.value + 1;
+                        charts_1.setOption({
+                            series: {
+                                id: 'pie',
+                                label: {
+                                    formatter: '{b}: {@[' + dimension + ']} ({d}%)'
+                                },
+                                encode: {
+                                    value: dimension,
+                                    tooltip: dimension
+                                }
+                            }
+                        });
+                    }
+                });
+
+                charts_1.setOption(option_1);
+            }
+        })
+
+        $.ajax({
+            url: "/mqms/charts/transmissionFailureRate?yearAndMonth=" + $('#yearAndMonth').datebox('getValue') + "&timeSpan=" + $('#timeSpan').numberspinner('getValue') + "&transType=" + $('#transType').combobox('getValues') + "&monthType=12",
+            success: function (result) {
+                console.log(result);
+
+                var transType = $("#transType").combobox("getValues");
+
+                //添加相当于机型数量的折线
+                var series = [
+                    {
+                        type: 'pie',
+                        id: 'pie',
+                        radius: '60%',
+                        center: ['88%', '50%'],
+                        label: {
+                            formatter: '{b}: ({d}%)',
+                            position: 'inner'
+                        },
+                        encode: {
+                            itemName: '机型',
+                            value: $('#yearAndMonth').datebox('getValue'),
+                            tooltip: $('#yearAndMonth').datebox('getValue')
+                        }
+                    }];
+                for (var i = 0; i < transType.length; i++) {
+                    var line = {type: 'line', seriesLayoutBy: 'row', itemStyle: {normal: {label: {show: true}}}};
+                    series.push(line)
+                }
+
+                var option_2 = {
+                    title: {
+                        text: '12个月不良率',
+                        subtext: '祺盛动力'
+                    },
+                    toolbox: {
+                        feature: {
+                            dataView: {show: true, readOnly: false},
+                            restore: {show: true},
+                            saveAsImage: {show: true}
+                        }
+                    },
+                    legend: {},
+                    tooltip: {
+                        trigger: 'axis',
+                        showContent: false
+                    },
+                    dataset: {
+                        source: result
+                    },
+                    xAxis: {type: 'category'},
+                    yAxis: {
+                        name: '台',
+                        gridIndex: 0
+                    },
+                    grid: {left: '5%', right: '30%'},
+                    series: series
+                };
+
+
+                charts_2.on('updateAxisPointer', function (event) {
+                    var xAxisInfo = event.axesInfo[0];
+                    if (xAxisInfo) {
+                        var dimension = xAxisInfo.value + 1;
+                        charts_2.setOption({
+                            series: {
+                                id: 'pie',
+                                label: {
+                                    formatter: '{b}: {@[' + dimension + ']} ({d}%)'
+                                },
+                                encode: {
+                                    value: dimension,
+                                    tooltip: dimension
+                                }
+                            }
+                        });
+                    }
+                });
+
+                charts_2.setOption(option_2);
+            }
+        })
+
+        $.ajax({
+            url: "/mqms/charts/transmissionFailureRate?yearAndMonth=" + $('#yearAndMonth').datebox('getValue') + "&timeSpan=" + $('#timeSpan').numberspinner('getValue') + "&transType=" + $('#transType').combobox('getValues') + "&monthType=24",
+            success: function (result) {
+                console.log(result);
+
+                var transType = $("#transType").combobox("getValues");
+
+                //添加相当于机型数量的折线
+                var series = [
+                    {
+                        type: 'pie',
+                        id: 'pie',
+                        radius: '60%',
+                        center: ['88%', '50%'],
+                        label: {
+                            formatter: '{b}: ({d}%)',
+                            position: 'inner'
+                        },
+                        encode: {
+                            itemName: '机型',
+                            value: $('#yearAndMonth').datebox('getValue'),
+                            tooltip: $('#yearAndMonth').datebox('getValue')
+                        }
+                    }];
+                for (var i = 0; i < transType.length; i++) {
+                    var line = {type: 'line', seriesLayoutBy: 'row', itemStyle: {normal: {label: {show: true}}}};
+                    series.push(line)
+                }
+
+                var option_3 = {
+                    title: {
+                        text: '24个月不良率',
+                        subtext: '祺盛动力'
+                    },
+                    toolbox: {
+                        feature: {
+                            dataView: {show: true, readOnly: false},
+                            restore: {show: true},
+                            saveAsImage: {show: true}
+                        }
+                    },
+                    legend: {},
+                    tooltip: {
+                        trigger: 'axis',
+                        showContent: false
+                    },
+                    dataset: {
+                        source: result
+                    },
+                    xAxis: {type: 'category'},
+                    yAxis: {
+                        name: '台',
+                        gridIndex: 0
+                    },
+                    grid: {left: '5%', right: '30%'},
+                    series: series
+                };
+
+
+                charts_3.on('updateAxisPointer', function (event) {
+                    var xAxisInfo = event.axesInfo[0];
+                    if (xAxisInfo) {
+                        var dimension = xAxisInfo.value + 1;
+                        charts_2.setOption({
+                            series: {
+                                id: 'pie',
+                                label: {
+                                    formatter: '{b}: {@[' + dimension + ']} ({d}%)'
+                                },
+                                encode: {
+                                    value: dimension,
+                                    tooltip: dimension
+                                }
+                            }
+                        });
+                    }
+                });
+
+                charts_3.setOption(option_3);
+            }
+        })
+        $.ajax({
+            url: "/mqms/charts/transmissionFailureRate?yearAndMonth=" + $('#yearAndMonth').datebox('getValue') + "&timeSpan=" + $('#timeSpan').numberspinner('getValue') + "&transType=" + $('#transType').combobox('getValues') + "&monthType=36",
+            success: function (result) {
+                console.log(result);
+
+                var transType = $("#transType").combobox("getValues");
+
+                //添加相当于机型数量的折线
+                var series = [
+                    {
+                        type: 'pie',
+                        id: 'pie',
+                        radius: '60%',
+                        center: ['88%', '50%'],
+                        label: {
+                            formatter: '{b}: ({d}%)',
+                            position: 'inner'
+                        },
+                        encode: {
+                            itemName: '机型',
+                            value: $('#yearAndMonth').datebox('getValue'),
+                            tooltip: $('#yearAndMonth').datebox('getValue')
+                        }
+                    }];
+                for (var i = 0; i < transType.length; i++) {
+                    var line = {type: 'line', seriesLayoutBy: 'row', itemStyle: {normal: {label: {show: true}}}};
+                    series.push(line)
+                }
+
+                var option_4 = {
+                    title: {
+                        text: '36个月不良率',
+                        subtext: '祺盛动力'
+                    },
+                    toolbox: {
+                        feature: {
+                            dataView: {show: true, readOnly: false},
+                            restore: {show: true},
+                            saveAsImage: {show: true}
+                        }
+                    },
+                    legend: {},
+                    tooltip: {
+                        trigger: 'axis',
+                        showContent: false
+                    },
+                    dataset: {
+                        source: result
+                    },
+                    xAxis: {type: 'category'},
+                    yAxis: {
+                        name: '台',
+                        gridIndex: 0
+                    },
+                    grid: {left: '5%', right: '30%'},
+                    series: series
+                };
+
+
+                charts_4.on('updateAxisPointer', function (event) {
+                    var xAxisInfo = event.axesInfo[0];
+                    if (xAxisInfo) {
+                        var dimension = xAxisInfo.value + 1;
+                        charts_2.setOption({
+                            series: {
+                                id: 'pie',
+                                label: {
+                                    formatter: '{b}: {@[' + dimension + ']} ({d}%)'
+                                },
+                                encode: {
+                                    value: dimension,
+                                    tooltip: dimension
+                                }
+                            }
+                        });
+                    }
+                });
+
+                charts_4.setOption(option_4);
+            }
+        })
+    }
+</script>
 </body>
 </html>

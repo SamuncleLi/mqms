@@ -111,7 +111,7 @@ public class DecodeController {
         mqmsSalesPoint.setSalesPointArea(salesPointArea);
         mqmsSalesPoint.setSalesPointCode(salesPointCode);
         mqmsSalesPoint.setSalesPointName(salesPointName);
-        if (id.equals("默认值")) {
+        if (id.equals("(默认值)")) {
             mqmsSalesPointBaseMapper.insertMqmsSalesPoint(mqmsSalesPoint);
         } else {
             mqmsSalesPoint.setId(Integer.parseInt(id));
@@ -180,7 +180,7 @@ public class DecodeController {
         mqmsFaultDecode.setFaultPartName(faultPartName);
         mqmsFaultDecode.setFaultSymptomCode(faultSymptomCode);
         mqmsFaultDecode.setFaultSymptomPhoeno(faultSymptomPhoeno);
-        if (id.equals("默认值")) {
+        if (id.equals("(默认值)")) {
             mqmsFaultDecodeBaseMapper.insertMqmsFaultDecode(mqmsFaultDecode);
         } else {
             mqmsFaultDecode.setId(Integer.parseInt(id));
@@ -252,7 +252,7 @@ public class DecodeController {
         String vinTransmType = request.getParameter("vin_transm_type");
 
         MqmsVinDecode mqmsVinDecode = new MqmsVinDecode();
-        mqmsVinDecode.setVinCarShortCode(vinShortCode);
+        mqmsVinDecode.setVinShortCode(vinShortCode);
         mqmsVinDecode.setVinSimCode(vinSimCode);
         mqmsVinDecode.setVinEngType(vinEngType);
         mqmsVinDecode.setVinSeries(vinSeries);
@@ -261,7 +261,7 @@ public class DecodeController {
         mqmsVinDecode.setVinCarShortCode(vinCarShortCode);
         mqmsVinDecode.setVinCarType(vinCarType);
         mqmsVinDecode.setVinTransmType(vinTransmType);
-        if (id.equals("默认值")) {
+        if (id.equals("(默认值)")) {
             mqmsVinDecodeBaseMapper.insertMqmsVinDecode(mqmsVinDecode);
         } else {
             mqmsVinDecode.setId(Integer.parseInt(id));
@@ -342,7 +342,7 @@ public class DecodeController {
         mqmsTranProductionDecode.setTranProModel(tranProModel);
         mqmsTranProductionDecode.setTranShortCode(tranShortCode);
 
-        if (id.equals("默认值")) {
+        if (id.equals("(默认值)")) {
             mqmsTranProductionDecodeBaseMapper.insertMqmsTranProductionDecode(mqmsTranProductionDecode);
         } else {
             mqmsTranProductionDecode.setId(Integer.parseInt(id));
@@ -408,7 +408,7 @@ public class DecodeController {
         mqmsTranManufacturesDecode.setTranManufactureModel(tranManufactureModel);
         mqmsTranManufacturesDecode.setTranManufacture(tranManufacture);
 
-        if (id.equals("默认值")) {
+        if (id.equals("(默认值)")) {
             mqmsTranManufacturesDecodeBaseMapper.insertMqmsTranManufacturesDecode(mqmsTranManufacturesDecode);
         } else {
             mqmsTranManufacturesDecode.setId(Integer.parseInt(id));
@@ -447,7 +447,7 @@ public class DecodeController {
         mqmsTranYearDecode.setTranProYearCode(tranProYearCode);
         mqmsTranYearDecode.setTranProYear(tranProYear);
 
-        if (id.equals("默认值")) {
+        if (id.equals("(默认值)")) {
             mqmsTranYearDecodeBaseMapper.insertMqmsTranYearDecode(mqmsTranYearDecode);
         } else {
             mqmsTranYearDecode.setId(Integer.parseInt(id));

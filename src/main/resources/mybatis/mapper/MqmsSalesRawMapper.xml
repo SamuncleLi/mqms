@@ -49,6 +49,7 @@
             <if test="applyTime != null and applyTime!=''">
                 `apply_time` = #{applyTime},
             </if>
+
         </trim>
         WHERE
         <trim suffixOverrides="and">

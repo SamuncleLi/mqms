@@ -10,7 +10,7 @@ import java.util.List;
 */
 public class MqmsProduction implements Serializable {
 
-    private static final long serialVersionUID = 1583227532229L;
+    private static final long serialVersionUID = 1585056839860L;
 
 
     /**
@@ -183,19 +183,19 @@ public class MqmsProduction implements Serializable {
     private String carSimpleCode;
 
     /**
-    * 
+    * UserID
     * isNullAble:1
     */
     private Integer applierId;
 
     /**
-    * 
+    * 上传人
     * isNullAble:1
     */
     private String applierName;
 
     /**
-    * 
+    * 上传时间
     * isNullAble:1
     */
     private String applyTime;

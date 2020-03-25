@@ -52,8 +52,10 @@ public class ChartsController {
             float unqualifiedRate=0;
             //单机型循环叠加计算不良率
             for (int j = 0; j < Integer.parseInt(timeSpan); j++) {
-                thisEngtypeCount = mqmsVoucherMapper.selectEngTypeCount(engTypeAssemble[i], yearAndMonthBegin)+thisEngtypeCount;
-                secondPinData = mqmsSalesMapper.selectSecondSalesCount(engTypeAssemble[i], yearAndMonthBegin)+secondPinData;
+                String beginData=MqmsUtil.getDateInfor("yyyy-MM",yearAndMonthBegin,-monthType+1);
+                String endData=MqmsUtil.getDateInfor("yyyy-MM",beginData,+monthType);
+                thisEngtypeCount = mqmsVoucherMapper.selectClaimCount(engTypeAssemble[i], beginData,endData);
+                secondPinData = mqmsSalesMapper.selectSecondSalesCount(engTypeAssemble[i], beginData,endData);
                 strArray[0][j+1]=yearAndMonthBegin;
                 if(secondPinData==0)
                 {
@@ -64,7 +66,7 @@ public class ChartsController {
                 }
                 DecimalFormat df = new DecimalFormat("0.00");//格式化小数
                 String strUnqualifiedRate = df.format(unqualifiedRate * 100);//返回一个String类型的两位小数
-                System.out.println(strUnqualifiedRate);
+//                System.out.println(strUnqualifiedRate);
                 strArray[i+1][j+1]=strUnqualifiedRate;
                 //月份推移
                 yearAndMonthBegin= MqmsUtil.getDateInfor("yyyy-MM",yearAndMonthBegin,1);
@@ -85,13 +87,43 @@ public class ChartsController {
      * @抛出异常
     */
     @RequestMapping("transmissionFailureRate")
-    public String[][] calculateTransmissionFailureRate(@RequestParam String yearAndMonth, @RequestParam String timeSpan, @RequestParam String engType){
-        String[][] array = {{"机型", "2012", "2013", "2014", "2015", "2016", "2017"},
-                {"151", "41.1", "30.4", "65.1", "53.3", "83.8", "98.7"},
-                {"153", "86.5", "92.1", "85.7", "83.1", "73.4", "55.1"},
-                {"131", "24.1", "67.2", "79.5", "86.4", "65.2", "82.5"},
-                {"204", "55.2", "67.1", "69.2", "72.4", "53.9", "39.1"}};
-        return array;
+    public String[][] calculateTransmissionFailureRate(@RequestParam String yearAndMonth, @RequestParam String timeSpan, @RequestParam String transType,@RequestParam int monthType){
+        //分离机型
+        String[] engTypeAssemble = transType.split(",");
+        //创建二维数组
+        String[][] strArray=new String[engTypeAssemble.length+1][Integer.parseInt(timeSpan)+1];
+        strArray[0][0]="机型";
+        for (int i = 0; i < engTypeAssemble.length; i++) {
+            //单机型初始化信息
+            String yearAndMonthBegin= MqmsUtil.getDateInfor("yyyy-MM",yearAndMonth,-Integer.parseInt(timeSpan)+1);
+            int thisEngtypeCount=0;
+            int secondPinData=0;
+            float unqualifiedRate=0;
+            //单机型循环叠加计算不良率
+
+            for (int j = 0; j < Integer.parseInt(timeSpan); j++) {
+                String beginData=MqmsUtil.getDateInfor("yyyy-MM",yearAndMonthBegin,-monthType+1);
+                String endData=MqmsUtil.getDateInfor("yyyy-MM",beginData,monthType);
+                thisEngtypeCount = mqmsVoucherMapper.selectTransClaimCount(engTypeAssemble[i], beginData,endData);
+                secondPinData = mqmsSalesMapper.selectTranSecondSalesCount(engTypeAssemble[i], beginData,endData);
+                strArray[0][j+1]=yearAndMonthBegin;
+                if(secondPinData==0)
+                {
+                    unqualifiedRate=0;
+                }
+                else{
+                    unqualifiedRate=(float) thisEngtypeCount / secondPinData;
+                }
+                DecimalFormat df = new DecimalFormat("0.00");//格式化小数
+                String strUnqualifiedRate = df.format(unqualifiedRate * 100);//返回一个String类型的两位小数
+//                System.out.println(strUnqualifiedRate);
+                strArray[i+1][j+1]=strUnqualifiedRate;
+                //月份推移
+                yearAndMonthBegin= MqmsUtil.getDateInfor("yyyy-MM",yearAndMonthBegin,1);
+            }
+            strArray[i+1][0]=engTypeAssemble[i];
+        }
+        return strArray;
     }
 
     /**
@@ -151,6 +183,39 @@ public class ChartsController {
 
         return array;
     }
+    /**
+     * @描述 计算故障发动机的售出时间分布
+     * @编写人 Jian Wang
+     * @邮箱
+     * @日期 2020/3/19
+     * @参变量
+     * @返回
+     * @抛出异常
+     */
+    @RequestMapping("/trans/salesFailureTime")
+    public String[][] caltransOfflineFailureTime(@RequestParam String yearAndMonth, @RequestParam(required = false) String transType){
+        //计算横坐标
+//        System.out.println("11111111111111111111111111111111");
+        String[] xAxis = {"售出时间", "0-6","7-12","13-24","25-36","36+"};
+        String[][] array = new String[2][xAxis.length];
+        array[0] = xAxis;
+        array[1][0] = "台数";
+
+        //时间推移，分为0-6个月，7-12个月，13-24个月，24-36个月，大于36个月
+        String timeSymbol6 = MqmsUtil.getDateInfor("yyyy-MM",yearAndMonth,-6);
+        String timeSymbol12 = MqmsUtil.getDateInfor("yyyy-MM",yearAndMonth,-12);
+        String timeSymbol24 = MqmsUtil.getDateInfor("yyyy-MM",yearAndMonth,-24);
+        String timeSymbol36 = MqmsUtil.getDateInfor("yyyy-MM",yearAndMonth,-36);
+        String timeSymbol1000 = MqmsUtil.getDateInfor("yyyy-MM",yearAndMonth,-1000);
+
+        array[1][1] = String.valueOf(mqmsVoucherMapper.salesTransFailureTimeBetween(transType, 0, 6));
+        array[1][2] = String.valueOf(mqmsVoucherMapper.salesTransFailureTimeBetween(transType, 7, 12));
+        array[1][3] = String.valueOf(mqmsVoucherMapper.salesTransFailureTimeBetween(transType, 13, 24));
+        array[1][4] = String.valueOf(mqmsVoucherMapper.salesTransFailureTimeBetween(transType, 25, 36));
+        array[1][5] = String.valueOf(mqmsVoucherMapper.salesTransFailureTimeBetween(transType, 36, 1000));
+
+        return array;
+    }
 
     /**
      * @描述 计算6个月，12个月，24个月，36个月的索赔金额
@@ -199,6 +264,33 @@ public class ChartsController {
     }
 
     /**
+     * 变速箱10大问题点
+     * @param mqmsVoucher
+     * @return
+     */
+    @RequestMapping("/trans/failureTop10")
+    public String[][] transFailureTop10(MqmsVoucher mqmsVoucher){
+
+        List<FailureTop10> list = mqmsVoucherMapper.transFailureTop10(mqmsVoucher);
+
+        //1,2,3行分别为ENG整理条目，各条目的数量，累计不良率
+        String[][] array = new String[3][list.size()+1];
+        //该eng整理下的vei总数
+        int total = mqmsVoucherMapper.queryMqmsVoucher(mqmsVoucher).size();
+        int sum = 0;
+        array[0][0] = "ENG整理";
+        array[1][0] = "汇总";
+        array[2][0] = "累计不良率";
+        for(int i=0;i<list.size();i++){
+            array[0][i+1] = list.get(i).getEngArrange();
+            sum += list.get(i).getNumber();
+            array[1][i+1] = String.valueOf(list.get(i).getNumber());
+            array[2][i+1] = String.valueOf(sum * 100.0 / total) + "%";
+        }
+        return array;
+    }
+
+    /**
      * @描述 索赔发动机（上了市场报告的）数量
      * @编写人 Zeho Lee
      * @邮箱 lizeh@gacmotor.com
@@ -225,6 +317,85 @@ public class ChartsController {
             yearAndMonthBegin= MqmsUtil.getDateInfor("yyyy-MM",yearAndMonthBegin,1);
         }
 
+        return strArray;
+    }
+    @RequestMapping("engineFailureRateMutil")
+    public String[][] calculateEngineFailureRateMutil(@RequestParam String yearAndMonth, @RequestParam String timeSpan, @RequestParam String engType){
+        //机型
+        String engTypeAssemble = engType;
+        int[] monthType={6,12,24,36};
+        //创建二维数组
+        String[][] strArray=new String[monthType.length+1][Integer.parseInt(timeSpan)+1];
+        strArray[0][0]="日期";
+        for (int i = 0; i < monthType.length; i++) {
+            //单机型初始化信息
+            String yearAndMonthBegin= MqmsUtil.getDateInfor("yyyy-MM",yearAndMonth,-Integer.parseInt(timeSpan)+1);
+            int thisEngtypeCount=0;
+            int secondPinData=0;
+            float unqualifiedRate=0;
+            //单机型循环叠加计算不良率
+            for (int j = 0; j < Integer.parseInt(timeSpan); j++) {
+                String beginData=MqmsUtil.getDateInfor("yyyy-MM",yearAndMonthBegin,-monthType[i]+1);
+                String endData=MqmsUtil.getDateInfor("yyyy-MM",beginData,+monthType[i]);
+                thisEngtypeCount = mqmsVoucherMapper.selectClaimCount(engTypeAssemble, beginData,endData);
+                secondPinData = mqmsSalesMapper.selectSecondSalesCount(engTypeAssemble, beginData,endData);
+                strArray[0][j+1]=yearAndMonthBegin;
+                if(secondPinData==0)
+                {
+                    unqualifiedRate=0;
+                }
+                else{
+                    unqualifiedRate=(float) thisEngtypeCount / secondPinData;
+                }
+                DecimalFormat df = new DecimalFormat("0.00");//格式化小数
+                String strUnqualifiedRate = df.format(unqualifiedRate * 100);//返回一个String类型的两位小数
+//                System.out.println(strUnqualifiedRate);
+                strArray[i+1][j+1]=strUnqualifiedRate;
+                //月份推移
+                yearAndMonthBegin= MqmsUtil.getDateInfor("yyyy-MM",yearAndMonthBegin,1);
+            }
+            strArray[i+1][0]=Integer.toString(monthType[i])+"个月";
+        }
+        return strArray;
+    }
+    @RequestMapping("transFailureRateMutil")
+    public String[][] calculatetransFailureRateMutil(@RequestParam String yearAndMonth, @RequestParam String timeSpan, @RequestParam String transType){
+        //机型
+        String engTypeAssemble = transType;
+        int[] monthType={6,12,24,36};
+        //创建二维数组
+        String[][] strArray=new String[monthType.length+1][Integer.parseInt(timeSpan)+1];
+        strArray[0][0]="日期";
+        for (int i = 0; i < monthType.length; i++) {
+            //单机型初始化信息
+            String yearAndMonthBegin= MqmsUtil.getDateInfor("yyyy-MM",yearAndMonth,-Integer.parseInt(timeSpan)+1);
+            int thisEngtypeCount=0;
+            int secondPinData=0;
+            float unqualifiedRate=0;
+            //单机型循环叠加计算不良率
+
+            for (int j = 0; j < Integer.parseInt(timeSpan); j++) {
+                String beginData=MqmsUtil.getDateInfor("yyyy-MM",yearAndMonthBegin,-monthType[i]+1);
+                String endData=MqmsUtil.getDateInfor("yyyy-MM",beginData,monthType[i]);
+                thisEngtypeCount = mqmsVoucherMapper.selectTransClaimCount(engTypeAssemble, beginData,endData);
+                secondPinData = mqmsSalesMapper.selectTranSecondSalesCount(engTypeAssemble, beginData,endData);
+                strArray[0][j+1]=yearAndMonthBegin;
+                if(secondPinData==0)
+                {
+                    unqualifiedRate=0;
+                }
+                else{
+                    unqualifiedRate=(float) thisEngtypeCount / secondPinData;
+                }
+                DecimalFormat df = new DecimalFormat("0.00");//格式化小数
+                String strUnqualifiedRate = df.format(unqualifiedRate * 100);//返回一个String类型的两位小数
+//                System.out.println(strUnqualifiedRate);
+                strArray[i+1][j+1]=strUnqualifiedRate;
+                //月份推移
+                yearAndMonthBegin= MqmsUtil.getDateInfor("yyyy-MM",yearAndMonthBegin,1);
+            }
+            strArray[i+1][0]=Integer.toString(monthType[i])+"个月";
+        }
         return strArray;
     }
 }

@@ -10,7 +10,7 @@ import java.util.List;
 */
 public class MqmsVoucher implements Serializable {
 
-    private static final long serialVersionUID = 1583292377737L;
+    private static final long serialVersionUID = 1585097053511L;
 
 
     /**
@@ -393,37 +393,37 @@ public class MqmsVoucher implements Serializable {
     private String deliveryPerson;
 
     /**
-    * 
+    * 快递确认时间
     * isNullAble:1
     */
     private String deliveryDeadline;
 
     /**
-    * 
+    * 快递到达时间
     * isNullAble:1
     */
     private String deliveryReceivedDate;
 
     /**
-    * 
+    * 不良追踪ID
     * isNullAble:1
     */
     private Integer failureTrackId;
 
     /**
-    * 
+    * UserID
     * isNullAble:1
     */
     private Integer applierId;
 
     /**
-    * 
+    * 上传人
     * isNullAble:1
     */
     private String applierName;
 
     /**
-    * 
+    * 上传时间
     * isNullAble:1
     */
     private String applyTime;

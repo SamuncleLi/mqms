@@ -109,7 +109,8 @@ function addTab(menuid){
     var node=getMenu(menuid);
     if($("#tabs").tabs("exists",node.menuname)){
         $("#tabs").tabs("select",node.menuname);
-    }else{
+    }
+    else{
         var content="<iframe frameborder=0 scrolling='auto' style='width:100%;height:100%' src="+node.url+"></iframe>";
         $("#tabs").tabs("add",{
             title:node.menuname,

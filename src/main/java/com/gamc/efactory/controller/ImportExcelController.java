@@ -20,6 +20,7 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * Created by UZI on 2019/12/30.
@@ -137,7 +138,7 @@ public class ImportExcelController {
                     System.out.println("删除文件成功");
                 }else{
                     System.out.println("删除文件失败");
-                }
+            }
             }
             if(result==1){
                 return "文件上传成功";}
@@ -164,9 +165,7 @@ public class ImportExcelController {
             String files = saveFile(multipartFile, request);
             int result = 0;
             try {
-//            System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
                 result =  salesService.addLists(files,request);
-                System.out.println(result+"555555555555555555555555555555555555555555555555555555555");
             } catch (Exception e) {
                 e.printStackTrace();
             }finally {
@@ -211,8 +210,10 @@ public class ImportExcelController {
             String fileName = multipartFile.getOriginalFilename();
             // 判断文件类型
             String realPath = request.getSession().getServletContext().getRealPath("/");
-            SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");//设置日期格式
-            String trueFileName = fileName+df.format(new Date());
+            String uuid = UUID.randomUUID().toString();
+//            System.out.println(realPath+"1222222222222222222222222222222222222222222222222222222222222222222222222");
+//            SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");//设置日期格式
+            String trueFileName = fileName+uuid;
             // 设置存放Excel文件的路径
             path = realPath + trueFileName;
             //C:\Users\UZI\AppData\Local\Temp\tomcat-docbase.3729691707234394010.8086\

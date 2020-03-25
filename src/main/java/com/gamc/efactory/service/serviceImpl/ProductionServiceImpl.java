@@ -27,6 +27,9 @@ import java.util.concurrent.*;
  */
 @Service
 public class ProductionServiceImpl implements ProductionService {
+
+    private ThreadFactory threadFactory = new ThreadFactoryBuilder().setNameFormat("sendEmailImmediately-pool-%d").build();
+    private ExecutorService executorService = new ThreadPoolExecutor(16, 24, 1000, TimeUnit.MILLISECONDS, new SynchronousQueue<Runnable>(), threadFactory, new ThreadPoolExecutor.AbortPolicy());
     @Autowired
     private MqmsProductionRawMapper mqmsProductionRawMapper;
     @Autowired
@@ -62,20 +65,37 @@ public class ProductionServiceImpl implements ProductionService {
                 //地域
 
                 //机型
-                MqmsVinDecode mqmsVinDecode;
-                mqmsVinDecode = mqmsVinDecodeMapper.vinDecode(vinShortCOde);
-                mqmsProductionRecord.setEngType(mqmsVinDecode.getVinEngType());
+                MqmsVinDecode mqmsVinDecode = mqmsVinDecodeMapper.vinDecode(vinShortCOde);
+                if (mqmsVinDecode.getVinEngType()!=null) {
+                    mqmsProductionRecord.setEngType(mqmsVinDecode.getVinEngType());
+                }
+                else {
+                    mqmsProductionRecord.setEngType("");
+                }
                 //系列
-                mqmsProductionRecord.setSerialCode(mqmsVinDecode.getVinSeries());
+                if (mqmsVinDecode.getVinSeries()!=null) {
+                    mqmsProductionRecord.setSerialCode(mqmsVinDecode.getVinSeries());
+                }
                 //车型简码
                 mqmsProductionRecord.setCarShortCode(vinShortCOde.substring(3, 5));
                 //车型
-                mqmsProductionRecord.setCarModel(mqmsVinDecode.getVinCarType());
+                if (mqmsVinDecode.getVinCarType()!=null) {
+                    mqmsProductionRecord.setCarModel(mqmsVinDecode.getVinCarType());
+                }
+                else{
+                    mqmsProductionRecord.setCarModel("");
+
+                }
                 //内部车型代号
-                mqmsProductionRecord.setCarSimpleCode(mqmsVinDecode.getVinCarType());
+                if(mqmsVinDecode.getVinCarType()!=null) {
+                    mqmsProductionRecord.setCarSimpleCode(mqmsVinDecode.getVinCarType());
+                }
+                else{
+                    mqmsProductionRecord.setCarSimpleCode("");
+                }
                 //销售年/月
 
-                if (mqmsSalesMapper.selectVinCodeCount(mqmsProductionRecord.getVin()) != 0) {
+                if (mqmsSalesMapper.selectVinCodeCount(mqmsProductionRecord.getVin())!= 0) {
                     MqmsSales mqmsSales = mqmsSalesMapper.selectByVinCode(mqmsProductionRecord.getVin());
                     mqmsProductionRecord.setProductionYear(mqmsSales.getSalesYear());
                     mqmsProductionRecord.setProductionMonth(mqmsSales.getSalesMonth());
@@ -90,7 +110,6 @@ public class ProductionServiceImpl implements ProductionService {
                 mqmsProductionRecord.setTransmissionShortCode(mqmsProductionRecord.getVin().substring(6, 7));
                 //变速箱简码
                 String trsmCode = mqmsProductionRecord.getTransmissionCode().replace("+", "");
-
                 String trsmType = trsmCode.substring(0, 5);
                 mqmsProductionRecord.setTransmissionSimpleCode(trsmType);
                 //变速箱类型
@@ -137,12 +156,13 @@ public class ProductionServiceImpl implements ProductionService {
             // 执行解析
             bigExcelReader.parse();
             //File files = new File(file);
-            System.out.println("0000000000000000000000000000000000000000000000");
-            return 1;
+//            System.out.println("0000000000000000000000000000000000000000000000");
+
 
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+        return 1;
     }
     private void saveAll(List<List<Object>> lists, HttpServletRequest request) throws IllegalAccessException {
         try {
@@ -195,9 +215,7 @@ public class ProductionServiceImpl implements ProductionService {
                     mqmsProductionList.add(mqmsProduction);
 
                 }
-                ThreadFactory threadFactory = new ThreadFactoryBuilder().setNameFormat("sendEmailImmediately-pool-%d").build();
-                ExecutorService executorService = new ThreadPoolExecutor(2, 4, 1000, TimeUnit.MILLISECONDS, new SynchronousQueue<Runnable>(), threadFactory, new ThreadPoolExecutor.AbortPolicy());
-                //使用线程池
+
                 ImportCall importCall = new ImportCall();
                 executorService.execute(importCall);
                 //构造函数传参
