@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("/decode")
-public class decodeController{
+public class DecodeController {
     @Autowired
     MultiFilterService multiFilterService;
         @RequestMapping("/vin")

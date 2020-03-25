@@ -39,7 +39,7 @@ var _menus=[
         ]
     },
     {"menuid":"41","icon":"fa-suitcase","menuname":"配置项管理",parentMenu:'4',
-        "menus":[{"menuid":"411","menuname":"字典","icon":"fa-inbox","url":"demo/msgTip.html"},
+        "menus":[{"menuid":"411","menuname":"字典","icon":"fa-inbox","url":"/mqms/view/dict"},
             {"menuid":"412","menuname":"销售点表","icon":"fa-share-alt-square","url":"/mqms/view/salesPointDecode"},
             {"menuid":"413","menuname":"vin码解码表","icon":"fa-share-alt-square","url":"/mqms/view/vinDecode"},
             {"menuid":"414","menuname":"变速箱厂家解码表","icon":"fa-share-alt-square","url":"/mqms/view/transManDecode"},

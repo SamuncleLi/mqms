@@ -282,5 +282,4 @@
         WHERE
         eng_type = #{eng_type} and `sales_failure_time` &gt;= #{begin} and `sales_failure_time` &lt;= #{end}
     </select>
-
 </mapper>

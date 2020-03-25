@@ -26,6 +26,21 @@
                     <if test="failureAnalystComment!=null">
                         `failure_analyst_comment`,
                     </if>
+                    <if test="saoId!=null">
+                        `sao_id`,
+                    </if>
+                    <if test="flag!=null">
+                        `flag`,
+                    </if>
+                    <if test="taskName!=null">
+                        `task_name`,
+                    </if>
+                    <if test="taskId!=null">
+                        `task_id`,
+                    </if>
+                    <if test="submitDate!=null">
+                        `submit_date`,
+                    </if>
         </trim>
         )
         VALUES
@@ -48,6 +63,21 @@
                 </if>
                 <if test="failureAnalystComment!=null">
                     #{failureAnalystComment},
+                </if>
+                <if test="saoId!=null">
+                    #{saoId},
+                </if>
+                <if test="flag!=null">
+                    #{flag},
+                </if>
+                <if test="taskName!=null">
+                    #{taskName},
+                </if>
+                <if test="taskId!=null">
+                    #{taskId},
+                </if>
+                <if test="submitDate!=null">
+                    #{submitDate},
                 </if>
         </trim>
         )
@@ -75,6 +105,21 @@
             <if test="failureAnalystComment != null and failureAnalystComment!=''">
                 `failure_analyst_comment` = #{failureAnalystComment},
             </if>
+            <if test="saoId != null">
+                `sao_id` = #{saoId},
+            </if>
+            <if test="flag != null and flag!=''">
+                `flag` = #{flag},
+            </if>
+            <if test="taskName != null and taskName!=''">
+                `task_name` = #{taskName},
+            </if>
+            <if test="taskId != null and taskId!=''">
+                `task_id` = #{taskId},
+            </if>
+            <if test="submitDate != null and submitDate!=''">
+                `submit_date` = #{submitDate},
+            </if>
         </trim>
         WHERE
         <trim suffixOverrides="and">
@@ -100,6 +145,21 @@
         </if>
         <if test="set.failureAnalystComment != null and set.failureAnalystComment!=''">
             `failure_analyst_comment` = #{set.failureAnalystComment},
+        </if>
+        <if test="set.saoId != null">
+            `sao_id` = #{set.saoId},
+        </if>
+        <if test="set.flag != null and set.flag!=''">
+            `flag` = #{set.flag},
+        </if>
+        <if test="set.taskName != null and set.taskName!=''">
+            `task_name` = #{set.taskName},
+        </if>
+        <if test="set.taskId != null and set.taskId!=''">
+            `task_id` = #{set.taskId},
+        </if>
+        <if test="set.submitDate != null and set.submitDate!=''">
+            `submit_date` = #{set.submitDate},
         </if>
         </trim>
         <trim prefix="where" suffixOverrides="and | or">
@@ -199,6 +259,98 @@
                 </foreach>
                 ) and
             </if>
+                <if test="where.saoIdList != null">
+                    `sao_id` in
+                    <foreach collection="where.saoIdList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test="where.saoIdSt !=null">
+                `sao_id` >= #{where.saoIdSt} and
+            </if>
+            <if test="where.saoIdEd!=null">
+                `sao_id` &lt;= #{where.saoIdEd} and
+            </if>
+                <if test="where.flagList != null">
+                    `flag` in
+                    <foreach collection="where.flagList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test ="where.fuzzyFlag!=null and where.fuzzyFlag.size()>0">
+                (
+                <foreach collection="where.fuzzyFlag"  separator="or" item="item">
+                    `Flag` like concat('%',#{item},'%')
+                </foreach>
+                ) and
+            </if>
+            <if test ="where.rightFuzzyFlag!=null and where.rightFuzzyFlag.size()>0">
+                (
+                <foreach collection="where.rightFuzzyFlag"  separator="or" item="item">
+                    `Flag` like concat(#{item},'%')
+                </foreach>
+                ) and
+            </if>
+                <if test="where.taskNameList != null">
+                    `task_name` in
+                    <foreach collection="where.taskNameList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test ="where.fuzzyTaskName!=null and where.fuzzyTaskName.size()>0">
+                (
+                <foreach collection="where.fuzzyTaskName"  separator="or" item="item">
+                    `Task_name` like concat('%',#{item},'%')
+                </foreach>
+                ) and
+            </if>
+            <if test ="where.rightFuzzyTaskName!=null and where.rightFuzzyTaskName.size()>0">
+                (
+                <foreach collection="where.rightFuzzyTaskName"  separator="or" item="item">
+                    `Task_name` like concat(#{item},'%')
+                </foreach>
+                ) and
+            </if>
+                <if test="where.taskIdList != null">
+                    `task_id` in
+                    <foreach collection="where.taskIdList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test ="where.fuzzyTaskId!=null and where.fuzzyTaskId.size()>0">
+                (
+                <foreach collection="where.fuzzyTaskId"  separator="or" item="item">
+                    `Task_id` like concat('%',#{item},'%')
+                </foreach>
+                ) and
+            </if>
+            <if test ="where.rightFuzzyTaskId!=null and where.rightFuzzyTaskId.size()>0">
+                (
+                <foreach collection="where.rightFuzzyTaskId"  separator="or" item="item">
+                    `Task_id` like concat(#{item},'%')
+                </foreach>
+                ) and
+            </if>
+                <if test="where.submitDateList != null">
+                    `submit_date` in
+                    <foreach collection="where.submitDateList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test ="where.fuzzySubmitDate!=null and where.fuzzySubmitDate.size()>0">
+                (
+                <foreach collection="where.fuzzySubmitDate"  separator="or" item="item">
+                    `Submit_date` like concat('%',#{item},'%')
+                </foreach>
+                ) and
+            </if>
+            <if test ="where.rightFuzzySubmitDate!=null and where.rightFuzzySubmitDate.size()>0">
+                (
+                <foreach collection="where.rightFuzzySubmitDate"  separator="or" item="item">
+                    `Submit_date` like concat(#{item},'%')
+                </foreach>
+                ) and
+            </if>
         </trim>
     </update>
 
@@ -210,6 +362,11 @@
         <result property="failureAnalystName" column="failure_analyst_name"/>
         <result property="failureAnalystDepartment" column="failure_analyst_department"/>
         <result property="failureAnalystComment" column="failure_analyst_comment"/>
+        <result property="saoId" column="sao_id"/>
+        <result property="flag" column="flag"/>
+        <result property="taskName" column="task_name"/>
+        <result property="taskId" column="task_id"/>
+        <result property="submitDate" column="submit_date"/>
     </resultMap>
 
 
@@ -235,6 +392,21 @@
             </if>
             <if test="failureAnalystComment != null and failureAnalystComment!=''">
                 `failure_analyst_comment` = #{failureAnalystComment} and
+            </if>
+            <if test="saoId != null">
+                `sao_id` = #{saoId} and
+            </if>
+            <if test="flag != null and flag!=''">
+                `flag` = #{flag} and
+            </if>
+            <if test="taskName != null and taskName!=''">
+                `task_name` = #{taskName} and
+            </if>
+            <if test="taskId != null and taskId!=''">
+                `task_id` = #{taskId} and
+            </if>
+            <if test="submitDate != null and submitDate!=''">
+                `submit_date` = #{submitDate} and
             </if>
             <if test = "(_parameter instanceof com.gamc.efactory.model.dataObject.MqmsFailureAnalysis$QueryBuilder) == true">
                 <if test="failureAnalysisIdList != null">
@@ -333,6 +505,98 @@
                     </foreach>
                     ) and
                 </if>
+                <if test="saoIdList != null">
+                    `sao_id` in
+                    <foreach collection="saoIdList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test="saoIdSt !=null">
+                    `sao_id` >= #{saoIdSt} and
+                </if>
+                <if test="saoIdEd!=null">
+                    `sao_id` &lt;= #{saoIdEd} and
+                </if>
+                <if test="flagList != null">
+                    `flag` in
+                    <foreach collection="flagList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyFlag!=null and fuzzyFlag.size()>0">
+                    (
+                    <foreach collection="fuzzyFlag"  separator="or" item="item">
+                        `Flag` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyFlag!=null and rightFuzzyFlag.size()>0">
+                    (
+                    <foreach collection="rightFuzzyFlag"  separator="or" item="item">
+                        `Flag` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="taskNameList != null">
+                    `task_name` in
+                    <foreach collection="taskNameList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyTaskName!=null and fuzzyTaskName.size()>0">
+                    (
+                    <foreach collection="fuzzyTaskName"  separator="or" item="item">
+                        `Task_name` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyTaskName!=null and rightFuzzyTaskName.size()>0">
+                    (
+                    <foreach collection="rightFuzzyTaskName"  separator="or" item="item">
+                        `Task_name` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="taskIdList != null">
+                    `task_id` in
+                    <foreach collection="taskIdList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyTaskId!=null and fuzzyTaskId.size()>0">
+                    (
+                    <foreach collection="fuzzyTaskId"  separator="or" item="item">
+                        `Task_id` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyTaskId!=null and rightFuzzyTaskId.size()>0">
+                    (
+                    <foreach collection="rightFuzzyTaskId"  separator="or" item="item">
+                        `Task_id` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="submitDateList != null">
+                    `submit_date` in
+                    <foreach collection="submitDateList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzySubmitDate!=null and fuzzySubmitDate.size()>0">
+                    (
+                    <foreach collection="fuzzySubmitDate"  separator="or" item="item">
+                        `Submit_date` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzySubmitDate!=null and rightFuzzySubmitDate.size()>0">
+                    (
+                    <foreach collection="rightFuzzySubmitDate"  separator="or" item="item">
+                        `Submit_date` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
             </if>
         </trim>
     </select>
@@ -359,6 +623,21 @@
             </if>
             <if test="failureAnalystComment != null and failureAnalystComment!=''">
                 `failure_analyst_comment` = #{failureAnalystComment} and
+            </if>
+            <if test="saoId != null">
+                `sao_id` = #{saoId} and
+            </if>
+            <if test="flag != null and flag!=''">
+                `flag` = #{flag} and
+            </if>
+            <if test="taskName != null and taskName!=''">
+                `task_name` = #{taskName} and
+            </if>
+            <if test="taskId != null and taskId!=''">
+                `task_id` = #{taskId} and
+            </if>
+            <if test="submitDate != null and submitDate!=''">
+                `submit_date` = #{submitDate} and
             </if>
             <if test = "(_parameter instanceof com.gamc.efactory.model.dataObject.MqmsFailureAnalysis$QueryBuilder) == true">
                     <if test="failureAnalysisIdList != null">
@@ -457,6 +736,98 @@
                     </foreach>
                     ) and
                 </if>
+                    <if test="saoIdList != null">
+                        `sao_id` in
+                        <foreach collection="saoIdList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test="saoIdSt !=null">
+                    `sao_id` >= #{saoIdSt} and
+                </if>
+                <if test="saoIdEd!=null">
+                    `sao_id` &lt;= #{saoIdEd} and
+                </if>
+                    <if test="flagList != null">
+                        `flag` in
+                        <foreach collection="flagList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyFlag!=null and fuzzyFlag.size()>0">
+                    (
+                    <foreach collection="fuzzyFlag"  separator="or" item="item">
+                        `Flag` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyFlag!=null and rightFuzzyFlag.size()>0">
+                    (
+                    <foreach collection="rightFuzzyFlag"  separator="or" item="item">
+                        `Flag` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                    <if test="taskNameList != null">
+                        `task_name` in
+                        <foreach collection="taskNameList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyTaskName!=null and fuzzyTaskName.size()>0">
+                    (
+                    <foreach collection="fuzzyTaskName"  separator="or" item="item">
+                        `Task_name` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyTaskName!=null and rightFuzzyTaskName.size()>0">
+                    (
+                    <foreach collection="rightFuzzyTaskName"  separator="or" item="item">
+                        `Task_name` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                    <if test="taskIdList != null">
+                        `task_id` in
+                        <foreach collection="taskIdList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyTaskId!=null and fuzzyTaskId.size()>0">
+                    (
+                    <foreach collection="fuzzyTaskId"  separator="or" item="item">
+                        `Task_id` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyTaskId!=null and rightFuzzyTaskId.size()>0">
+                    (
+                    <foreach collection="rightFuzzyTaskId"  separator="or" item="item">
+                        `Task_id` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                    <if test="submitDateList != null">
+                        `submit_date` in
+                        <foreach collection="submitDateList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzySubmitDate!=null and fuzzySubmitDate.size()>0">
+                    (
+                    <foreach collection="fuzzySubmitDate"  separator="or" item="item">
+                        `Submit_date` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzySubmitDate!=null and rightFuzzySubmitDate.size()>0">
+                    (
+                    <foreach collection="rightFuzzySubmitDate"  separator="or" item="item">
+                        `Submit_date` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
             </if>
         </trim>
         limit 1
@@ -470,6 +841,11 @@
         `failure_analyst_name`,
         `failure_analyst_department`,
         `failure_analyst_comment`,
+        `sao_id`,
+        `flag`,
+        `task_name`,
+        `task_id`,
+        `submit_date`,
         </trim>
     </sql>
 
@@ -508,6 +884,21 @@
                     <if test="fetchFields.fetchFields.failureAnalystComment==true">
                         `failure_analyst_comment`,
                     </if>
+                    <if test="fetchFields.fetchFields.saoId==true">
+                        `sao_id`,
+                    </if>
+                    <if test="fetchFields.fetchFields.flag==true">
+                        `flag`,
+                    </if>
+                    <if test="fetchFields.fetchFields.taskName==true">
+                        `task_name`,
+                    </if>
+                    <if test="fetchFields.fetchFields.taskId==true">
+                        `task_id`,
+                    </if>
+                    <if test="fetchFields.fetchFields.submitDate==true">
+                        `submit_date`,
+                    </if>
                     </if>
                     <if test="fetchFields.AllFields==null and fetchFields.excludeFields!=null">
                     <if test="fetchFields.excludeFields.failureAnalysisId==null">
@@ -527,6 +918,21 @@
                     </if>
                     <if test="fetchFields.excludeFields.failureAnalystComment==null">
                         `failure_analyst_comment`,
+                    </if>
+                    <if test="fetchFields.excludeFields.saoId==null">
+                        `sao_id`,
+                    </if>
+                    <if test="fetchFields.excludeFields.flag==null">
+                        `flag`,
+                    </if>
+                    <if test="fetchFields.excludeFields.taskName==null">
+                        `task_name`,
+                    </if>
+                    <if test="fetchFields.excludeFields.taskId==null">
+                        `task_id`,
+                    </if>
+                    <if test="fetchFields.excludeFields.submitDate==null">
+                        `submit_date`,
                     </if>
                     </if>
                     <if test="fetchFields.otherFields!=null and fetchFields.otherFields.size>0">

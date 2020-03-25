@@ -60,7 +60,7 @@ public class SendEmails {
         ProcessForm processForm=new ProcessForm();
 
         String structure1="[[1, 1, 1, 1], [2, 2]]";
-            List<List<Integer>> mStructure1=objectMapper.readValue(structure1.toString(),List.class);
+        List<List<Integer>> mStructure1=objectMapper.readValue(structure1.toString(),List.class);
         ProcessForm.DataDisplaySingle single1=new ProcessForm.DataDisplaySingle();
         single1.setTitle("标题1");
         single1.setType("text");

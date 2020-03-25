@@ -10,7 +10,7 @@ import java.util.List;
 */
 public class MqmsFailureTrack implements Serializable {
 
-    private static final long serialVersionUID = 1583454485051L;
+    private static final long serialVersionUID = 1585034007533L;
 
 
     /**
@@ -30,7 +30,7 @@ public class MqmsFailureTrack implements Serializable {
     * 流程系统id
     * isNullAble:1
     */
-    private Integer saoId;
+    private Long saoId;
 
     /**
     * 不良追踪负责人id
@@ -111,6 +111,12 @@ public class MqmsFailureTrack implements Serializable {
     private String failureReappearSymbol;
 
     /**
+    * 
+    * isNullAble:1
+    */
+    private String reloadDate;
+
+    /**
     * 故障再现日期
     * isNullAble:1
     */
@@ -128,6 +134,36 @@ public class MqmsFailureTrack implements Serializable {
     */
     private String failureReappearResult;
 
+    /**
+    * 外观情况
+    * isNullAble:1
+    */
+    private String appearance;
+
+    /**
+    * 解析科室
+    * isNullAble:1
+    */
+    private String analysisDepartments;
+
+    /**
+    * 解析截点
+    * isNullAble:1
+    */
+    private String analysisDeadline;
+
+    /**
+    * 解析要求
+    * isNullAble:1
+    */
+    private String analysisRequirement;
+
+    /**
+    * 附件
+    * isNullAble:1,defaultVal:
+    */
+    private String appendix;
+
 
     public void setFailureTrackId(Integer failureTrackId){this.failureTrackId = failureTrackId;}
 
@@ -137,9 +173,9 @@ public class MqmsFailureTrack implements Serializable {
 
     public String getVoucherCode(){return this.voucherCode;}
 
-    public void setSaoId(Integer saoId){this.saoId = saoId;}
+    public void setSaoId(Long saoId){this.saoId = saoId;}
 
-    public Integer getSaoId(){return this.saoId;}
+    public Long getSaoId(){return this.saoId;}
 
     public void setTrackBeginerId(Integer trackBeginerId){this.trackBeginerId = trackBeginerId;}
 
@@ -193,6 +229,10 @@ public class MqmsFailureTrack implements Serializable {
 
     public String getFailureReappearSymbol(){return this.failureReappearSymbol;}
 
+    public void setReloadDate(String reloadDate){this.reloadDate = reloadDate;}
+
+    public String getReloadDate(){return this.reloadDate;}
+
     public void setFailureReappearDate(String failureReappearDate){this.failureReappearDate = failureReappearDate;}
 
     public String getFailureReappearDate(){return this.failureReappearDate;}
@@ -204,6 +244,26 @@ public class MqmsFailureTrack implements Serializable {
     public void setFailureReappearResult(String failureReappearResult){this.failureReappearResult = failureReappearResult;}
 
     public String getFailureReappearResult(){return this.failureReappearResult;}
+
+    public void setAppearance(String appearance){this.appearance = appearance;}
+
+    public String getAppearance(){return this.appearance;}
+
+    public void setAnalysisDepartments(String analysisDepartments){this.analysisDepartments = analysisDepartments;}
+
+    public String getAnalysisDepartments(){return this.analysisDepartments;}
+
+    public void setAnalysisDeadline(String analysisDeadline){this.analysisDeadline = analysisDeadline;}
+
+    public String getAnalysisDeadline(){return this.analysisDeadline;}
+
+    public void setAnalysisRequirement(String analysisRequirement){this.analysisRequirement = analysisRequirement;}
+
+    public String getAnalysisRequirement(){return this.analysisRequirement;}
+
+    public void setAppendix(String appendix){this.appendix = appendix;}
+
+    public String getAppendix(){return this.appendix;}
     @Override
     public String toString() {
         return "MqmsFailureTrack{" +
@@ -223,9 +283,15 @@ public class MqmsFailureTrack implements Serializable {
                 "failureReappearPersonId='" + failureReappearPersonId + '\'' +
                 "failureReappearPersonName='" + failureReappearPersonName + '\'' +
                 "failureReappearSymbol='" + failureReappearSymbol + '\'' +
+                "reloadDate='" + reloadDate + '\'' +
                 "failureReappearDate='" + failureReappearDate + '\'' +
                 "failureReappearSituation='" + failureReappearSituation + '\'' +
                 "failureReappearResult='" + failureReappearResult + '\'' +
+                "appearance='" + appearance + '\'' +
+                "analysisDepartments='" + analysisDepartments + '\'' +
+                "analysisDeadline='" + analysisDeadline + '\'' +
+                "analysisRequirement='" + analysisRequirement + '\'' +
+                "appendix='" + appendix + '\'' +
             '}';
     }
 
@@ -298,17 +364,17 @@ public class MqmsFailureTrack implements Serializable {
         private List<String> rightFuzzyVoucherCode;
 
         public List<String> getRightFuzzyVoucherCode(){return this.rightFuzzyVoucherCode;}
-        private List<Integer> saoIdList;
+        private List<Long> saoIdList;
 
-        public List<Integer> getSaoIdList(){return this.saoIdList;}
+        public List<Long> getSaoIdList(){return this.saoIdList;}
 
-        private Integer saoIdSt;
+        private Long saoIdSt;
 
-        private Integer saoIdEd;
+        private Long saoIdEd;
 
-        public Integer getSaoIdSt(){return this.saoIdSt;}
+        public Long getSaoIdSt(){return this.saoIdSt;}
 
-        public Integer getSaoIdEd(){return this.saoIdEd;}
+        public Long getSaoIdEd(){return this.saoIdEd;}
 
         private List<Integer> trackBeginerIdList;
 
@@ -466,6 +532,18 @@ public class MqmsFailureTrack implements Serializable {
         private List<String> rightFuzzyFailureReappearSymbol;
 
         public List<String> getRightFuzzyFailureReappearSymbol(){return this.rightFuzzyFailureReappearSymbol;}
+        private List<String> reloadDateList;
+
+        public List<String> getReloadDateList(){return this.reloadDateList;}
+
+
+        private List<String> fuzzyReloadDate;
+
+        public List<String> getFuzzyReloadDate(){return this.fuzzyReloadDate;}
+
+        private List<String> rightFuzzyReloadDate;
+
+        public List<String> getRightFuzzyReloadDate(){return this.rightFuzzyReloadDate;}
         private List<String> failureReappearDateList;
 
         public List<String> getFailureReappearDateList(){return this.failureReappearDateList;}
@@ -502,6 +580,66 @@ public class MqmsFailureTrack implements Serializable {
         private List<String> rightFuzzyFailureReappearResult;
 
         public List<String> getRightFuzzyFailureReappearResult(){return this.rightFuzzyFailureReappearResult;}
+        private List<String> appearanceList;
+
+        public List<String> getAppearanceList(){return this.appearanceList;}
+
+
+        private List<String> fuzzyAppearance;
+
+        public List<String> getFuzzyAppearance(){return this.fuzzyAppearance;}
+
+        private List<String> rightFuzzyAppearance;
+
+        public List<String> getRightFuzzyAppearance(){return this.rightFuzzyAppearance;}
+        private List<String> analysisDepartmentsList;
+
+        public List<String> getAnalysisDepartmentsList(){return this.analysisDepartmentsList;}
+
+
+        private List<String> fuzzyAnalysisDepartments;
+
+        public List<String> getFuzzyAnalysisDepartments(){return this.fuzzyAnalysisDepartments;}
+
+        private List<String> rightFuzzyAnalysisDepartments;
+
+        public List<String> getRightFuzzyAnalysisDepartments(){return this.rightFuzzyAnalysisDepartments;}
+        private List<String> analysisDeadlineList;
+
+        public List<String> getAnalysisDeadlineList(){return this.analysisDeadlineList;}
+
+
+        private List<String> fuzzyAnalysisDeadline;
+
+        public List<String> getFuzzyAnalysisDeadline(){return this.fuzzyAnalysisDeadline;}
+
+        private List<String> rightFuzzyAnalysisDeadline;
+
+        public List<String> getRightFuzzyAnalysisDeadline(){return this.rightFuzzyAnalysisDeadline;}
+        private List<String> analysisRequirementList;
+
+        public List<String> getAnalysisRequirementList(){return this.analysisRequirementList;}
+
+
+        private List<String> fuzzyAnalysisRequirement;
+
+        public List<String> getFuzzyAnalysisRequirement(){return this.fuzzyAnalysisRequirement;}
+
+        private List<String> rightFuzzyAnalysisRequirement;
+
+        public List<String> getRightFuzzyAnalysisRequirement(){return this.rightFuzzyAnalysisRequirement;}
+        private List<String> appendixList;
+
+        public List<String> getAppendixList(){return this.appendixList;}
+
+
+        private List<String> fuzzyAppendix;
+
+        public List<String> getFuzzyAppendix(){return this.fuzzyAppendix;}
+
+        private List<String> rightFuzzyAppendix;
+
+        public List<String> getRightFuzzyAppendix(){return this.rightFuzzyAppendix;}
         private QueryBuilder (){
             this.fetchFields = new HashMap<>();
         }
@@ -592,33 +730,33 @@ public class MqmsFailureTrack implements Serializable {
             return this;
         }
 
-        public QueryBuilder saoIdBetWeen(Integer saoIdSt,Integer saoIdEd){
+        public QueryBuilder saoIdBetWeen(Long saoIdSt,Long saoIdEd){
             this.saoIdSt = saoIdSt;
             this.saoIdEd = saoIdEd;
             return this;
         }
 
-        public QueryBuilder saoIdGreaterEqThan(Integer saoIdSt){
+        public QueryBuilder saoIdGreaterEqThan(Long saoIdSt){
             this.saoIdSt = saoIdSt;
             return this;
         }
-        public QueryBuilder saoIdLessEqThan(Integer saoIdEd){
+        public QueryBuilder saoIdLessEqThan(Long saoIdEd){
             this.saoIdEd = saoIdEd;
             return this;
         }
 
 
-        public QueryBuilder saoId(Integer saoId){
+        public QueryBuilder saoId(Long saoId){
             setSaoId(saoId);
             return this;
         }
 
-        public QueryBuilder saoIdList(Integer ... saoId){
+        public QueryBuilder saoIdList(Long ... saoId){
             this.saoIdList = solveNullList(saoId);
             return this;
         }
 
-        public QueryBuilder saoIdList(List<Integer> saoId){
+        public QueryBuilder saoIdList(List<Long> saoId){
             this.saoIdList = saoId;
             return this;
         }
@@ -1206,6 +1344,51 @@ public class MqmsFailureTrack implements Serializable {
             return this;
         }
 
+        public QueryBuilder fuzzyReloadDate (List<String> fuzzyReloadDate){
+            this.fuzzyReloadDate = fuzzyReloadDate;
+            return this;
+        }
+
+        public QueryBuilder fuzzyReloadDate (String ... fuzzyReloadDate){
+            this.fuzzyReloadDate = solveNullList(fuzzyReloadDate);
+            return this;
+        }
+
+        public QueryBuilder rightFuzzyReloadDate (List<String> rightFuzzyReloadDate){
+            this.rightFuzzyReloadDate = rightFuzzyReloadDate;
+            return this;
+        }
+
+        public QueryBuilder rightFuzzyReloadDate (String ... rightFuzzyReloadDate){
+            this.rightFuzzyReloadDate = solveNullList(rightFuzzyReloadDate);
+            return this;
+        }
+
+        public QueryBuilder reloadDate(String reloadDate){
+            setReloadDate(reloadDate);
+            return this;
+        }
+
+        public QueryBuilder reloadDateList(String ... reloadDate){
+            this.reloadDateList = solveNullList(reloadDate);
+            return this;
+        }
+
+        public QueryBuilder reloadDateList(List<String> reloadDate){
+            this.reloadDateList = reloadDate;
+            return this;
+        }
+
+        public QueryBuilder fetchReloadDate(){
+            setFetchFields("fetchFields","reloadDate");
+            return this;
+        }
+
+        public QueryBuilder excludeReloadDate(){
+            setFetchFields("excludeFields","reloadDate");
+            return this;
+        }
+
         public QueryBuilder fuzzyFailureReappearDate (List<String> fuzzyFailureReappearDate){
             this.fuzzyFailureReappearDate = fuzzyFailureReappearDate;
             return this;
@@ -1340,6 +1523,231 @@ public class MqmsFailureTrack implements Serializable {
             setFetchFields("excludeFields","failureReappearResult");
             return this;
         }
+
+        public QueryBuilder fuzzyAppearance (List<String> fuzzyAppearance){
+            this.fuzzyAppearance = fuzzyAppearance;
+            return this;
+        }
+
+        public QueryBuilder fuzzyAppearance (String ... fuzzyAppearance){
+            this.fuzzyAppearance = solveNullList(fuzzyAppearance);
+            return this;
+        }
+
+        public QueryBuilder rightFuzzyAppearance (List<String> rightFuzzyAppearance){
+            this.rightFuzzyAppearance = rightFuzzyAppearance;
+            return this;
+        }
+
+        public QueryBuilder rightFuzzyAppearance (String ... rightFuzzyAppearance){
+            this.rightFuzzyAppearance = solveNullList(rightFuzzyAppearance);
+            return this;
+        }
+
+        public QueryBuilder appearance(String appearance){
+            setAppearance(appearance);
+            return this;
+        }
+
+        public QueryBuilder appearanceList(String ... appearance){
+            this.appearanceList = solveNullList(appearance);
+            return this;
+        }
+
+        public QueryBuilder appearanceList(List<String> appearance){
+            this.appearanceList = appearance;
+            return this;
+        }
+
+        public QueryBuilder fetchAppearance(){
+            setFetchFields("fetchFields","appearance");
+            return this;
+        }
+
+        public QueryBuilder excludeAppearance(){
+            setFetchFields("excludeFields","appearance");
+            return this;
+        }
+
+        public QueryBuilder fuzzyAnalysisDepartments (List<String> fuzzyAnalysisDepartments){
+            this.fuzzyAnalysisDepartments = fuzzyAnalysisDepartments;
+            return this;
+        }
+
+        public QueryBuilder fuzzyAnalysisDepartments (String ... fuzzyAnalysisDepartments){
+            this.fuzzyAnalysisDepartments = solveNullList(fuzzyAnalysisDepartments);
+            return this;
+        }
+
+        public QueryBuilder rightFuzzyAnalysisDepartments (List<String> rightFuzzyAnalysisDepartments){
+            this.rightFuzzyAnalysisDepartments = rightFuzzyAnalysisDepartments;
+            return this;
+        }
+
+        public QueryBuilder rightFuzzyAnalysisDepartments (String ... rightFuzzyAnalysisDepartments){
+            this.rightFuzzyAnalysisDepartments = solveNullList(rightFuzzyAnalysisDepartments);
+            return this;
+        }
+
+        public QueryBuilder analysisDepartments(String analysisDepartments){
+            setAnalysisDepartments(analysisDepartments);
+            return this;
+        }
+
+        public QueryBuilder analysisDepartmentsList(String ... analysisDepartments){
+            this.analysisDepartmentsList = solveNullList(analysisDepartments);
+            return this;
+        }
+
+        public QueryBuilder analysisDepartmentsList(List<String> analysisDepartments){
+            this.analysisDepartmentsList = analysisDepartments;
+            return this;
+        }
+
+        public QueryBuilder fetchAnalysisDepartments(){
+            setFetchFields("fetchFields","analysisDepartments");
+            return this;
+        }
+
+        public QueryBuilder excludeAnalysisDepartments(){
+            setFetchFields("excludeFields","analysisDepartments");
+            return this;
+        }
+
+        public QueryBuilder fuzzyAnalysisDeadline (List<String> fuzzyAnalysisDeadline){
+            this.fuzzyAnalysisDeadline = fuzzyAnalysisDeadline;
+            return this;
+        }
+
+        public QueryBuilder fuzzyAnalysisDeadline (String ... fuzzyAnalysisDeadline){
+            this.fuzzyAnalysisDeadline = solveNullList(fuzzyAnalysisDeadline);
+            return this;
+        }
+
+        public QueryBuilder rightFuzzyAnalysisDeadline (List<String> rightFuzzyAnalysisDeadline){
+            this.rightFuzzyAnalysisDeadline = rightFuzzyAnalysisDeadline;
+            return this;
+        }
+
+        public QueryBuilder rightFuzzyAnalysisDeadline (String ... rightFuzzyAnalysisDeadline){
+            this.rightFuzzyAnalysisDeadline = solveNullList(rightFuzzyAnalysisDeadline);
+            return this;
+        }
+
+        public QueryBuilder analysisDeadline(String analysisDeadline){
+            setAnalysisDeadline(analysisDeadline);
+            return this;
+        }
+
+        public QueryBuilder analysisDeadlineList(String ... analysisDeadline){
+            this.analysisDeadlineList = solveNullList(analysisDeadline);
+            return this;
+        }
+
+        public QueryBuilder analysisDeadlineList(List<String> analysisDeadline){
+            this.analysisDeadlineList = analysisDeadline;
+            return this;
+        }
+
+        public QueryBuilder fetchAnalysisDeadline(){
+            setFetchFields("fetchFields","analysisDeadline");
+            return this;
+        }
+
+        public QueryBuilder excludeAnalysisDeadline(){
+            setFetchFields("excludeFields","analysisDeadline");
+            return this;
+        }
+
+        public QueryBuilder fuzzyAnalysisRequirement (List<String> fuzzyAnalysisRequirement){
+            this.fuzzyAnalysisRequirement = fuzzyAnalysisRequirement;
+            return this;
+        }
+
+        public QueryBuilder fuzzyAnalysisRequirement (String ... fuzzyAnalysisRequirement){
+            this.fuzzyAnalysisRequirement = solveNullList(fuzzyAnalysisRequirement);
+            return this;
+        }
+
+        public QueryBuilder rightFuzzyAnalysisRequirement (List<String> rightFuzzyAnalysisRequirement){
+            this.rightFuzzyAnalysisRequirement = rightFuzzyAnalysisRequirement;
+            return this;
+        }
+
+        public QueryBuilder rightFuzzyAnalysisRequirement (String ... rightFuzzyAnalysisRequirement){
+            this.rightFuzzyAnalysisRequirement = solveNullList(rightFuzzyAnalysisRequirement);
+            return this;
+        }
+
+        public QueryBuilder analysisRequirement(String analysisRequirement){
+            setAnalysisRequirement(analysisRequirement);
+            return this;
+        }
+
+        public QueryBuilder analysisRequirementList(String ... analysisRequirement){
+            this.analysisRequirementList = solveNullList(analysisRequirement);
+            return this;
+        }
+
+        public QueryBuilder analysisRequirementList(List<String> analysisRequirement){
+            this.analysisRequirementList = analysisRequirement;
+            return this;
+        }
+
+        public QueryBuilder fetchAnalysisRequirement(){
+            setFetchFields("fetchFields","analysisRequirement");
+            return this;
+        }
+
+        public QueryBuilder excludeAnalysisRequirement(){
+            setFetchFields("excludeFields","analysisRequirement");
+            return this;
+        }
+
+        public QueryBuilder fuzzyAppendix (List<String> fuzzyAppendix){
+            this.fuzzyAppendix = fuzzyAppendix;
+            return this;
+        }
+
+        public QueryBuilder fuzzyAppendix (String ... fuzzyAppendix){
+            this.fuzzyAppendix = solveNullList(fuzzyAppendix);
+            return this;
+        }
+
+        public QueryBuilder rightFuzzyAppendix (List<String> rightFuzzyAppendix){
+            this.rightFuzzyAppendix = rightFuzzyAppendix;
+            return this;
+        }
+
+        public QueryBuilder rightFuzzyAppendix (String ... rightFuzzyAppendix){
+            this.rightFuzzyAppendix = solveNullList(rightFuzzyAppendix);
+            return this;
+        }
+
+        public QueryBuilder appendix(String appendix){
+            setAppendix(appendix);
+            return this;
+        }
+
+        public QueryBuilder appendixList(String ... appendix){
+            this.appendixList = solveNullList(appendix);
+            return this;
+        }
+
+        public QueryBuilder appendixList(List<String> appendix){
+            this.appendixList = appendix;
+            return this;
+        }
+
+        public QueryBuilder fetchAppendix(){
+            setFetchFields("fetchFields","appendix");
+            return this;
+        }
+
+        public QueryBuilder excludeAppendix(){
+            setFetchFields("excludeFields","appendix");
+            return this;
+        }
         private <T>List<T> solveNullList(T ... objs){
             if (objs != null){
             List<T> list = new ArrayList<>();
@@ -1407,17 +1815,17 @@ public class MqmsFailureTrack implements Serializable {
         private List<String> rightFuzzyVoucherCode;
 
         public List<String> getRightFuzzyVoucherCode(){return this.rightFuzzyVoucherCode;}
-        private List<Integer> saoIdList;
+        private List<Long> saoIdList;
 
-        public List<Integer> getSaoIdList(){return this.saoIdList;}
+        public List<Long> getSaoIdList(){return this.saoIdList;}
 
-        private Integer saoIdSt;
+        private Long saoIdSt;
 
-        private Integer saoIdEd;
+        private Long saoIdEd;
 
-        public Integer getSaoIdSt(){return this.saoIdSt;}
+        public Long getSaoIdSt(){return this.saoIdSt;}
 
-        public Integer getSaoIdEd(){return this.saoIdEd;}
+        public Long getSaoIdEd(){return this.saoIdEd;}
 
         private List<Integer> trackBeginerIdList;
 
@@ -1575,6 +1983,18 @@ public class MqmsFailureTrack implements Serializable {
         private List<String> rightFuzzyFailureReappearSymbol;
 
         public List<String> getRightFuzzyFailureReappearSymbol(){return this.rightFuzzyFailureReappearSymbol;}
+        private List<String> reloadDateList;
+
+        public List<String> getReloadDateList(){return this.reloadDateList;}
+
+
+        private List<String> fuzzyReloadDate;
+
+        public List<String> getFuzzyReloadDate(){return this.fuzzyReloadDate;}
+
+        private List<String> rightFuzzyReloadDate;
+
+        public List<String> getRightFuzzyReloadDate(){return this.rightFuzzyReloadDate;}
         private List<String> failureReappearDateList;
 
         public List<String> getFailureReappearDateList(){return this.failureReappearDateList;}
@@ -1611,6 +2031,66 @@ public class MqmsFailureTrack implements Serializable {
         private List<String> rightFuzzyFailureReappearResult;
 
         public List<String> getRightFuzzyFailureReappearResult(){return this.rightFuzzyFailureReappearResult;}
+        private List<String> appearanceList;
+
+        public List<String> getAppearanceList(){return this.appearanceList;}
+
+
+        private List<String> fuzzyAppearance;
+
+        public List<String> getFuzzyAppearance(){return this.fuzzyAppearance;}
+
+        private List<String> rightFuzzyAppearance;
+
+        public List<String> getRightFuzzyAppearance(){return this.rightFuzzyAppearance;}
+        private List<String> analysisDepartmentsList;
+
+        public List<String> getAnalysisDepartmentsList(){return this.analysisDepartmentsList;}
+
+
+        private List<String> fuzzyAnalysisDepartments;
+
+        public List<String> getFuzzyAnalysisDepartments(){return this.fuzzyAnalysisDepartments;}
+
+        private List<String> rightFuzzyAnalysisDepartments;
+
+        public List<String> getRightFuzzyAnalysisDepartments(){return this.rightFuzzyAnalysisDepartments;}
+        private List<String> analysisDeadlineList;
+
+        public List<String> getAnalysisDeadlineList(){return this.analysisDeadlineList;}
+
+
+        private List<String> fuzzyAnalysisDeadline;
+
+        public List<String> getFuzzyAnalysisDeadline(){return this.fuzzyAnalysisDeadline;}
+
+        private List<String> rightFuzzyAnalysisDeadline;
+
+        public List<String> getRightFuzzyAnalysisDeadline(){return this.rightFuzzyAnalysisDeadline;}
+        private List<String> analysisRequirementList;
+
+        public List<String> getAnalysisRequirementList(){return this.analysisRequirementList;}
+
+
+        private List<String> fuzzyAnalysisRequirement;
+
+        public List<String> getFuzzyAnalysisRequirement(){return this.fuzzyAnalysisRequirement;}
+
+        private List<String> rightFuzzyAnalysisRequirement;
+
+        public List<String> getRightFuzzyAnalysisRequirement(){return this.rightFuzzyAnalysisRequirement;}
+        private List<String> appendixList;
+
+        public List<String> getAppendixList(){return this.appendixList;}
+
+
+        private List<String> fuzzyAppendix;
+
+        public List<String> getFuzzyAppendix(){return this.fuzzyAppendix;}
+
+        private List<String> rightFuzzyAppendix;
+
+        public List<String> getRightFuzzyAppendix(){return this.rightFuzzyAppendix;}
 
         public ConditionBuilder failureTrackIdBetWeen(Integer failureTrackIdSt,Integer failureTrackIdEd){
             this.failureTrackIdSt = failureTrackIdSt;
@@ -1668,28 +2148,28 @@ public class MqmsFailureTrack implements Serializable {
             return this;
         }
 
-        public ConditionBuilder saoIdBetWeen(Integer saoIdSt,Integer saoIdEd){
+        public ConditionBuilder saoIdBetWeen(Long saoIdSt,Long saoIdEd){
             this.saoIdSt = saoIdSt;
             this.saoIdEd = saoIdEd;
             return this;
         }
 
-        public ConditionBuilder saoIdGreaterEqThan(Integer saoIdSt){
+        public ConditionBuilder saoIdGreaterEqThan(Long saoIdSt){
             this.saoIdSt = saoIdSt;
             return this;
         }
-        public ConditionBuilder saoIdLessEqThan(Integer saoIdEd){
+        public ConditionBuilder saoIdLessEqThan(Long saoIdEd){
             this.saoIdEd = saoIdEd;
             return this;
         }
 
 
-        public ConditionBuilder saoIdList(Integer ... saoId){
+        public ConditionBuilder saoIdList(Long ... saoId){
             this.saoIdList = solveNullList(saoId);
             return this;
         }
 
-        public ConditionBuilder saoIdList(List<Integer> saoId){
+        public ConditionBuilder saoIdList(List<Long> saoId){
             this.saoIdList = saoId;
             return this;
         }
@@ -2072,6 +2552,36 @@ public class MqmsFailureTrack implements Serializable {
             return this;
         }
 
+        public ConditionBuilder fuzzyReloadDate (List<String> fuzzyReloadDate){
+            this.fuzzyReloadDate = fuzzyReloadDate;
+            return this;
+        }
+
+        public ConditionBuilder fuzzyReloadDate (String ... fuzzyReloadDate){
+            this.fuzzyReloadDate = solveNullList(fuzzyReloadDate);
+            return this;
+        }
+
+        public ConditionBuilder rightFuzzyReloadDate (List<String> rightFuzzyReloadDate){
+            this.rightFuzzyReloadDate = rightFuzzyReloadDate;
+            return this;
+        }
+
+        public ConditionBuilder rightFuzzyReloadDate (String ... rightFuzzyReloadDate){
+            this.rightFuzzyReloadDate = solveNullList(rightFuzzyReloadDate);
+            return this;
+        }
+
+        public ConditionBuilder reloadDateList(String ... reloadDate){
+            this.reloadDateList = solveNullList(reloadDate);
+            return this;
+        }
+
+        public ConditionBuilder reloadDateList(List<String> reloadDate){
+            this.reloadDateList = reloadDate;
+            return this;
+        }
+
         public ConditionBuilder fuzzyFailureReappearDate (List<String> fuzzyFailureReappearDate){
             this.fuzzyFailureReappearDate = fuzzyFailureReappearDate;
             return this;
@@ -2162,6 +2672,156 @@ public class MqmsFailureTrack implements Serializable {
             return this;
         }
 
+        public ConditionBuilder fuzzyAppearance (List<String> fuzzyAppearance){
+            this.fuzzyAppearance = fuzzyAppearance;
+            return this;
+        }
+
+        public ConditionBuilder fuzzyAppearance (String ... fuzzyAppearance){
+            this.fuzzyAppearance = solveNullList(fuzzyAppearance);
+            return this;
+        }
+
+        public ConditionBuilder rightFuzzyAppearance (List<String> rightFuzzyAppearance){
+            this.rightFuzzyAppearance = rightFuzzyAppearance;
+            return this;
+        }
+
+        public ConditionBuilder rightFuzzyAppearance (String ... rightFuzzyAppearance){
+            this.rightFuzzyAppearance = solveNullList(rightFuzzyAppearance);
+            return this;
+        }
+
+        public ConditionBuilder appearanceList(String ... appearance){
+            this.appearanceList = solveNullList(appearance);
+            return this;
+        }
+
+        public ConditionBuilder appearanceList(List<String> appearance){
+            this.appearanceList = appearance;
+            return this;
+        }
+
+        public ConditionBuilder fuzzyAnalysisDepartments (List<String> fuzzyAnalysisDepartments){
+            this.fuzzyAnalysisDepartments = fuzzyAnalysisDepartments;
+            return this;
+        }
+
+        public ConditionBuilder fuzzyAnalysisDepartments (String ... fuzzyAnalysisDepartments){
+            this.fuzzyAnalysisDepartments = solveNullList(fuzzyAnalysisDepartments);
+            return this;
+        }
+
+        public ConditionBuilder rightFuzzyAnalysisDepartments (List<String> rightFuzzyAnalysisDepartments){
+            this.rightFuzzyAnalysisDepartments = rightFuzzyAnalysisDepartments;
+            return this;
+        }
+
+        public ConditionBuilder rightFuzzyAnalysisDepartments (String ... rightFuzzyAnalysisDepartments){
+            this.rightFuzzyAnalysisDepartments = solveNullList(rightFuzzyAnalysisDepartments);
+            return this;
+        }
+
+        public ConditionBuilder analysisDepartmentsList(String ... analysisDepartments){
+            this.analysisDepartmentsList = solveNullList(analysisDepartments);
+            return this;
+        }
+
+        public ConditionBuilder analysisDepartmentsList(List<String> analysisDepartments){
+            this.analysisDepartmentsList = analysisDepartments;
+            return this;
+        }
+
+        public ConditionBuilder fuzzyAnalysisDeadline (List<String> fuzzyAnalysisDeadline){
+            this.fuzzyAnalysisDeadline = fuzzyAnalysisDeadline;
+            return this;
+        }
+
+        public ConditionBuilder fuzzyAnalysisDeadline (String ... fuzzyAnalysisDeadline){
+            this.fuzzyAnalysisDeadline = solveNullList(fuzzyAnalysisDeadline);
+            return this;
+        }
+
+        public ConditionBuilder rightFuzzyAnalysisDeadline (List<String> rightFuzzyAnalysisDeadline){
+            this.rightFuzzyAnalysisDeadline = rightFuzzyAnalysisDeadline;
+            return this;
+        }
+
+        public ConditionBuilder rightFuzzyAnalysisDeadline (String ... rightFuzzyAnalysisDeadline){
+            this.rightFuzzyAnalysisDeadline = solveNullList(rightFuzzyAnalysisDeadline);
+            return this;
+        }
+
+        public ConditionBuilder analysisDeadlineList(String ... analysisDeadline){
+            this.analysisDeadlineList = solveNullList(analysisDeadline);
+            return this;
+        }
+
+        public ConditionBuilder analysisDeadlineList(List<String> analysisDeadline){
+            this.analysisDeadlineList = analysisDeadline;
+            return this;
+        }
+
+        public ConditionBuilder fuzzyAnalysisRequirement (List<String> fuzzyAnalysisRequirement){
+            this.fuzzyAnalysisRequirement = fuzzyAnalysisRequirement;
+            return this;
+        }
+
+        public ConditionBuilder fuzzyAnalysisRequirement (String ... fuzzyAnalysisRequirement){
+            this.fuzzyAnalysisRequirement = solveNullList(fuzzyAnalysisRequirement);
+            return this;
+        }
+
+        public ConditionBuilder rightFuzzyAnalysisRequirement (List<String> rightFuzzyAnalysisRequirement){
+            this.rightFuzzyAnalysisRequirement = rightFuzzyAnalysisRequirement;
+            return this;
+        }
+
+        public ConditionBuilder rightFuzzyAnalysisRequirement (String ... rightFuzzyAnalysisRequirement){
+            this.rightFuzzyAnalysisRequirement = solveNullList(rightFuzzyAnalysisRequirement);
+            return this;
+        }
+
+        public ConditionBuilder analysisRequirementList(String ... analysisRequirement){
+            this.analysisRequirementList = solveNullList(analysisRequirement);
+            return this;
+        }
+
+        public ConditionBuilder analysisRequirementList(List<String> analysisRequirement){
+            this.analysisRequirementList = analysisRequirement;
+            return this;
+        }
+
+        public ConditionBuilder fuzzyAppendix (List<String> fuzzyAppendix){
+            this.fuzzyAppendix = fuzzyAppendix;
+            return this;
+        }
+
+        public ConditionBuilder fuzzyAppendix (String ... fuzzyAppendix){
+            this.fuzzyAppendix = solveNullList(fuzzyAppendix);
+            return this;
+        }
+
+        public ConditionBuilder rightFuzzyAppendix (List<String> rightFuzzyAppendix){
+            this.rightFuzzyAppendix = rightFuzzyAppendix;
+            return this;
+        }
+
+        public ConditionBuilder rightFuzzyAppendix (String ... rightFuzzyAppendix){
+            this.rightFuzzyAppendix = solveNullList(rightFuzzyAppendix);
+            return this;
+        }
+
+        public ConditionBuilder appendixList(String ... appendix){
+            this.appendixList = solveNullList(appendix);
+            return this;
+        }
+
+        public ConditionBuilder appendixList(List<String> appendix){
+            this.appendixList = appendix;
+            return this;
+        }
+
         private <T>List<T> solveNullList(T ... objs){
             if (objs != null){
             List<T> list = new ArrayList<>();
@@ -2194,7 +2854,7 @@ public class MqmsFailureTrack implements Serializable {
             this.obj.setVoucherCode(voucherCode);
             return this;
         }
-        public Builder saoId(Integer saoId){
+        public Builder saoId(Long saoId){
             this.obj.setSaoId(saoId);
             return this;
         }
@@ -2250,6 +2910,10 @@ public class MqmsFailureTrack implements Serializable {
             this.obj.setFailureReappearSymbol(failureReappearSymbol);
             return this;
         }
+        public Builder reloadDate(String reloadDate){
+            this.obj.setReloadDate(reloadDate);
+            return this;
+        }
         public Builder failureReappearDate(String failureReappearDate){
             this.obj.setFailureReappearDate(failureReappearDate);
             return this;
@@ -2260,6 +2924,26 @@ public class MqmsFailureTrack implements Serializable {
         }
         public Builder failureReappearResult(String failureReappearResult){
             this.obj.setFailureReappearResult(failureReappearResult);
+            return this;
+        }
+        public Builder appearance(String appearance){
+            this.obj.setAppearance(appearance);
+            return this;
+        }
+        public Builder analysisDepartments(String analysisDepartments){
+            this.obj.setAnalysisDepartments(analysisDepartments);
+            return this;
+        }
+        public Builder analysisDeadline(String analysisDeadline){
+            this.obj.setAnalysisDeadline(analysisDeadline);
+            return this;
+        }
+        public Builder analysisRequirement(String analysisRequirement){
+            this.obj.setAnalysisRequirement(analysisRequirement);
+            return this;
+        }
+        public Builder appendix(String appendix){
+            this.obj.setAppendix(appendix);
             return this;
         }
         public MqmsFailureTrack build(){return obj;}

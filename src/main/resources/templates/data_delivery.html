@@ -76,13 +76,16 @@
                 <td>实际返回时间</td><td><input id="deliveryReceivedDate" name="deliveryReceivedDate" class="easyui-datebox"></td>
                 <td>快递单号</td><td><input id="deliveryCode" name="deliveryCode" class="easyui-textbox"></td>
             </tr>
+            <tr>
+                <td><input id="failureTrackIds" name="failureTrackIds" class="easyui-textbox" hidden="hidden"></td>
+            </tr>
             </tbody>
         </table>
     </form>
 </div>
 <div id="failureTrack-dlgbutton">
-    <a href="javascript:saveFailureTrackDlg()" class="easyui-linkbutton">保存</a>
-    <a href="javascript:closeFailureTrackDlg()" class="easyui-linkbutton">关闭</a>
+    <a href="javascript:save_delivery_modify_dlg()" class="easyui-linkbutton">保存</a>
+    <a href="javascript:close_delivery_modify_dlg()" class="easyui-linkbutton">关闭</a>
 </div>
 <script type="text/javascript">
     //初始化全局变量
@@ -202,10 +205,23 @@
             return;
         }
         var voucherCodes=[];
+        var failureTrackIds=[];
         for(var i=0;i<selectedRows.length;i++){
             voucherCodes.push(selectedRows[i].voucher_code);//以列表中的哪个字段为索引
+            failureTrackIds.push(selectedRows[i].failure_track_id)
         }
         var voucherCodeList = voucherCodes.join(",");
+        var failureTrackIdList = failureTrackIds.join(",");
+        $("#voucherCodes").textbox('setValue', voucherCodeList);
+        $("#failureTrackIds").textbox("setValue", failureTrackIdList);
+        $('#deliveryDeadline').datebox('setValue', $('#dg2').datagrid('getSelections')[0].delivery_deadline);
+        var date = new Date();
+        var stryear = date.getFullYear();
+        var strmonth = date.getMonth() + 2;
+        var strday = date.getDate();
+        var strYMD = stryear + '-' + (strmonth.toString().length < 2 ? '0' + strmonth : strmonth) + "-" + strday>9?strday.toString():'0' + strday;
+
+        $('#deliveryReceivedDate').datebox('setValue', strYMD);
         //判断是否可以开启不良追踪，如果已经开启不良追踪，则显示已开启不良追踪
         $('#failureTrack-dlg').dialog("open", true);
     }
@@ -217,7 +233,7 @@
     //保存不良追踪对话框
     function save_delivery_modify_dlg() {
         $('#failureTrackForm').form('submit', {
-            url: "/mqms/failure_track/add",
+            url: "/mqms/failure_track/delivery_confirm",
             onSubmit: function(){
                 var isValid = $(this).form('validate');
                 if (!isValid){
