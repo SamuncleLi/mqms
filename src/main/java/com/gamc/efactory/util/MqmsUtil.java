@@ -47,29 +47,37 @@ public class MqmsUtil {
      */
     public static Map<String, String> getWeekDate(String dateTime) throws java.text.ParseException {
         Map<String, String> map = new HashMap();
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        Date date = sdf.parse(dateTime);
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(date);
-        cal.setFirstDayOfWeek(Calendar.WEDNESDAY);// 设置一个星期的第一天，按中国的习惯一个星期的第一天是星期一
-        int dayWeek = cal.get(Calendar.DAY_OF_WEEK);// 获得当前日期是一个星期的第几天
-        if (dayWeek == 1) {
-            dayWeek = 8;
+        if (dateTime!=null) {
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            Date date =  sdf.parse(dateTime);
+            Calendar cal = Calendar.getInstance();
+            cal.setTime(date);
+            cal.setFirstDayOfWeek(Calendar.WEDNESDAY);// 设置一个星期的第一天，按中国的习惯一个星期的第一天是星期一
+            int dayWeek = cal.get(Calendar.DAY_OF_WEEK);// 获得当前日期是一个星期的第几天
+            if (dayWeek == 1) {
+                dayWeek = 8;
+            }
+
+            cal.add(Calendar.DATE, cal.getFirstDayOfWeek() - dayWeek);// 根据日历的规则，给当前日期减去星期几与一个星期第一天的差值
+            Date mondayDate = cal.getTime();
+            String weekBegin = sdf.format(mondayDate);
+
+
+            cal.add(Calendar.DATE, 4 + cal.getFirstDayOfWeek());
+            Date sundayDate = cal.getTime();
+            String weekEnd = sdf.format(sundayDate);
+
+
+            map.put("wednesdayDate", weekBegin);
+            map.put("ThursdayDate", weekEnd);
+            return map;
+        }
+        else{
+            map.put("wednesdayDate", "");
+            map.put("ThursdayDate", "");
+            return map;
         }
 
-        cal.add(Calendar.DATE, cal.getFirstDayOfWeek() - dayWeek);// 根据日历的规则，给当前日期减去星期几与一个星期第一天的差值
-        Date mondayDate = cal.getTime();
-        String weekBegin = sdf.format(mondayDate);
-
-
-        cal.add(Calendar.DATE, 4 + cal.getFirstDayOfWeek());
-        Date sundayDate = cal.getTime();
-        String weekEnd = sdf.format(sundayDate);
-
-
-        map.put("wednesdayDate", weekBegin);
-        map.put("ThursdayDate", weekEnd);
-        return map;
     }
 
     /**

@@ -1,24 +1,60 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:border-collapse="http://java.sun.com/xml/ns/persistence/orm">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <title>销售点解码表</title>
     <link rel="stylesheet" type="text/css" href="${req.contextPath}/static/plugin/jquery-easyui-1.5.5.4/themes/bootstrap/easyui.css">
     <link rel="stylesheet" type="text/css" href="${req.contextPath}/static/plugin/jquery-easyui-1.5.5.4/themes/icon.css">
+    <link rel="stylesheet" href="${req.contextPath}/static/css/decode.css" type="text/css"/>
     <script type="text/javascript" src="${req.contextPath}/static/plugin/jquery-easyui-1.5.5.4/jquery.min.js"></script>
     <script type="text/javascript" src="${req.contextPath}/static/plugin/jquery-easyui-1.5.5.4/jquery.easyui.min.js"></script>
     <script type="text/javascript" src="${req.contextPath}/static/plugin/jquery-easyui-1.5.5.4/locale/easyui-lang-zh_CN.js"></script>
     <style type="text/css">
         html { overflow-y:hidden; }
-        td{
-            padding: 5px;
-        }
-        .easyui-textbox{
-            width: 135px;
-        }
+        /*td{*/
+            /*padding: 5px;*/
+        /*}*/
         .easyui-combobox{
-            width: 135px;
+            width: 125px;
         }
+        .team3f-table tr{
+            text-align:center;
+            font-size: 12px;
+            color: #000000;
+            line-height:30px;
+            width: 100%;
+        }
+        .team3f-table td:last-child{
+            border-bottom: 1px solid #d0d0d0;
+            border-right: 0px solid #d0d0d0;
+        }
+        .team3f-table td{
+            border-bottom: 1px solid #d0d0d0;
+            border-right: 1px solid #d0d0d0;
+            line-height:50px;
+            overflow: auto;
+            white-space:normal;
+            word-break:break-all;
+            word-wrap:break-word;
+        }
+        .team3f-table td:nth-child(2n+1){
+            width: 15%;
+            font-weight:bold;
+        }
+        .team3f-table td:nth-child(2n){
+            width: 18.3%;
+        }
+        .team3f-table input.easyui-textbox{
+            vertical-align: middle;
+            text-align: center;
+            word-wrap: break-word;
+            word-break: break-all;
+            margin: 0;
+            padding: 0;
+
+        }
+        .datagrid-header-row td{background-color:lightblue;color:#0A0A0A}
+        easyui-
     </style>
     <script type="text/javascript">
         var system = "mqms";
@@ -34,27 +70,278 @@
             })
 
         })
+        function reviseDecodeInfor() {
+            var selectedRows = $('#vinDecode').datagrid('getSelections');
+            if(selectedRows.length==0){
+                $.messager.alert("系统提示","请选择一行");
+                return;
+            }
+            else if (selectedRows.length>1){
+                $.messager.alert("系统提示","请选择一行");
+                return;
+            }
+
+            var data;
+            for(var i=0;i<selectedRows.length;i++) {
+                data=selectedRows[i];
+                console.log(data);
+            }
+            setFromValues($('#selectionInfor'),data);
+            $('#reviseInfor').dialog("open", true);
+        }
+        //        同列名自动复制
+        function setFromValues(el, data)
+        {
+            for (var p in data)
+            {
+                //easyui-textbox赋值需要指定id
+                el.find(":input[id='" + p + "']").textbox('setValue',data[p]);
+            }
+        }
+        //清空表单信息
+        function clearForm(){
+            // $('#selectionInfor').form('clear');
+            //input框清空
+//            var div = document.getElementById(id);
+            var doms = $('input').not(':button,.noClear');
+            for(var i=0,len=doms.length;i<len;i++){
+                var name = $(doms[i]).attr('name');
+                if(typeof(name) !='undefined' && name !=null && name != '' && name !='fillname' && name != 'fillorgid'){
+                    var theClass = $(doms[i]).attr('class');
+                    var type = $(doms[i]).attr('type');
+                    if(type == 'radio'){//单选框
+                        $(doms[i]).prop('checked',false);
+                    }else if(typeof(theClass) =='undefined' ||  theClass.indexOf('easyui-validatebox') != -1){//验证框或者没class属性值的
+                        $(doms[i]).val(null);
+                    }else if(theClass.indexOf('textbox-value') != -1){
+                        var domx = $(doms[i]).closest('span').prev();
+                        var theClass1 = domx.attr('class');
+                        if(typeof(theClass1) !='undefined'){
+                            if(theClass1.indexOf('easyui-textbox') != -1){
+                                domx.textbox('setValue',null);
+                            }else if(theClass1.indexOf('easyui-combotree') != -1){
+                                domx.combotree('setValue',null);
+                            }else if(theClass1.indexOf('easyui-datebox') != -1){
+                                domx.datebox('setValue',null)
+                            }else if(theClass1.indexOf('easyui-combobox') != -1){
+                                domx.combobox('setValue',null);
+                            }else if(theClass1.indexOf('') != -1){
+
+                            }else if(theClass1.indexOf('') != -1){
+
+                            }
+                        }else{
+                            debugger;
+                            domx.combotree('setValue',null);
+                        }
+
+                    }
+                }
+            }
+////附件清空
+//            $('div[name=divflag]').children().remove();
+        }
+
+        function cancelDialog() {
+            $('#reviseInfor').dialog("close", true);
+        }
+        function  saveInfor() {
+            $('#selectionInfor').form("submit",{
+                type: 'post',
+                url: '/mqms/decode/vinRevise',
+                onSubmit : function() {
+                    //表单验证
+                    return $(this).form("validate");
+                },
+                success : function(data) {
+                    if (data == '数据操作成功') {
+                        $.messager.alert("系统提示",'操作已成功');
+                        //关闭DIALOG并刷新页面
+                        cancelDialog();
+                        clearForm();
+                        $("#vinDecode").datagrid('reload');
+
+                    } else {
+                        $.messager.alert("系统提示",'操作失败,请重新提交');
+                    }
+
+                }
+            });
+        }
+        function  addDecodeInfor() {
+
+            $('#id').textbox('setValue','(默认值)');
+            $('#reviseInfor').dialog("open", true);
+
+        }
+        function deleteDecodeInfor() {
+            var selectedRows = $('#vinDecode').datagrid('getSelections');
+            if (selectedRows.length == 0) {
+                $.messager.alert("系统提示", "请选择至少一行");
+                return;
+            }
+            var data = [];
+            for (var i = 0; i < selectedRows.length; i++) {
+                data.push(selectedRows[i]['id']);
+            }
+            $.messager.confirm('确认', "您已选择删除" + selectedRows.length + "行，确定要执行吗？", function (r) {
+                if (r) {
+                    $.ajax({
+                        type: 'post',
+                        url: '/mqms/decode/vinDelete',
+                        data: {ids: data},
+                        traditional: true,
+                        success: function (data) {
+                            if (data == '数据删除成功') {
+                                $.messager.alert("系统提示", '操作已成功');
+                                //关闭DIALOG并刷新页面
+                                cancelDialog();
+                                $("#vinDecode").datagrid('reload');
+                            } else {
+                                $.messager.alert("系统提示", '操作失败,请重新提交');
+                            }
+
+                        }
+                    });
+                }
+            })
+        }
+        //信息查询
+        function querryDecodeInfor() {
+            //前端过滤，暂时不玩，后面再说
+//            var dg = $('#salesPointDecode');
+//            dg.datagrid('enableFilter');
+            var vinShortCode=document.getElementById("vinShortCode");
+            var vinSimCode=document.getElementById("vinSimCode");
+            var vinEngType=document.getElementById("vinEngType");
+            var vinSeries=document.getElementById("vinSeries");
+            var vinEngShortCode=document.getElementById("vinEngShortCode");
+            var vinTransmShortCode=document.getElementById("vinTransmShortCode");
+            var vinCarShortCode=document.getElementById("vinCarShortCode");
+            var vinCarType=document.getElementById("vinCarType");
+            var vinTransmType=document.getElementById("vinTransmType");
+            $.ajax({
+                type: 'post',
+                url: "/" + system + "/" + module +"/vinInfor",
+                data: {
+                    "vinShortCode":vinShortCode.value,
+                    "vinSimCode":vinSimCode.value,
+                    "vinEngType":vinEngType.value,
+                    "vinSeries":vinSeries.value,
+                    "vinEngShortCode":vinEngShortCode.value,
+                    "vinTransmShortCode":vinTransmShortCode.value,
+                    "vinCarShortCode":vinCarShortCode.value,
+                    "vinCarType":vinCarType.value,
+                    "vinTransmType":vinTransmType.value
+                },
+                traditional:true,
+                async : true, //异步
+                success : function(data) {
+                    $("#vinDecode").datagrid('loadData',data);
+                }
+            })
+        }
+        //table刷新
+        function refreshDecodeInfor() {
+
+            $("#vinDecode").datagrid('reload');
+        }
     </script>
 </head>
 <body style="overflow-y: hidden">
 
-<table id="vinDecode" title="VIN解码" class="easyui-datagrid" fitColumns="false"
-       pagination="true" rownumbers="true" fit="true" toolbar="#tb" method="GET">
+
+<table id="vinDecode" title="VIN解码" class="easyui-datagrid" fitColumns="false" data-options="collapsible:true"
+       pagination="true" rownumbers="true" fit="true" toolbar="#tb2" method="GET" style="width:100%;height:100%">
     <thead>
     <tr>
         <th field="id" align="center">ID</th>
-        <th field="vin_short_code" align="center">短码</th>
-        <th field="vin_sim_code" align="center">简码</th>
+        <th field="vin_short_code" align="center">车型短码</th>
+        <th field="vin_sim_code" align="center">车型代码</th>
         <th field="vin_eng_type" align="center">机型</th>
         <th field="vin_series" align="center">系列号</th>
         <th field="vin_eng_short_code" align="center">机型简码</th>
-        <th field="vin_transm_short_code" align="center">简码</th>
+        <th field="vin_transm_short_code" align="center">变箱简码</th>
         <th field="vin_car_short_code" align="center">车型简码</th>
         <th field="vin_car_type" align="center">车型</th>
-        <th field="vin_transm_type" align="center">变速箱类型</th>
+        <th field="vin_transm_type" align="center">变箱类型</th>
     </tr>
     </thead>
 </table>
+<div id="tb2" class="select-area">
+    <div id="searchItems">
+
+        <label>车型短码</label><input id="vinShortCode" class="easyui-combobox">
+        <label>车型代码</label><input id="vinSimCode" class="easyui-combobox" >
+        <label>机型</label><input id="vinEngType" class="easyui-combobox">
+        <label>系列号</label><input id="vinSeries" class="easyui-combobox">
+        <label>机型简码</label><input id="vinEngShortCode" class="easyui-combobox">
+        <label>变箱简码</label><input id="vinTransmShortCode" class="easyui-combobox">
+        <label>车型简码</label><input id="vinCarShortCode" class="easyui-combobox">
+        <label>车型</label><input id="vinCarType" class="easyui-combobox" >
+        <br>
+        <label>变箱类型</label><input id="vinTransmType" class="easyui-combobox">
+    </div>
+    <div>
+        <a href="javascript:addDecodeInfor()" class="easyui-linkbutton" iconCls="icon-add" plain="true">增加</a>
+        <a href="javascript:deleteDecodeInfor()" class="easyui-linkbutton" iconCls="icon-remove" plain="true" >删除</a>
+        <a href="javascript:reviseDecodeInfor()" class="easyui-linkbutton" iconCls="icon-edit" plain="true" >修改</a>
+        <a href="javascript:querryDecodeInfor()" class="easyui-linkbutton" iconCls="icon-save" plain="true" >查询</a>
+        <a href="javascript:refreshDecodeInfor()" class="easyui-linkbutton" iconCls="icon-reload" plain="true" >刷新</a>
+    </div>
+</div>
+<div id="reviseInfor" title="VIN信息修改" class="easyui-dialog" closed="true" data-options="buttons:'#bb',modal:true">
+    <form id="selectionInfor">
+        <!--<fieldset>-->
+        <!--<p><label>ID:</label><input id="idReadOnly" name="id" style="width:50px;" readonly="true" ></p>-->
+        <!--<p><label>车型短码:</label><input name="vin_short_code" style="width:200px;" ></p>-->
+        <!--<p><label>车型代码:</label><input name="vin_sim_code"  style="width:200px;"  ></p>-->
+        <!--<p><label>机码:</label><input name="vin_eng_type"  style="width:200px;" ></p>-->
+        <!--<p><label>系列号: </label><input name="vin_series" style="width:200px;" ></p>-->
+        <!--<p><label>机型简码:</label><input name="vin_eng_short_code"  style="width:200px;"  ></p>-->
+        <!--<p><label>变箱简码:</label><input name="vin_transm_short_code"  style="width:200px;"  ></p>-->
+        <!--<p><label>车型简码:</label><input name="vin_car_short_code" style="width:200px;" ></p>-->
+        <!--<p><label>车型:   </label><input name="vin_car_type"  style="width:200px;"  ></p>-->
+        <!--<p><label>变箱类型:</label><input name="vin_transm_type"  style="width:200px;"  ></p>-->
+        <!--</fieldset>-->
+        <table  class="team3f-table" >
+            <tbody >
+            <tr>
+                <td>ID</td><td><input id="id" name="id" class="easyui-textbox" readonly="true" ></td>
+                <td>车型短码</td><td><input id="vin_short_code"  name="vin_short_code" class="easyui-textbox"></td>
+
+
+                <td>车型代码</td><td><input id="vin_sim_code" name="vin_sim_code" class="easyui-textbox"></td>
+            </tr>
+            <tr>
+                <td>机型</td><td><input id="vin_eng_type" name="vin_eng_type" class="easyui-textbox"></td>
+
+                <td>系列号</td><td><input id="vin_series" name="vin_series" class="easyui-textbox"></td>
+                <td>机型简码</td><td><input id="vin_eng_short_code" name="vin_eng_short_code" class="easyui-textbox"></td>
+            </tr>
+            <tr>
+                <td>变箱简码</td><td><input id="vin_transm_short_code" name="vin_transm_short_code" class="easyui-textbox"></td>
+                <td>车型简码</td><td><input id="vin_car_short_code" name="vin_car_short_code" class="easyui-textbox"></td>
+
+                <td>车型</td><td><input id="vin_car_type" name="vin_car_type" class="easyui-textbox"></td>
+            </tr>
+            <tr>
+                <td>变箱类型</td><td><input id="vin_transm_type" name="vin_transm_type" class="easyui-textbox"></td>
+
+            </tr>
+            </tbody>
+        </table>
+    </form>
+    <!--看使用习惯，功能键放在下面还是后面好呢-->
+    <!--<div class="select-area" align="center">-->
+    <!--<a href="javascript:saveInfor()" class="easyui-linkbutton" iconCls="icon-save" plain="true">保存</a>-->
+    <!--<a href="javascript:cancelDialog()" class="easyui-linkbutton" iconCls="icon-cancel" plain="true">取消</a>-->
+    <!--</div>-->
+</div>
+<div id="bb">
+    <a href="javascript:saveInfor()" class="easyui-linkbutton" iconCls="icon-save" plain="true" >保存</a>
+    <a href="javascript:cancelDialog()" class="easyui-linkbutton" iconCls="icon-cancel" plain="true">取消</a>
+</div>
 
 
 </body>

@@ -7,8 +7,8 @@ import javax.servlet.http.HttpSession;
 import java.util.concurrent.ExecutionException;
 
 /**
- * Created by Jian Wang on 2020/1/3.
+ * Created by Zeho Lee on 2020/1/3.
  */
-public interface SalesService {
-    int addLists(String file , HttpServletRequest request) throws ExecutionException, InterruptedException;
+public interface ProductionService20191220 {
+    boolean batchImport(String fileName, MultipartFile file, HttpSession session);
 }

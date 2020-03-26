@@ -6,5 +6,8 @@
         SELECT `tran_manufacture` FROM `mqms_tran_manufactures_decode`
         WHERE  `tran_manufacture_model` = #{tran_manufacture_model}
     </select>
-
+    <delete id="deleteTransManuById"  >
+        DELETE  FROM `mqms_tran_manufactures_decode`
+        WHERE  `id` = #{id}
+    </delete>
 </mapper>

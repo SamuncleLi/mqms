@@ -20,6 +20,7 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * Created by UZI on 2019/12/30.
@@ -71,52 +72,14 @@ public class ImportExcelController {
 //        }
 //        return "数据成功导入";
 //    }
+    /**
+     * VEI数导入
+     */
     @Autowired
     private VeiDataService veiDataService;
     @RequestMapping(value = "/veiData")
-    public String exImportVeiData(@RequestParam()MultipartFile file, HttpSession session) {
+    public String exImportVeiData(@RequestParam("file")MultipartFile multipartFile,HttpServletRequest request) {
 
-        boolean a = false;
-
-        String fileName = file.getOriginalFilename();
-//        User user=(User)session.getAttribute("user");
-//        System.out.println(user.getUserName()+"11111111111111111111111111111111111111111111111");
-        try {
-            a = veiDataService.batchImport(fileName, file, session);
-            return "数据成功导入";
-        } catch (Exception e) {
-            e.printStackTrace();
-            return "数据导入失败";
-        }
-
-    }
-    @Autowired
-    private ProductionService productionService;
-    @RequestMapping(value = "/productionData")
-    public String exImportProductionData(@RequestParam()MultipartFile file, HttpSession session) {
-
-        boolean a = false;
-
-        String fileName = file.getOriginalFilename();
-//       User user=(User)session.getAttribute("user");
-//        System.out.println(user.getUserName()+"111111111111111111111111");
-
-        try {
-            a = productionService.batchImport(fileName, file, session);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return "数据成功导入";
-    }
-
-    /**
-     * test
-     */
-    @Autowired
-    private SalesService salesService;
-//    @PostMapping(value = "/salesData", consumes = "multipart/*", headers = "content-type=multipart/form-data")
-    @RequestMapping(value = "/salesData")
-    public String addBlacklist(@RequestParam("file") MultipartFile multipartFile, HttpServletRequest request) {
         //判断上传内容是否符合要求
         String fileName = multipartFile.getOriginalFilename();
         if (!fileName.matches("^.+\\.(?i)(xls)$") && !fileName.matches("^.+\\.(?i)(xlsx)$")) {
@@ -126,8 +89,8 @@ public class ImportExcelController {
         String files = saveFile(multipartFile, request);
         int result = 0;
         try {
-//            System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
-            result =  salesService.addBlackLists(files,request);
+            result =  veiDataService.addLists(files,request);
+            System.out.println(result+"555555555555555555555555555555555555555555555555555555555");
         } catch (Exception e) {
             e.printStackTrace();
         }finally {
@@ -141,12 +104,85 @@ public class ImportExcelController {
             }
         }
         if(result==1){
-            return "文件上传成功";
-        }
+            return "文件上传成功";}
         else{
-            return "文件上传失败";
-        }
+            return "文件上传失败";}
     }
+
+    /**
+     * 生产数据导入
+     */
+    @Autowired
+    private ProductionService productionService;
+    @RequestMapping(value = "/productionData")
+    public String exImportProductionData(@RequestParam("file")MultipartFile multipartFile,HttpServletRequest request) {
+
+
+            //判断上传内容是否符合要求
+            String fileName = multipartFile.getOriginalFilename();
+            if (!fileName.matches("^.+\\.(?i)(xls)$") && !fileName.matches("^.+\\.(?i)(xlsx)$")) {
+                return "上传的文件格式不正确";
+            }
+
+            String files = saveFile(multipartFile, request);
+            int result = 0;
+            try {
+                result =  productionService.addLists(files,request);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }finally {
+                File file = new File(files);
+                System.gc();
+                boolean delSuccess = file.delete();
+                if(delSuccess){
+                    System.out.println("删除文件成功");
+                }else{
+                    System.out.println("删除文件失败");
+            }
+            }
+            if(result==1){
+                return "文件上传成功";}
+            else{
+                return "文件上传失败";}
+        }
+
+    /**
+     * 销售数据导入
+     */
+    @Autowired
+    private SalesService salesService;
+//    @PostMapping(value = "/salesData", consumes = "multipart/*", headers = "content-type=multipart/form-data")
+    @RequestMapping(value = "/salesData")
+    public String addBlacklist(@RequestParam("file") MultipartFile multipartFile, HttpServletRequest request
+
+        ) {
+            //判断上传内容是否符合要求
+            String fileName = multipartFile.getOriginalFilename();
+            if (!fileName.matches("^.+\\.(?i)(xls)$") && !fileName.matches("^.+\\.(?i)(xlsx)$")) {
+                return "上传的文件格式不正确";
+            }
+
+            String files = saveFile(multipartFile, request);
+            int result = 0;
+            try {
+                result =  salesService.addLists(files,request);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }finally {
+                File file = new File(files);
+                System.gc();
+                boolean delSuccess = file.delete();
+                if(delSuccess){
+                    System.out.println("删除文件成功");
+                }else{
+                    System.out.println("删除文件失败");
+                }
+            }
+            if(result==1){
+                return "文件上传成功";}
+            else{
+                return "文件上传失败";}
+        }
 
 //    public String exImportSalesData(@RequestParam()MultipartFile file, HttpSession session) {
 //
@@ -163,13 +199,21 @@ public class ImportExcelController {
 //        }
 //        return "数据成功导入";
 
+    /**
+     * 复制文件到服务器本地
+     * @param multipartFile
+     * @param request
+     * @return
+     */
         private String saveFile(MultipartFile multipartFile, HttpServletRequest request) {
             String path;
             String fileName = multipartFile.getOriginalFilename();
             // 判断文件类型
             String realPath = request.getSession().getServletContext().getRealPath("/");
-            SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");//设置日期格式
-            String trueFileName = fileName+df.format(new Date());
+            String uuid = UUID.randomUUID().toString();
+//            System.out.println(realPath+"1222222222222222222222222222222222222222222222222222222222222222222222222");
+//            SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");//设置日期格式
+            String trueFileName = fileName+uuid;
             // 设置存放Excel文件的路径
             path = realPath + trueFileName;
             //C:\Users\UZI\AppData\Local\Temp\tomcat-docbase.3729691707234394010.8086\

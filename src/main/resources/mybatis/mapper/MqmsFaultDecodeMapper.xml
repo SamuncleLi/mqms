@@ -6,5 +6,16 @@
         SELECT `fault_symptom_code` FROM `mqms_fault_decode`
         WHERE  `fault_symptom_phoeno` = #{fault_symptom_phoeno}
     </select>
-
+    <delete id="deleteFaultCodeById"  >
+        DELETE  FROM `mqms_fault_decode`
+        WHERE  `id` = #{id}
+    </delete>
+    <select id="searchFaultCodeInfor"  resultType="java.util.HashMap" >
+        SELECT * FROM `mqms_fault_decode`
+        WHERE
+        `fault_part_code`  like concat('%',#{faultPartCode},'%') and
+        `fault_part_name`  like concat('%',#{faultPartName},'%') and
+        `fault_symptom_phoeno`  like concat('%',#{faultSymptomPhoeno},'%') and
+        `fault_symptom_code`  like concat('%',#{faultSymptomCode},'%')
+    </select>
 </mapper>

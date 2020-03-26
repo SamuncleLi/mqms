@@ -10,7 +10,7 @@ import java.util.List;
 */
 public class MqmsProductionRaw implements Serializable {
 
-    private static final long serialVersionUID = 1583227536383L;
+    private static final long serialVersionUID = 1585056845454L;
 
 
     /**
@@ -21,37 +21,37 @@ public class MqmsProductionRaw implements Serializable {
     private Integer productionId;
 
     /**
-    * 
+    * 工厂
     * isNullAble:1
     */
     private String factoryCode;
 
     /**
-    * 
+    * 生产批次
     * isNullAble:1
     */
     private String productionBatch;
 
     /**
-    * 
+    * vin码
     * isNullAble:1
     */
     private String vin;
 
     /**
-    * 
+    * mtoc
     * isNullAble:1
     */
     private String mtoc;
 
     /**
-    * 
+    * 站点
     * isNullAble:1
     */
     private String stationCode;
 
     /**
-    * 
+    * 通过时间
     * isNullAble:1
     */
     private String passTime;
@@ -63,13 +63,13 @@ public class MqmsProductionRaw implements Serializable {
     private String carModelCode;
 
     /**
-    * 
+    * 生产车型名称
     * isNullAble:1
     */
     private String carModelName;
 
     /**
-    * 
+    * 工作日
     * isNullAble:1
     */
     private String productionWorktime;
@@ -81,7 +81,7 @@ public class MqmsProductionRaw implements Serializable {
     private String egtypeCode;
 
     /**
-    * 
+    * 变速箱号
     * isNullAble:1
     */
     private String transmissionCode;
@@ -99,31 +99,31 @@ public class MqmsProductionRaw implements Serializable {
     private String period;
 
     /**
-    * 
+    * 车辆类型
     * isNullAble:1
     */
     private String carType;
 
     /**
-    * 
+    * 出口国家
     * isNullAble:1
     */
     private String exportCountry;
 
     /**
-    * 
+    * UserID
     * isNullAble:1
     */
     private Integer applierId;
 
     /**
-    * 
+    * 上传人
     * isNullAble:1
     */
     private String applierName;
 
     /**
-    * 
+    * 上传时间
     * isNullAble:1
     */
     private String applyTime;

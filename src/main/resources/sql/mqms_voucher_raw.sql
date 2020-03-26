@@ -46,7 +46,7 @@ CREATE TABLE `mqms_voucher_raw` (
   `shop_arrival_date` varchar(255) DEFAULT NULL COMMENT '车辆到店时间',
   `sales_failure_time` int(11) DEFAULT NULL COMMENT '销售至故障经过月',
   `failure_desc` varchar(255) DEFAULT NULL COMMENT '故障描述',
-  `diagnostic_result` varchar(255) DEFAULT NULL COMMENT '诊断过程',
+  `diagnostic_result` varchar(2000) DEFAULT NULL COMMENT '诊断过程',
   `man_cost` decimal(65,2) DEFAULT NULL COMMENT '工时金额',
   `material_cost` decimal(65,2) DEFAULT NULL COMMENT '配件金额',
   `material_management_cost` decimal(65,2) DEFAULT NULL COMMENT '配件管理费用',
@@ -60,9 +60,12 @@ CREATE TABLE `mqms_voucher_raw` (
   `submit_date` varchar(255) DEFAULT NULL COMMENT '提交时间',
   `egtype_code` varchar(255) DEFAULT NULL COMMENT '发动机号',
   `transmission_code` varchar(255) DEFAULT NULL COMMENT '变速箱号',
+  `eng_arrange` varchar(255) DEFAULT NULL COMMENT 'eng整理（故障分类）',
   `applier_id` int(11) DEFAULT NULL,
   `applier_name` varchar(255) DEFAULT NULL,
   `apply_time` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`voucher_id`),
   UNIQUE KEY `voucher_code` (`voucher_code`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=880 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
+
+

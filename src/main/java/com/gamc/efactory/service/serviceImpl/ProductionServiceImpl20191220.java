@@ -3,7 +3,7 @@ package com.gamc.efactory.service.serviceImpl;
 import com.gamc.efactory.dao.*;
 import com.gamc.efactory.model.dataObject.*;
 import com.gamc.efactory.service.ProductionService;
-import com.gamc.efactory.util.BigExcelReader;
+import com.gamc.efactory.service.ProductionService20191220;
 import com.gamc.efactory.util.ExcelUtil;
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
 import org.slf4j.Logger;
@@ -11,10 +11,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.lang.reflect.Field;
 import java.math.BigDecimal;
@@ -26,10 +24,7 @@ import java.util.concurrent.*;
  * Created by Jian Wang on 2020/1/5.
  */
 @Service
-public class ProductionServiceImpl implements ProductionService {
-
-    private ThreadFactory threadFactory = new ThreadFactoryBuilder().setNameFormat("sendEmailImmediately-pool-%d").build();
-    private ExecutorService executorService = new ThreadPoolExecutor(16, 24, 1000, TimeUnit.MILLISECONDS, new SynchronousQueue<Runnable>(), threadFactory, new ThreadPoolExecutor.AbortPolicy());
+public class ProductionServiceImpl20191220 implements ProductionService20191220 {
     @Autowired
     private MqmsProductionRawMapper mqmsProductionRawMapper;
     @Autowired
@@ -46,7 +41,7 @@ public class ProductionServiceImpl implements ProductionService {
     private MqmsFaultDecodeMapper mqmsFaultDecodeMapper;
     @Autowired
     private MqmsSalesMapper mqmsSalesMapper;
-    Logger logger = LoggerFactory.getLogger(ProductionServiceImpl.class);
+    Logger logger = LoggerFactory.getLogger(ProductionServiceImpl20191220.class);
     private class ImportCall implements Runnable {
         //构造函数传递参数
         private List<MqmsProduction> mqmsProductionList;
@@ -65,37 +60,20 @@ public class ProductionServiceImpl implements ProductionService {
                 //地域
 
                 //机型
-                MqmsVinDecode mqmsVinDecode = mqmsVinDecodeMapper.vinDecode(vinShortCOde);
-                if (mqmsVinDecode.getVinEngType()!=null) {
-                    mqmsProductionRecord.setEngType(mqmsVinDecode.getVinEngType());
-                }
-                else {
-                    mqmsProductionRecord.setEngType("");
-                }
+                MqmsVinDecode mqmsVinDecode;
+                mqmsVinDecode = mqmsVinDecodeMapper.vinDecode(vinShortCOde);
+                mqmsProductionRecord.setEngType(mqmsVinDecode.getVinEngType());
                 //系列
-                if (mqmsVinDecode.getVinSeries()!=null) {
-                    mqmsProductionRecord.setSerialCode(mqmsVinDecode.getVinSeries());
-                }
+                mqmsProductionRecord.setSerialCode(mqmsVinDecode.getVinSeries());
                 //车型简码
                 mqmsProductionRecord.setCarShortCode(vinShortCOde.substring(3, 5));
                 //车型
-                if (mqmsVinDecode.getVinCarType()!=null) {
-                    mqmsProductionRecord.setCarModel(mqmsVinDecode.getVinCarType());
-                }
-                else{
-                    mqmsProductionRecord.setCarModel("");
-
-                }
+                mqmsProductionRecord.setCarModel(mqmsVinDecode.getVinCarType());
                 //内部车型代号
-                if(mqmsVinDecode.getVinCarType()!=null) {
-                    mqmsProductionRecord.setCarSimpleCode(mqmsVinDecode.getVinCarType());
-                }
-                else{
-                    mqmsProductionRecord.setCarSimpleCode("");
-                }
+                mqmsProductionRecord.setCarSimpleCode(mqmsVinDecode.getVinCarType());
                 //销售年/月
 
-                if (mqmsSalesMapper.selectVinCodeCount(mqmsProductionRecord.getVin())!= 0) {
+                if (mqmsSalesMapper.selectVinCodeCount(mqmsProductionRecord.getVin()) != 0) {
                     MqmsSales mqmsSales = mqmsSalesMapper.selectByVinCode(mqmsProductionRecord.getVin());
                     mqmsProductionRecord.setProductionYear(mqmsSales.getSalesYear());
                     mqmsProductionRecord.setProductionMonth(mqmsSales.getSalesMonth());
@@ -110,6 +88,7 @@ public class ProductionServiceImpl implements ProductionService {
                 mqmsProductionRecord.setTransmissionShortCode(mqmsProductionRecord.getVin().substring(6, 7));
                 //变速箱简码
                 String trsmCode = mqmsProductionRecord.getTransmissionCode().replace("+", "");
+
                 String trsmType = trsmCode.substring(0, 5);
                 mqmsProductionRecord.setTransmissionSimpleCode(trsmType);
                 //变速箱类型
@@ -127,70 +106,34 @@ public class ProductionServiceImpl implements ProductionService {
         }
     }
 
-    @Transactional
-    public int addLists(String file, HttpServletRequest request) throws ExecutionException, InterruptedException {
+    public boolean batchImport(String fileName, MultipartFile file, HttpSession session) {
         try {
-            BigExcelReader bigExcelReader = new BigExcelReader(file) {
-                @Override
-                public void outputAllRow(List<String[]> lists) throws IllegalAccessException {
-
-
-                    List<List<Object>> lists1 = new LinkedList<>();
-                    //执行保存
-                    for (String[] row : lists) {
-                        Map<String, Object> map = new HashMap<String, Object>();
-                        //map.put("", row);
-                        List<Object> list2 = new ArrayList<>();
-//                        System.out.print("[");
-                        for (String cell : row) {
-//                            System.out.print(cell+",");
-                            list2.add(cell);
-                        }
-                        lists1.add(list2);
-                        //list2= new ArrayList<Object>();
-//                        System.out.println("]");
-                    }
-                    saveAll(lists1, request);
-                }
-            };
-            // 执行解析
-            bigExcelReader.parse();
-            //File files = new File(file);
-//            System.out.println("0000000000000000000000000000000000000000000000");
-
-
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-        return 1;
-    }
-    private void saveAll(List<List<Object>> lists, HttpServletRequest request) throws IllegalAccessException {
-        try {
-            if (lists.size() > 0) {
-
-//            System.out.println(lists.size());
+            if (fileName.endsWith(".xlsx")) {
                 List<MqmsProductionRaw> mqmsProductionRawList = new ArrayList<>();
                 List<MqmsProduction> mqmsProductionList = new ArrayList<>();
+                User user=(User)session.getAttribute("user");
                 SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
-                User user = (User) request.getSession().getAttribute("user");
-                for (int i = 1; i < lists.size(); i++) {
-//                System.out.println("222222222222222222222222222");
-                    List<Object> rowData = lists.get(i);
+                // 说明是xlsx文件,不过这里最好限制一下
+                List<List<String>> result = ExcelUtil.importXlsx(file.getInputStream());
+                //第0行为表头
+                for (int i = 1; i < result.size(); i++) {
+                    List<String> rowData = result.get(i);
+
                     //利用反射遍历对属性赋值
                     MqmsProductionRaw mqmsProductionRaw = new MqmsProductionRaw();
                     Class cls = mqmsProductionRaw.getClass();
                     Field[] fields = cls.getDeclaredFields();
-                    for (int j = 2; j < fields.length - 3; j++) {
+                    for (int j = 2; j < fields.length-3; j++) {
                         Field f = fields[j];
                         f.setAccessible(true);
                         if (f.getType().equals(String.class)) {
                             f.set(mqmsProductionRaw, rowData.get(j - 2));
                         } else if (f.getType().equals(BigDecimal.class)) {
 
-                            f.set(mqmsProductionRaw, new BigDecimal(rowData.get(j - 2).toString()));
+                            f.set(mqmsProductionRaw, new BigDecimal(rowData.get(j - 2)));
                         } else if (f.getType().equals(Integer.class)) {
                             //来自前面的坑，EXCEL导出整数变成字符多了小数点，例2838(Int),2838.0(String
-                            String str = rowData.get(j - 2).toString();
+                            String str = rowData.get(j - 2);
                             if (str.contains(".")) {
                                 int indexOf = str.indexOf(".");
                                 str = str.substring(0, indexOf);
@@ -215,11 +158,6 @@ public class ProductionServiceImpl implements ProductionService {
                     mqmsProductionList.add(mqmsProduction);
 
                 }
-
-                ImportCall importCall = new ImportCall();
-                executorService.execute(importCall);
-                //构造函数传参
-                importCall.setMqmsProductionList(mqmsProductionList);
                 for (MqmsProductionRaw mqmsProductionRawRecord : mqmsProductionRawList) {
                     String vin = mqmsProductionRawRecord.getVin();
                     int cnt = mqmsProductionRawMapper.selectByVin(vin);
@@ -231,11 +169,19 @@ public class ProductionServiceImpl implements ProductionService {
 //                        System.out.println(" 更新 " + mqmsProductionRawRecord);
                     }
                 }
+                ThreadFactory threadFactory = new ThreadFactoryBuilder().setNameFormat("sendEmailImmediately-pool-%d").build();
+                ExecutorService executorService = new ThreadPoolExecutor(2, 4, 1000, TimeUnit.MILLISECONDS, new SynchronousQueue<Runnable>(), threadFactory, new ThreadPoolExecutor.AbortPolicy());
+                //使用线程池
+                ImportCall importCall = new ImportCall();
+                executorService.execute(importCall);
+                //构造函数传参
+                importCall.setMqmsProductionList(mqmsProductionList);
 
             }
+            return true;
         } catch (Exception e) {
             e.printStackTrace();
-
+            return false;
         }
 
     }

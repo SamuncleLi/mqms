@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>单机型市场品质数据</title>
+    <title>变速箱单台市场品质数据</title>
     <link rel="stylesheet" type="text/css" href="${req.contextPath}/static/css/charts_eng_single_analysis.css">
     <link rel="stylesheet" type="text/css" href="${req.contextPath}/static/plugin/jquery-easyui-1.5.5.4/themes/gray/easyui.css">
     <link rel="stylesheet" type="text/css" href="${req.contextPath}/static/plugin/jquery-easyui-1.5.5.4/themes/icon.css">
@@ -15,7 +15,7 @@
 <div title="选择区" data-options="region:'north',split:false,border:false" class="select-area">
     <label for="yearAndMonth">起始月份</label><input id="yearAndMonth" class="easyui-datebox">
     <label for="timeSpan">时间跨度/月</label><input id="timeSpan" class="easyui-numberspinner" value="12">
-    <label for="engType">机型</label><input id="engType" class="easyui-combobox liselectoptions">
+    <label for="transType">机型</label><input id="transType" class="easyui-combobox liselectoptions">
     <a id="asy" href="javascript:analysis()" class="easyui-linkbutton" data-options="iconCls:'icon-search'">分析</a>
 </div>
 
@@ -37,10 +37,10 @@
     //初始化选择区域
     $(function () {
         //多选框
-        $('#engType').combobox({
-            url:'/mqms/engType/listInArray',
-            textField:'engType',
-            valueField:'engType',
+        $('#transType').combobox({
+            url:'/mqms/transType/listInArray',
+            textField:'transType',
+            valueField:'transType',
         })
 
         //年月选择控件
@@ -141,8 +141,9 @@
     })
 
     function analysis() {
+        //不知道怎么细分
         $.ajax({
-            url:'/mqms/charts/eng/tranPie?engType=' + $('#engType').combobox('getValue'),
+            url:'/mqms/charts/eng/tranPie?transType=' + $('#transType').combobox('getValue'),
             success:function (result) {
                 var option_1 = {
                     title: {
@@ -189,9 +190,9 @@
             }
         })
 
-
+//
         $.ajax({
-            url: '/mqms/charts/eng/salesFailureTime?engType=' + $('#engType').combobox('getValue') + "&yearAndMonth=" + $('#yearAndMonth').datebox('getValue'),
+            url: '/mqms/charts/trans/salesFailureTime?transType=' + $('#transType').combobox('getValue') + "&yearAndMonth=" + $('#yearAndMonth').datebox('getValue'),
             success: function (result) {
                 var option_2 = {
                     title: {
@@ -246,8 +247,8 @@
 
 
         $.ajax({
-            url:"/mqms/charts/engineFailureRateMutil?yearAndMonth=" + $('#yearAndMonth').datebox('getValue') + "&timeSpan=" + $('#timeSpan').numberspinner('getValue') + "&engType="+ $('#engType').combobox('getValue'),
-            success:function (result) {
+            url: "/mqms/charts/transFailureRateMutil?yearAndMonth=" + $('#yearAndMonth').datebox('getValue') + "&timeSpan=" + $('#timeSpan').numberspinner('getValue') + "&transType=" + $('#transType').combobox('getValue'),
+            success: function (result) {
 //        var condition = $("#condition").combobox("getValues");
                 var condition = ['6个月', '12个月', '24个月', '36个月']
 
@@ -286,12 +287,13 @@
                     series: series
                 };
 
+
                 charts_3.setOption(option_3)
             }
         })
 
         $.ajax({
-            url: '/mqms/charts/eng/failureTop10?engType=' + $('#engType').combobox('getValue'),
+            url: '/mqms/charts/trans/failureTop10?transType=' + $('#transType').combobox('getValue'),
             success: function (result) {
                 var option_4 = {
                     title: {
@@ -358,7 +360,7 @@
 
 
         $.ajax({
-            url: '/mqms/charts/eng/reportedFailure?engType=' + $('#engType').combobox('getValue') + "&timeSpan=" + $('#timeSpan').numberspinner('getValue') + "&yearAndMonth=" + $('#yearAndMonth').datebox('getValue'),
+            url: '/mqms/charts/eng/reportedFailure?transType=' + $('#transType').combobox('getValue') + "&timeSpan=" + $('#timeSpan').numberspinner('getValue') + "&yearAndMonth=" + $('#yearAndMonth').datebox('getValue'),
             success: function (result) {
                 var option_5 = {
                     title: {

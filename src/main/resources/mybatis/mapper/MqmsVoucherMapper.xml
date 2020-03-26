@@ -2,9 +2,21 @@
 <!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.gamc.efactory.dao.MqmsVoucherMapper">
-    <select id="selectEngTypeCount"  resultType="java.lang.Integer" >
+    <select id="selectClaimCount"  resultType="java.lang.Integer" >
+    SELECT COUNT(*) FROM `mqms_voucher`
+    WHERE  `eng_type` = #{engType}
+    AND  `confirm_date` &gt;= #{beginData}
+    AND  `confirm_date` &lt;= #{endData}
+    AND  `sales_date` &gt;= #{beginData}
+    AND  `sales_date` &lt;= #{endData}
+</select>
+    <select id="selectTransClaimCount"  resultType="java.lang.Integer" >
         SELECT COUNT(*) FROM `mqms_voucher`
-        WHERE  `eng_type` = #{eng_type} AND  `confirm_date` LIKE  concat(#{confirm_date},'%')
+        WHERE  `tran_type_detail` = #{tranTypeDetail}
+        AND  `confirm_date` &gt;= #{beginData}
+        AND  `confirm_date` &lt;= #{endData}
+        AND  `sales_date` &gt;= #{beginData}
+        AND  `sales_date` &lt;= #{endData}
     </select>
 
     <select id="selectTotalCost"  resultType="java.math.BigDecimal" >
@@ -271,6 +283,23 @@
         number desc
         LIMIT 0,10;
     </select>
+    <select id="transFailureTop10" resultMap="FailureTop10Map" parameterType="MqmsVoucher">
+        SELECT
+        eng_arrange,
+        count(*) as number
+        FROM
+        `mqms_voucher`
+        <trim prefix="where" suffixOverrides="and | or">
+            <if test="engType != null">
+                `tran_type_detail` = #{tranTypeDetail} and
+            </if>
+        </trim>
+        GROUP BY
+        eng_arrange
+        ORDER BY
+        number desc
+        LIMIT 0,10;
+    </select>
 
     <select id="countBetweenYearAndMonth" resultType="java.lang.Integer">
         SELECT count(*) FROM `mqms_voucher`
@@ -281,5 +310,11 @@
         SELECT count(*) FROM `mqms_voucher`
         WHERE
         eng_type = #{eng_type} and `sales_failure_time` &gt;= #{begin} and `sales_failure_time` &lt;= #{end}
-    </select>
+    </select>    <select id="salesTransFailureTimeBetween" resultType="java.lang.Integer">
+    SELECT count(*) FROM `mqms_voucher`
+    WHERE
+    `tran_type_detail` = #{tranTypeDetail} and `sales_failure_time` &gt;= #{begin} and `sales_failure_time` &lt;= #{end}
+</select>
+
+
 </mapper>

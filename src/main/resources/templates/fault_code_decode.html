@@ -8,17 +8,43 @@
     <script type="text/javascript" src="${req.contextPath}/static/plugin/jquery-easyui-1.5.5.4/jquery.min.js"></script>
     <script type="text/javascript" src="${req.contextPath}/static/plugin/jquery-easyui-1.5.5.4/jquery.easyui.min.js"></script>
     <script type="text/javascript" src="${req.contextPath}/static/plugin/jquery-easyui-1.5.5.4/locale/easyui-lang-zh_CN.js"></script>
+    <link rel="stylesheet" href="${req.contextPath}/static/css/decode.css" type="text/css"/>
     <style type="text/css">
         html { overflow-y:hidden; }
-        td{
-            padding: 5px;
-        }
-        .easyui-textbox{
-            width: 135px;
-        }
         .easyui-combobox{
-            width: 135px;
+            width: 125px;
         }
+        .team3f-table tr{
+            text-align:center;
+            font-size: 12px;
+            color: #000000;
+            line-height:30px;
+            width: 100%;
+        }
+        .team3f-table td:last-child{
+            border-bottom: 1px solid #d0d0d0;
+            border-right: 0px solid #d0d0d0;
+        }
+        .team3f-table td{
+            border-bottom: 1px solid #d0d0d0;
+            border-right: 1px solid #d0d0d0;
+            line-height:50px;
+            overflow: auto;
+            white-space:normal;
+            word-break:break-all;
+            word-wrap:break-word;
+        }
+        .team3f-table td:nth-child(2n+1){
+            width: 15%;
+            font-weight:bold;
+        }
+        .team3f-table td:nth-child(2n){
+            width: 18.3%;
+        }
+        .team3f-table .easyui-textbox{
+
+        }
+        .datagrid-header-row td{background-color:lightblue;color:#0A0A0A}
     </style>
     <script type="text/javascript">
         var system = "mqms";
@@ -31,17 +57,173 @@
                 url:"/" + system + "/" + module + "/faultCode",
 //                sortOrder:"ASC",
                 method:"GET",
-
                 title: moduleDesc + "解码"
             })
 
         })
+        function reviseDecodeInfor() {
+            var selectedRows = $('#faultCodeDecode').datagrid('getSelections');
+            if(selectedRows.length==0){
+                $.messager.alert("系统提示","请选择一行");
+                return;
+            }
+            else if (selectedRows.length>1){
+                $.messager.alert("系统提示","请选择一行");
+                return;
+            }
+
+            var data;
+            for(var i=0;i<selectedRows.length;i++) {
+                data=selectedRows[i];
+//                console.log(data);
+            }
+            setFromValues($('#selectionInfor'),data);
+            $('#reviseInfor').dialog("open", true);
+        }
+        //        同列名自动复制
+        function setFromValues(el, data)
+        {
+            for (var p in data)
+            {
+//                el.find(":input[name='" + p + "']").val(data[p]);
+                //easyui-textbox赋值需要指定id
+                el.find(":input[id='" + p + "']").textbox('setValue',data[p]);
+            }
+        }
+        //清空表单信息
+        function clearForm(){
+            // $('#selectionInfor').form('clear');
+            //input框清空
+//            var div = document.getElementById(id);
+            var doms = $('input').not(':button,.noClear');
+            for(var i=0,len=doms.length;i<len;i++){
+                var name = $(doms[i]).attr('name');
+                if(typeof(name) !='undefined' && name !=null && name != '' && name !='fillname' && name != 'fillorgid'){
+                    var theClass = $(doms[i]).attr('class');
+                    var type = $(doms[i]).attr('type');
+                    if(type == 'radio'){//单选框
+                        $(doms[i]).prop('checked',false);
+                    }else if(typeof(theClass) =='undefined' ||  theClass.indexOf('easyui-validatebox') != -1){//验证框或者没class属性值的
+                        $(doms[i]).val(null);
+                    }else if(theClass.indexOf('textbox-value') != -1){
+                        var domx = $(doms[i]).closest('span').prev();
+                        var theClass1 = domx.attr('class');
+                        if(typeof(theClass1) !='undefined'){
+                            if(theClass1.indexOf('easyui-textbox') != -1){
+                                domx.textbox('setValue',null);
+                            }else if(theClass1.indexOf('easyui-combotree') != -1){
+                                domx.combotree('setValue',null);
+                            }else if(theClass1.indexOf('easyui-datebox') != -1){
+                                domx.datebox('setValue',null)
+                            }else if(theClass1.indexOf('easyui-combobox') != -1){
+                                domx.combobox('setValue',null);
+                            }else if(theClass1.indexOf('') != -1){
+
+                            }else if(theClass1.indexOf('') != -1){
+
+                            }
+                        }else{
+                            debugger;
+                            domx.combotree('setValue',null);
+                        }
+
+                    }
+                }
+            }
+////附件清空
+//            $('div[name=divflag]').children().remove();
+        }
+        function cancelDialog() {
+            $('#reviseInfor').dialog("close", true);
+        }
+        function  saveInfor() {
+            $('#selectionInfor').form("submit",{
+                type: 'post',
+                url: '/mqms/decode/faultCodeRevise',
+                onSubmit : function() {
+                    //表单验证
+                    return $(this).form("validate");
+                },
+                success : function(data) {
+                    if (data == '数据操作成功') {
+                        $.messager.alert("系统提示",'操作已成功');
+                        //关闭DIALOG并刷新页面
+                        cancelDialog();
+                        clearForm();
+                        $("#faultCodeDecode").datagrid('reload');
+                    } else {
+                        $.messager.alert("系统提示",'操作失败,请重新提交');
+                    }
+
+                }
+            });
+        }
+        function  addDecodeInfor() {
+            $('#id').textbox('setValue','(默认值)');
+            $('#reviseInfor').dialog("open", true);
+        }
+        function deleteDecodeInfor() {
+            var selectedRows = $('#faultCodeDecode').datagrid('getSelections');
+            if (selectedRows.length == 0) {
+                $.messager.alert("系统提示", "请选择至少一行");
+                return;
+            }
+            var data = [];
+            for (var i = 0; i < selectedRows.length; i++) {
+                data.push(selectedRows[i]['id']);
+            }
+            $.messager.confirm('确认', "您已选择删除" + selectedRows.length + "行，确定要执行吗？", function (r) {
+                if (r) {
+                    $.ajax({
+                        type: 'post',
+                        url: '/mqms/decode/faultCodeDelete',
+                        data: {ids: data},
+                        traditional: true,
+                        success: function (data) {
+                            if (data == '数据删除成功') {
+                                $.messager.alert("系统提示", '操作已成功');
+                                //关闭DIALOG并刷新页面
+                                cancelDialog();
+                                $("#faultCodeDecode").datagrid('reload');
+                            } else {
+                                $.messager.alert("系统提示", '操作失败,请重新提交');
+                            }
+                        }
+                    });
+                }
+            })
+        }
+        //信息查询
+        function querryDecodeInfor() {
+            //前端过滤，暂时不玩，后面再说
+//            var dg = $('#salesPointDecode');
+//            dg.datagrid('enableFilter');
+            var faultPartCode=document.getElementById("faultPartCode");
+            var faultPartName=document.getElementById("faultPartName");
+            var faultSymptomPhoeno=document.getElementById("faultSymptomPhoeno");
+            var faultSymptomCode=document.getElementById("faultSymptomCode");
+            $.ajax({
+                type: 'post',
+                url: "/" + system + "/" + module +"/faultCodeInfor",
+                data: {"faultPartCode":faultPartCode.value,"faultPartName":faultPartName.value,"faultSymptomPhoeno":faultSymptomPhoeno.value,"faultSymptomCode":faultSymptomCode.value},
+                traditional:true,
+                async : true, //异步
+                success : function(data) {
+                    $("#faultCodeDecode").datagrid('loadData',data);
+                }
+            })
+        }
+        //table刷新
+        function refreshDecodeInfor() {
+
+            $("#faultCodeDecode").datagrid('reload');
+        }
     </script>
 </head>
 <body style="overflow-y: hidden">
 
 <table id="faultCodeDecode" title="故障代码解码" class="easyui-datagrid" fitColumns="false"
-       pagination="true" rownumbers="true" fit="true" toolbar="#tb" method="GET">
+       pagination="true" rownumbers="true" fit="true" toolbar="#tb2" method="GET">
     <thead>
     <tr>
         <th field="id" align="center">ID</th>
@@ -52,6 +234,54 @@
     </tr>
     </thead>
 </table>
+<div id="tb2" class="select-area">
+    <div>
+        <label>零件代号</label><input id="faultPartCode" class="easyui-combobox">
+        <label>零件名称</label><input id="faultPartName" class="easyui-combobox" >
+        <label>故障现象</label><input id="faultSymptomPhoeno" class="easyui-combobox">
+        <label>故障代码</label><input id="faultSymptomCode" class="easyui-combobox">
+    </div>
+    <div>
+        <a href="javascript:addDecodeInfor()" class="easyui-linkbutton" iconCls="icon-save" plain="true">增加</a>
+        <a href="javascript:reviseDecodeInfor()" class="easyui-linkbutton" iconCls="icon-save" plain="true" >修改</a>
+        <a href="javascript:deleteDecodeInfor()" class="easyui-linkbutton" iconCls="icon-save" plain="true" >删除</a>
+        <a href="javascript:querryDecodeInfor()" class="easyui-linkbutton" iconCls="icon-save" plain="true" >查询</a>
+        <a href="javascript:refreshDecodeInfor()" class="easyui-linkbutton" iconCls="icon-reload" plain="true" >刷新</a>
+    </div>
+</div>
+<div id="reviseInfor" title="销售点信息修改" class="easyui-dialog" closed="true" data-options="buttons:'#bb',modal:true">
+    <form id="selectionInfor">
+        <!--<label>ID:</label><input id="idReadOnly" name="id" style="width:50px;" readonly="true" >-->
+        <!--<label>零件代号:</label><input name="fault_part_code" style="width:200px;" onkeydown="if(event.keyCode==13)saveInfor()">-->
+        <!--<label>零件名称:</label><input name="fault_part_name"  onkeydown="if(event.keyCode==13)saveInfor()">-->
+        <!--<label>故障现象:</label><input name="fault_symptom_phoeno"  onkeydown="if(event.keyCode==13)saveInfor()">-->
+        <!--<label>故障代码:</label><input name="fault_symptom_code"  onkeydown="if(event.keyCode==13)saveInfor()">-->
+        <!--<a href="javascript:saveInfor()" class="easyui-linkbutton" iconCls="icon-save" plain="true" >保存</a>-->
+        <!--<a href="javascript:cancelDialog()" class="easyui-linkbutton" iconCls="icon-cancel" plain="true">取消</a>-->
+        <table  class="team3f-table" >
+            <tbody >
+            <tr>
+                <td>ID</td><td><input id="id" name="id" class="easyui-textbox" readonly="true" ></td>
+                <td>零件代号</td><td><input id="fault_part_code"  name="fault_part_code" class="easyui-textbox"></td>
+                <td>零件名称</td><td><input id="fault_part_name" name="fault_part_name" class="easyui-textbox"></td>
+            </tr>
+            <tr>
+                <td>故障现象</td><td><input id="fault_symptom_phoeno" name="fault_symptom_phoeno" class="easyui-textbox"></td>
+                <td>故障代码</td><td><input id="fault_symptom_code" name="fault_symptom_code" class="easyui-textbox"></td>
+            </tr>
+            </tbody>
+        </table>
+    </form>
+    <!--看使用习惯，功能键放在下面还是后面好呢-->
+    <!--<div class="select-area" align="center">-->
+    <!--<a href="javascript:saveInfor()" class="easyui-linkbutton" iconCls="icon-save" plain="true">保存</a>-->
+    <!--<a href="javascript:cancelDialog()" class="easyui-linkbutton" iconCls="icon-cancel" plain="true">取消</a>-->
+    <!--</div>-->
+</div>
+<div id="bb">
+    <a href="javascript:saveInfor()" class="easyui-linkbutton" iconCls="icon-save" plain="true" >保存</a>
+    <a href="javascript:cancelDialog()" class="easyui-linkbutton" iconCls="icon-cancel" plain="true">取消</a>
+</div>
 
 
 </body>
