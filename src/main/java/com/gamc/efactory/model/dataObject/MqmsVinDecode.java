@@ -10,7 +10,7 @@ import java.util.List;
 */
 public class MqmsVinDecode implements Serializable {
 
-    private static final long serialVersionUID = 1583047386897L;
+    private static final long serialVersionUID = 1585138536677L;
 
 
     /**
@@ -36,7 +36,7 @@ public class MqmsVinDecode implements Serializable {
     * 机型
     * isNullAble:1
     */
-    private String vinEngType;
+    private String vinEngShortCode;
 
     /**
     * 系列号
@@ -48,7 +48,7 @@ public class MqmsVinDecode implements Serializable {
     * 机型简码
     * isNullAble:1
     */
-    private String vinEngShortCode;
+    private String vinEngType;
 
     /**
     * 
@@ -87,17 +87,17 @@ public class MqmsVinDecode implements Serializable {
 
     public String getVinSimCode(){return this.vinSimCode;}
 
-    public void setVinEngType(String vinEngType){this.vinEngType = vinEngType;}
+    public void setVinEngShortCode(String vinEngShortCode){this.vinEngShortCode = vinEngShortCode;}
 
-    public String getVinEngType(){return this.vinEngType;}
+    public String getVinEngShortCode(){return this.vinEngShortCode;}
 
     public void setVinSeries(String vinSeries){this.vinSeries = vinSeries;}
 
     public String getVinSeries(){return this.vinSeries;}
 
-    public void setVinEngShortCode(String vinEngShortCode){this.vinEngShortCode = vinEngShortCode;}
+    public void setVinEngType(String vinEngType){this.vinEngType = vinEngType;}
 
-    public String getVinEngShortCode(){return this.vinEngShortCode;}
+    public String getVinEngType(){return this.vinEngType;}
 
     public void setVinTransmShortCode(String vinTransmShortCode){this.vinTransmShortCode = vinTransmShortCode;}
 
@@ -120,9 +120,9 @@ public class MqmsVinDecode implements Serializable {
                 "id='" + id + '\'' +
                 "vinShortCode='" + vinShortCode + '\'' +
                 "vinSimCode='" + vinSimCode + '\'' +
-                "vinEngType='" + vinEngType + '\'' +
-                "vinSeries='" + vinSeries + '\'' +
                 "vinEngShortCode='" + vinEngShortCode + '\'' +
+                "vinSeries='" + vinSeries + '\'' +
+                "vinEngType='" + vinEngType + '\'' +
                 "vinTransmShortCode='" + vinTransmShortCode + '\'' +
                 "vinCarShortCode='" + vinCarShortCode + '\'' +
                 "vinCarType='" + vinCarType + '\'' +
@@ -211,30 +211,6 @@ public class MqmsVinDecode implements Serializable {
         private List<String> rightFuzzyVinSimCode;
 
         public List<String> getRightFuzzyVinSimCode(){return this.rightFuzzyVinSimCode;}
-        private List<String> vinEngTypeList;
-
-        public List<String> getVinEngTypeList(){return this.vinEngTypeList;}
-
-
-        private List<String> fuzzyVinEngType;
-
-        public List<String> getFuzzyVinEngType(){return this.fuzzyVinEngType;}
-
-        private List<String> rightFuzzyVinEngType;
-
-        public List<String> getRightFuzzyVinEngType(){return this.rightFuzzyVinEngType;}
-        private List<String> vinSeriesList;
-
-        public List<String> getVinSeriesList(){return this.vinSeriesList;}
-
-
-        private List<String> fuzzyVinSeries;
-
-        public List<String> getFuzzyVinSeries(){return this.fuzzyVinSeries;}
-
-        private List<String> rightFuzzyVinSeries;
-
-        public List<String> getRightFuzzyVinSeries(){return this.rightFuzzyVinSeries;}
         private List<String> vinEngShortCodeList;
 
         public List<String> getVinEngShortCodeList(){return this.vinEngShortCodeList;}
@@ -247,6 +223,30 @@ public class MqmsVinDecode implements Serializable {
         private List<String> rightFuzzyVinEngShortCode;
 
         public List<String> getRightFuzzyVinEngShortCode(){return this.rightFuzzyVinEngShortCode;}
+        private List<String> vinSeriesList;
+
+        public List<String> getVinSeriesList(){return this.vinSeriesList;}
+
+
+        private List<String> fuzzyVinSeries;
+
+        public List<String> getFuzzyVinSeries(){return this.fuzzyVinSeries;}
+
+        private List<String> rightFuzzyVinSeries;
+
+        public List<String> getRightFuzzyVinSeries(){return this.rightFuzzyVinSeries;}
+        private List<String> vinEngTypeList;
+
+        public List<String> getVinEngTypeList(){return this.vinEngTypeList;}
+
+
+        private List<String> fuzzyVinEngType;
+
+        public List<String> getFuzzyVinEngType(){return this.fuzzyVinEngType;}
+
+        private List<String> rightFuzzyVinEngType;
+
+        public List<String> getRightFuzzyVinEngType(){return this.rightFuzzyVinEngType;}
         private List<String> vinTransmShortCodeList;
 
         public List<String> getVinTransmShortCodeList(){return this.vinTransmShortCodeList;}
@@ -430,48 +430,48 @@ public class MqmsVinDecode implements Serializable {
             return this;
         }
 
-        public QueryBuilder fuzzyVinEngType (List<String> fuzzyVinEngType){
-            this.fuzzyVinEngType = fuzzyVinEngType;
+        public QueryBuilder fuzzyVinEngShortCode (List<String> fuzzyVinEngShortCode){
+            this.fuzzyVinEngShortCode = fuzzyVinEngShortCode;
             return this;
         }
 
-        public QueryBuilder fuzzyVinEngType (String ... fuzzyVinEngType){
-            this.fuzzyVinEngType = solveNullList(fuzzyVinEngType);
+        public QueryBuilder fuzzyVinEngShortCode (String ... fuzzyVinEngShortCode){
+            this.fuzzyVinEngShortCode = solveNullList(fuzzyVinEngShortCode);
             return this;
         }
 
-        public QueryBuilder rightFuzzyVinEngType (List<String> rightFuzzyVinEngType){
-            this.rightFuzzyVinEngType = rightFuzzyVinEngType;
+        public QueryBuilder rightFuzzyVinEngShortCode (List<String> rightFuzzyVinEngShortCode){
+            this.rightFuzzyVinEngShortCode = rightFuzzyVinEngShortCode;
             return this;
         }
 
-        public QueryBuilder rightFuzzyVinEngType (String ... rightFuzzyVinEngType){
-            this.rightFuzzyVinEngType = solveNullList(rightFuzzyVinEngType);
+        public QueryBuilder rightFuzzyVinEngShortCode (String ... rightFuzzyVinEngShortCode){
+            this.rightFuzzyVinEngShortCode = solveNullList(rightFuzzyVinEngShortCode);
             return this;
         }
 
-        public QueryBuilder vinEngType(String vinEngType){
-            setVinEngType(vinEngType);
+        public QueryBuilder vinEngShortCode(String vinEngShortCode){
+            setVinEngShortCode(vinEngShortCode);
             return this;
         }
 
-        public QueryBuilder vinEngTypeList(String ... vinEngType){
-            this.vinEngTypeList = solveNullList(vinEngType);
+        public QueryBuilder vinEngShortCodeList(String ... vinEngShortCode){
+            this.vinEngShortCodeList = solveNullList(vinEngShortCode);
             return this;
         }
 
-        public QueryBuilder vinEngTypeList(List<String> vinEngType){
-            this.vinEngTypeList = vinEngType;
+        public QueryBuilder vinEngShortCodeList(List<String> vinEngShortCode){
+            this.vinEngShortCodeList = vinEngShortCode;
             return this;
         }
 
-        public QueryBuilder fetchVinEngType(){
-            setFetchFields("fetchFields","vinEngType");
+        public QueryBuilder fetchVinEngShortCode(){
+            setFetchFields("fetchFields","vinEngShortCode");
             return this;
         }
 
-        public QueryBuilder excludeVinEngType(){
-            setFetchFields("excludeFields","vinEngType");
+        public QueryBuilder excludeVinEngShortCode(){
+            setFetchFields("excludeFields","vinEngShortCode");
             return this;
         }
 
@@ -520,48 +520,48 @@ public class MqmsVinDecode implements Serializable {
             return this;
         }
 
-        public QueryBuilder fuzzyVinEngShortCode (List<String> fuzzyVinEngShortCode){
-            this.fuzzyVinEngShortCode = fuzzyVinEngShortCode;
+        public QueryBuilder fuzzyVinEngType (List<String> fuzzyVinEngType){
+            this.fuzzyVinEngType = fuzzyVinEngType;
             return this;
         }
 
-        public QueryBuilder fuzzyVinEngShortCode (String ... fuzzyVinEngShortCode){
-            this.fuzzyVinEngShortCode = solveNullList(fuzzyVinEngShortCode);
+        public QueryBuilder fuzzyVinEngType (String ... fuzzyVinEngType){
+            this.fuzzyVinEngType = solveNullList(fuzzyVinEngType);
             return this;
         }
 
-        public QueryBuilder rightFuzzyVinEngShortCode (List<String> rightFuzzyVinEngShortCode){
-            this.rightFuzzyVinEngShortCode = rightFuzzyVinEngShortCode;
+        public QueryBuilder rightFuzzyVinEngType (List<String> rightFuzzyVinEngType){
+            this.rightFuzzyVinEngType = rightFuzzyVinEngType;
             return this;
         }
 
-        public QueryBuilder rightFuzzyVinEngShortCode (String ... rightFuzzyVinEngShortCode){
-            this.rightFuzzyVinEngShortCode = solveNullList(rightFuzzyVinEngShortCode);
+        public QueryBuilder rightFuzzyVinEngType (String ... rightFuzzyVinEngType){
+            this.rightFuzzyVinEngType = solveNullList(rightFuzzyVinEngType);
             return this;
         }
 
-        public QueryBuilder vinEngShortCode(String vinEngShortCode){
-            setVinEngShortCode(vinEngShortCode);
+        public QueryBuilder vinEngType(String vinEngType){
+            setVinEngType(vinEngType);
             return this;
         }
 
-        public QueryBuilder vinEngShortCodeList(String ... vinEngShortCode){
-            this.vinEngShortCodeList = solveNullList(vinEngShortCode);
+        public QueryBuilder vinEngTypeList(String ... vinEngType){
+            this.vinEngTypeList = solveNullList(vinEngType);
             return this;
         }
 
-        public QueryBuilder vinEngShortCodeList(List<String> vinEngShortCode){
-            this.vinEngShortCodeList = vinEngShortCode;
+        public QueryBuilder vinEngTypeList(List<String> vinEngType){
+            this.vinEngTypeList = vinEngType;
             return this;
         }
 
-        public QueryBuilder fetchVinEngShortCode(){
-            setFetchFields("fetchFields","vinEngShortCode");
+        public QueryBuilder fetchVinEngType(){
+            setFetchFields("fetchFields","vinEngType");
             return this;
         }
 
-        public QueryBuilder excludeVinEngShortCode(){
-            setFetchFields("excludeFields","vinEngShortCode");
+        public QueryBuilder excludeVinEngType(){
+            setFetchFields("excludeFields","vinEngType");
             return this;
         }
 
@@ -823,30 +823,6 @@ public class MqmsVinDecode implements Serializable {
         private List<String> rightFuzzyVinSimCode;
 
         public List<String> getRightFuzzyVinSimCode(){return this.rightFuzzyVinSimCode;}
-        private List<String> vinEngTypeList;
-
-        public List<String> getVinEngTypeList(){return this.vinEngTypeList;}
-
-
-        private List<String> fuzzyVinEngType;
-
-        public List<String> getFuzzyVinEngType(){return this.fuzzyVinEngType;}
-
-        private List<String> rightFuzzyVinEngType;
-
-        public List<String> getRightFuzzyVinEngType(){return this.rightFuzzyVinEngType;}
-        private List<String> vinSeriesList;
-
-        public List<String> getVinSeriesList(){return this.vinSeriesList;}
-
-
-        private List<String> fuzzyVinSeries;
-
-        public List<String> getFuzzyVinSeries(){return this.fuzzyVinSeries;}
-
-        private List<String> rightFuzzyVinSeries;
-
-        public List<String> getRightFuzzyVinSeries(){return this.rightFuzzyVinSeries;}
         private List<String> vinEngShortCodeList;
 
         public List<String> getVinEngShortCodeList(){return this.vinEngShortCodeList;}
@@ -859,6 +835,30 @@ public class MqmsVinDecode implements Serializable {
         private List<String> rightFuzzyVinEngShortCode;
 
         public List<String> getRightFuzzyVinEngShortCode(){return this.rightFuzzyVinEngShortCode;}
+        private List<String> vinSeriesList;
+
+        public List<String> getVinSeriesList(){return this.vinSeriesList;}
+
+
+        private List<String> fuzzyVinSeries;
+
+        public List<String> getFuzzyVinSeries(){return this.fuzzyVinSeries;}
+
+        private List<String> rightFuzzyVinSeries;
+
+        public List<String> getRightFuzzyVinSeries(){return this.rightFuzzyVinSeries;}
+        private List<String> vinEngTypeList;
+
+        public List<String> getVinEngTypeList(){return this.vinEngTypeList;}
+
+
+        private List<String> fuzzyVinEngType;
+
+        public List<String> getFuzzyVinEngType(){return this.fuzzyVinEngType;}
+
+        private List<String> rightFuzzyVinEngType;
+
+        public List<String> getRightFuzzyVinEngType(){return this.rightFuzzyVinEngType;}
         private List<String> vinTransmShortCodeList;
 
         public List<String> getVinTransmShortCodeList(){return this.vinTransmShortCodeList;}
@@ -994,33 +994,33 @@ public class MqmsVinDecode implements Serializable {
             return this;
         }
 
-        public ConditionBuilder fuzzyVinEngType (List<String> fuzzyVinEngType){
-            this.fuzzyVinEngType = fuzzyVinEngType;
+        public ConditionBuilder fuzzyVinEngShortCode (List<String> fuzzyVinEngShortCode){
+            this.fuzzyVinEngShortCode = fuzzyVinEngShortCode;
             return this;
         }
 
-        public ConditionBuilder fuzzyVinEngType (String ... fuzzyVinEngType){
-            this.fuzzyVinEngType = solveNullList(fuzzyVinEngType);
+        public ConditionBuilder fuzzyVinEngShortCode (String ... fuzzyVinEngShortCode){
+            this.fuzzyVinEngShortCode = solveNullList(fuzzyVinEngShortCode);
             return this;
         }
 
-        public ConditionBuilder rightFuzzyVinEngType (List<String> rightFuzzyVinEngType){
-            this.rightFuzzyVinEngType = rightFuzzyVinEngType;
+        public ConditionBuilder rightFuzzyVinEngShortCode (List<String> rightFuzzyVinEngShortCode){
+            this.rightFuzzyVinEngShortCode = rightFuzzyVinEngShortCode;
             return this;
         }
 
-        public ConditionBuilder rightFuzzyVinEngType (String ... rightFuzzyVinEngType){
-            this.rightFuzzyVinEngType = solveNullList(rightFuzzyVinEngType);
+        public ConditionBuilder rightFuzzyVinEngShortCode (String ... rightFuzzyVinEngShortCode){
+            this.rightFuzzyVinEngShortCode = solveNullList(rightFuzzyVinEngShortCode);
             return this;
         }
 
-        public ConditionBuilder vinEngTypeList(String ... vinEngType){
-            this.vinEngTypeList = solveNullList(vinEngType);
+        public ConditionBuilder vinEngShortCodeList(String ... vinEngShortCode){
+            this.vinEngShortCodeList = solveNullList(vinEngShortCode);
             return this;
         }
 
-        public ConditionBuilder vinEngTypeList(List<String> vinEngType){
-            this.vinEngTypeList = vinEngType;
+        public ConditionBuilder vinEngShortCodeList(List<String> vinEngShortCode){
+            this.vinEngShortCodeList = vinEngShortCode;
             return this;
         }
 
@@ -1054,33 +1054,33 @@ public class MqmsVinDecode implements Serializable {
             return this;
         }
 
-        public ConditionBuilder fuzzyVinEngShortCode (List<String> fuzzyVinEngShortCode){
-            this.fuzzyVinEngShortCode = fuzzyVinEngShortCode;
+        public ConditionBuilder fuzzyVinEngType (List<String> fuzzyVinEngType){
+            this.fuzzyVinEngType = fuzzyVinEngType;
             return this;
         }
 
-        public ConditionBuilder fuzzyVinEngShortCode (String ... fuzzyVinEngShortCode){
-            this.fuzzyVinEngShortCode = solveNullList(fuzzyVinEngShortCode);
+        public ConditionBuilder fuzzyVinEngType (String ... fuzzyVinEngType){
+            this.fuzzyVinEngType = solveNullList(fuzzyVinEngType);
             return this;
         }
 
-        public ConditionBuilder rightFuzzyVinEngShortCode (List<String> rightFuzzyVinEngShortCode){
-            this.rightFuzzyVinEngShortCode = rightFuzzyVinEngShortCode;
+        public ConditionBuilder rightFuzzyVinEngType (List<String> rightFuzzyVinEngType){
+            this.rightFuzzyVinEngType = rightFuzzyVinEngType;
             return this;
         }
 
-        public ConditionBuilder rightFuzzyVinEngShortCode (String ... rightFuzzyVinEngShortCode){
-            this.rightFuzzyVinEngShortCode = solveNullList(rightFuzzyVinEngShortCode);
+        public ConditionBuilder rightFuzzyVinEngType (String ... rightFuzzyVinEngType){
+            this.rightFuzzyVinEngType = solveNullList(rightFuzzyVinEngType);
             return this;
         }
 
-        public ConditionBuilder vinEngShortCodeList(String ... vinEngShortCode){
-            this.vinEngShortCodeList = solveNullList(vinEngShortCode);
+        public ConditionBuilder vinEngTypeList(String ... vinEngType){
+            this.vinEngTypeList = solveNullList(vinEngType);
             return this;
         }
 
-        public ConditionBuilder vinEngShortCodeList(List<String> vinEngShortCode){
-            this.vinEngShortCodeList = vinEngShortCode;
+        public ConditionBuilder vinEngTypeList(List<String> vinEngType){
+            this.vinEngTypeList = vinEngType;
             return this;
         }
 
@@ -1240,16 +1240,16 @@ public class MqmsVinDecode implements Serializable {
             this.obj.setVinSimCode(vinSimCode);
             return this;
         }
-        public Builder vinEngType(String vinEngType){
-            this.obj.setVinEngType(vinEngType);
+        public Builder vinEngShortCode(String vinEngShortCode){
+            this.obj.setVinEngShortCode(vinEngShortCode);
             return this;
         }
         public Builder vinSeries(String vinSeries){
             this.obj.setVinSeries(vinSeries);
             return this;
         }
-        public Builder vinEngShortCode(String vinEngShortCode){
-            this.obj.setVinEngShortCode(vinEngShortCode);
+        public Builder vinEngType(String vinEngType){
+            this.obj.setVinEngType(vinEngType);
             return this;
         }
         public Builder vinTransmShortCode(String vinTransmShortCode){

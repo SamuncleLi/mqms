@@ -17,14 +17,14 @@
                     <if test="vinSimCode!=null">
                         `vin_sim_code`,
                     </if>
-                    <if test="vinEngType!=null">
-                        `vin_eng_type`,
+                    <if test="vinEngShortCode!=null">
+                        `vin_eng_short_code`,
                     </if>
                     <if test="vinSeries!=null">
                         `vin_series`,
                     </if>
-                    <if test="vinEngShortCode!=null">
-                        `vin_eng_short_code`,
+                    <if test="vinEngType!=null">
+                        `vin_eng_type`,
                     </if>
                     <if test="vinTransmShortCode!=null">
                         `vin_transm_short_code`,
@@ -52,14 +52,14 @@
                 <if test="vinSimCode!=null">
                     #{vinSimCode},
                 </if>
-                <if test="vinEngType!=null">
-                    #{vinEngType},
+                <if test="vinEngShortCode!=null">
+                    #{vinEngShortCode},
                 </if>
                 <if test="vinSeries!=null">
                     #{vinSeries},
                 </if>
-                <if test="vinEngShortCode!=null">
-                    #{vinEngShortCode},
+                <if test="vinEngType!=null">
+                    #{vinEngType},
                 </if>
                 <if test="vinTransmShortCode!=null">
                     #{vinTransmShortCode},
@@ -90,14 +90,14 @@
             <if test="vinSimCode != null and vinSimCode!=''">
                 `vin_sim_code` = #{vinSimCode},
             </if>
-            <if test="vinEngType != null and vinEngType!=''">
-                `vin_eng_type` = #{vinEngType},
+            <if test="vinEngShortCode != null and vinEngShortCode!=''">
+                `vin_eng_short_code` = #{vinEngShortCode},
             </if>
             <if test="vinSeries != null and vinSeries!=''">
                 `vin_series` = #{vinSeries},
             </if>
-            <if test="vinEngShortCode != null and vinEngShortCode!=''">
-                `vin_eng_short_code` = #{vinEngShortCode},
+            <if test="vinEngType != null and vinEngType!=''">
+                `vin_eng_type` = #{vinEngType},
             </if>
             <if test="vinTransmShortCode != null and vinTransmShortCode!=''">
                 `vin_transm_short_code` = #{vinTransmShortCode},
@@ -128,14 +128,14 @@
         <if test="set.vinSimCode != null and set.vinSimCode!=''">
             `vin_sim_code` = #{set.vinSimCode},
         </if>
-        <if test="set.vinEngType != null and set.vinEngType!=''">
-            `vin_eng_type` = #{set.vinEngType},
+        <if test="set.vinEngShortCode != null and set.vinEngShortCode!=''">
+            `vin_eng_short_code` = #{set.vinEngShortCode},
         </if>
         <if test="set.vinSeries != null and set.vinSeries!=''">
             `vin_series` = #{set.vinSeries},
         </if>
-        <if test="set.vinEngShortCode != null and set.vinEngShortCode!=''">
-            `vin_eng_short_code` = #{set.vinEngShortCode},
+        <if test="set.vinEngType != null and set.vinEngType!=''">
+            `vin_eng_type` = #{set.vinEngType},
         </if>
         <if test="set.vinTransmShortCode != null and set.vinTransmShortCode!=''">
             `vin_transm_short_code` = #{set.vinTransmShortCode},
@@ -203,23 +203,23 @@
                 </foreach>
                 ) and
             </if>
-                <if test="where.vinEngTypeList != null">
-                    `vin_eng_type` in
-                    <foreach collection="where.vinEngTypeList" close=")" open="(" separator="," item="item">
+                <if test="where.vinEngShortCodeList != null">
+                    `vin_eng_short_code` in
+                    <foreach collection="where.vinEngShortCodeList" close=")" open="(" separator="," item="item">
                         #{item}
                     </foreach> and
                 </if>
-            <if test ="where.fuzzyVinEngType!=null and where.fuzzyVinEngType.size()>0">
+            <if test ="where.fuzzyVinEngShortCode!=null and where.fuzzyVinEngShortCode.size()>0">
                 (
-                <foreach collection="where.fuzzyVinEngType"  separator="or" item="item">
-                    `Vin_eng_type` like concat('%',#{item},'%')
+                <foreach collection="where.fuzzyVinEngShortCode"  separator="or" item="item">
+                    `Vin_eng_short_code` like concat('%',#{item},'%')
                 </foreach>
                 ) and
             </if>
-            <if test ="where.rightFuzzyVinEngType!=null and where.rightFuzzyVinEngType.size()>0">
+            <if test ="where.rightFuzzyVinEngShortCode!=null and where.rightFuzzyVinEngShortCode.size()>0">
                 (
-                <foreach collection="where.rightFuzzyVinEngType"  separator="or" item="item">
-                    `Vin_eng_type` like concat(#{item},'%')
+                <foreach collection="where.rightFuzzyVinEngShortCode"  separator="or" item="item">
+                    `Vin_eng_short_code` like concat(#{item},'%')
                 </foreach>
                 ) and
             </if>
@@ -243,23 +243,23 @@
                 </foreach>
                 ) and
             </if>
-                <if test="where.vinEngShortCodeList != null">
-                    `vin_eng_short_code` in
-                    <foreach collection="where.vinEngShortCodeList" close=")" open="(" separator="," item="item">
+                <if test="where.vinEngTypeList != null">
+                    `vin_eng_type` in
+                    <foreach collection="where.vinEngTypeList" close=")" open="(" separator="," item="item">
                         #{item}
                     </foreach> and
                 </if>
-            <if test ="where.fuzzyVinEngShortCode!=null and where.fuzzyVinEngShortCode.size()>0">
+            <if test ="where.fuzzyVinEngType!=null and where.fuzzyVinEngType.size()>0">
                 (
-                <foreach collection="where.fuzzyVinEngShortCode"  separator="or" item="item">
-                    `Vin_eng_short_code` like concat('%',#{item},'%')
+                <foreach collection="where.fuzzyVinEngType"  separator="or" item="item">
+                    `Vin_eng_type` like concat('%',#{item},'%')
                 </foreach>
                 ) and
             </if>
-            <if test ="where.rightFuzzyVinEngShortCode!=null and where.rightFuzzyVinEngShortCode.size()>0">
+            <if test ="where.rightFuzzyVinEngType!=null and where.rightFuzzyVinEngType.size()>0">
                 (
-                <foreach collection="where.rightFuzzyVinEngShortCode"  separator="or" item="item">
-                    `Vin_eng_short_code` like concat(#{item},'%')
+                <foreach collection="where.rightFuzzyVinEngType"  separator="or" item="item">
+                    `Vin_eng_type` like concat(#{item},'%')
                 </foreach>
                 ) and
             </if>
@@ -351,9 +351,9 @@
         <result property="id" column="id"/>
         <result property="vinShortCode" column="vin_short_code"/>
         <result property="vinSimCode" column="vin_sim_code"/>
-        <result property="vinEngType" column="vin_eng_type"/>
-        <result property="vinSeries" column="vin_series"/>
         <result property="vinEngShortCode" column="vin_eng_short_code"/>
+        <result property="vinSeries" column="vin_series"/>
+        <result property="vinEngType" column="vin_eng_type"/>
         <result property="vinTransmShortCode" column="vin_transm_short_code"/>
         <result property="vinCarShortCode" column="vin_car_short_code"/>
         <result property="vinCarType" column="vin_car_type"/>
@@ -375,14 +375,14 @@
             <if test="vinSimCode != null and vinSimCode!=''">
                 `vin_sim_code` = #{vinSimCode} and
             </if>
-            <if test="vinEngType != null and vinEngType!=''">
-                `vin_eng_type` = #{vinEngType} and
+            <if test="vinEngShortCode != null and vinEngShortCode!=''">
+                `vin_eng_short_code` = #{vinEngShortCode} and
             </if>
             <if test="vinSeries != null and vinSeries!=''">
                 `vin_series` = #{vinSeries} and
             </if>
-            <if test="vinEngShortCode != null and vinEngShortCode!=''">
-                `vin_eng_short_code` = #{vinEngShortCode} and
+            <if test="vinEngType != null and vinEngType!=''">
+                `vin_eng_type` = #{vinEngType} and
             </if>
             <if test="vinTransmShortCode != null and vinTransmShortCode!=''">
                 `vin_transm_short_code` = #{vinTransmShortCode} and
@@ -449,23 +449,23 @@
                     </foreach>
                     ) and
                 </if>
-                <if test="vinEngTypeList != null">
-                    `vin_eng_type` in
-                    <foreach collection="vinEngTypeList" close=")" open="(" separator="," item="item">
+                <if test="vinEngShortCodeList != null">
+                    `vin_eng_short_code` in
+                    <foreach collection="vinEngShortCodeList" close=")" open="(" separator="," item="item">
                         #{item}
                     </foreach> and
                 </if>
-                <if test ="fuzzyVinEngType!=null and fuzzyVinEngType.size()>0">
+                <if test ="fuzzyVinEngShortCode!=null and fuzzyVinEngShortCode.size()>0">
                     (
-                    <foreach collection="fuzzyVinEngType"  separator="or" item="item">
-                        `Vin_eng_type` like concat('%',#{item},'%')
+                    <foreach collection="fuzzyVinEngShortCode"  separator="or" item="item">
+                        `Vin_eng_short_code` like concat('%',#{item},'%')
                     </foreach>
                     ) and
                 </if>
-                <if test ="rightFuzzyVinEngType!=null and rightFuzzyVinEngType.size()>0">
+                <if test ="rightFuzzyVinEngShortCode!=null and rightFuzzyVinEngShortCode.size()>0">
                     (
-                    <foreach collection="rightFuzzyVinEngType"  separator="or" item="item">
-                        `Vin_eng_type` like concat(#{item},'%')
+                    <foreach collection="rightFuzzyVinEngShortCode"  separator="or" item="item">
+                        `Vin_eng_short_code` like concat(#{item},'%')
                     </foreach>
                     ) and
                 </if>
@@ -489,23 +489,23 @@
                     </foreach>
                     ) and
                 </if>
-                <if test="vinEngShortCodeList != null">
-                    `vin_eng_short_code` in
-                    <foreach collection="vinEngShortCodeList" close=")" open="(" separator="," item="item">
+                <if test="vinEngTypeList != null">
+                    `vin_eng_type` in
+                    <foreach collection="vinEngTypeList" close=")" open="(" separator="," item="item">
                         #{item}
                     </foreach> and
                 </if>
-                <if test ="fuzzyVinEngShortCode!=null and fuzzyVinEngShortCode.size()>0">
+                <if test ="fuzzyVinEngType!=null and fuzzyVinEngType.size()>0">
                     (
-                    <foreach collection="fuzzyVinEngShortCode"  separator="or" item="item">
-                        `Vin_eng_short_code` like concat('%',#{item},'%')
+                    <foreach collection="fuzzyVinEngType"  separator="or" item="item">
+                        `Vin_eng_type` like concat('%',#{item},'%')
                     </foreach>
                     ) and
                 </if>
-                <if test ="rightFuzzyVinEngShortCode!=null and rightFuzzyVinEngShortCode.size()>0">
+                <if test ="rightFuzzyVinEngType!=null and rightFuzzyVinEngType.size()>0">
                     (
-                    <foreach collection="rightFuzzyVinEngShortCode"  separator="or" item="item">
-                        `Vin_eng_short_code` like concat(#{item},'%')
+                    <foreach collection="rightFuzzyVinEngType"  separator="or" item="item">
+                        `Vin_eng_type` like concat(#{item},'%')
                     </foreach>
                     ) and
                 </if>
@@ -607,14 +607,14 @@
             <if test="vinSimCode != null and vinSimCode!=''">
                 `vin_sim_code` = #{vinSimCode} and
             </if>
-            <if test="vinEngType != null and vinEngType!=''">
-                `vin_eng_type` = #{vinEngType} and
+            <if test="vinEngShortCode != null and vinEngShortCode!=''">
+                `vin_eng_short_code` = #{vinEngShortCode} and
             </if>
             <if test="vinSeries != null and vinSeries!=''">
                 `vin_series` = #{vinSeries} and
             </if>
-            <if test="vinEngShortCode != null and vinEngShortCode!=''">
-                `vin_eng_short_code` = #{vinEngShortCode} and
+            <if test="vinEngType != null and vinEngType!=''">
+                `vin_eng_type` = #{vinEngType} and
             </if>
             <if test="vinTransmShortCode != null and vinTransmShortCode!=''">
                 `vin_transm_short_code` = #{vinTransmShortCode} and
@@ -681,23 +681,23 @@
                     </foreach>
                     ) and
                 </if>
-                    <if test="vinEngTypeList != null">
-                        `vin_eng_type` in
-                        <foreach collection="vinEngTypeList" close=")" open="(" separator="," item="item">
+                    <if test="vinEngShortCodeList != null">
+                        `vin_eng_short_code` in
+                        <foreach collection="vinEngShortCodeList" close=")" open="(" separator="," item="item">
                             #{item}
                         </foreach> and
                     </if>
-                <if test ="fuzzyVinEngType!=null and fuzzyVinEngType.size()>0">
+                <if test ="fuzzyVinEngShortCode!=null and fuzzyVinEngShortCode.size()>0">
                     (
-                    <foreach collection="fuzzyVinEngType"  separator="or" item="item">
-                        `Vin_eng_type` like concat('%',#{item},'%')
+                    <foreach collection="fuzzyVinEngShortCode"  separator="or" item="item">
+                        `Vin_eng_short_code` like concat('%',#{item},'%')
                     </foreach>
                     ) and
                 </if>
-                <if test ="rightFuzzyVinEngType!=null and rightFuzzyVinEngType.size()>0">
+                <if test ="rightFuzzyVinEngShortCode!=null and rightFuzzyVinEngShortCode.size()>0">
                     (
-                    <foreach collection="rightFuzzyVinEngType"  separator="or" item="item">
-                        `Vin_eng_type` like concat(#{item},'%')
+                    <foreach collection="rightFuzzyVinEngShortCode"  separator="or" item="item">
+                        `Vin_eng_short_code` like concat(#{item},'%')
                     </foreach>
                     ) and
                 </if>
@@ -721,23 +721,23 @@
                     </foreach>
                     ) and
                 </if>
-                    <if test="vinEngShortCodeList != null">
-                        `vin_eng_short_code` in
-                        <foreach collection="vinEngShortCodeList" close=")" open="(" separator="," item="item">
+                    <if test="vinEngTypeList != null">
+                        `vin_eng_type` in
+                        <foreach collection="vinEngTypeList" close=")" open="(" separator="," item="item">
                             #{item}
                         </foreach> and
                     </if>
-                <if test ="fuzzyVinEngShortCode!=null and fuzzyVinEngShortCode.size()>0">
+                <if test ="fuzzyVinEngType!=null and fuzzyVinEngType.size()>0">
                     (
-                    <foreach collection="fuzzyVinEngShortCode"  separator="or" item="item">
-                        `Vin_eng_short_code` like concat('%',#{item},'%')
+                    <foreach collection="fuzzyVinEngType"  separator="or" item="item">
+                        `Vin_eng_type` like concat('%',#{item},'%')
                     </foreach>
                     ) and
                 </if>
-                <if test ="rightFuzzyVinEngShortCode!=null and rightFuzzyVinEngShortCode.size()>0">
+                <if test ="rightFuzzyVinEngType!=null and rightFuzzyVinEngType.size()>0">
                     (
-                    <foreach collection="rightFuzzyVinEngShortCode"  separator="or" item="item">
-                        `Vin_eng_short_code` like concat(#{item},'%')
+                    <foreach collection="rightFuzzyVinEngType"  separator="or" item="item">
+                        `Vin_eng_type` like concat(#{item},'%')
                     </foreach>
                     ) and
                 </if>
@@ -831,9 +831,9 @@
         `id`,
         `vin_short_code`,
         `vin_sim_code`,
-        `vin_eng_type`,
-        `vin_series`,
         `vin_eng_short_code`,
+        `vin_series`,
+        `vin_eng_type`,
         `vin_transm_short_code`,
         `vin_car_short_code`,
         `vin_car_type`,
@@ -867,14 +867,14 @@
                     <if test="fetchFields.fetchFields.vinSimCode==true">
                         `vin_sim_code`,
                     </if>
-                    <if test="fetchFields.fetchFields.vinEngType==true">
-                        `vin_eng_type`,
+                    <if test="fetchFields.fetchFields.vinEngShortCode==true">
+                        `vin_eng_short_code`,
                     </if>
                     <if test="fetchFields.fetchFields.vinSeries==true">
                         `vin_series`,
                     </if>
-                    <if test="fetchFields.fetchFields.vinEngShortCode==true">
-                        `vin_eng_short_code`,
+                    <if test="fetchFields.fetchFields.vinEngType==true">
+                        `vin_eng_type`,
                     </if>
                     <if test="fetchFields.fetchFields.vinTransmShortCode==true">
                         `vin_transm_short_code`,
@@ -899,14 +899,14 @@
                     <if test="fetchFields.excludeFields.vinSimCode==null">
                         `vin_sim_code`,
                     </if>
-                    <if test="fetchFields.excludeFields.vinEngType==null">
-                        `vin_eng_type`,
+                    <if test="fetchFields.excludeFields.vinEngShortCode==null">
+                        `vin_eng_short_code`,
                     </if>
                     <if test="fetchFields.excludeFields.vinSeries==null">
                         `vin_series`,
                     </if>
-                    <if test="fetchFields.excludeFields.vinEngShortCode==null">
-                        `vin_eng_short_code`,
+                    <if test="fetchFields.excludeFields.vinEngType==null">
+                        `vin_eng_type`,
                     </if>
                     <if test="fetchFields.excludeFields.vinTransmShortCode==null">
                         `vin_transm_short_code`,

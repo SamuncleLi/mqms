@@ -7,9 +7,9 @@
         <result property="id" column="id"/>
         <result property="vinShortCode" column="vin_short_code"/>
         <result property="vinSimCode" column="vin_sim_code"/>
-        <result property="vinEngType" column="vin_eng_type"/>
-        <result property="vinSeries" column="vin_series"/>
         <result property="vinEngShortCode" column="vin_eng_short_code"/>
+        <result property="vinSeries" column="vin_series"/>
+        <result property="vinEngType" column="vin_eng_type"/>
         <result property="vinTransmShortCode" column="vin_transm_short_code"/>
         <result property="vinCarShortCode" column="vin_car_short_code"/>
         <result property="vinCarType" column="vin_car_type"/>
@@ -28,9 +28,9 @@
         WHERE
         `vin_short_code`  like concat('%',#{vinShortCode},'%') and
         `vin_sim_code`  like concat('%',#{vinSimCode},'%') and
-        `vin_eng_type`  like concat('%',#{vinEngType},'%') and
-        `vin_series`  like concat('%',#{vinSeries},'%') and
         `vin_eng_short_code`  like concat('%',#{vinEngShortCode},'%') and
+        `vin_series`  like concat('%',#{vinSeries},'%') and
+        `vin_eng_type`  like concat('%',#{vinEngType},'%') and
         `vin_transm_short_code`  like concat('%',#{vinTransmShortCode},'%') and
         `vin_car_short_code`  like concat('%',#{vinCarShortCode},'%') and
         `vin_car_type`  like concat('%',#{vinCarType},'%') and

@@ -40,7 +40,7 @@
 
     <select id="selectSecondSalesCount"  resultType="java.lang.Integer" >
         SELECT COUNT(*) FROM `mqms_sales`
-        WHERE  `eng_short_code` = #{engShortCode}
+        WHERE  `eng_type` = #{engType}
         AND  `second_pin_date` &gt;= #{beginData}
         AND  `second_pin_date` &lt;= #{endData}
     </select>

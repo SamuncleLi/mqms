@@ -48,8 +48,11 @@ CREATE TABLE `mqms_sales` (
   `car_short_code` varchar(255) DEFAULT NULL COMMENT '车辆短码',
   `car_model` varchar(255) DEFAULT NULL COMMENT '车型',
   `car_model_code` varchar(255) DEFAULT NULL COMMENT '内部车型代号',
-    `applier_id` int(11) DEFAULT NULL COMMENT 'UserID',
+  `applier_id` int(11) DEFAULT NULL COMMENT 'UserID',
   `applier_name` varchar(255) DEFAULT NULL COMMENT '上传人',
   `apply_time` varchar(255) DEFAULT NULL COMMENT '上传时间',
-  PRIMARY KEY (`sales_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
+  PRIMARY KEY (`sales_id`),
+  UNIQUE KEY `vin` (`vin_code`) USING BTREE,
+  KEY `engType` (`eng_type`) USING BTREE,
+  KEY `transType` (`tran_type`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=3176099 DEFAULT CHARSET=utf8;

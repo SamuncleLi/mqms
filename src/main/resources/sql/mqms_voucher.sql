@@ -46,7 +46,7 @@ CREATE TABLE `mqms_voucher` (
   `shop_arrival_date` varchar(255) DEFAULT NULL COMMENT '车辆到店时间',
   `sales_failure_time` int(11) DEFAULT NULL COMMENT '销售至故障经过月',
   `failure_desc` varchar(255) DEFAULT NULL COMMENT '故障描述',
-  `diagnostic_result` varchar(255) DEFAULT NULL COMMENT '诊断过程',
+  `diagnostic_result` varchar(2000) DEFAULT NULL COMMENT '诊断过程',
   `man_cost` decimal(65,2) DEFAULT NULL COMMENT '工时金额',
   `material_cost` decimal(65,2) DEFAULT NULL COMMENT '配件金额',
   `material_management_cost` decimal(65,2) DEFAULT NULL COMMENT '配件管理费用',
@@ -83,12 +83,12 @@ CREATE TABLE `mqms_voucher` (
   `track_beginer` varchar(255) DEFAULT NULL COMMENT '开启不良追踪者',
   `track_begin_time` varchar(255) DEFAULT NULL COMMENT '不良追踪开启时间',
   `delivery_person` varchar(255) DEFAULT NULL COMMENT '快递负责人',
-  `delivery_deadline` varchar(255) DEFAULT NULL,
-  `delivery_received_date` varchar(255) DEFAULT NULL,
-  `failure_track_id` int(11) DEFAULT NULL,
+  `delivery_deadline` varchar(255) DEFAULT NULL COMMENT '快递确认时间',
+  `delivery_received_date` varchar(255) DEFAULT NULL COMMENT '快递到达时间',
+  `failure_track_id` int(11) DEFAULT NULL COMMENT '不良追踪ID',
   `applier_id` int(11) DEFAULT NULL COMMENT 'UserID',
   `applier_name` varchar(255) DEFAULT NULL COMMENT '上传人',
   `apply_time` varchar(255) DEFAULT NULL COMMENT '上传时间',
   PRIMARY KEY (`voucher_id`),
   UNIQUE KEY `voucher_code` (`voucher_code`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=1704 DEFAULT CHARSET=utf8 COMMENT='vei系统导出表的拓展信息表';
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='vei系统导出表的拓展信息表';

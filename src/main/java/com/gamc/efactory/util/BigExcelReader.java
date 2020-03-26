@@ -360,8 +360,7 @@ public abstract class BigExcelReader {
 
                         if (formatIndex == 14 || formatIndex == 31 || formatIndex == 57 || formatIndex == 58
                                 || (176 <= formatIndex && formatIndex <= 178) || (182 <= formatIndex && formatIndex <= 196)
-                                || (210 <= formatIndex && formatIndex <= 213) || (208 == formatIndex)) {// 日期
-                            sdf = new SimpleDateFormat("yyyy-MM-dd");
+                                || (210 <= formatIndex && formatIndex <= 213) || formatIndex == 180 ||(208 == formatIndex)) {// 日期
 //                            System.out.println(readValue+"'"+formatIndex+"'"+"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
                             Date date = DateUtil.getJavaDate(Double.parseDouble(readValue));
                             rowDatas[colIdx]=sdf.format(date);
@@ -371,6 +370,7 @@ public abstract class BigExcelReader {
 
                         } else if (formatIndex == 20 || formatIndex == 32 || formatIndex == 183 || (200 <= formatIndex && formatIndex <= 209)) {//时间
                             Date date = DateUtil.getJavaDate(Double.parseDouble(readValue));
+//                            System.out.println(readValue+"'"+formatIndex+"'"+"BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB");
                             rowDatas[colIdx]=sdf.format(date);
                             rowTypes[colIdx] = STRING;
 
@@ -381,8 +381,9 @@ public abstract class BigExcelReader {
                                 rowDatas[colIdx] = e.replace(".", "");
                                 rowTypes[colIdx] = NUMBER;
                             } else {
+//                                System.out.println(readValue+"'"+formatIndex+"'"+"cccccccccccccccccccccccccccccccc");
                                 rowDatas[colIdx] = readValue;
-                                rowTypes[colIdx] = NUMBER;
+                                rowTypes[colIdx] = STRING;
                             }
                         }
                         break;
@@ -393,7 +394,7 @@ public abstract class BigExcelReader {
                 // 当解析一定行数时输出数据
             else if (name.equals("row")) {
                     container.add(rowDatas);
-                    if (container.size() == 2000) {
+                    if (container.size() == 8000) {
                         try {
                             doTask();
                         } catch (IllegalAccessException e) {
@@ -462,7 +463,7 @@ public abstract class BigExcelReader {
     private int getColsNum(Attributes attrubuts) {
         String spans = attrubuts.getValue("spans");
         String cols = spans.substring(spans.indexOf(":") + 1);
-        System.out.println(cols+"ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss");
+//        System.out.println(cols+"ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss");
         return Integer.parseInt(cols);
 
         //String cols = attrubuts.getValue("r");
