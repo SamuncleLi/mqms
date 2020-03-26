@@ -6,6 +6,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.gamc.efactory.config.Config;
 import com.gamc.efactory.config.TaskName;
+import com.gamc.efactory.dao.MqmsFailureAnalysisMapper;
 import com.gamc.efactory.dao.MqmsFailureTrackMapper;
 import com.gamc.efactory.dao.UserMapper;
 import com.gamc.efactory.model.dataObject.*;
@@ -50,6 +51,8 @@ public class FailureTrackController {
     FailureTrackService failureTrackService;
     @Autowired
     UserMapper userMapper;
+    @Autowired
+    MqmsFailureAnalysisMapper mqmsFailureAnalysisMapper;
 
     @RequestMapping("/columnNameAndComment")
     public JSONArray getColumnNameAndComment(@RequestParam("table")String table){
@@ -130,7 +133,7 @@ public class FailureTrackController {
     @RequestMapping("/submit_to_process")
     @Transactional
     public JSONObject submitToProcess(@RequestParam String failureTrackIds){
-        //TODO 防止重复提交
+        //TODO 防止重复提交 3/26
         JSONObject result = new JSONObject();
         String[] failureTrackIdArray = failureTrackIds.split(",");
         int count = 0;
@@ -167,7 +170,7 @@ public class FailureTrackController {
 
                 JSONObject returnJson = AttHttpRequestUtil.httpPost(url, jsonObject, false);
 
-                //TODO 更新sao_id 3/24
+                // 更新sao_id 3/24
                 MqmsFailureTrack failureTrack = new MqmsFailureTrack();
                 failureTrack.setFailureTrackId(failureTrackInt[i]);
                 failureTrack.setSaoId(returnJson.getLong("SAOId"));
@@ -319,21 +322,7 @@ public class FailureTrackController {
             submitFormSingle4.setInput_id("file");
             submitFormSingle4.setRow(2);
             submitFormSingle4.setCol(1);
-//            ProcessForm.SubmitFormSingle submitFormSingle3 = new ProcessForm.SubmitFormSingle();
-//            submitFormSingle3.setType("filebox");
-//            submitFormSingle3.setTitle("图片上传");
-//            submitFormSingle3.setName("img");
-//            submitFormSingle3.setInput_id("img");
-//            submitFormSingle3.setRow(1);
-//            submitFormSingle3.setCol(3);
-//            ProcessForm.SubmitFormSingle submitFormSingle4 = new ProcessForm.SubmitFormSingle();
-//            submitFormSingle4.setType("img");
-//            submitFormSingle4.setTitle("图片预览");
-//            submitFormSingle4.setName("img");
-//            submitFormSingle4.setInput_id("img");
-//            submitFormSingle4.setRow(2);
-//            submitFormSingle4.setCol(1);
-//            submitFormSingle4.setLines(4);
+
             submitFormGroup.addSubmitSingle(submitFormSingle1);
             submitFormGroup.addSubmitSingle(submitFormSingle2);
 //            submitFormGroup.addSubmitSingle(submitFormSingle3);
@@ -417,8 +406,8 @@ public class FailureTrackController {
             ProcessForm.SubmitFormSingle submitFormSingle1 = new ProcessForm.SubmitFormSingle();
             submitFormSingle1.setType("combobox");
             submitFormSingle1.setTitle("是否解析");
-            submitFormSingle1.setName("xyjx");
-            submitFormSingle1.setInput_id("xyjx");
+            submitFormSingle1.setName("needAnalyse");
+            submitFormSingle1.setInput_id("needAnalyse");
             submitFormSingle1.setRow(1);
             submitFormSingle1.setCol(1);
             submitFormSingle1.addOption("是", "y");
@@ -458,13 +447,13 @@ public class FailureTrackController {
             ProcessForm.SubmitFormSingle submitFormSingle1 = new ProcessForm.SubmitFormSingle();
             submitFormSingle1.setType("combobox-multi");
             submitFormSingle1.setTitle("选择解析人");
-            submitFormSingle1.setName("gcsjx");
-            submitFormSingle1.setInput_id("gcsjx");
+            submitFormSingle1.setName("engineerUserId");
+            submitFormSingle1.setInput_id("engineerUserId");
             submitFormSingle1.setRow(1);
             submitFormSingle1.setCol(1);
             //TODO 根据flag获取可选工程师 3/26
-            submitFormSingle1.addOption("张三", "张三");
-            submitFormSingle1.addOption("李四", "李四");
+            submitFormSingle1.addOption("张三", "1275");
+            submitFormSingle1.addOption("李四", "1279");
             ProcessForm.SubmitFormSingle submitFormSingle2 = new ProcessForm.SubmitFormSingle();
             submitFormSingle2.setType("textbox");
             submitFormSingle2.setTitle("备注");
@@ -525,8 +514,8 @@ public class FailureTrackController {
             ProcessForm.SubmitFormSingle submitFormSingle4 = new ProcessForm.SubmitFormSingle();
             submitFormSingle4.setType("datebox");
             submitFormSingle4.setTitle("对策实施时间");
-            submitFormSingle4.setName("solution_date");
-            submitFormSingle4.setInput_id("solution_date");
+            submitFormSingle4.setName("solutionDate");
+            submitFormSingle4.setInput_id("solutionDate");
             submitFormSingle4.setRow(3);
             submitFormSingle4.setCol(4);
             ProcessForm.SubmitFormSingle submitFormSingle5 = new ProcessForm.SubmitFormSingle();
@@ -708,38 +697,60 @@ public class FailureTrackController {
     }
 
     @RequestMapping("/choose_department")
-    public JSONObject chooseDepartment(SimpleApplicationObject simpleApplicationObject, MqmsFailureTrack mqmsFailureTrack){
+    public JSONObject chooseDepartment(SimpleApplicationObject simpleApplicationObject, MqmsFailureTrack mqmsFailureTrack, @RequestParam("needAnalyse")String needAnalyse){
         String[] departmentArray = mqmsFailureTrack.getAnalysisDepartments()
                 .split(",");
         //更新科室
-        mqmsFailureTrackMapper.update(mqmsFailureTrack.UpdateBuild().where(mqmsFailureTrack.ConditionBuild().saoIdList(simpleApplicationObject.getSimpleApplicationObjectId())).build());
+        mqmsFailureTrackMapper.update(mqmsFailureTrack.UpdateBuild().set(mqmsFailureTrack).where(mqmsFailureTrack.ConditionBuild().saoIdList(simpleApplicationObject.getSimpleApplicationObjectId())).build());
         System.out.println(mqmsFailureTrack.getAnalysisDepartments());
-
-//        //后台查询这些科室的窗口，并新建分析数据 3/25解决
-//        for (int i=0;i<departmentArray.length;i++){
-//            MqmsFailureAnalysis mqmsFailureAnalysis = new MqmsFailureAnalysis();
-//            mqmsFailureAnalysis.setFailureAnalystDepartment();
-//            mqmsFailureAnalysis.setSaoId();
-//            mqmsFailureAnalysis.setTaskId();
-//
-//            //设置窗口姓名，id
-//            mqmsFailureAnalysis.setFailureAnalystId();
-//            mqmsFailureAnalysis.setFailureAnalystName();
-//            mqmsFailureAnalysis.setFailureAnalystComment();
-//        }
-
 
         //向流程系统提交同意的申请
         Map map = new HashMap();
         map = JSONObject.parseObject(JSONObject.toJSONString(simpleApplicationObject), Map.class);
         map.put("auditorInfo", "agree");
         map.put("auditorComment", "同意");
+        map.put("variablesName", "variables");
+        JSONObject variable = new JSONObject();
+        JSONObject condition = new JSONObject();
+        condition.put("needAnalyse", needAnalyse);
+        variable.put("condition", condition);
+        JSONArray arrayVariables = new JSONArray();
+
+        //如果不需要审核，则直接设置市场品质系长和市场品质科长
+        if(needAnalyse.equals("n")){
+
+        }
+        //如果需要审核，则设置窗口人员和总结人员
+        else if(needAnalyse.equals("y")){
+
+        }
+        //设置最后的总结人选
+        JSONObject processChecker = new JSONObject();
+        processChecker.put("zj", 1732);
+        variable.put("processChecker", processChecker);
+        map.put("variables", variable.toJSONString());
+
+        //TODO 获取窗口
+        int[] cks = {1732,1279,1278};
+
+        //后台查询这些科室的窗口，并新建分析数据,设置flag
+        for (int i=0;i<departmentArray.length;i++){
+            JSONObject departmentVariable = new JSONObject();
+            JSONObject departmentProcessChecker1 = new JSONObject();
+            departmentProcessChecker1.put("ck", cks[i]);
+            departmentVariable.put("processChecker", departmentProcessChecker1);
+            departmentVariable.put("flag",departmentArray[i]);
+            arrayVariables.add(departmentVariable);
+        }
+        variable.put("arrayVariables", arrayVariables);
+
+        //向流程系统提交同意的申请
         JSONObject returnJson = httpService.postInJSON(Config.processSystem.getVarName()+"/SAO/audit/team3fvariables", map, JSONObject.class);
         return returnJson;
     }
 
     @RequestMapping("/choose_engineer")
-    public JSONObject chooseEngineer(SimpleApplicationObject simpleApplicationObject, @RequestParam("flag")String flag ,@RequestParam("")){
+    public JSONObject chooseEngineer(SimpleApplicationObject simpleApplicationObject, @RequestParam("failureTrackId")int failureTrackId, @RequestParam("flag")String flag , String engineerUserId, String desc){
         MqmsFailureAnalysis mqmsFailureAnalysis = new MqmsFailureAnalysis();
         mqmsFailureAnalysis.setFailureAnalystId(simpleApplicationObject.getAssigneeId());
         User user = userMapper.queryUserLimit1(simpleApplicationObject.getAssigneeId());
@@ -751,7 +762,9 @@ public class FailureTrackController {
         mqmsFailureAnalysis.setFlag(flag);
 
         //将截至日期，选择的工程师等合在一起
-//        mqmsFailureAnalysis.setFailureAnalystComment();
+        String comment = "选择工程师为：";
+
+        String[] engineerUserIds = engineerUserId.split(",");
 
         //向流程系统提交同意的申请
         Map map = new HashMap();
@@ -762,24 +775,32 @@ public class FailureTrackController {
         JSONObject variable = new JSONObject();
 
         JSONArray arrayVariables = new JSONArray();
-        JSONObject departmentVariable1 = new JSONObject();
-        JSONObject departmentProcessChecker1 = new JSONObject();
-        departmentProcessChecker1.put("gcsjx", 1279);
-        departmentVariable1.put("processChecker", departmentProcessChecker1);
 
-        JSONObject departmentVariable2 = new JSONObject();
-        JSONObject departmentProcessChecker2 = new JSONObject();
-        departmentProcessChecker2.put("gcsjx", 1278);
-        departmentVariable2.put("processChecker", departmentProcessChecker2);
+        for(int i=0;i<engineerUserIds.length;i++){
+            JSONObject departmentVariable = new JSONObject();
+            JSONObject departmentProcessChecker = new JSONObject();
+            departmentProcessChecker.put("gcsjx", Integer.parseInt(engineerUserIds[i]));
+            departmentVariable.put("processChecker", departmentProcessChecker);
 
-        arrayVariables.add(departmentVariable1);
-        arrayVariables.add(departmentVariable2);
-
+            arrayVariables.add(departmentVariable);
+            comment += userMapper.queryUserLimit1(Integer.parseInt(engineerUserIds[i])).getUserName() + ",";
+        }
         variable.put("arrayVariables", arrayVariables);
 
         map.put("variables", variable.toJSONString());
         JSONObject returnJson = httpService.postInJSON(Config.processSystem.getVarName()+"/SAO/audit/team3fvariables", map, JSONObject.class);
         returnJson.put("success", "true");
+
+        comment+= "备注为：" + desc;
+        //插入不良解析
+        mqmsFailureAnalysis.setFailureAnalystComment(comment);
+
+        //插入提交日期
+        mqmsFailureAnalysis.setSubmitDate(AttDateUtil.getNow("all"));
+
+        //插入failureTrackId
+        mqmsFailureAnalysis.setFailureAnalystId(failureTrackId);
+        mqmsFailureAnalysisMapper.insertMqmsFailureAnalysis(mqmsFailureAnalysis);
         return returnJson;
     }
 
@@ -793,17 +814,42 @@ public class FailureTrackController {
      * @抛出异常
     */
     @RequestMapping("/engineer_analysis")
-    public JSONObject engineerAnalysis(SimpleApplicationObject simpleApplicationObject, MqmsFailureTrack mqmsFailureTrack){
+    public JSONObject engineerAnalysis(SimpleApplicationObject simpleApplicationObject, @RequestParam int failureTrackId, @RequestParam("flag")String flag, @RequestParam("mainReason")String mainReason, @RequestParam("outflowReason")String outflowReason, @RequestParam("solutionDate")String solutionDate, @RequestParam("solution")String solution){
         //向流程系统提交同意的申请
         Map map = new HashMap();
         map = JSONObject.parseObject(JSONObject.toJSONString(simpleApplicationObject), Map.class);
         map.put("auditorInfo", "agree");
         map.put("auditorComment", "同意");
 
-        //TODO 业务系统更新 3/25
+        //业务系统更新，更新failureAnalysis
+        MqmsFailureAnalysis mqmsFailureAnalysis = new MqmsFailureAnalysis();
+        mqmsFailureAnalysis.setFailureAnalystId(simpleApplicationObject.getAssigneeId());
+        User user = userMapper.queryUserLimit1(simpleApplicationObject.getAssigneeId());
+        mqmsFailureAnalysis.setFailureAnalystName(user.getUserName());
+        mqmsFailureAnalysis.setFailureAnalystDepartment(user.getDepartment());
+        mqmsFailureAnalysis.setSaoId(simpleApplicationObject.getSimpleApplicationObjectId());
+        mqmsFailureAnalysis.setTaskId(simpleApplicationObject.getTaskId());
+        mqmsFailureAnalysis.setTaskName(simpleApplicationObject.getTaskName());
+        mqmsFailureAnalysis.setFlag(flag);
+        mqmsFailureAnalysis.setSubmitDate(AttDateUtil.getNow("all"));
 
+        //组成分析
+        StringBuffer commentBuffer = new StringBuffer();
+        commentBuffer.append("要因分析：");
+        commentBuffer.append(mainReason);
+        commentBuffer.append("\n流出分析：");
+        commentBuffer.append(outflowReason);
+        commentBuffer.append("\n截止日期：");
+        commentBuffer.append(solutionDate);
+        commentBuffer.append("\n解决方案：");
+        commentBuffer.append(solution);
+        mqmsFailureAnalysis.setFailureAnalystComment(commentBuffer.toString());
+        //根据failureTrackId插入新failureAnalysis
+        //插入failureTrackId
+        mqmsFailureAnalysis.setFailureTrackId(failureTrackId);
+        mqmsFailureAnalysisMapper.insertMqmsFailureAnalysis(mqmsFailureAnalysis);
         JSONObject returnJson = httpService.postInJSON(Config.processSystem.getVarName()+"/SAO/audit/team3fvariables", map, JSONObject.class);
-        returnJson.put("success", "true");
+//        returnJson.put("success", "true");
         return returnJson;
     }
 
