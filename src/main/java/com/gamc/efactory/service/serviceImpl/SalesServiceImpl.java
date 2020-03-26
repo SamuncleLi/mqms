@@ -35,7 +35,8 @@ public class SalesServiceImpl implements SalesService {
     private ThreadFactory threadFactory = new ThreadFactoryBuilder().setNameFormat("sendEmailImmediately-pool-%d").build();
 //    private ExecutorService executorService = new ThreadPoolExecutor(8, 40, 1000, TimeUnit.MILLISECONDS, new SynchronousQueue<Runnable>(),threadFactory,new ThreadPoolExecutor.AbortPolicy());
 
-    private ExecutorService executorService = new ThreadPoolExecutor(8, 40, 1000, TimeUnit.MILLISECONDS,    new LinkedBlockingQueue<Runnable>(30),threadFactory,new ThreadPoolExecutor.AbortPolicy());
+    private ExecutorService executorService = new ThreadPoolExecutor(16, 80, 500, TimeUnit.MILLISECONDS,    new LinkedBlockingQueue<Runnable>(200),threadFactory,new ThreadPoolExecutor.AbortPolicy());
+
     @Autowired
     private MqmsSalesRawMapper mqmsSalesRawMapper;
     @Autowired
@@ -94,55 +95,61 @@ public class SalesServiceImpl implements SalesService {
 
     private void saveAll(List<List<Object>> lists, HttpServletRequest request) throws IllegalAccessException {
         try {
-            if (lists.size() > 0) {
+            int threadacCount=((ThreadPoolExecutor)executorService).getPoolSize();
+//            int threadacCount=((ThreadPoolExecutor)executorService).getActiveCount();
+                if (lists.size() > 0&&threadacCount<140) {
 
-                List<MqmsSalesRaw> mqmsSalesRawList = new ArrayList<>();
-                List<MqmsSales> mqmsSalesList = new ArrayList<>();
-                SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
-                User user = (User) request.getSession().getAttribute("user");
-                for (int i = 1; i < lists.size(); i++) {
-                    List<Object> rowData = lists.get(i);
-                    //利用反射遍历对属性赋值
-                    MqmsSalesRaw mqmsSalesRaw = new MqmsSalesRaw();
-                    MqmsSales mqmsSales = new MqmsSales();
-                    Class cls = mqmsSalesRaw.getClass();
-                    Field[] fields = cls.getDeclaredFields();
-                    for (int j = 2; j < fields.length - 3; j++) {
-                        Field f = fields[j];
-                        f.setAccessible(true);
-                        if (f.getType().equals(String.class)) {
-                            f.set(mqmsSalesRaw, rowData.get(j - 2));
-                        } else if (f.getType().equals(BigDecimal.class)) {
+                    List<MqmsSalesRaw> mqmsSalesRawList = new ArrayList<>();
+                    List<MqmsSales> mqmsSalesList = new ArrayList<>();
+                    SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
+                    User user = (User) request.getSession().getAttribute("user");
+                    for (int i = 1; i < lists.size(); i++) {
+                        List<Object> rowData = lists.get(i);
+                        //利用反射遍历对属性赋值
+                        MqmsSalesRaw mqmsSalesRaw = new MqmsSalesRaw();
+                        MqmsSales mqmsSales = new MqmsSales();
+                        Class cls = mqmsSalesRaw.getClass();
+                        Field[] fields = cls.getDeclaredFields();
+                        for (int j = 2; j < fields.length - 3; j++) {
+                            Field f = fields[j];
+                            f.setAccessible(true);
+                            if (f.getType().equals(String.class)) {
+                                f.set(mqmsSalesRaw, rowData.get(j - 2));
+                            } else if (f.getType().equals(BigDecimal.class)) {
 
-                            f.set(mqmsSalesRaw, new BigDecimal(rowData.get(j - 2).toString()));
-                        } else if (f.getType().equals(Integer.class)) {
-                            //来自前面的坑，EXCEL导出整数变成字符多了小数点，例2838(Int),2838.0(String
-                            String str = rowData.get(j - 2).toString();
-                            if (str.contains(".")) {
-                                int indexOf = str.indexOf(".");
-                                str = str.substring(0, indexOf);
+                                f.set(mqmsSalesRaw, new BigDecimal(rowData.get(j - 2).toString()));
+                            } else if (f.getType().equals(Integer.class)) {
+                                //来自前面的坑，EXCEL导出整数变成字符多了小数点，例2838(Int),2838.0(String
+                                String str = rowData.get(j - 2).toString();
+                                if (str.contains(".")) {
+                                    int indexOf = str.indexOf(".");
+                                    str = str.substring(0, indexOf);
+                                }
+                                f.set(mqmsSalesRaw, Integer.parseInt(str));
                             }
-                            f.set(mqmsSalesRaw, Integer.parseInt(str));
+                            mqmsSalesRaw.setApplierId(user.getUserId());
+                            mqmsSalesRaw.setApplierName(user.getUserName());
+                            mqmsSalesRaw.setApplyTime(df.format(new Date()));
+
                         }
-                        mqmsSalesRaw.setApplierId(user.getUserId());
-                        mqmsSalesRaw.setApplierName(user.getUserName());
-                        mqmsSalesRaw.setApplyTime(df.format(new Date()));
-
+                        mqmsSalesRawList.add(mqmsSalesRaw);
+                        //相同属性复制
+                        BeanUtils.copyProperties(mqmsSalesRaw, mqmsSales);
+                        mqmsSalesList.add(mqmsSales);
                     }
-                    mqmsSalesRawList.add(mqmsSalesRaw);
-                    //相同属性复制
-                    BeanUtils.copyProperties(mqmsSalesRaw, mqmsSales);
-                    mqmsSalesList.add(mqmsSales);
-                }
 
 
-                //使用线程池
-                ImportCall importCall = new ImportCall();
-                ImportCallRaw importCallRaw = new ImportCallRaw();
-                importCall.setMqmsSalesList(mqmsSalesList);
-                importCallRaw.setMqmsSalesRawList(mqmsSalesRawList);
-                executorService.execute(importCall);
-                executorService.execute(importCallRaw);
+                    //使用线程池
+                    ImportCall importCall = new ImportCall();
+                    ImportCallRaw importCallRaw = new ImportCallRaw();
+                    importCall.setMqmsSalesList(mqmsSalesList);
+                    importCallRaw.setMqmsSalesRawList(mqmsSalesRawList);
+//                    System.out.println(threadacCount+"yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy");
+                    executorService.execute(importCall);
+
+//                System.out.println(threadacCount+"oooooooooooooooooooooooooooooooooooooooooooooooooo");
+//                System.out.println(threadCount+"JJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJ");
+                    executorService.execute(importCallRaw);
 
 
 //                for (MqmsSalesRaw mqmsSalesRawRecord : mqmsSalesRawList) {
@@ -156,7 +163,8 @@ public class SalesServiceImpl implements SalesService {
 //                        }
 //                    }
 //                }
-            }
+                }
+
 
         } catch (Exception e) {
             e.printStackTrace();

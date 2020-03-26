@@ -29,7 +29,7 @@ import java.util.concurrent.*;
 public class ProductionServiceImpl implements ProductionService {
 
     private ThreadFactory threadFactory = new ThreadFactoryBuilder().setNameFormat("sendEmailImmediately-pool-%d").build();
-    private ExecutorService executorService = new ThreadPoolExecutor(16, 24, 1000, TimeUnit.MILLISECONDS, new SynchronousQueue<Runnable>(), threadFactory, new ThreadPoolExecutor.AbortPolicy());
+    private ExecutorService executorService = new ThreadPoolExecutor(16, 80, 500, TimeUnit.MILLISECONDS,    new LinkedBlockingQueue<Runnable>(200),threadFactory,new ThreadPoolExecutor.AbortPolicy());
     @Autowired
     private MqmsProductionRawMapper mqmsProductionRawMapper;
     @Autowired
@@ -60,12 +60,12 @@ public class ProductionServiceImpl implements ProductionService {
 
             for (MqmsProduction mqmsProductionRecord : mqmsProductionList) {
                 //短码
-                String vinShortCOde = mqmsProductionRecord.getVin().substring(0, 5);
-                mqmsProductionRecord.setShortCode(vinShortCOde);
+                String vinShortCode = mqmsProductionRecord.getVin().substring(0, 5);
+                mqmsProductionRecord.setShortCode(vinShortCode);
                 //地域
 
                 //机型
-                MqmsVinDecode mqmsVinDecode = mqmsVinDecodeMapper.vinDecode(vinShortCOde);
+                MqmsVinDecode mqmsVinDecode = mqmsVinDecodeMapper.vinDecode(vinShortCode);
                 if (mqmsVinDecode.getVinEngType()!=null) {
                     mqmsProductionRecord.setEngType(mqmsVinDecode.getVinEngType());
                 }
@@ -77,7 +77,7 @@ public class ProductionServiceImpl implements ProductionService {
                     mqmsProductionRecord.setSerialCode(mqmsVinDecode.getVinSeries());
                 }
                 //车型简码
-                mqmsProductionRecord.setCarShortCode(vinShortCOde.substring(3, 5));
+                mqmsProductionRecord.setCarShortCode(vinShortCode.substring(3, 5));
                 //车型
                 if (mqmsVinDecode.getVinCarType()!=null) {
                     mqmsProductionRecord.setCarModel(mqmsVinDecode.getVinCarType());
@@ -88,7 +88,7 @@ public class ProductionServiceImpl implements ProductionService {
                 }
                 //内部车型代号
                 if(mqmsVinDecode.getVinCarType()!=null) {
-                    mqmsProductionRecord.setCarSimpleCode(mqmsVinDecode.getVinCarType());
+                    mqmsProductionRecord.setCarSimpleCode(mqmsVinDecode.getVinCarShortCode());
                 }
                 else{
                     mqmsProductionRecord.setCarSimpleCode("");
@@ -166,7 +166,9 @@ public class ProductionServiceImpl implements ProductionService {
     }
     private void saveAll(List<List<Object>> lists, HttpServletRequest request) throws IllegalAccessException {
         try {
-            if (lists.size() > 0) {
+            int threadacCount=((ThreadPoolExecutor)executorService).getPoolSize();
+//            int threadacCount=((ThreadPoolExecutor)executorService).getActiveCount();
+            if (lists.size() > 0&&threadacCount<140) {
 
 //            System.out.println(lists.size());
                 List<MqmsProductionRaw> mqmsProductionRawList = new ArrayList<>();
@@ -205,32 +207,19 @@ public class ProductionServiceImpl implements ProductionService {
                     //相同属性复制
                     MqmsProduction mqmsProduction = new MqmsProduction();
                     BeanUtils.copyProperties(mqmsProductionRaw, mqmsProduction);
-//                    String shortCode = "";
-//                    if (mqmsProduction.getVin().length() <= 5) {
-//                        shortCode = mqmsProduction.getVin().toString();
-//                    } else {
-//                        shortCode = mqmsProduction.getVin().substring(0, 5);
-//                    }
-//                    mqmsProduction.setShortCode(shortCode);
                     mqmsProductionList.add(mqmsProduction);
 
                 }
 
                 ImportCall importCall = new ImportCall();
-                executorService.execute(importCall);
+                ImportCallRaw importCallRaw = new ImportCallRaw();
                 //构造函数传参
                 importCall.setMqmsProductionList(mqmsProductionList);
-                for (MqmsProductionRaw mqmsProductionRawRecord : mqmsProductionRawList) {
-                    String vin = mqmsProductionRawRecord.getVin();
-                    int cnt = mqmsProductionRawMapper.selectByVin(vin);
-                    if (cnt == 0) {
-                        mqmsProductionRawMapper.insertMqmsProductionRaw(mqmsProductionRawRecord);
-//                        System.out.println(" 插入 " + mqmsProductionRawRecord);
-                    } else {
-                        mqmsProductionRawMapper.updateByVin(mqmsProductionRawRecord);
-//                        System.out.println(" 更新 " + mqmsProductionRawRecord);
-                    }
-                }
+                importCallRaw.setMqmsProductionRawList(mqmsProductionRawList);
+                executorService.execute(importCall);
+                executorService.execute(importCallRaw);
+
+
 
             }
         } catch (Exception e) {
@@ -238,6 +227,29 @@ public class ProductionServiceImpl implements ProductionService {
 
         }
 
+    }
+    private class ImportCallRaw implements Runnable {
+        //构造函数传递参数
+        private List<MqmsProductionRaw> mqmsProductionRawList;
+
+        public void setMqmsProductionRawList(List<MqmsProductionRaw> mqmsProductionRawList) {
+            this.mqmsProductionRawList = mqmsProductionRawList;
+        }
+
+        @Override
+        public void run() {
+            for (MqmsProductionRaw mqmsProductionRawRecord : mqmsProductionRawList) {
+                String vin = mqmsProductionRawRecord.getVin();
+                int cnt = mqmsProductionRawMapper.selectByVin(vin);
+                if (cnt == 0) {
+                    mqmsProductionRawMapper.insertMqmsProductionRaw(mqmsProductionRawRecord);
+//                        System.out.println(" 插入 " + mqmsProductionRawRecord);
+                } else {
+                    mqmsProductionRawMapper.updateByVin(mqmsProductionRawRecord);
+//                        System.out.println(" 更新 " + mqmsProductionRawRecord);
+                }
+            }
+        }
     }
 }
 

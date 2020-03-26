@@ -12,5 +12,5 @@ import com.gamc.efactory.dao.base.MqmsVoucherRawBaseMapper;
 */
 public interface MqmsVoucherRawMapper extends MqmsVoucherRawBaseMapper{
     int selectByVoucherCode(@Param("voucherCode") String voucherCode);
-    int updateMqmsVoucherRaw(MqmsVoucherRaw object);
+
 }

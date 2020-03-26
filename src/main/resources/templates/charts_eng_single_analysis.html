@@ -150,7 +150,13 @@
                         subtext: '祺盛动力',
                         left: 'center'
                     },
-
+                    toolbox: {
+                        feature: {
+                            dataView: {show: true, readOnly: false},
+                            restore: {show: true},
+                            saveAsImage: {show: true}
+                        }
+                    },
                     tooltip: {
                         trigger: 'item',
                         formatter: '{a} <br/>{b} : {c} ({d}%)'
@@ -198,6 +204,14 @@
                         text: '售出时间分布（滚轮缩放)',
                         subtext: '祺盛动力'
                     },
+                    toolbox: {
+                        feature: {
+                            dataView: {show: true, readOnly: false},
+                            restore: {show: true},
+                            saveAsImage: {show: true}
+                        }
+                    },
+                    legend: {},
                     tooltip: {
                         trigger: 'axis',
                         axisPointer: {
@@ -218,6 +232,7 @@
                             axisPointer: {
                                 type: 'shadow'
                             }
+
                         }
                     ],
                     yAxis: [
@@ -278,7 +293,8 @@
                     dataset: {
                         source: result
                     },
-                    xAxis: {type: 'category'},
+                    xAxis: {type: 'category'
+                    },
                     yAxis: {
                         type: 'value',
                         gridIndex: 0
@@ -323,6 +339,10 @@
                             type: 'category',
                             axisPointer: {
                                 type: 'shadow'
+                            },
+                            axisLabel: {//解决显示不全自动隐藏问题，倾斜
+                                interval:0,
+                                rotate:40
                             }
                         }
                     ],

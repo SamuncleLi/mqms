@@ -10,7 +10,7 @@ import java.util.List;
 */
 public class MqmsSales implements Serializable {
 
-    private static final long serialVersionUID = 1585036104985L;
+    private static final long serialVersionUID = 1585183733147L;
 
 
     /**

@@ -21,7 +21,6 @@ public interface MqmsVoucherMapper extends MqmsVoucherBaseMapper{
     int selectTransClaimCount(@Param("tranTypeDetail") String transTypeDetail,@Param("beginData") String beginData,@Param("endData") String endData);
     BigDecimal selectTotalCost(@Param("eng_type") String engType, @Param("confirm_date") String confirmDate);
     int selectByVoucherCode(@Param("voucher_code") String voucherCode);
-    int updateMqmsVoucher(MqmsVoucher object);
     //左等右不等
     int countBetweenYearAndMonth(@Param("eng_type")String engType, @Param("begin")String begin, @Param("end")String end);
     //左右均等于
