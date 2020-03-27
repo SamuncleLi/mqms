@@ -271,15 +271,32 @@ public class FailureTrackServiceImpl implements FailureTrackService{
         List<MqmsFailureAnalysis> mqmsFailureAnalysisList = mqmsFailureAnalysisMapper.queryMqmsFailureAnalysis(mqmsFailureAnalysis);
 
         int count=0;
-        //
-        for(MqmsFailureAnalysis failureAnalysis:mqmsFailureAnalysisList){
-            String comment = failureAnalysis.getFailureAnalystComment();
+        ProcessForm.DataDisplayGroup group = new ProcessForm.DataDisplayGroup();
+        String rowStructure = "[4],";
+        String structure1 = "[";
+        for(int i=0;i<mqmsFailureAnalysisList.size();i++){
+            structure1 += rowStructure;
+        }
+        structure1.substring(0, structure1.length() - 2);
+        structure1+="]";
+        //展现评论
+        for(int i=0;i<mqmsFailureAnalysisList.size();i++){
+            String comment = mqmsFailureAnalysisList.get(i).getFailureAnalystComment();
             if(StringUtil.isNotEmpty(comment)){
-                JSONObject commentJson = JSON.parseObject(comment);
-                count += commentJson.keySet().size();
+                ProcessForm.DataDisplaySingle single = new ProcessForm.DataDisplaySingle();
+                single.setTitle(mqmsFailureAnalysisList.get(i).getFailureAnalystName());
+                single.setType("text");
+                single.setContent(comment);
+                single.setCol(1);
+                single.setRow(i + 1);
+                group.addData(single);
             }
         }
-        ProcessForm.DataDisplayGroup group = new ProcessForm.DataDisplayGroup();
+        group.setGroup_name("解析信息");
+        ObjectMapper objectMapper = new ObjectMapper();
+        List<List<Integer>> mStructure1 = objectMapper.readValue(structure1.toString(), List.class);
+        group.setStructure(mStructure1);
+
         return group;
     }
 }

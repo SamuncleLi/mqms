@@ -550,9 +550,9 @@ public class FailureTrackController {
             ProcessForm.DataDisplayGroup appendixInfo = failureTrackService.getAppendixInfo(failureTrackId);
             processForm.addNormalData(appendixInfo);
 
-            //TODO 查询本科室工程师的解析数据 3/25
+            //查询本科室工程师的解析数据 3/25
             ProcessForm.DataDisplayGroup engineerInfo = failureTrackService.getEngineerInfo(failureTrackId, simpleApplicationObjectData.getString("flag"));
-
+            processForm.addNormalData(engineerInfo);
             String structure2 = "[[4]]";
             ProcessForm.SubmitFormGroup submitFormGroup = new ProcessForm.SubmitFormGroup();
             ProcessForm.SubmitFormSingle submitFormSingle1 = new ProcessForm.SubmitFormSingle();
@@ -568,6 +568,7 @@ public class FailureTrackController {
             mStructure2 = objectMapper.readValue(structure2.toString(), List.class);
 
             submitFormGroup.setStructure(mStructure2);
+            processForm.setSubmitForm(submitFormGroup);
 
             ProcessForm.SubmitButton submitButton = new ProcessForm.SubmitButton();
 
@@ -576,6 +577,14 @@ public class FailureTrackController {
             processForm.addSubmitButton(submitButton);
         }
         else if("科长".equals(simpleApplicationObjectData.getString("taskName"))){
+            ProcessForm.DataDisplayGroup previousInfo = failureTrackService.getPreviousInfo(failureTrackId);
+            processForm.addNormalData(previousInfo);
+            ProcessForm.DataDisplayGroup appendixInfo = failureTrackService.getAppendixInfo(failureTrackId);
+            processForm.addNormalData(appendixInfo);
+
+            //查询本科室工程师的解析数据 3/25
+            ProcessForm.DataDisplayGroup engineerInfo = failureTrackService.getEngineerInfo(failureTrackId, simpleApplicationObjectData.getString("flag"));
+            processForm.addNormalData(engineerInfo);
             String structure2 = "[[4]]";
             ProcessForm.SubmitFormGroup submitFormGroup = new ProcessForm.SubmitFormGroup();
             ProcessForm.SubmitFormSingle submitFormSingle1 = new ProcessForm.SubmitFormSingle();
@@ -589,6 +598,9 @@ public class FailureTrackController {
             submitFormGroup.addSubmitSingle(submitFormSingle1);
             List<List<Integer>> mStructure2 = null;
             mStructure2 = objectMapper.readValue(structure2.toString(), List.class);
+
+            submitFormGroup.setStructure(mStructure2);
+            processForm.setSubmitForm(submitFormGroup);
 
             ProcessForm.SubmitButton submitButton = new ProcessForm.SubmitButton();
 
