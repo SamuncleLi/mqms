@@ -193,4 +193,9 @@ public class ViewController {
     public String dataDelivery(){
         return "data_delivery";
     }
+    @RequestMapping(value = "/data_market_bulletin")
+    public String dataMarketBulletin(){
+        return "data_market_bulletin";
+    }
+
 }

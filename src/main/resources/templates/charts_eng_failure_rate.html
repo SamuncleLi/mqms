@@ -209,10 +209,12 @@
     })
 
     function analysis() {
+        $.messager.alert('系统提示',"数据查询中，请稍后。。。");
         $.ajax({
             url:"/mqms/charts/engineFailureRate?yearAndMonth=" + $('#yearAndMonth').datebox('getValue') + "&timeSpan=" + $('#timeSpan').numberspinner('getValue') + "&engType="+ $('#engType').combobox('getValues') + "&monthType=6",
             success:function (result) {
-                console.log(result);
+                $.messager.alert('系统提示',"数据查询成功");
+//                console.log(result);
 
                 var engType = $("#engType").combobox("getValues");
 
@@ -245,9 +247,16 @@
                     },
                     toolbox: {
                         feature: {
-                            dataView: {show: true, readOnly: false},
-                            restore: {show: true},
-                            saveAsImage: {show: true}
+                            dataView: {
+                                show: true,
+                                readOnly: false,
+                            },
+//                            mark: {show:true},
+                            restore:{show:true},
+                            magicType: {type: ['bar']},
+                            saveAsImage:{show:true}
+//                            restore: {show: true},
+//                            saveAsImage: {show: true}
                         }
                     },
                     legend: {},
@@ -265,6 +274,7 @@
                     },
                     grid: {left:'5%', right: '30%'},
                     series:series
+
                 };
 
 
@@ -295,7 +305,7 @@
         $.ajax({
             url: "/mqms/charts/engineFailureRate?yearAndMonth=" + $('#yearAndMonth').datebox('getValue') + "&timeSpan=" + $('#timeSpan').numberspinner('getValue') + "&engType=" + $('#engType').combobox('getValues') + "&monthType=12",
             success: function (result) {
-                console.log(result);
+//                console.log(result);
 
                 var engType = $("#engType").combobox("getValues");
 
@@ -329,8 +339,9 @@
                     toolbox: {
                         feature: {
                             dataView: {show: true, readOnly: false},
-                            restore: {show: true},
-                            saveAsImage: {show: true}
+                            restore:{show:true},
+                            magicType: {type: ['bar']},
+                            saveAsImage:{show:true}
                         }
                     },
                     legend: {},
@@ -377,31 +388,31 @@
         $.ajax({
             url: "/mqms/charts/engineFailureRate?yearAndMonth=" + $('#yearAndMonth').datebox('getValue') + "&timeSpan=" + $('#timeSpan').numberspinner('getValue') + "&engType=" + $('#engType').combobox('getValues') + "&monthType=24",
             success: function (result) {
-                console.log(result);
+//                console.log(result);
 
                 var engType = $("#engType").combobox("getValues");
 
                 //添加相当于机型数量的折线
-                var series = [
-                    {
-                        type: 'pie',
-                        id: 'pie',
-                        radius: '60%',
-                        center: ['88%', '50%'],
-                        label: {
-                            formatter: '{b}: ({d}%)',
-                            position: 'inner'
-                        },
-                        encode: {
-                            itemName: '机型',
-                            value: $('#yearAndMonth').datebox('getValue'),
-                            tooltip: $('#yearAndMonth').datebox('getValue')
-                        }
-                    }];
+                var series = [];
                 for (var i = 0; i < engType.length; i++) {
                     var line = {type: 'line', seriesLayoutBy: 'row', itemStyle: {normal: {label: {show: true}}}};
                     series.push(line)
                 }
+                series.push({
+                    type: 'pie',
+                    id: 'pie',
+                    radius: '60%',
+                    center: ['88%', '50%'],
+                    label: {
+                        formatter: '{b}: ({d}%)',
+                        position: 'inner'
+                    },
+                    encode: {
+                        itemName: '机型',
+                        value: $('#yearAndMonth').datebox('getValue'),
+                        tooltip: $('#yearAndMonth').datebox('getValue')
+                    }
+                })
 
                 var option_3 = {
                     title: {
@@ -411,8 +422,9 @@
                     toolbox: {
                         feature: {
                             dataView: {show: true, readOnly: false},
-                            restore: {show: true},
-                            saveAsImage: {show: true}
+                            restore:{show:true},
+                            magicType: {type: ['bar']},
+                            saveAsImage:{show:true}
                         }
                     },
                     legend: {},
@@ -458,7 +470,7 @@
         $.ajax({
             url: "/mqms/charts/engineFailureRate?yearAndMonth=" + $('#yearAndMonth').datebox('getValue') + "&timeSpan=" + $('#timeSpan').numberspinner('getValue') + "&engType=" + $('#engType').combobox('getValues') + "&monthType=36",
             success: function (result) {
-                console.log(result);
+//                console.log(result);
 
                 var engType = $("#engType").combobox("getValues");
 
@@ -492,8 +504,9 @@
                     toolbox: {
                         feature: {
                             dataView: {show: true, readOnly: false},
-                            restore: {show: true},
-                            saveAsImage: {show: true}
+                            restore:{show:true},
+                            magicType: {type: ['bar']},
+                            saveAsImage:{show:true}
                         }
                     },
                     legend: {},
