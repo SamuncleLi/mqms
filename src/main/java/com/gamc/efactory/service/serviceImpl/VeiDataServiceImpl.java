@@ -109,18 +109,13 @@ public class VeiDataServiceImpl implements VeiDataService {
                     if (trsmProMonth.length() < 2) {
                         trsmProMonth = "0" + trsmProMonth;
                     }
-//                    System.out.println(trsmProMonth);
+
                     String trsmProYear = mqmsTranYearDecodeMapper.selectTranProYear(trsmProYearCode);
-//                    System.out.println(trsmProYear);
                     mqmsVoucherRecord.setTransmissionProductionData(trsmProYear + "-" + trsmProMonth + "-" + trsmProDay);
                     //变速箱生产至确认经过月
                     int proFailureMonths = 0;
                     try {
-//                        System.out.println(mqmsVoucherRecord.getTransmissionProductionData());
-//                        System.out.println(mqmsVoucherRecord.getConfirmDate());
                         proFailureMonths = MqmsUtil.getMonth(mqmsVoucherRecord.getTransmissionProductionData(), mqmsVoucherRecord.getConfirmDate());
-//                        System.out.println(proFailureMonths);
-
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -135,7 +130,6 @@ public class VeiDataServiceImpl implements VeiDataService {
                         e.printStackTrace();
                     }
                 }
-
                 //下线至故障经过月
                 int offlineFailureMonths = 0;
                 if (mqmsVoucherRecord.getOfflineDate() != null && mqmsVoucherRecord.getFailureDate() != null) {
@@ -215,8 +209,6 @@ public class VeiDataServiceImpl implements VeiDataService {
             };
             // 执行解析
             bigExcelReader.parse();
-            //File files = new File(file);
-//            System.out.println("0000000000000000000000000000000000000000000000");
             return 1;
 
         } catch (Exception e) {
@@ -230,13 +222,12 @@ public class VeiDataServiceImpl implements VeiDataService {
 //            int threadacCount=((ThreadPoolExecutor)executorService).getActiveCount();
             if (lists.size() > 0&&threadacCount<140) {
 
-//            System.out.println(lists.size());
+
                 List<MqmsVoucherRaw> mqmsVoucherRawList = new ArrayList<>();
                 List<MqmsVoucher> mqmsVoucherList = new ArrayList<>();
                 SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
                 User user = (User) request.getSession().getAttribute("user");
                 for (int i = 1; i < lists.size(); i++) {
-//                System.out.println("222222222222222222222222222");
                     List<Object> rowData = lists.get(i);
                     //利用反射遍历对属性赋值
                     MqmsVoucherRaw mqmsVoucherRaw = new MqmsVoucherRaw();

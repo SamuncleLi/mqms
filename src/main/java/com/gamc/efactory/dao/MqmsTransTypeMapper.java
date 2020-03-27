@@ -5,7 +5,7 @@ import org.apache.ibatis.annotations.Param;
 import com.gamc.efactory.model.dataObject.MqmsTransType;
 import com.gamc.efactory.dao.base.MqmsTransTypeBaseMapper;
 /**
-*  @author lizeh
+*  @author wangjian
 */
 public interface MqmsTransTypeMapper extends MqmsTransTypeBaseMapper{
 

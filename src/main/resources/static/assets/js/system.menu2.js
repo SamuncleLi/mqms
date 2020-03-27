@@ -11,7 +11,7 @@ var _menus=[
     },
 	{"menuid":"11","icon":"fa-trophy","menuname":"市场数据",parentMenu:'1',
 		"menus":[{"menuid":"110","menuname":"市场故障清单","icon":"fa-window-restore","url":"/mqms/view/data_voucher"},
-                {"menuid":"111","menuname":"市场通报清单","icon":"fa-window-restore","url":"/mqms/view/charts_tran_failure_rate"},
+                {"menuid":"111","menuname":"市场通报清单","icon":"fa-window-restore","url":"/mqms/view/data_market_bulletin"},
                 {"menuid":"112","menuname":"销售清单","icon":"fa-window-maximize","url":"/mqms/view/data_sales"},
                 {"menuid":"113","menuname":"生产清单","icon":"fa-window-maximize","url":"/mqms/view/data_production"},
 			]},{
