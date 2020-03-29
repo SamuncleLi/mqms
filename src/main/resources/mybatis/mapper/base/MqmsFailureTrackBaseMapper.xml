@@ -56,6 +56,9 @@
                     <if test="failureReappearSymbol!=null">
                         `failure_reappear_symbol`,
                     </if>
+                    <if test="reloadDate!=null">
+                        `reload_date`,
+                    </if>
                     <if test="failureReappearDate!=null">
                         `failure_reappear_date`,
                     </if>
@@ -64,6 +67,21 @@
                     </if>
                     <if test="failureReappearResult!=null">
                         `failure_reappear_result`,
+                    </if>
+                    <if test="appearance!=null">
+                        `appearance`,
+                    </if>
+                    <if test="analysisDepartments!=null">
+                        `analysis_departments`,
+                    </if>
+                    <if test="analysisDeadline!=null">
+                        `analysis_deadline`,
+                    </if>
+                    <if test="analysisRequirement!=null">
+                        `analysis_requirement`,
+                    </if>
+                    <if test="appendix!=null">
+                        `appendix`,
                     </if>
         </trim>
         )
@@ -118,6 +136,9 @@
                 <if test="failureReappearSymbol!=null">
                     #{failureReappearSymbol},
                 </if>
+                <if test="reloadDate!=null">
+                    #{reloadDate},
+                </if>
                 <if test="failureReappearDate!=null">
                     #{failureReappearDate},
                 </if>
@@ -126,6 +147,21 @@
                 </if>
                 <if test="failureReappearResult!=null">
                     #{failureReappearResult},
+                </if>
+                <if test="appearance!=null">
+                    #{appearance},
+                </if>
+                <if test="analysisDepartments!=null">
+                    #{analysisDepartments},
+                </if>
+                <if test="analysisDeadline!=null">
+                    #{analysisDeadline},
+                </if>
+                <if test="analysisRequirement!=null">
+                    #{analysisRequirement},
+                </if>
+                <if test="appendix!=null">
+                    #{appendix},
                 </if>
         </trim>
         )
@@ -183,6 +219,9 @@
             <if test="failureReappearSymbol != null and failureReappearSymbol!=''">
                 `failure_reappear_symbol` = #{failureReappearSymbol},
             </if>
+            <if test="reloadDate != null and reloadDate!=''">
+                `reload_date` = #{reloadDate},
+            </if>
             <if test="failureReappearDate != null and failureReappearDate!=''">
                 `failure_reappear_date` = #{failureReappearDate},
             </if>
@@ -191,6 +230,21 @@
             </if>
             <if test="failureReappearResult != null and failureReappearResult!=''">
                 `failure_reappear_result` = #{failureReappearResult},
+            </if>
+            <if test="appearance != null and appearance!=''">
+                `appearance` = #{appearance},
+            </if>
+            <if test="analysisDepartments != null and analysisDepartments!=''">
+                `analysis_departments` = #{analysisDepartments},
+            </if>
+            <if test="analysisDeadline != null and analysisDeadline!=''">
+                `analysis_deadline` = #{analysisDeadline},
+            </if>
+            <if test="analysisRequirement != null and analysisRequirement!=''">
+                `analysis_requirement` = #{analysisRequirement},
+            </if>
+            <if test="appendix != null and appendix!=''">
+                `appendix` = #{appendix},
             </if>
         </trim>
         WHERE
@@ -248,6 +302,9 @@
         <if test="set.failureReappearSymbol != null and set.failureReappearSymbol!=''">
             `failure_reappear_symbol` = #{set.failureReappearSymbol},
         </if>
+        <if test="set.reloadDate != null and set.reloadDate!=''">
+            `reload_date` = #{set.reloadDate},
+        </if>
         <if test="set.failureReappearDate != null and set.failureReappearDate!=''">
             `failure_reappear_date` = #{set.failureReappearDate},
         </if>
@@ -256,6 +313,21 @@
         </if>
         <if test="set.failureReappearResult != null and set.failureReappearResult!=''">
             `failure_reappear_result` = #{set.failureReappearResult},
+        </if>
+        <if test="set.appearance != null and set.appearance!=''">
+            `appearance` = #{set.appearance},
+        </if>
+        <if test="set.analysisDepartments != null and set.analysisDepartments!=''">
+            `analysis_departments` = #{set.analysisDepartments},
+        </if>
+        <if test="set.analysisDeadline != null and set.analysisDeadline!=''">
+            `analysis_deadline` = #{set.analysisDeadline},
+        </if>
+        <if test="set.analysisRequirement != null and set.analysisRequirement!=''">
+            `analysis_requirement` = #{set.analysisRequirement},
+        </if>
+        <if test="set.appendix != null and set.appendix!=''">
+            `appendix` = #{set.appendix},
         </if>
         </trim>
         <trim prefix="where" suffixOverrides="and | or">
@@ -539,6 +611,26 @@
                 </foreach>
                 ) and
             </if>
+                <if test="where.reloadDateList != null">
+                    `reload_date` in
+                    <foreach collection="where.reloadDateList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test ="where.fuzzyReloadDate!=null and where.fuzzyReloadDate.size()>0">
+                (
+                <foreach collection="where.fuzzyReloadDate"  separator="or" item="item">
+                    `Reload_date` like concat('%',#{item},'%')
+                </foreach>
+                ) and
+            </if>
+            <if test ="where.rightFuzzyReloadDate!=null and where.rightFuzzyReloadDate.size()>0">
+                (
+                <foreach collection="where.rightFuzzyReloadDate"  separator="or" item="item">
+                    `Reload_date` like concat(#{item},'%')
+                </foreach>
+                ) and
+            </if>
                 <if test="where.failureReappearDateList != null">
                     `failure_reappear_date` in
                     <foreach collection="where.failureReappearDateList" close=")" open="(" separator="," item="item">
@@ -599,6 +691,106 @@
                 </foreach>
                 ) and
             </if>
+                <if test="where.appearanceList != null">
+                    `appearance` in
+                    <foreach collection="where.appearanceList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test ="where.fuzzyAppearance!=null and where.fuzzyAppearance.size()>0">
+                (
+                <foreach collection="where.fuzzyAppearance"  separator="or" item="item">
+                    `Appearance` like concat('%',#{item},'%')
+                </foreach>
+                ) and
+            </if>
+            <if test ="where.rightFuzzyAppearance!=null and where.rightFuzzyAppearance.size()>0">
+                (
+                <foreach collection="where.rightFuzzyAppearance"  separator="or" item="item">
+                    `Appearance` like concat(#{item},'%')
+                </foreach>
+                ) and
+            </if>
+                <if test="where.analysisDepartmentsList != null">
+                    `analysis_departments` in
+                    <foreach collection="where.analysisDepartmentsList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test ="where.fuzzyAnalysisDepartments!=null and where.fuzzyAnalysisDepartments.size()>0">
+                (
+                <foreach collection="where.fuzzyAnalysisDepartments"  separator="or" item="item">
+                    `Analysis_departments` like concat('%',#{item},'%')
+                </foreach>
+                ) and
+            </if>
+            <if test ="where.rightFuzzyAnalysisDepartments!=null and where.rightFuzzyAnalysisDepartments.size()>0">
+                (
+                <foreach collection="where.rightFuzzyAnalysisDepartments"  separator="or" item="item">
+                    `Analysis_departments` like concat(#{item},'%')
+                </foreach>
+                ) and
+            </if>
+                <if test="where.analysisDeadlineList != null">
+                    `analysis_deadline` in
+                    <foreach collection="where.analysisDeadlineList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test ="where.fuzzyAnalysisDeadline!=null and where.fuzzyAnalysisDeadline.size()>0">
+                (
+                <foreach collection="where.fuzzyAnalysisDeadline"  separator="or" item="item">
+                    `Analysis_deadline` like concat('%',#{item},'%')
+                </foreach>
+                ) and
+            </if>
+            <if test ="where.rightFuzzyAnalysisDeadline!=null and where.rightFuzzyAnalysisDeadline.size()>0">
+                (
+                <foreach collection="where.rightFuzzyAnalysisDeadline"  separator="or" item="item">
+                    `Analysis_deadline` like concat(#{item},'%')
+                </foreach>
+                ) and
+            </if>
+                <if test="where.analysisRequirementList != null">
+                    `analysis_requirement` in
+                    <foreach collection="where.analysisRequirementList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test ="where.fuzzyAnalysisRequirement!=null and where.fuzzyAnalysisRequirement.size()>0">
+                (
+                <foreach collection="where.fuzzyAnalysisRequirement"  separator="or" item="item">
+                    `Analysis_requirement` like concat('%',#{item},'%')
+                </foreach>
+                ) and
+            </if>
+            <if test ="where.rightFuzzyAnalysisRequirement!=null and where.rightFuzzyAnalysisRequirement.size()>0">
+                (
+                <foreach collection="where.rightFuzzyAnalysisRequirement"  separator="or" item="item">
+                    `Analysis_requirement` like concat(#{item},'%')
+                </foreach>
+                ) and
+            </if>
+                <if test="where.appendixList != null">
+                    `appendix` in
+                    <foreach collection="where.appendixList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test ="where.fuzzyAppendix!=null and where.fuzzyAppendix.size()>0">
+                (
+                <foreach collection="where.fuzzyAppendix"  separator="or" item="item">
+                    `Appendix` like concat('%',#{item},'%')
+                </foreach>
+                ) and
+            </if>
+            <if test ="where.rightFuzzyAppendix!=null and where.rightFuzzyAppendix.size()>0">
+                (
+                <foreach collection="where.rightFuzzyAppendix"  separator="or" item="item">
+                    `Appendix` like concat(#{item},'%')
+                </foreach>
+                ) and
+            </if>
         </trim>
     </update>
 
@@ -620,9 +812,15 @@
         <result property="failureReappearPersonId" column="failure_reappear_person_id"/>
         <result property="failureReappearPersonName" column="failure_reappear_person_name"/>
         <result property="failureReappearSymbol" column="failure_reappear_symbol"/>
+        <result property="reloadDate" column="reload_date"/>
         <result property="failureReappearDate" column="failure_reappear_date"/>
         <result property="failureReappearSituation" column="failure_reappear_situation"/>
         <result property="failureReappearResult" column="failure_reappear_result"/>
+        <result property="appearance" column="appearance"/>
+        <result property="analysisDepartments" column="analysis_departments"/>
+        <result property="analysisDeadline" column="analysis_deadline"/>
+        <result property="analysisRequirement" column="analysis_requirement"/>
+        <result property="appendix" column="appendix"/>
     </resultMap>
 
 
@@ -679,6 +877,9 @@
             <if test="failureReappearSymbol != null and failureReappearSymbol!=''">
                 `failure_reappear_symbol` = #{failureReappearSymbol} and
             </if>
+            <if test="reloadDate != null and reloadDate!=''">
+                `reload_date` = #{reloadDate} and
+            </if>
             <if test="failureReappearDate != null and failureReappearDate!=''">
                 `failure_reappear_date` = #{failureReappearDate} and
             </if>
@@ -687,6 +888,21 @@
             </if>
             <if test="failureReappearResult != null and failureReappearResult!=''">
                 `failure_reappear_result` = #{failureReappearResult} and
+            </if>
+            <if test="appearance != null and appearance!=''">
+                `appearance` = #{appearance} and
+            </if>
+            <if test="analysisDepartments != null and analysisDepartments!=''">
+                `analysis_departments` = #{analysisDepartments} and
+            </if>
+            <if test="analysisDeadline != null and analysisDeadline!=''">
+                `analysis_deadline` = #{analysisDeadline} and
+            </if>
+            <if test="analysisRequirement != null and analysisRequirement!=''">
+                `analysis_requirement` = #{analysisRequirement} and
+            </if>
+            <if test="appendix != null and appendix!=''">
+                `appendix` = #{appendix} and
             </if>
             <if test = "(_parameter instanceof com.gamc.efactory.model.dataObject.MqmsFailureTrack$QueryBuilder) == true">
                 <if test="failureTrackIdList != null">
@@ -969,6 +1185,26 @@
                     </foreach>
                     ) and
                 </if>
+                <if test="reloadDateList != null">
+                    `reload_date` in
+                    <foreach collection="reloadDateList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyReloadDate!=null and fuzzyReloadDate.size()>0">
+                    (
+                    <foreach collection="fuzzyReloadDate"  separator="or" item="item">
+                        `Reload_date` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyReloadDate!=null and rightFuzzyReloadDate.size()>0">
+                    (
+                    <foreach collection="rightFuzzyReloadDate"  separator="or" item="item">
+                        `Reload_date` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
                 <if test="failureReappearDateList != null">
                     `failure_reappear_date` in
                     <foreach collection="failureReappearDateList" close=")" open="(" separator="," item="item">
@@ -1029,6 +1265,106 @@
                     </foreach>
                     ) and
                 </if>
+                <if test="appearanceList != null">
+                    `appearance` in
+                    <foreach collection="appearanceList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyAppearance!=null and fuzzyAppearance.size()>0">
+                    (
+                    <foreach collection="fuzzyAppearance"  separator="or" item="item">
+                        `Appearance` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyAppearance!=null and rightFuzzyAppearance.size()>0">
+                    (
+                    <foreach collection="rightFuzzyAppearance"  separator="or" item="item">
+                        `Appearance` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="analysisDepartmentsList != null">
+                    `analysis_departments` in
+                    <foreach collection="analysisDepartmentsList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyAnalysisDepartments!=null and fuzzyAnalysisDepartments.size()>0">
+                    (
+                    <foreach collection="fuzzyAnalysisDepartments"  separator="or" item="item">
+                        `Analysis_departments` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyAnalysisDepartments!=null and rightFuzzyAnalysisDepartments.size()>0">
+                    (
+                    <foreach collection="rightFuzzyAnalysisDepartments"  separator="or" item="item">
+                        `Analysis_departments` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="analysisDeadlineList != null">
+                    `analysis_deadline` in
+                    <foreach collection="analysisDeadlineList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyAnalysisDeadline!=null and fuzzyAnalysisDeadline.size()>0">
+                    (
+                    <foreach collection="fuzzyAnalysisDeadline"  separator="or" item="item">
+                        `Analysis_deadline` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyAnalysisDeadline!=null and rightFuzzyAnalysisDeadline.size()>0">
+                    (
+                    <foreach collection="rightFuzzyAnalysisDeadline"  separator="or" item="item">
+                        `Analysis_deadline` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="analysisRequirementList != null">
+                    `analysis_requirement` in
+                    <foreach collection="analysisRequirementList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyAnalysisRequirement!=null and fuzzyAnalysisRequirement.size()>0">
+                    (
+                    <foreach collection="fuzzyAnalysisRequirement"  separator="or" item="item">
+                        `Analysis_requirement` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyAnalysisRequirement!=null and rightFuzzyAnalysisRequirement.size()>0">
+                    (
+                    <foreach collection="rightFuzzyAnalysisRequirement"  separator="or" item="item">
+                        `Analysis_requirement` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="appendixList != null">
+                    `appendix` in
+                    <foreach collection="appendixList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyAppendix!=null and fuzzyAppendix.size()>0">
+                    (
+                    <foreach collection="fuzzyAppendix"  separator="or" item="item">
+                        `Appendix` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyAppendix!=null and rightFuzzyAppendix.size()>0">
+                    (
+                    <foreach collection="rightFuzzyAppendix"  separator="or" item="item">
+                        `Appendix` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
             </if>
         </trim>
     </select>
@@ -1086,6 +1422,9 @@
             <if test="failureReappearSymbol != null and failureReappearSymbol!=''">
                 `failure_reappear_symbol` = #{failureReappearSymbol} and
             </if>
+            <if test="reloadDate != null and reloadDate!=''">
+                `reload_date` = #{reloadDate} and
+            </if>
             <if test="failureReappearDate != null and failureReappearDate!=''">
                 `failure_reappear_date` = #{failureReappearDate} and
             </if>
@@ -1094,6 +1433,21 @@
             </if>
             <if test="failureReappearResult != null and failureReappearResult!=''">
                 `failure_reappear_result` = #{failureReappearResult} and
+            </if>
+            <if test="appearance != null and appearance!=''">
+                `appearance` = #{appearance} and
+            </if>
+            <if test="analysisDepartments != null and analysisDepartments!=''">
+                `analysis_departments` = #{analysisDepartments} and
+            </if>
+            <if test="analysisDeadline != null and analysisDeadline!=''">
+                `analysis_deadline` = #{analysisDeadline} and
+            </if>
+            <if test="analysisRequirement != null and analysisRequirement!=''">
+                `analysis_requirement` = #{analysisRequirement} and
+            </if>
+            <if test="appendix != null and appendix!=''">
+                `appendix` = #{appendix} and
             </if>
             <if test = "(_parameter instanceof com.gamc.efactory.model.dataObject.MqmsFailureTrack$QueryBuilder) == true">
                     <if test="failureTrackIdList != null">
@@ -1376,6 +1730,26 @@
                     </foreach>
                     ) and
                 </if>
+                    <if test="reloadDateList != null">
+                        `reload_date` in
+                        <foreach collection="reloadDateList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyReloadDate!=null and fuzzyReloadDate.size()>0">
+                    (
+                    <foreach collection="fuzzyReloadDate"  separator="or" item="item">
+                        `Reload_date` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyReloadDate!=null and rightFuzzyReloadDate.size()>0">
+                    (
+                    <foreach collection="rightFuzzyReloadDate"  separator="or" item="item">
+                        `Reload_date` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
                     <if test="failureReappearDateList != null">
                         `failure_reappear_date` in
                         <foreach collection="failureReappearDateList" close=")" open="(" separator="," item="item">
@@ -1436,6 +1810,106 @@
                     </foreach>
                     ) and
                 </if>
+                    <if test="appearanceList != null">
+                        `appearance` in
+                        <foreach collection="appearanceList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyAppearance!=null and fuzzyAppearance.size()>0">
+                    (
+                    <foreach collection="fuzzyAppearance"  separator="or" item="item">
+                        `Appearance` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyAppearance!=null and rightFuzzyAppearance.size()>0">
+                    (
+                    <foreach collection="rightFuzzyAppearance"  separator="or" item="item">
+                        `Appearance` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                    <if test="analysisDepartmentsList != null">
+                        `analysis_departments` in
+                        <foreach collection="analysisDepartmentsList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyAnalysisDepartments!=null and fuzzyAnalysisDepartments.size()>0">
+                    (
+                    <foreach collection="fuzzyAnalysisDepartments"  separator="or" item="item">
+                        `Analysis_departments` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyAnalysisDepartments!=null and rightFuzzyAnalysisDepartments.size()>0">
+                    (
+                    <foreach collection="rightFuzzyAnalysisDepartments"  separator="or" item="item">
+                        `Analysis_departments` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                    <if test="analysisDeadlineList != null">
+                        `analysis_deadline` in
+                        <foreach collection="analysisDeadlineList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyAnalysisDeadline!=null and fuzzyAnalysisDeadline.size()>0">
+                    (
+                    <foreach collection="fuzzyAnalysisDeadline"  separator="or" item="item">
+                        `Analysis_deadline` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyAnalysisDeadline!=null and rightFuzzyAnalysisDeadline.size()>0">
+                    (
+                    <foreach collection="rightFuzzyAnalysisDeadline"  separator="or" item="item">
+                        `Analysis_deadline` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                    <if test="analysisRequirementList != null">
+                        `analysis_requirement` in
+                        <foreach collection="analysisRequirementList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyAnalysisRequirement!=null and fuzzyAnalysisRequirement.size()>0">
+                    (
+                    <foreach collection="fuzzyAnalysisRequirement"  separator="or" item="item">
+                        `Analysis_requirement` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyAnalysisRequirement!=null and rightFuzzyAnalysisRequirement.size()>0">
+                    (
+                    <foreach collection="rightFuzzyAnalysisRequirement"  separator="or" item="item">
+                        `Analysis_requirement` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                    <if test="appendixList != null">
+                        `appendix` in
+                        <foreach collection="appendixList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyAppendix!=null and fuzzyAppendix.size()>0">
+                    (
+                    <foreach collection="fuzzyAppendix"  separator="or" item="item">
+                        `Appendix` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyAppendix!=null and rightFuzzyAppendix.size()>0">
+                    (
+                    <foreach collection="rightFuzzyAppendix"  separator="or" item="item">
+                        `Appendix` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
             </if>
         </trim>
         limit 1
@@ -1459,9 +1933,15 @@
         `failure_reappear_person_id`,
         `failure_reappear_person_name`,
         `failure_reappear_symbol`,
+        `reload_date`,
         `failure_reappear_date`,
         `failure_reappear_situation`,
         `failure_reappear_result`,
+        `appearance`,
+        `analysis_departments`,
+        `analysis_deadline`,
+        `analysis_requirement`,
+        `appendix`,
         </trim>
     </sql>
 
@@ -1530,6 +2010,9 @@
                     <if test="fetchFields.fetchFields.failureReappearSymbol==true">
                         `failure_reappear_symbol`,
                     </if>
+                    <if test="fetchFields.fetchFields.reloadDate==true">
+                        `reload_date`,
+                    </if>
                     <if test="fetchFields.fetchFields.failureReappearDate==true">
                         `failure_reappear_date`,
                     </if>
@@ -1538,6 +2021,21 @@
                     </if>
                     <if test="fetchFields.fetchFields.failureReappearResult==true">
                         `failure_reappear_result`,
+                    </if>
+                    <if test="fetchFields.fetchFields.appearance==true">
+                        `appearance`,
+                    </if>
+                    <if test="fetchFields.fetchFields.analysisDepartments==true">
+                        `analysis_departments`,
+                    </if>
+                    <if test="fetchFields.fetchFields.analysisDeadline==true">
+                        `analysis_deadline`,
+                    </if>
+                    <if test="fetchFields.fetchFields.analysisRequirement==true">
+                        `analysis_requirement`,
+                    </if>
+                    <if test="fetchFields.fetchFields.appendix==true">
+                        `appendix`,
                     </if>
                     </if>
                     <if test="fetchFields.AllFields==null and fetchFields.excludeFields!=null">
@@ -1589,6 +2087,9 @@
                     <if test="fetchFields.excludeFields.failureReappearSymbol==null">
                         `failure_reappear_symbol`,
                     </if>
+                    <if test="fetchFields.excludeFields.reloadDate==null">
+                        `reload_date`,
+                    </if>
                     <if test="fetchFields.excludeFields.failureReappearDate==null">
                         `failure_reappear_date`,
                     </if>
@@ -1597,6 +2098,21 @@
                     </if>
                     <if test="fetchFields.excludeFields.failureReappearResult==null">
                         `failure_reappear_result`,
+                    </if>
+                    <if test="fetchFields.excludeFields.appearance==null">
+                        `appearance`,
+                    </if>
+                    <if test="fetchFields.excludeFields.analysisDepartments==null">
+                        `analysis_departments`,
+                    </if>
+                    <if test="fetchFields.excludeFields.analysisDeadline==null">
+                        `analysis_deadline`,
+                    </if>
+                    <if test="fetchFields.excludeFields.analysisRequirement==null">
+                        `analysis_requirement`,
+                    </if>
+                    <if test="fetchFields.excludeFields.appendix==null">
+                        `appendix`,
                     </if>
                     </if>
                     <if test="fetchFields.otherFields!=null and fetchFields.otherFields.size>0">

@@ -10,7 +10,7 @@ import java.util.List;
 */
 public class Dict implements Serializable {
 
-    private static final long serialVersionUID = 1564372165625L;
+    private static final long serialVersionUID = 1584602060348L;
 
 
     /**

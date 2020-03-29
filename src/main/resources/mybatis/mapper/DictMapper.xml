@@ -4,7 +4,7 @@
 <mapper namespace="com.gamc.efactory.dao.DictMapper">
     <select id="countDict" resultType="java.lang.Integer">
         select COUNT(*)
-        from  `wms_dict`
+        from  `mqms_dict`
         <trim prefix="where" suffixOverrides="and | or">
             <if test="dictId != null">
                 `dict_id` = #{dictId} and

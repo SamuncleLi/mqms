@@ -10,7 +10,12 @@ import java.util.Map;
 
 public class ProcessForm implements Serializable {
     /**
-     * normalData用于展示内容，一个 DataDisplayGroup 代表一个块
+     * normalData用于展示内容，一个 DataDisplayGroup 代表一个展示区域
+     * listData用于展示列表内容（类似easyui 的datagrid） 一个DataDisplayList 代表一个块（datagrid）
+     * submitForm用于放置评审者需要填写的表单，系统自动会在此表单基础上添加隐藏的表单控件，内容为流程系统的task信息：
+     *           taskName simpleApplicationObjectId processInstId auditorUserId taskId flag
+     * submitButton用于展示评审者点击的按钮 一个SubmitButton代表一个按钮
+     *
      */
     private List<DataDisplayGroup> normalData;
     private List<DataDisplayList>   listData;
@@ -102,12 +107,12 @@ public class ProcessForm implements Serializable {
 
     /**
      * DataDisplayGroup 表示一个数据展示区域
-     * group_name 展示区域的标题
-     * structure  描述电脑版本上该区域的表格结构（手机版无视该结构）
+     * group_name(必填) 展示区域的标题
+     * structure(必填)  描述电脑版本上该区域的表格结构（手机版无视该结构）
      *            表格最多只能有四列，列于列之间可以合并
      *            示例： [[1,1,1,1],[2,2]]表示该表格有两行，第一行是4列  ，第二行第一列和第二列合并，第三列和第四列合并
      *            列数可以有省缺值，例如[[1],[1]] 表示有两行，每一行都是4列，但是每一行的数组里至少放一个1
-     * data       展示内容的集合
+     * data（必填）       展示内容的集合
      */
     public static   class DataDisplayGroup implements Serializable{
         private String group_name;
@@ -147,7 +152,10 @@ public class ProcessForm implements Serializable {
 
     /**
      * DataDisplaySingle 用于描述单个展示的内容
-     * type  类型，
+     * type（必填）      类型，包括： text image file (TODO:pdf)
+     * content（必填）  具体的内容，如果类型是image/file/pdf 则为文件的url地址
+     * title（必填）    标题
+     * row/col（必填）  展示的内容所在的表格结构的行数和列数（起始值为1不是0）
      */
     public static class DataDisplaySingle implements Serializable{
         private    String type;
@@ -197,6 +205,16 @@ public class ProcessForm implements Serializable {
         }
     }
 
+    /**
+     * DataDisplayList 表示一个列表数据展示区域
+     * group_name（必填）  列表的名称
+     * head（必填）        表头信息,手机版的列表为手风琴列表，加载时只显示一行内容，点击才显示剩余内容。
+     *                     未展开前显示的这一行内容为head集合的第一个，所以请确保head的第一个DatagridHead能够体现出这一行数据的特性，
+     *                     例如如果这是一个零件出库列表，则第一个DatagridHead应为"零件名称"
+     * data_url（选填）    数据来源的url，返回的数据类型应为JSONArray(method:get)
+     * data（选填）        列表的数据（类似easyui datagrid 获取的JSONArray）
+     */
+
     public static class DataDisplayList implements Serializable{
         private String group_name;
         private String data_url;
@@ -234,7 +252,20 @@ public class ProcessForm implements Serializable {
         public void setData(JSONArray data) {
             this.data = data;
         }
+        public void addDatagridHead(DatagridHead datagridHead){
+            if(head!=null){
+                head=new ArrayList<>();
+            }
+            head.add(datagridHead);
+        }
     }
+
+    /**
+     * DatagridHead 数据列表的表头信息
+     * name（必填）  表头名称
+     * field（必填） 数据的key值
+     * width（必填） 表头宽度，单位为px（只有PC版才会生效）
+     */
     public static class DatagridHead implements Serializable{
         private String name;
         private String field;
@@ -304,6 +335,15 @@ public class ProcessForm implements Serializable {
             this.dataList = dataList;
         }
     }
+
+    /**
+     * SubmitFormGroup用于描述一个表单
+     * input(必填)  表单控件的集合,一个SubmitFormSingle代表一个控件
+     * structure(必填)  描述电脑版本上该表单的表格结构（手机版无视该结构）
+     *            表格最多只能有四列，列于列之间可以合并
+     *            示例： [[1,1,1,1],[2,2]]表示该表格有两行，第一行是4列  ，第二行第一列和第二列合并，第三列和第四列合并
+     *            列数可以有省缺值，例如[[1],[1]] 表示有两行，每一行都是4列，但是每一行的数组里至少放一个1
+     */
     public static class SubmitFormGroup implements Serializable{
         private List<SubmitFormSingle> input;
         private List<List<Integer>> structure;
@@ -330,6 +370,30 @@ public class ProcessForm implements Serializable {
             input.add(submitFormSingle);
         }
     }
+
+    /**
+     * SubmitFormSingle 用于描述一个表单控件
+     * type（必填） 控件类型，包括：text（纯文本，不用填写任何东西） combobox(组合单选框 TODO:PC版的能够填写，手机版的只能选择)
+     *                            combobox-multi(多选框)
+     *                            textbox datebox filebox
+     * name（必填） 控件提交时的name值，不能使用的name值：
+     * title（必填） 控件的标题
+     *             taskName simpleApplicationObjectId processInstId auditorUserId taskId flag
+     * row/col（必填） 控件所在表单结构的行数和列数（起始值为1）
+     * text（选填） 如果控件类型为text(纯文本)，则填写文本内容，其他类型不用填
+     * input_id（选填） 控件的id,如果控件类型为combobox或combobox-multi必填，其他无特殊情况不用填.
+     *                 已经被占用的id不能使用，它们有：
+     *                 datagrid 开头的id ;download；app;add_list；mask;loading;L9;
+     * lines（选填） textbox的行数(默认为1)
+     * data_url（选填） combobox/combobox-multi 的数据源，页面会从该url获取选项内容,url返回的类型为JSONArray,每个JSONObject的格式为{"name":"xxxx","value":"xxx"}
+     *                 系统向该url获取请求时(method:get)还会附带一个JSON对象，内容为task信息，有： taskName simpleApplicationObjectId processInstId auditorUserId taskId flag
+     * option(选填)    combobox/combobox-multi的选项内容，其中第一个String对应选项的显示内容(即name值)，第二个String对应选项的实际提交内容(即value值)
+     *                 例如option为: {{"是":"yes"},{"否":"no"}}，则该下拉框的选项为"是"和"否"，如果选了"是",则表单提交的值为"yes"
+     * attr(选填)    控件的属性值，系统会自动写入控件的标签里（*同样的属性值在PC版和手机版可能会有差异）
+     *               例如：attr为：{{"data-options":"editable:false,required:true"}} 的控件
+     *               系统 生成的html（以PC为例） 为："<input  ##id## style='width:95%;height:##height##' class=##class##  name=##name## data-options="editable:false,required:true">
+     *               不能写入的属性：id;style;class;name;placeholder;
+     */
     public static class SubmitFormSingle implements Serializable{
         private String type;
         private String name;
@@ -445,6 +509,18 @@ public class ProcessForm implements Serializable {
             option.put(name,value);
         }
     }
+
+    /**
+     * SubmitButton 用于描述一个按钮
+     * name(必填) 按扭的名称
+     * url（必填） 当点击按钮时，系统会向该url提交表单，如果SubmitFormGroup为空，系统也会提交隐藏表单，表单内容为task的相关信息：
+     *             taskName simpleApplicationObjectId processInstId auditorUserId taskId flag
+     * button_id（选填）按钮的id，非特殊情况不要填，不能使用已被占用的id，他们有：
+     *                  datagrid 开头的id ;download；app;add_list；mask;loading;L9;
+     * icon（选填） PC版按钮的图标，手机版没有图标，可填的值有：
+     *             blank;add;edit;clear;remove;save;cut;ok;no;cancel;reload;search;print;help;undo;redo;back;sum;tip;next;filter;man;lock;more;
+     *
+     */
     public static class SubmitButton{
         private String button_id;
         private String name;

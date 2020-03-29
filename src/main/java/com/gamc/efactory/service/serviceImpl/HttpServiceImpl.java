@@ -34,10 +34,10 @@ public class HttpServiceImpl implements HttpService{
     //接收JSON
     @Override
     public <T> T postInJSON(String url, Map<String, String> params, Class<T> returnClass){
-        RestTemplate client = new RestTemplate();
-//        RestTemplate client = new RestTemplate(new SimpleClientHttpRequestFactory() {{
-//            setProxy(new java.net.Proxy(java.net.Proxy.Type.HTTP, new InetSocketAddress("127.0.0.1", 8888)));
-//        }});
+//        RestTemplate client = new RestTemplate();
+        RestTemplate client = new RestTemplate(new SimpleClientHttpRequestFactory() {{
+            setProxy(new java.net.Proxy(java.net.Proxy.Type.HTTP, new InetSocketAddress("127.0.0.1", 8888)));
+        }});
         HttpHeaders headers = new HttpHeaders();
         //  请勿轻易改变此提交方式，大部分的情况下，提交方式都是表单提交 todo contenttype可设置
         headers.setContentType(MediaType.APPLICATION_JSON);
