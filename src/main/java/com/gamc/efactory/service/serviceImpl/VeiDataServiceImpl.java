@@ -139,7 +139,6 @@ public class VeiDataServiceImpl implements VeiDataService {
                         e.printStackTrace();
                     }
 //                    mqmsVoucherRecord.setSalesFailureTime(salesFailureMonths);
-                    ，
                     mqmsVoucherRecord.setOfflineFailureTime(offlineFailureMonths);
                 }
 
