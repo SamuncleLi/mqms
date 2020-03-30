@@ -121,15 +121,15 @@ public class VeiDataServiceImpl implements VeiDataService {
                     }
                     mqmsVoucherRecord.setTransmissionComfirmTime(Integer.toString(proFailureMonths));
                 }
-                //销售至故障经过月
-                int salesFailureMonths = 0;
-                if (mqmsVoucherRecord.getSalesDate() != null && mqmsVoucherRecord.getFailureDate() != null) {
-                    try {
-                        salesFailureMonths = MqmsUtil.getMonth(mqmsVoucherRecord.getSalesDate(), mqmsVoucherRecord.getFailureDate());
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }
+//                //销售至故障经过月
+//                int salesFailureMonths = 0;
+//                if (mqmsVoucherRecord.getSalesDate() != null && mqmsVoucherRecord.getFailureDate() != null) {
+//                    try {
+//                        salesFailureMonths = MqmsUtil.getMonth(mqmsVoucherRecord.getSalesDate(), mqmsVoucherRecord.getFailureDate());
+//                    } catch (Exception e) {
+//                        e.printStackTrace();
+//                    }
+//                }
                 //下线至故障经过月
                 int offlineFailureMonths = 0;
                 if (mqmsVoucherRecord.getOfflineDate() != null && mqmsVoucherRecord.getFailureDate() != null) {
@@ -138,7 +138,7 @@ public class VeiDataServiceImpl implements VeiDataService {
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
-                    mqmsVoucherRecord.setSalesFailureTime(salesFailureMonths);
+//                    mqmsVoucherRecord.setSalesFailureTime(salesFailureMonths);
                     mqmsVoucherRecord.setOfflineFailureTime(offlineFailureMonths);
                 }
 
