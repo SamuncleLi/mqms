@@ -1,0 +1,423 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gamc.efactory.dao.base.MqmsCarTypeInforBaseMapper">
+
+
+    <insert id="insertMqmsCarTypeInfor"  useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO `mqms_car_type_infor`
+        (
+        <trim suffixOverrides=",">
+                    <if test="id!=null">
+                        `id`,
+                    </if>
+                    <if test="carType!=null">
+                        `car_type`,
+                    </if>
+                    <if test="manufactureDate!=null">
+                        `manufacture_date`,
+                    </if>
+                    <if test="specificType!=null">
+                        `specific_type`,
+                    </if>
+        </trim>
+        )
+        VALUES
+        (
+        <trim suffixOverrides=",">
+                <if test="id!=null">
+                    #{id},
+                </if>
+                <if test="carType!=null">
+                    #{carType},
+                </if>
+                <if test="manufactureDate!=null">
+                    #{manufactureDate},
+                </if>
+                <if test="specificType!=null">
+                    #{specificType},
+                </if>
+        </trim>
+        )
+    </insert>
+
+
+
+
+    <update id="updateMqmsCarTypeInfor">
+        UPDATE `mqms_car_type_infor`
+        SET
+        <trim suffixOverrides=",">
+            <if test="carType != null and carType!=''">
+                `car_type` = #{carType},
+            </if>
+            <if test="manufactureDate != null and manufactureDate!=''">
+                `manufacture_date` = #{manufactureDate},
+            </if>
+            <if test="specificType != null and specificType!=''">
+                `specific_type` = #{specificType},
+            </if>
+        </trim>
+        WHERE
+        <trim suffixOverrides="and">
+                `id` = #{id} and
+        </trim>
+    </update>
+
+    <update id="update">
+        UPDATE `mqms_car_type_infor`
+        SET
+        <trim suffixOverrides=",">
+        <if test="set.carType != null and set.carType!=''">
+            `car_type` = #{set.carType},
+        </if>
+        <if test="set.manufactureDate != null and set.manufactureDate!=''">
+            `manufacture_date` = #{set.manufactureDate},
+        </if>
+        <if test="set.specificType != null and set.specificType!=''">
+            `specific_type` = #{set.specificType},
+        </if>
+        </trim>
+        <trim prefix="where" suffixOverrides="and | or">
+                <if test="where.idList != null">
+                    `id` in
+                    <foreach collection="where.idList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test="where.idSt !=null">
+                `id` >= #{where.idSt} and
+            </if>
+            <if test="where.idEd!=null">
+                `id` &lt;= #{where.idEd} and
+            </if>
+                <if test="where.carTypeList != null">
+                    `car_type` in
+                    <foreach collection="where.carTypeList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test ="where.fuzzyCarType!=null and where.fuzzyCarType.size()>0">
+                (
+                <foreach collection="where.fuzzyCarType"  separator="or" item="item">
+                    `Car_type` like concat('%',#{item},'%')
+                </foreach>
+                ) and
+            </if>
+            <if test ="where.rightFuzzyCarType!=null and where.rightFuzzyCarType.size()>0">
+                (
+                <foreach collection="where.rightFuzzyCarType"  separator="or" item="item">
+                    `Car_type` like concat(#{item},'%')
+                </foreach>
+                ) and
+            </if>
+                <if test="where.manufactureDateList != null">
+                    `manufacture_date` in
+                    <foreach collection="where.manufactureDateList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test ="where.fuzzyManufactureDate!=null and where.fuzzyManufactureDate.size()>0">
+                (
+                <foreach collection="where.fuzzyManufactureDate"  separator="or" item="item">
+                    `Manufacture_date` like concat('%',#{item},'%')
+                </foreach>
+                ) and
+            </if>
+            <if test ="where.rightFuzzyManufactureDate!=null and where.rightFuzzyManufactureDate.size()>0">
+                (
+                <foreach collection="where.rightFuzzyManufactureDate"  separator="or" item="item">
+                    `Manufacture_date` like concat(#{item},'%')
+                </foreach>
+                ) and
+            </if>
+                <if test="where.specificTypeList != null">
+                    `specific_type` in
+                    <foreach collection="where.specificTypeList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test ="where.fuzzySpecificType!=null and where.fuzzySpecificType.size()>0">
+                (
+                <foreach collection="where.fuzzySpecificType"  separator="or" item="item">
+                    `Specific_type` like concat('%',#{item},'%')
+                </foreach>
+                ) and
+            </if>
+            <if test ="where.rightFuzzySpecificType!=null and where.rightFuzzySpecificType.size()>0">
+                (
+                <foreach collection="where.rightFuzzySpecificType"  separator="or" item="item">
+                    `Specific_type` like concat(#{item},'%')
+                </foreach>
+                ) and
+            </if>
+        </trim>
+    </update>
+
+
+    <resultMap type="com.gamc.efactory.model.dataObject.MqmsCarTypeInfor" id="MqmsCarTypeInforMap">
+        <result property="id" column="id"/>
+        <result property="carType" column="car_type"/>
+        <result property="manufactureDate" column="manufacture_date"/>
+        <result property="specificType" column="specific_type"/>
+    </resultMap>
+
+
+    <select id="queryMqmsCarTypeInfor" resultMap="MqmsCarTypeInforMap">
+        select
+        <include refid="baseResult"></include>
+        from  `mqms_car_type_infor`
+        <trim prefix="where" suffixOverrides="and | or">
+            <if test="id != null">
+                `id` = #{id} and
+            </if>
+            <if test="carType != null and carType!=''">
+                `car_type` = #{carType} and
+            </if>
+            <if test="manufactureDate != null and manufactureDate!=''">
+                `manufacture_date` = #{manufactureDate} and
+            </if>
+            <if test="specificType != null and specificType!=''">
+                `specific_type` = #{specificType} and
+            </if>
+            <if test = "(_parameter instanceof com.gamc.efactory.model.dataObject.MqmsCarTypeInfor$QueryBuilder) == true">
+                <if test="idList != null">
+                    `id` in
+                    <foreach collection="idList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test="idSt !=null">
+                    `id` >= #{idSt} and
+                </if>
+                <if test="idEd!=null">
+                    `id` &lt;= #{idEd} and
+                </if>
+                <if test="carTypeList != null">
+                    `car_type` in
+                    <foreach collection="carTypeList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyCarType!=null and fuzzyCarType.size()>0">
+                    (
+                    <foreach collection="fuzzyCarType"  separator="or" item="item">
+                        `Car_type` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyCarType!=null and rightFuzzyCarType.size()>0">
+                    (
+                    <foreach collection="rightFuzzyCarType"  separator="or" item="item">
+                        `Car_type` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="manufactureDateList != null">
+                    `manufacture_date` in
+                    <foreach collection="manufactureDateList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyManufactureDate!=null and fuzzyManufactureDate.size()>0">
+                    (
+                    <foreach collection="fuzzyManufactureDate"  separator="or" item="item">
+                        `Manufacture_date` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyManufactureDate!=null and rightFuzzyManufactureDate.size()>0">
+                    (
+                    <foreach collection="rightFuzzyManufactureDate"  separator="or" item="item">
+                        `Manufacture_date` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="specificTypeList != null">
+                    `specific_type` in
+                    <foreach collection="specificTypeList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzySpecificType!=null and fuzzySpecificType.size()>0">
+                    (
+                    <foreach collection="fuzzySpecificType"  separator="or" item="item">
+                        `Specific_type` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzySpecificType!=null and rightFuzzySpecificType.size()>0">
+                    (
+                    <foreach collection="rightFuzzySpecificType"  separator="or" item="item">
+                        `Specific_type` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+            </if>
+        </trim>
+    </select>
+
+    <select id="queryMqmsCarTypeInforLimit1" resultMap="MqmsCarTypeInforMap">
+        select
+        <include refid="baseResult"></include>
+        from  `mqms_car_type_infor`
+        <trim prefix="where" suffixOverrides="and | or">
+            <if test="id != null">
+                `id` = #{id} and
+            </if>
+            <if test="carType != null and carType!=''">
+                `car_type` = #{carType} and
+            </if>
+            <if test="manufactureDate != null and manufactureDate!=''">
+                `manufacture_date` = #{manufactureDate} and
+            </if>
+            <if test="specificType != null and specificType!=''">
+                `specific_type` = #{specificType} and
+            </if>
+            <if test = "(_parameter instanceof com.gamc.efactory.model.dataObject.MqmsCarTypeInfor$QueryBuilder) == true">
+                    <if test="idList != null">
+                        `id` in
+                        <foreach collection="idList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test="idSt !=null">
+                    `id` >= #{idSt} and
+                </if>
+                <if test="idEd!=null">
+                    `id` &lt;= #{idEd} and
+                </if>
+                    <if test="carTypeList != null">
+                        `car_type` in
+                        <foreach collection="carTypeList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyCarType!=null and fuzzyCarType.size()>0">
+                    (
+                    <foreach collection="fuzzyCarType"  separator="or" item="item">
+                        `Car_type` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyCarType!=null and rightFuzzyCarType.size()>0">
+                    (
+                    <foreach collection="rightFuzzyCarType"  separator="or" item="item">
+                        `Car_type` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                    <if test="manufactureDateList != null">
+                        `manufacture_date` in
+                        <foreach collection="manufactureDateList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyManufactureDate!=null and fuzzyManufactureDate.size()>0">
+                    (
+                    <foreach collection="fuzzyManufactureDate"  separator="or" item="item">
+                        `Manufacture_date` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyManufactureDate!=null and rightFuzzyManufactureDate.size()>0">
+                    (
+                    <foreach collection="rightFuzzyManufactureDate"  separator="or" item="item">
+                        `Manufacture_date` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                    <if test="specificTypeList != null">
+                        `specific_type` in
+                        <foreach collection="specificTypeList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzySpecificType!=null and fuzzySpecificType.size()>0">
+                    (
+                    <foreach collection="fuzzySpecificType"  separator="or" item="item">
+                        `Specific_type` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzySpecificType!=null and rightFuzzySpecificType.size()>0">
+                    (
+                    <foreach collection="rightFuzzySpecificType"  separator="or" item="item">
+                        `Specific_type` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+            </if>
+        </trim>
+        limit 1
+    </select>
+
+    <sql id="allResult">
+        <trim suffixOverrides=",">
+        `id`,
+        `car_type`,
+        `manufacture_date`,
+        `specific_type`,
+        </trim>
+    </sql>
+
+
+
+    <sql id="baseResult">
+        <trim suffixOverrides=",">
+            <if test = "(_parameter instanceof com.gamc.efactory.model.dataObject.MqmsCarTypeInfor$QueryBuilder) == true">
+
+                <if test="fetchFields==null">
+                    <include refid="allResult"></include>
+                </if>
+                <if test="fetchFields!=null">
+                    <if test="fetchFields.AllFields !=null">
+                        <include refid="allResult"></include>
+                    </if>
+                    <if test="fetchFields.AllFields ==null and fetchFields.fetchFields==null and fetchFields.excludeFields==null and fetchFields.otherFields==null">
+                        <include refid="allResult"></include>
+                    </if>
+                    <if test="fetchFields.AllFields==null and fetchFields.fetchFields!=null">
+                    <if test="fetchFields.fetchFields.id==true">
+                        `id`,
+                    </if>
+                    <if test="fetchFields.fetchFields.carType==true">
+                        `car_type`,
+                    </if>
+                    <if test="fetchFields.fetchFields.manufactureDate==true">
+                        `manufacture_date`,
+                    </if>
+                    <if test="fetchFields.fetchFields.specificType==true">
+                        `specific_type`,
+                    </if>
+                    </if>
+                    <if test="fetchFields.AllFields==null and fetchFields.excludeFields!=null">
+                    <if test="fetchFields.excludeFields.id==null">
+                        `id`,
+                    </if>
+                    <if test="fetchFields.excludeFields.carType==null">
+                        `car_type`,
+                    </if>
+                    <if test="fetchFields.excludeFields.manufactureDate==null">
+                        `manufacture_date`,
+                    </if>
+                    <if test="fetchFields.excludeFields.specificType==null">
+                        `specific_type`,
+                    </if>
+                    </if>
+                    <if test="fetchFields.otherFields!=null and fetchFields.otherFields.size>0">
+                        <foreach collection="fetchFields.otherFields" index="index" item="item" separator=",">
+                        `#{item}`
+                        </foreach>
+                    </if>
+                </if>
+            </if>
+            <if test="(_parameter instanceof com.gamc.efactory.model.dataObject.MqmsCarTypeInfor$QueryBuilder) == false" >
+                <include refid="allResult"></include>
+            </if>
+
+        </trim>
+    </sql>
+
+
+</mapper>
