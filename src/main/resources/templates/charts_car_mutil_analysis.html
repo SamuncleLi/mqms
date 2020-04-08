@@ -88,6 +88,9 @@
                             icon: 'info',
 //                    top:300
                         });
+                        setTimeout(function(){
+                            $(".messager-body").window('close');
+                        },3000);
                         var carType = $("#carType").combobox("getValues");
 
                         //添加相当于机型数量的折线

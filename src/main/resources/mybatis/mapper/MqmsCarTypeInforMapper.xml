@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gamc.efactory.dao.MqmsCarTypeInforMapper">
+
+    <resultMap type="com.gamc.efactory.model.dataObject.MqmsCarTypeInfor" id="MqmsCarTypeInforMap">
+        <result property="id" column="id"/>
+        <result property="carType" column="car_type"/>
+        <result property="manufactureDate" column="manufacture_date"/>
+        <result property="specificType" column="specific_type"/>
+    </resultMap>
+    <select id="searchCarTypeInfor"  resultMap="MqmsCarTypeInforMap" >
+        SELECT DISTINCT `car_type` FROM `mqms_car_type_infor`
+    </select>
+    <select id="searchCarDetailInfor"  resultMap="MqmsCarTypeInforMap" >
+        SELECT `manufacture_date`,`specific_type` FROM `mqms_car_type_infor`
+        WHERE `car_type`=#{carType}
+    </select>
+    <select id="searchNextDate"  resultType="java.lang.String">
+        SELECT `manufacture_date` FROM `mqms_car_type_infor`
+        WHERE `car_type`=#{carType} ORDER BY `manufacture_date` DESC
+    </select>
+</mapper>
