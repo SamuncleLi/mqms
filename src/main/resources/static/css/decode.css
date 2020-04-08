@@ -30,7 +30,12 @@ html{
     width: 800px;
     height: 400px;
 }
-
+/*#searchItems {*/
+   /*height: 67%;*/
+/*}*/
+/*#searchItems .easyui-combobox {*/
+    /*height: 20%;*/
+/*}*/
 /*#selectionInfor .fieldset{*/
     /*background-color: #f1f1f1;*/
     /*border: none;*/
