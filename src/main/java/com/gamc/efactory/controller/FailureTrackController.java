@@ -6,9 +6,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.gamc.efactory.config.Config;
 import com.gamc.efactory.config.TaskName;
-import com.gamc.efactory.dao.MqmsFailureAnalysisMapper;
-import com.gamc.efactory.dao.MqmsFailureTrackMapper;
-import com.gamc.efactory.dao.UserMapper;
+import com.gamc.efactory.dao.*;
 import com.gamc.efactory.model.dataObject.*;
 import com.gamc.efactory.service.FailureTrackService;
 import com.gamc.efactory.service.HttpService;
@@ -53,6 +51,10 @@ public class FailureTrackController {
     UserMapper userMapper;
     @Autowired
     MqmsFailureAnalysisMapper mqmsFailureAnalysisMapper;
+    @Autowired
+    MqmsUserDictMapper userDictMapper;
+    @Autowired
+    DictMapper dictMapper;
 
     @RequestMapping("/columnNameAndComment")
     public JSONArray getColumnNameAndComment(@RequestParam("table") String table) {
@@ -307,9 +309,14 @@ public class FailureTrackController {
             submitFormSingle2.setInput_id("carTestSymbol");
             submitFormSingle2.setRow(1);
             submitFormSingle2.setCol(2);
-            submitFormSingle2.setData_url("/static/test.json");
-            submitFormSingle2.addOption("是", "y");
-            submitFormSingle2.addOption("否", "n");
+
+            Dict dictE = new Dict();
+            dictE.setDictType1("boolean");
+            List<Dict> dicts = dictMapper.queryDict(dictE);
+            for(Dict dict:dicts){
+                submitFormSingle2.addOption(dict.getDictText(),dict.getDictValue());
+            }
+
             ProcessForm.SubmitFormSingle submitFormSingle4 = new ProcessForm.SubmitFormSingle();
             submitFormSingle4.setType("filebox");
             submitFormSingle4.setTitle("上传附件");
@@ -320,7 +327,6 @@ public class FailureTrackController {
 
             submitFormGroup.addSubmitSingle(submitFormSingle1);
             submitFormGroup.addSubmitSingle(submitFormSingle2);
-//            submitFormGroup.addSubmitSingle(submitFormSingle3);
             submitFormGroup.addSubmitSingle(submitFormSingle4);
             List<List<Integer>> mStructure2 = null;
 
@@ -331,7 +337,7 @@ public class FailureTrackController {
             ProcessForm.SubmitButton submitButton = new ProcessForm.SubmitButton();
 
             submitButton.setName("提交");
-            submitButton.setUrl("http://127.0.0.1:8086/mqms/failure_track/appearance_check?failureTrackId=" + String.valueOf(mqmsFailureTrack.getFailureTrackId()));
+            submitButton.setUrl("/mqms/failure_track/appearance_check?failureTrackId=" + String.valueOf(mqmsFailureTrack.getFailureTrackId()));
             processForm.addSubmitButton(submitButton);
         } else if ("再现担当".equals(simpleApplicationObjectData.getString("taskName"))) {
             ProcessForm.DataDisplayGroup previousInfo = failureTrackService.getPreviousInfo(failureTrackId);
@@ -391,7 +397,7 @@ public class FailureTrackController {
             ProcessForm.SubmitButton submitButton = new ProcessForm.SubmitButton();
 
             submitButton.setName("提交");
-            submitButton.setUrl("http://127.0.0.1:8086/mqms/failure_track/failure_reappear?failureTrackId=" + String.valueOf(mqmsFailureTrack.getFailureTrackId()));
+            submitButton.setUrl("/mqms/failure_track/failure_reappear?failureTrackId=" + String.valueOf(mqmsFailureTrack.getFailureTrackId()));
             processForm.addSubmitButton(submitButton);
         } else if ("选择解析科室".equals(simpleApplicationObjectData.getString("taskName"))) {
             String structure2 = "[[1,3]]";
@@ -403,8 +409,12 @@ public class FailureTrackController {
             submitFormSingle1.setInput_id("needAnalyse");
             submitFormSingle1.setRow(1);
             submitFormSingle1.setCol(1);
-            submitFormSingle1.addOption("是", "y");
-            submitFormSingle1.addOption("否", "n");
+            Dict dictE = new Dict();
+            dictE.setDictType1("boolean");
+            List<Dict> dicts = dictMapper.queryDict(dictE);
+            for(Dict dict:dicts){
+                submitFormSingle1.addOption(dict.getDictText(),dict.getDictValue());
+            }
             ProcessForm.SubmitFormSingle submitFormSingle2 = new ProcessForm.SubmitFormSingle();
             submitFormSingle2.setType("combobox-multi");
             submitFormSingle2.setTitle("解析科室");
@@ -412,12 +422,19 @@ public class FailureTrackController {
             submitFormSingle2.setInput_id("analysisDepartments");
             submitFormSingle2.setRow(1);
             submitFormSingle2.setCol(2);
-            //TODO 动态加载科室 3/30
-            submitFormSingle2.addOption("设备科", "sbk");
-            submitFormSingle2.addOption("生产技术科", "scjsk");
+
+            //动态加载科室
+            Dict dictDepartment = new Dict();
+            dictDepartment.setDictType1("department");
+            List<Dict> dictDepartments = dictMapper.queryDict(dictDepartment);
+            for(Dict dict:dictDepartments){
+                submitFormSingle2.addOption(dict.getDictText(),dict.getDictValue());
+            }
             submitFormGroup.addSubmitSingle(submitFormSingle1);
             submitFormGroup.addSubmitSingle(submitFormSingle2);
             List<List<Integer>> mStructure2 = null;
+
+            //TODO 记录flag，所有分支都需要 4/1
 
             mStructure2 = objectMapper.readValue(structure2.toString(), List.class);
 
@@ -426,7 +443,7 @@ public class FailureTrackController {
             ProcessForm.SubmitButton submitButton = new ProcessForm.SubmitButton();
 
             submitButton.setName("提交");
-            submitButton.setUrl("http://127.0.0.1:8086/mqms/failure_track/choose_department?failureTrackId=" + String.valueOf(mqmsFailureTrack.getFailureTrackId()));
+            submitButton.setUrl("/mqms/failure_track/choose_department?failureTrackId=" + String.valueOf(mqmsFailureTrack.getFailureTrackId()));
             processForm.addSubmitButton(submitButton);
         } else if ("窗口".equals(simpleApplicationObjectData.getString("taskName"))) {
             ProcessForm.DataDisplayGroup failureTrackInfo = failureTrackService.getPreviousInfo(failureTrackId);
@@ -464,7 +481,7 @@ public class FailureTrackController {
             ProcessForm.SubmitButton submitButton = new ProcessForm.SubmitButton();
 
             submitButton.setName("提交");
-            submitButton.setUrl("http://127.0.0.1:8086/mqms/failure_track/choose_engineer?failureTrackId=" + String.valueOf(mqmsFailureTrack.getFailureTrackId()));
+            submitButton.setUrl("/mqms/failure_track/choose_engineer?failureTrackId=" + String.valueOf(mqmsFailureTrack.getFailureTrackId()));
             processForm.addSubmitButton(submitButton);
         } else if ("工程师解析".equals(simpleApplicationObjectData.getString("taskName"))) {
             ProcessForm.DataDisplayGroup previousInfo = failureTrackService.getPreviousInfo(failureTrackId);
@@ -472,7 +489,7 @@ public class FailureTrackController {
             ProcessForm.DataDisplayGroup appendixInfo = failureTrackService.getAppendixInfo(failureTrackId);
             processForm.addNormalData(appendixInfo);
 
-            String structure2 = "[[4],[4],[3,1],[4]]";
+            String structure2 = "[[4],[4],[2,1,1],[4]]";
             ProcessForm.SubmitFormGroup submitFormGroup = new ProcessForm.SubmitFormGroup();
             ProcessForm.SubmitFormSingle submitFormSingle1 = new ProcessForm.SubmitFormSingle();
             submitFormSingle1.setType("textbox");
@@ -508,12 +525,26 @@ public class FailureTrackController {
             submitFormSingle4.setName("solutionDate");
             submitFormSingle4.setInput_id("solutionDate");
             submitFormSingle4.setRow(3);
-            submitFormSingle4.setCol(4);
+            submitFormSingle4.setCol(3);
+            ProcessForm.SubmitFormSingle submitFormSingle6 = new ProcessForm.SubmitFormSingle();
+            submitFormSingle6.setType("datebox");
+            submitFormSingle6.setTitle("首台号");
+            submitFormSingle6.setName("firstChangedCode");
+            submitFormSingle6.setInput_id("firstChangedCode");
+            submitFormSingle6.setRow(3);
+            submitFormSingle6.setCol(4);
+            ProcessForm.SubmitFormSingle submitFormSingle7 = new ProcessForm.SubmitFormSingle();
+            submitFormSingle7.setType("datebox");
+            submitFormSingle7.setTitle("对策实施时间");
+            submitFormSingle7.setName("solutionDate");
+            submitFormSingle7.setInput_id("solutionDate");
+            submitFormSingle7.setRow(3);
+            submitFormSingle7.setCol(3);
             ProcessForm.SubmitFormSingle submitFormSingle5 = new ProcessForm.SubmitFormSingle();
             submitFormSingle5.setType("textbox");
-            submitFormSingle5.setTitle("对策");
-            submitFormSingle5.setName("solution");
-            submitFormSingle5.setInput_id("solution");
+            submitFormSingle5.setTitle("临时对策");
+            submitFormSingle5.setName("tmpSolution");
+            submitFormSingle5.setInput_id("tmpSolution" );
             submitFormSingle5.setRow(4);
             submitFormSingle5.setCol(1);
             submitFormSingle5.setLines(3);
@@ -532,7 +563,7 @@ public class FailureTrackController {
             ProcessForm.SubmitButton submitButton = new ProcessForm.SubmitButton();
 
             submitButton.setName("提交");
-            submitButton.setUrl("http://127.0.0.1:8086/mqms/failure_track/engineer_analysis?failureTrackId=" + String.valueOf(mqmsFailureTrack.getFailureTrackId()));
+            submitButton.setUrl("/mqms/failure_track/engineer_analysis?failureTrackId=" + String.valueOf(mqmsFailureTrack.getFailureTrackId()));
             processForm.addSubmitButton(submitButton);
         } else if ("系长".equals(simpleApplicationObjectData.getString("taskName"))) {
             ProcessForm.DataDisplayGroup previousInfo = failureTrackService.getPreviousInfo(failureTrackId);
@@ -563,7 +594,7 @@ public class FailureTrackController {
             ProcessForm.SubmitButton submitButton = new ProcessForm.SubmitButton();
 
             submitButton.setName("提交");
-            submitButton.setUrl("http://127.0.0.1:8086/mqms/failure_track/section_analysis?failureTrackId=" + String.valueOf(mqmsFailureTrack.getFailureTrackId()));
+            submitButton.setUrl("/mqms/failure_track/section_analysis?failureTrackId=" + String.valueOf(mqmsFailureTrack.getFailureTrackId()));
             processForm.addSubmitButton(submitButton);
         } else if ("科长".equals(simpleApplicationObjectData.getString("taskName"))) {
             ProcessForm.DataDisplayGroup previousInfo = failureTrackService.getPreviousInfo(failureTrackId);
@@ -594,10 +625,14 @@ public class FailureTrackController {
             ProcessForm.SubmitButton submitButton = new ProcessForm.SubmitButton();
 
             submitButton.setName("提交");
-            submitButton.setUrl("http://127.0.0.1:8086/mqms/failure_track/department_analysis?failureTrackId=" + String.valueOf(mqmsFailureTrack.getFailureTrackId()));
+            submitButton.setUrl("/mqms/failure_track/department_analysis?failureTrackId=" + String.valueOf(mqmsFailureTrack.getFailureTrackId()));
             processForm.addSubmitButton(submitButton);
         } else if ("总结".equals(simpleApplicationObjectData.getString("taskName"))) {
-            //TODO 之前所有信息，按照flag来展现
+            //之前所有信息，按照flag来展现
+            List<ProcessForm.DataDisplayGroup> allInfo = failureTrackService.getAllEngineerInfo(failureTrackId);
+            for(ProcessForm.DataDisplayGroup info:allInfo){
+                processForm.addNormalData(info);
+            }
 
             String structure2 = "[[4]]";
             ProcessForm.SubmitFormGroup submitFormGroup = new ProcessForm.SubmitFormGroup();
@@ -613,18 +648,24 @@ public class FailureTrackController {
             List<List<Integer>> mStructure2 = null;
             mStructure2 = objectMapper.readValue(structure2.toString(), List.class);
 
-            ProcessForm.SubmitButton submitButton = new ProcessForm.SubmitButton();
+            submitFormGroup.setStructure(mStructure2);
+            processForm.setSubmitForm(submitFormGroup);
 
+            ProcessForm.SubmitButton submitButton = new ProcessForm.SubmitButton();
             submitButton.setName("同意");
-            submitButton.setUrl("http://127.0.0.1:8086/mqms/failure_track/summary_agree?failureTrackId=" + String.valueOf(mqmsFailureTrack.getFailureTrackId()));
+            submitButton.setUrl("/mqms/failure_track/summary_agree?failureTrackId=" + String.valueOf(mqmsFailureTrack.getFailureTrackId()));
             processForm.addSubmitButton(submitButton);
 
             ProcessForm.SubmitButton rejectButton = new ProcessForm.SubmitButton();
             rejectButton.setName("驳回");
-            rejectButton.setUrl("http://127.0.0.1:8086/mqms/failure_track/summary_disagree?failureTrackId=" + String.valueOf(mqmsFailureTrack.getFailureTrackId()));
+            rejectButton.setUrl("/mqms/failure_track/summary_disagree?failureTrackId=" + String.valueOf(mqmsFailureTrack.getFailureTrackId()));
             processForm.addSubmitButton(rejectButton);
         } else if ("市场品质系长审核".equals(simpleApplicationObjectData.getString("taskName"))) {
-            //TODO 之前所有信息，按照flag来展现
+            //之前所有信息，按照flag来展现
+            List<ProcessForm.DataDisplayGroup> allInfo = failureTrackService.getAllEngineerInfo(failureTrackId);
+            for(ProcessForm.DataDisplayGroup info:allInfo){
+                processForm.addNormalData(info);
+            }
             String structure2 = "[[4]]";
             ProcessForm.SubmitFormGroup submitFormGroup = new ProcessForm.SubmitFormGroup();
             ProcessForm.SubmitFormSingle submitFormSingle1 = new ProcessForm.SubmitFormSingle();
@@ -639,13 +680,24 @@ public class FailureTrackController {
             List<List<Integer>> mStructure2 = null;
             mStructure2 = objectMapper.readValue(structure2.toString(), List.class);
 
-            ProcessForm.SubmitButton submitButton = new ProcessForm.SubmitButton();
+            submitFormGroup.setStructure(mStructure2);
+            processForm.setSubmitForm(submitFormGroup);
 
-            submitButton.setName("提交");
-            submitButton.setUrl("http://127.0.0.1:8086/mqms/failure_track/quality_section?failureTrackId=" + String.valueOf(mqmsFailureTrack.getFailureTrackId()));
+            ProcessForm.SubmitButton submitButton = new ProcessForm.SubmitButton();
+            submitButton.setName("同意");
+            submitButton.setUrl("/mqms/failure_track/quality_section_agree?failureTrackId=" + String.valueOf(mqmsFailureTrack.getFailureTrackId()));
             processForm.addSubmitButton(submitButton);
+
+            ProcessForm.SubmitButton rejectButton = new ProcessForm.SubmitButton();
+            rejectButton.setName("驳回");
+            rejectButton.setUrl("/mqms/failure_track/qualilty_section_disagree?failureTrackId=" + String.valueOf(mqmsFailureTrack.getFailureTrackId()));
+            processForm.addSubmitButton(rejectButton);
         } else if ("市场品质科长审核".equals(simpleApplicationObjectData.getString("taskName"))) {
-            //TODO 之前所有信息，按照flag来展现
+            //之前所有信息，按照flag来展现
+            List<ProcessForm.DataDisplayGroup> allInfo = failureTrackService.getAllEngineerInfo(failureTrackId);
+            for(ProcessForm.DataDisplayGroup info:allInfo){
+                processForm.addNormalData(info);
+            }
             String structure2 = "[[4]]";
             ProcessForm.SubmitFormGroup submitFormGroup = new ProcessForm.SubmitFormGroup();
             ProcessForm.SubmitFormSingle submitFormSingle1 = new ProcessForm.SubmitFormSingle();
@@ -660,11 +712,18 @@ public class FailureTrackController {
             List<List<Integer>> mStructure2 = null;
             mStructure2 = objectMapper.readValue(structure2.toString(), List.class);
 
-            ProcessForm.SubmitButton submitButton = new ProcessForm.SubmitButton();
+            submitFormGroup.setStructure(mStructure2);
+            processForm.setSubmitForm(submitFormGroup);
 
-            submitButton.setName("提交");
-            submitButton.setUrl("http://127.0.0.1:8086/mqms/failure_track/quality_department?failureTrackId=" + String.valueOf(mqmsFailureTrack.getFailureTrackId()));
+            ProcessForm.SubmitButton submitButton = new ProcessForm.SubmitButton();
+            submitButton.setName("同意");
+            submitButton.setUrl("/mqms/failure_track/quality_department_agree?failureTrackId=" + String.valueOf(mqmsFailureTrack.getFailureTrackId()));
             processForm.addSubmitButton(submitButton);
+
+            ProcessForm.SubmitButton rejectButton = new ProcessForm.SubmitButton();
+            rejectButton.setName("驳回");
+            rejectButton.setUrl("http://127.0.0.1:8086/mqms/failure_track/quality_department_disagree?failureTrackId=" + String.valueOf(mqmsFailureTrack.getFailureTrackId()));
+            processForm.addSubmitButton(rejectButton);
         }
         String str = objectMapper.writeValueAsString(processForm);
 
@@ -692,7 +751,7 @@ public class FailureTrackController {
         Map map = new HashMap();
         map = JSONObject.parseObject(JSONObject.toJSONString(simpleApplicationObject), Map.class);
         map.put("auditorInfo", "agree");
-        map.put("auditorComment", "同意");
+        map.put("auditorComment", mqmsFailureTrack.getFailureReappearResult());
         JSONObject returnJson = httpService.postInJSON(Config.processSystem.getVarName() + "/SAO/audit/team3fvariables", map, JSONObject.class);
         return returnJson;
     }
@@ -709,7 +768,7 @@ public class FailureTrackController {
         Map map = new HashMap();
         map = JSONObject.parseObject(JSONObject.toJSONString(simpleApplicationObject), Map.class);
         map.put("auditorInfo", "agree");
-        map.put("auditorComment", "同意");
+        map.put("auditorComment", "解析科室：" + mqmsFailureTrack.getAnalysisDepartments());
         map.put("variablesName", "variables");
         JSONObject variable = new JSONObject();
         JSONObject condition = new JSONObject();
@@ -717,7 +776,22 @@ public class FailureTrackController {
         variable.put("condition", condition);
         JSONArray arrayVariables = new JSONArray();
 
-        //TODO 如果不需要审核，则直接设置市场品质系长和市场品质科长 3/30
+        //TODO 设置最后的总结人选
+        JSONObject processChecker1 = new JSONObject();
+        processChecker1.put("zj", 1732);
+        variable.put("processChecker", processChecker1);
+        map.put("variables", variable.toJSONString());
+        //TODO 设置市场品质系长和市场品质科长
+        JSONObject processChecker2 = new JSONObject();
+        processChecker2.put("scpzxz", 1732);
+        variable.put("processChecker", processChecker2);
+        map.put("variables", variable.toJSONString());
+        JSONObject processChecker3 = new JSONObject();
+        processChecker3.put("scpzkz", 1732);
+        variable.put("processChecker", processChecker3);
+        map.put("variables", variable.toJSONString());
+
+
         if (needAnalyse.equals("n")) {
 
         }
@@ -725,11 +799,7 @@ public class FailureTrackController {
         else if (needAnalyse.equals("y")) {
 
         }
-        //设置最后的总结人选
-        JSONObject processChecker = new JSONObject();
-        processChecker.put("zj", 1732);
-        variable.put("processChecker", processChecker);
-        map.put("variables", variable.toJSONString());
+
 
         //TODO 获取窗口 3/30
         int[] cks = {1732, 1279, 1278};
@@ -871,6 +941,7 @@ public class FailureTrackController {
         mqmsFailureAnalysis.setTaskId(simpleApplicationObject.getTaskId());
         mqmsFailureAnalysis.setTaskName(simpleApplicationObject.getTaskName());
         mqmsFailureAnalysis.setFlag(flag);
+        mqmsFailureAnalysis.setSubmitDate(AttDateUtil.getNow("all"));
 
         mqmsFailureAnalysis.setFailureAnalystComment(comment);
         //根据failureTrackId插入新failureAnalysis
@@ -898,6 +969,7 @@ public class FailureTrackController {
         mqmsFailureAnalysis.setTaskId(simpleApplicationObject.getTaskId());
         mqmsFailureAnalysis.setTaskName(simpleApplicationObject.getTaskName());
         mqmsFailureAnalysis.setFlag(flag);
+        mqmsFailureAnalysis.setSubmitDate(AttDateUtil.getNow("all"));
 
         mqmsFailureAnalysis.setFailureAnalystComment(comment);
         //根据failureTrackId插入新failureAnalysis
@@ -908,7 +980,7 @@ public class FailureTrackController {
         return returnJson;
     }
 
-    @RequestMapping("/summary")
+    @RequestMapping("/summary_agree")
     public JSONObject summary(SimpleApplicationObject simpleApplicationObject, @RequestParam int failureTrackId, @RequestParam("flag") String flag, @RequestParam("comment") String comment) {
         //向流程系统提交同意的申请
         Map map = new HashMap();
@@ -936,7 +1008,7 @@ public class FailureTrackController {
         return returnJson;
     }
 
-    @RequestMapping("/quality_section")
+    @RequestMapping("/quality_section_agree")
     public JSONObject qualitySection(SimpleApplicationObject simpleApplicationObject, @RequestParam int failureTrackId, @RequestParam("flag") String flag, @RequestParam("comment") String comment) {
         //向流程系统提交同意的申请
         Map map = new HashMap();
@@ -963,7 +1035,7 @@ public class FailureTrackController {
         return returnJson;
     }
 
-    @RequestMapping("/quality_department")
+    @RequestMapping("/quality_department_agree")
     public JSONObject qualityDepartment(SimpleApplicationObject simpleApplicationObject, @RequestParam int failureTrackId, @RequestParam("flag") String flag, @RequestParam("comment") String comment) {
         //向流程系统提交同意的申请
         Map map = new HashMap();

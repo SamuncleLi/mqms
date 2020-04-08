@@ -10,13 +10,20 @@
     <script type="text/javascript" src="${req.contextPath}/static/plugin/jquery-easyui-1.5.5.4/jquery.easyui.min.js"></script>
     <script type="text/javascript" src="${req.contextPath}/static/plugin/jquery-easyui-1.5.5.4/locale/easyui-lang-zh_CN.js"></script>
     <script type="text/javascript" src="${req.contextPath}/static/echart/echarts.js"></script>
+    <script src="${req.contextPath}/static/layuiExtend/layui/layui.js"></script>
+    <link  href="${req.contextPath}/static/layuiExtend/layui/css/layui.css" media="all" rel="stylesheet">
 </head>
 <body>
 <div title="选择区" data-options="region:'north',split:false,border:false" class="select-area">
-    <label for="yearAndMonth">起始月份</label><input id="yearAndMonth" class="easyui-datebox">
-    <label for="timeSpan">时间跨度/月</label><input id="timeSpan" class="easyui-numberspinner" value="12">
-    <label for="engType">机型</label><input id="engType" class="easyui-combobox liselectoptions">
-    <a id="asy" href="javascript:analysis()" class="easyui-linkbutton" data-options="iconCls:'icon-search'">分析</a>
+    <table>
+        <tr>
+            <td align="center"><label style="font-size:10px;" for="yearAndMonth">起始月份</label></td><td><input id="yearAndMonth" class="easyui-datebox"></td>
+            <td align="center"><label style="font-size:10px;" for="timeSpan">时间跨度/月</label></td><td><input id="timeSpan" class="easyui-spinner" value="12"></td>
+            <td align="center"><label style="font-size:10px;" for="engType">机型</label></td><td><input id="engType" class="easyui-combobox liselectoptions"></td>
+            <td align="center"><label style="font-size:10px;" for="resizeSlider">长宽比</label></td><td><div id="resizeSlider" class="easyui-slider" style="display: inline;width: 100px" data-options="min:0.6,max:1.5,step:0.1"></div></td>
+            <td align="center"><a id="asy" href="javascript:analysis()" class="easyui-linkbutton" data-options="iconCls:'icon-search'">分析</a></td>
+        </tr>
+    </table>
 </div>
 
 <div title="图表区" data-options="region:'south',split:false,border:false" class="charts-area">
@@ -27,8 +34,27 @@
 </div>
 
 <script type="text/javascript">
+    var charts_1;
+    var charts_2;
+    var charts_3;
+    var charts_4;
+    var charts_5;
+
+    function resizeCharts(value) {
+        $(".mqmscharts").css('height',value * 300);
+        charts_1.resize({height:value * 290});
+        charts_2.resize({height:value * 290});
+        charts_3.resize({height:value * 290});
+        charts_4.resize({height:value * 290});
+    }
     //初始化选择区域
     $(function () {
+        $('#resizeSlider').slider({
+            onSlideEnd:function(value){
+                console.log(value);
+                resizeCharts(value);
+            }
+        });
         //多选框
         $('#engType').combobox({
             url:'/mqms/engType/listInArray',
@@ -228,7 +254,7 @@
                     type: 'pie',
                     id: 'pie',
                     radius: '60%',
-                    center: ['88%', '50%'],
+                    center: ['85%', '50%'],
                     label: {
                         formatter: '{b}: ({d}%)',
                         position: 'inner'
@@ -251,6 +277,7 @@
                                 show: true,
                                 readOnly: false,
                             },
+                            dataZoom: {show: true},
 //                            mark: {show:true},
                             restore:{show:true},
                             magicType: {type: ['bar']},
@@ -277,8 +304,6 @@
                     series:series
 
                 };
-
-
 
                 charts_1.on('updateAxisPointer', function (event) {
                     var xAxisInfo = event.axesInfo[0];

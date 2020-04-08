@@ -2,6 +2,8 @@
 <!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.gamc.efactory.dao.MqmsFailureAnalysisMapper">
-
+    <select id="queryFlags" parameterType="int" resultType="java.lang.String">
+        SELECT flag FROM mqms_failure_analysis where failure_track_id = #{failureTrackId} group by flag
+    </select>
 
 </mapper>

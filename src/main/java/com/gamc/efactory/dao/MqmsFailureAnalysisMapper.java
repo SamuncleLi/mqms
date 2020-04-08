@@ -8,6 +8,7 @@ import com.gamc.efactory.dao.base.MqmsFailureAnalysisBaseMapper;
 *  @author lizeh
 */
 public interface MqmsFailureAnalysisMapper extends MqmsFailureAnalysisBaseMapper{
-
+    //获取某个failureTrack下的所有flag
+    public List<String> queryFlags(int failureTrackId);
 
 }
