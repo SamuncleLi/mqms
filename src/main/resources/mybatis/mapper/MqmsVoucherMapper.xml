@@ -5,18 +5,24 @@
     <select id="selectClaimCount"  resultType="java.lang.Integer" >
     SELECT COUNT(*) FROM `mqms_voucher`
     WHERE  `eng_type` = #{engType}
-    AND  `confirm_date` &gt;= #{beginData}
-    AND  `confirm_date` &lt;= #{endData}
-    AND  `sales_date` &gt;= #{beginData}
-    AND  `sales_date` &lt;= #{endData}
+    AND  `confirm_date` &gt;= #{beginDate}
+    AND  `confirm_date` &lt;= #{endDate}
+    AND  `sales_date` &gt;= #{beginDate}
+    AND  `sales_date` &lt;= #{endDate}
 </select>
     <select id="selectTransClaimCount"  resultType="java.lang.Integer" >
         SELECT COUNT(*) FROM `mqms_voucher`
         WHERE  `tran_type_detail` = #{tranTypeDetail}
-        AND  `confirm_date` &gt;= #{beginData}
-        AND  `confirm_date` &lt;= #{endData}
-        AND  `sales_date` &gt;= #{beginData}
-        AND  `sales_date` &lt;= #{endData}
+        AND  `confirm_date` &gt;= #{beginDate}
+        AND  `confirm_date` &lt;= #{endDate}
+        AND  `sales_date` &gt;= #{beginDate}
+        AND  `sales_date` &lt;= #{endDate}
+    </select>
+    <select id="selectCarMutilMount"  resultType="java.lang.Integer" >
+        SELECT COUNT(*) FROM `mqms_voucher`
+        WHERE  `car_model` = #{carModel}
+        AND  `confirm_date` &gt;= #{beginDate}
+        AND  `confirm_date` &lt;= #{endDate}
     </select>
 
     <select id="selectTotalCost"  resultType="java.math.BigDecimal" >
@@ -94,11 +100,11 @@
     <select id="salesFailureTimeBetween" resultType="java.lang.Integer">
         SELECT count(*) FROM `mqms_voucher`
         WHERE
-        eng_type = #{eng_type} and `sales_failure_time` &gt;= #{begin} and `sales_failure_time` &lt;= #{end}
+        eng_type = #{eng_type} and `sales_date` &gt;= #{begin} and `sales_date` &lt;= #{end}
     </select>    <select id="salesTransFailureTimeBetween" resultType="java.lang.Integer">
     SELECT count(*) FROM `mqms_voucher`
     WHERE
-    `tran_type_detail` = #{tranTypeDetail} and `sales_failure_time` &gt;= #{begin} and `sales_failure_time` &lt;= #{end}
+    `tran_type_detail` = #{tranTypeDetail} and `sales_date` &gt;= #{begin} and `sales_date` &lt;= #{end}
 </select>
 
 

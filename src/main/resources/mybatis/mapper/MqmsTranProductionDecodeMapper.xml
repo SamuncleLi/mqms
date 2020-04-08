@@ -13,7 +13,9 @@
     <select id="searchTransTypeInfor"  resultType="java.util.HashMap" >
         SELECT * FROM `mqms_tran_production_decode`
         WHERE
-        `tran_pro_model`  like concat('%',#{tranProModel},'%') and
-        `tran_shortCode`  like concat('%',#{tranShortCode},'%')
+        `tran_pro_model`  like concat('%',#{tranProModel},'%') AND
+        `tran_shortCode`  like concat('%',#{tranShortCode},'%')AND
+        `tran_warranty_years` like concat('%',#{tranWarrantyYears},'%') AND
+        `tran_warranty_millege` like concat('%',#{tranWarrantyMillege},'%')
     </select>
 </mapper>

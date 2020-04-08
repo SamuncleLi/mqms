@@ -12,5 +12,10 @@ public interface MqmsTranProductionDecodeMapper extends MqmsTranProductionDecode
 
     String selectTranProductionCode(@Param("tran_pro_model") String tranProModel);
     int deleteTransTypeById(@Param("id") String id);
-    List<HashMap<String, String>> searchTransTypeInfor(@Param("tranProModel") String tranProModel, @Param("tranShortCode") String tranShortCode);
+    List<HashMap<String, String>> searchTransTypeInfor(
+            @Param("tranProModel") String tranProModel,
+            @Param("tranShortCode") String tranShortCode,
+            @Param("tranWarrantyYears") String tranWarrantyYears,
+            @Param("tranWarrantyMillege") String tranWarrantyMillege
+            );
 }

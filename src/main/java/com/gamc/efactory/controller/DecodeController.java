@@ -338,9 +338,13 @@ public class DecodeController {
         String id = request.getParameter("id");
         String tranProModel = request.getParameter("tran_pro_model");
         String tranShortCode = request.getParameter("tran_shortCode");
+        String tranWarrantyYears = request.getParameter("tranWarrantyYears");
+        String tranWarrantyMillege = request.getParameter("tranWarrantyMillege");
         MqmsTranProductionDecode mqmsTranProductionDecode=new MqmsTranProductionDecode();
         mqmsTranProductionDecode.setTranProModel(tranProModel);
         mqmsTranProductionDecode.setTranShortCode(tranShortCode);
+        mqmsTranProductionDecode.setTranWarrantyYears(tranWarrantyYears);
+        mqmsTranProductionDecode.setTranWarrantyYears(tranWarrantyMillege);
 
         if (id.equals("(默认值)")) {
             mqmsTranProductionDecodeBaseMapper.insertMqmsTranProductionDecode(mqmsTranProductionDecode);
@@ -380,10 +384,14 @@ public class DecodeController {
         JSONObject result = new JSONObject();
         String tranProModel = request.getParameter("tranProModel");
         String tranShortCode = request.getParameter("tranShortCode");
+        String tranWarrantyYears = request.getParameter("tranWarrantyYears");
+        String tranWarrantyMillege = request.getParameter("tranWarrantyMillege");
 
         List<HashMap<String, String>> list = mqmsTranProductionDecodeMapper.searchTransTypeInfor(
                 tranProModel,
-                tranShortCode);
+                tranShortCode,
+                tranWarrantyYears,
+                tranWarrantyMillege);
         for(HashMap obj:list){
             JSONObject jsonObject = JSONObject.parseObject(JSON.toJSONString(obj));
             jsonArray.add(jsonObject);

@@ -167,21 +167,25 @@
             for(var i=0;i<selectedRows.length;i++) {
                 data.push(selectedRows[i]['id']);
             }
-            $.ajax({
-                type: 'post',
-                url: '/mqms/decode/transYearDelete',
-                data: {ids:data},
-                traditional:true,
-                success : function(data) {
-                    if (data == '数据删除成功') {
-                        $.messager.alert("系统提示",'操作已成功');
-                        //关闭DIALOG并刷新页面
-                        cancelDialog();
-                        $("#transYearDecode").datagrid('reload');
-                    } else {
-                        $.messager.alert("系统提示",'操作失败,请重新提交');
-                    }
+            $.messager.confirm('确认', "您已选择删除" + selectedRows.length + "行，确定要执行吗？", function (r) {
+                if (r) {
+                    $.ajax({
+                        type: 'post',
+                        url: '/mqms/decode/transYearDelete',
+                        data: {ids: data},
+                        traditional: true,
+                        success: function (data) {
+                            if (data == '数据删除成功') {
+                                $.messager.alert("系统提示", '操作已成功');
+                                //关闭DIALOG并刷新页面
+                                cancelDialog();
+                                $("#transYearDecode").datagrid('reload');
+                            } else {
+                                $.messager.alert("系统提示", '操作失败,请重新提交');
+                            }
 
+                        }
+                    });
                 }
             })
         }
@@ -200,8 +204,8 @@
     </tr>
     </thead>
 </table>
-<div id="tb2" class="select-area">
-    <div>
+<div id="tb2" class="select-area" >
+    <div >
         <a href="javascript:addDecodeInfor()" class="easyui-linkbutton" iconCls="icon-add" plain="true">增加</a>
         <a href="javascript:deleteDecodeInfor()" class="easyui-linkbutton" iconCls="icon-remove" plain="true" >删除</a>
         <a href="javascript:reviseDecodeInfor()" class="easyui-linkbutton" iconCls="icon-edit" plain="true" >修改</a>

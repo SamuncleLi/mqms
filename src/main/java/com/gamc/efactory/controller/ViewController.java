@@ -197,5 +197,10 @@ public class ViewController {
     public String dataMarketBulletin(){
         return "data_market_bulletin";
     }
+    @RequestMapping(value = "/charts_car_mutil_analysis")
+    public String chartsCarMutilAnalysis(){
+        return "charts_car_mutil_analysis";
+    }
+
 
 }

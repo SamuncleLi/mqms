@@ -219,26 +219,27 @@
                 var transType = $("#transType").combobox("getValues");
 
                 //添加相当于机型数量的折线
-                var series = [
-                    {
-                        type: 'pie',
-                        id: 'pie',
-                        radius: '60%',
-                        center: ['88%', '50%'],
-                        label: {
-                            formatter: '{b}: ({d}%)',
-                            position: 'inner'
-                        },
-                        encode: {
-                            itemName: '机型',
-                            value: $('#yearAndMonth').datebox('getValue'),
-                            tooltip: $('#yearAndMonth').datebox('getValue')
-                        }
-                    }];
+                var series = [];
+
                 for(var i=0;i<transType.length;i++){
                     var line = {type: 'line', seriesLayoutBy: 'row',itemStyle: { normal: {label: {show: true}}}};
                     series.push(line)
                 }
+                series.push(        {
+                    type: 'pie',
+                    id: 'pie',
+                    radius: '60%',
+                    center: ['88%', '50%'],
+                    label: {
+                        formatter: '{b}: ({d}%)',
+                        position: 'inner'
+                    },
+                    encode: {
+                        itemName: '机型',
+                        value: $('#yearAndMonth').datebox('getValue'),
+                        tooltip: $('#yearAndMonth').datebox('getValue')
+                    }
+                });
 
                 var option_1 = {
                     title: {
@@ -303,27 +304,27 @@
                 var transType = $("#transType").combobox("getValues");
 
                 //添加相当于机型数量的折线
-                var series = [
-                    {
-                        type: 'pie',
-                        id: 'pie',
-                        radius: '60%',
-                        center: ['88%', '50%'],
-                        label: {
-                            formatter: '{b}: ({d}%)',
-                            position: 'inner'
-                        },
-                        encode: {
-                            itemName: '机型',
-                            value: $('#yearAndMonth').datebox('getValue'),
-                            tooltip: $('#yearAndMonth').datebox('getValue')
-                        }
-                    }];
+                var series = []
+
                 for (var i = 0; i < transType.length; i++) {
                     var line = {type: 'line', seriesLayoutBy: 'row', itemStyle: {normal: {label: {show: true}}}};
                     series.push(line)
                 }
-
+                series.push(                {
+                    type: 'pie',
+                    id: 'pie',
+                    radius: '60%',
+                    center: ['88%', '50%'],
+                    label: {
+                        formatter: '{b}: ({d}%)',
+                        position: 'inner'
+                    },
+                    encode: {
+                        itemName: '机型',
+                        value: $('#yearAndMonth').datebox('getValue'),
+                        tooltip: $('#yearAndMonth').datebox('getValue')
+                    }
+                });
                 var option_2 = {
                     title: {
                         text: '12个月不良率',
@@ -386,27 +387,27 @@
                 var transType = $("#transType").combobox("getValues");
 
                 //添加相当于机型数量的折线
-                var series = [
-                    {
-                        type: 'pie',
-                        id: 'pie',
-                        radius: '60%',
-                        center: ['88%', '50%'],
-                        label: {
-                            formatter: '{b}: ({d}%)',
-                            position: 'inner'
-                        },
-                        encode: {
-                            itemName: '机型',
-                            value: $('#yearAndMonth').datebox('getValue'),
-                            tooltip: $('#yearAndMonth').datebox('getValue')
-                        }
-                    }];
+                var series = []
+
                 for (var i = 0; i < transType.length; i++) {
                     var line = {type: 'line', seriesLayoutBy: 'row', itemStyle: {normal: {label: {show: true}}}};
                     series.push(line)
                 }
-
+                series.push(           {
+                    type: 'pie',
+                    id: 'pie',
+                    radius: '60%',
+                    center: ['88%', '50%'],
+                    label: {
+                        formatter: '{b}: ({d}%)',
+                        position: 'inner'
+                    },
+                    encode: {
+                        itemName: '机型',
+                        value: $('#yearAndMonth').datebox('getValue'),
+                        tooltip: $('#yearAndMonth').datebox('getValue')
+                    }
+                });
                 var option_3 = {
                     title: {
                         text: '24个月不良率',
@@ -468,26 +469,27 @@
                 var transType = $("#transType").combobox("getValues");
 
                 //添加相当于机型数量的折线
-                var series = [
-                    {
-                        type: 'pie',
-                        id: 'pie',
-                        radius: '60%',
-                        center: ['88%', '50%'],
-                        label: {
-                            formatter: '{b}: ({d}%)',
-                            position: 'inner'
-                        },
-                        encode: {
-                            itemName: '机型',
-                            value: $('#yearAndMonth').datebox('getValue'),
-                            tooltip: $('#yearAndMonth').datebox('getValue')
-                        }
-                    }];
+                var series = []
+
                 for (var i = 0; i < transType.length; i++) {
                     var line = {type: 'line', seriesLayoutBy: 'row', itemStyle: {normal: {label: {show: true}}}};
                     series.push(line)
                 }
+                series.push(                    {
+                    type: 'pie',
+                    id: 'pie',
+                    radius: '60%',
+                    center: ['88%', '50%'],
+                    label: {
+                        formatter: '{b}: ({d}%)',
+                        position: 'inner'
+                    },
+                    encode: {
+                        itemName: '机型',
+                        value: $('#yearAndMonth').datebox('getValue'),
+                        tooltip: $('#yearAndMonth').datebox('getValue')
+                    }
+                });
 
                 var option_4 = {
                     title: {

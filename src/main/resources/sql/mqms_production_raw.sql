@@ -20,7 +20,7 @@ SET FOREIGN_KEY_CHECKS=0;
 -- ----------------------------
 DROP TABLE IF EXISTS `mqms_production_raw`;
 CREATE TABLE `mqms_production_raw` (
-`production_id` int(11) NOT NULL AUTO_INCREMENT,
+`production_id` int(11) NOT NULL AUTO_INCREMENT,'生产数据ID',
   `factory_code` varchar(255) DEFAULT NULL COMMENT '工厂',
   `production_batch` varchar(255) DEFAULT NULL COMMENT '生产批次',
   `vin` varchar(255) DEFAULT NULL COMMENT 'vin码',

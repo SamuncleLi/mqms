@@ -17,6 +17,12 @@
                     <if test="tranShortCode!=null">
                         `tran_shortCode`,
                     </if>
+                    <if test="tranWarrantyYears!=null">
+                        `tran_warranty_years`,
+                    </if>
+                    <if test="tranWarrantyMillege!=null">
+                        `tran_warranty_millege`,
+                    </if>
         </trim>
         )
         VALUES
@@ -30,6 +36,12 @@
                 </if>
                 <if test="tranShortCode!=null">
                     #{tranShortCode},
+                </if>
+                <if test="tranWarrantyYears!=null">
+                    #{tranWarrantyYears},
+                </if>
+                <if test="tranWarrantyMillege!=null">
+                    #{tranWarrantyMillege},
                 </if>
         </trim>
         )
@@ -48,6 +60,12 @@
             <if test="tranShortCode != null and tranShortCode!=''">
                 `tran_shortCode` = #{tranShortCode},
             </if>
+            <if test="tranWarrantyYears != null and tranWarrantyYears!=''">
+                `tran_warranty_years` = #{tranWarrantyYears},
+            </if>
+            <if test="tranWarrantyMillege != null and tranWarrantyMillege!=''">
+                `tran_warranty_millege` = #{tranWarrantyMillege},
+            </if>
         </trim>
         WHERE
         <trim suffixOverrides="and">
@@ -64,6 +82,12 @@
         </if>
         <if test="set.tranShortCode != null and set.tranShortCode!=''">
             `tran_shortCode` = #{set.tranShortCode},
+        </if>
+        <if test="set.tranWarrantyYears != null and set.tranWarrantyYears!=''">
+            `tran_warranty_years` = #{set.tranWarrantyYears},
+        </if>
+        <if test="set.tranWarrantyMillege != null and set.tranWarrantyMillege!=''">
+            `tran_warranty_millege` = #{set.tranWarrantyMillege},
         </if>
         </trim>
         <trim prefix="where" suffixOverrides="and | or">
@@ -119,6 +143,46 @@
                 </foreach>
                 ) and
             </if>
+                <if test="where.tranWarrantyYearsList != null">
+                    `tran_warranty_years` in
+                    <foreach collection="where.tranWarrantyYearsList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test ="where.fuzzyTranWarrantyYears!=null and where.fuzzyTranWarrantyYears.size()>0">
+                (
+                <foreach collection="where.fuzzyTranWarrantyYears"  separator="or" item="item">
+                    `Tran_warranty_years` like concat('%',#{item},'%')
+                </foreach>
+                ) and
+            </if>
+            <if test ="where.rightFuzzyTranWarrantyYears!=null and where.rightFuzzyTranWarrantyYears.size()>0">
+                (
+                <foreach collection="where.rightFuzzyTranWarrantyYears"  separator="or" item="item">
+                    `Tran_warranty_years` like concat(#{item},'%')
+                </foreach>
+                ) and
+            </if>
+                <if test="where.tranWarrantyMillegeList != null">
+                    `tran_warranty_millege` in
+                    <foreach collection="where.tranWarrantyMillegeList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test ="where.fuzzyTranWarrantyMillege!=null and where.fuzzyTranWarrantyMillege.size()>0">
+                (
+                <foreach collection="where.fuzzyTranWarrantyMillege"  separator="or" item="item">
+                    `Tran_warranty_millege` like concat('%',#{item},'%')
+                </foreach>
+                ) and
+            </if>
+            <if test ="where.rightFuzzyTranWarrantyMillege!=null and where.rightFuzzyTranWarrantyMillege.size()>0">
+                (
+                <foreach collection="where.rightFuzzyTranWarrantyMillege"  separator="or" item="item">
+                    `Tran_warranty_millege` like concat(#{item},'%')
+                </foreach>
+                ) and
+            </if>
         </trim>
     </update>
 
@@ -127,6 +191,8 @@
         <result property="id" column="id"/>
         <result property="tranProModel" column="tran_pro_model"/>
         <result property="tranShortCode" column="tran_shortCode"/>
+        <result property="tranWarrantyYears" column="tran_warranty_years"/>
+        <result property="tranWarrantyMillege" column="tran_warranty_millege"/>
     </resultMap>
 
 
@@ -143,6 +209,12 @@
             </if>
             <if test="tranShortCode != null and tranShortCode!=''">
                 `tran_shortCode` = #{tranShortCode} and
+            </if>
+            <if test="tranWarrantyYears != null and tranWarrantyYears!=''">
+                `tran_warranty_years` = #{tranWarrantyYears} and
+            </if>
+            <if test="tranWarrantyMillege != null and tranWarrantyMillege!=''">
+                `tran_warranty_millege` = #{tranWarrantyMillege} and
             </if>
             <if test = "(_parameter instanceof com.gamc.efactory.model.dataObject.MqmsTranProductionDecode$QueryBuilder) == true">
                 <if test="idList != null">
@@ -197,6 +269,46 @@
                     </foreach>
                     ) and
                 </if>
+                <if test="tranWarrantyYearsList != null">
+                    `tran_warranty_years` in
+                    <foreach collection="tranWarrantyYearsList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyTranWarrantyYears!=null and fuzzyTranWarrantyYears.size()>0">
+                    (
+                    <foreach collection="fuzzyTranWarrantyYears"  separator="or" item="item">
+                        `Tran_warranty_years` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyTranWarrantyYears!=null and rightFuzzyTranWarrantyYears.size()>0">
+                    (
+                    <foreach collection="rightFuzzyTranWarrantyYears"  separator="or" item="item">
+                        `Tran_warranty_years` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="tranWarrantyMillegeList != null">
+                    `tran_warranty_millege` in
+                    <foreach collection="tranWarrantyMillegeList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyTranWarrantyMillege!=null and fuzzyTranWarrantyMillege.size()>0">
+                    (
+                    <foreach collection="fuzzyTranWarrantyMillege"  separator="or" item="item">
+                        `Tran_warranty_millege` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyTranWarrantyMillege!=null and rightFuzzyTranWarrantyMillege.size()>0">
+                    (
+                    <foreach collection="rightFuzzyTranWarrantyMillege"  separator="or" item="item">
+                        `Tran_warranty_millege` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
             </if>
         </trim>
     </select>
@@ -214,6 +326,12 @@
             </if>
             <if test="tranShortCode != null and tranShortCode!=''">
                 `tran_shortCode` = #{tranShortCode} and
+            </if>
+            <if test="tranWarrantyYears != null and tranWarrantyYears!=''">
+                `tran_warranty_years` = #{tranWarrantyYears} and
+            </if>
+            <if test="tranWarrantyMillege != null and tranWarrantyMillege!=''">
+                `tran_warranty_millege` = #{tranWarrantyMillege} and
             </if>
             <if test = "(_parameter instanceof com.gamc.efactory.model.dataObject.MqmsTranProductionDecode$QueryBuilder) == true">
                     <if test="idList != null">
@@ -268,6 +386,46 @@
                     </foreach>
                     ) and
                 </if>
+                    <if test="tranWarrantyYearsList != null">
+                        `tran_warranty_years` in
+                        <foreach collection="tranWarrantyYearsList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyTranWarrantyYears!=null and fuzzyTranWarrantyYears.size()>0">
+                    (
+                    <foreach collection="fuzzyTranWarrantyYears"  separator="or" item="item">
+                        `Tran_warranty_years` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyTranWarrantyYears!=null and rightFuzzyTranWarrantyYears.size()>0">
+                    (
+                    <foreach collection="rightFuzzyTranWarrantyYears"  separator="or" item="item">
+                        `Tran_warranty_years` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                    <if test="tranWarrantyMillegeList != null">
+                        `tran_warranty_millege` in
+                        <foreach collection="tranWarrantyMillegeList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyTranWarrantyMillege!=null and fuzzyTranWarrantyMillege.size()>0">
+                    (
+                    <foreach collection="fuzzyTranWarrantyMillege"  separator="or" item="item">
+                        `Tran_warranty_millege` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyTranWarrantyMillege!=null and rightFuzzyTranWarrantyMillege.size()>0">
+                    (
+                    <foreach collection="rightFuzzyTranWarrantyMillege"  separator="or" item="item">
+                        `Tran_warranty_millege` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
             </if>
         </trim>
         limit 1
@@ -278,6 +436,8 @@
         `id`,
         `tran_pro_model`,
         `tran_shortCode`,
+        `tran_warranty_years`,
+        `tran_warranty_millege`,
         </trim>
     </sql>
 
@@ -307,6 +467,12 @@
                     <if test="fetchFields.fetchFields.tranShortCode==true">
                         `tran_shortCode`,
                     </if>
+                    <if test="fetchFields.fetchFields.tranWarrantyYears==true">
+                        `tran_warranty_years`,
+                    </if>
+                    <if test="fetchFields.fetchFields.tranWarrantyMillege==true">
+                        `tran_warranty_millege`,
+                    </if>
                     </if>
                     <if test="fetchFields.AllFields==null and fetchFields.excludeFields!=null">
                     <if test="fetchFields.excludeFields.id==null">
@@ -317,6 +483,12 @@
                     </if>
                     <if test="fetchFields.excludeFields.tranShortCode==null">
                         `tran_shortCode`,
+                    </if>
+                    <if test="fetchFields.excludeFields.tranWarrantyYears==null">
+                        `tran_warranty_years`,
+                    </if>
+                    <if test="fetchFields.excludeFields.tranWarrantyMillege==null">
+                        `tran_warranty_millege`,
                     </if>
                     </if>
                     <if test="fetchFields.otherFields!=null and fetchFields.otherFields.size>0">

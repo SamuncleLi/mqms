@@ -17,15 +17,16 @@ public interface MqmsVoucherMapper extends MqmsVoucherBaseMapper{
     public List<TransmissionProportion> calTransmissionProportion(MqmsVoucher mqmsVoucher);
     public List<FailureTop10> failureTop10(MqmsVoucher mqmsVoucher);
 
-    int selectClaimCount(@Param("engType") String engType,@Param("beginData") String beginData,@Param("endData") String endData);
-    int selectTransClaimCount(@Param("tranTypeDetail") String transTypeDetail,@Param("beginData") String beginData,@Param("endData") String endData);
+    int selectClaimCount(@Param("engType") String engType,@Param("beginDate") String beginDate,@Param("endDate") String endDate);
+    int selectTransClaimCount(@Param("tranTypeDetail") String transTypeDetail,@Param("beginDate") String beginDate,@Param("endDate") String endDate);
+    int selectCarMutilMount(@Param("carModel")String carModel, @Param("beginDate")String beginDate, @Param("endDate")String endDate);
     BigDecimal selectTotalCost(@Param("eng_type") String engType, @Param("confirm_date") String confirmDate);
     int selectByVoucherCode(@Param("voucher_code") String voucherCode);
     //左等右不等
     int countBetweenYearAndMonth(@Param("eng_type")String engType, @Param("begin")String begin, @Param("end")String end);
     //左右均等于
-    int salesFailureTimeBetween(@Param("eng_type")String engType, @Param("begin")int begin, @Param("end")int end);
-    int salesTransFailureTimeBetween(@Param("tranTypeDetail")String tranTypeDetail, @Param("begin")int begin, @Param("end")int end);
+    int salesFailureTimeBetween(@Param("eng_type")String engType, @Param("begin")String begin, @Param("end")String end);
+    int salesTransFailureTimeBetween(@Param("tranTypeDetail")String tranTypeDetail, @Param("begin")String begin, @Param("end")String end);
     public List<FailureTop10> transFailureTop10(MqmsVoucher mqmsVoucher);
 
 }

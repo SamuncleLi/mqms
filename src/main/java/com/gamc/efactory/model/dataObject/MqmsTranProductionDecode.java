@@ -10,7 +10,7 @@ import java.util.List;
 */
 public class MqmsTranProductionDecode implements Serializable {
 
-    private static final long serialVersionUID = 1582624186927L;
+    private static final long serialVersionUID = 1585804780025L;
 
 
     /**
@@ -32,6 +32,18 @@ public class MqmsTranProductionDecode implements Serializable {
     */
     private String tranShortCode;
 
+    /**
+    * 变速箱保修年限
+    * isNullAble:1
+    */
+    private String tranWarrantyYears;
+
+    /**
+    * 变速箱保修里程
+    * isNullAble:1
+    */
+    private String tranWarrantyMillege;
+
 
     public void setId(Integer id){this.id = id;}
 
@@ -44,12 +56,22 @@ public class MqmsTranProductionDecode implements Serializable {
     public void setTranShortCode(String tranShortCode){this.tranShortCode = tranShortCode;}
 
     public String getTranShortCode(){return this.tranShortCode;}
+
+    public void setTranWarrantyYears(String tranWarrantyYears){this.tranWarrantyYears = tranWarrantyYears;}
+
+    public String getTranWarrantyYears(){return this.tranWarrantyYears;}
+
+    public void setTranWarrantyMillege(String tranWarrantyMillege){this.tranWarrantyMillege = tranWarrantyMillege;}
+
+    public String getTranWarrantyMillege(){return this.tranWarrantyMillege;}
     @Override
     public String toString() {
         return "MqmsTranProductionDecode{" +
                 "id='" + id + '\'' +
                 "tranProModel='" + tranProModel + '\'' +
                 "tranShortCode='" + tranShortCode + '\'' +
+                "tranWarrantyYears='" + tranWarrantyYears + '\'' +
+                "tranWarrantyMillege='" + tranWarrantyMillege + '\'' +
             '}';
     }
 
@@ -134,6 +156,30 @@ public class MqmsTranProductionDecode implements Serializable {
         private List<String> rightFuzzyTranShortCode;
 
         public List<String> getRightFuzzyTranShortCode(){return this.rightFuzzyTranShortCode;}
+        private List<String> tranWarrantyYearsList;
+
+        public List<String> getTranWarrantyYearsList(){return this.tranWarrantyYearsList;}
+
+
+        private List<String> fuzzyTranWarrantyYears;
+
+        public List<String> getFuzzyTranWarrantyYears(){return this.fuzzyTranWarrantyYears;}
+
+        private List<String> rightFuzzyTranWarrantyYears;
+
+        public List<String> getRightFuzzyTranWarrantyYears(){return this.rightFuzzyTranWarrantyYears;}
+        private List<String> tranWarrantyMillegeList;
+
+        public List<String> getTranWarrantyMillegeList(){return this.tranWarrantyMillegeList;}
+
+
+        private List<String> fuzzyTranWarrantyMillege;
+
+        public List<String> getFuzzyTranWarrantyMillege(){return this.fuzzyTranWarrantyMillege;}
+
+        private List<String> rightFuzzyTranWarrantyMillege;
+
+        public List<String> getRightFuzzyTranWarrantyMillege(){return this.rightFuzzyTranWarrantyMillege;}
         private QueryBuilder (){
             this.fetchFields = new HashMap<>();
         }
@@ -268,6 +314,96 @@ public class MqmsTranProductionDecode implements Serializable {
             setFetchFields("excludeFields","tranShortCode");
             return this;
         }
+
+        public QueryBuilder fuzzyTranWarrantyYears (List<String> fuzzyTranWarrantyYears){
+            this.fuzzyTranWarrantyYears = fuzzyTranWarrantyYears;
+            return this;
+        }
+
+        public QueryBuilder fuzzyTranWarrantyYears (String ... fuzzyTranWarrantyYears){
+            this.fuzzyTranWarrantyYears = solveNullList(fuzzyTranWarrantyYears);
+            return this;
+        }
+
+        public QueryBuilder rightFuzzyTranWarrantyYears (List<String> rightFuzzyTranWarrantyYears){
+            this.rightFuzzyTranWarrantyYears = rightFuzzyTranWarrantyYears;
+            return this;
+        }
+
+        public QueryBuilder rightFuzzyTranWarrantyYears (String ... rightFuzzyTranWarrantyYears){
+            this.rightFuzzyTranWarrantyYears = solveNullList(rightFuzzyTranWarrantyYears);
+            return this;
+        }
+
+        public QueryBuilder tranWarrantyYears(String tranWarrantyYears){
+            setTranWarrantyYears(tranWarrantyYears);
+            return this;
+        }
+
+        public QueryBuilder tranWarrantyYearsList(String ... tranWarrantyYears){
+            this.tranWarrantyYearsList = solveNullList(tranWarrantyYears);
+            return this;
+        }
+
+        public QueryBuilder tranWarrantyYearsList(List<String> tranWarrantyYears){
+            this.tranWarrantyYearsList = tranWarrantyYears;
+            return this;
+        }
+
+        public QueryBuilder fetchTranWarrantyYears(){
+            setFetchFields("fetchFields","tranWarrantyYears");
+            return this;
+        }
+
+        public QueryBuilder excludeTranWarrantyYears(){
+            setFetchFields("excludeFields","tranWarrantyYears");
+            return this;
+        }
+
+        public QueryBuilder fuzzyTranWarrantyMillege (List<String> fuzzyTranWarrantyMillege){
+            this.fuzzyTranWarrantyMillege = fuzzyTranWarrantyMillege;
+            return this;
+        }
+
+        public QueryBuilder fuzzyTranWarrantyMillege (String ... fuzzyTranWarrantyMillege){
+            this.fuzzyTranWarrantyMillege = solveNullList(fuzzyTranWarrantyMillege);
+            return this;
+        }
+
+        public QueryBuilder rightFuzzyTranWarrantyMillege (List<String> rightFuzzyTranWarrantyMillege){
+            this.rightFuzzyTranWarrantyMillege = rightFuzzyTranWarrantyMillege;
+            return this;
+        }
+
+        public QueryBuilder rightFuzzyTranWarrantyMillege (String ... rightFuzzyTranWarrantyMillege){
+            this.rightFuzzyTranWarrantyMillege = solveNullList(rightFuzzyTranWarrantyMillege);
+            return this;
+        }
+
+        public QueryBuilder tranWarrantyMillege(String tranWarrantyMillege){
+            setTranWarrantyMillege(tranWarrantyMillege);
+            return this;
+        }
+
+        public QueryBuilder tranWarrantyMillegeList(String ... tranWarrantyMillege){
+            this.tranWarrantyMillegeList = solveNullList(tranWarrantyMillege);
+            return this;
+        }
+
+        public QueryBuilder tranWarrantyMillegeList(List<String> tranWarrantyMillege){
+            this.tranWarrantyMillegeList = tranWarrantyMillege;
+            return this;
+        }
+
+        public QueryBuilder fetchTranWarrantyMillege(){
+            setFetchFields("fetchFields","tranWarrantyMillege");
+            return this;
+        }
+
+        public QueryBuilder excludeTranWarrantyMillege(){
+            setFetchFields("excludeFields","tranWarrantyMillege");
+            return this;
+        }
         private <T>List<T> solveNullList(T ... objs){
             if (objs != null){
             List<T> list = new ArrayList<>();
@@ -347,6 +483,30 @@ public class MqmsTranProductionDecode implements Serializable {
         private List<String> rightFuzzyTranShortCode;
 
         public List<String> getRightFuzzyTranShortCode(){return this.rightFuzzyTranShortCode;}
+        private List<String> tranWarrantyYearsList;
+
+        public List<String> getTranWarrantyYearsList(){return this.tranWarrantyYearsList;}
+
+
+        private List<String> fuzzyTranWarrantyYears;
+
+        public List<String> getFuzzyTranWarrantyYears(){return this.fuzzyTranWarrantyYears;}
+
+        private List<String> rightFuzzyTranWarrantyYears;
+
+        public List<String> getRightFuzzyTranWarrantyYears(){return this.rightFuzzyTranWarrantyYears;}
+        private List<String> tranWarrantyMillegeList;
+
+        public List<String> getTranWarrantyMillegeList(){return this.tranWarrantyMillegeList;}
+
+
+        private List<String> fuzzyTranWarrantyMillege;
+
+        public List<String> getFuzzyTranWarrantyMillege(){return this.fuzzyTranWarrantyMillege;}
+
+        private List<String> rightFuzzyTranWarrantyMillege;
+
+        public List<String> getRightFuzzyTranWarrantyMillege(){return this.rightFuzzyTranWarrantyMillege;}
 
         public ConditionBuilder idBetWeen(Integer idSt,Integer idEd){
             this.idSt = idSt;
@@ -434,6 +594,66 @@ public class MqmsTranProductionDecode implements Serializable {
             return this;
         }
 
+        public ConditionBuilder fuzzyTranWarrantyYears (List<String> fuzzyTranWarrantyYears){
+            this.fuzzyTranWarrantyYears = fuzzyTranWarrantyYears;
+            return this;
+        }
+
+        public ConditionBuilder fuzzyTranWarrantyYears (String ... fuzzyTranWarrantyYears){
+            this.fuzzyTranWarrantyYears = solveNullList(fuzzyTranWarrantyYears);
+            return this;
+        }
+
+        public ConditionBuilder rightFuzzyTranWarrantyYears (List<String> rightFuzzyTranWarrantyYears){
+            this.rightFuzzyTranWarrantyYears = rightFuzzyTranWarrantyYears;
+            return this;
+        }
+
+        public ConditionBuilder rightFuzzyTranWarrantyYears (String ... rightFuzzyTranWarrantyYears){
+            this.rightFuzzyTranWarrantyYears = solveNullList(rightFuzzyTranWarrantyYears);
+            return this;
+        }
+
+        public ConditionBuilder tranWarrantyYearsList(String ... tranWarrantyYears){
+            this.tranWarrantyYearsList = solveNullList(tranWarrantyYears);
+            return this;
+        }
+
+        public ConditionBuilder tranWarrantyYearsList(List<String> tranWarrantyYears){
+            this.tranWarrantyYearsList = tranWarrantyYears;
+            return this;
+        }
+
+        public ConditionBuilder fuzzyTranWarrantyMillege (List<String> fuzzyTranWarrantyMillege){
+            this.fuzzyTranWarrantyMillege = fuzzyTranWarrantyMillege;
+            return this;
+        }
+
+        public ConditionBuilder fuzzyTranWarrantyMillege (String ... fuzzyTranWarrantyMillege){
+            this.fuzzyTranWarrantyMillege = solveNullList(fuzzyTranWarrantyMillege);
+            return this;
+        }
+
+        public ConditionBuilder rightFuzzyTranWarrantyMillege (List<String> rightFuzzyTranWarrantyMillege){
+            this.rightFuzzyTranWarrantyMillege = rightFuzzyTranWarrantyMillege;
+            return this;
+        }
+
+        public ConditionBuilder rightFuzzyTranWarrantyMillege (String ... rightFuzzyTranWarrantyMillege){
+            this.rightFuzzyTranWarrantyMillege = solveNullList(rightFuzzyTranWarrantyMillege);
+            return this;
+        }
+
+        public ConditionBuilder tranWarrantyMillegeList(String ... tranWarrantyMillege){
+            this.tranWarrantyMillegeList = solveNullList(tranWarrantyMillege);
+            return this;
+        }
+
+        public ConditionBuilder tranWarrantyMillegeList(List<String> tranWarrantyMillege){
+            this.tranWarrantyMillegeList = tranWarrantyMillege;
+            return this;
+        }
+
         private <T>List<T> solveNullList(T ... objs){
             if (objs != null){
             List<T> list = new ArrayList<>();
@@ -468,6 +688,14 @@ public class MqmsTranProductionDecode implements Serializable {
         }
         public Builder tranShortCode(String tranShortCode){
             this.obj.setTranShortCode(tranShortCode);
+            return this;
+        }
+        public Builder tranWarrantyYears(String tranWarrantyYears){
+            this.obj.setTranWarrantyYears(tranWarrantyYears);
+            return this;
+        }
+        public Builder tranWarrantyMillege(String tranWarrantyMillege){
+            this.obj.setTranWarrantyMillege(tranWarrantyMillege);
             return this;
         }
         public MqmsTranProductionDecode build(){return obj;}
