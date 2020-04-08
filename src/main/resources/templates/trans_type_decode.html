@@ -197,12 +197,16 @@
 //            dg.datagrid('enableFilter');
             var tranProModel=document.getElementById("tranProModel");
             var tranShortCode=document.getElementById("tranShortCode");
+            var tranWarrantyYears=document.getElementById("tranWarrantyYears");
+            var tranWarrantyMillege=document.getElementById("tranWarrantyMillege");
             $.ajax({
                 type: 'post',
                 url: "/" + system + "/" + module +"/transTypeInfor",
                 data: {
                     "tranProModel":tranProModel.value,
-                    "tranShortCode":tranShortCode.value
+                    "tranShortCode":tranShortCode.value,
+                    "tranWarrantyYears":tranProModel.value,
+                    "tranWarrantyMillege":tranShortCode.value
                 },
                 traditional:true,
                 async : true, //异步
@@ -228,6 +232,8 @@
         <th field="id" align="center">ID</th>
         <th field="tran_pro_model" align="center">变速箱型号代码</th>
         <th field="tran_shortCode" align="center">变速箱型号</th>
+        <th field="tran_warranty_years" align="center">变速箱保修年限</th>
+        <th field="tran_warranty_millege" align="center">变速箱保修里程</th>
     </tr>
     </thead>
 </table>
@@ -235,6 +241,8 @@
     <div>
         <label>变速箱型号代码</label><input id="tranProModel" class="easyui-combobox">
         <label>变速箱型号</label><input id="tranShortCode" class="easyui-combobox" >
+        <label>变速箱保修年限</label><input id="tranWarrantyYears" class="easyui-combobox">
+        <label>变速箱保修里程</label><input id="tranWarrantyMillege" class="easyui-combobox" >
     </div>
     <div>
         <a href="javascript:addDecodeInfor()" class="easyui-linkbutton" iconCls="icon-add" plain="true">增加</a>
@@ -257,7 +265,14 @@
                 <td>ID</td><td><input id="id" name="id" class="easyui-textbox" readonly="true" ></td>
                 <td>型号代码</td><td><input id="tran_pro_model"  name="tran_pro_model" class="easyui-textbox"></td>
                 <td>型号</td><td><input id="tran_shortCode" name="tran_shortCode" class="easyui-textbox"></td>
+
             </tr>
+            <tr>
+                <td>保修年限</td><td><input id="tran_warranty_years"  name="tran_warranty_years" class="easyui-textbox"></td>
+                <td>保修里程</td><td><input id="tran_warranty_millege" name="tran_warranty_millege" class="easyui-textbox"></td>
+            </tr>
+
+
             </tbody>
         </table>
     </form>

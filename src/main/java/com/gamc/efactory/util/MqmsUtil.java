@@ -19,7 +19,7 @@ public class MqmsUtil {
      * @throws Exception
      */
     public static int getMonth(String startDate, String endDate) throws Exception {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM");
         Calendar c = Calendar.getInstance();
         c.setTime(sdf.parse(endDate));
         int year1 = c.get(Calendar.YEAR);

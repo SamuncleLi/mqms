@@ -249,4 +249,41 @@ public class ImportExcelController {
         }
         return "数据成功导入";
     }
+    /**
+     * 市场通报数据导入
+     */
+    @Autowired
+    private MarketBulletinService marketBulletinService;
+    @RequestMapping(value = "/marketBulletinData")
+    public String exImportmarketBulletinData(@RequestParam("file")MultipartFile multipartFile,HttpServletRequest request) {
+
+
+        //判断上传内容是否符合要求
+        String fileName = multipartFile.getOriginalFilename();
+        if (!fileName.matches("^.+\\.(?i)(xls)$") && !fileName.matches("^.+\\.(?i)(xlsx)$")) {
+            return "上传的文件格式不正确";
+        }
+
+        String files = saveFile(multipartFile, request);
+        int result = 0;
+        try {
+            result =  marketBulletinService.addLists(files,request);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }finally {
+            File file = new File(files);
+            System.gc();
+            boolean delSuccess = file.delete();
+            if(delSuccess){
+                System.out.println("删除文件成功");
+            }else{
+                System.out.println("删除文件失败");
+            }
+        }
+        if(result==1){
+            return "文件上传成功";}
+        else{
+            return "文件上传失败";}
+    }
+
 }

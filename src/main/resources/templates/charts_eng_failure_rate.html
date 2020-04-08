@@ -209,11 +209,26 @@
     })
 
     function analysis() {
-        $.messager.alert('系统提示',"数据查询中，请稍后。。。");
+//        document.getElementById("number").style.visibility="visible";
+//        document.getElementById("prog").style.visibility="visible";
+//        start();
+        $.messager.alert('系统提示',"数据正在查询中，请稍后");
         $.ajax({
             url:"/mqms/charts/engineFailureRate?yearAndMonth=" + $('#yearAndMonth').datebox('getValue') + "&timeSpan=" + $('#timeSpan').numberspinner('getValue') + "&engType="+ $('#engType').combobox('getValues') + "&monthType=6",
             success:function (result) {
-                $.messager.alert('系统提示',"数据查询成功");
+
+                $.messager.alert
+
+                ({
+                    title:'系统提示',
+                    msg:'数据查询成功，窗口将于3秒后自动关闭',
+                    icon: 'info',
+//                    top:300
+                });
+
+                setTimeout(function(){
+                    $(".messager-body").window('close');
+                },3000);
 //                console.log(result);
 
                 var engType = $("#engType").combobox("getValues");
@@ -259,7 +274,7 @@
 //                            saveAsImage: {show: true}
                         }
                     },
-                    
+
                     legend: {},
                     tooltip: {
                         trigger: 'axis',
@@ -270,7 +285,7 @@
                     },
                     xAxis: {type: 'category'},
                     yAxis: {
-                        name: '台',
+                        name: '',
                         gridIndex: 0
                     },
                     grid: {left:'5%', right: '30%'},
@@ -311,26 +326,26 @@
                 var engType = $("#engType").combobox("getValues");
 
                 //添加相当于机型数量的折线
-                var series = [
-                    {
-                        type: 'pie',
-                        id: 'pie',
-                        radius: '60%',
-                        center: ['88%', '50%'],
-                        label: {
-                            formatter: '{b}: ({d}%)',
-                            position: 'inner'
-                        },
-                        encode: {
-                            itemName: '机型',
-                            value: $('#yearAndMonth').datebox('getValue'),
-                            tooltip: $('#yearAndMonth').datebox('getValue')
-                        }
-                    }];
+                var series = [];
+
                 for (var i = 0; i < engType.length; i++) {
                     var line = {type: 'line', seriesLayoutBy: 'row', itemStyle: {normal: {label: {show: true}}}};
                     series.push(line)
                 }
+                series.push({
+                    type: 'pie',
+                        id: 'pie',
+                        radius: '60%',
+                        center: ['88%', '50%'],
+                        label: {
+                        formatter: '{b}: ({d}%)',
+                            position: 'inner'
+                    },
+                    encode: {
+                        itemName: '机型',
+                            value: $('#yearAndMonth').datebox('getValue'),
+                            tooltip: $('#yearAndMonth').datebox('getValue')
+                    }});
 
                     var option_2 = {
                         title: {
@@ -355,7 +370,7 @@
                     },
                     xAxis: {type: 'category'},
                     yAxis: {
-                        name: '台',
+                        name: '',
                         gridIndex: 0
                     },
                     grid: {left: '5%', right: '30%'},
@@ -438,7 +453,7 @@
                     },
                     xAxis: {type: 'category'},
                     yAxis: {
-                        name: '台',
+                        name: '',
                         gridIndex: 0
                     },
                     grid: {left: '5%', right: '30%'},
@@ -476,26 +491,27 @@
                 var engType = $("#engType").combobox("getValues");
 
                 //添加相当于机型数量的折线
-                var series = [
-                    {
-                        type: 'pie',
-                        id: 'pie',
-                        radius: '60%',
-                        center: ['88%', '50%'],
-                        label: {
-                            formatter: '{b}: ({d}%)',
-                            position: 'inner'
-                        },
-                        encode: {
-                            itemName: '机型',
-                            value: $('#yearAndMonth').datebox('getValue'),
-                            tooltip: $('#yearAndMonth').datebox('getValue')
-                        }
-                    }];
+                var series = [];
+
                 for (var i = 0; i < engType.length; i++) {
                     var line = {type: 'line', seriesLayoutBy: 'row', itemStyle: {normal: {label: {show: true}}}};
                     series.push(line)
                 }
+                series.push(         {
+                    type: 'pie',
+                    id: 'pie',
+                    radius: '60%',
+                    center: ['88%', '50%'],
+                    label: {
+                        formatter: '{b}: ({d}%)',
+                        position: 'inner'
+                    },
+                    encode: {
+                        itemName: '机型',
+                        value: $('#yearAndMonth').datebox('getValue'),
+                        tooltip: $('#yearAndMonth').datebox('getValue')
+                    }
+                });
 
                 var option_4 = {
                     title: {
@@ -520,7 +536,7 @@
                     },
                     xAxis: {type: 'category'},
                     yAxis: {
-                        name: '台',
+                        name: '',
                         gridIndex: 0
                     },
                     grid: {left: '5%', right: '30%'},
@@ -551,6 +567,29 @@
             }
         })
     }
+
+
+        function start(){
+            value = parseInt(document.getElementById('prog').value);
+            if(value >= 100){value=0;}
+            document.getElementById('prog').value = (value+1).toString();
+            document.getElementById('number').innerHTML = value.toString();
+            t = setTimeout('start()',100);
+        }
+
+    function stop(){
+        try{
+            clearTimeout(t);
+        }
+        catch(t){
+            for(var i = 0; i <= 100; i++){
+                document.getElementById('number').innerHTML = i.toString();
+                document.getElementById('prog').value = i.toString();
+            }
+        }
+    }
+
 </script>
+
 </body>
 </html>

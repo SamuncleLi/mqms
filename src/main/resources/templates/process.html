@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>装配数据追溯</title>
+    <script type="text/javascript" src="${req.contextPath}/static/plugin/jquery-easyui-1.5.5.4/jquery.min.js"></script>
+    <script type="text/javascript" src="${req.contextPath}/static/plugin/jquery-easyui-1.5.5.4/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="${req.contextPath}/static/plugin/jquery-easyui-1.5.5.4/locale/easyui-lang-zh_CN.js"></script>
+    <link rel="stylesheet" href="${req.contextPath}/static/plugin/jquery-easyui-1.5.5.4/themes/gray/easyui.css" type="text/css"/>
+    <link rel="stylesheet" href="${req.contextPath}/static/plugin/jquery-easyui-1.5.5.4/themes/icon.css" type="text/css"/>
+    <link rel="stylesheet" href="${req.contextPath}/static/css/data_voucher.css" type="text/css"/>
+    <script type="text/javascript" src="${req.contextPath}/static/plugin/jquery-easyui-1.5.5.4/datagrid-detailview.js"></script>
+    <script type="text/javascript" src="${req.contextPath}/static/plugin/jquery-easyui-1.5.5.4/datagrid-filter.js"></script>
+    <link  href="${req.contextPath}/static/layuiExtend/layui/css/layui.css" media="all" rel="stylesheet">
+    <script type="text/javascript" src="${req.contextPath}/static/datagrid-export/datagrid-export.js"></script>
+    <script src="${req.contextPath}/static/layuiExtend/layui/layui.js"></script>
+</head>
+<body>
+<label id="number" for="prog"></label>
+<progress id="prog" value="60" max="100"></progress>
+<script type="text/javascript">
+
+    function start(){
+        value = parseInt(document.getElementById('prog').value);
+        if(value >= 100){value=0;}
+        document.getElementById('prog').value = (value+1).toString();
+        document.getElementById('number').innerHTML = value.toString();
+        t = setTimeout('start()',100);
+    }
+
+    function stop(){
+        try{
+            clearTimeout(t);
+        }
+        catch(t){
+            for(var i = 0; i <= 100; i++){
+                document.getElementById('number').innerHTML = i.toString();
+                document.getElementById('prog').value = i.toString();
+            }
+        }
+    }
+</script>
+</body>
+</html>

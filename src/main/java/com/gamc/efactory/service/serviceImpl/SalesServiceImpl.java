@@ -95,8 +95,8 @@ public class SalesServiceImpl implements SalesService {
 
     private void saveAll(List<List<Object>> lists, HttpServletRequest request) throws IllegalAccessException {
         try {
-            int threadacCount=((ThreadPoolExecutor)executorService).getPoolSize();
-//            int threadacCount=((ThreadPoolExecutor)executorService).getActiveCount();
+//            int threadacCount=((ThreadPoolExecutor)executorService).getPoolSize();
+            int threadacCount=((ThreadPoolExecutor)executorService).getActiveCount();
                 if (lists.size() > 0&&threadacCount<140) {
 
                     List<MqmsSalesRaw> mqmsSalesRawList = new ArrayList<>();

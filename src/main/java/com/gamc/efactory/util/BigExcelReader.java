@@ -394,7 +394,7 @@ public abstract class BigExcelReader {
                 // 当解析一定行数时输出数据
             else if (name.equals("row")) {
                     container.add(rowDatas);
-                    if (container.size() == 8000) {
+                    if (container.size() == 5000) {
                         try {
                             doTask();
                         } catch (IllegalAccessException e) {

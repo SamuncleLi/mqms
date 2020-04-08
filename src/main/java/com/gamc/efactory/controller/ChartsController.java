@@ -1,8 +1,10 @@
 package com.gamc.efactory.controller;
 
+import com.gamc.efactory.dao.MqmsCarTypeInforMapper;
 import com.gamc.efactory.dao.MqmsFailureReportMapper;
 import com.gamc.efactory.dao.MqmsSalesMapper;
 import com.gamc.efactory.dao.MqmsVoucherMapper;
+import com.gamc.efactory.model.dataObject.MqmsCarTypeInfor;
 import com.gamc.efactory.model.dataObject.MqmsVoucher;
 import com.gamc.efactory.model.viewObject.FailureTop10;
 import com.gamc.efactory.model.viewObject.TransmissionProportion;
@@ -13,7 +15,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Created by Zeho Lee on 2020/1/8.
@@ -28,15 +33,17 @@ public class ChartsController {
     MqmsSalesMapper mqmsSalesMapper;
     @Autowired
     MqmsFailureReportMapper mqmsFailureReportMapper;
+    @Autowired
+    MqmsCarTypeInforMapper mqmsCarTypeInforMapper;
     /**
      * @描述 计算发动机不良率
-     * @编写人 Zeho Lee
-     * @邮箱 lizeh@gacmotor.com
-     * @日期 2020/1/9
+     * @编写人 Jian Wang
+     * @邮箱 798846080@qq.com
+     * @日期 2020/3/3
      * @参变量
      * @返回
      * @抛出异常
-    */
+     */
     @RequestMapping("engineFailureRate")
     public String[][] calculateEngineFailureRate(@RequestParam String yearAndMonth, @RequestParam String timeSpan, @RequestParam String engType, @RequestParam int monthType){
         //分离机型
@@ -79,13 +86,13 @@ public class ChartsController {
 
     /**
      * @描述 计算变速箱不良率
-     * @编写人 Zeho Lee
-     * @邮箱 lizeh@gacmotor.com
-     * @日期 2020/1/9
+     * @编写人 Jian Wang
+     * @邮箱 798846080@qq.com
+     * @日期 2020/3/3
      * @参变量
      * @返回
      * @抛出异常
-    */
+     */
     @RequestMapping("transmissionFailureRate")
     public String[][] calculateTransmissionFailureRate(@RequestParam String yearAndMonth, @RequestParam String timeSpan, @RequestParam String transType,@RequestParam int monthType){
         //分离机型
@@ -125,7 +132,65 @@ public class ChartsController {
         }
         return strArray;
     }
+    /**
+     * @描述 计算累计不良率
+     * @编写人 Jian Wang
+     * @邮箱 798846080@qq.com
+     * @日期 2020/4/3
+     * @参变量
+     * @返回
+     * @抛出异常
+     */
+    @RequestMapping("carMutilFailureRate")
+    public String[][] calculateCarMutilFailureRate(@RequestParam String carType, @RequestParam String carInfor) throws Exception {
+        String manufactureDate=carInfor.substring(0,7);
+        String[] allManuDate=mqmsCarTypeInforMapper.searchNextDate(carType);
+        String nextDate="";
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM");//设置日期格式
 
+        if (!Objects.equals(manufactureDate, allManuDate[0])&&allManuDate.length>1){
+            for(int j=1;j<allManuDate.length;j++){
+                if (Objects.equals(allManuDate[j], manufactureDate)){
+                    nextDate=allManuDate[j-1];
+                }
+            }
+        }
+        else{
+            nextDate=df.format(new Date());
+//            System.out.println(nextDate+"1222221111111111111111111111111113");
+        }
+        int monthNum=MqmsUtil.getMonth(manufactureDate,nextDate);
+        //创建二维数组
+        String[][] strArray=new String[2][monthNum+1];
+        strArray[0][0]="月份";
+        strArray[1][0]="累计不良率";
+//        for (int i = 0; i < monthNum; i++) {
+//            //单机型初始化信息
+//            String yearAndMonthBegin= MqmsUtil.getDateInfor("yyyy-MM",yearAndMonth,-Integer.parseInt(timeSpan)+1);
+        int thisEngtypeCount=0;
+        int secondPinData=0;
+        float unqualifiedRate=0;
+//            //单机型循环叠加计算不良率
+        String beginData=manufactureDate;
+        for (int i = 0; i < monthNum; i++) {
+
+            String endData=MqmsUtil.getDateInfor("yyyy-MM",beginData,i+1);
+            thisEngtypeCount = mqmsVoucherMapper.selectCarMutilMount(carType, beginData,endData);
+            secondPinData = mqmsSalesMapper.selectCarMutilSalesCount(carType, beginData,endData,nextDate);
+            strArray[0][i+1]=Integer.toString(i+1);
+            if(secondPinData==0)
+            {
+                unqualifiedRate=0;
+            }
+            else{
+                unqualifiedRate=(float) thisEngtypeCount / secondPinData;
+            }
+            DecimalFormat dlf = new DecimalFormat("0.00");//格式化小数
+            String strUnqualifiedRate = dlf.format(unqualifiedRate * 100);//返回一个String类型的两位小数
+            strArray[1][i+1]=strUnqualifiedRate;
+        }
+        return strArray;
+    }
     /**
      * @描述 计算发动机的搭配的各种变速箱的数量
      * @编写人 Zeho Lee
@@ -134,7 +199,7 @@ public class ChartsController {
      * @参变量
      * @返回
      * @抛出异常
-    */
+     */
     @RequestMapping("/eng/tranPie")
     public String[][] calTransmissionProportion(MqmsVoucher mqmsVoucher){
         String[] engType = {"变速箱类型", "数量"};
@@ -175,11 +240,11 @@ public class ChartsController {
         String timeSymbol36 = MqmsUtil.getDateInfor("yyyy-MM",yearAndMonth,-36);
         String timeSymbol1000 = MqmsUtil.getDateInfor("yyyy-MM",yearAndMonth,-1000);
 
-        array[1][1] = String.valueOf(mqmsVoucherMapper.salesFailureTimeBetween(engType, 0, 6));
-        array[1][2] = String.valueOf(mqmsVoucherMapper.salesFailureTimeBetween(engType, 7, 12));
-        array[1][3] = String.valueOf(mqmsVoucherMapper.salesFailureTimeBetween(engType, 13, 24));
-        array[1][4] = String.valueOf(mqmsVoucherMapper.salesFailureTimeBetween(engType, 25, 36));
-        array[1][5] = String.valueOf(mqmsVoucherMapper.salesFailureTimeBetween(engType, 36, 1000));
+        array[1][1] = String.valueOf(mqmsVoucherMapper.salesFailureTimeBetween(engType, timeSymbol6, yearAndMonth));
+        array[1][2] = String.valueOf(mqmsVoucherMapper.salesFailureTimeBetween(engType, timeSymbol12, yearAndMonth));
+        array[1][3] = String.valueOf(mqmsVoucherMapper.salesFailureTimeBetween(engType, timeSymbol24, yearAndMonth));
+        array[1][4] = String.valueOf(mqmsVoucherMapper.salesFailureTimeBetween(engType, timeSymbol36, yearAndMonth));
+        array[1][5] = String.valueOf(mqmsVoucherMapper.salesFailureTimeBetween(engType, timeSymbol1000, yearAndMonth));
 
         return array;
     }
@@ -208,11 +273,11 @@ public class ChartsController {
         String timeSymbol36 = MqmsUtil.getDateInfor("yyyy-MM",yearAndMonth,-36);
         String timeSymbol1000 = MqmsUtil.getDateInfor("yyyy-MM",yearAndMonth,-1000);
 
-        array[1][1] = String.valueOf(mqmsVoucherMapper.salesTransFailureTimeBetween(transType, 0, 6));
-        array[1][2] = String.valueOf(mqmsVoucherMapper.salesTransFailureTimeBetween(transType, 7, 12));
-        array[1][3] = String.valueOf(mqmsVoucherMapper.salesTransFailureTimeBetween(transType, 13, 24));
-        array[1][4] = String.valueOf(mqmsVoucherMapper.salesTransFailureTimeBetween(transType, 25, 36));
-        array[1][5] = String.valueOf(mqmsVoucherMapper.salesTransFailureTimeBetween(transType, 36, 1000));
+        array[1][1] = String.valueOf(mqmsVoucherMapper.salesTransFailureTimeBetween(transType, timeSymbol6, yearAndMonth));
+        array[1][2] = String.valueOf(mqmsVoucherMapper.salesTransFailureTimeBetween(transType, timeSymbol12,  yearAndMonth));
+        array[1][3] = String.valueOf(mqmsVoucherMapper.salesTransFailureTimeBetween(transType, timeSymbol24, yearAndMonth));
+        array[1][4] = String.valueOf(mqmsVoucherMapper.salesTransFailureTimeBetween(transType, timeSymbol36, yearAndMonth));
+        array[1][5] = String.valueOf(mqmsVoucherMapper.salesTransFailureTimeBetween(transType, timeSymbol1000, yearAndMonth));
 
         return array;
     }
@@ -225,7 +290,7 @@ public class ChartsController {
      * @参变量
      * @返回
      * @抛出异常
-    */
+     */
     @RequestMapping("/eng/calClaimIndenity")
     public String[][] calClaimIndenity(){
         String[][] array = {{}};
@@ -240,7 +305,7 @@ public class ChartsController {
      * @参变量
      * @返回
      * @抛出异常
-    */
+     */
     @RequestMapping("/eng/failureTop10")
     public String[][] failureTop10(MqmsVoucher mqmsVoucher){
         //计算该种发动机机型的不同变速箱数量
@@ -298,7 +363,7 @@ public class ChartsController {
      * @参变量
      * @返回
      * @抛出异常
-    */
+     */
     @RequestMapping("/eng/reportedFailure")
     public String[][] reportedFailure(@RequestParam String yearAndMonth, @RequestParam String timeSpan, @RequestParam String engType){
         //获取起始月

@@ -19,7 +19,8 @@ var _menus=[
         "menus":[{"menuid":"120","menuname":"发动机不良率","icon":"fa-globe","url":"/mqms/view/charts_eng_failure_rate"},
                 {"menuid":"121","menuname":"变速箱不良率","icon":"fa-laptop","url":"/mqms/view/charts_tran_failure_rate"},
                 {"menuid":"122","menuname":"发动机单机型市场品质数据","icon":"fa-laptop","url":"/mqms/view/charts_eng_single_analysis"},
-                {"menuid":"123","menuname":"变速箱单机型市场品质数据","icon":"fa-laptop","url":"/mqms/view/charts_tran_single_analysis"}
+                {"menuid":"123","menuname":"变速箱单机型市场品质数据","icon":"fa-laptop","url":"/mqms/view/charts_tran_single_analysis"},
+                {"menuid":"124","menuname":"车型累计不良率","icon":"fa-laptop","url":"/mqms/view/charts_car_mutil_analysis"}
             ]
     },
 	{"menuid":"21","icon":"fa-plug","menuname":"不良跟踪",parentMenu:'2',

@@ -85,8 +85,14 @@ public class VeiDataServiceImpl implements VeiDataService {
                 mqmsVoucherRecord.setShortCode(mqmsVoucherRecord.getVehicleType().substring(0, 2));
                 //机型、车型及变速箱类型
                 String vinShortCode = mqmsVoucherRecord.getVinCode().substring(0, 5);
-                mqmsVoucherRecord.setEngType(mqmsVinDecodeMapper.vinDecode(vinShortCode).getVinEngType());
-                mqmsVoucherRecord.setCarModel(mqmsVinDecodeMapper.vinDecode(vinShortCode).getVinCarType());
+                if (mqmsVinDecodeMapper.vinDecode(vinShortCode)!=null){
+                    String engtype= mqmsVinDecodeMapper.vinDecode(vinShortCode).getVinEngType();
+                    mqmsVoucherRecord.setEngType(engtype);
+                }
+                if (mqmsVinDecodeMapper.vinDecode(vinShortCode)!=null) {
+                    String carModel=mqmsVinDecodeMapper.vinDecode(vinShortCode).getVinCarType();
+                    mqmsVoucherRecord.setCarModel(carModel);
+                }
                 //变速箱类型暂时空着
                 mqmsVoucherRecord.setTransmissionCodeRe("");
 
@@ -195,32 +201,34 @@ public class VeiDataServiceImpl implements VeiDataService {
                         Map<String, Object> map = new HashMap<String, Object>();
                         //map.put("", row);
                         List<Object> list2 = new ArrayList<>();
-                        System.out.print("[");
+//                        System.out.print("[");
                         for (String cell : row) {
-                            System.out.print(cell + ",");
+//                            System.out.print(cell + ",");
                             list2.add(cell);
                         }
                         lists1.add(list2);
                         //list2= new ArrayList<Object>();
-                        System.out.println("]");
+//                        System.out.println("]");
                     }
                     saveAll(lists1, request);
                 }
             };
             // 执行解析
             bigExcelReader.parse();
-            return 1;
+
 
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+//        System.out.println( ((ThreadPoolExecutor)executorService).getActiveCount()+"12tttttttttttttttttttttttttttttttttttttttttttttt");
+        return 1;
     }
 
     private void saveAll(List<List<Object>> lists, HttpServletRequest request) throws IllegalAccessException {
         try {
-            int threadacCount=((ThreadPoolExecutor)executorService).getPoolSize();
+//            int threadacCount=((ThreadPoolExecutor)executorService).getPoolSize();
 //            int threadacCount=((ThreadPoolExecutor)executorService).getActiveCount();
-            if (lists.size() > 0&&threadacCount<140) {
+            if (lists.size() > 0&&((ThreadPoolExecutor)executorService).getActiveCount()<140) {
 
 
                 List<MqmsVoucherRaw> mqmsVoucherRawList = new ArrayList<>();
@@ -334,22 +342,9 @@ public class VeiDataServiceImpl implements VeiDataService {
                 //构造函数传参
                 importCall.setMqmsVoucherList(mqmsVoucherList);
                 importCallRaw.setMqmsVoucherRawList(mqmsVoucherRawList);
+                //线程开启
                 executorService.execute(importCall);
                 executorService.execute(importCallRaw);
-
-
-
-//                for(MqmsVoucher mqmsVoucherRecord:mqmsVoucherList){
-//                    String qualityFeedbackCode=mqmsVoucherRecord.getQualityFeedbackCode();
-//                    int cnt = mqmsVoucherMapper.selectByQualityFeedbackCode(qualityFeedbackCode);
-//                    if (cnt == 0) {
-//                        mqmsVoucherMapper.insertMqmsVoucher(mqmsVoucherRecord);
-//                        System.out.println(" 插入 "+mqmsVoucherRecord);
-//                    } else {
-//                        mqmsVoucherMapper.updateByQualityFeedbackCode(mqmsVoucherRecord);
-//                        System.out.println(" 更新 "+mqmsVoucherRecord);
-//                    }
-
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -364,15 +359,9 @@ public class VeiDataServiceImpl implements VeiDataService {
         public void setMqmsVoucherRawList(List<MqmsVoucherRaw> mqmsVoucherRawList) {
             this.mqmsVoucherRawList = mqmsVoucherRawList;
         }
-        //构造函数,传递session
-
-
         @Override
         public void run() {
             for (MqmsVoucherRaw mqmsVoucherRawRecord : mqmsVoucherRawList) {
-//                    System.out.println("88888888888888888888888888888888888888888888888888888888888888888888888");
-
-
                 String voucherCode = mqmsVoucherRawRecord.getVoucherCode();
                 if (voucherCode != null) {
                     int cnt = mqmsVoucherRawMapper.selectByVoucherCode(voucherCode);
@@ -380,10 +369,10 @@ public class VeiDataServiceImpl implements VeiDataService {
                         mqmsVoucherRawMapper.insertMqmsVoucherRaw(mqmsVoucherRawRecord);
                     } else {
                         mqmsVoucherRawMapper.updateMqmsVoucherRaw(mqmsVoucherRawRecord);
-//                            System.out.println(" 更新 " + mqmsVoucherRawRecord);
                     }
                 }
             }
+            
         }
     }
 }

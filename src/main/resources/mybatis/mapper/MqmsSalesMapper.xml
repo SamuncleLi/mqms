@@ -50,6 +50,13 @@
         AND  `second_pin_date` &gt;= #{beginData}
         AND  `second_pin_date` &lt;= #{endData}
     </select>
+    <select id="selectCarMutilSalesCount"  resultType="java.lang.Integer" >
+        SELECT COUNT(*) FROM `mqms_sales`
+        WHERE  `car_type` = #{carType}
+        AND  `second_pin_date` &gt;= #{beginData}
+        AND  `second_pin_date` &lt;= #{nextData}
+        AND  `produce_date`  &lt;=  #{endData}
+    </select>
     <select id="selectByVinCode"  resultMap="MqmsSalesMap" >
         SELECT * FROM `mqms_sales`
         WHERE  `vin_code` = #{vin_code}
