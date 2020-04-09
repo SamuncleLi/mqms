@@ -10,12 +10,12 @@ import java.util.List;
 */
 public class MqmsProduction implements Serializable {
 
-    private static final long serialVersionUID = 1585056839860L;
+    private static final long serialVersionUID = 1586409164147L;
 
 
     /**
     * 主键
-    * 
+    * ID
     * isNullAble:0
     */
     private Integer productionId;

@@ -45,8 +45,8 @@ public class MqmsUtil {
      * @return
      * @throws java.text.ParseException
      */
-    public static Map<String, String> getWeekDate(String dateTime) throws java.text.ParseException {
-        Map<String, String> map = new HashMap();
+    public static Map getWeekDate(String dateTime) throws java.text.ParseException {
+        Map<String, Object> map = new HashMap<String, Object>();
         if (dateTime!=null) {
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
             Date date =  sdf.parse(dateTime);

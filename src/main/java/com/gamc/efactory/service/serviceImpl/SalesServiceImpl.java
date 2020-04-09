@@ -34,7 +34,6 @@ import java.util.concurrent.*;
 public class SalesServiceImpl implements SalesService {
     private ThreadFactory threadFactory = new ThreadFactoryBuilder().setNameFormat("sendEmailImmediately-pool-%d").build();
 //    private ExecutorService executorService = new ThreadPoolExecutor(8, 40, 1000, TimeUnit.MILLISECONDS, new SynchronousQueue<Runnable>(),threadFactory,new ThreadPoolExecutor.AbortPolicy());
-
     private ExecutorService executorService = new ThreadPoolExecutor(16, 80, 500, TimeUnit.MILLISECONDS,    new LinkedBlockingQueue<Runnable>(200),threadFactory,new ThreadPoolExecutor.AbortPolicy());
 
     @Autowired
@@ -95,10 +94,7 @@ public class SalesServiceImpl implements SalesService {
 
     private void saveAll(List<List<Object>> lists, HttpServletRequest request) throws IllegalAccessException {
         try {
-//            int threadacCount=((ThreadPoolExecutor)executorService).getPoolSize();
-            int threadacCount=((ThreadPoolExecutor)executorService).getActiveCount();
-                if (lists.size() > 0&&threadacCount<140) {
-
+                if  (lists.size() > 0&&((ThreadPoolExecutor)executorService).getActiveCount()<80)  {
                     List<MqmsSalesRaw> mqmsSalesRawList = new ArrayList<>();
                     List<MqmsSales> mqmsSalesList = new ArrayList<>();
                     SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
@@ -116,7 +112,6 @@ public class SalesServiceImpl implements SalesService {
                             if (f.getType().equals(String.class)) {
                                 f.set(mqmsSalesRaw, rowData.get(j - 2));
                             } else if (f.getType().equals(BigDecimal.class)) {
-
                                 f.set(mqmsSalesRaw, new BigDecimal(rowData.get(j - 2).toString()));
                             } else if (f.getType().equals(Integer.class)) {
                                 //来自前面的坑，EXCEL导出整数变成字符多了小数点，例2838(Int),2838.0(String
@@ -142,28 +137,23 @@ public class SalesServiceImpl implements SalesService {
                     //使用线程池
                     ImportCall importCall = new ImportCall();
                     ImportCallRaw importCallRaw = new ImportCallRaw();
+                    //传参
                     importCall.setMqmsSalesList(mqmsSalesList);
                     importCallRaw.setMqmsSalesRawList(mqmsSalesRawList);
-//                    System.out.println(threadacCount+"yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy");
+                    //线程开启
                     executorService.execute(importCall);
-
-//                System.out.println(threadacCount+"oooooooooooooooooooooooooooooooooooooooooooooooooo");
-//                System.out.println(threadCount+"JJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJ");
                     executorService.execute(importCallRaw);
-
-
-//                for (MqmsSalesRaw mqmsSalesRawRecord : mqmsSalesRawList) {
-//                    String vinCode = mqmsSalesRawRecord.getVinCode();
-//                    if (vinCode != null) {
-//                        int cnt = mqmsSalesRawMapper.selectByVinCode(vinCode);
-//                        if (cnt == 0) {
-//                            mqmsSalesRawMapper.insertMqmsSalesRaw(mqmsSalesRawRecord);
-//                        } else {
-//                            mqmsSalesRawMapper.updateByVinCode(mqmsSalesRawRecord);
-//                        }
-//                    }
-//                }
                 }
+            boolean allThreadsIsDone = ((ThreadPoolExecutor) executorService).getTaskCount()==((ThreadPoolExecutor) executorService).getCompletedTaskCount();
+//                if(allThreadsIsDone){
+//                   //处理内容
+//                }
+            while (!allThreadsIsDone){
+                allThreadsIsDone = ((ThreadPoolExecutor) executorService).getTaskCount()==((ThreadPoolExecutor) executorService).getCompletedTaskCount();
+//                    if(allThreadsIsDone){
+//                            //处理内容
+//                    }
+            }
 
 
         } catch (Exception e) {
@@ -226,7 +216,7 @@ public class SalesServiceImpl implements SalesService {
                 //变速箱系列
 
                 String vinCode = mqmsSalesRecord.getVinCode();
-                if (vinCode != null) {
+                if (vinCode != null&&vinCode.length()>7) {
 
                     //变速箱短码
                     mqmsSalesRecord.setTranShortCode(mqmsSalesRecord.getVinCode().substring(6, 7));

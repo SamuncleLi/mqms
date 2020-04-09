@@ -28,5 +28,6 @@ public interface MqmsVoucherMapper extends MqmsVoucherBaseMapper{
     int salesFailureTimeBetween(@Param("eng_type")String engType, @Param("begin")String begin, @Param("end")String end);
     int salesTransFailureTimeBetween(@Param("tranTypeDetail")String tranTypeDetail, @Param("begin")String begin, @Param("end")String end);
     public List<FailureTop10> transFailureTop10(MqmsVoucher mqmsVoucher);
+    int updateMqmsVoucherByVoucherCode(MqmsVoucher object);
 
 }

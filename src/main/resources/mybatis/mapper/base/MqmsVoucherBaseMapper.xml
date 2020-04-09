@@ -137,8 +137,8 @@
                     <if test="engType!=null">
                         `eng_type`,
                     </if>
-                    <if test="transmissionCodeRe!=null">
-                        `transmission_code_re`,
+                    <if test="transmissionTypeRe!=null">
+                        `transmission_type_re`,
                     </if>
                     <if test="tranTypeDetail!=null">
                         `tran_type_detail`,
@@ -349,8 +349,8 @@
                 <if test="engType!=null">
                     #{engType},
                 </if>
-                <if test="transmissionCodeRe!=null">
-                    #{transmissionCodeRe},
+                <if test="transmissionTypeRe!=null">
+                    #{transmissionTypeRe},
                 </if>
                 <if test="tranTypeDetail!=null">
                     #{tranTypeDetail},
@@ -564,8 +564,8 @@
             <if test="engType != null and engType!=''">
                 `eng_type` = #{engType},
             </if>
-            <if test="transmissionCodeRe != null and transmissionCodeRe!=''">
-                `transmission_code_re` = #{transmissionCodeRe},
+            <if test="transmissionTypeRe != null and transmissionTypeRe!=''">
+                `transmission_type_re` = #{transmissionTypeRe},
             </if>
             <if test="tranTypeDetail != null and tranTypeDetail!=''">
                 `tran_type_detail` = #{tranTypeDetail},
@@ -779,8 +779,8 @@
         <if test="set.engType != null and set.engType!=''">
             `eng_type` = #{set.engType},
         </if>
-        <if test="set.transmissionCodeRe != null and set.transmissionCodeRe!=''">
-            `transmission_code_re` = #{set.transmissionCodeRe},
+        <if test="set.transmissionTypeRe != null and set.transmissionTypeRe!=''">
+            `transmission_type_re` = #{set.transmissionTypeRe},
         </if>
         <if test="set.tranTypeDetail != null and set.tranTypeDetail!=''">
             `tran_type_detail` = #{set.tranTypeDetail},
@@ -1639,23 +1639,23 @@
                 </foreach>
                 ) and
             </if>
-                <if test="where.transmissionCodeReList != null">
-                    `transmission_code_re` in
-                    <foreach collection="where.transmissionCodeReList" close=")" open="(" separator="," item="item">
+                <if test="where.transmissionTypeReList != null">
+                    `transmission_type_re` in
+                    <foreach collection="where.transmissionTypeReList" close=")" open="(" separator="," item="item">
                         #{item}
                     </foreach> and
                 </if>
-            <if test ="where.fuzzyTransmissionCodeRe!=null and where.fuzzyTransmissionCodeRe.size()>0">
+            <if test ="where.fuzzyTransmissionTypeRe!=null and where.fuzzyTransmissionTypeRe.size()>0">
                 (
-                <foreach collection="where.fuzzyTransmissionCodeRe"  separator="or" item="item">
-                    `Transmission_code_re` like concat('%',#{item},'%')
+                <foreach collection="where.fuzzyTransmissionTypeRe"  separator="or" item="item">
+                    `Transmission_type_re` like concat('%',#{item},'%')
                 </foreach>
                 ) and
             </if>
-            <if test ="where.rightFuzzyTransmissionCodeRe!=null and where.rightFuzzyTransmissionCodeRe.size()>0">
+            <if test ="where.rightFuzzyTransmissionTypeRe!=null and where.rightFuzzyTransmissionTypeRe.size()>0">
                 (
-                <foreach collection="where.rightFuzzyTransmissionCodeRe"  separator="or" item="item">
-                    `Transmission_code_re` like concat(#{item},'%')
+                <foreach collection="where.rightFuzzyTransmissionTypeRe"  separator="or" item="item">
+                    `Transmission_type_re` like concat(#{item},'%')
                 </foreach>
                 ) and
             </if>
@@ -2183,7 +2183,7 @@
         <result property="engArrange" column="eng_arrange"/>
         <result property="carModel" column="car_model"/>
         <result property="engType" column="eng_type"/>
-        <result property="transmissionCodeRe" column="transmission_code_re"/>
+        <result property="transmissionTypeRe" column="transmission_type_re"/>
         <result property="tranTypeDetail" column="tran_type_detail"/>
         <result property="transmissionManufacturer" column="transmission_manufacturer"/>
         <result property="receiveTime" column="receive_time"/>
@@ -2346,8 +2346,8 @@
             <if test="engType != null and engType!=''">
                 `eng_type` = #{engType} and
             </if>
-            <if test="transmissionCodeRe != null and transmissionCodeRe!=''">
-                `transmission_code_re` = #{transmissionCodeRe} and
+            <if test="transmissionTypeRe != null and transmissionTypeRe!=''">
+                `transmission_type_re` = #{transmissionTypeRe} and
             </if>
             <if test="tranTypeDetail != null and tranTypeDetail!=''">
                 `tran_type_detail` = #{tranTypeDetail} and
@@ -3205,23 +3205,23 @@
                     </foreach>
                     ) and
                 </if>
-                <if test="transmissionCodeReList != null">
-                    `transmission_code_re` in
-                    <foreach collection="transmissionCodeReList" close=")" open="(" separator="," item="item">
+                <if test="transmissionTypeReList != null">
+                    `transmission_type_re` in
+                    <foreach collection="transmissionTypeReList" close=")" open="(" separator="," item="item">
                         #{item}
                     </foreach> and
                 </if>
-                <if test ="fuzzyTransmissionCodeRe!=null and fuzzyTransmissionCodeRe.size()>0">
+                <if test ="fuzzyTransmissionTypeRe!=null and fuzzyTransmissionTypeRe.size()>0">
                     (
-                    <foreach collection="fuzzyTransmissionCodeRe"  separator="or" item="item">
-                        `Transmission_code_re` like concat('%',#{item},'%')
+                    <foreach collection="fuzzyTransmissionTypeRe"  separator="or" item="item">
+                        `Transmission_type_re` like concat('%',#{item},'%')
                     </foreach>
                     ) and
                 </if>
-                <if test ="rightFuzzyTransmissionCodeRe!=null and rightFuzzyTransmissionCodeRe.size()>0">
+                <if test ="rightFuzzyTransmissionTypeRe!=null and rightFuzzyTransmissionTypeRe.size()>0">
                     (
-                    <foreach collection="rightFuzzyTransmissionCodeRe"  separator="or" item="item">
-                        `Transmission_code_re` like concat(#{item},'%')
+                    <foreach collection="rightFuzzyTransmissionTypeRe"  separator="or" item="item">
+                        `Transmission_type_re` like concat(#{item},'%')
                     </foreach>
                     ) and
                 </if>
@@ -3839,8 +3839,8 @@
             <if test="engType != null and engType!=''">
                 `eng_type` = #{engType} and
             </if>
-            <if test="transmissionCodeRe != null and transmissionCodeRe!=''">
-                `transmission_code_re` = #{transmissionCodeRe} and
+            <if test="transmissionTypeRe != null and transmissionTypeRe!=''">
+                `transmission_type_re` = #{transmissionTypeRe} and
             </if>
             <if test="tranTypeDetail != null and tranTypeDetail!=''">
                 `tran_type_detail` = #{tranTypeDetail} and
@@ -4698,23 +4698,23 @@
                     </foreach>
                     ) and
                 </if>
-                    <if test="transmissionCodeReList != null">
-                        `transmission_code_re` in
-                        <foreach collection="transmissionCodeReList" close=")" open="(" separator="," item="item">
+                    <if test="transmissionTypeReList != null">
+                        `transmission_type_re` in
+                        <foreach collection="transmissionTypeReList" close=")" open="(" separator="," item="item">
                             #{item}
                         </foreach> and
                     </if>
-                <if test ="fuzzyTransmissionCodeRe!=null and fuzzyTransmissionCodeRe.size()>0">
+                <if test ="fuzzyTransmissionTypeRe!=null and fuzzyTransmissionTypeRe.size()>0">
                     (
-                    <foreach collection="fuzzyTransmissionCodeRe"  separator="or" item="item">
-                        `Transmission_code_re` like concat('%',#{item},'%')
+                    <foreach collection="fuzzyTransmissionTypeRe"  separator="or" item="item">
+                        `Transmission_type_re` like concat('%',#{item},'%')
                     </foreach>
                     ) and
                 </if>
-                <if test ="rightFuzzyTransmissionCodeRe!=null and rightFuzzyTransmissionCodeRe.size()>0">
+                <if test ="rightFuzzyTransmissionTypeRe!=null and rightFuzzyTransmissionTypeRe.size()>0">
                     (
-                    <foreach collection="rightFuzzyTransmissionCodeRe"  separator="or" item="item">
-                        `Transmission_code_re` like concat(#{item},'%')
+                    <foreach collection="rightFuzzyTransmissionTypeRe"  separator="or" item="item">
+                        `Transmission_type_re` like concat(#{item},'%')
                     </foreach>
                     ) and
                 </if>
@@ -5244,7 +5244,7 @@
         `eng_arrange`,
         `car_model`,
         `eng_type`,
-        `transmission_code_re`,
+        `transmission_type_re`,
         `tran_type_detail`,
         `transmission_manufacturer`,
         `receive_time`,
@@ -5419,8 +5419,8 @@
                     <if test="fetchFields.fetchFields.engType==true">
                         `eng_type`,
                     </if>
-                    <if test="fetchFields.fetchFields.transmissionCodeRe==true">
-                        `transmission_code_re`,
+                    <if test="fetchFields.fetchFields.transmissionTypeRe==true">
+                        `transmission_type_re`,
                     </if>
                     <if test="fetchFields.fetchFields.tranTypeDetail==true">
                         `tran_type_detail`,
@@ -5628,8 +5628,8 @@
                     <if test="fetchFields.excludeFields.engType==null">
                         `eng_type`,
                     </if>
-                    <if test="fetchFields.excludeFields.transmissionCodeRe==null">
-                        `transmission_code_re`,
+                    <if test="fetchFields.excludeFields.transmissionTypeRe==null">
+                        `transmission_type_re`,
                     </if>
                     <if test="fetchFields.excludeFields.tranTypeDetail==null">
                         `tran_type_detail`,

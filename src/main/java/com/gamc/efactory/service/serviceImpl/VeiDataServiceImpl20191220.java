@@ -4,7 +4,6 @@ import com.gamc.efactory.dao.*;
 import com.gamc.efactory.model.dataObject.MqmsVoucher;
 import com.gamc.efactory.model.dataObject.MqmsVoucherRaw;
 import com.gamc.efactory.model.dataObject.User;
-import com.gamc.efactory.service.VeiDataService;
 import com.gamc.efactory.service.VeiDataService20191220;
 import com.gamc.efactory.util.ExcelUtil;
 import com.gamc.efactory.util.MqmsUtil;
@@ -86,8 +85,9 @@ public class VeiDataServiceImpl20191220 implements VeiDataService20191220 {
                 String vinShortCOde = mqmsVoucherRecord.getVinCode().substring(0, 5);
                 mqmsVoucherRecord.setEngType(mqmsVinDecodeMapper.vinDecode(vinShortCOde).getVinEngShortCode());
                 mqmsVoucherRecord.setCarModel(mqmsVinDecodeMapper.vinDecode(vinShortCOde).getVinCarType());
-                //变速箱类型暂时空着
-                mqmsVoucherRecord.setTransmissionCodeRe("");
+
+                //变速箱详细类型暂时空着需要根据变速箱号解码
+                mqmsVoucherRecord.setTransmissionTypeRe("");
 
                 //变速箱机型
                 if(StringUtil.isNotEmpty(mqmsVoucherRecord.getTransmissionCode())){

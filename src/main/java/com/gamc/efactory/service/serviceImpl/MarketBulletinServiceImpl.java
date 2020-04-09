@@ -50,14 +50,11 @@ public class MarketBulletinServiceImpl implements MarketBulletinService {
                     List<List<Object>> lists1 = new LinkedList<>();
                     //执行保存
                     for (String[] row : lists) {
-                        Map<String, Object> map = new HashMap<String, Object>();
+//                        Map<String, Object> map = new HashMap<String, Object>();
                         //map.put("", row);
                         List<Object> list2 = new ArrayList<>();
 //                        System.out.print("[");
-                        for (String cell : row) {
-//                            System.out.print(cell + ",");
-                            list2.add(cell);
-                        }
+                        Collections.addAll(list2, row);
                         lists1.add(list2);
                         //list2= new ArrayList<Object>();
 //                        System.out.println("]");
