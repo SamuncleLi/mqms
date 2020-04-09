@@ -168,7 +168,7 @@ public class ProductionServiceImpl implements ProductionService {
         try {
             int threadacCount=((ThreadPoolExecutor)executorService).getPoolSize();
 //            int threadacCount=((ThreadPoolExecutor)executorService).getActiveCount();
-            if (lists.size() > 0&&threadacCount<140) {
+            if (lists.size() > 0&&((ThreadPoolExecutor)executorService).getActiveCount()<80)  {
 
 //            System.out.println(lists.size());
                 List<MqmsProductionRaw> mqmsProductionRawList = new ArrayList<>();
@@ -221,6 +221,16 @@ public class ProductionServiceImpl implements ProductionService {
 
 
 
+            }
+            boolean allThreadsIsDone = ((ThreadPoolExecutor) executorService).getTaskCount()==((ThreadPoolExecutor) executorService).getCompletedTaskCount();
+//                if(allThreadsIsDone){
+//                   //处理内容
+//                }
+            while (!allThreadsIsDone) {
+                allThreadsIsDone = ((ThreadPoolExecutor) executorService).getTaskCount() == ((ThreadPoolExecutor) executorService).getCompletedTaskCount();
+//                    if(allThreadsIsDone){
+//
+// 处理内容
             }
         } catch (Exception e) {
             e.printStackTrace();

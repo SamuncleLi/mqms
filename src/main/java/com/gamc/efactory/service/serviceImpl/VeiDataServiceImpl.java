@@ -1,25 +1,18 @@
 package com.gamc.efactory.service.serviceImpl;
 
-import com.gamc.efactory.controller.ViewController;
 import com.gamc.efactory.model.dataObject.*;
 import com.gamc.efactory.util.*;
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
 import com.gamc.efactory.dao.*;
-import com.gamc.efactory.dao.base.MqmsTranYearDecodeBaseMapper;
 import com.gamc.efactory.service.VeiDataService;
-import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import java.lang.reflect.Field;
 import java.math.BigDecimal;
 import java.text.ParseException;
@@ -28,7 +21,9 @@ import java.util.*;
 import java.util.concurrent.*;
 
 /**
- * Created by Zeho Lee on 2020/1/3.
+ * VEI数据导入实现类
+ * 时间：2020/04/08
+ * 更新：王健
  */
 @Service
 public class VeiDataServiceImpl implements VeiDataService {
@@ -50,51 +45,53 @@ public class VeiDataServiceImpl implements VeiDataService {
     @Autowired
     private MqmsFaultDecodeMapper mqmsFaultDecodeMapper;
 
-    Logger logger = LoggerFactory.getLogger(VeiDataServiceImpl.class);
-
-
+    //    Logger logger = LoggerFactory.getLogger(VeiDataServiceImpl.class);
     private class ImportCall implements Runnable {
         //构造函数传递参数
         private List<MqmsVoucher> mqmsVoucherList;
 
-        public void setMqmsVoucherList(List<MqmsVoucher> mqmsVoucherList) {
+        void setMqmsVoucherList(List<MqmsVoucher> mqmsVoucherList) {
             this.mqmsVoucherList = mqmsVoucherList;
         }
-        //构造函数,传递session
-
-
         @Override
         public void run() {
-
             for (MqmsVoucher mqmsVoucherRecord : mqmsVoucherList) {
-
                 //接收区间
                 if (!Objects.equals(mqmsVoucherRecord.getSubmitDate(), "")) {
-                    Map<String, String> map = new HashMap();
+                    Map map = new HashMap<String, Object>();
                     try {
                         map = MqmsUtil.getWeekDate(mqmsVoucherRecord.getSubmitDate());
                     } catch (ParseException e) {
                         e.printStackTrace();
                     }
-
                     mqmsVoucherRecord.setReceiveTime(map.get("wednesdayDate") + "~" + map.get("ThursdayDate"));
                 } else {
                     mqmsVoucherRecord.setReceiveTime("");
                 }
                 //车型简码
                 mqmsVoucherRecord.setShortCode(mqmsVoucherRecord.getVehicleType().substring(0, 2));
-                //机型、车型及变速箱类型
-                String vinShortCode = mqmsVoucherRecord.getVinCode().substring(0, 5);
-                if (mqmsVinDecodeMapper.vinDecode(vinShortCode)!=null){
-                    String engtype= mqmsVinDecodeMapper.vinDecode(vinShortCode).getVinEngType();
-                    mqmsVoucherRecord.setEngType(engtype);
+                //暂时通过VIN码获取机型、车型及变速箱类型
+                if(mqmsVoucherRecord.getVinCode()!=null&&mqmsVoucherRecord.getVinCode().length()>5) {
+                    String vinShortCode = mqmsVoucherRecord.getVinCode().substring(0, 5);
+                    if (mqmsVinDecodeMapper.vinDecode(vinShortCode) != null) {
+                        String engtype = mqmsVinDecodeMapper.vinDecode(vinShortCode).getVinEngType();
+                        mqmsVoucherRecord.setEngType(engtype);
+                        String carModel = mqmsVinDecodeMapper.vinDecode(vinShortCode).getVinCarType();
+                        mqmsVoucherRecord.setCarModel(carModel);
+                    }
+                    else{
+                        mqmsVoucherRecord.setEngType("");
+                        mqmsVoucherRecord.setCarModel("");
+                    }
+                    String transShortCode = mqmsVoucherRecord.getVinCode().substring(6,7);
+                    mqmsVoucherRecord.setTransmissionShortCode(transShortCode);
                 }
-                if (mqmsVinDecodeMapper.vinDecode(vinShortCode)!=null) {
-                    String carModel=mqmsVinDecodeMapper.vinDecode(vinShortCode).getVinCarType();
-                    mqmsVoucherRecord.setCarModel(carModel);
+                else{
+                    mqmsVoucherRecord.setEngType("");
+                    mqmsVoucherRecord.setCarModel("");
                 }
                 //变速箱类型暂时空着
-                mqmsVoucherRecord.setTransmissionCodeRe("");
+                mqmsVoucherRecord.setTranTypeDetail("");
 
                 //变速箱机型
                 if (StringUtil.isNotEmpty(mqmsVoucherRecord.getTransmissionCode())) {
@@ -107,7 +104,7 @@ public class VeiDataServiceImpl implements VeiDataService {
                     //暂定不通过vin码查询变速箱类型
 //                    mqmsVoucherRecord.setTranTypeDetail(mqmsVinDecodeMapper.vinDecode(vinShortCOde).getVinTransmType());
                     //通过变速箱号查询变速箱类型
-                    mqmsVoucherRecord.setTranTypeDetail(mqmsTranProductionDecodeMapper.selectTranProductionCode(trsmType));
+                    mqmsVoucherRecord.setTransmissionTypeRe(mqmsTranProductionDecodeMapper.selectTranProductionCode(trsmType));
                     //变速箱生产厂家
                     mqmsVoucherRecord.setTransmissionManufacturer(mqmsTranManufacturesDecodeMapper.selectTranManufacture(trsmManufacture));
                     //变速箱生产日期
@@ -127,24 +124,14 @@ public class VeiDataServiceImpl implements VeiDataService {
                     }
                     mqmsVoucherRecord.setTransmissionComfirmTime(Integer.toString(proFailureMonths));
                 }
-//                //销售至故障经过月
-//                int salesFailureMonths = 0;
-//                if (mqmsVoucherRecord.getSalesDate() != null && mqmsVoucherRecord.getFailureDate() != null) {
-//                    try {
-//                        salesFailureMonths = MqmsUtil.getMonth(mqmsVoucherRecord.getSalesDate(), mqmsVoucherRecord.getFailureDate());
-//                    } catch (Exception e) {
-//                        e.printStackTrace();
-//                    }
-//                }
                 //下线至故障经过月
                 int offlineFailureMonths = 0;
-                if (mqmsVoucherRecord.getOfflineDate() != null && mqmsVoucherRecord.getFailureDate() != null) {
+                if (mqmsVoucherRecord.getSalesDate()!= null && mqmsVoucherRecord.getConfirmDate()!= null) {
                     try {
-                        offlineFailureMonths = MqmsUtil.getMonth(mqmsVoucherRecord.getOfflineDate(), mqmsVoucherRecord.getFailureDate());
+                        offlineFailureMonths = MqmsUtil.getMonth(mqmsVoucherRecord.getSalesDate(), mqmsVoucherRecord.getConfirmDate());
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
-//                    mqmsVoucherRecord.setSalesFailureTime(salesFailureMonths);
                     mqmsVoucherRecord.setOfflineFailureTime(offlineFailureMonths);
                 }
 
@@ -171,21 +158,20 @@ public class VeiDataServiceImpl implements VeiDataService {
                     mqmsVoucherRecord.setFailureMonth("");
                 }
                 //故障代码
-                mqmsVoucherRecord.setFaultCodeClassification(mqmsFaultDecodeMapper.selectFaultCode(mqmsVoucherRecord.getPartsAndSymptom()));
+                mqmsVoucherRecord.setFaultCodeClassification(mqmsFaultDecodeMapper.selectFaultCode(mqmsVoucherRecord.getEngArrange()));
                 String voucherCode = mqmsVoucherRecord.getVoucherCode();
                 if (voucherCode != null) {
                     int cnt = mqmsVoucherMapper.selectByVoucherCode(voucherCode);
                     if (cnt == 0) {
                         mqmsVoucherMapper.insertMqmsVoucher(mqmsVoucherRecord);
                     } else {
-                        mqmsVoucherMapper.updateMqmsVoucher(mqmsVoucherRecord);
+                        mqmsVoucherMapper.updateMqmsVoucherByVoucherCode(mqmsVoucherRecord);
                     }
                 }
             }
 
         }
     }
-
 
     @Transactional
     public int addLists(String file, HttpServletRequest request) throws ExecutionException, InterruptedException {
@@ -198,14 +184,11 @@ public class VeiDataServiceImpl implements VeiDataService {
                     List<List<Object>> lists1 = new LinkedList<>();
                     //执行保存
                     for (String[] row : lists) {
-                        Map<String, Object> map = new HashMap<String, Object>();
+//                        Map<String, Object> map = new HashMap<String, Object>();
                         //map.put("", row);
                         List<Object> list2 = new ArrayList<>();
 //                        System.out.print("[");
-                        for (String cell : row) {
-//                            System.out.print(cell + ",");
-                            list2.add(cell);
-                        }
+                        Collections.addAll(list2, row);
                         lists1.add(list2);
                         //list2= new ArrayList<Object>();
 //                        System.out.println("]");
@@ -220,7 +203,6 @@ public class VeiDataServiceImpl implements VeiDataService {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-//        System.out.println( ((ThreadPoolExecutor)executorService).getActiveCount()+"12tttttttttttttttttttttttttttttttttttttttttttttt");
         return 1;
     }
 
@@ -228,9 +210,7 @@ public class VeiDataServiceImpl implements VeiDataService {
         try {
 //            int threadacCount=((ThreadPoolExecutor)executorService).getPoolSize();
 //            int threadacCount=((ThreadPoolExecutor)executorService).getActiveCount();
-            if (lists.size() > 0&&((ThreadPoolExecutor)executorService).getActiveCount()<140) {
-
-
+            if (lists.size() > 0&&((ThreadPoolExecutor)executorService).getActiveCount()<80) {
                 List<MqmsVoucherRaw> mqmsVoucherRawList = new ArrayList<>();
                 List<MqmsVoucher> mqmsVoucherList = new ArrayList<>();
                 SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
@@ -278,61 +258,11 @@ public class VeiDataServiceImpl implements VeiDataService {
                         mqmsVoucherRaw.setApplierName(user.getUserName());
                         mqmsVoucherRaw.setApplyTime(df.format(new Date()));
                     }
-
                     mqmsVoucherRawList.add(mqmsVoucherRaw);
-
-                    //开新线程解析
                     //相同属性复制，避免重复性Get/Set
                     MqmsVoucher mqmsVoucher = new MqmsVoucher();
                     BeanUtils.copyProperties(mqmsVoucherRaw, mqmsVoucher);
                     mqmsVoucherList.add(mqmsVoucher);
-                    //销售至故障经过月
-//                    int salesFailureMonths= MqmsUtil.getMonth(mqmsVoucher.getSalesDate(),mqmsVoucher.getFailureDate());
-                    //下线至故障经过月
-//                    int offlineFailureMonths=MqmsUtil.getMonth(mqmsVoucher.getOfflineDate(),mqmsVoucher.getConfirmDate());
-//                    mqmsVoucher.setSalesFailureTime(salesFailureMonths);
-//                    mqmsVoucher.setOfflineFailureTime(offlineFailureMonths);
-                    //里程区间
-//                    mqmsVoucher.setMileageDistribution(RangeResultUtil.rangeResult(mqmsVoucher.getMileage(),5000,100000));
-//                    String[] dateTime=mqmsVoucher.getFailureDate().split("-");
-                    //故障发生年
-//                    mqmsVoucher.setFailureYear(dateTime[0]);
-                    //故障发生月
-//                    mqmsVoucher.setFailureMonth(dateTime[1]);
-//                    Map<String, String> map = new HashMap();
-//                    map=MqmsUtil.getWeekDate(mqmsVoucher.getSubmitDate());
-//                    //接收区间
-//                    mqmsVoucher.setReceiveTime(map.get("wednesdayDate")+"~"+map.get("ThursdayDate"));
-                    //车型
-
-                    //发动机号
-
-                    //发动机生产日期
-
-                    //变速箱机型
-//                    String trsmCode=mqmsVoucher.getTransmissionCode().replace("+","");
-//                    String trsmType=trsmCode.substring(0,5);
-//                    String trsmManufacture=trsmCode.substring(5,10);
-//                    String trsmProYearCode=trsmCode.substring(11,12);
-//                    String trsmProMonthHex=trsmCode.substring(12,13);
-//
-//                    String trsmProDay=trsmCode.substring(13,15);
-//                    System.out.println(trsmType+trsmManufacture+trsmProYearCode);
-//                    mqmsVoucher.setTransmissionCodeRe(mqmsTranProductionDecodeMapper.selectTranProductionCode(trsmType));
-                    //变速箱生产厂家
-//                    mqmsVoucher.setTransmissionManufacturer(mqmsTranManufacturesDecodeMapper.selectTranManufacture(trsmManufacture));
-                    //变速箱生产日期
-//                    String trsmProMonth=Integer.toString(Integer.parseInt(trsmProMonthHex,16),10);
-//                    if(trsmProMonth.length()<2){
-//                        trsmProMonth="0"+trsmProMonth;
-//                    }
-//                    System.out.println(trsmProMonth);
-//                    String trsmProYear=mqmsTranYearDecodeMapper.selectTranProYear(trsmProYearCode);
-//                    System.out.println(trsmProYear);
-//                    mqmsVoucher.setTransmissionProductionData(trsmProYear+"-"+trsmProMonth+"-"+trsmProDay);
-                    //变速箱生产至确认经过月
-//                    int proFailureMonths=MqmsUtil.getMonth(mqmsVoucher.getTransmissionProductionData(),mqmsVoucher.getConfirmDate());
-//                    mqmsVoucher.setTransmissionComfirmTime(Integer.toString(proFailureMonths));
                 }
 
                 //使用线程池
@@ -346,6 +276,18 @@ public class VeiDataServiceImpl implements VeiDataService {
                 executorService.execute(importCall);
                 executorService.execute(importCallRaw);
             }
+                //通过任务量（即开启线程数）与任务完成数量对比，判断全部子线程是否已经结束
+                boolean allThreadsIsDone = ((ThreadPoolExecutor) executorService).getTaskCount()==((ThreadPoolExecutor) executorService).getCompletedTaskCount();
+//                if(allThreadsIsDone){
+//                   //处理内容
+//                }
+                while (!allThreadsIsDone){
+                    allThreadsIsDone = ((ThreadPoolExecutor) executorService).getTaskCount()==((ThreadPoolExecutor) executorService).getCompletedTaskCount();
+//                    if(allThreadsIsDone){
+//                            //处理内容
+//                    }
+                }
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -368,11 +310,11 @@ public class VeiDataServiceImpl implements VeiDataService {
                     if (cnt == 0) {
                         mqmsVoucherRawMapper.insertMqmsVoucherRaw(mqmsVoucherRawRecord);
                     } else {
-                        mqmsVoucherRawMapper.updateMqmsVoucherRaw(mqmsVoucherRawRecord);
+                        mqmsVoucherRawMapper.updateMqmsVoucherRawByVoucherCode(mqmsVoucherRawRecord);
                     }
                 }
             }
-            
+
         }
     }
 }
