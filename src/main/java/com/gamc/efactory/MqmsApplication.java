@@ -22,5 +22,4 @@ public class MqmsApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(MqmsApplication.class, args);
 	}
-
 }

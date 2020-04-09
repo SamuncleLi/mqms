@@ -460,9 +460,15 @@ public class FailureTrackController {
             submitFormSingle1.setInput_id("engineerUserId");
             submitFormSingle1.setRow(1);
             submitFormSingle1.setCol(1);
-            //TODO 根据flag获取可选工程师 3/30
-            submitFormSingle1.addOption("张三", "1275");
-            submitFormSingle1.addOption("李四", "1279");
+            //根据flag获取可选工程师
+            MqmsUserDict dictE = new MqmsUserDict();
+            dictE.setOrgType("engineer");
+            dictE.setOrgDesc(simpleApplicationObjectData.getString("flag"));
+            List<MqmsUserDict> dicts = userDictMapper.queryMqmsUserDict(dictE);
+            for(MqmsUserDict dict:dicts){
+                submitFormSingle1.addOption(dict.getUserName(),String.valueOf(dict.getUserId()));
+            }
+
             ProcessForm.SubmitFormSingle submitFormSingle2 = new ProcessForm.SubmitFormSingle();
             submitFormSingle2.setType("textbox");
             submitFormSingle2.setTitle("备注");
