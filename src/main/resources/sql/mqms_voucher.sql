@@ -63,7 +63,7 @@ CREATE TABLE `mqms_voucher` (
   `eng_arrange` varchar(255) DEFAULT NULL COMMENT 'eng整理（故障分类）',
   `car_model` varchar(255) DEFAULT NULL COMMENT '车型',
   `eng_type` varchar(255) DEFAULT NULL COMMENT '发动机机型',
-  `transmission_code_re` varchar(255) DEFAULT NULL COMMENT '变速箱机型',
+  `transmission_type_re` varchar(255) DEFAULT NULL COMMENT '变速箱机型',
   `tran_type_detail` varchar(255) DEFAULT NULL COMMENT '变速箱机型（详细）',
   `transmission_manufacturer` varchar(255) DEFAULT NULL COMMENT '变速箱生产厂家',
   `receive_time` varchar(255) DEFAULT NULL COMMENT '接收区间',
@@ -90,5 +90,9 @@ CREATE TABLE `mqms_voucher` (
   `applier_name` varchar(255) DEFAULT NULL COMMENT '上传人',
   `apply_time` varchar(255) DEFAULT NULL COMMENT '上传时间',
   PRIMARY KEY (`voucher_id`),
-  UNIQUE KEY `voucher_code` (`voucher_code`) USING BTREE
+  UNIQUE KEY `voucher_code` (`voucher_code`) USING BTREE,
+  KEY `engType` (`eng_type`) USING BTREE,
+  KEY `transType` (`tran_type_detail`) USING BTREE
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='vei系统导出表的拓展信息表';
+
+
