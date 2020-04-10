@@ -18,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
@@ -25,6 +26,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -241,6 +243,11 @@ public class FailureTrackServiceImpl implements FailureTrackService{
 
     //上传附件
     public MqmsFailureTrack fileUpload(List<MultipartFile> file, SimpleApplicationObject simpleApplicationObject, User user, MqmsFailureTrack mqmsFailureTrack, String appendix) throws Exception{
+        System.out.println(file.get(0).getOriginalFilename());
+        //如果没有上传文件
+        if(file.get(0).getOriginalFilename().equals("")){
+            return mqmsFailureTrack;
+        }
         for(MultipartFile multipartFile:file){
             byte[] bytes = multipartFile.getBytes();
             Resource resource = new ClassPathResource("");
@@ -263,12 +270,11 @@ public class FailureTrackServiceImpl implements FailureTrackService{
         return mqmsFailureTrack;
     }
 
-    //获取工程师解析信息
+    //获取多实例解析信息
     public ProcessForm.DataDisplayGroup getEngineerInfo(int failureTrackId, String flag) throws Exception{
         //获取comment数量
         MqmsFailureAnalysis mqmsFailureAnalysis = new MqmsFailureAnalysis();
-        mqmsFailureAnalysis.QueryBuild().failureTrackId(failureTrackId).flag(flag);
-        List<MqmsFailureAnalysis> mqmsFailureAnalysisList = mqmsFailureAnalysisMapper.queryMqmsFailureAnalysis(mqmsFailureAnalysis);
+        List<MqmsFailureAnalysis> mqmsFailureAnalysisList = mqmsFailureAnalysisMapper.queryMqmsFailureAnalysis(mqmsFailureAnalysis.QueryBuild().failureTrackId(failureTrackId).flag(flag));
 
         int count=0;
         ProcessForm.DataDisplayGroup group = new ProcessForm.DataDisplayGroup();
@@ -277,8 +283,8 @@ public class FailureTrackServiceImpl implements FailureTrackService{
         for(int i=0;i<mqmsFailureAnalysisList.size();i++){
             structure1 += rowStructure;
         }
-        structure1.substring(0, structure1.length() - 2);
-        structure1+="]";
+        structure1 = structure1.substring(0, structure1.length() - 1);
+        structure1 += "]";
         //展现评论
         for(int i=0;i<mqmsFailureAnalysisList.size();i++){
             String comment = mqmsFailureAnalysisList.get(i).getFailureAnalystComment();
@@ -299,4 +305,19 @@ public class FailureTrackServiceImpl implements FailureTrackService{
 
         return group;
     }
+
+    //获取工程师解析信息
+    public List<ProcessForm.DataDisplayGroup> getAllEngineerInfo(int failureTrackId) throws Exception{
+        //获取flag数
+        List<String> flags = mqmsFailureAnalysisMapper.queryFlags(failureTrackId);
+        List<ProcessForm.DataDisplayGroup> res = new ArrayList<>(flags.size());
+        for(String flag:flags) {
+            ProcessForm.DataDisplayGroup group = new ProcessForm.DataDisplayGroup();
+            group = getEngineerInfo(failureTrackId, flag);
+            res.add(group);
+        }
+        return res;
+    }
+
+
 }

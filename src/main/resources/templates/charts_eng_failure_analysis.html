@@ -16,6 +16,7 @@
     <label for="yearAndMonth">起始月份</label><input id="yearAndMonth" class="easyui-datebox">
     <label for="timeSpan">时间跨度/月</label><input id="timeSpan" class="easyui-numberspinner" value="12">
     <label for="engType">机型</label><input id="engType" class="easyui-combobox liselectoptions">
+    <label for="resizeBtn">调整大小</label><a id="resizeBtn" href="javascript:resizeCharts()" class="easyui-linkbutton">改变大小</a>
     <a id="asy" href="javascript:analysis()" class="easyui-linkbutton" data-options="iconCls:'icon-search'">分析</a>
 </div>
 
@@ -33,6 +34,8 @@
     var charts_3;
     var charts_4;
     var charts_5;
+
+
 
     //初始化选择区域
     $(function () {
@@ -153,6 +156,7 @@
                     toolbox: {
                         feature: {
                             dataView: {show: true, readOnly: false},
+                            dataZoom: {show: true},
                             restore: {show: true},
                             saveAsImage: {show: true}
                         }

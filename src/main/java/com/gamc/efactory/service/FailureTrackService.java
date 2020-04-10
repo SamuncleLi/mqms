@@ -21,6 +21,8 @@ public interface FailureTrackService {
     public ProcessForm.DataDisplayGroup getAppendixInfo(int failureTrackId) throws Exception;
     //文件上传
     public MqmsFailureTrack fileUpload(List<MultipartFile> file, SimpleApplicationObject simpleApplicationObject, User user, MqmsFailureTrack mqmsFailureTrack, String appendix) throws Exception;
-    //获取工程师解析信息
+    //获取多科室中的其中一个科室解析信息
     public ProcessForm.DataDisplayGroup getEngineerInfo(int failureTrackId, String flag) throws Exception;
+    //获取多科室中的所有解析信息
+    public List<ProcessForm.DataDisplayGroup> getAllEngineerInfo(int failureTrackId) throws Exception;
 }

@@ -1,17 +1,35 @@
 label{
-    margin: 2%;
+    margin: 1%;
+    width: 120px;
 }
 .easyui-datebox{
-    width: 15%;
-    margin: 2%;
+    width: 12%;
+    margin: 1%;
 }
 .easyui-combobox{
-    width: 15%;
-    margin: 2%;
+    width: 12%;
+    margin: 1%;
 }
 .easyui-numberspinner{
-    width: 15%;
-    margin: 2%;
+    width: 12%;
+    margin: 1%;
+}
+.easyui-slider{
+    width: 120px;
+    height: 10px;
+    margin: 1%;
+}
+/*.easyui-linkbutton{*/
+    /*width: 100%;*/
+    /*margin: 1%;*/
+/*}*/
+.easyui-spinner{
+    width: 12%;
+    margin: 1%;
+}
+td{
+    width: 80px;
+    margin: 1%;
 }
 .mqmscharts{
     width: 98%;
@@ -29,6 +47,10 @@ label{
 .charts-area{
     width: 100%;
     height: 90%;
+}
+#slideTest1{
+    width: 105px;
+    display: inline-block;
 }
 body{
     width: 100%;

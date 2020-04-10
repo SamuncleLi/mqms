@@ -6,12 +6,8 @@ import org.dom4j.Element;
 import org.dom4j.Attribute;
 import org.dom4j.io.SAXReader;
 import org.springframework.stereotype.Component;
-import org.w3c.dom.Document;
 
 import javax.jws.WebService;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.SAXParser;
 import java.io.ByteArrayInputStream;
 import java.util.HashMap;
 import java.util.List;
