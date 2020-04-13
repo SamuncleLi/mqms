@@ -10,7 +10,7 @@ import java.util.List;
 */
 public class MqmsMarketBulletin implements Serializable {
 
-    private static final long serialVersionUID = 1585715814055L;
+    private static final long serialVersionUID = 1586703626510L;
 
 
     /**
@@ -159,6 +159,30 @@ public class MqmsMarketBulletin implements Serializable {
     private String claimForm;
 
     /**
+    * ST处理方案
+    * isNullAble:1
+    */
+    private String processingSchemeST;
+
+    /**
+    * 返回进度
+    * isNullAble:1
+    */
+    private String returnProgress;
+
+    /**
+    * 返回方式
+    * isNullAble:1
+    */
+    private String returnMode;
+
+    /**
+    * 快递到达时间
+    * isNullAble:1
+    */
+    private String deliveryReceivedDate;
+
+    /**
     * UserID
     * isNullAble:1
     */
@@ -273,6 +297,22 @@ public class MqmsMarketBulletin implements Serializable {
 
     public String getClaimForm(){return this.claimForm;}
 
+    public void setProcessingSchemeST(String processingSchemeST){this.processingSchemeST = processingSchemeST;}
+
+    public String getProcessingSchemeST(){return this.processingSchemeST;}
+
+    public void setReturnProgress(String returnProgress){this.returnProgress = returnProgress;}
+
+    public String getReturnProgress(){return this.returnProgress;}
+
+    public void setReturnMode(String returnMode){this.returnMode = returnMode;}
+
+    public String getReturnMode(){return this.returnMode;}
+
+    public void setDeliveryReceivedDate(String deliveryReceivedDate){this.deliveryReceivedDate = deliveryReceivedDate;}
+
+    public String getDeliveryReceivedDate(){return this.deliveryReceivedDate;}
+
     public void setApplierId(Integer applierId){this.applierId = applierId;}
 
     public Integer getApplierId(){return this.applierId;}
@@ -311,6 +351,10 @@ public class MqmsMarketBulletin implements Serializable {
                 "controversyWithST='" + controversyWithST + '\'' +
                 "settleScheme='" + settleScheme + '\'' +
                 "claimForm='" + claimForm + '\'' +
+                "processingSchemeST='" + processingSchemeST + '\'' +
+                "returnProgress='" + returnProgress + '\'' +
+                "returnMode='" + returnMode + '\'' +
+                "deliveryReceivedDate='" + deliveryReceivedDate + '\'' +
                 "applierId='" + applierId + '\'' +
                 "applierName='" + applierName + '\'' +
                 "applyTime='" + applyTime + '\'' +
@@ -650,6 +694,54 @@ public class MqmsMarketBulletin implements Serializable {
         private List<String> rightFuzzyClaimForm;
 
         public List<String> getRightFuzzyClaimForm(){return this.rightFuzzyClaimForm;}
+        private List<String> processingSchemeSTList;
+
+        public List<String> getProcessingSchemeSTList(){return this.processingSchemeSTList;}
+
+
+        private List<String> fuzzyProcessingSchemeST;
+
+        public List<String> getFuzzyProcessingSchemeST(){return this.fuzzyProcessingSchemeST;}
+
+        private List<String> rightFuzzyProcessingSchemeST;
+
+        public List<String> getRightFuzzyProcessingSchemeST(){return this.rightFuzzyProcessingSchemeST;}
+        private List<String> returnProgressList;
+
+        public List<String> getReturnProgressList(){return this.returnProgressList;}
+
+
+        private List<String> fuzzyReturnProgress;
+
+        public List<String> getFuzzyReturnProgress(){return this.fuzzyReturnProgress;}
+
+        private List<String> rightFuzzyReturnProgress;
+
+        public List<String> getRightFuzzyReturnProgress(){return this.rightFuzzyReturnProgress;}
+        private List<String> returnModeList;
+
+        public List<String> getReturnModeList(){return this.returnModeList;}
+
+
+        private List<String> fuzzyReturnMode;
+
+        public List<String> getFuzzyReturnMode(){return this.fuzzyReturnMode;}
+
+        private List<String> rightFuzzyReturnMode;
+
+        public List<String> getRightFuzzyReturnMode(){return this.rightFuzzyReturnMode;}
+        private List<String> deliveryReceivedDateList;
+
+        public List<String> getDeliveryReceivedDateList(){return this.deliveryReceivedDateList;}
+
+
+        private List<String> fuzzyDeliveryReceivedDate;
+
+        public List<String> getFuzzyDeliveryReceivedDate(){return this.fuzzyDeliveryReceivedDate;}
+
+        private List<String> rightFuzzyDeliveryReceivedDate;
+
+        public List<String> getRightFuzzyDeliveryReceivedDate(){return this.rightFuzzyDeliveryReceivedDate;}
         private List<Integer> applierIdList;
 
         public List<Integer> getApplierIdList(){return this.applierIdList;}
@@ -1762,6 +1854,186 @@ public class MqmsMarketBulletin implements Serializable {
             return this;
         }
 
+        public QueryBuilder fuzzyProcessingSchemeST (List<String> fuzzyProcessingSchemeST){
+            this.fuzzyProcessingSchemeST = fuzzyProcessingSchemeST;
+            return this;
+        }
+
+        public QueryBuilder fuzzyProcessingSchemeST (String ... fuzzyProcessingSchemeST){
+            this.fuzzyProcessingSchemeST = solveNullList(fuzzyProcessingSchemeST);
+            return this;
+        }
+
+        public QueryBuilder rightFuzzyProcessingSchemeST (List<String> rightFuzzyProcessingSchemeST){
+            this.rightFuzzyProcessingSchemeST = rightFuzzyProcessingSchemeST;
+            return this;
+        }
+
+        public QueryBuilder rightFuzzyProcessingSchemeST (String ... rightFuzzyProcessingSchemeST){
+            this.rightFuzzyProcessingSchemeST = solveNullList(rightFuzzyProcessingSchemeST);
+            return this;
+        }
+
+        public QueryBuilder processingSchemeST(String processingSchemeST){
+            setProcessingSchemeST(processingSchemeST);
+            return this;
+        }
+
+        public QueryBuilder processingSchemeSTList(String ... processingSchemeST){
+            this.processingSchemeSTList = solveNullList(processingSchemeST);
+            return this;
+        }
+
+        public QueryBuilder processingSchemeSTList(List<String> processingSchemeST){
+            this.processingSchemeSTList = processingSchemeST;
+            return this;
+        }
+
+        public QueryBuilder fetchProcessingSchemeST(){
+            setFetchFields("fetchFields","processingSchemeST");
+            return this;
+        }
+
+        public QueryBuilder excludeProcessingSchemeST(){
+            setFetchFields("excludeFields","processingSchemeST");
+            return this;
+        }
+
+        public QueryBuilder fuzzyReturnProgress (List<String> fuzzyReturnProgress){
+            this.fuzzyReturnProgress = fuzzyReturnProgress;
+            return this;
+        }
+
+        public QueryBuilder fuzzyReturnProgress (String ... fuzzyReturnProgress){
+            this.fuzzyReturnProgress = solveNullList(fuzzyReturnProgress);
+            return this;
+        }
+
+        public QueryBuilder rightFuzzyReturnProgress (List<String> rightFuzzyReturnProgress){
+            this.rightFuzzyReturnProgress = rightFuzzyReturnProgress;
+            return this;
+        }
+
+        public QueryBuilder rightFuzzyReturnProgress (String ... rightFuzzyReturnProgress){
+            this.rightFuzzyReturnProgress = solveNullList(rightFuzzyReturnProgress);
+            return this;
+        }
+
+        public QueryBuilder returnProgress(String returnProgress){
+            setReturnProgress(returnProgress);
+            return this;
+        }
+
+        public QueryBuilder returnProgressList(String ... returnProgress){
+            this.returnProgressList = solveNullList(returnProgress);
+            return this;
+        }
+
+        public QueryBuilder returnProgressList(List<String> returnProgress){
+            this.returnProgressList = returnProgress;
+            return this;
+        }
+
+        public QueryBuilder fetchReturnProgress(){
+            setFetchFields("fetchFields","returnProgress");
+            return this;
+        }
+
+        public QueryBuilder excludeReturnProgress(){
+            setFetchFields("excludeFields","returnProgress");
+            return this;
+        }
+
+        public QueryBuilder fuzzyReturnMode (List<String> fuzzyReturnMode){
+            this.fuzzyReturnMode = fuzzyReturnMode;
+            return this;
+        }
+
+        public QueryBuilder fuzzyReturnMode (String ... fuzzyReturnMode){
+            this.fuzzyReturnMode = solveNullList(fuzzyReturnMode);
+            return this;
+        }
+
+        public QueryBuilder rightFuzzyReturnMode (List<String> rightFuzzyReturnMode){
+            this.rightFuzzyReturnMode = rightFuzzyReturnMode;
+            return this;
+        }
+
+        public QueryBuilder rightFuzzyReturnMode (String ... rightFuzzyReturnMode){
+            this.rightFuzzyReturnMode = solveNullList(rightFuzzyReturnMode);
+            return this;
+        }
+
+        public QueryBuilder returnMode(String returnMode){
+            setReturnMode(returnMode);
+            return this;
+        }
+
+        public QueryBuilder returnModeList(String ... returnMode){
+            this.returnModeList = solveNullList(returnMode);
+            return this;
+        }
+
+        public QueryBuilder returnModeList(List<String> returnMode){
+            this.returnModeList = returnMode;
+            return this;
+        }
+
+        public QueryBuilder fetchReturnMode(){
+            setFetchFields("fetchFields","returnMode");
+            return this;
+        }
+
+        public QueryBuilder excludeReturnMode(){
+            setFetchFields("excludeFields","returnMode");
+            return this;
+        }
+
+        public QueryBuilder fuzzyDeliveryReceivedDate (List<String> fuzzyDeliveryReceivedDate){
+            this.fuzzyDeliveryReceivedDate = fuzzyDeliveryReceivedDate;
+            return this;
+        }
+
+        public QueryBuilder fuzzyDeliveryReceivedDate (String ... fuzzyDeliveryReceivedDate){
+            this.fuzzyDeliveryReceivedDate = solveNullList(fuzzyDeliveryReceivedDate);
+            return this;
+        }
+
+        public QueryBuilder rightFuzzyDeliveryReceivedDate (List<String> rightFuzzyDeliveryReceivedDate){
+            this.rightFuzzyDeliveryReceivedDate = rightFuzzyDeliveryReceivedDate;
+            return this;
+        }
+
+        public QueryBuilder rightFuzzyDeliveryReceivedDate (String ... rightFuzzyDeliveryReceivedDate){
+            this.rightFuzzyDeliveryReceivedDate = solveNullList(rightFuzzyDeliveryReceivedDate);
+            return this;
+        }
+
+        public QueryBuilder deliveryReceivedDate(String deliveryReceivedDate){
+            setDeliveryReceivedDate(deliveryReceivedDate);
+            return this;
+        }
+
+        public QueryBuilder deliveryReceivedDateList(String ... deliveryReceivedDate){
+            this.deliveryReceivedDateList = solveNullList(deliveryReceivedDate);
+            return this;
+        }
+
+        public QueryBuilder deliveryReceivedDateList(List<String> deliveryReceivedDate){
+            this.deliveryReceivedDateList = deliveryReceivedDate;
+            return this;
+        }
+
+        public QueryBuilder fetchDeliveryReceivedDate(){
+            setFetchFields("fetchFields","deliveryReceivedDate");
+            return this;
+        }
+
+        public QueryBuilder excludeDeliveryReceivedDate(){
+            setFetchFields("excludeFields","deliveryReceivedDate");
+            return this;
+        }
+
         public QueryBuilder applierIdBetWeen(Integer applierIdSt,Integer applierIdEd){
             this.applierIdSt = applierIdSt;
             this.applierIdEd = applierIdEd;
@@ -2223,6 +2495,54 @@ public class MqmsMarketBulletin implements Serializable {
         private List<String> rightFuzzyClaimForm;
 
         public List<String> getRightFuzzyClaimForm(){return this.rightFuzzyClaimForm;}
+        private List<String> processingSchemeSTList;
+
+        public List<String> getProcessingSchemeSTList(){return this.processingSchemeSTList;}
+
+
+        private List<String> fuzzyProcessingSchemeST;
+
+        public List<String> getFuzzyProcessingSchemeST(){return this.fuzzyProcessingSchemeST;}
+
+        private List<String> rightFuzzyProcessingSchemeST;
+
+        public List<String> getRightFuzzyProcessingSchemeST(){return this.rightFuzzyProcessingSchemeST;}
+        private List<String> returnProgressList;
+
+        public List<String> getReturnProgressList(){return this.returnProgressList;}
+
+
+        private List<String> fuzzyReturnProgress;
+
+        public List<String> getFuzzyReturnProgress(){return this.fuzzyReturnProgress;}
+
+        private List<String> rightFuzzyReturnProgress;
+
+        public List<String> getRightFuzzyReturnProgress(){return this.rightFuzzyReturnProgress;}
+        private List<String> returnModeList;
+
+        public List<String> getReturnModeList(){return this.returnModeList;}
+
+
+        private List<String> fuzzyReturnMode;
+
+        public List<String> getFuzzyReturnMode(){return this.fuzzyReturnMode;}
+
+        private List<String> rightFuzzyReturnMode;
+
+        public List<String> getRightFuzzyReturnMode(){return this.rightFuzzyReturnMode;}
+        private List<String> deliveryReceivedDateList;
+
+        public List<String> getDeliveryReceivedDateList(){return this.deliveryReceivedDateList;}
+
+
+        private List<String> fuzzyDeliveryReceivedDate;
+
+        public List<String> getFuzzyDeliveryReceivedDate(){return this.fuzzyDeliveryReceivedDate;}
+
+        private List<String> rightFuzzyDeliveryReceivedDate;
+
+        public List<String> getRightFuzzyDeliveryReceivedDate(){return this.rightFuzzyDeliveryReceivedDate;}
         private List<Integer> applierIdList;
 
         public List<Integer> getApplierIdList(){return this.applierIdList;}
@@ -2972,6 +3292,126 @@ public class MqmsMarketBulletin implements Serializable {
             return this;
         }
 
+        public ConditionBuilder fuzzyProcessingSchemeST (List<String> fuzzyProcessingSchemeST){
+            this.fuzzyProcessingSchemeST = fuzzyProcessingSchemeST;
+            return this;
+        }
+
+        public ConditionBuilder fuzzyProcessingSchemeST (String ... fuzzyProcessingSchemeST){
+            this.fuzzyProcessingSchemeST = solveNullList(fuzzyProcessingSchemeST);
+            return this;
+        }
+
+        public ConditionBuilder rightFuzzyProcessingSchemeST (List<String> rightFuzzyProcessingSchemeST){
+            this.rightFuzzyProcessingSchemeST = rightFuzzyProcessingSchemeST;
+            return this;
+        }
+
+        public ConditionBuilder rightFuzzyProcessingSchemeST (String ... rightFuzzyProcessingSchemeST){
+            this.rightFuzzyProcessingSchemeST = solveNullList(rightFuzzyProcessingSchemeST);
+            return this;
+        }
+
+        public ConditionBuilder processingSchemeSTList(String ... processingSchemeST){
+            this.processingSchemeSTList = solveNullList(processingSchemeST);
+            return this;
+        }
+
+        public ConditionBuilder processingSchemeSTList(List<String> processingSchemeST){
+            this.processingSchemeSTList = processingSchemeST;
+            return this;
+        }
+
+        public ConditionBuilder fuzzyReturnProgress (List<String> fuzzyReturnProgress){
+            this.fuzzyReturnProgress = fuzzyReturnProgress;
+            return this;
+        }
+
+        public ConditionBuilder fuzzyReturnProgress (String ... fuzzyReturnProgress){
+            this.fuzzyReturnProgress = solveNullList(fuzzyReturnProgress);
+            return this;
+        }
+
+        public ConditionBuilder rightFuzzyReturnProgress (List<String> rightFuzzyReturnProgress){
+            this.rightFuzzyReturnProgress = rightFuzzyReturnProgress;
+            return this;
+        }
+
+        public ConditionBuilder rightFuzzyReturnProgress (String ... rightFuzzyReturnProgress){
+            this.rightFuzzyReturnProgress = solveNullList(rightFuzzyReturnProgress);
+            return this;
+        }
+
+        public ConditionBuilder returnProgressList(String ... returnProgress){
+            this.returnProgressList = solveNullList(returnProgress);
+            return this;
+        }
+
+        public ConditionBuilder returnProgressList(List<String> returnProgress){
+            this.returnProgressList = returnProgress;
+            return this;
+        }
+
+        public ConditionBuilder fuzzyReturnMode (List<String> fuzzyReturnMode){
+            this.fuzzyReturnMode = fuzzyReturnMode;
+            return this;
+        }
+
+        public ConditionBuilder fuzzyReturnMode (String ... fuzzyReturnMode){
+            this.fuzzyReturnMode = solveNullList(fuzzyReturnMode);
+            return this;
+        }
+
+        public ConditionBuilder rightFuzzyReturnMode (List<String> rightFuzzyReturnMode){
+            this.rightFuzzyReturnMode = rightFuzzyReturnMode;
+            return this;
+        }
+
+        public ConditionBuilder rightFuzzyReturnMode (String ... rightFuzzyReturnMode){
+            this.rightFuzzyReturnMode = solveNullList(rightFuzzyReturnMode);
+            return this;
+        }
+
+        public ConditionBuilder returnModeList(String ... returnMode){
+            this.returnModeList = solveNullList(returnMode);
+            return this;
+        }
+
+        public ConditionBuilder returnModeList(List<String> returnMode){
+            this.returnModeList = returnMode;
+            return this;
+        }
+
+        public ConditionBuilder fuzzyDeliveryReceivedDate (List<String> fuzzyDeliveryReceivedDate){
+            this.fuzzyDeliveryReceivedDate = fuzzyDeliveryReceivedDate;
+            return this;
+        }
+
+        public ConditionBuilder fuzzyDeliveryReceivedDate (String ... fuzzyDeliveryReceivedDate){
+            this.fuzzyDeliveryReceivedDate = solveNullList(fuzzyDeliveryReceivedDate);
+            return this;
+        }
+
+        public ConditionBuilder rightFuzzyDeliveryReceivedDate (List<String> rightFuzzyDeliveryReceivedDate){
+            this.rightFuzzyDeliveryReceivedDate = rightFuzzyDeliveryReceivedDate;
+            return this;
+        }
+
+        public ConditionBuilder rightFuzzyDeliveryReceivedDate (String ... rightFuzzyDeliveryReceivedDate){
+            this.rightFuzzyDeliveryReceivedDate = solveNullList(rightFuzzyDeliveryReceivedDate);
+            return this;
+        }
+
+        public ConditionBuilder deliveryReceivedDateList(String ... deliveryReceivedDate){
+            this.deliveryReceivedDateList = solveNullList(deliveryReceivedDate);
+            return this;
+        }
+
+        public ConditionBuilder deliveryReceivedDateList(List<String> deliveryReceivedDate){
+            this.deliveryReceivedDateList = deliveryReceivedDate;
+            return this;
+        }
+
         public ConditionBuilder applierIdBetWeen(Integer applierIdSt,Integer applierIdEd){
             this.applierIdSt = applierIdSt;
             this.applierIdEd = applierIdEd;
@@ -3176,6 +3616,22 @@ public class MqmsMarketBulletin implements Serializable {
         }
         public Builder claimForm(String claimForm){
             this.obj.setClaimForm(claimForm);
+            return this;
+        }
+        public Builder processingSchemeST(String processingSchemeST){
+            this.obj.setProcessingSchemeST(processingSchemeST);
+            return this;
+        }
+        public Builder returnProgress(String returnProgress){
+            this.obj.setReturnProgress(returnProgress);
+            return this;
+        }
+        public Builder returnMode(String returnMode){
+            this.obj.setReturnMode(returnMode);
+            return this;
+        }
+        public Builder deliveryReceivedDate(String deliveryReceivedDate){
+            this.obj.setDeliveryReceivedDate(deliveryReceivedDate);
             return this;
         }
         public Builder applierId(Integer applierId){

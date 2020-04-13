@@ -63,6 +63,7 @@ CREATE TABLE `mqms_voucher` (
   `eng_arrange` varchar(255) DEFAULT NULL COMMENT 'eng整理（故障分类）',
   `car_model` varchar(255) DEFAULT NULL COMMENT '车型',
   `eng_type` varchar(255) DEFAULT NULL COMMENT '发动机机型',
+  `end_series` varchar(255) DEFAULT NULL COMMENT '发动机系列',
   `transmission_type_re` varchar(255) DEFAULT NULL COMMENT '变速箱机型',
   `tran_type_detail` varchar(255) DEFAULT NULL COMMENT '变速箱机型（详细）',
   `transmission_manufacturer` varchar(255) DEFAULT NULL COMMENT '变速箱生产厂家',
@@ -71,7 +72,7 @@ CREATE TABLE `mqms_voucher` (
   `production_raw_description` varchar(255) DEFAULT NULL COMMENT '备注1',
   `PDI` varchar(255) DEFAULT NULL COMMENT 'PDI',
   `offline_failure_time` int(11) DEFAULT NULL COMMENT '下线至确认经过月',
-  `transmission_comfirm_time` varchar(255) DEFAULT NULL COMMENT '变速箱使用至确认经过月',
+  `transmission_comfirm_time` varchar(255) DEFAULT NULL COMMENT '变速箱生产至确认经过月',
   `eng_or_tran` varchar(255) DEFAULT NULL COMMENT '发动机或变速箱',
   `short_code` varchar(255) DEFAULT NULL COMMENT '短码',
   `fault_code_classification` varchar(255) DEFAULT NULL COMMENT '故障码分类',
@@ -80,6 +81,9 @@ CREATE TABLE `mqms_voucher` (
   `failure_month` varchar(255) DEFAULT NULL COMMENT '故障月',
   `transmission_short_code` varchar(255) DEFAULT '' COMMENT '变速箱短码',
   `mileage_distribution` varchar(255) DEFAULT NULL COMMENT '里程分布',
+  `claim_type` varchar(225) DEFAULT NULL COMMENT '索赔类型',
+  `claim_compete` varchar(255) DEFAULT NULL COMMENT '是否完成索赔',
+  `express_delivery` varchar(255) DEFAULT NULL COMMENT '是否快递',
   `track_beginer` varchar(255) DEFAULT NULL COMMENT '开启不良追踪者',
   `track_begin_time` varchar(255) DEFAULT NULL COMMENT '不良追踪开启时间',
   `delivery_person` varchar(255) DEFAULT NULL COMMENT '快递负责人',
@@ -94,5 +98,7 @@ CREATE TABLE `mqms_voucher` (
   KEY `engType` (`eng_type`) USING BTREE,
   KEY `transType` (`tran_type_detail`) USING BTREE
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='vei系统导出表的拓展信息表';
+
+
 
 

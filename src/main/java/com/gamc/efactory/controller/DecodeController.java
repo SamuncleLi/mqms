@@ -338,13 +338,15 @@ public class DecodeController {
         String id = request.getParameter("id");
         String tranProModel = request.getParameter("tran_pro_model");
         String tranShortCode = request.getParameter("tran_shortCode");
-        String tranWarrantyYears = request.getParameter("tranWarrantyYears");
-        String tranWarrantyMillege = request.getParameter("tranWarrantyMillege");
+        String tranWarrantyYears = request.getParameter("tran_warranty_years");
+        System.out.println(tranWarrantyYears);
+        String tranWarrantyMillege = request.getParameter("tran_warranty_millege");
+        System.out.println(tranWarrantyMillege);
         MqmsTranProductionDecode mqmsTranProductionDecode=new MqmsTranProductionDecode();
         mqmsTranProductionDecode.setTranProModel(tranProModel);
         mqmsTranProductionDecode.setTranShortCode(tranShortCode);
         mqmsTranProductionDecode.setTranWarrantyYears(tranWarrantyYears);
-        mqmsTranProductionDecode.setTranWarrantyYears(tranWarrantyMillege);
+        mqmsTranProductionDecode.setTranWarrantyMillege(tranWarrantyMillege);
 
         if (id.equals("(默认值)")) {
             mqmsTranProductionDecodeBaseMapper.insertMqmsTranProductionDecode(mqmsTranProductionDecode);

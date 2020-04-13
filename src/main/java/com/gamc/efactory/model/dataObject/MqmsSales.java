@@ -10,7 +10,7 @@ import java.util.List;
 */
 public class MqmsSales implements Serializable {
 
-    private static final long serialVersionUID = 1585183733147L;
+    private static final long serialVersionUID = 1586673870153L;
 
 
     /**
@@ -91,6 +91,12 @@ public class MqmsSales implements Serializable {
     * isNullAble:1
     */
     private String carType;
+
+    /**
+    * 发动机流水号
+    * isNullAble:1
+    */
+    private String engCode;
 
     /**
     * 变速箱号
@@ -253,6 +259,10 @@ public class MqmsSales implements Serializable {
 
     public String getCarType(){return this.carType;}
 
+    public void setEngCode(String engCode){this.engCode = engCode;}
+
+    public String getEngCode(){return this.engCode;}
+
     public void setTransmissionCode(String transmissionCode){this.transmissionCode = transmissionCode;}
 
     public String getTransmissionCode(){return this.transmissionCode;}
@@ -340,6 +350,7 @@ public class MqmsSales implements Serializable {
                 "state='" + state + '\'' +
                 "mtoc='" + mtoc + '\'' +
                 "carType='" + carType + '\'' +
+                "engCode='" + engCode + '\'' +
                 "transmissionCode='" + transmissionCode + '\'' +
                 "factoryCode='" + factoryCode + '\'' +
                 "factoryArea='" + factoryArea + '\'' +
@@ -562,6 +573,18 @@ public class MqmsSales implements Serializable {
         private List<String> rightFuzzyCarType;
 
         public List<String> getRightFuzzyCarType(){return this.rightFuzzyCarType;}
+        private List<String> engCodeList;
+
+        public List<String> getEngCodeList(){return this.engCodeList;}
+
+
+        private List<String> fuzzyEngCode;
+
+        public List<String> getFuzzyEngCode(){return this.fuzzyEngCode;}
+
+        private List<String> rightFuzzyEngCode;
+
+        public List<String> getRightFuzzyEngCode(){return this.rightFuzzyEngCode;}
         private List<String> transmissionCodeList;
 
         public List<String> getTransmissionCodeList(){return this.transmissionCodeList;}
@@ -1360,6 +1383,51 @@ public class MqmsSales implements Serializable {
 
         public QueryBuilder excludeCarType(){
             setFetchFields("excludeFields","carType");
+            return this;
+        }
+
+        public QueryBuilder fuzzyEngCode (List<String> fuzzyEngCode){
+            this.fuzzyEngCode = fuzzyEngCode;
+            return this;
+        }
+
+        public QueryBuilder fuzzyEngCode (String ... fuzzyEngCode){
+            this.fuzzyEngCode = solveNullList(fuzzyEngCode);
+            return this;
+        }
+
+        public QueryBuilder rightFuzzyEngCode (List<String> rightFuzzyEngCode){
+            this.rightFuzzyEngCode = rightFuzzyEngCode;
+            return this;
+        }
+
+        public QueryBuilder rightFuzzyEngCode (String ... rightFuzzyEngCode){
+            this.rightFuzzyEngCode = solveNullList(rightFuzzyEngCode);
+            return this;
+        }
+
+        public QueryBuilder engCode(String engCode){
+            setEngCode(engCode);
+            return this;
+        }
+
+        public QueryBuilder engCodeList(String ... engCode){
+            this.engCodeList = solveNullList(engCode);
+            return this;
+        }
+
+        public QueryBuilder engCodeList(List<String> engCode){
+            this.engCodeList = engCode;
+            return this;
+        }
+
+        public QueryBuilder fetchEngCode(){
+            setFetchFields("fetchFields","engCode");
+            return this;
+        }
+
+        public QueryBuilder excludeEngCode(){
+            setFetchFields("excludeFields","engCode");
             return this;
         }
 
@@ -2367,6 +2435,18 @@ public class MqmsSales implements Serializable {
         private List<String> rightFuzzyCarType;
 
         public List<String> getRightFuzzyCarType(){return this.rightFuzzyCarType;}
+        private List<String> engCodeList;
+
+        public List<String> getEngCodeList(){return this.engCodeList;}
+
+
+        private List<String> fuzzyEngCode;
+
+        public List<String> getFuzzyEngCode(){return this.fuzzyEngCode;}
+
+        private List<String> rightFuzzyEngCode;
+
+        public List<String> getRightFuzzyEngCode(){return this.rightFuzzyEngCode;}
         private List<String> transmissionCodeList;
 
         public List<String> getTransmissionCodeList(){return this.transmissionCodeList;}
@@ -2967,6 +3047,36 @@ public class MqmsSales implements Serializable {
 
         public ConditionBuilder carTypeList(List<String> carType){
             this.carTypeList = carType;
+            return this;
+        }
+
+        public ConditionBuilder fuzzyEngCode (List<String> fuzzyEngCode){
+            this.fuzzyEngCode = fuzzyEngCode;
+            return this;
+        }
+
+        public ConditionBuilder fuzzyEngCode (String ... fuzzyEngCode){
+            this.fuzzyEngCode = solveNullList(fuzzyEngCode);
+            return this;
+        }
+
+        public ConditionBuilder rightFuzzyEngCode (List<String> rightFuzzyEngCode){
+            this.rightFuzzyEngCode = rightFuzzyEngCode;
+            return this;
+        }
+
+        public ConditionBuilder rightFuzzyEngCode (String ... rightFuzzyEngCode){
+            this.rightFuzzyEngCode = solveNullList(rightFuzzyEngCode);
+            return this;
+        }
+
+        public ConditionBuilder engCodeList(String ... engCode){
+            this.engCodeList = solveNullList(engCode);
+            return this;
+        }
+
+        public ConditionBuilder engCodeList(List<String> engCode){
+            this.engCodeList = engCode;
             return this;
         }
 
@@ -3580,6 +3690,10 @@ public class MqmsSales implements Serializable {
         }
         public Builder carType(String carType){
             this.obj.setCarType(carType);
+            return this;
+        }
+        public Builder engCode(String engCode){
+            this.obj.setEngCode(engCode);
             return this;
         }
         public Builder transmissionCode(String transmissionCode){

@@ -2,10 +2,7 @@ package com.gamc.efactory.service.serviceImpl;
 
 
 import com.gamc.efactory.dao.*;
-import com.gamc.efactory.model.dataObject.MqmsSales;
-import com.gamc.efactory.model.dataObject.MqmsSalesRaw;
-import com.gamc.efactory.model.dataObject.MqmsVinDecode;
-import com.gamc.efactory.model.dataObject.User;
+import com.gamc.efactory.model.dataObject.*;
 import com.gamc.efactory.service.SalesService;
 import com.gamc.efactory.util.BigExcelReader;
 import com.gamc.efactory.util.ExcelUtil;
@@ -173,7 +170,8 @@ public class SalesServiceImpl implements SalesService {
         public void run() {
 
             for (MqmsSales mqmsSalesRecord : mqmsSalesList) {
-
+                if (mqmsSalesRecord.getVinCode() != null&&mqmsSalesRecord.getVinCode().length()>7) {
+                    String vinCode = mqmsSalesRecord.getVinCode();
                 //区域
                 mqmsSalesRecord.setSalesArea(mqmsSalesPointMapper.selectSalesPointInfor(mqmsSalesRecord.getDealerCode()));
 
@@ -199,27 +197,43 @@ public class SalesServiceImpl implements SalesService {
                     mqmsSalesRecord.setSalesMonth("");
                 }
 
-                //变速箱类型
-                String trsmCode = "";
-                if (!Objects.equals(mqmsSalesRecord.getTransmissionCode(), null)) {
-                    if (Objects.equals(mqmsSalesRecord.getTransmissionCode().substring(0, 1), "+")) {
-                        trsmCode = mqmsSalesRecord.getTransmissionCode().replace("+", "");
-                    } else {
-                        trsmCode = mqmsSalesRecord.getTransmissionCode();
-                    }
-                    String trsmType = trsmCode.substring(0, 5);
 
-                    mqmsSalesRecord.setTranType(mqmsTranProductionDecodeMapper.selectTranProductionCode(trsmType));
-                } else {
-                    mqmsSalesRecord.setTranType("");
-                }
                 //变速箱系列
 
-                String vinCode = mqmsSalesRecord.getVinCode();
-                if (vinCode != null&&vinCode.length()>7) {
 
-                    //变速箱短码
-                    mqmsSalesRecord.setTranShortCode(mqmsSalesRecord.getVinCode().substring(6, 7));
+
+
+                     //发动机号&变速箱号
+                    if (mqmsProductionMapper.selectInforByVin(vinCode)!=null) {
+                        MqmsProduction mqmsProduction = new MqmsProduction();
+                        mqmsProduction = mqmsProductionMapper.selectInforByVin(vinCode);
+                        mqmsSalesRecord.setEngCode(mqmsProduction.getEgtypeCode());
+                        mqmsSalesRecord.setTransmissionCode(mqmsProduction.getTransmissionCode());
+                        //变速箱类型
+                        String trsmCode = "";
+                        if (!Objects.equals(mqmsSalesRecord.getTransmissionCode(), null)) {
+                            if (Objects.equals(mqmsSalesRecord.getTransmissionCode().substring(0, 1), "+")) {
+                                trsmCode = mqmsSalesRecord.getTransmissionCode().replace("+", "");
+                            } else {
+                                trsmCode = mqmsSalesRecord.getTransmissionCode();
+                            }
+                            String trsmType = trsmCode.substring(0, 5);
+                            if (mqmsTranProductionDecodeMapper.selectTranProductionCode(trsmType) != null) {
+
+                                mqmsSalesRecord.setTranType(mqmsTranProductionDecodeMapper.selectTranProductionCode(trsmType));
+                            } else {
+                                mqmsSalesRecord.setTranType("");
+                            }
+                        }
+                    }else {
+                            mqmsSalesRecord.setEngCode("");
+                            mqmsSalesRecord.setTransmissionCode("");
+                        }
+
+
+                    //变速箱短码/系列暂时不清楚,先填VIN码第7位
+                    mqmsSalesRecord.setTranShortCode(vinCode.substring(6, 7));
+                    mqmsSalesRecord.setTranSeries(vinCode.substring(6, 7));
                     //机型
                     String vinShortCode = vinCode.substring(0, 5);
                     MqmsVinDecode mqmsVinDecode = mqmsVinDecodeMapper.vinDecode(vinShortCode);

@@ -47,6 +47,9 @@
                     <if test="carType!=null">
                         `car_type`,
                     </if>
+                    <if test="engCode!=null">
+                        `eng_code`,
+                    </if>
                     <if test="transmissionCode!=null">
                         `transmission_code`,
                     </if>
@@ -144,6 +147,9 @@
                 </if>
                 <if test="carType!=null">
                     #{carType},
+                </if>
+                <if test="engCode!=null">
+                    #{engCode},
                 </if>
                 <if test="transmissionCode!=null">
                     #{transmissionCode},
@@ -246,6 +252,9 @@
             <if test="carType != null and carType!=''">
                 `car_type` = #{carType},
             </if>
+            <if test="engCode != null and engCode!=''">
+                `eng_code` = #{engCode},
+            </if>
             <if test="transmissionCode != null and transmissionCode!=''">
                 `transmission_code` = #{transmissionCode},
             </if>
@@ -346,6 +355,9 @@
         </if>
         <if test="set.carType != null and set.carType!=''">
             `car_type` = #{set.carType},
+        </if>
+        <if test="set.engCode != null and set.engCode!=''">
+            `eng_code` = #{set.engCode},
         </if>
         <if test="set.transmissionCode != null and set.transmissionCode!=''">
             `transmission_code` = #{set.transmissionCode},
@@ -652,6 +664,26 @@
                 (
                 <foreach collection="where.rightFuzzyCarType"  separator="or" item="item">
                     `Car_type` like concat(#{item},'%')
+                </foreach>
+                ) and
+            </if>
+                <if test="where.engCodeList != null">
+                    `eng_code` in
+                    <foreach collection="where.engCodeList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test ="where.fuzzyEngCode!=null and where.fuzzyEngCode.size()>0">
+                (
+                <foreach collection="where.fuzzyEngCode"  separator="or" item="item">
+                    `Eng_code` like concat('%',#{item},'%')
+                </foreach>
+                ) and
+            </if>
+            <if test ="where.rightFuzzyEngCode!=null and where.rightFuzzyEngCode.size()>0">
+                (
+                <foreach collection="where.rightFuzzyEngCode"  separator="or" item="item">
+                    `Eng_code` like concat(#{item},'%')
                 </foreach>
                 ) and
             </if>
@@ -1025,6 +1057,7 @@
         <result property="state" column="state"/>
         <result property="mtoc" column="mtoc"/>
         <result property="carType" column="car_type"/>
+        <result property="engCode" column="eng_code"/>
         <result property="transmissionCode" column="transmission_code"/>
         <result property="factoryCode" column="factory_code"/>
         <result property="factoryArea" column="factory_area"/>
@@ -1089,6 +1122,9 @@
             </if>
             <if test="carType != null and carType!=''">
                 `car_type` = #{carType} and
+            </if>
+            <if test="engCode != null and engCode!=''">
+                `eng_code` = #{engCode} and
             </if>
             <if test="transmissionCode != null and transmissionCode!=''">
                 `transmission_code` = #{transmissionCode} and
@@ -1394,6 +1430,26 @@
                     (
                     <foreach collection="rightFuzzyCarType"  separator="or" item="item">
                         `Car_type` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="engCodeList != null">
+                    `eng_code` in
+                    <foreach collection="engCodeList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyEngCode!=null and fuzzyEngCode.size()>0">
+                    (
+                    <foreach collection="fuzzyEngCode"  separator="or" item="item">
+                        `Eng_code` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyEngCode!=null and rightFuzzyEngCode.size()>0">
+                    (
+                    <foreach collection="rightFuzzyEngCode"  separator="or" item="item">
+                        `Eng_code` like concat(#{item},'%')
                     </foreach>
                     ) and
                 </if>
@@ -1797,6 +1853,9 @@
             <if test="carType != null and carType!=''">
                 `car_type` = #{carType} and
             </if>
+            <if test="engCode != null and engCode!=''">
+                `eng_code` = #{engCode} and
+            </if>
             <if test="transmissionCode != null and transmissionCode!=''">
                 `transmission_code` = #{transmissionCode} and
             </if>
@@ -2101,6 +2160,26 @@
                     (
                     <foreach collection="rightFuzzyCarType"  separator="or" item="item">
                         `Car_type` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                    <if test="engCodeList != null">
+                        `eng_code` in
+                        <foreach collection="engCodeList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyEngCode!=null and fuzzyEngCode.size()>0">
+                    (
+                    <foreach collection="fuzzyEngCode"  separator="or" item="item">
+                        `Eng_code` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyEngCode!=null and rightFuzzyEngCode.size()>0">
+                    (
+                    <foreach collection="rightFuzzyEngCode"  separator="or" item="item">
+                        `Eng_code` like concat(#{item},'%')
                     </foreach>
                     ) and
                 </if>
@@ -2476,6 +2555,7 @@
         `state`,
         `mtoc`,
         `car_type`,
+        `eng_code`,
         `transmission_code`,
         `factory_code`,
         `factory_area`,
@@ -2552,6 +2632,9 @@
                     </if>
                     <if test="fetchFields.fetchFields.carType==true">
                         `car_type`,
+                    </if>
+                    <if test="fetchFields.fetchFields.engCode==true">
+                        `eng_code`,
                     </if>
                     <if test="fetchFields.fetchFields.transmissionCode==true">
                         `transmission_code`,
@@ -2647,6 +2730,9 @@
                     </if>
                     <if test="fetchFields.excludeFields.carType==null">
                         `car_type`,
+                    </if>
+                    <if test="fetchFields.excludeFields.engCode==null">
+                        `eng_code`,
                     </if>
                     <if test="fetchFields.excludeFields.transmissionCode==null">
                         `transmission_code`,

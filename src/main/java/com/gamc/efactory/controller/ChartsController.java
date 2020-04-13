@@ -1,10 +1,8 @@
 package com.gamc.efactory.controller;
 
-import com.gamc.efactory.dao.MqmsCarTypeInforMapper;
-import com.gamc.efactory.dao.MqmsFailureReportMapper;
-import com.gamc.efactory.dao.MqmsSalesMapper;
-import com.gamc.efactory.dao.MqmsVoucherMapper;
+import com.gamc.efactory.dao.*;
 import com.gamc.efactory.model.dataObject.MqmsCarTypeInfor;
+import com.gamc.efactory.model.dataObject.MqmsMarketBulletin;
 import com.gamc.efactory.model.dataObject.MqmsVoucher;
 import com.gamc.efactory.model.viewObject.FailureTop10;
 import com.gamc.efactory.model.viewObject.TransmissionProportion;
@@ -35,6 +33,8 @@ public class ChartsController {
     MqmsFailureReportMapper mqmsFailureReportMapper;
     @Autowired
     MqmsCarTypeInforMapper mqmsCarTypeInforMapper;
+    @Autowired
+    MqmsMarketBulletinMapper mqmsMarketBulletinMapper;
     /**
      * @描述 计算发动机不良率
      * @编写人 Jian Wang
@@ -356,32 +356,34 @@ public class ChartsController {
     }
 
     /**
-     * @描述 索赔发动机（上了市场报告的）数量
-     * @编写人 Zeho Lee
-     * @邮箱 lizeh@gacmotor.com
-     * @日期 2020/1/13
+     * @描述 索赔发动机（上了市场通报的）数量
+     * @编写人 Jian Wang
+     * @日期 2020/4/10
      * @参变量
      * @返回
      * @抛出异常
      */
     @RequestMapping("/eng/reportedFailure")
     public String[][] reportedFailure(@RequestParam String yearAndMonth, @RequestParam String timeSpan, @RequestParam String engType){
-        //获取起始月
-        String yearAndMonthBegin= MqmsUtil.getDateInfor("yyyy-MM",yearAndMonth,-Integer.parseInt(timeSpan)+1);
-        String[][] strArray = new String[2][Integer.parseInt(timeSpan)+1];
-        //题头初始化
-        strArray[0][0] = "月份";
-        strArray[1][0] = "台数";
-        //单机型循环叠加计算不良率
-        for (int j = 0; j < Integer.parseInt(timeSpan); j++) {
-            strArray[0][j+1]=yearAndMonthBegin;
 
-            //获取每个月的市场报告的索赔发动机
-            strArray[1][j+1]=String.valueOf(mqmsFailureReportMapper.countByMonth(engType, yearAndMonthBegin));
-            //月份推移
-            yearAndMonthBegin= MqmsUtil.getDateInfor("yyyy-MM",yearAndMonthBegin,1);
-        }
+        //创建二维数组
+        String[][] strArray=new String[3][Integer.parseInt(timeSpan)+1];
+        strArray[0][0]="日期";
+        strArray[1][0]="FDJ";
+        strArray[2][0]="ST";
 
+        int engFDJCount=0;
+        int engSTCount=0;
+        String date="";
+            for (int i = 0; i < Integer.parseInt(timeSpan); i++) {
+                date= MqmsUtil.getDateInfor("yyyy-MM",yearAndMonth,-Integer.parseInt(timeSpan)+i+1);
+                engFDJCount = mqmsMarketBulletinMapper.salesEngFailureFDJCount(date);
+                engSTCount =mqmsMarketBulletinMapper.salesEngFailureSTCount(date,"Y");
+                strArray[0][i+1]=date;
+                strArray[1][i+1]=Integer.toString(engFDJCount);
+                strArray[2][i+1]=Integer.toString(engSTCount);
+
+    }
         return strArray;
     }
     @RequestMapping("engineFailureRateMutil")

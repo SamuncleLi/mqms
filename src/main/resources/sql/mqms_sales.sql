@@ -33,6 +33,7 @@ CREATE TABLE `mqms_sales` (
   `state` varchar(255) DEFAULT NULL COMMENT '状态',
   `mtoc` varchar(255) DEFAULT NULL COMMENT 'MTOC',
   `car_type` varchar(255) DEFAULT NULL COMMENT '车型',
+  `eng_code` varchar(255) DEFAULT NULL COMMENT '发动机流水号',
   `transmission_code` varchar(255) DEFAULT NULL COMMENT '变速箱号',
   `factory_code` varchar(255) DEFAULT NULL COMMENT '工厂简码',
   `factory_area` varchar(255) DEFAULT NULL COMMENT '工厂地区',
@@ -55,4 +56,6 @@ CREATE TABLE `mqms_sales` (
   UNIQUE KEY `vin` (`vin_code`) USING BTREE,
   KEY `engType` (`eng_type`) USING BTREE,
   KEY `transType` (`tran_type`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=3176099 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
+
+

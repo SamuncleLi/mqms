@@ -221,7 +221,7 @@
             url: '/mqms/import/veiData',
             success: function (data) {
                 if (data == '文件上传成功') {
-                    $.messager.alert("系统提示",'上传文件成功');
+//                    $.messager.alert("系统提示",'上传文件成功');
                     $('#upload-dlg').dialog("close", true);
                     $("#dg2").datagrid('reload');
                     $.messager.alert

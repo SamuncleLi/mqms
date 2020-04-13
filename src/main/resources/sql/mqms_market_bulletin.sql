@@ -44,11 +44,17 @@ CREATE TABLE `mqms_market_bulletin` (
   `controversy_with_ST` varchar(255) DEFAULT NULL COMMENT '是否与ST存在争议',
   `settle_scheme` varchar(2000) DEFAULT NULL COMMENT '处理方案',
   `claim_form` varchar(255) DEFAULT NULL COMMENT '索赔形式',
+  `processing_scheme_ST` varchar(255) DEFAULT NULL COMMENT 'ST处理方案',
+  `return_progress` varchar(255) DEFAULT NULL COMMENT '返回进度',
+  `return_mode` varchar(255) DEFAULT NULL COMMENT '返回方式',
+  `delivery_received_date` varchar(255) DEFAULT NULL COMMENT '快递到达时间',
   `applier_id` int(255) DEFAULT NULL COMMENT 'UserID',
   `applier_name` varchar(255) DEFAULT NULL COMMENT '上传人',
   `apply_time` varchar(255) DEFAULT NULL COMMENT '上传时间',
   PRIMARY KEY (`market_bulletin_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
+
+
 
 -- ----------------------------
 -- Records of mqms_market_bulletin

@@ -28,7 +28,7 @@ public class MarketBulletinServiceImpl implements MarketBulletinService {
 
     private ThreadFactory threadFactory = new ThreadFactoryBuilder().setNameFormat("sendEmailImmediately-pool-%d").build();
     private ExecutorService executorService = new ThreadPoolExecutor(16, 80, 500, TimeUnit.MILLISECONDS, new LinkedBlockingQueue<Runnable>(200), threadFactory, new ThreadPoolExecutor.AbortPolicy());
-//    int threadacCount=;
+    //    int threadacCount=;
     @Autowired
     private MqmsMarketBulletinMapper mqmsMarketBulletinMapper;
     @Autowired
@@ -68,15 +68,15 @@ public class MarketBulletinServiceImpl implements MarketBulletinService {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-        System.out.println(((ThreadPoolExecutor)executorService).getActiveCount()+"cccccccccccccccccccccccc");
-                return ((ThreadPoolExecutor)executorService).getActiveCount();
+//        System.out.println(((ThreadPoolExecutor)executorService).getActiveCount()+"cccccccccccccccccccccccc");
+        return ((ThreadPoolExecutor)executorService).getActiveCount();
     }
 
     private void saveAll(List<List<Object>> lists, HttpServletRequest request) throws IllegalAccessException {
         try {
 
 //            int threadacCount=((ThreadPoolExecutor)executorService).getActiveCount();
-            if (lists.size() > 0&&((ThreadPoolExecutor)executorService).getActiveCount()<140) {
+            if (lists.size() > 0&&((ThreadPoolExecutor)executorService).getActiveCount()<80) {
                 List<MqmsMarketBulletin> mqmsMarketBulletinList = new ArrayList<>();
                 SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
                 User user = (User) request.getSession().getAttribute("user");
@@ -134,7 +134,17 @@ public class MarketBulletinServiceImpl implements MarketBulletinService {
                 //构造函数传参
                 importCall.setMqmsMarketBulletinList(mqmsMarketBulletinList);
                 executorService.execute(importCall);
-                System.out.println(((ThreadPoolExecutor)executorService).getActiveCount()+"aaaaaaaaaaaaaaaaaaaaaaa");
+//                System.out.println(((ThreadPoolExecutor)executorService).getActiveCount()+"aaaaaaaaaaaaaaaaaaaaaaa");
+            }
+            boolean allThreadsIsDone = ((ThreadPoolExecutor) executorService).getTaskCount()==((ThreadPoolExecutor) executorService).getCompletedTaskCount();
+//                if(allThreadsIsDone){
+//                   //处理内容
+//                }
+            while (!allThreadsIsDone) {
+                allThreadsIsDone = ((ThreadPoolExecutor) executorService).getTaskCount() == ((ThreadPoolExecutor) executorService).getCompletedTaskCount();
+//                    if(allThreadsIsDone){
+//
+// 处理内容
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -187,7 +197,7 @@ public class MarketBulletinServiceImpl implements MarketBulletinService {
 
                 mqmsMarketBulletinMapper.insertMqmsMarketBulletin(mqmsMarketBulletinRecord);
             }
-            System.out.println(((ThreadPoolExecutor)executorService).getActiveCount()+"bbbbbbbbbbbbbbbbbbbbbbbbbbbbb");
+//            System.out.println(((ThreadPoolExecutor)executorService).getActiveCount()+"bbbbbbbbbbbbbbbbbbbbbbbbbbbbb");
         }
     }
 }
