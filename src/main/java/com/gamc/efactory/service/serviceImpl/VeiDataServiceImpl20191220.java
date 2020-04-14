@@ -87,7 +87,7 @@ public class VeiDataServiceImpl20191220 implements VeiDataService20191220 {
                 mqmsVoucherRecord.setCarModel(mqmsVinDecodeMapper.vinDecode(vinShortCOde).getVinCarType());
 
                 //变速箱详细类型暂时空着需要根据变速箱号解码
-                mqmsVoucherRecord.setTransmissionTypeRe("");
+                mqmsVoucherRecord.setTransmissionCodeRe("");
 
                 //变速箱机型
                 if(StringUtil.isNotEmpty(mqmsVoucherRecord.getTransmissionCode())){

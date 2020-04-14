@@ -6,11 +6,11 @@ import java.util.Map;
 import java.util.List;
 /**
 *
-*  @author wangjian
+*  @author lizeh
 */
 public class MqmsVoucher implements Serializable {
 
-    private static final long serialVersionUID = 1586401058901L;
+    private static final long serialVersionUID = 1586492619383L;
 
 
     /**
@@ -276,7 +276,7 @@ public class MqmsVoucher implements Serializable {
     * 变速箱机型
     * isNullAble:1
     */
-    private String transmissionTypeRe;
+    private String transmissionCodeRe;
 
     /**
     * 变速箱机型（详细）
@@ -601,9 +601,9 @@ public class MqmsVoucher implements Serializable {
 
     public String getEngType(){return this.engType;}
 
-    public void setTransmissionTypeRe(String transmissionTypeRe){this.transmissionTypeRe = transmissionTypeRe;}
+    public void setTransmissionCodeRe(String transmissionCodeRe){this.transmissionCodeRe = transmissionCodeRe;}
 
-    public String getTransmissionTypeRe(){return this.transmissionTypeRe;}
+    public String getTransmissionCodeRe(){return this.transmissionCodeRe;}
 
     public void setTranTypeDetail(String tranTypeDetail){this.tranTypeDetail = tranTypeDetail;}
 
@@ -750,7 +750,7 @@ public class MqmsVoucher implements Serializable {
                 "engArrange='" + engArrange + '\'' +
                 "carModel='" + carModel + '\'' +
                 "engType='" + engType + '\'' +
-                "transmissionTypeRe='" + transmissionTypeRe + '\'' +
+                "transmissionCodeRe='" + transmissionCodeRe + '\'' +
                 "tranTypeDetail='" + tranTypeDetail + '\'' +
                 "transmissionManufacturer='" + transmissionManufacturer + '\'' +
                 "receiveTime='" + receiveTime + '\'' +
@@ -1340,18 +1340,18 @@ public class MqmsVoucher implements Serializable {
         private List<String> rightFuzzyEngType;
 
         public List<String> getRightFuzzyEngType(){return this.rightFuzzyEngType;}
-        private List<String> transmissionTypeReList;
+        private List<String> transmissionCodeReList;
 
-        public List<String> getTransmissionTypeReList(){return this.transmissionTypeReList;}
+        public List<String> getTransmissionCodeReList(){return this.transmissionCodeReList;}
 
 
-        private List<String> fuzzyTransmissionTypeRe;
+        private List<String> fuzzyTransmissionCodeRe;
 
-        public List<String> getFuzzyTransmissionTypeRe(){return this.fuzzyTransmissionTypeRe;}
+        public List<String> getFuzzyTransmissionCodeRe(){return this.fuzzyTransmissionCodeRe;}
 
-        private List<String> rightFuzzyTransmissionTypeRe;
+        private List<String> rightFuzzyTransmissionCodeRe;
 
-        public List<String> getRightFuzzyTransmissionTypeRe(){return this.rightFuzzyTransmissionTypeRe;}
+        public List<String> getRightFuzzyTransmissionCodeRe(){return this.rightFuzzyTransmissionCodeRe;}
         private List<String> tranTypeDetailList;
 
         public List<String> getTranTypeDetailList(){return this.tranTypeDetailList;}
@@ -3551,48 +3551,48 @@ public class MqmsVoucher implements Serializable {
             return this;
         }
 
-        public QueryBuilder fuzzyTransmissionTypeRe (List<String> fuzzyTransmissionTypeRe){
-            this.fuzzyTransmissionTypeRe = fuzzyTransmissionTypeRe;
+        public QueryBuilder fuzzyTransmissionCodeRe (List<String> fuzzyTransmissionCodeRe){
+            this.fuzzyTransmissionCodeRe = fuzzyTransmissionCodeRe;
             return this;
         }
 
-        public QueryBuilder fuzzyTransmissionTypeRe (String ... fuzzyTransmissionTypeRe){
-            this.fuzzyTransmissionTypeRe = solveNullList(fuzzyTransmissionTypeRe);
+        public QueryBuilder fuzzyTransmissionCodeRe (String ... fuzzyTransmissionCodeRe){
+            this.fuzzyTransmissionCodeRe = solveNullList(fuzzyTransmissionCodeRe);
             return this;
         }
 
-        public QueryBuilder rightFuzzyTransmissionTypeRe (List<String> rightFuzzyTransmissionTypeRe){
-            this.rightFuzzyTransmissionTypeRe = rightFuzzyTransmissionTypeRe;
+        public QueryBuilder rightFuzzyTransmissionCodeRe (List<String> rightFuzzyTransmissionCodeRe){
+            this.rightFuzzyTransmissionCodeRe = rightFuzzyTransmissionCodeRe;
             return this;
         }
 
-        public QueryBuilder rightFuzzyTransmissionTypeRe (String ... rightFuzzyTransmissionTypeRe){
-            this.rightFuzzyTransmissionTypeRe = solveNullList(rightFuzzyTransmissionTypeRe);
+        public QueryBuilder rightFuzzyTransmissionCodeRe (String ... rightFuzzyTransmissionCodeRe){
+            this.rightFuzzyTransmissionCodeRe = solveNullList(rightFuzzyTransmissionCodeRe);
             return this;
         }
 
-        public QueryBuilder transmissionTypeRe(String transmissionTypeRe){
-            setTransmissionTypeRe(transmissionTypeRe);
+        public QueryBuilder transmissionCodeRe(String transmissionCodeRe){
+            setTransmissionCodeRe(transmissionCodeRe);
             return this;
         }
 
-        public QueryBuilder transmissionTypeReList(String ... transmissionTypeRe){
-            this.transmissionTypeReList = solveNullList(transmissionTypeRe);
+        public QueryBuilder transmissionCodeReList(String ... transmissionCodeRe){
+            this.transmissionCodeReList = solveNullList(transmissionCodeRe);
             return this;
         }
 
-        public QueryBuilder transmissionTypeReList(List<String> transmissionTypeRe){
-            this.transmissionTypeReList = transmissionTypeRe;
+        public QueryBuilder transmissionCodeReList(List<String> transmissionCodeRe){
+            this.transmissionCodeReList = transmissionCodeRe;
             return this;
         }
 
-        public QueryBuilder fetchTransmissionTypeRe(){
-            setFetchFields("fetchFields","transmissionTypeRe");
+        public QueryBuilder fetchTransmissionCodeRe(){
+            setFetchFields("fetchFields","transmissionCodeRe");
             return this;
         }
 
-        public QueryBuilder excludeTransmissionTypeRe(){
-            setFetchFields("excludeFields","transmissionTypeRe");
+        public QueryBuilder excludeTransmissionCodeRe(){
+            setFetchFields("excludeFields","transmissionCodeRe");
             return this;
         }
 
@@ -5267,18 +5267,18 @@ public class MqmsVoucher implements Serializable {
         private List<String> rightFuzzyEngType;
 
         public List<String> getRightFuzzyEngType(){return this.rightFuzzyEngType;}
-        private List<String> transmissionTypeReList;
+        private List<String> transmissionCodeReList;
 
-        public List<String> getTransmissionTypeReList(){return this.transmissionTypeReList;}
+        public List<String> getTransmissionCodeReList(){return this.transmissionCodeReList;}
 
 
-        private List<String> fuzzyTransmissionTypeRe;
+        private List<String> fuzzyTransmissionCodeRe;
 
-        public List<String> getFuzzyTransmissionTypeRe(){return this.fuzzyTransmissionTypeRe;}
+        public List<String> getFuzzyTransmissionCodeRe(){return this.fuzzyTransmissionCodeRe;}
 
-        private List<String> rightFuzzyTransmissionTypeRe;
+        private List<String> rightFuzzyTransmissionCodeRe;
 
-        public List<String> getRightFuzzyTransmissionTypeRe(){return this.rightFuzzyTransmissionTypeRe;}
+        public List<String> getRightFuzzyTransmissionCodeRe(){return this.rightFuzzyTransmissionCodeRe;}
         private List<String> tranTypeDetailList;
 
         public List<String> getTranTypeDetailList(){return this.tranTypeDetailList;}
@@ -6830,33 +6830,33 @@ public class MqmsVoucher implements Serializable {
             return this;
         }
 
-        public ConditionBuilder fuzzyTransmissionTypeRe (List<String> fuzzyTransmissionTypeRe){
-            this.fuzzyTransmissionTypeRe = fuzzyTransmissionTypeRe;
+        public ConditionBuilder fuzzyTransmissionCodeRe (List<String> fuzzyTransmissionCodeRe){
+            this.fuzzyTransmissionCodeRe = fuzzyTransmissionCodeRe;
             return this;
         }
 
-        public ConditionBuilder fuzzyTransmissionTypeRe (String ... fuzzyTransmissionTypeRe){
-            this.fuzzyTransmissionTypeRe = solveNullList(fuzzyTransmissionTypeRe);
+        public ConditionBuilder fuzzyTransmissionCodeRe (String ... fuzzyTransmissionCodeRe){
+            this.fuzzyTransmissionCodeRe = solveNullList(fuzzyTransmissionCodeRe);
             return this;
         }
 
-        public ConditionBuilder rightFuzzyTransmissionTypeRe (List<String> rightFuzzyTransmissionTypeRe){
-            this.rightFuzzyTransmissionTypeRe = rightFuzzyTransmissionTypeRe;
+        public ConditionBuilder rightFuzzyTransmissionCodeRe (List<String> rightFuzzyTransmissionCodeRe){
+            this.rightFuzzyTransmissionCodeRe = rightFuzzyTransmissionCodeRe;
             return this;
         }
 
-        public ConditionBuilder rightFuzzyTransmissionTypeRe (String ... rightFuzzyTransmissionTypeRe){
-            this.rightFuzzyTransmissionTypeRe = solveNullList(rightFuzzyTransmissionTypeRe);
+        public ConditionBuilder rightFuzzyTransmissionCodeRe (String ... rightFuzzyTransmissionCodeRe){
+            this.rightFuzzyTransmissionCodeRe = solveNullList(rightFuzzyTransmissionCodeRe);
             return this;
         }
 
-        public ConditionBuilder transmissionTypeReList(String ... transmissionTypeRe){
-            this.transmissionTypeReList = solveNullList(transmissionTypeRe);
+        public ConditionBuilder transmissionCodeReList(String ... transmissionCodeRe){
+            this.transmissionCodeReList = solveNullList(transmissionCodeRe);
             return this;
         }
 
-        public ConditionBuilder transmissionTypeReList(List<String> transmissionTypeRe){
-            this.transmissionTypeReList = transmissionTypeRe;
+        public ConditionBuilder transmissionCodeReList(List<String> transmissionCodeRe){
+            this.transmissionCodeReList = transmissionCodeRe;
             return this;
         }
 
@@ -7794,8 +7794,8 @@ public class MqmsVoucher implements Serializable {
             this.obj.setEngType(engType);
             return this;
         }
-        public Builder transmissionTypeRe(String transmissionTypeRe){
-            this.obj.setTransmissionTypeRe(transmissionTypeRe);
+        public Builder transmissionCodeRe(String transmissionCodeRe){
+            this.obj.setTransmissionCodeRe(transmissionCodeRe);
             return this;
         }
         public Builder tranTypeDetail(String tranTypeDetail){

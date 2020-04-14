@@ -4,7 +4,7 @@
 <mapper namespace="com.gamc.efactory.dao.base.MqmsUserDictBaseMapper">
 
 
-    <insert id="insertMqmsUserDict" >
+    <insert id="insertMqmsUserDict"  useGeneratedKeys="true" keyProperty="id">
         INSERT INTO `mqms_user_dict`
         (
         <trim suffixOverrides=",">
@@ -14,8 +14,14 @@
                     <if test="orgType!=null">
                         `org_type`,
                     </if>
+                    <if test="orgTypeCn!=null">
+                        `org_type_cn`,
+                    </if>
                     <if test="orgDesc!=null">
                         `org_desc`,
+                    </if>
+                    <if test="orgDescCn!=null">
+                        `org_desc_cn`,
                     </if>
                     <if test="userId!=null">
                         `user_id`,
@@ -37,8 +43,14 @@
                 <if test="orgType!=null">
                     #{orgType},
                 </if>
+                <if test="orgTypeCn!=null">
+                    #{orgTypeCn},
+                </if>
                 <if test="orgDesc!=null">
                     #{orgDesc},
+                </if>
+                <if test="orgDescCn!=null">
+                    #{orgDescCn},
                 </if>
                 <if test="userId!=null">
                     #{userId},
@@ -60,14 +72,17 @@
         UPDATE `mqms_user_dict`
         SET
         <trim suffixOverrides=",">
-            <if test="id != null">
-                `id` = #{id},
-            </if>
             <if test="orgType != null and orgType!=''">
                 `org_type` = #{orgType},
             </if>
+            <if test="orgTypeCn != null and orgTypeCn!=''">
+                `org_type_cn` = #{orgTypeCn},
+            </if>
             <if test="orgDesc != null and orgDesc!=''">
                 `org_desc` = #{orgDesc},
+            </if>
+            <if test="orgDescCn != null and orgDescCn!=''">
+                `org_desc_cn` = #{orgDescCn},
             </if>
             <if test="userId != null">
                 `user_id` = #{userId},
@@ -81,6 +96,7 @@
         </trim>
         WHERE
         <trim suffixOverrides="and">
+                `id` = #{id} and
         </trim>
     </update>
 
@@ -88,14 +104,17 @@
         UPDATE `mqms_user_dict`
         SET
         <trim suffixOverrides=",">
-        <if test="set.id != null">
-            `id` = #{set.id},
-        </if>
         <if test="set.orgType != null and set.orgType!=''">
             `org_type` = #{set.orgType},
         </if>
+        <if test="set.orgTypeCn != null and set.orgTypeCn!=''">
+            `org_type_cn` = #{set.orgTypeCn},
+        </if>
         <if test="set.orgDesc != null and set.orgDesc!=''">
             `org_desc` = #{set.orgDesc},
+        </if>
+        <if test="set.orgDescCn != null and set.orgDescCn!=''">
+            `org_desc_cn` = #{set.orgDescCn},
         </if>
         <if test="set.userId != null">
             `user_id` = #{set.userId},
@@ -140,6 +159,26 @@
                 </foreach>
                 ) and
             </if>
+                <if test="where.orgTypeCnList != null">
+                    `org_type_cn` in
+                    <foreach collection="where.orgTypeCnList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test ="where.fuzzyOrgTypeCn!=null and where.fuzzyOrgTypeCn.size()>0">
+                (
+                <foreach collection="where.fuzzyOrgTypeCn"  separator="or" item="item">
+                    `Org_type_cn` like concat('%',#{item},'%')
+                </foreach>
+                ) and
+            </if>
+            <if test ="where.rightFuzzyOrgTypeCn!=null and where.rightFuzzyOrgTypeCn.size()>0">
+                (
+                <foreach collection="where.rightFuzzyOrgTypeCn"  separator="or" item="item">
+                    `Org_type_cn` like concat(#{item},'%')
+                </foreach>
+                ) and
+            </if>
                 <if test="where.orgDescList != null">
                     `org_desc` in
                     <foreach collection="where.orgDescList" close=")" open="(" separator="," item="item">
@@ -157,6 +196,26 @@
                 (
                 <foreach collection="where.rightFuzzyOrgDesc"  separator="or" item="item">
                     `Org_desc` like concat(#{item},'%')
+                </foreach>
+                ) and
+            </if>
+                <if test="where.orgDescCnList != null">
+                    `org_desc_cn` in
+                    <foreach collection="where.orgDescCnList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test ="where.fuzzyOrgDescCn!=null and where.fuzzyOrgDescCn.size()>0">
+                (
+                <foreach collection="where.fuzzyOrgDescCn"  separator="or" item="item">
+                    `Org_desc_cn` like concat('%',#{item},'%')
+                </foreach>
+                ) and
+            </if>
+            <if test ="where.rightFuzzyOrgDescCn!=null and where.rightFuzzyOrgDescCn.size()>0">
+                (
+                <foreach collection="where.rightFuzzyOrgDescCn"  separator="or" item="item">
+                    `Org_desc_cn` like concat(#{item},'%')
                 </foreach>
                 ) and
             </if>
@@ -219,7 +278,9 @@
     <resultMap type="com.gamc.efactory.model.dataObject.MqmsUserDict" id="MqmsUserDictMap">
         <result property="id" column="id"/>
         <result property="orgType" column="org_type"/>
+        <result property="orgTypeCn" column="org_type_cn"/>
         <result property="orgDesc" column="org_desc"/>
+        <result property="orgDescCn" column="org_desc_cn"/>
         <result property="userId" column="user_id"/>
         <result property="userName" column="user_name"/>
         <result property="userNo" column="user_no"/>
@@ -237,8 +298,14 @@
             <if test="orgType != null and orgType!=''">
                 `org_type` = #{orgType} and
             </if>
+            <if test="orgTypeCn != null and orgTypeCn!=''">
+                `org_type_cn` = #{orgTypeCn} and
+            </if>
             <if test="orgDesc != null and orgDesc!=''">
                 `org_desc` = #{orgDesc} and
+            </if>
+            <if test="orgDescCn != null and orgDescCn!=''">
+                `org_desc_cn` = #{orgDescCn} and
             </if>
             <if test="userId != null">
                 `user_id` = #{userId} and
@@ -282,6 +349,26 @@
                     </foreach>
                     ) and
                 </if>
+                <if test="orgTypeCnList != null">
+                    `org_type_cn` in
+                    <foreach collection="orgTypeCnList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyOrgTypeCn!=null and fuzzyOrgTypeCn.size()>0">
+                    (
+                    <foreach collection="fuzzyOrgTypeCn"  separator="or" item="item">
+                        `Org_type_cn` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyOrgTypeCn!=null and rightFuzzyOrgTypeCn.size()>0">
+                    (
+                    <foreach collection="rightFuzzyOrgTypeCn"  separator="or" item="item">
+                        `Org_type_cn` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
                 <if test="orgDescList != null">
                     `org_desc` in
                     <foreach collection="orgDescList" close=")" open="(" separator="," item="item">
@@ -299,6 +386,26 @@
                     (
                     <foreach collection="rightFuzzyOrgDesc"  separator="or" item="item">
                         `Org_desc` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="orgDescCnList != null">
+                    `org_desc_cn` in
+                    <foreach collection="orgDescCnList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyOrgDescCn!=null and fuzzyOrgDescCn.size()>0">
+                    (
+                    <foreach collection="fuzzyOrgDescCn"  separator="or" item="item">
+                        `Org_desc_cn` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyOrgDescCn!=null and rightFuzzyOrgDescCn.size()>0">
+                    (
+                    <foreach collection="rightFuzzyOrgDescCn"  separator="or" item="item">
+                        `Org_desc_cn` like concat(#{item},'%')
                     </foreach>
                     ) and
                 </if>
@@ -369,8 +476,14 @@
             <if test="orgType != null and orgType!=''">
                 `org_type` = #{orgType} and
             </if>
+            <if test="orgTypeCn != null and orgTypeCn!=''">
+                `org_type_cn` = #{orgTypeCn} and
+            </if>
             <if test="orgDesc != null and orgDesc!=''">
                 `org_desc` = #{orgDesc} and
+            </if>
+            <if test="orgDescCn != null and orgDescCn!=''">
+                `org_desc_cn` = #{orgDescCn} and
             </if>
             <if test="userId != null">
                 `user_id` = #{userId} and
@@ -414,6 +527,26 @@
                     </foreach>
                     ) and
                 </if>
+                    <if test="orgTypeCnList != null">
+                        `org_type_cn` in
+                        <foreach collection="orgTypeCnList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyOrgTypeCn!=null and fuzzyOrgTypeCn.size()>0">
+                    (
+                    <foreach collection="fuzzyOrgTypeCn"  separator="or" item="item">
+                        `Org_type_cn` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyOrgTypeCn!=null and rightFuzzyOrgTypeCn.size()>0">
+                    (
+                    <foreach collection="rightFuzzyOrgTypeCn"  separator="or" item="item">
+                        `Org_type_cn` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
                     <if test="orgDescList != null">
                         `org_desc` in
                         <foreach collection="orgDescList" close=")" open="(" separator="," item="item">
@@ -431,6 +564,26 @@
                     (
                     <foreach collection="rightFuzzyOrgDesc"  separator="or" item="item">
                         `Org_desc` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                    <if test="orgDescCnList != null">
+                        `org_desc_cn` in
+                        <foreach collection="orgDescCnList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyOrgDescCn!=null and fuzzyOrgDescCn.size()>0">
+                    (
+                    <foreach collection="fuzzyOrgDescCn"  separator="or" item="item">
+                        `Org_desc_cn` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyOrgDescCn!=null and rightFuzzyOrgDescCn.size()>0">
+                    (
+                    <foreach collection="rightFuzzyOrgDescCn"  separator="or" item="item">
+                        `Org_desc_cn` like concat(#{item},'%')
                     </foreach>
                     ) and
                 </if>
@@ -495,7 +648,9 @@
         <trim suffixOverrides=",">
         `id`,
         `org_type`,
+        `org_type_cn`,
         `org_desc`,
+        `org_desc_cn`,
         `user_id`,
         `user_name`,
         `user_no`,
@@ -525,8 +680,14 @@
                     <if test="fetchFields.fetchFields.orgType==true">
                         `org_type`,
                     </if>
+                    <if test="fetchFields.fetchFields.orgTypeCn==true">
+                        `org_type_cn`,
+                    </if>
                     <if test="fetchFields.fetchFields.orgDesc==true">
                         `org_desc`,
+                    </if>
+                    <if test="fetchFields.fetchFields.orgDescCn==true">
+                        `org_desc_cn`,
                     </if>
                     <if test="fetchFields.fetchFields.userId==true">
                         `user_id`,
@@ -545,8 +706,14 @@
                     <if test="fetchFields.excludeFields.orgType==null">
                         `org_type`,
                     </if>
+                    <if test="fetchFields.excludeFields.orgTypeCn==null">
+                        `org_type_cn`,
+                    </if>
                     <if test="fetchFields.excludeFields.orgDesc==null">
                         `org_desc`,
+                    </if>
+                    <if test="fetchFields.excludeFields.orgDescCn==null">
+                        `org_desc_cn`,
                     </if>
                     <if test="fetchFields.excludeFields.userId==null">
                         `user_id`,

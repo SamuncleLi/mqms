@@ -68,7 +68,9 @@ public class FailureTrackController {
         String[] voucherCodeArray = voucherCodes.split(",");
         JSONObject result = new JSONObject();
         int count = 0;
+        //TODO 根据快递负责人id查出工号和姓名
         for (String voucherCode : voucherCodeArray) {
+            mqmsFailureTrack.setFailureTrackId(null);
             mqmsFailureTrack.setVoucherCode(voucherCode);
             mqmsFailureTrackMapper.insertMqmsFailureTrack(mqmsFailureTrack);
             count++;
@@ -113,6 +115,7 @@ public class FailureTrackController {
             mqmsFailureTrack.setDeliveryCode(deliveryCode);
             count += mqmsFailureTrackMapper.updateMqmsFailureTrack(mqmsFailureTrack);
         }
+        submitToProcess(failureTrackIds);
         if (count == failureTrackInt.length) {
             result.put("success", "true");
         } else {
@@ -133,7 +136,8 @@ public class FailureTrackController {
     @RequestMapping("/submit_to_process")
     @Transactional
     public JSONObject submitToProcess(@RequestParam String failureTrackIds) {
-        //TODO 防止重复提交 3/30
+        //TODO 防止重复提交
+
         JSONObject result = new JSONObject();
         String[] failureTrackIdArray = failureTrackIds.split(",");
         int count = 0;
@@ -149,7 +153,6 @@ public class FailureTrackController {
                 variables.put("arrayVariables", shrIds);
                 JSONObject proCK = new JSONObject();
                 proCK.put("scpzdd", 1732);
-                proCK.put("zxdd", 1732);
                 proCK.put("xzjxks", 1732);
                 variables.put("processChecker", proCK);
                 JSONObject condition = new JSONObject();
@@ -179,7 +182,6 @@ public class FailureTrackController {
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            System.out.println(".......................test.......................");
             return result;
         }
     }
@@ -194,7 +196,7 @@ public class FailureTrackController {
      * @抛出异常
      */
     @RequestMapping("/appearance_check")
-    public JSONObject appearanceCheck(SimpleApplicationObject simpleApplicationObject, MqmsFailureTrack mqmsFailureTrack, @RequestParam("file") List<MultipartFile> file) {
+    public JSONObject appearanceCheck(SimpleApplicationObject simpleApplicationObject, MqmsFailureTrack mqmsFailureTrack, @RequestParam("file") List<MultipartFile> file, @RequestParam("engOrTran")String engOrTran) {
         JSONObject result = new JSONObject();
         String appendix = mqmsFailureTrack.getAppendix();
 
@@ -236,9 +238,16 @@ public class FailureTrackController {
         variable.put("arrayVariables", arrayVariables);
 
         JSONObject processChecker = new JSONObject();
-        processChecker.put("scpzxz", 1279);
-        processChecker.put("scpzkz", 1732);
-        processChecker.put("gd", 1732);
+
+        MqmsUserDict mqmsUserDict = new MqmsUserDict();
+        //根据发动机或者变速箱来设置系长和科长
+        mqmsUserDict.setOrgType("scpzxz");
+        mqmsUserDict.setOrgDesc(engOrTran);
+        processChecker.put("scpzxz", userDictMapper.queryMqmsUserDictLimit1(mqmsUserDict).getUserId());
+        mqmsUserDict.setOrgType("scpzkz");
+        mqmsUserDict.setOrgDesc(engOrTran);
+        processChecker.put("scpzkz", userDictMapper.queryMqmsUserDictLimit1(mqmsUserDict).getUserId());
+
         variable.put("processChecker", processChecker);
         map.put("variables", variable.toJSONString());
         JSONObject returnJson = httpService.postInJSON(Config.processSystem.getVarName() + "/SAO/audit/team3fvariables", map, JSONObject.class);
@@ -303,18 +312,31 @@ public class FailureTrackController {
             submitFormSingle1.setRow(1);
             submitFormSingle1.setCol(1);
             ProcessForm.SubmitFormSingle submitFormSingle2 = new ProcessForm.SubmitFormSingle();
-            submitFormSingle2.setType("combobox-multi");
+            submitFormSingle2.setType("combobox");
             submitFormSingle2.setTitle("是否装车");
             submitFormSingle2.setName("carTestSymbol");
             submitFormSingle2.setInput_id("carTestSymbol");
             submitFormSingle2.setRow(1);
             submitFormSingle2.setCol(2);
-
             Dict dictE = new Dict();
             dictE.setDictType1("boolean");
             List<Dict> dicts = dictMapper.queryDict(dictE);
             for(Dict dict:dicts){
                 submitFormSingle2.addOption(dict.getDictText(),dict.getDictValue());
+            }
+            ProcessForm.SubmitFormSingle submitFormSingle3 = new ProcessForm.SubmitFormSingle();
+            submitFormSingle3.setType("combobox");
+            submitFormSingle3.setTitle("再现负责人");
+            submitFormSingle3.setName("importance");
+            submitFormSingle3.setInput_id("importance");
+            submitFormSingle3.setRow(1);
+            submitFormSingle3.setCol(3);
+            MqmsUserDict userDictE = new MqmsUserDict();
+            userDictE.setOrgType("reappear");
+            userDictE.setOrgDesc(mqmsFailureTrack.getEngOrTran());
+            List<MqmsUserDict> userDicts = userDictMapper.queryMqmsUserDict(userDictE);
+            for(MqmsUserDict userDict:userDicts){
+                submitFormSingle3.addOption(userDict.getUserName(),String.valueOf(userDict.getUserId()));
             }
 
             ProcessForm.SubmitFormSingle submitFormSingle4 = new ProcessForm.SubmitFormSingle();
@@ -327,6 +349,7 @@ public class FailureTrackController {
 
             submitFormGroup.addSubmitSingle(submitFormSingle1);
             submitFormGroup.addSubmitSingle(submitFormSingle2);
+            submitFormGroup.addSubmitSingle(submitFormSingle3);
             submitFormGroup.addSubmitSingle(submitFormSingle4);
             List<List<Integer>> mStructure2 = null;
 
@@ -337,13 +360,15 @@ public class FailureTrackController {
             ProcessForm.SubmitButton submitButton = new ProcessForm.SubmitButton();
 
             submitButton.setName("提交");
-            submitButton.setUrl("/mqms/failure_track/appearance_check?failureTrackId=" + String.valueOf(mqmsFailureTrack.getFailureTrackId()));
+            submitButton.setUrl("/mqms/failure_track/appearance_check?failureTrackId=" + String.valueOf(mqmsFailureTrack.getFailureTrackId()) + "engOrTran=" + mqmsFailureTrack.getEngOrTran());
             processForm.addSubmitButton(submitButton);
         } else if ("再现担当".equals(simpleApplicationObjectData.getString("taskName"))) {
             ProcessForm.DataDisplayGroup previousInfo = failureTrackService.getPreviousInfo(failureTrackId);
             processForm.addNormalData(previousInfo);
             ProcessForm.DataDisplayGroup appendixInfo = failureTrackService.getAppendixInfo(failureTrackId);
-            processForm.addNormalData(appendixInfo);
+            if(appendixInfo!=null){
+                processForm.addNormalData(appendixInfo);processForm.addNormalData(appendixInfo);
+            }
 
             String structure2 = "[[1, 3], [1,3], [4]]";
             ProcessForm.SubmitFormGroup submitFormGroup = new ProcessForm.SubmitFormGroup();
@@ -400,7 +425,7 @@ public class FailureTrackController {
             submitButton.setUrl("/mqms/failure_track/failure_reappear?failureTrackId=" + String.valueOf(mqmsFailureTrack.getFailureTrackId()));
             processForm.addSubmitButton(submitButton);
         } else if ("选择解析科室".equals(simpleApplicationObjectData.getString("taskName"))) {
-            String structure2 = "[[1,3]]";
+            String structure2 = "[[1,1,2]]";
             ProcessForm.SubmitFormGroup submitFormGroup = new ProcessForm.SubmitFormGroup();
             ProcessForm.SubmitFormSingle submitFormSingle1 = new ProcessForm.SubmitFormSingle();
             submitFormSingle1.setType("combobox");
@@ -415,13 +440,26 @@ public class FailureTrackController {
             for(Dict dict:dicts){
                 submitFormSingle1.addOption(dict.getDictText(),dict.getDictValue());
             }
+            ProcessForm.SubmitFormSingle submitFormSingle3 = new ProcessForm.SubmitFormSingle();
+            submitFormSingle3.setType("combobox");
+            submitFormSingle3.setTitle("重要度");
+            submitFormSingle3.setName("importance");
+            submitFormSingle3.setInput_id("importance");
+            submitFormSingle3.setRow(1);
+            submitFormSingle3.setCol(2);
+            dictE.setDictType1("importance");
+            dicts = dictMapper.queryDict(dictE);
+            for(Dict dict:dicts){
+                submitFormSingle3.addOption(dict.getDictText(),dict.getDictValue());
+            }
+
             ProcessForm.SubmitFormSingle submitFormSingle2 = new ProcessForm.SubmitFormSingle();
             submitFormSingle2.setType("combobox-multi");
             submitFormSingle2.setTitle("解析科室");
             submitFormSingle2.setName("analysisDepartments");
             submitFormSingle2.setInput_id("analysisDepartments");
             submitFormSingle2.setRow(1);
-            submitFormSingle2.setCol(2);
+            submitFormSingle2.setCol(3);
 
             //动态加载科室
             Dict dictDepartment = new Dict();
@@ -432,7 +470,9 @@ public class FailureTrackController {
             }
             submitFormGroup.addSubmitSingle(submitFormSingle1);
             submitFormGroup.addSubmitSingle(submitFormSingle2);
+            submitFormGroup.addSubmitSingle(submitFormSingle3);
             List<List<Integer>> mStructure2 = null;
+
 
             //TODO 记录flag，所有分支都需要 4/1
 
@@ -449,7 +489,9 @@ public class FailureTrackController {
             ProcessForm.DataDisplayGroup failureTrackInfo = failureTrackService.getPreviousInfo(failureTrackId);
             processForm.addNormalData(failureTrackInfo);
             ProcessForm.DataDisplayGroup appendixInfo = failureTrackService.getAppendixInfo(failureTrackId);
-            processForm.addNormalData(appendixInfo);
+            if(appendixInfo!=null){
+                processForm.addNormalData(appendixInfo);processForm.addNormalData(appendixInfo);
+            }
 
             String structure2 = "[[2,2]]";
             ProcessForm.SubmitFormGroup submitFormGroup = new ProcessForm.SubmitFormGroup();
@@ -493,7 +535,9 @@ public class FailureTrackController {
             ProcessForm.DataDisplayGroup previousInfo = failureTrackService.getPreviousInfo(failureTrackId);
             processForm.addNormalData(previousInfo);
             ProcessForm.DataDisplayGroup appendixInfo = failureTrackService.getAppendixInfo(failureTrackId);
-            processForm.addNormalData(appendixInfo);
+            if(appendixInfo!=null){
+                processForm.addNormalData(appendixInfo);processForm.addNormalData(appendixInfo);
+            }
 
             String structure2 = "[[4],[4],[2,1,1],[4]]";
             ProcessForm.SubmitFormGroup submitFormGroup = new ProcessForm.SubmitFormGroup();
@@ -575,7 +619,9 @@ public class FailureTrackController {
             ProcessForm.DataDisplayGroup previousInfo = failureTrackService.getPreviousInfo(failureTrackId);
             processForm.addNormalData(previousInfo);
             ProcessForm.DataDisplayGroup appendixInfo = failureTrackService.getAppendixInfo(failureTrackId);
-            processForm.addNormalData(appendixInfo);
+            if(appendixInfo!=null){
+                processForm.addNormalData(appendixInfo);processForm.addNormalData(appendixInfo);
+            }
 
             //查询本科室工程师的解析数据 3/25
             ProcessForm.DataDisplayGroup engineerInfo = failureTrackService.getEngineerInfo(failureTrackId, simpleApplicationObjectData.getString("flag"));
@@ -606,7 +652,9 @@ public class FailureTrackController {
             ProcessForm.DataDisplayGroup previousInfo = failureTrackService.getPreviousInfo(failureTrackId);
             processForm.addNormalData(previousInfo);
             ProcessForm.DataDisplayGroup appendixInfo = failureTrackService.getAppendixInfo(failureTrackId);
-            processForm.addNormalData(appendixInfo);
+            if(appendixInfo!=null){
+                processForm.addNormalData(appendixInfo);processForm.addNormalData(appendixInfo);
+            }
 
             //查询本科室工程师的解析数据 3/25
             ProcessForm.DataDisplayGroup engineerInfo = failureTrackService.getEngineerInfo(failureTrackId, simpleApplicationObjectData.getString("flag"));
@@ -782,12 +830,13 @@ public class FailureTrackController {
         variable.put("condition", condition);
         JSONArray arrayVariables = new JSONArray();
 
-        //TODO 设置最后的总结人选
+        //设置最后的总结人选
         JSONObject processChecker1 = new JSONObject();
         processChecker1.put("zj", 1732);
+
         variable.put("processChecker", processChecker1);
         map.put("variables", variable.toJSONString());
-        //TODO 设置市场品质系长和市场品质科长
+        //设置市场品质系长和市场品质科长
         JSONObject processChecker2 = new JSONObject();
         processChecker2.put("scpzxz", 1732);
         variable.put("processChecker", processChecker2);
@@ -807,14 +856,15 @@ public class FailureTrackController {
         }
 
 
-        //TODO 获取窗口 3/30
-        int[] cks = {1732, 1279, 1278};
-
-        //后台查询这些科室的窗口，并新建分析数据,设置flag
+        //根据department获取窗口，并新建分析数据,设置flag
         for (int i = 0; i < departmentArray.length; i++) {
             JSONObject departmentVariable = new JSONObject();
             JSONObject departmentProcessChecker1 = new JSONObject();
-            departmentProcessChecker1.put("ck", cks[i]);
+
+            MqmsUserDict mqmsUserDictExample = new MqmsUserDict();
+            mqmsUserDictExample.setOrgType("ck");
+            mqmsUserDictExample.setOrgDesc(departmentArray[i]);
+            departmentProcessChecker1.put("ck", userDictMapper.queryMqmsUserDictLimit1(mqmsUserDictExample).getUserId());
             departmentVariable.put("processChecker", departmentProcessChecker1);
             departmentVariable.put("flag", departmentArray[i]);
             arrayVariables.add(departmentVariable);
@@ -891,7 +941,7 @@ public class FailureTrackController {
      * @抛出异常
      */
     @RequestMapping("/engineer_analysis")
-    public JSONObject engineerAnalysis(SimpleApplicationObject simpleApplicationObject, @RequestParam int failureTrackId, @RequestParam("flag") String flag, @RequestParam("mainReason") String mainReason, @RequestParam("outflowReason") String outflowReason, @RequestParam("solutionDate") String solutionDate, @RequestParam("solution") String solution) {
+    public JSONObject engineerAnalysis(SimpleApplicationObject simpleApplicationObject, @RequestParam int failureTrackId, @RequestParam("flag") String flag, @RequestParam("mainReason") String mainReason, @RequestParam("outflowReason") String outflowReason, @RequestParam("solutionDate") String solutionDate, @RequestParam("solution") String solution, @RequestParam("tempSolution")String tempSolution) {
         //向流程系统提交同意的申请
         Map map = new HashMap();
         map = JSONObject.parseObject(JSONObject.toJSONString(simpleApplicationObject), Map.class);
@@ -918,6 +968,8 @@ public class FailureTrackController {
         commentBuffer.append(outflowReason);
         commentBuffer.append("\n截止日期：");
         commentBuffer.append(solutionDate);
+        commentBuffer.append("\n临时对策");
+        commentBuffer.append(tempSolution);
         commentBuffer.append("\n解决方案：");
         commentBuffer.append(solution);
         mqmsFailureAnalysis.setFailureAnalystComment(commentBuffer.toString());
@@ -1049,6 +1101,11 @@ public class FailureTrackController {
         map.put("auditorInfo", "agree");
         map.put("auditorComment", "同意");
 
+        MqmsFailureTrack mqmsFailureTrack = new MqmsFailureTrack();
+        mqmsFailureTrack.setFailureTrackId(failureTrackId);
+        mqmsFailureTrack.setProcessState(TaskName.scpzdd);
+        mqmsFailureTrackMapper.updateMqmsFailureTrack(mqmsFailureTrack);
+
         MqmsFailureAnalysis mqmsFailureAnalysis = new MqmsFailureAnalysis();
         mqmsFailureAnalysis.setFailureAnalystId(simpleApplicationObject.getAssigneeId());
         User user = userMapper.queryUserLimit1(simpleApplicationObject.getAssigneeId());
@@ -1067,4 +1124,38 @@ public class FailureTrackController {
         JSONObject returnJson = httpService.postInJSON(Config.processSystem.getVarName() + "/SAO/audit/team3fvariables", map, JSONObject.class);
         return returnJson;
     }
+
+    //归档，流程完成
+    @RequestMapping("/document_collection")
+    public JSONObject documentCollection(SimpleApplicationObject simpleApplicationObject, @RequestParam int failureTrackId, @RequestParam("flag") String flag, @RequestParam("comment") String comment){
+        //向流程系统提交同意的申请
+        Map map = new HashMap();
+        map = JSONObject.parseObject(JSONObject.toJSONString(simpleApplicationObject), Map.class);
+        map.put("auditorInfo", "agree");
+        map.put("auditorComment", "同意");
+
+        MqmsFailureTrack mqmsFailureTrack = new MqmsFailureTrack();
+        mqmsFailureTrack.setFailureTrackId(failureTrackId);
+        mqmsFailureTrack.setProcessState(TaskName.scpzdd);
+        mqmsFailureTrackMapper.updateMqmsFailureTrack(mqmsFailureTrack);
+
+        MqmsFailureAnalysis mqmsFailureAnalysis = new MqmsFailureAnalysis();
+        mqmsFailureAnalysis.setFailureAnalystId(simpleApplicationObject.getAssigneeId());
+        User user = userMapper.queryUserLimit1(simpleApplicationObject.getAssigneeId());
+        mqmsFailureAnalysis.setFailureAnalystName(user.getUserName());
+        mqmsFailureAnalysis.setFailureAnalystDepartment(user.getDepartment());
+        mqmsFailureAnalysis.setSaoId(simpleApplicationObject.getSimpleApplicationObjectId());
+        mqmsFailureAnalysis.setTaskId(simpleApplicationObject.getTaskId());
+        mqmsFailureAnalysis.setTaskName(simpleApplicationObject.getTaskName());
+        mqmsFailureAnalysis.setFlag(flag);
+
+        mqmsFailureAnalysis.setFailureAnalystComment(comment);
+        //根据failureTrackId插入新failureAnalysis
+        //插入failureTrackId
+        mqmsFailureAnalysis.setFailureTrackId(failureTrackId);
+        mqmsFailureAnalysisMapper.insertMqmsFailureAnalysis(mqmsFailureAnalysis);
+        JSONObject returnJson = httpService.postInJSON(Config.processSystem.getVarName() + "/SAO/audit/team3fvariables", map, JSONObject.class);
+        return returnJson;
+    }
+
 }
