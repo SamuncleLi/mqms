@@ -78,10 +78,13 @@ public class VeiDataServiceImpl implements VeiDataService {
                         mqmsVoucherRecord.setEngType(engtype);
                         String carModel = mqmsVinDecodeMapper.vinDecode(vinShortCode).getVinCarType();
                         mqmsVoucherRecord.setCarModel(carModel);
+                        String engSeries = mqmsVinDecodeMapper.vinDecode(vinShortCode).getVinSeries();
+                        mqmsVoucherRecord.setEndSeries(engSeries);
                     }
                     else{
                         mqmsVoucherRecord.setEngType("");
                         mqmsVoucherRecord.setCarModel("");
+                        mqmsVoucherRecord.setEndSeries("");
                     }
                     String transShortCode = mqmsVoucherRecord.getVinCode().substring(6,7);
                     mqmsVoucherRecord.setTransmissionShortCode(transShortCode);
@@ -158,7 +161,21 @@ public class VeiDataServiceImpl implements VeiDataService {
                     mqmsVoucherRecord.setFailureMonth("");
                 }
                 //故障代码
-                mqmsVoucherRecord.setFaultCodeClassification(mqmsFaultDecodeMapper.selectFaultCode(mqmsVoucherRecord.getEngArrange()));
+                if (mqmsVoucherRecord.getEngArrange()!=null) {
+                    String engArrange=mqmsVoucherRecord.getEngArrange();
+
+                    if (mqmsFaultDecodeMapper.selectFaultCode(engArrange)!=null){
+                        String faultCode=mqmsFaultDecodeMapper.selectFaultCode(engArrange);
+                        mqmsVoucherRecord.setFaultCodeClassification(faultCode) ;
+                    }
+                   else{
+                        mqmsVoucherRecord.setFaultCodeClassification("");
+                    }
+                }
+                else
+                {
+                    mqmsVoucherRecord.setFaultCodeClassification("");
+                }
                 String voucherCode = mqmsVoucherRecord.getVoucherCode();
                 if (voucherCode != null) {
                     int cnt = mqmsVoucherMapper.selectByVoucherCode(voucherCode);

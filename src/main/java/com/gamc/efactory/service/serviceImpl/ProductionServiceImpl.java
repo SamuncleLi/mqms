@@ -166,7 +166,7 @@ public class ProductionServiceImpl implements ProductionService {
     }
     private void saveAll(List<List<Object>> lists, HttpServletRequest request) throws IllegalAccessException {
         try {
-            int threadacCount=((ThreadPoolExecutor)executorService).getPoolSize();
+//            int threadacCount=((ThreadPoolExecutor)executorService).getPoolSize();
 //            int threadacCount=((ThreadPoolExecutor)executorService).getActiveCount();
             if (lists.size() > 0&&((ThreadPoolExecutor)executorService).getActiveCount()<80)  {
 

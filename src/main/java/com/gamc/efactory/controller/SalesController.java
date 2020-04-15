@@ -23,7 +23,7 @@ public class SalesController {
         String schema = "mqms";
         return multiFilterService.columnNameAndCommentQuery(schema, table);
     }
-
+   //LIST
     @RequestMapping("/list")
     public JSONObject multiFilter(@RequestParam(required = false)String page, @RequestParam(required = false) String rows, @RequestParam(required = false) String condition){
         String table = "mqms_sales";

@@ -137,8 +137,11 @@
                     <if test="engType!=null">
                         `eng_type`,
                     </if>
-                    <if test="transmissionCodeRe!=null">
-                        `transmission_code_re`,
+                    <if test="endSeries!=null">
+                        `end_series`,
+                    </if>
+                    <if test="transmissionTypeRe!=null">
+                        `transmission_type_re`,
                     </if>
                     <if test="tranTypeDetail!=null">
                         `tran_type_detail`,
@@ -187,6 +190,15 @@
                     </if>
                     <if test="mileageDistribution!=null">
                         `mileage_distribution`,
+                    </if>
+                    <if test="claimType!=null">
+                        `claim_type`,
+                    </if>
+                    <if test="claimCompete!=null">
+                        `claim_compete`,
+                    </if>
+                    <if test="expressDelivery!=null">
+                        `express_delivery`,
                     </if>
                     <if test="trackBeginer!=null">
                         `track_beginer`,
@@ -349,8 +361,11 @@
                 <if test="engType!=null">
                     #{engType},
                 </if>
-                <if test="transmissionCodeRe!=null">
-                    #{transmissionCodeRe},
+                <if test="endSeries!=null">
+                    #{endSeries},
+                </if>
+                <if test="transmissionTypeRe!=null">
+                    #{transmissionTypeRe},
                 </if>
                 <if test="tranTypeDetail!=null">
                     #{tranTypeDetail},
@@ -399,6 +414,15 @@
                 </if>
                 <if test="mileageDistribution!=null">
                     #{mileageDistribution},
+                </if>
+                <if test="claimType!=null">
+                    #{claimType},
+                </if>
+                <if test="claimCompete!=null">
+                    #{claimCompete},
+                </if>
+                <if test="expressDelivery!=null">
+                    #{expressDelivery},
                 </if>
                 <if test="trackBeginer!=null">
                     #{trackBeginer},
@@ -564,8 +588,11 @@
             <if test="engType != null and engType!=''">
                 `eng_type` = #{engType},
             </if>
-            <if test="transmissionCodeRe != null and transmissionCodeRe!=''">
-                `transmission_code_re` = #{transmissionCodeRe},
+            <if test="endSeries != null and endSeries!=''">
+                `end_series` = #{endSeries},
+            </if>
+            <if test="transmissionTypeRe != null and transmissionTypeRe!=''">
+                `transmission_type_re` = #{transmissionTypeRe},
             </if>
             <if test="tranTypeDetail != null and tranTypeDetail!=''">
                 `tran_type_detail` = #{tranTypeDetail},
@@ -614,6 +641,15 @@
             </if>
             <if test="mileageDistribution != null and mileageDistribution!=''">
                 `mileage_distribution` = #{mileageDistribution},
+            </if>
+            <if test="claimType != null and claimType!=''">
+                `claim_type` = #{claimType},
+            </if>
+            <if test="claimCompete != null and claimCompete!=''">
+                `claim_compete` = #{claimCompete},
+            </if>
+            <if test="expressDelivery != null and expressDelivery!=''">
+                `express_delivery` = #{expressDelivery},
             </if>
             <if test="trackBeginer != null and trackBeginer!=''">
                 `track_beginer` = #{trackBeginer},
@@ -779,8 +815,11 @@
         <if test="set.engType != null and set.engType!=''">
             `eng_type` = #{set.engType},
         </if>
-        <if test="set.transmissionCodeRe != null and set.transmissionCodeRe!=''">
-            `transmission_code_re` = #{set.transmissionCodeRe},
+        <if test="set.endSeries != null and set.endSeries!=''">
+            `end_series` = #{set.endSeries},
+        </if>
+        <if test="set.transmissionTypeRe != null and set.transmissionTypeRe!=''">
+            `transmission_type_re` = #{set.transmissionTypeRe},
         </if>
         <if test="set.tranTypeDetail != null and set.tranTypeDetail!=''">
             `tran_type_detail` = #{set.tranTypeDetail},
@@ -829,6 +868,15 @@
         </if>
         <if test="set.mileageDistribution != null and set.mileageDistribution!=''">
             `mileage_distribution` = #{set.mileageDistribution},
+        </if>
+        <if test="set.claimType != null and set.claimType!=''">
+            `claim_type` = #{set.claimType},
+        </if>
+        <if test="set.claimCompete != null and set.claimCompete!=''">
+            `claim_compete` = #{set.claimCompete},
+        </if>
+        <if test="set.expressDelivery != null and set.expressDelivery!=''">
+            `express_delivery` = #{set.expressDelivery},
         </if>
         <if test="set.trackBeginer != null and set.trackBeginer!=''">
             `track_beginer` = #{set.trackBeginer},
@@ -1639,23 +1687,43 @@
                 </foreach>
                 ) and
             </if>
-                <if test="where.transmissionCodeReList != null">
-                    `transmission_code_re` in
-                    <foreach collection="where.transmissionCodeReList" close=")" open="(" separator="," item="item">
+                <if test="where.endSeriesList != null">
+                    `end_series` in
+                    <foreach collection="where.endSeriesList" close=")" open="(" separator="," item="item">
                         #{item}
                     </foreach> and
                 </if>
-            <if test ="where.fuzzyTransmissionCodeRe!=null and where.fuzzyTransmissionCodeRe.size()>0">
+            <if test ="where.fuzzyEndSeries!=null and where.fuzzyEndSeries.size()>0">
                 (
-                <foreach collection="where.fuzzyTransmissionCodeRe"  separator="or" item="item">
-                    `Transmission_code_re` like concat('%',#{item},'%')
+                <foreach collection="where.fuzzyEndSeries"  separator="or" item="item">
+                    `End_series` like concat('%',#{item},'%')
                 </foreach>
                 ) and
             </if>
-            <if test ="where.rightFuzzyTransmissionCodeRe!=null and where.rightFuzzyTransmissionCodeRe.size()>0">
+            <if test ="where.rightFuzzyEndSeries!=null and where.rightFuzzyEndSeries.size()>0">
                 (
-                <foreach collection="where.rightFuzzyTransmissionCodeRe"  separator="or" item="item">
-                    `Transmission_code_re` like concat(#{item},'%')
+                <foreach collection="where.rightFuzzyEndSeries"  separator="or" item="item">
+                    `End_series` like concat(#{item},'%')
+                </foreach>
+                ) and
+            </if>
+                <if test="where.transmissionTypeReList != null">
+                    `transmission_type_re` in
+                    <foreach collection="where.transmissionTypeReList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test ="where.fuzzyTransmissionTypeRe!=null and where.fuzzyTransmissionTypeRe.size()>0">
+                (
+                <foreach collection="where.fuzzyTransmissionTypeRe"  separator="or" item="item">
+                    `Transmission_type_re` like concat('%',#{item},'%')
+                </foreach>
+                ) and
+            </if>
+            <if test ="where.rightFuzzyTransmissionTypeRe!=null and where.rightFuzzyTransmissionTypeRe.size()>0">
+                (
+                <foreach collection="where.rightFuzzyTransmissionTypeRe"  separator="or" item="item">
+                    `Transmission_type_re` like concat(#{item},'%')
                 </foreach>
                 ) and
             </if>
@@ -1971,6 +2039,66 @@
                 </foreach>
                 ) and
             </if>
+                <if test="where.claimTypeList != null">
+                    `claim_type` in
+                    <foreach collection="where.claimTypeList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test ="where.fuzzyClaimType!=null and where.fuzzyClaimType.size()>0">
+                (
+                <foreach collection="where.fuzzyClaimType"  separator="or" item="item">
+                    `Claim_type` like concat('%',#{item},'%')
+                </foreach>
+                ) and
+            </if>
+            <if test ="where.rightFuzzyClaimType!=null and where.rightFuzzyClaimType.size()>0">
+                (
+                <foreach collection="where.rightFuzzyClaimType"  separator="or" item="item">
+                    `Claim_type` like concat(#{item},'%')
+                </foreach>
+                ) and
+            </if>
+                <if test="where.claimCompeteList != null">
+                    `claim_compete` in
+                    <foreach collection="where.claimCompeteList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test ="where.fuzzyClaimCompete!=null and where.fuzzyClaimCompete.size()>0">
+                (
+                <foreach collection="where.fuzzyClaimCompete"  separator="or" item="item">
+                    `Claim_compete` like concat('%',#{item},'%')
+                </foreach>
+                ) and
+            </if>
+            <if test ="where.rightFuzzyClaimCompete!=null and where.rightFuzzyClaimCompete.size()>0">
+                (
+                <foreach collection="where.rightFuzzyClaimCompete"  separator="or" item="item">
+                    `Claim_compete` like concat(#{item},'%')
+                </foreach>
+                ) and
+            </if>
+                <if test="where.expressDeliveryList != null">
+                    `express_delivery` in
+                    <foreach collection="where.expressDeliveryList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test ="where.fuzzyExpressDelivery!=null and where.fuzzyExpressDelivery.size()>0">
+                (
+                <foreach collection="where.fuzzyExpressDelivery"  separator="or" item="item">
+                    `Express_delivery` like concat('%',#{item},'%')
+                </foreach>
+                ) and
+            </if>
+            <if test ="where.rightFuzzyExpressDelivery!=null and where.rightFuzzyExpressDelivery.size()>0">
+                (
+                <foreach collection="where.rightFuzzyExpressDelivery"  separator="or" item="item">
+                    `Express_delivery` like concat(#{item},'%')
+                </foreach>
+                ) and
+            </if>
                 <if test="where.trackBeginerList != null">
                     `track_beginer` in
                     <foreach collection="where.trackBeginerList" close=")" open="(" separator="," item="item">
@@ -2183,7 +2311,8 @@
         <result property="engArrange" column="eng_arrange"/>
         <result property="carModel" column="car_model"/>
         <result property="engType" column="eng_type"/>
-        <result property="transmissionCodeRe" column="transmission_code_re"/>
+        <result property="endSeries" column="end_series"/>
+        <result property="transmissionTypeRe" column="transmission_type_re"/>
         <result property="tranTypeDetail" column="tran_type_detail"/>
         <result property="transmissionManufacturer" column="transmission_manufacturer"/>
         <result property="receiveTime" column="receive_time"/>
@@ -2200,6 +2329,9 @@
         <result property="failureMonth" column="failure_month"/>
         <result property="transmissionShortCode" column="transmission_short_code"/>
         <result property="mileageDistribution" column="mileage_distribution"/>
+        <result property="claimType" column="claim_type"/>
+        <result property="claimCompete" column="claim_compete"/>
+        <result property="expressDelivery" column="express_delivery"/>
         <result property="trackBeginer" column="track_beginer"/>
         <result property="trackBeginTime" column="track_begin_time"/>
         <result property="deliveryPerson" column="delivery_person"/>
@@ -2346,8 +2478,11 @@
             <if test="engType != null and engType!=''">
                 `eng_type` = #{engType} and
             </if>
-            <if test="transmissionCodeRe != null and transmissionCodeRe!=''">
-                `transmission_code_re` = #{transmissionCodeRe} and
+            <if test="endSeries != null and endSeries!=''">
+                `end_series` = #{endSeries} and
+            </if>
+            <if test="transmissionTypeRe != null and transmissionTypeRe!=''">
+                `transmission_type_re` = #{transmissionTypeRe} and
             </if>
             <if test="tranTypeDetail != null and tranTypeDetail!=''">
                 `tran_type_detail` = #{tranTypeDetail} and
@@ -2396,6 +2531,15 @@
             </if>
             <if test="mileageDistribution != null and mileageDistribution!=''">
                 `mileage_distribution` = #{mileageDistribution} and
+            </if>
+            <if test="claimType != null and claimType!=''">
+                `claim_type` = #{claimType} and
+            </if>
+            <if test="claimCompete != null and claimCompete!=''">
+                `claim_compete` = #{claimCompete} and
+            </if>
+            <if test="expressDelivery != null and expressDelivery!=''">
+                `express_delivery` = #{expressDelivery} and
             </if>
             <if test="trackBeginer != null and trackBeginer!=''">
                 `track_beginer` = #{trackBeginer} and
@@ -3205,23 +3349,43 @@
                     </foreach>
                     ) and
                 </if>
-                <if test="transmissionCodeReList != null">
-                    `transmission_code_re` in
-                    <foreach collection="transmissionCodeReList" close=")" open="(" separator="," item="item">
+                <if test="endSeriesList != null">
+                    `end_series` in
+                    <foreach collection="endSeriesList" close=")" open="(" separator="," item="item">
                         #{item}
                     </foreach> and
                 </if>
-                <if test ="fuzzyTransmissionCodeRe!=null and fuzzyTransmissionCodeRe.size()>0">
+                <if test ="fuzzyEndSeries!=null and fuzzyEndSeries.size()>0">
                     (
-                    <foreach collection="fuzzyTransmissionCodeRe"  separator="or" item="item">
-                        `Transmission_code_re` like concat('%',#{item},'%')
+                    <foreach collection="fuzzyEndSeries"  separator="or" item="item">
+                        `End_series` like concat('%',#{item},'%')
                     </foreach>
                     ) and
                 </if>
-                <if test ="rightFuzzyTransmissionCodeRe!=null and rightFuzzyTransmissionCodeRe.size()>0">
+                <if test ="rightFuzzyEndSeries!=null and rightFuzzyEndSeries.size()>0">
                     (
-                    <foreach collection="rightFuzzyTransmissionCodeRe"  separator="or" item="item">
-                        `Transmission_code_re` like concat(#{item},'%')
+                    <foreach collection="rightFuzzyEndSeries"  separator="or" item="item">
+                        `End_series` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="transmissionTypeReList != null">
+                    `transmission_type_re` in
+                    <foreach collection="transmissionTypeReList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyTransmissionTypeRe!=null and fuzzyTransmissionTypeRe.size()>0">
+                    (
+                    <foreach collection="fuzzyTransmissionTypeRe"  separator="or" item="item">
+                        `Transmission_type_re` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyTransmissionTypeRe!=null and rightFuzzyTransmissionTypeRe.size()>0">
+                    (
+                    <foreach collection="rightFuzzyTransmissionTypeRe"  separator="or" item="item">
+                        `Transmission_type_re` like concat(#{item},'%')
                     </foreach>
                     ) and
                 </if>
@@ -3537,6 +3701,66 @@
                     </foreach>
                     ) and
                 </if>
+                <if test="claimTypeList != null">
+                    `claim_type` in
+                    <foreach collection="claimTypeList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyClaimType!=null and fuzzyClaimType.size()>0">
+                    (
+                    <foreach collection="fuzzyClaimType"  separator="or" item="item">
+                        `Claim_type` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyClaimType!=null and rightFuzzyClaimType.size()>0">
+                    (
+                    <foreach collection="rightFuzzyClaimType"  separator="or" item="item">
+                        `Claim_type` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="claimCompeteList != null">
+                    `claim_compete` in
+                    <foreach collection="claimCompeteList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyClaimCompete!=null and fuzzyClaimCompete.size()>0">
+                    (
+                    <foreach collection="fuzzyClaimCompete"  separator="or" item="item">
+                        `Claim_compete` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyClaimCompete!=null and rightFuzzyClaimCompete.size()>0">
+                    (
+                    <foreach collection="rightFuzzyClaimCompete"  separator="or" item="item">
+                        `Claim_compete` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="expressDeliveryList != null">
+                    `express_delivery` in
+                    <foreach collection="expressDeliveryList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyExpressDelivery!=null and fuzzyExpressDelivery.size()>0">
+                    (
+                    <foreach collection="fuzzyExpressDelivery"  separator="or" item="item">
+                        `Express_delivery` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyExpressDelivery!=null and rightFuzzyExpressDelivery.size()>0">
+                    (
+                    <foreach collection="rightFuzzyExpressDelivery"  separator="or" item="item">
+                        `Express_delivery` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
                 <if test="trackBeginerList != null">
                     `track_beginer` in
                     <foreach collection="trackBeginerList" close=")" open="(" separator="," item="item">
@@ -3839,8 +4063,11 @@
             <if test="engType != null and engType!=''">
                 `eng_type` = #{engType} and
             </if>
-            <if test="transmissionCodeRe != null and transmissionCodeRe!=''">
-                `transmission_code_re` = #{transmissionCodeRe} and
+            <if test="endSeries != null and endSeries!=''">
+                `end_series` = #{endSeries} and
+            </if>
+            <if test="transmissionTypeRe != null and transmissionTypeRe!=''">
+                `transmission_type_re` = #{transmissionTypeRe} and
             </if>
             <if test="tranTypeDetail != null and tranTypeDetail!=''">
                 `tran_type_detail` = #{tranTypeDetail} and
@@ -3889,6 +4116,15 @@
             </if>
             <if test="mileageDistribution != null and mileageDistribution!=''">
                 `mileage_distribution` = #{mileageDistribution} and
+            </if>
+            <if test="claimType != null and claimType!=''">
+                `claim_type` = #{claimType} and
+            </if>
+            <if test="claimCompete != null and claimCompete!=''">
+                `claim_compete` = #{claimCompete} and
+            </if>
+            <if test="expressDelivery != null and expressDelivery!=''">
+                `express_delivery` = #{expressDelivery} and
             </if>
             <if test="trackBeginer != null and trackBeginer!=''">
                 `track_beginer` = #{trackBeginer} and
@@ -4698,23 +4934,43 @@
                     </foreach>
                     ) and
                 </if>
-                    <if test="transmissionCodeReList != null">
-                        `transmission_code_re` in
-                        <foreach collection="transmissionCodeReList" close=")" open="(" separator="," item="item">
+                    <if test="endSeriesList != null">
+                        `end_series` in
+                        <foreach collection="endSeriesList" close=")" open="(" separator="," item="item">
                             #{item}
                         </foreach> and
                     </if>
-                <if test ="fuzzyTransmissionCodeRe!=null and fuzzyTransmissionCodeRe.size()>0">
+                <if test ="fuzzyEndSeries!=null and fuzzyEndSeries.size()>0">
                     (
-                    <foreach collection="fuzzyTransmissionCodeRe"  separator="or" item="item">
-                        `Transmission_code_re` like concat('%',#{item},'%')
+                    <foreach collection="fuzzyEndSeries"  separator="or" item="item">
+                        `End_series` like concat('%',#{item},'%')
                     </foreach>
                     ) and
                 </if>
-                <if test ="rightFuzzyTransmissionCodeRe!=null and rightFuzzyTransmissionCodeRe.size()>0">
+                <if test ="rightFuzzyEndSeries!=null and rightFuzzyEndSeries.size()>0">
                     (
-                    <foreach collection="rightFuzzyTransmissionCodeRe"  separator="or" item="item">
-                        `Transmission_code_re` like concat(#{item},'%')
+                    <foreach collection="rightFuzzyEndSeries"  separator="or" item="item">
+                        `End_series` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                    <if test="transmissionTypeReList != null">
+                        `transmission_type_re` in
+                        <foreach collection="transmissionTypeReList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyTransmissionTypeRe!=null and fuzzyTransmissionTypeRe.size()>0">
+                    (
+                    <foreach collection="fuzzyTransmissionTypeRe"  separator="or" item="item">
+                        `Transmission_type_re` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyTransmissionTypeRe!=null and rightFuzzyTransmissionTypeRe.size()>0">
+                    (
+                    <foreach collection="rightFuzzyTransmissionTypeRe"  separator="or" item="item">
+                        `Transmission_type_re` like concat(#{item},'%')
                     </foreach>
                     ) and
                 </if>
@@ -5030,6 +5286,66 @@
                     </foreach>
                     ) and
                 </if>
+                    <if test="claimTypeList != null">
+                        `claim_type` in
+                        <foreach collection="claimTypeList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyClaimType!=null and fuzzyClaimType.size()>0">
+                    (
+                    <foreach collection="fuzzyClaimType"  separator="or" item="item">
+                        `Claim_type` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyClaimType!=null and rightFuzzyClaimType.size()>0">
+                    (
+                    <foreach collection="rightFuzzyClaimType"  separator="or" item="item">
+                        `Claim_type` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                    <if test="claimCompeteList != null">
+                        `claim_compete` in
+                        <foreach collection="claimCompeteList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyClaimCompete!=null and fuzzyClaimCompete.size()>0">
+                    (
+                    <foreach collection="fuzzyClaimCompete"  separator="or" item="item">
+                        `Claim_compete` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyClaimCompete!=null and rightFuzzyClaimCompete.size()>0">
+                    (
+                    <foreach collection="rightFuzzyClaimCompete"  separator="or" item="item">
+                        `Claim_compete` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                    <if test="expressDeliveryList != null">
+                        `express_delivery` in
+                        <foreach collection="expressDeliveryList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyExpressDelivery!=null and fuzzyExpressDelivery.size()>0">
+                    (
+                    <foreach collection="fuzzyExpressDelivery"  separator="or" item="item">
+                        `Express_delivery` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyExpressDelivery!=null and rightFuzzyExpressDelivery.size()>0">
+                    (
+                    <foreach collection="rightFuzzyExpressDelivery"  separator="or" item="item">
+                        `Express_delivery` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
                     <if test="trackBeginerList != null">
                         `track_beginer` in
                         <foreach collection="trackBeginerList" close=")" open="(" separator="," item="item">
@@ -5244,7 +5560,8 @@
         `eng_arrange`,
         `car_model`,
         `eng_type`,
-        `transmission_code_re`,
+        `end_series`,
+        `transmission_type_re`,
         `tran_type_detail`,
         `transmission_manufacturer`,
         `receive_time`,
@@ -5261,6 +5578,9 @@
         `failure_month`,
         `transmission_short_code`,
         `mileage_distribution`,
+        `claim_type`,
+        `claim_compete`,
+        `express_delivery`,
         `track_beginer`,
         `track_begin_time`,
         `delivery_person`,
@@ -5419,8 +5739,11 @@
                     <if test="fetchFields.fetchFields.engType==true">
                         `eng_type`,
                     </if>
-                    <if test="fetchFields.fetchFields.transmissionCodeRe==true">
-                        `transmission_code_re`,
+                    <if test="fetchFields.fetchFields.endSeries==true">
+                        `end_series`,
+                    </if>
+                    <if test="fetchFields.fetchFields.transmissionTypeRe==true">
+                        `transmission_type_re`,
                     </if>
                     <if test="fetchFields.fetchFields.tranTypeDetail==true">
                         `tran_type_detail`,
@@ -5469,6 +5792,15 @@
                     </if>
                     <if test="fetchFields.fetchFields.mileageDistribution==true">
                         `mileage_distribution`,
+                    </if>
+                    <if test="fetchFields.fetchFields.claimType==true">
+                        `claim_type`,
+                    </if>
+                    <if test="fetchFields.fetchFields.claimCompete==true">
+                        `claim_compete`,
+                    </if>
+                    <if test="fetchFields.fetchFields.expressDelivery==true">
+                        `express_delivery`,
                     </if>
                     <if test="fetchFields.fetchFields.trackBeginer==true">
                         `track_beginer`,
@@ -5628,8 +5960,11 @@
                     <if test="fetchFields.excludeFields.engType==null">
                         `eng_type`,
                     </if>
-                    <if test="fetchFields.excludeFields.transmissionCodeRe==null">
-                        `transmission_code_re`,
+                    <if test="fetchFields.excludeFields.endSeries==null">
+                        `end_series`,
+                    </if>
+                    <if test="fetchFields.excludeFields.transmissionTypeRe==null">
+                        `transmission_type_re`,
                     </if>
                     <if test="fetchFields.excludeFields.tranTypeDetail==null">
                         `tran_type_detail`,
@@ -5678,6 +6013,15 @@
                     </if>
                     <if test="fetchFields.excludeFields.mileageDistribution==null">
                         `mileage_distribution`,
+                    </if>
+                    <if test="fetchFields.excludeFields.claimType==null">
+                        `claim_type`,
+                    </if>
+                    <if test="fetchFields.excludeFields.claimCompete==null">
+                        `claim_compete`,
+                    </if>
+                    <if test="fetchFields.excludeFields.expressDelivery==null">
+                        `express_delivery`,
                     </if>
                     <if test="fetchFields.excludeFields.trackBeginer==null">
                         `track_beginer`,

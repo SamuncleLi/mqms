@@ -213,16 +213,28 @@
     }
     //上传文件
     function fileUpload() {
-        $.messager.alert('系统提示',"正在上传，上传完成后会有提示，请耐心等候");
+        $.messager.alert('系统提示',"正在上传，请耐心等候");
 
         $("#fileForm").form("submit", {
             type: 'post',
             url: '/mqms/import/marketBulletinData',
             success: function (data) {
                 if (data == '文件上传成功') {
-                    $.messager.alert("系统提示",'上传文件成功');
-                    $('#upload-dlg').dialog("close", true);
-                    $("#dg2").datagrid('reload');
+                    $.messager.alert
+
+                    ({
+                        title:'系统提示',
+                        msg:'数据上传成功，窗口将于3秒后自动关闭',
+                        icon: 'info',
+//                    top:300
+                    });
+                    setTimeout(function(){
+                        $(".messager-body").window('close');
+                        $('#upload-dlg').dialog("close", true);
+                        $("#dg2").datagrid('reload');
+                    },3000);
+
+
                 } else {
                     $.messager.alert("系统提示",'上传文件失败');
                 }
@@ -287,7 +299,7 @@
 
     //导出
     function exportFile() {
-        $('#dg2').datagrid('toExcel', "品质不良数据.xls")
+        $('#dg2').datagrid('toExcel', "市场通报数据.xlsx")
     }
 
     //打开修改对话框

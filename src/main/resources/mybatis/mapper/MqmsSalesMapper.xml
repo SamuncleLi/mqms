@@ -105,6 +105,9 @@
             <if test="carType != null and carType!=''">
                 `car_type` = #{carType},
             </if>
+            <if test="engCode != null and engCode!=''">
+                `eng_code` = #{engCode},
+            </if>
             <if test="transmissionCode != null and transmissionCode!=''">
                 `transmission_code` = #{transmissionCode},
             </if>
@@ -159,8 +162,6 @@
             <if test="applyTime != null and applyTime!=''">
                 `apply_time` = #{applyTime},
             </if>
-
-
         </trim>
         WHERE
         <trim suffixOverrides="and">

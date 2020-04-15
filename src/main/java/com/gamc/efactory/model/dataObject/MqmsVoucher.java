@@ -6,11 +6,11 @@ import java.util.Map;
 import java.util.List;
 /**
 *
-*  @author lizeh
+*  @author wangjian
 */
 public class MqmsVoucher implements Serializable {
 
-    private static final long serialVersionUID = 1586492619383L;
+    private static final long serialVersionUID = 1586701524237L;
 
 
     /**
@@ -273,10 +273,16 @@ public class MqmsVoucher implements Serializable {
     private String engType;
 
     /**
+    * 发动机系列
+    * isNullAble:1
+    */
+    private String endSeries;
+
+    /**
     * 变速箱机型
     * isNullAble:1
     */
-    private String transmissionCodeRe;
+    private String transmissionTypeRe;
 
     /**
     * 变速箱机型（详细）
@@ -321,7 +327,7 @@ public class MqmsVoucher implements Serializable {
     private Integer offlineFailureTime;
 
     /**
-    * 变速箱使用至确认经过月
+    * 变速箱生产至确认经过月
     * isNullAble:1
     */
     private String transmissionComfirmTime;
@@ -373,6 +379,24 @@ public class MqmsVoucher implements Serializable {
     * isNullAble:1
     */
     private String mileageDistribution;
+
+    /**
+    * 索赔类型
+    * isNullAble:1
+    */
+    private String claimType;
+
+    /**
+    * 是否完成索赔
+    * isNullAble:1
+    */
+    private String claimCompete;
+
+    /**
+    * 是否快递
+    * isNullAble:1
+    */
+    private String expressDelivery;
 
     /**
     * 开启不良追踪者
@@ -601,9 +625,13 @@ public class MqmsVoucher implements Serializable {
 
     public String getEngType(){return this.engType;}
 
-    public void setTransmissionCodeRe(String transmissionCodeRe){this.transmissionCodeRe = transmissionCodeRe;}
+    public void setEndSeries(String endSeries){this.endSeries = endSeries;}
 
-    public String getTransmissionCodeRe(){return this.transmissionCodeRe;}
+    public String getEndSeries(){return this.endSeries;}
+
+    public void setTransmissionTypeRe(String transmissionTypeRe){this.transmissionTypeRe = transmissionTypeRe;}
+
+    public String getTransmissionTypeRe(){return this.transmissionTypeRe;}
 
     public void setTranTypeDetail(String tranTypeDetail){this.tranTypeDetail = tranTypeDetail;}
 
@@ -668,6 +696,18 @@ public class MqmsVoucher implements Serializable {
     public void setMileageDistribution(String mileageDistribution){this.mileageDistribution = mileageDistribution;}
 
     public String getMileageDistribution(){return this.mileageDistribution;}
+
+    public void setClaimType(String claimType){this.claimType = claimType;}
+
+    public String getClaimType(){return this.claimType;}
+
+    public void setClaimCompete(String claimCompete){this.claimCompete = claimCompete;}
+
+    public String getClaimCompete(){return this.claimCompete;}
+
+    public void setExpressDelivery(String expressDelivery){this.expressDelivery = expressDelivery;}
+
+    public String getExpressDelivery(){return this.expressDelivery;}
 
     public void setTrackBeginer(String trackBeginer){this.trackBeginer = trackBeginer;}
 
@@ -750,7 +790,8 @@ public class MqmsVoucher implements Serializable {
                 "engArrange='" + engArrange + '\'' +
                 "carModel='" + carModel + '\'' +
                 "engType='" + engType + '\'' +
-                "transmissionCodeRe='" + transmissionCodeRe + '\'' +
+                "endSeries='" + endSeries + '\'' +
+                "transmissionTypeRe='" + transmissionTypeRe + '\'' +
                 "tranTypeDetail='" + tranTypeDetail + '\'' +
                 "transmissionManufacturer='" + transmissionManufacturer + '\'' +
                 "receiveTime='" + receiveTime + '\'' +
@@ -767,6 +808,9 @@ public class MqmsVoucher implements Serializable {
                 "failureMonth='" + failureMonth + '\'' +
                 "transmissionShortCode='" + transmissionShortCode + '\'' +
                 "mileageDistribution='" + mileageDistribution + '\'' +
+                "claimType='" + claimType + '\'' +
+                "claimCompete='" + claimCompete + '\'' +
+                "expressDelivery='" + expressDelivery + '\'' +
                 "trackBeginer='" + trackBeginer + '\'' +
                 "trackBeginTime='" + trackBeginTime + '\'' +
                 "deliveryPerson='" + deliveryPerson + '\'' +
@@ -1340,18 +1384,30 @@ public class MqmsVoucher implements Serializable {
         private List<String> rightFuzzyEngType;
 
         public List<String> getRightFuzzyEngType(){return this.rightFuzzyEngType;}
-        private List<String> transmissionCodeReList;
+        private List<String> endSeriesList;
 
-        public List<String> getTransmissionCodeReList(){return this.transmissionCodeReList;}
+        public List<String> getEndSeriesList(){return this.endSeriesList;}
 
 
-        private List<String> fuzzyTransmissionCodeRe;
+        private List<String> fuzzyEndSeries;
 
-        public List<String> getFuzzyTransmissionCodeRe(){return this.fuzzyTransmissionCodeRe;}
+        public List<String> getFuzzyEndSeries(){return this.fuzzyEndSeries;}
 
-        private List<String> rightFuzzyTransmissionCodeRe;
+        private List<String> rightFuzzyEndSeries;
 
-        public List<String> getRightFuzzyTransmissionCodeRe(){return this.rightFuzzyTransmissionCodeRe;}
+        public List<String> getRightFuzzyEndSeries(){return this.rightFuzzyEndSeries;}
+        private List<String> transmissionTypeReList;
+
+        public List<String> getTransmissionTypeReList(){return this.transmissionTypeReList;}
+
+
+        private List<String> fuzzyTransmissionTypeRe;
+
+        public List<String> getFuzzyTransmissionTypeRe(){return this.fuzzyTransmissionTypeRe;}
+
+        private List<String> rightFuzzyTransmissionTypeRe;
+
+        public List<String> getRightFuzzyTransmissionTypeRe(){return this.rightFuzzyTransmissionTypeRe;}
         private List<String> tranTypeDetailList;
 
         public List<String> getTranTypeDetailList(){return this.tranTypeDetailList;}
@@ -1544,6 +1600,42 @@ public class MqmsVoucher implements Serializable {
         private List<String> rightFuzzyMileageDistribution;
 
         public List<String> getRightFuzzyMileageDistribution(){return this.rightFuzzyMileageDistribution;}
+        private List<String> claimTypeList;
+
+        public List<String> getClaimTypeList(){return this.claimTypeList;}
+
+
+        private List<String> fuzzyClaimType;
+
+        public List<String> getFuzzyClaimType(){return this.fuzzyClaimType;}
+
+        private List<String> rightFuzzyClaimType;
+
+        public List<String> getRightFuzzyClaimType(){return this.rightFuzzyClaimType;}
+        private List<String> claimCompeteList;
+
+        public List<String> getClaimCompeteList(){return this.claimCompeteList;}
+
+
+        private List<String> fuzzyClaimCompete;
+
+        public List<String> getFuzzyClaimCompete(){return this.fuzzyClaimCompete;}
+
+        private List<String> rightFuzzyClaimCompete;
+
+        public List<String> getRightFuzzyClaimCompete(){return this.rightFuzzyClaimCompete;}
+        private List<String> expressDeliveryList;
+
+        public List<String> getExpressDeliveryList(){return this.expressDeliveryList;}
+
+
+        private List<String> fuzzyExpressDelivery;
+
+        public List<String> getFuzzyExpressDelivery(){return this.fuzzyExpressDelivery;}
+
+        private List<String> rightFuzzyExpressDelivery;
+
+        public List<String> getRightFuzzyExpressDelivery(){return this.rightFuzzyExpressDelivery;}
         private List<String> trackBeginerList;
 
         public List<String> getTrackBeginerList(){return this.trackBeginerList;}
@@ -3551,48 +3643,93 @@ public class MqmsVoucher implements Serializable {
             return this;
         }
 
-        public QueryBuilder fuzzyTransmissionCodeRe (List<String> fuzzyTransmissionCodeRe){
-            this.fuzzyTransmissionCodeRe = fuzzyTransmissionCodeRe;
+        public QueryBuilder fuzzyEndSeries (List<String> fuzzyEndSeries){
+            this.fuzzyEndSeries = fuzzyEndSeries;
             return this;
         }
 
-        public QueryBuilder fuzzyTransmissionCodeRe (String ... fuzzyTransmissionCodeRe){
-            this.fuzzyTransmissionCodeRe = solveNullList(fuzzyTransmissionCodeRe);
+        public QueryBuilder fuzzyEndSeries (String ... fuzzyEndSeries){
+            this.fuzzyEndSeries = solveNullList(fuzzyEndSeries);
             return this;
         }
 
-        public QueryBuilder rightFuzzyTransmissionCodeRe (List<String> rightFuzzyTransmissionCodeRe){
-            this.rightFuzzyTransmissionCodeRe = rightFuzzyTransmissionCodeRe;
+        public QueryBuilder rightFuzzyEndSeries (List<String> rightFuzzyEndSeries){
+            this.rightFuzzyEndSeries = rightFuzzyEndSeries;
             return this;
         }
 
-        public QueryBuilder rightFuzzyTransmissionCodeRe (String ... rightFuzzyTransmissionCodeRe){
-            this.rightFuzzyTransmissionCodeRe = solveNullList(rightFuzzyTransmissionCodeRe);
+        public QueryBuilder rightFuzzyEndSeries (String ... rightFuzzyEndSeries){
+            this.rightFuzzyEndSeries = solveNullList(rightFuzzyEndSeries);
             return this;
         }
 
-        public QueryBuilder transmissionCodeRe(String transmissionCodeRe){
-            setTransmissionCodeRe(transmissionCodeRe);
+        public QueryBuilder endSeries(String endSeries){
+            setEndSeries(endSeries);
             return this;
         }
 
-        public QueryBuilder transmissionCodeReList(String ... transmissionCodeRe){
-            this.transmissionCodeReList = solveNullList(transmissionCodeRe);
+        public QueryBuilder endSeriesList(String ... endSeries){
+            this.endSeriesList = solveNullList(endSeries);
             return this;
         }
 
-        public QueryBuilder transmissionCodeReList(List<String> transmissionCodeRe){
-            this.transmissionCodeReList = transmissionCodeRe;
+        public QueryBuilder endSeriesList(List<String> endSeries){
+            this.endSeriesList = endSeries;
             return this;
         }
 
-        public QueryBuilder fetchTransmissionCodeRe(){
-            setFetchFields("fetchFields","transmissionCodeRe");
+        public QueryBuilder fetchEndSeries(){
+            setFetchFields("fetchFields","endSeries");
             return this;
         }
 
-        public QueryBuilder excludeTransmissionCodeRe(){
-            setFetchFields("excludeFields","transmissionCodeRe");
+        public QueryBuilder excludeEndSeries(){
+            setFetchFields("excludeFields","endSeries");
+            return this;
+        }
+
+        public QueryBuilder fuzzyTransmissionTypeRe (List<String> fuzzyTransmissionTypeRe){
+            this.fuzzyTransmissionTypeRe = fuzzyTransmissionTypeRe;
+            return this;
+        }
+
+        public QueryBuilder fuzzyTransmissionTypeRe (String ... fuzzyTransmissionTypeRe){
+            this.fuzzyTransmissionTypeRe = solveNullList(fuzzyTransmissionTypeRe);
+            return this;
+        }
+
+        public QueryBuilder rightFuzzyTransmissionTypeRe (List<String> rightFuzzyTransmissionTypeRe){
+            this.rightFuzzyTransmissionTypeRe = rightFuzzyTransmissionTypeRe;
+            return this;
+        }
+
+        public QueryBuilder rightFuzzyTransmissionTypeRe (String ... rightFuzzyTransmissionTypeRe){
+            this.rightFuzzyTransmissionTypeRe = solveNullList(rightFuzzyTransmissionTypeRe);
+            return this;
+        }
+
+        public QueryBuilder transmissionTypeRe(String transmissionTypeRe){
+            setTransmissionTypeRe(transmissionTypeRe);
+            return this;
+        }
+
+        public QueryBuilder transmissionTypeReList(String ... transmissionTypeRe){
+            this.transmissionTypeReList = solveNullList(transmissionTypeRe);
+            return this;
+        }
+
+        public QueryBuilder transmissionTypeReList(List<String> transmissionTypeRe){
+            this.transmissionTypeReList = transmissionTypeRe;
+            return this;
+        }
+
+        public QueryBuilder fetchTransmissionTypeRe(){
+            setFetchFields("fetchFields","transmissionTypeRe");
+            return this;
+        }
+
+        public QueryBuilder excludeTransmissionTypeRe(){
+            setFetchFields("excludeFields","transmissionTypeRe");
             return this;
         }
 
@@ -4309,6 +4446,141 @@ public class MqmsVoucher implements Serializable {
 
         public QueryBuilder excludeMileageDistribution(){
             setFetchFields("excludeFields","mileageDistribution");
+            return this;
+        }
+
+        public QueryBuilder fuzzyClaimType (List<String> fuzzyClaimType){
+            this.fuzzyClaimType = fuzzyClaimType;
+            return this;
+        }
+
+        public QueryBuilder fuzzyClaimType (String ... fuzzyClaimType){
+            this.fuzzyClaimType = solveNullList(fuzzyClaimType);
+            return this;
+        }
+
+        public QueryBuilder rightFuzzyClaimType (List<String> rightFuzzyClaimType){
+            this.rightFuzzyClaimType = rightFuzzyClaimType;
+            return this;
+        }
+
+        public QueryBuilder rightFuzzyClaimType (String ... rightFuzzyClaimType){
+            this.rightFuzzyClaimType = solveNullList(rightFuzzyClaimType);
+            return this;
+        }
+
+        public QueryBuilder claimType(String claimType){
+            setClaimType(claimType);
+            return this;
+        }
+
+        public QueryBuilder claimTypeList(String ... claimType){
+            this.claimTypeList = solveNullList(claimType);
+            return this;
+        }
+
+        public QueryBuilder claimTypeList(List<String> claimType){
+            this.claimTypeList = claimType;
+            return this;
+        }
+
+        public QueryBuilder fetchClaimType(){
+            setFetchFields("fetchFields","claimType");
+            return this;
+        }
+
+        public QueryBuilder excludeClaimType(){
+            setFetchFields("excludeFields","claimType");
+            return this;
+        }
+
+        public QueryBuilder fuzzyClaimCompete (List<String> fuzzyClaimCompete){
+            this.fuzzyClaimCompete = fuzzyClaimCompete;
+            return this;
+        }
+
+        public QueryBuilder fuzzyClaimCompete (String ... fuzzyClaimCompete){
+            this.fuzzyClaimCompete = solveNullList(fuzzyClaimCompete);
+            return this;
+        }
+
+        public QueryBuilder rightFuzzyClaimCompete (List<String> rightFuzzyClaimCompete){
+            this.rightFuzzyClaimCompete = rightFuzzyClaimCompete;
+            return this;
+        }
+
+        public QueryBuilder rightFuzzyClaimCompete (String ... rightFuzzyClaimCompete){
+            this.rightFuzzyClaimCompete = solveNullList(rightFuzzyClaimCompete);
+            return this;
+        }
+
+        public QueryBuilder claimCompete(String claimCompete){
+            setClaimCompete(claimCompete);
+            return this;
+        }
+
+        public QueryBuilder claimCompeteList(String ... claimCompete){
+            this.claimCompeteList = solveNullList(claimCompete);
+            return this;
+        }
+
+        public QueryBuilder claimCompeteList(List<String> claimCompete){
+            this.claimCompeteList = claimCompete;
+            return this;
+        }
+
+        public QueryBuilder fetchClaimCompete(){
+            setFetchFields("fetchFields","claimCompete");
+            return this;
+        }
+
+        public QueryBuilder excludeClaimCompete(){
+            setFetchFields("excludeFields","claimCompete");
+            return this;
+        }
+
+        public QueryBuilder fuzzyExpressDelivery (List<String> fuzzyExpressDelivery){
+            this.fuzzyExpressDelivery = fuzzyExpressDelivery;
+            return this;
+        }
+
+        public QueryBuilder fuzzyExpressDelivery (String ... fuzzyExpressDelivery){
+            this.fuzzyExpressDelivery = solveNullList(fuzzyExpressDelivery);
+            return this;
+        }
+
+        public QueryBuilder rightFuzzyExpressDelivery (List<String> rightFuzzyExpressDelivery){
+            this.rightFuzzyExpressDelivery = rightFuzzyExpressDelivery;
+            return this;
+        }
+
+        public QueryBuilder rightFuzzyExpressDelivery (String ... rightFuzzyExpressDelivery){
+            this.rightFuzzyExpressDelivery = solveNullList(rightFuzzyExpressDelivery);
+            return this;
+        }
+
+        public QueryBuilder expressDelivery(String expressDelivery){
+            setExpressDelivery(expressDelivery);
+            return this;
+        }
+
+        public QueryBuilder expressDeliveryList(String ... expressDelivery){
+            this.expressDeliveryList = solveNullList(expressDelivery);
+            return this;
+        }
+
+        public QueryBuilder expressDeliveryList(List<String> expressDelivery){
+            this.expressDeliveryList = expressDelivery;
+            return this;
+        }
+
+        public QueryBuilder fetchExpressDelivery(){
+            setFetchFields("fetchFields","expressDelivery");
+            return this;
+        }
+
+        public QueryBuilder excludeExpressDelivery(){
+            setFetchFields("excludeFields","expressDelivery");
             return this;
         }
 
@@ -5267,18 +5539,30 @@ public class MqmsVoucher implements Serializable {
         private List<String> rightFuzzyEngType;
 
         public List<String> getRightFuzzyEngType(){return this.rightFuzzyEngType;}
-        private List<String> transmissionCodeReList;
+        private List<String> endSeriesList;
 
-        public List<String> getTransmissionCodeReList(){return this.transmissionCodeReList;}
+        public List<String> getEndSeriesList(){return this.endSeriesList;}
 
 
-        private List<String> fuzzyTransmissionCodeRe;
+        private List<String> fuzzyEndSeries;
 
-        public List<String> getFuzzyTransmissionCodeRe(){return this.fuzzyTransmissionCodeRe;}
+        public List<String> getFuzzyEndSeries(){return this.fuzzyEndSeries;}
 
-        private List<String> rightFuzzyTransmissionCodeRe;
+        private List<String> rightFuzzyEndSeries;
 
-        public List<String> getRightFuzzyTransmissionCodeRe(){return this.rightFuzzyTransmissionCodeRe;}
+        public List<String> getRightFuzzyEndSeries(){return this.rightFuzzyEndSeries;}
+        private List<String> transmissionTypeReList;
+
+        public List<String> getTransmissionTypeReList(){return this.transmissionTypeReList;}
+
+
+        private List<String> fuzzyTransmissionTypeRe;
+
+        public List<String> getFuzzyTransmissionTypeRe(){return this.fuzzyTransmissionTypeRe;}
+
+        private List<String> rightFuzzyTransmissionTypeRe;
+
+        public List<String> getRightFuzzyTransmissionTypeRe(){return this.rightFuzzyTransmissionTypeRe;}
         private List<String> tranTypeDetailList;
 
         public List<String> getTranTypeDetailList(){return this.tranTypeDetailList;}
@@ -5471,6 +5755,42 @@ public class MqmsVoucher implements Serializable {
         private List<String> rightFuzzyMileageDistribution;
 
         public List<String> getRightFuzzyMileageDistribution(){return this.rightFuzzyMileageDistribution;}
+        private List<String> claimTypeList;
+
+        public List<String> getClaimTypeList(){return this.claimTypeList;}
+
+
+        private List<String> fuzzyClaimType;
+
+        public List<String> getFuzzyClaimType(){return this.fuzzyClaimType;}
+
+        private List<String> rightFuzzyClaimType;
+
+        public List<String> getRightFuzzyClaimType(){return this.rightFuzzyClaimType;}
+        private List<String> claimCompeteList;
+
+        public List<String> getClaimCompeteList(){return this.claimCompeteList;}
+
+
+        private List<String> fuzzyClaimCompete;
+
+        public List<String> getFuzzyClaimCompete(){return this.fuzzyClaimCompete;}
+
+        private List<String> rightFuzzyClaimCompete;
+
+        public List<String> getRightFuzzyClaimCompete(){return this.rightFuzzyClaimCompete;}
+        private List<String> expressDeliveryList;
+
+        public List<String> getExpressDeliveryList(){return this.expressDeliveryList;}
+
+
+        private List<String> fuzzyExpressDelivery;
+
+        public List<String> getFuzzyExpressDelivery(){return this.fuzzyExpressDelivery;}
+
+        private List<String> rightFuzzyExpressDelivery;
+
+        public List<String> getRightFuzzyExpressDelivery(){return this.rightFuzzyExpressDelivery;}
         private List<String> trackBeginerList;
 
         public List<String> getTrackBeginerList(){return this.trackBeginerList;}
@@ -6830,33 +7150,63 @@ public class MqmsVoucher implements Serializable {
             return this;
         }
 
-        public ConditionBuilder fuzzyTransmissionCodeRe (List<String> fuzzyTransmissionCodeRe){
-            this.fuzzyTransmissionCodeRe = fuzzyTransmissionCodeRe;
+        public ConditionBuilder fuzzyEndSeries (List<String> fuzzyEndSeries){
+            this.fuzzyEndSeries = fuzzyEndSeries;
             return this;
         }
 
-        public ConditionBuilder fuzzyTransmissionCodeRe (String ... fuzzyTransmissionCodeRe){
-            this.fuzzyTransmissionCodeRe = solveNullList(fuzzyTransmissionCodeRe);
+        public ConditionBuilder fuzzyEndSeries (String ... fuzzyEndSeries){
+            this.fuzzyEndSeries = solveNullList(fuzzyEndSeries);
             return this;
         }
 
-        public ConditionBuilder rightFuzzyTransmissionCodeRe (List<String> rightFuzzyTransmissionCodeRe){
-            this.rightFuzzyTransmissionCodeRe = rightFuzzyTransmissionCodeRe;
+        public ConditionBuilder rightFuzzyEndSeries (List<String> rightFuzzyEndSeries){
+            this.rightFuzzyEndSeries = rightFuzzyEndSeries;
             return this;
         }
 
-        public ConditionBuilder rightFuzzyTransmissionCodeRe (String ... rightFuzzyTransmissionCodeRe){
-            this.rightFuzzyTransmissionCodeRe = solveNullList(rightFuzzyTransmissionCodeRe);
+        public ConditionBuilder rightFuzzyEndSeries (String ... rightFuzzyEndSeries){
+            this.rightFuzzyEndSeries = solveNullList(rightFuzzyEndSeries);
             return this;
         }
 
-        public ConditionBuilder transmissionCodeReList(String ... transmissionCodeRe){
-            this.transmissionCodeReList = solveNullList(transmissionCodeRe);
+        public ConditionBuilder endSeriesList(String ... endSeries){
+            this.endSeriesList = solveNullList(endSeries);
             return this;
         }
 
-        public ConditionBuilder transmissionCodeReList(List<String> transmissionCodeRe){
-            this.transmissionCodeReList = transmissionCodeRe;
+        public ConditionBuilder endSeriesList(List<String> endSeries){
+            this.endSeriesList = endSeries;
+            return this;
+        }
+
+        public ConditionBuilder fuzzyTransmissionTypeRe (List<String> fuzzyTransmissionTypeRe){
+            this.fuzzyTransmissionTypeRe = fuzzyTransmissionTypeRe;
+            return this;
+        }
+
+        public ConditionBuilder fuzzyTransmissionTypeRe (String ... fuzzyTransmissionTypeRe){
+            this.fuzzyTransmissionTypeRe = solveNullList(fuzzyTransmissionTypeRe);
+            return this;
+        }
+
+        public ConditionBuilder rightFuzzyTransmissionTypeRe (List<String> rightFuzzyTransmissionTypeRe){
+            this.rightFuzzyTransmissionTypeRe = rightFuzzyTransmissionTypeRe;
+            return this;
+        }
+
+        public ConditionBuilder rightFuzzyTransmissionTypeRe (String ... rightFuzzyTransmissionTypeRe){
+            this.rightFuzzyTransmissionTypeRe = solveNullList(rightFuzzyTransmissionTypeRe);
+            return this;
+        }
+
+        public ConditionBuilder transmissionTypeReList(String ... transmissionTypeRe){
+            this.transmissionTypeReList = solveNullList(transmissionTypeRe);
+            return this;
+        }
+
+        public ConditionBuilder transmissionTypeReList(List<String> transmissionTypeRe){
+            this.transmissionTypeReList = transmissionTypeRe;
             return this;
         }
 
@@ -7336,6 +7686,96 @@ public class MqmsVoucher implements Serializable {
             return this;
         }
 
+        public ConditionBuilder fuzzyClaimType (List<String> fuzzyClaimType){
+            this.fuzzyClaimType = fuzzyClaimType;
+            return this;
+        }
+
+        public ConditionBuilder fuzzyClaimType (String ... fuzzyClaimType){
+            this.fuzzyClaimType = solveNullList(fuzzyClaimType);
+            return this;
+        }
+
+        public ConditionBuilder rightFuzzyClaimType (List<String> rightFuzzyClaimType){
+            this.rightFuzzyClaimType = rightFuzzyClaimType;
+            return this;
+        }
+
+        public ConditionBuilder rightFuzzyClaimType (String ... rightFuzzyClaimType){
+            this.rightFuzzyClaimType = solveNullList(rightFuzzyClaimType);
+            return this;
+        }
+
+        public ConditionBuilder claimTypeList(String ... claimType){
+            this.claimTypeList = solveNullList(claimType);
+            return this;
+        }
+
+        public ConditionBuilder claimTypeList(List<String> claimType){
+            this.claimTypeList = claimType;
+            return this;
+        }
+
+        public ConditionBuilder fuzzyClaimCompete (List<String> fuzzyClaimCompete){
+            this.fuzzyClaimCompete = fuzzyClaimCompete;
+            return this;
+        }
+
+        public ConditionBuilder fuzzyClaimCompete (String ... fuzzyClaimCompete){
+            this.fuzzyClaimCompete = solveNullList(fuzzyClaimCompete);
+            return this;
+        }
+
+        public ConditionBuilder rightFuzzyClaimCompete (List<String> rightFuzzyClaimCompete){
+            this.rightFuzzyClaimCompete = rightFuzzyClaimCompete;
+            return this;
+        }
+
+        public ConditionBuilder rightFuzzyClaimCompete (String ... rightFuzzyClaimCompete){
+            this.rightFuzzyClaimCompete = solveNullList(rightFuzzyClaimCompete);
+            return this;
+        }
+
+        public ConditionBuilder claimCompeteList(String ... claimCompete){
+            this.claimCompeteList = solveNullList(claimCompete);
+            return this;
+        }
+
+        public ConditionBuilder claimCompeteList(List<String> claimCompete){
+            this.claimCompeteList = claimCompete;
+            return this;
+        }
+
+        public ConditionBuilder fuzzyExpressDelivery (List<String> fuzzyExpressDelivery){
+            this.fuzzyExpressDelivery = fuzzyExpressDelivery;
+            return this;
+        }
+
+        public ConditionBuilder fuzzyExpressDelivery (String ... fuzzyExpressDelivery){
+            this.fuzzyExpressDelivery = solveNullList(fuzzyExpressDelivery);
+            return this;
+        }
+
+        public ConditionBuilder rightFuzzyExpressDelivery (List<String> rightFuzzyExpressDelivery){
+            this.rightFuzzyExpressDelivery = rightFuzzyExpressDelivery;
+            return this;
+        }
+
+        public ConditionBuilder rightFuzzyExpressDelivery (String ... rightFuzzyExpressDelivery){
+            this.rightFuzzyExpressDelivery = solveNullList(rightFuzzyExpressDelivery);
+            return this;
+        }
+
+        public ConditionBuilder expressDeliveryList(String ... expressDelivery){
+            this.expressDeliveryList = solveNullList(expressDelivery);
+            return this;
+        }
+
+        public ConditionBuilder expressDeliveryList(List<String> expressDelivery){
+            this.expressDeliveryList = expressDelivery;
+            return this;
+        }
+
         public ConditionBuilder fuzzyTrackBeginer (List<String> fuzzyTrackBeginer){
             this.fuzzyTrackBeginer = fuzzyTrackBeginer;
             return this;
@@ -7794,8 +8234,12 @@ public class MqmsVoucher implements Serializable {
             this.obj.setEngType(engType);
             return this;
         }
-        public Builder transmissionCodeRe(String transmissionCodeRe){
-            this.obj.setTransmissionCodeRe(transmissionCodeRe);
+        public Builder endSeries(String endSeries){
+            this.obj.setEndSeries(endSeries);
+            return this;
+        }
+        public Builder transmissionTypeRe(String transmissionTypeRe){
+            this.obj.setTransmissionTypeRe(transmissionTypeRe);
             return this;
         }
         public Builder tranTypeDetail(String tranTypeDetail){
@@ -7860,6 +8304,18 @@ public class MqmsVoucher implements Serializable {
         }
         public Builder mileageDistribution(String mileageDistribution){
             this.obj.setMileageDistribution(mileageDistribution);
+            return this;
+        }
+        public Builder claimType(String claimType){
+            this.obj.setClaimType(claimType);
+            return this;
+        }
+        public Builder claimCompete(String claimCompete){
+            this.obj.setClaimCompete(claimCompete);
+            return this;
+        }
+        public Builder expressDelivery(String expressDelivery){
+            this.obj.setExpressDelivery(expressDelivery);
             return this;
         }
         public Builder trackBeginer(String trackBeginer){

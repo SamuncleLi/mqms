@@ -101,11 +101,12 @@
         SELECT count(*) FROM `mqms_voucher`
         WHERE
         eng_type = #{eng_type} and `sales_date` &gt;= #{begin} and `sales_date` &lt;= #{end}
-    </select>    <select id="salesTransFailureTimeBetween" resultType="java.lang.Integer">
+    </select>
+    <select id="salesTransFailureTimeBetween" resultType="java.lang.Integer">
     SELECT count(*) FROM `mqms_voucher`
     WHERE
     `tran_type_detail` = #{tranTypeDetail} and `sales_date` &gt;= #{begin} and `sales_date` &lt;= #{end}
-</select>
+    </select>
 
     <update id="updateMqmsVoucherByVoucherCode">
         UPDATE `mqms_voucher`
@@ -237,6 +238,9 @@
             <if test="engType != null and engType!=''">
                 `eng_type` = #{engType},
             </if>
+            <if test="endSeries != null and endSeries!=''">
+                `end_series` = #{endSeries},
+            </if>
             <if test="transmissionTypeRe != null and transmissionTypeRe!=''">
                 `transmission_type_re` = #{transmissionTypeRe},
             </if>
@@ -287,6 +291,15 @@
             </if>
             <if test="mileageDistribution != null and mileageDistribution!=''">
                 `mileage_distribution` = #{mileageDistribution},
+            </if>
+            <if test="claimType != null and claimType!=''">
+                `claim_type` = #{claimType},
+            </if>
+            <if test="claimCompete != null and claimCompete!=''">
+                `claim_compete` = #{claimCompete},
+            </if>
+            <if test="expressDelivery != null and expressDelivery!=''">
+                `express_delivery` = #{expressDelivery},
             </if>
             <if test="trackBeginer != null and trackBeginer!=''">
                 `track_beginer` = #{trackBeginer},

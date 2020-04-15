@@ -160,19 +160,21 @@
             url: '/mqms/import/salesData',
             success: function (data) {
                 if (data == '文件上传成功') {
-                    $.messager.alert("系统提示",'上传文件成功');
-                    $('#upload-dlg').dialog("close",true);
-                    $("#dg2").datagrid('reload');
+//                    $.messager.alert("系统提示",'上传文件成功');
+                    var time = 3;
                     $.messager.alert
 
                     ({
                         title:'系统提示',
-                        msg:'数据上传成功，窗口将于3秒后自动关闭',
+                        msg:'数据上传成功，窗口将于'+time+'秒后自动关闭',
                         icon: 'info',
 //                    top:300
                     });
+                    time--;
                     setTimeout(function(){
                         $(".messager-body").window('close');
+                        $('#upload-dlg').dialog("close",true);
+                        $("#dg2").datagrid('reload');
                     },3000);
 
                 } else {
