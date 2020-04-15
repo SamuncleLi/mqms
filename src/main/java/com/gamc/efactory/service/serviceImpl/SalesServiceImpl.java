@@ -237,54 +237,44 @@ public class SalesServiceImpl implements SalesService {
                     //机型
                     String vinShortCode = vinCode.substring(0, 5);
                     MqmsVinDecode mqmsVinDecode = mqmsVinDecodeMapper.vinDecode(vinShortCode);
-                    if (mqmsVinDecode.getVinCarType()!=null){
-                        mqmsSalesRecord.setCarType(mqmsVinDecode.getVinCarType());
-                    }
-                    else
-                    {
-                        mqmsSalesRecord.setCarType("");
-                    }
-                    if(mqmsVinDecode.getVinEngType()!=null) {
-                        mqmsSalesRecord.setEngType(mqmsVinDecode.getVinEngType());
-                    }
-                    else
-                    {
-                        mqmsSalesRecord.setEngType("");
-                    }
-                    //系列
-                    if(mqmsVinDecode.getVinSeries()!=null) {
-                        mqmsSalesRecord.setEngSeries(mqmsVinDecode.getVinSeries());
-                    }
-                    else
-                    {
-                        mqmsSalesRecord.setEngSeries("");
-                    }
-                    //发动机型短码
-                    if(mqmsVinDecode.getVinEngShortCode()!=null) {
-                        mqmsSalesRecord.setEngShortCode(mqmsVinDecode.getVinEngShortCode());
-                    }
-                    else
-                    {
-                        mqmsSalesRecord.setEngShortCode("");
-                    }
-                    //车型简码
-                    mqmsSalesRecord.setCarShortCode(vinShortCode.substring(3, 5));
-                    //车型
-                    if (mqmsVinDecode.getVinCarType()!=null) {
-                        mqmsSalesRecord.setCarModel(mqmsVinDecode.getVinCarType());
-                    }
-                    else{
-                        mqmsSalesRecord.setCarModel("");
-                    }
-                    //内部车型号
-                    if (mqmsVinDecode.getVinCarType()!=null)
-                    {
-                        mqmsSalesRecord.setCarModelCode(mqmsVinDecode.getVinCarType());
-                    }
-                    else
-                    {
+                    if (mqmsVinDecode!=null) {
+                        if (mqmsVinDecode.getVinCarType() != null) {
+                            mqmsSalesRecord.setCarType(mqmsVinDecode.getVinCarType());
+                        } else {
+                            mqmsSalesRecord.setCarType("");
+                        }
+                        if (mqmsVinDecode.getVinEngType() != null) {
+                            mqmsSalesRecord.setEngType(mqmsVinDecode.getVinEngType());
+                        } else {
+                            mqmsSalesRecord.setEngType("");
+                        }
+                        //系列
+                        if (mqmsVinDecode.getVinSeries() != null) {
+                            mqmsSalesRecord.setEngSeries(mqmsVinDecode.getVinSeries());
+                        } else {
+                            mqmsSalesRecord.setEngSeries("");
+                        }
+                        //发动机型短码
+                        if (mqmsVinDecode.getVinEngShortCode() != null) {
+                            mqmsSalesRecord.setEngShortCode(mqmsVinDecode.getVinEngShortCode());
+                        } else {
+                            mqmsSalesRecord.setEngShortCode("");
+                        }
+                        //车型简码
+                        mqmsSalesRecord.setCarShortCode(vinShortCode.substring(3, 5));
+                        //车型
+                        if (mqmsVinDecode.getVinCarType() != null) {
+                            mqmsSalesRecord.setCarModel(mqmsVinDecode.getVinCarType());
+                        } else {
+                            mqmsSalesRecord.setCarModel("");
+                        }
+                        //内部车型号
+                        if (mqmsVinDecode.getVinCarType() != null) {
+                            mqmsSalesRecord.setCarModelCode(mqmsVinDecode.getVinCarType());
+                        } else {
 
-                        mqmsSalesRecord.setCarModelCode("");
+                            mqmsSalesRecord.setCarModelCode("");
+                        }
                     }
                     int cnt = mqmsSalesMapper.selectVinCodeCount(vinCode);
                     if (cnt == 0) {

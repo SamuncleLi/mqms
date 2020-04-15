@@ -18,4 +18,8 @@ public interface MqmsSalesMapper extends MqmsSalesBaseMapper{
     MqmsSales selectByVinCode(@Param("vin_code") String vinCode);
     int selectVinCodeCount(@Param("vin_code") String vinCode);
     int updateByVinCode(MqmsSales object);
+    int selectCountBySalesArea(@Param("salesArea") String salesArea);
+    int querryFailureMonthCount(@Param("beginDate") String beginDate,@Param("endDate") String endDate);
+
+
 }

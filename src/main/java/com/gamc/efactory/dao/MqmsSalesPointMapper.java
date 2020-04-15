@@ -20,4 +20,7 @@ public interface MqmsSalesPointMapper extends MqmsSalesPointBaseMapper{
             @Param("salesPointName") String salesPointName,
             @Param("salesPointArea") String salesPointArea,
             @Param("salesPointCode") String salesPointCode);
+    String[] searchDifferentSalesPointArea();
+    String[] selectSalesNameInfor(@Param("salesPointArea") String salesPointArea);
+    String   selectSalesArea(@Param("salesPointName") String salesPointName);
 }

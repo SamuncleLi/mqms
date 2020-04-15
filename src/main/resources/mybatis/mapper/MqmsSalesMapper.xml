@@ -65,6 +65,14 @@
         SELECT COUNT(*) FROM `mqms_sales`
         WHERE  `vin_code` = #{vin_code}
     </select>
+    <select id="selectCountBySalesArea"  resultType="java.lang.Integer" >
+        SELECT COUNT(*) FROM `mqms_sales`
+        WHERE  `sales_area` = #{salesArea}
+    </select>
+    <select id="querryFailureMonthCount" resultType="java.lang.Integer">
+        SELECT count(*) FROM `mqms_sales`
+        WHERE  `produce_date` &gt;= #{beginDate} AND `produce_date` &lt;= #{endDate}
+    </select>
     <update id="updateByVinCode">
         UPDATE `mqms_sales`
         SET

@@ -141,9 +141,22 @@
     })
 
     function analysis() {
+        $.messager.alert('系统提示',"数据正在查询中，请稍后");
         $.ajax({
             url:'/mqms/charts/eng/tranPie?engType=' + $('#engType').combobox('getValue'),
             success:function (result) {
+                $.messager.alert
+
+                ({
+                    title:'系统提示',
+                    msg:'数据查询成功，窗口将于3秒后自动关闭',
+                    icon: 'info',
+//                    top:300
+                });
+
+                setTimeout(function(){
+                    $(".messager-body").window('close');
+                },3000);
                 var option_1 = {
                     title: {
                         text: '变速箱类型',
@@ -443,7 +456,7 @@
                     }],
                     yAxis: {
                         type: 'value',
-                        gridIndex: 0
+//                        gridIndex: 0 别乱写
                     },
                     series: [{
                         name: 'FDJ',

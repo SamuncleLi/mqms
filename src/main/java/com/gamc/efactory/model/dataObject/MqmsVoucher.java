@@ -10,7 +10,7 @@ import java.util.List;
 */
 public class MqmsVoucher implements Serializable {
 
-    private static final long serialVersionUID = 1586701524237L;
+    private static final long serialVersionUID = 1586869147342L;
 
 
     /**
@@ -309,13 +309,13 @@ public class MqmsVoucher implements Serializable {
     private String claimCompensation;
 
     /**
-    * 备注1
+    * 销售区域
     * isNullAble:1
     */
-    private String productionRawDescription;
+    private String salesArea;
 
     /**
-    * PDI
+    * 是否PDI索赔
     * isNullAble:1
     */
     private String PDI;
@@ -649,9 +649,9 @@ public class MqmsVoucher implements Serializable {
 
     public String getClaimCompensation(){return this.claimCompensation;}
 
-    public void setProductionRawDescription(String productionRawDescription){this.productionRawDescription = productionRawDescription;}
+    public void setSalesArea(String salesArea){this.salesArea = salesArea;}
 
-    public String getProductionRawDescription(){return this.productionRawDescription;}
+    public String getSalesArea(){return this.salesArea;}
 
     public void setPDI(String PDI){this.PDI = PDI;}
 
@@ -796,7 +796,7 @@ public class MqmsVoucher implements Serializable {
                 "transmissionManufacturer='" + transmissionManufacturer + '\'' +
                 "receiveTime='" + receiveTime + '\'' +
                 "claimCompensation='" + claimCompensation + '\'' +
-                "productionRawDescription='" + productionRawDescription + '\'' +
+                "salesArea='" + salesArea + '\'' +
                 "PDI='" + PDI + '\'' +
                 "offlineFailureTime='" + offlineFailureTime + '\'' +
                 "transmissionComfirmTime='" + transmissionComfirmTime + '\'' +
@@ -1456,18 +1456,18 @@ public class MqmsVoucher implements Serializable {
         private List<String> rightFuzzyClaimCompensation;
 
         public List<String> getRightFuzzyClaimCompensation(){return this.rightFuzzyClaimCompensation;}
-        private List<String> productionRawDescriptionList;
+        private List<String> salesAreaList;
 
-        public List<String> getProductionRawDescriptionList(){return this.productionRawDescriptionList;}
+        public List<String> getSalesAreaList(){return this.salesAreaList;}
 
 
-        private List<String> fuzzyProductionRawDescription;
+        private List<String> fuzzySalesArea;
 
-        public List<String> getFuzzyProductionRawDescription(){return this.fuzzyProductionRawDescription;}
+        public List<String> getFuzzySalesArea(){return this.fuzzySalesArea;}
 
-        private List<String> rightFuzzyProductionRawDescription;
+        private List<String> rightFuzzySalesArea;
 
-        public List<String> getRightFuzzyProductionRawDescription(){return this.rightFuzzyProductionRawDescription;}
+        public List<String> getRightFuzzySalesArea(){return this.rightFuzzySalesArea;}
         private List<String> PDIList;
 
         public List<String> getPDIList(){return this.PDIList;}
@@ -3913,48 +3913,48 @@ public class MqmsVoucher implements Serializable {
             return this;
         }
 
-        public QueryBuilder fuzzyProductionRawDescription (List<String> fuzzyProductionRawDescription){
-            this.fuzzyProductionRawDescription = fuzzyProductionRawDescription;
+        public QueryBuilder fuzzySalesArea (List<String> fuzzySalesArea){
+            this.fuzzySalesArea = fuzzySalesArea;
             return this;
         }
 
-        public QueryBuilder fuzzyProductionRawDescription (String ... fuzzyProductionRawDescription){
-            this.fuzzyProductionRawDescription = solveNullList(fuzzyProductionRawDescription);
+        public QueryBuilder fuzzySalesArea (String ... fuzzySalesArea){
+            this.fuzzySalesArea = solveNullList(fuzzySalesArea);
             return this;
         }
 
-        public QueryBuilder rightFuzzyProductionRawDescription (List<String> rightFuzzyProductionRawDescription){
-            this.rightFuzzyProductionRawDescription = rightFuzzyProductionRawDescription;
+        public QueryBuilder rightFuzzySalesArea (List<String> rightFuzzySalesArea){
+            this.rightFuzzySalesArea = rightFuzzySalesArea;
             return this;
         }
 
-        public QueryBuilder rightFuzzyProductionRawDescription (String ... rightFuzzyProductionRawDescription){
-            this.rightFuzzyProductionRawDescription = solveNullList(rightFuzzyProductionRawDescription);
+        public QueryBuilder rightFuzzySalesArea (String ... rightFuzzySalesArea){
+            this.rightFuzzySalesArea = solveNullList(rightFuzzySalesArea);
             return this;
         }
 
-        public QueryBuilder productionRawDescription(String productionRawDescription){
-            setProductionRawDescription(productionRawDescription);
+        public QueryBuilder salesArea(String salesArea){
+            setSalesArea(salesArea);
             return this;
         }
 
-        public QueryBuilder productionRawDescriptionList(String ... productionRawDescription){
-            this.productionRawDescriptionList = solveNullList(productionRawDescription);
+        public QueryBuilder salesAreaList(String ... salesArea){
+            this.salesAreaList = solveNullList(salesArea);
             return this;
         }
 
-        public QueryBuilder productionRawDescriptionList(List<String> productionRawDescription){
-            this.productionRawDescriptionList = productionRawDescription;
+        public QueryBuilder salesAreaList(List<String> salesArea){
+            this.salesAreaList = salesArea;
             return this;
         }
 
-        public QueryBuilder fetchProductionRawDescription(){
-            setFetchFields("fetchFields","productionRawDescription");
+        public QueryBuilder fetchSalesArea(){
+            setFetchFields("fetchFields","salesArea");
             return this;
         }
 
-        public QueryBuilder excludeProductionRawDescription(){
-            setFetchFields("excludeFields","productionRawDescription");
+        public QueryBuilder excludeSalesArea(){
+            setFetchFields("excludeFields","salesArea");
             return this;
         }
 
@@ -5611,18 +5611,18 @@ public class MqmsVoucher implements Serializable {
         private List<String> rightFuzzyClaimCompensation;
 
         public List<String> getRightFuzzyClaimCompensation(){return this.rightFuzzyClaimCompensation;}
-        private List<String> productionRawDescriptionList;
+        private List<String> salesAreaList;
 
-        public List<String> getProductionRawDescriptionList(){return this.productionRawDescriptionList;}
+        public List<String> getSalesAreaList(){return this.salesAreaList;}
 
 
-        private List<String> fuzzyProductionRawDescription;
+        private List<String> fuzzySalesArea;
 
-        public List<String> getFuzzyProductionRawDescription(){return this.fuzzyProductionRawDescription;}
+        public List<String> getFuzzySalesArea(){return this.fuzzySalesArea;}
 
-        private List<String> rightFuzzyProductionRawDescription;
+        private List<String> rightFuzzySalesArea;
 
-        public List<String> getRightFuzzyProductionRawDescription(){return this.rightFuzzyProductionRawDescription;}
+        public List<String> getRightFuzzySalesArea(){return this.rightFuzzySalesArea;}
         private List<String> PDIList;
 
         public List<String> getPDIList(){return this.PDIList;}
@@ -7330,33 +7330,33 @@ public class MqmsVoucher implements Serializable {
             return this;
         }
 
-        public ConditionBuilder fuzzyProductionRawDescription (List<String> fuzzyProductionRawDescription){
-            this.fuzzyProductionRawDescription = fuzzyProductionRawDescription;
+        public ConditionBuilder fuzzySalesArea (List<String> fuzzySalesArea){
+            this.fuzzySalesArea = fuzzySalesArea;
             return this;
         }
 
-        public ConditionBuilder fuzzyProductionRawDescription (String ... fuzzyProductionRawDescription){
-            this.fuzzyProductionRawDescription = solveNullList(fuzzyProductionRawDescription);
+        public ConditionBuilder fuzzySalesArea (String ... fuzzySalesArea){
+            this.fuzzySalesArea = solveNullList(fuzzySalesArea);
             return this;
         }
 
-        public ConditionBuilder rightFuzzyProductionRawDescription (List<String> rightFuzzyProductionRawDescription){
-            this.rightFuzzyProductionRawDescription = rightFuzzyProductionRawDescription;
+        public ConditionBuilder rightFuzzySalesArea (List<String> rightFuzzySalesArea){
+            this.rightFuzzySalesArea = rightFuzzySalesArea;
             return this;
         }
 
-        public ConditionBuilder rightFuzzyProductionRawDescription (String ... rightFuzzyProductionRawDescription){
-            this.rightFuzzyProductionRawDescription = solveNullList(rightFuzzyProductionRawDescription);
+        public ConditionBuilder rightFuzzySalesArea (String ... rightFuzzySalesArea){
+            this.rightFuzzySalesArea = solveNullList(rightFuzzySalesArea);
             return this;
         }
 
-        public ConditionBuilder productionRawDescriptionList(String ... productionRawDescription){
-            this.productionRawDescriptionList = solveNullList(productionRawDescription);
+        public ConditionBuilder salesAreaList(String ... salesArea){
+            this.salesAreaList = solveNullList(salesArea);
             return this;
         }
 
-        public ConditionBuilder productionRawDescriptionList(List<String> productionRawDescription){
-            this.productionRawDescriptionList = productionRawDescription;
+        public ConditionBuilder salesAreaList(List<String> salesArea){
+            this.salesAreaList = salesArea;
             return this;
         }
 
@@ -8258,8 +8258,8 @@ public class MqmsVoucher implements Serializable {
             this.obj.setClaimCompensation(claimCompensation);
             return this;
         }
-        public Builder productionRawDescription(String productionRawDescription){
-            this.obj.setProductionRawDescription(productionRawDescription);
+        public Builder salesArea(String salesArea){
+            this.obj.setSalesArea(salesArea);
             return this;
         }
         public Builder PDI(String PDI){

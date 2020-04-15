@@ -142,6 +142,7 @@
 
     function analysis() {
         //不知道怎么细分
+        $.messager.alert('系统提示',"数据正在查询中，请稍后");
         $.ajax({
             url:'/mqms/charts/eng/tranPie?transType=' + $('#transType').combobox('getValue'),
             success:function (result) {
@@ -263,6 +264,18 @@
         $.ajax({
             url: "/mqms/charts/transFailureRateMutil?yearAndMonth=" + $('#yearAndMonth').datebox('getValue') + "&timeSpan=" + $('#timeSpan').numberspinner('getValue') + "&transType=" + $('#transType').combobox('getValue'),
             success: function (result) {
+                $.messager.alert
+
+                ({
+                    title:'系统提示',
+                    msg:'数据查询成功，窗口将于3秒后自动关闭',
+                    icon: 'info',
+//                    top:300
+                });
+
+                setTimeout(function(){
+                    $(".messager-body").window('close');
+                },3000);
 //        var condition = $("#condition").combobox("getValues");
                 var condition = ['6个月', '12个月', '24个月', '36个月']
 

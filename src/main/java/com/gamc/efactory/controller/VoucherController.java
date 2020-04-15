@@ -4,21 +4,18 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.gamc.efactory.dao.MqmsFailureTrackMapper;
-import com.gamc.efactory.model.dataObject.MqmsFailureTrack;
-import com.gamc.efactory.model.dataObject.User;
+import com.gamc.efactory.dao.MqmsVoucherMapper;
+import com.gamc.efactory.model.dataObject.*;
 import com.gamc.efactory.service.MultiFilterService;
+import com.gamc.efactory.util.EasyUIUtil;
+import com.gamc.efactory.util.MqmsUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.servlet.ServletContext;
-import javax.servlet.http.HttpSession;
-import javax.servlet.http.HttpSessionContext;
-import java.util.ArrayList;
-import java.util.Enumeration;
-import java.util.HashSet;
-import java.util.List;
+import java.text.ParseException;
+import java.util.*;
 
 /**
  * Created by Zeho Lee on 2020/1/6.
@@ -30,6 +27,8 @@ public class VoucherController {
     MultiFilterService multiFilterService;
     @Autowired
     MqmsFailureTrackMapper mqmsFailureTrackMapper;
+    @Autowired
+    MqmsVoucherMapper mqmsVoucherMapper;
 
     @RequestMapping("/columnNameAndComment")
     public JSONArray getColumnNameAndComment(@RequestParam("table")String table){
@@ -80,5 +79,27 @@ public class VoucherController {
         result.put("voucherCodeSet", voucherCodeSet);
 
         return result;
+    }
+    @RequestMapping("/engArrange/listInArray")
+    public JSONArray geteEngArrange(@RequestParam String yearAndMonth){
+        JSONObject result = new JSONObject();
+        JSONArray jsonArray = new JSONArray();
+        //计算任意一个日期属于哪个周一到周日
+        Map map = new HashMap<String, Object>();
+        try {
+            map = MqmsUtil.getWeekInterval(yearAndMonth);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        String beginDate=map.get("Monday").toString();
+        String endDate=map.get("Sunday").toString();
+        List<HashMap<String, String>> engArranges=mqmsVoucherMapper.querryDifferentEngArrange(beginDate,endDate);
+        for (HashMap engArrange:engArranges) {
+            if (engArrange != null) {
+                JSONObject jsonObject = JSONObject.parseObject(JSON.toJSONString(engArrange));
+                jsonArray.add(jsonObject);
+            }
+        }
+        return jsonArray;
     }
 }

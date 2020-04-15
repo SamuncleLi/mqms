@@ -301,7 +301,7 @@ public class DecodeController {
         String vinSimCode = request.getParameter("vinSimCode");
         String vinEngType = request.getParameter("vinEngType");
         String vinSeries = request.getParameter("vinSeries");
-        System.out.println(vinSeries);
+//        System.out.println(vinSeries);
         String vinEngShortCode = request.getParameter("vinEngShortCode");
         String vinTransmShortCode = request.getParameter("vinTransmShortCode");
         String vinCarShortCode = request.getParameter("vinCarShortCode");
