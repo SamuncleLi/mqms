@@ -107,7 +107,7 @@ public class VeiDataServiceImpl implements VeiDataService {
                     //暂定不通过vin码查询变速箱类型
 //                    mqmsVoucherRecord.setTranTypeDetail(mqmsVinDecodeMapper.vinDecode(vinShortCOde).getVinTransmType());
                     //通过变速箱号查询变速箱类型
-                    mqmsVoucherRecord.setTransmissionCodeRe(mqmsTranProductionDecodeMapper.selectTranProductionCode(trsmType));
+                    mqmsVoucherRecord.setTransmissionTypeRe(mqmsTranProductionDecodeMapper.selectTranProductionCode(trsmType));
                     //变速箱生产厂家
                     mqmsVoucherRecord.setTransmissionManufacturer(mqmsTranManufacturesDecodeMapper.selectTranManufacture(trsmManufacture));
                     //变速箱生产日期

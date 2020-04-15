@@ -47,8 +47,6 @@ public class VeiDataServiceImpl20191220 implements VeiDataService20191220 {
 
     Logger logger = LoggerFactory.getLogger(VeiDataServiceImpl20191220.class);
 
-
-
     private class ImportCall implements Runnable {
         //构造函数传递参数
         private List<MqmsVoucher> mqmsVoucherList;
@@ -58,13 +56,9 @@ public class VeiDataServiceImpl20191220 implements VeiDataService20191220 {
         }
         //构造函数,传递session
 
-
-
         @Override
         public void run() {
-
             for (MqmsVoucher mqmsVoucherRecord : mqmsVoucherList) {
-
                 //接收区间
                 if (mqmsVoucherRecord.getSubmitDate()!="") {
                     Map<String, String> map = new HashMap();
@@ -73,7 +67,6 @@ public class VeiDataServiceImpl20191220 implements VeiDataService20191220 {
                     } catch (ParseException e) {
                         e.printStackTrace();
                     }
-
                     mqmsVoucherRecord.setReceiveTime(map.get("wednesdayDate") + "~" + map.get("ThursdayDate"));
                 }
                 else{
@@ -87,7 +80,7 @@ public class VeiDataServiceImpl20191220 implements VeiDataService20191220 {
                 mqmsVoucherRecord.setCarModel(mqmsVinDecodeMapper.vinDecode(vinShortCOde).getVinCarType());
 
                 //变速箱详细类型暂时空着需要根据变速箱号解码
-                mqmsVoucherRecord.setTransmissionCodeRe("");
+                mqmsVoucherRecord.setTransmissionTypeRe("");
 
                 //变速箱机型
                 if(StringUtil.isNotEmpty(mqmsVoucherRecord.getTransmissionCode())){
