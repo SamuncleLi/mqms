@@ -190,10 +190,13 @@ public class MarketBulletinServiceImpl implements MarketBulletinService {
                     mqmsMarketBulletinRecord.setTransCategory(mqmsMarketBulletinRecord.getVinCode().substring(6,7));
                     //机型、车型及变速箱类型
                     String vinShortCode = mqmsMarketBulletinRecord.getVinCode().substring(0, 5);
-                    mqmsMarketBulletinRecord.setEngType(mqmsVinDecodeMapper.vinDecode(vinShortCode).getVinEngType());
-                    mqmsMarketBulletinRecord.setCarModel(mqmsVinDecodeMapper.vinDecode(vinShortCode).getVinCarType());
-                    mqmsMarketBulletinRecord.setTransType(mqmsVinDecodeMapper.vinDecode(vinShortCode).getVinTransmType());
+                    if(mqmsVinDecodeMapper.vinDecode(vinShortCode)!=null){
+                        mqmsMarketBulletinRecord.setEngType(mqmsVinDecodeMapper.vinDecode(vinShortCode).getVinEngType());
+                        mqmsMarketBulletinRecord.setCarModel(mqmsVinDecodeMapper.vinDecode(vinShortCode).getVinCarType());
+                        mqmsMarketBulletinRecord.setTransType(mqmsVinDecodeMapper.vinDecode(vinShortCode).getVinTransmType());
+                    }
                 }
+
 
                 mqmsMarketBulletinMapper.insertMqmsMarketBulletin(mqmsMarketBulletinRecord);
             }

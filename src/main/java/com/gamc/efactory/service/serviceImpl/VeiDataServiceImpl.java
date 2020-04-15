@@ -44,6 +44,8 @@ public class VeiDataServiceImpl implements VeiDataService {
     private MqmsVinDecodeMapper mqmsVinDecodeMapper;
     @Autowired
     private MqmsFaultDecodeMapper mqmsFaultDecodeMapper;
+    @Autowired
+    private MqmsSalesPointMapper mqmsSalesPointMapper;
 
     //    Logger logger = LoggerFactory.getLogger(VeiDataServiceImpl.class);
     private class ImportCall implements Runnable {
@@ -168,13 +170,23 @@ public class VeiDataServiceImpl implements VeiDataService {
                         String faultCode=mqmsFaultDecodeMapper.selectFaultCode(engArrange);
                         mqmsVoucherRecord.setFaultCodeClassification(faultCode) ;
                     }
-                   else{
+                    else{
                         mqmsVoucherRecord.setFaultCodeClassification("");
                     }
                 }
                 else
                 {
                     mqmsVoucherRecord.setFaultCodeClassification("");
+                }
+
+
+                String dealerName=mqmsVoucherRecord.getDealerName();
+                if (dealerName!=null) {
+                    if (mqmsSalesPointMapper.selectSalesArea(dealerName)!=null){
+                        String salesArea=mqmsSalesPointMapper.selectSalesArea(dealerName);
+                        mqmsVoucherRecord.setSalesArea(salesArea);
+
+                    }
                 }
                 String voucherCode = mqmsVoucherRecord.getVoucherCode();
                 if (voucherCode != null) {
@@ -293,17 +305,17 @@ public class VeiDataServiceImpl implements VeiDataService {
                 executorService.execute(importCall);
                 executorService.execute(importCallRaw);
             }
-                //通过任务量（即开启线程数）与任务完成数量对比，判断全部子线程是否已经结束
-                boolean allThreadsIsDone = ((ThreadPoolExecutor) executorService).getTaskCount()==((ThreadPoolExecutor) executorService).getCompletedTaskCount();
+            //通过任务量（即开启线程数）与任务完成数量对比，判断全部子线程是否已经结束
+            boolean allThreadsIsDone = ((ThreadPoolExecutor) executorService).getTaskCount()==((ThreadPoolExecutor) executorService).getCompletedTaskCount();
 //                if(allThreadsIsDone){
 //                   //处理内容
 //                }
-                while (!allThreadsIsDone){
-                    allThreadsIsDone = ((ThreadPoolExecutor) executorService).getTaskCount()==((ThreadPoolExecutor) executorService).getCompletedTaskCount();
+            while (!allThreadsIsDone){
+                allThreadsIsDone = ((ThreadPoolExecutor) executorService).getTaskCount()==((ThreadPoolExecutor) executorService).getCompletedTaskCount();
 //                    if(allThreadsIsDone){
 //                            //处理内容
 //                    }
-                }
+            }
 
         } catch (Exception e) {
             e.printStackTrace();

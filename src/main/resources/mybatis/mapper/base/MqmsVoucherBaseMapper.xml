@@ -155,8 +155,8 @@
                     <if test="claimCompensation!=null">
                         `claim_compensation`,
                     </if>
-                    <if test="productionRawDescription!=null">
-                        `production_raw_description`,
+                    <if test="salesArea!=null">
+                        `sales_area`,
                     </if>
                     <if test="PDI!=null">
                         `PDI`,
@@ -379,8 +379,8 @@
                 <if test="claimCompensation!=null">
                     #{claimCompensation},
                 </if>
-                <if test="productionRawDescription!=null">
-                    #{productionRawDescription},
+                <if test="salesArea!=null">
+                    #{salesArea},
                 </if>
                 <if test="PDI!=null">
                     #{PDI},
@@ -606,8 +606,8 @@
             <if test="claimCompensation != null and claimCompensation!=''">
                 `claim_compensation` = #{claimCompensation},
             </if>
-            <if test="productionRawDescription != null and productionRawDescription!=''">
-                `production_raw_description` = #{productionRawDescription},
+            <if test="salesArea != null and salesArea!=''">
+                `sales_area` = #{salesArea},
             </if>
             <if test="PDI != null and PDI!=''">
                 `PDI` = #{PDI},
@@ -833,8 +833,8 @@
         <if test="set.claimCompensation != null and set.claimCompensation!=''">
             `claim_compensation` = #{set.claimCompensation},
         </if>
-        <if test="set.productionRawDescription != null and set.productionRawDescription!=''">
-            `production_raw_description` = #{set.productionRawDescription},
+        <if test="set.salesArea != null and set.salesArea!=''">
+            `sales_area` = #{set.salesArea},
         </if>
         <if test="set.PDI != null and set.PDI!=''">
             `PDI` = #{set.PDI},
@@ -1807,23 +1807,23 @@
                 </foreach>
                 ) and
             </if>
-                <if test="where.productionRawDescriptionList != null">
-                    `production_raw_description` in
-                    <foreach collection="where.productionRawDescriptionList" close=")" open="(" separator="," item="item">
+                <if test="where.salesAreaList != null">
+                    `sales_area` in
+                    <foreach collection="where.salesAreaList" close=")" open="(" separator="," item="item">
                         #{item}
                     </foreach> and
                 </if>
-            <if test ="where.fuzzyProductionRawDescription!=null and where.fuzzyProductionRawDescription.size()>0">
+            <if test ="where.fuzzySalesArea!=null and where.fuzzySalesArea.size()>0">
                 (
-                <foreach collection="where.fuzzyProductionRawDescription"  separator="or" item="item">
-                    `Production_raw_description` like concat('%',#{item},'%')
+                <foreach collection="where.fuzzySalesArea"  separator="or" item="item">
+                    `Sales_area` like concat('%',#{item},'%')
                 </foreach>
                 ) and
             </if>
-            <if test ="where.rightFuzzyProductionRawDescription!=null and where.rightFuzzyProductionRawDescription.size()>0">
+            <if test ="where.rightFuzzySalesArea!=null and where.rightFuzzySalesArea.size()>0">
                 (
-                <foreach collection="where.rightFuzzyProductionRawDescription"  separator="or" item="item">
-                    `Production_raw_description` like concat(#{item},'%')
+                <foreach collection="where.rightFuzzySalesArea"  separator="or" item="item">
+                    `Sales_area` like concat(#{item},'%')
                 </foreach>
                 ) and
             </if>
@@ -2317,7 +2317,7 @@
         <result property="transmissionManufacturer" column="transmission_manufacturer"/>
         <result property="receiveTime" column="receive_time"/>
         <result property="claimCompensation" column="claim_compensation"/>
-        <result property="productionRawDescription" column="production_raw_description"/>
+        <result property="salesArea" column="sales_area"/>
         <result property="PDI" column="PDI"/>
         <result property="offlineFailureTime" column="offline_failure_time"/>
         <result property="transmissionComfirmTime" column="transmission_comfirm_time"/>
@@ -2496,8 +2496,8 @@
             <if test="claimCompensation != null and claimCompensation!=''">
                 `claim_compensation` = #{claimCompensation} and
             </if>
-            <if test="productionRawDescription != null and productionRawDescription!=''">
-                `production_raw_description` = #{productionRawDescription} and
+            <if test="salesArea != null and salesArea!=''">
+                `sales_area` = #{salesArea} and
             </if>
             <if test="PDI != null and PDI!=''">
                 `PDI` = #{PDI} and
@@ -3469,23 +3469,23 @@
                     </foreach>
                     ) and
                 </if>
-                <if test="productionRawDescriptionList != null">
-                    `production_raw_description` in
-                    <foreach collection="productionRawDescriptionList" close=")" open="(" separator="," item="item">
+                <if test="salesAreaList != null">
+                    `sales_area` in
+                    <foreach collection="salesAreaList" close=")" open="(" separator="," item="item">
                         #{item}
                     </foreach> and
                 </if>
-                <if test ="fuzzyProductionRawDescription!=null and fuzzyProductionRawDescription.size()>0">
+                <if test ="fuzzySalesArea!=null and fuzzySalesArea.size()>0">
                     (
-                    <foreach collection="fuzzyProductionRawDescription"  separator="or" item="item">
-                        `Production_raw_description` like concat('%',#{item},'%')
+                    <foreach collection="fuzzySalesArea"  separator="or" item="item">
+                        `Sales_area` like concat('%',#{item},'%')
                     </foreach>
                     ) and
                 </if>
-                <if test ="rightFuzzyProductionRawDescription!=null and rightFuzzyProductionRawDescription.size()>0">
+                <if test ="rightFuzzySalesArea!=null and rightFuzzySalesArea.size()>0">
                     (
-                    <foreach collection="rightFuzzyProductionRawDescription"  separator="or" item="item">
-                        `Production_raw_description` like concat(#{item},'%')
+                    <foreach collection="rightFuzzySalesArea"  separator="or" item="item">
+                        `Sales_area` like concat(#{item},'%')
                     </foreach>
                     ) and
                 </if>
@@ -4081,8 +4081,8 @@
             <if test="claimCompensation != null and claimCompensation!=''">
                 `claim_compensation` = #{claimCompensation} and
             </if>
-            <if test="productionRawDescription != null and productionRawDescription!=''">
-                `production_raw_description` = #{productionRawDescription} and
+            <if test="salesArea != null and salesArea!=''">
+                `sales_area` = #{salesArea} and
             </if>
             <if test="PDI != null and PDI!=''">
                 `PDI` = #{PDI} and
@@ -5054,23 +5054,23 @@
                     </foreach>
                     ) and
                 </if>
-                    <if test="productionRawDescriptionList != null">
-                        `production_raw_description` in
-                        <foreach collection="productionRawDescriptionList" close=")" open="(" separator="," item="item">
+                    <if test="salesAreaList != null">
+                        `sales_area` in
+                        <foreach collection="salesAreaList" close=")" open="(" separator="," item="item">
                             #{item}
                         </foreach> and
                     </if>
-                <if test ="fuzzyProductionRawDescription!=null and fuzzyProductionRawDescription.size()>0">
+                <if test ="fuzzySalesArea!=null and fuzzySalesArea.size()>0">
                     (
-                    <foreach collection="fuzzyProductionRawDescription"  separator="or" item="item">
-                        `Production_raw_description` like concat('%',#{item},'%')
+                    <foreach collection="fuzzySalesArea"  separator="or" item="item">
+                        `Sales_area` like concat('%',#{item},'%')
                     </foreach>
                     ) and
                 </if>
-                <if test ="rightFuzzyProductionRawDescription!=null and rightFuzzyProductionRawDescription.size()>0">
+                <if test ="rightFuzzySalesArea!=null and rightFuzzySalesArea.size()>0">
                     (
-                    <foreach collection="rightFuzzyProductionRawDescription"  separator="or" item="item">
-                        `Production_raw_description` like concat(#{item},'%')
+                    <foreach collection="rightFuzzySalesArea"  separator="or" item="item">
+                        `Sales_area` like concat(#{item},'%')
                     </foreach>
                     ) and
                 </if>
@@ -5566,7 +5566,7 @@
         `transmission_manufacturer`,
         `receive_time`,
         `claim_compensation`,
-        `production_raw_description`,
+        `sales_area`,
         `PDI`,
         `offline_failure_time`,
         `transmission_comfirm_time`,
@@ -5757,8 +5757,8 @@
                     <if test="fetchFields.fetchFields.claimCompensation==true">
                         `claim_compensation`,
                     </if>
-                    <if test="fetchFields.fetchFields.productionRawDescription==true">
-                        `production_raw_description`,
+                    <if test="fetchFields.fetchFields.salesArea==true">
+                        `sales_area`,
                     </if>
                     <if test="fetchFields.fetchFields.PDI==true">
                         `PDI`,
@@ -5978,8 +5978,8 @@
                     <if test="fetchFields.excludeFields.claimCompensation==null">
                         `claim_compensation`,
                     </if>
-                    <if test="fetchFields.excludeFields.productionRawDescription==null">
-                        `production_raw_description`,
+                    <if test="fetchFields.excludeFields.salesArea==null">
+                        `sales_area`,
                     </if>
                     <if test="fetchFields.excludeFields.PDI==null">
                         `PDI`,

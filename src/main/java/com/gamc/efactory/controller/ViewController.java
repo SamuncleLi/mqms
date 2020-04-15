@@ -201,6 +201,10 @@ public class ViewController {
     public String chartsCarMutilAnalysis(){
         return "charts_car_mutil_analysis";
     }
+    @RequestMapping(value = "/charts_eng_weekly_analysis")
+    public String chartsEngWeeklyAnalysis(){
+        return "charts_eng_weekly_analysis";
+    }
 
 
 }

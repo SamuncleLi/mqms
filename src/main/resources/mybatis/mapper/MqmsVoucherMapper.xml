@@ -9,7 +9,7 @@
     AND  `confirm_date` &lt;= #{endDate}
     AND  `sales_date` &gt;= #{beginDate}
     AND  `sales_date` &lt;= #{endDate}
-</select>
+    </select>
     <select id="selectTransClaimCount"  resultType="java.lang.Integer" >
         SELECT COUNT(*) FROM `mqms_voucher`
         WHERE  `tran_type_detail` = #{tranTypeDetail}
@@ -44,13 +44,13 @@
     </resultMap>
     <select id="calTransmissionProportion" resultMap="TransmissionProportionMap" parameterType="MqmsVoucher">
         SELECT
-            transmission_type_re,
-            count(*) as number
+        transmission_type_re,
+        count(*) as number
         FROM
-            `mqms_voucher`
+        `mqms_voucher`
         <trim prefix="where" suffixOverrides="and | or">
             <if test="engType != null">
-            `eng_type` = #{engType} and
+                `eng_type` = #{engType} and
             </if>
         </trim>
         GROUP BY
@@ -107,7 +107,39 @@
     WHERE
     `tran_type_detail` = #{tranTypeDetail} and `sales_date` &gt;= #{begin} and `sales_date` &lt;= #{end}
     </select>
-
+    <select id="querryWeekMileageCount" resultType="java.lang.Integer">
+        SELECT count(*) FROM `mqms_voucher`
+        WHERE
+        `mileage` &gt;= #{begin} AND  `mileage` &lt;= #{end} AND  `sales_date` &gt;= #{beginDate} AND `sales_date` &lt;= #{endDate}
+    </select>
+    <select id="querryDifferentMonthCount" resultType="java.lang.Integer">
+        SELECT count(*) FROM `mqms_voucher`
+        WHERE
+        `sales_failure_time` &gt;= #{begin} AND  `sales_failure_time` &lt;= #{end} AND  `sales_date` &gt;= #{beginDate} AND `sales_date` &lt;= #{endDate}
+    </select>
+    <select id="querryDifferentRegionsCount" resultType="java.lang.Integer">
+        SELECT count(*) FROM `mqms_voucher`
+        WHERE
+        `sales_area`= #{salesArea} AND  `sales_date` &gt;= #{beginDate} AND `sales_date` &lt;= #{endDate}
+    </select>
+    <select id="querryDifferentArea" resultType="java.lang.String">
+        SELECT DISTINCT `sales_area` FROM `mqms_voucher`
+        WHERE  `sales_date` &gt;= #{beginDate} AND `sales_date` &lt;= #{endDate}
+    </select>
+    <select id="querryDifferentEngArrange" resultType="java.util.HashMap">
+        SELECT DISTINCT `eng_arrange` FROM `mqms_voucher`
+        WHERE  `failure_date` &gt;= #{beginDate} AND `failure_date` &lt;= #{endDate}
+    </select>
+    <select id="querryFailureMonthCount" resultType="java.lang.Integer">
+        SELECT count(*) FROM `mqms_voucher`
+        WHERE  `failure_date` &gt;= #{beginDate} AND `failure_date` &lt;= #{endDate}
+        AND `eng_arrange`= #{engArrange}
+    </select>
+    <select id="querryOfflineMonthCount" resultType="java.lang.Integer">
+        SELECT count(*) FROM `mqms_voucher`
+        WHERE  `offline_date` &gt;= #{beginDate} AND `failure_date` &lt;= #{endDate}
+        AND `eng_arrange`= #{engArrange}
+    </select>
     <update id="updateMqmsVoucherByVoucherCode">
         UPDATE `mqms_voucher`
         SET
@@ -256,8 +288,8 @@
             <if test="claimCompensation != null and claimCompensation!=''">
                 `claim_compensation` = #{claimCompensation},
             </if>
-            <if test="productionRawDescription != null and productionRawDescription!=''">
-                `production_raw_description` = #{productionRawDescription},
+            <if test="salesArea != null and salesArea!=''">
+                `sales_area` = #{salesArea},
             </if>
             <if test="PDI != null and PDI!=''">
                 `PDI` = #{PDI},

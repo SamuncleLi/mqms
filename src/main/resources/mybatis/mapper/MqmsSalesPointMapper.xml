@@ -4,8 +4,16 @@
 <mapper namespace="com.gamc.efactory.dao.MqmsSalesPointMapper">
 
     <select id="selectSalesPointInfor"  resultType="java.lang.Object" >
+    SELECT `sales_point_area` FROM `mqms_sales_point`
+    WHERE  `sales_point_code` = #{salesPointCode}
+</select>
+    <select id="selectSalesNameInfor"  resultType="java.lang.String">
+        SELECT `sales_point_name` FROM `mqms_sales_point`
+        WHERE  `sales_point_area` = #{salesPointArea}
+    </select>
+    <select id="selectSalesArea"  resultType="java.lang.String">
         SELECT `sales_point_area` FROM `mqms_sales_point`
-        WHERE  `sales_point_code` = #{salesPointCode}
+        WHERE  `sales_point_name` = #{salesPointName}
     </select>
     <delete id="deleteSalesPointById"  >
         DELETE  FROM `mqms_sales_point`
@@ -17,6 +25,9 @@
         WHERE `sales_point_name`  like concat('%',#{salesPointName},'%') and
               `sales_point_area`  like concat('%',#{salesPointArea},'%') and
               `sales_point_code`  like concat('%',#{salesPointCode},'%')
+    </select>
+    <select id="searchDifferentSalesPointArea"  resultType="java.lang.String" >
+        SELECT DISTINCT `sales_point_area` FROM `mqms_sales_point`
     </select>
 
 </mapper>

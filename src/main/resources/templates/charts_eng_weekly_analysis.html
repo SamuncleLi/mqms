@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>变速箱周报数据</title>
+    <link rel="stylesheet" type="text/css" href="${req.contextPath}/static/css/charts_eng_weekly_analysis.css">
+    <link rel="stylesheet" type="text/css" href="${req.contextPath}/static/plugin/jquery-easyui-1.5.5.4/themes/gray/easyui.css">
+    <link rel="stylesheet" type="text/css" href="${req.contextPath}/static/plugin/jquery-easyui-1.5.5.4/themes/icon.css">
+    <script type="text/javascript" src="${req.contextPath}/static/plugin/jquery-easyui-1.5.5.4/jquery.min.js"></script>
+    <script type="text/javascript" src="${req.contextPath}/static/plugin/jquery-easyui-1.5.5.4/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="${req.contextPath}/static/plugin/jquery-easyui-1.5.5.4/locale/easyui-lang-zh_CN.js"></script>
+    <script type="text/javascript" src="${req.contextPath}/static/echart/echarts.js"></script>
+</head>
+<body>
+<div title="选择区" data-options="region:'north',split:false,border:false" class="select-area">
+    <label for="yearAndMonth">起始月份</label><input id="yearAndMonth" class="easyui-datebox" data-options="value:'Today'">
+    <!--<label for="timeSpan">时间跨度/月</label><input id="timeSpan" class="easyui-numberspinner" value="12">-->
+    <label for="engArrange">故障类型</label><input id="engArrange" class="easyui-combobox liselectoptions">
+    <a id="asy" href="javascript:analysis()" class="easyui-linkbutton" data-options="iconCls:'icon-search'">分析</a>
+</div>
+
+<div title="图表区" data-options="region:'south',split:false,border:false" class="charts-area">
+    <div title="故障推移" id="charts_1" class="mqmscharts"></div>
+    <div title="售出时间分布" id="charts_2" class="mqmscharts"></div>
+    <div title="里程推移" id="charts_3" class="mqmscharts"></div>
+    <div title="经过月推移" id="charts_4" class="mqmscharts"></div>
+    <div title="地域推移" id="charts_5" class="mqmscharts"></div>
+</div>
+<script>
+    var charts_1;
+    var charts_2;
+    var charts_3;
+    var charts_4;
+    var charts_5;
+
+    //初始化选择区域
+    $(function () {
+        //多选框
+        $('#engArrange').combobox({
+            url: '/mqms/voucher/engArrange/listInArray?yearAndMonth=' + $('#yearAndMonth').datebox('getValue'),
+            textField: 'eng_arrange',
+            valueField: 'eng_arrange'
+        });
+
+        //年月日选择控件
+        $(function () {
+            var curr_time = new Date();
+            var str = curr_time.getFullYear() + "-";
+            str += curr_time.getMonth() + 1 + "-";
+            str += curr_time.getDate() + "-";
+//            str += curr_time.getHours()+":";
+//            str += curr_time.getMinutes()+":";
+//            str += curr_time.getSeconds();
+            $('#yearAndMonth').datebox('setValue', str);
+            $('#yearAndMonth').datebox({
+                onChange: function () {
+                    $('#engArrange').combobox({
+                        url: '/mqms/voucher/engArrange/listInArray?yearAndMonth=' + $('#yearAndMonth').datebox('getValue'),
+                        textField: 'eng_arrange',
+                        valueField: 'eng_arrange'
+                    });
+                }
+            })
+
+        });
+
+        //初始化绘图区
+        $(function () {
+            charts_1 = echarts.init(document.getElementById('charts_1'));
+            charts_2 = echarts.init(document.getElementById('charts_2'));
+            charts_3 = echarts.init(document.getElementById('charts_3'));
+            charts_4 = echarts.init(document.getElementById('charts_4'));
+            charts_5 = echarts.init(document.getElementById('charts_5'));
+        })
+    });
+
+
+    function analysis() {
+        $.ajax({
+            url: '/mqms/charts/eng/failureMonthCount?yearAndMonth=' + $('#yearAndMonth').datebox('getValue')+'&failureContent='+$('#engArrange').datebox('getValue'),
+            success: function (result) {
+                //睡醒了，可以简单来啦，使用slice() 浅克隆去复制数组中的元素，从第二个开始到最后一个
+                var legendData=[result[1][0],result[2][0]];
+                var xAxisData=result[0].slice(1);
+                var Data1=result[1].slice(1);
+                var Data2=result[2].slice(1);
+                var option_1 = {
+                    tooltip: {
+                        trigger: 'axis',
+                        axisPointer: {            // 坐标轴指示器，坐标轴触发有效
+                            type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+                        }
+                    },
+                    title: {
+                        text:  '故障月分布',
+                        subtext: '祺盛动力'
+                    },
+                    legend: {
+                        data :legendData
+                    },
+                    grid: {
+                        left: '3%',
+                        right: '4%',
+                        bottom: '3%',
+                        containLabel: true
+                    },
+                    toolbox: {
+                        feature: {
+                            dataView: {show: true, readOnly: false},
+                            restore:{show:true},
+                            magicType: {type: ['line']},
+                            saveAsImage:{show:true}
+                        }
+                    },
+                    xAxis: [
+                        {type: 'category',
+//                                boundaryGap: false,
+                            data : xAxisData,
+
+                            axisLabel: {//解决显示不全自动隐藏问题，倾斜
+                                interval:0,
+                                rotate:10
+                            }  },
+                    ],
+                    yAxis: {
+                        type: 'value',
+//                            gridIndex: 0   这不能乱写滴
+                    },
+                    series: [{
+                        name: '故障月发生数',
+                        type: 'bar',
+                        stack: '数量',
+                        data: Data1,
+                        label:{
+                            normal:{
+                                show:true,            //显示数字
+//                                position: 'top'        //这里可以自己选择位置
+                            }
+                        }
+                    },
+                        {
+                            name: '新增',
+                            type: 'bar',
+                            stack: '数量',
+                            data: Data2,
+                            label:{
+                                normal:{
+                                    show:true,            //显示数字
+//                                    position: 'middle'        //这里可以自己选择位置
+                                }
+                            }
+                        }]
+
+                };
+                charts_1.setOption(option_1)
+
+            }
+        });
+        $.messager.alert('系统提示',"数据正在查询中，请稍后");
+        $.ajax({
+
+            url: '/mqms/charts/eng/failureRateMonthDistribution?yearAndMonth=' + $('#yearAndMonth').datebox('getValue')+'&failureContent='+$('#engArrange').datebox('getValue'),
+            success: function (result) {
+                $.messager.alert
+
+                ({
+                    title:'系统提示',
+                    msg:'数据查询成功，窗口将于3秒后自动关闭',
+                    icon: 'info',
+//                    top:300
+                });
+
+                setTimeout(function(){
+                    $(".messager-body").window('close');
+                },3000);
+// 睡醒了，可以简单来啦，使用slice() 浅克隆去复制数组中的元素，从第二个开始到最后一个
+                var legendData=[result[1][0],result[2][0]];
+                var xAxisData=result[0].slice(1);
+                var oldData=result[1].slice(1);
+                var newData=result[2].slice(1);
+                var percentData=result[3].slice(1);
+                var option_2 = {
+                    tooltip: {
+                        trigger: 'axis',
+                        axisPointer: {
+                            type: 'cross',
+                            crossStyle: {
+                                color: '#999'
+                            }
+                        }
+                    },
+                    title: {
+                        text: '生产月推移',
+                        subtext: '祺盛动力'
+                    },
+                    toolbox: {
+                        feature: {
+                            dataView: {show: true, readOnly: false},
+                            magicType: {show: true, type: ['line', 'bar']},
+                            restore: {show: true},
+                            saveAsImage: {show: true}
+                        }
+                    },
+                    legend: {
+                        data: ['统计','新增','不良率']
+                    },
+                    xAxis: [
+                        {
+                            type: 'category',
+                            data: xAxisData,
+                            axisPointer: {
+                                type: 'shadow'
+                            },
+                            axisLabel: {//解决显示不全自动隐藏问题，倾斜
+                                interval:0,
+                                rotate:10
+                            }
+                        }
+                    ],
+                    yAxis: [
+                        {
+                            type: 'value',
+                            name: '不良率'
+                        },
+                        {
+                            type: 'value'
+                        }
+                    ],
+                    series: [
+                        {
+                            name: '统计',
+                            type: 'bar',
+                            stack: '数量',
+                            data: oldData
+                        },
+                        {
+                            name: '新增',
+                            type: 'bar',
+                            stack: '数量',
+                            data: newData
+                        },
+                        {
+                            name: '不良率',
+                            type: 'line',
+                            stack: '不良率',
+                            yAxisIndex: 1,
+                            data:percentData
+                        }
+                    ]
+                };
+                charts_2.setOption(option_2)
+
+            }
+        });
+
+        $.ajax({
+            url: '/mqms/charts/eng/mileageDistribution?yearAndMonth=' + $('#yearAndMonth').datebox('getValue'),
+            success: function (result) {
+                //睡醒了，可以简单来啦，使用slice() 浅克隆去复制数组中的元素，从第二个开始到最后一个
+                var legendData=[result[1][0],result[2][0]];
+                var xAxisData=result[0].slice(1);
+                var fdjData=result[1].slice(1);
+                var stData=result[2].slice(1);
+                var option_3 = {
+                    tooltip: {
+                        trigger: 'axis',
+                        axisPointer: {            // 坐标轴指示器，坐标轴触发有效
+                            type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+                        }
+                    },
+                    title: {
+                        text:  '里程故障分布',
+                        subtext: '祺盛动力'
+                    },
+                    legend: {
+                        data :legendData
+                    },
+                    grid: {
+                        left: '3%',
+                        right: '4%',
+                        bottom: '3%',
+                        containLabel: true
+                    },
+                    toolbox: {
+                        feature: {
+                            dataView: {show: true, readOnly: false},
+                            restore:{show:true},
+                            magicType: {type: ['line']},
+                            saveAsImage:{show:true}
+                        }
+                    },
+                    xAxis: [
+                        {type: 'category',
+//                                boundaryGap: false,
+                            data : xAxisData,
+
+                            axisLabel: {//解决显示不全自动隐藏问题，倾斜
+                                interval:0,
+                                rotate:10
+                            }  },
+                    ],
+                    yAxis: {
+                        type: 'value',
+//                            gridIndex: 0   这不能乱写滴
+                    },
+                    series: [{
+                        name: '历史',
+                        type: 'bar',
+                        stack: '数量',
+                        data: fdjData,
+                        label:{
+                            normal:{
+                                show:true,            //显示数字
+//                                position: 'top'        //这里可以自己选择位置
+                            }
+                        }
+                    },
+                        {
+                            name: '新增',
+                            type: 'bar',
+                            stack: '数量',
+                            data: stData,
+                            label:{
+                                normal:{
+                                    show:true,            //显示数字
+//                                    position: 'middle'        //这里可以自己选择位置
+                                }
+                            }
+                        }]
+
+                };
+                charts_3.setOption(option_3)
+
+            }
+        });
+
+        $.ajax({
+            url: '/mqms/charts/eng/diffrentMonthDistribution?yearAndMonth=' + $('#yearAndMonth').datebox('getValue'),
+            success: function (result) {
+                var option_4 = {
+                    title: {
+                        text: '不同经过月分布',
+                        subtext: '祺盛动力'
+                    },
+                    toolbox: {
+                        feature: {
+                            dataView: {show: true, readOnly: false},
+                            restore:{show:true},
+                            magicType: {type: ['line']},
+                            saveAsImage:{show:true}
+                        }
+                    },
+                    legend: {},
+                    tooltip: {
+                        trigger: 'axis',
+                        axisPointer: {
+                            type: 'cross',
+                            crossStyle: {
+                                color: '#999'
+                            }
+                        }
+                    },
+                    dataset: {
+                        source: result
+//                            [['售出时间', '0-6月', '7-12月', '13-24月', '25-36月', '36月+'],
+//                            ['台数', 4, 3, 6, 5, 8]]
+                    },
+                    xAxis: [
+                        {
+                            type: 'category',
+                            axisPointer: {
+                                type: 'shadow'
+                            },
+                            axisLabel: {//解决显示不全自动隐藏问题，倾斜
+                                interval:0,
+                                rotate:30
+                            }
+
+                        }
+                    ],
+                    yAxis: [
+                        {
+                            type: 'value',
+                            min: 0,
+                            axisLabel: {
+                                formatter: '{value} '
+                            }
+                        }
+                    ],
+                    series: [{
+                        type: 'bar', seriesLayoutBy: 'row', itemStyle: {
+                            normal: {
+                                color: '#4d4bff',
+                                label: {
+                                    show: true
+                                }
+                            }
+                        }
+                    }]
+                };
+                charts_4.setOption(option_4);
+            }
+        });
+
+        $.ajax({
+            url: '/mqms/charts/eng/differentRegionstDistribution?yearAndMonth=' + $('#yearAndMonth').datebox('getValue'),
+            success: function (result) {
+//                //睡醒了，可以简单来啦，使用slice() 浅克隆去复制数组中的元素，从第二个开始到最后一个
+                var legendData=[result[1][0],result[2][0]];
+                var xAxisData=result[0].slice(1);
+                var countData=result[1].slice(1);
+                var percentData=result[2].slice(1);
+                var option_5 = {
+                    tooltip: {
+                        trigger: 'axis',
+                        axisPointer: {
+                            type: 'cross',
+                            crossStyle: {
+                                color: '#999'
+                            }
+                        }
+                    },
+                    title: {
+                        text: '地域分布',
+                        subtext: '祺盛动力'
+                    },
+                    toolbox: {
+                        feature: {
+                            dataView: {show: true, readOnly: false},
+                            magicType: {show: true, type: ['line', 'bar']},
+                            restore: {show: true},
+                            saveAsImage: {show: true}
+                        }
+                    },
+                    legend: {
+                        data: ['地区', '不良率']
+                    },
+                    xAxis: [
+                        {
+                            type: 'category',
+                            data: xAxisData,
+                            axisPointer: {
+                                type: 'shadow'
+                            },
+                            axisLabel: {//解决显示不全自动隐藏问题，倾斜
+                                interval:0,
+                                rotate:10
+                            }
+                        }
+                    ],
+                    yAxis: [
+                        {
+                            type: 'value',
+                            name: '不良率',
+                            min: 0,
+                            max: 250,
+                            interval: 50,
+                            axisLabel: {
+                                formatter: '{value} 台'
+                            }
+                        },
+                        {
+                            type: 'value',
+                            name: '地区',
+                            min: 0,
+                            max: 25,
+                            interval: 5,
+                            axisLabel: {
+                                formatter: '{value} %'
+                            }
+                        }
+                    ],
+                    series: [
+                        {
+                            name: '地区',
+                            type: 'bar',
+                            data: countData
+                        },
+                        {
+                            name: '不良率',
+                            type: 'line',
+                            yAxisIndex: 1,
+                            data:percentData
+                        }
+                    ]
+                };
+                charts_5.setOption(option_5)
+
+            }
+        });
+    }
+
+
+
+</script>
+
+</body>
+</html>

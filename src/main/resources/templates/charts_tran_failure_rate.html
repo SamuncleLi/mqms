@@ -209,13 +209,22 @@
     })
 
     function analysis() {
-        $.messager.alert('系统提示',"数据查询中，请稍后。。。");
+        $.messager.alert('系统提示',"数据查询中，请稍后");
         $.ajax({
             url:"/mqms/charts/transmissionFailureRate?yearAndMonth=" + $('#yearAndMonth').datebox('getValue') + "&timeSpan=" + $('#timeSpan').numberspinner('getValue') + "&transType="+ $('#transType').combobox('getValues') + "&monthType=6",
             success:function (result) {
-                $.messager.alert('系统提示',"数据查询成功");
-//                console.log(result);
+                $.messager.alert
 
+                ({
+                    title:'系统提示',
+                    msg:'数据查询成功，窗口将于3秒后自动关闭',
+                    icon: 'info',
+//                    top:300
+                });
+
+                setTimeout(function(){
+                    $(".messager-body").window('close');
+                },3000);
                 var transType = $("#transType").combobox("getValues");
 
                 //添加相当于机型数量的折线
