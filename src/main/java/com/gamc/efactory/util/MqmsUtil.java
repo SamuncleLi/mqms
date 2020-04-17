@@ -141,4 +141,36 @@ public class MqmsUtil {
         }
         return dateTime2;
     }
+    /**
+     * 字符转时间yyyy-MM-dd
+     * @return
+     */
+    public static String strToYmd( String date) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+        Date dateTime = null;
+        String dateTime2="";
+        try {
+            dateTime = sdf.parse(date);
+            dateTime2=sdf.format(dateTime);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return dateTime2;
+    }
+    /**
+     * 字符转时间yyyy-MM-dd HH:mm:ss
+     * @return
+     */
+    public static String strToYmdHms( String date) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        Date dateTime = null;
+        String dateTime2="";
+        try {
+            dateTime = sdf.parse(date);
+            dateTime2=sdf.format(dateTime);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return dateTime2;
+    }
 }

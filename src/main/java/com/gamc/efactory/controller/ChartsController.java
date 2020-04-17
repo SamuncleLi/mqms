@@ -698,7 +698,6 @@ public class ChartsController {
 //                strArray[0][i + 1] = Integer.toString(i);
 //            }
 //        }
-
         return strArray;
     }
     @RequestMapping("engineFailureRateMutil")
