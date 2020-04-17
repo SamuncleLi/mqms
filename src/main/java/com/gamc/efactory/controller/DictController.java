@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class DictController {
     @Autowired
     DictMapper dictMapper;
+
     
     @RequestMapping(value = "/list")
     public JSONObject listDict(Dict dict, @RequestParam(value = "page",required = false)String page, @RequestParam(value = "rows", required = false)String rows){
