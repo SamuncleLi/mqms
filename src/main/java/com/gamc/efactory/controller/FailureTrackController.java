@@ -169,7 +169,8 @@ public class FailureTrackController {
                 jsonObject.put("processInstTitle", "活动表单");
                 jsonObject.put("form_data_url", "http://localhost:8086/mqms/failure_track/form_data?failureTrackId=" + String.valueOf(failureTrackInt[i]));
 
-                String url = "http://localhost:8081/process/SAO/build";
+                //TODO 暂时改成了8086，作为测试地址
+                String url = "http://localhost:8086/process/SAO/build";
 
                 JSONObject returnJson = AttHttpRequestUtil.httpPost(url, jsonObject, false);
 
@@ -776,7 +777,7 @@ public class FailureTrackController {
 
             ProcessForm.SubmitButton rejectButton = new ProcessForm.SubmitButton();
             rejectButton.setName("驳回");
-            rejectButton.setUrl("http://127.0.0.1:8086/mqms/failure_track/quality_department_disagree?failureTrackId=" + String.valueOf(mqmsFailureTrack.getFailureTrackId()));
+            rejectButton.setUrl("/mqms/failure_track/quality_department_disagree?failureTrackId=" + String.valueOf(mqmsFailureTrack.getFailureTrackId()));
             processForm.addSubmitButton(rejectButton);
         }
         String str = objectMapper.writeValueAsString(processForm);
