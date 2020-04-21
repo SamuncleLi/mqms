@@ -1,10 +1,13 @@
 package com.gamc.efactory.service.serviceImpl;
 
+import ch.qos.logback.core.joran.spi.ElementSelector;
 import com.gamc.efactory.model.dataObject.*;
 import com.gamc.efactory.util.*;
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
 import com.gamc.efactory.dao.*;
 import com.gamc.efactory.service.VeiDataService;
+import com.sun.org.apache.bcel.internal.generic.IF_ACMPEQ;
+import jdk.nashorn.internal.runtime.regexp.joni.Regex;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
@@ -29,7 +32,7 @@ import java.util.concurrent.*;
 public class VeiDataServiceImpl implements VeiDataService {
 
     private ThreadFactory threadFactory = new ThreadFactoryBuilder().setNameFormat("sendEmailImmediately-pool-%d").build();
-    private ExecutorService executorService = new ThreadPoolExecutor(16, 80, 500, TimeUnit.MILLISECONDS, new LinkedBlockingQueue<Runnable>(200), threadFactory, new ThreadPoolExecutor.AbortPolicy());
+    private ExecutorService executorService = new ThreadPoolExecutor(8, 20, 100, TimeUnit.MILLISECONDS, new LinkedBlockingQueue<Runnable>(50), threadFactory, new ThreadPoolExecutor.AbortPolicy());
     @Autowired
     private MqmsVoucherRawMapper mqmsVoucherRawMapper;
     @Autowired
@@ -71,7 +74,13 @@ public class VeiDataServiceImpl implements VeiDataService {
                     mqmsVoucherRecord.setReceiveTime("");
                 }
                 //车型简码
-                mqmsVoucherRecord.setShortCode(mqmsVoucherRecord.getVehicleType().substring(0, 2));
+                if (StringUtil.isNotEmpty(mqmsVoucherRecord.getVehicleType())&&mqmsVoucherRecord.getVehicleType().length()>2){
+                    mqmsVoucherRecord.setShortCode(mqmsVoucherRecord.getVehicleType().substring(0, 2));
+                }
+                else
+                {
+                    mqmsVoucherRecord.setShortCode("");
+                }
                 //暂时通过VIN码获取机型、车型及变速箱类型
                 if(mqmsVoucherRecord.getVinCode()!=null&&mqmsVoucherRecord.getVinCode().length()>5) {
                     String vinShortCode = mqmsVoucherRecord.getVinCode().substring(0, 5);
@@ -90,44 +99,71 @@ public class VeiDataServiceImpl implements VeiDataService {
                     }
                     String transShortCode = mqmsVoucherRecord.getVinCode().substring(6,7);
                     mqmsVoucherRecord.setTransmissionShortCode(transShortCode);
+
                 }
                 else{
                     mqmsVoucherRecord.setEngType("");
                     mqmsVoucherRecord.setCarModel("");
                 }
-                //变速箱类型暂时空着
-                mqmsVoucherRecord.setTranTypeDetail("");
 
+                String trsmCode="";
                 //变速箱机型
-                if (StringUtil.isNotEmpty(mqmsVoucherRecord.getTransmissionCode())) {
-                    String trsmCode = mqmsVoucherRecord.getTransmissionCode().replace("+", "");
+                if (StringUtil.isNotEmpty(mqmsVoucherRecord.getTransmissionCode())&&mqmsVoucherRecord.getTransmissionCode().length()>15) {
+                    trsmCode = mqmsVoucherRecord.getTransmissionCode().replace("+", "");
                     String trsmType = trsmCode.substring(0, 5);
                     String trsmManufacture = trsmCode.substring(5, 10);
                     String trsmProYearCode = trsmCode.substring(11, 12);
                     String trsmProMonthHex = trsmCode.substring(12, 13);
                     String trsmProDay = trsmCode.substring(13, 15);
+                    String trsmProMonth="";
                     //暂定不通过vin码查询变速箱类型
 //                    mqmsVoucherRecord.setTranTypeDetail(mqmsVinDecodeMapper.vinDecode(vinShortCOde).getVinTransmType());
                     //通过变速箱号查询变速箱类型
+//                    System.out.println(trsmType);
                     mqmsVoucherRecord.setTransmissionTypeRe(mqmsTranProductionDecodeMapper.selectTranProductionCode(trsmType));
+                    //变速箱类型
+                    mqmsVoucherRecord.setTranTypeDetail(mqmsTranProductionDecodeMapper.selectTranType(trsmType));
                     //变速箱生产厂家
                     mqmsVoucherRecord.setTransmissionManufacturer(mqmsTranManufacturesDecodeMapper.selectTranManufacture(trsmManufacture));
                     //变速箱生产日期
-                    String trsmProMonth = Integer.toString(Integer.parseInt(trsmProMonthHex, 16), 10);
-                    if (trsmProMonth.length() < 2) {
-                        trsmProMonth = "0" + trsmProMonth;
-                    }
+                    if (trsmProMonthHex.matches("^[1-9A-C]")) {
+                        trsmProMonth = Integer.toString(Integer.parseInt(trsmProMonthHex, 16), 10);
 
-                    String trsmProYear = mqmsTranYearDecodeMapper.selectTranProYear(trsmProYearCode);
-                    mqmsVoucherRecord.setTransmissionProductionData(trsmProYear + "-" + trsmProMonth + "-" + trsmProDay);
-                    //变速箱生产至确认经过月
-                    int proFailureMonths = 0;
-                    try {
-                        proFailureMonths = MqmsUtil.getMonth(mqmsVoucherRecord.getTransmissionProductionData(), mqmsVoucherRecord.getConfirmDate());
-                    } catch (Exception e) {
-                        e.printStackTrace();
+                        if (trsmProMonth.length() < 2) {
+                            trsmProMonth = "0" + trsmProMonth;
+                        }
+                        if (StringUtil.isNotEmpty(trsmProYearCode)&& trsmProYearCode.matches("^[A-Z]+$")) {
+                            String trsmProYear = mqmsTranYearDecodeMapper.selectTranProYear(trsmProYearCode);
+                            mqmsVoucherRecord.setTransmissionProductionData(trsmProYear + "-" + trsmProMonth + "-" + trsmProDay);
+                            //变速箱生产至确认经过月
+                            int proFailureMonths = 0;
+                            if (mqmsVoucherRecord.getConfirmDate() != null) {
+                                try {
+
+                                    proFailureMonths = MqmsUtil.getMonth(mqmsVoucherRecord.getTransmissionProductionData(), mqmsVoucherRecord.getConfirmDate());
+                                } catch (Exception e) {
+                                    System.out.println(trsmCode);
+                                    e.printStackTrace();
+                                }
+                                mqmsVoucherRecord.setTransmissionComfirmTime(Integer.toString(proFailureMonths));
+                            }
+                            else {
+                                mqmsVoucherRecord.setTransmissionComfirmTime("");
+                            }
+                        }
+                        else{
+                            System.out.println(trsmCode);
+                            mqmsVoucherRecord.setTransmissionComfirmTime("");
+
+                        }
+
                     }
-                    mqmsVoucherRecord.setTransmissionComfirmTime(Integer.toString(proFailureMonths));
+                    else{
+                        System.out.println(trsmCode);
+                    }
+                }
+                else{
+                    System.out.println(trsmCode);
                 }
                 //下线至故障经过月
                 int offlineFailureMonths = 0;
@@ -227,6 +263,17 @@ public class VeiDataServiceImpl implements VeiDataService {
             };
             // 执行解析
             bigExcelReader.parse();
+            //通过任务量（即开启线程数）与任务完成数量对比，判断全部子线程是否已经结束
+            boolean allThreadsIsDone = ((ThreadPoolExecutor) executorService).getTaskCount()==((ThreadPoolExecutor) executorService).getCompletedTaskCount();
+//                if(allThreadsIsDone){
+//                   //处理内容
+//                }
+            while (!allThreadsIsDone){
+                allThreadsIsDone = ((ThreadPoolExecutor) executorService).getTaskCount()==((ThreadPoolExecutor) executorService).getCompletedTaskCount();
+//                    if(allThreadsIsDone){
+//                            //处理内容
+//                    }
+            }
 
 
         } catch (Exception e) {
@@ -239,7 +286,7 @@ public class VeiDataServiceImpl implements VeiDataService {
         try {
 //            int threadacCount=((ThreadPoolExecutor)executorService).getPoolSize();
 //            int threadacCount=((ThreadPoolExecutor)executorService).getActiveCount();
-            if (lists.size() > 0&&((ThreadPoolExecutor)executorService).getActiveCount()<80) {
+            if (lists.size() > 0) {
                 List<MqmsVoucherRaw> mqmsVoucherRawList = new ArrayList<>();
                 List<MqmsVoucher> mqmsVoucherList = new ArrayList<>();
                 SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
@@ -264,8 +311,11 @@ public class VeiDataServiceImpl implements VeiDataService {
                                 if (StringUtil.isEmpty(rowData.get(j - 2).toString())) {
                                     f.set(mqmsVoucherRaw, new BigDecimal(0.0));
                                 } else {
+//                                    System.out.println("'" + f.getName() + "'" + "'" + j + "'");
                                     f.set(mqmsVoucherRaw, new BigDecimal(Double.parseDouble(rowData.get(j - 2).toString())));
+
                                 }
+
                             } else {
                                 f.set(mqmsVoucherRaw, null);
                             }
@@ -305,18 +355,10 @@ public class VeiDataServiceImpl implements VeiDataService {
                 executorService.execute(importCall);
                 executorService.execute(importCallRaw);
             }
-            //通过任务量（即开启线程数）与任务完成数量对比，判断全部子线程是否已经结束
-            boolean allThreadsIsDone = ((ThreadPoolExecutor) executorService).getTaskCount()==((ThreadPoolExecutor) executorService).getCompletedTaskCount();
-//                if(allThreadsIsDone){
-//                   //处理内容
-//                }
-            while (!allThreadsIsDone){
-                allThreadsIsDone = ((ThreadPoolExecutor) executorService).getTaskCount()==((ThreadPoolExecutor) executorService).getCompletedTaskCount();
-//                    if(allThreadsIsDone){
-//                            //处理内容
-//                    }
+            boolean allThreadsIsUse=((ThreadPoolExecutor) executorService).getActiveCount()<((ThreadPoolExecutor) executorService).getMaximumPoolSize();
+            while (!allThreadsIsUse) {
+                allThreadsIsUse=((ThreadPoolExecutor) executorService).getActiveCount()<((ThreadPoolExecutor) executorService).getMaximumPoolSize();
             }
-
         } catch (Exception e) {
             e.printStackTrace();
         }

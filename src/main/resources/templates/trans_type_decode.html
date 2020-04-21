@@ -196,7 +196,9 @@
 //            var dg = $('#salesPointDecode');
 //            dg.datagrid('enableFilter');
             var tranProModel=document.getElementById("tranProModel");
+            var tranSingleCode=document.getElementById("tranSingleCode");
             var tranShortCode=document.getElementById("tranShortCode");
+            var tranTypeDetail=document.getElementById("tranTypeDetail");
             var tranWarrantyYears=document.getElementById("tranWarrantyYears");
             var tranWarrantyMillege=document.getElementById("tranWarrantyMillege");
             $.ajax({
@@ -204,9 +206,11 @@
                 url: "/" + system + "/" + module +"/transTypeInfor",
                 data: {
                     "tranProModel":tranProModel.value,
+                    "tranSingleCode":tranSingleCode.value,
                     "tranShortCode":tranShortCode.value,
-                    "tranWarrantyYears":tranProModel.value,
-                    "tranWarrantyMillege":tranShortCode.value
+                    "tranTypeDetail":tranTypeDetail.value,
+                    "tranWarrantyYears":tranWarrantyYears.value,
+                    "tranWarrantyMillege":tranWarrantyMillege.value
                 },
                 traditional:true,
                 async : true, //异步
@@ -230,19 +234,23 @@
     <thead>
     <tr>
         <th field="id" align="center">ID</th>
-        <th field="tran_pro_model" align="center">变速箱型号代码</th>
-        <th field="tran_shortCode" align="center">变速箱型号</th>
-        <th field="tran_warranty_years" align="center">变速箱保修年限</th>
-        <th field="tran_warranty_millege" align="center">变速箱保修里程</th>
+        <th field="tran_pro_model" align="center">型号代码</th>
+        <th field="tran_single_code" align="center">类型1</th>
+        <th field="tran_shortCode" align="center">类型2</th>
+        <th field="tran_type_detail" align="center">型号</th>
+        <th field="tran_warranty_years" align="center">保修年限</th>
+        <th field="tran_warranty_millege" align="center">保修里程</th>
     </tr>
     </thead>
 </table>
 <div id="tb2" class="select-area">
     <div>
-        <label>变速箱型号代码</label><input id="tranProModel" class="easyui-combobox">
-        <label>变速箱型号</label><input id="tranShortCode" class="easyui-combobox" >
-        <label>变速箱保修年限</label><input id="tranWarrantyYears" class="easyui-combobox">
-        <label>变速箱保修里程</label><input id="tranWarrantyMillege" class="easyui-combobox" >
+        <label>型号代码</label><input id="tranProModel" class="easyui-combobox">
+        <label>类型1</label><input id="tranSingleCode" class="easyui-combobox">
+        <label>类型2</label><input id="tranShortCode" class="easyui-combobox">
+        <label>型号</label><input id="tranTypeDetail" class="easyui-combobox" >
+        <label>保修年限</label><input id="tranWarrantyYears" class="easyui-combobox">
+        <label>保修里程</label><input id="tranWarrantyMillege" class="easyui-combobox" >
     </div>
     <div>
         <a href="javascript:addDecodeInfor()" class="easyui-linkbutton" iconCls="icon-add" plain="true">增加</a>
@@ -264,13 +272,15 @@
             <tr>
                 <td>ID</td><td><input id="id" name="id" class="easyui-textbox" readonly="true" ></td>
                 <td>型号代码</td><td><input id="tran_pro_model"  name="tran_pro_model" class="easyui-textbox"></td>
-                <td>型号</td><td><input id="tran_shortCode" name="tran_shortCode" class="easyui-textbox"></td>
-
+                <td>类型1</td><td><input id="tran_single_code" name="tran_single_code" class="easyui-textbox"></td>
             </tr>
             <tr>
+                <td>类型2</td><td><input id="tran_shortCode" name="tran_shortCode" class="easyui-textbox"></td>
+                <td>型号</td><td><input id="tran_type_detail" name="tran_type_detail" class="easyui-textbox"></td>
                 <td>保修年限</td><td><input id="tran_warranty_years"  name="tran_warranty_years" class="easyui-textbox"></td>
-                <td>保修里程</td><td><input id="tran_warranty_millege" name="tran_warranty_millege" class="easyui-textbox"></td>
             </tr>
+                <td>保修里程</td><td><input id="tran_warranty_millege" name="tran_warranty_millege" class="easyui-textbox"></td>
+
 
 
             </tbody>

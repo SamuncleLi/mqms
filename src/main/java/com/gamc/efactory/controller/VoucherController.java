@@ -3,6 +3,7 @@ package com.gamc.efactory.controller;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.gamc.efactory.dao.MqmsEngAndTransMapper;
 import com.gamc.efactory.dao.MqmsFailureTrackMapper;
 import com.gamc.efactory.dao.MqmsVoucherMapper;
 import com.gamc.efactory.model.dataObject.*;
@@ -29,6 +30,8 @@ public class VoucherController {
     MqmsFailureTrackMapper mqmsFailureTrackMapper;
     @Autowired
     MqmsVoucherMapper mqmsVoucherMapper;
+    @Autowired
+    MqmsEngAndTransMapper mqmsEngAndTransMapper;
 
     @RequestMapping("/columnNameAndComment")
     public JSONArray getColumnNameAndComment(@RequestParam("table")String table){
@@ -81,7 +84,7 @@ public class VoucherController {
         return result;
     }
     @RequestMapping("/engArrange/listInArray")
-    public JSONArray geteEngArrange(@RequestParam String yearAndMonth){
+    public JSONArray getEngArrange(@RequestParam String yearAndMonth){
         JSONObject result = new JSONObject();
         JSONArray jsonArray = new JSONArray();
         //计算任意一个日期属于哪个周一到周日
@@ -91,12 +94,36 @@ public class VoucherController {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        String beginDate=map.get("Monday").toString();
-        String endDate=map.get("Sunday").toString();
+        String beginDate=map.get("Thurs").toString();
+        String endDate=map.get("Wens").toString();
         List<HashMap<String, String>> engArranges=mqmsVoucherMapper.querryDifferentEngArrange(beginDate,endDate);
         for (HashMap engArrange:engArranges) {
             if (engArrange != null) {
                 JSONObject jsonObject = JSONObject.parseObject(JSON.toJSONString(engArrange));
+                jsonArray.add(jsonObject);
+            }
+        }
+        return jsonArray;
+    }
+    @RequestMapping("/engAndTran/listInArray")
+    public JSONArray getEngOrTran(){
+        JSONArray jsonArray = new JSONArray();
+        List<HashMap<String, String>> engAndTrans=mqmsEngAndTransMapper.querryDifferentType();
+        for (HashMap engAndTran:engAndTrans) {
+            if (engAndTran != null) {
+                JSONObject jsonObject = JSONObject.parseObject(JSON.toJSONString(engAndTran));
+                jsonArray.add(jsonObject);
+            }
+        }
+        return jsonArray;
+    }
+    @RequestMapping("/detailType/listInArray")
+    public JSONArray getDetailType(@RequestParam String engOrTran){
+        JSONArray jsonArray = new JSONArray();
+        List<HashMap<String, String>> detailTypes=mqmsEngAndTransMapper.querryDetailType(engOrTran);
+        for (HashMap detailType:detailTypes) {
+            if (detailType != null) {
+                JSONObject jsonObject = JSONObject.parseObject(JSON.toJSONString(detailType));
                 jsonArray.add(jsonObject);
             }
         }

@@ -11,10 +11,13 @@ import com.gamc.efactory.dao.base.MqmsTranProductionDecodeBaseMapper;
 public interface MqmsTranProductionDecodeMapper extends MqmsTranProductionDecodeBaseMapper{
 
     String selectTranProductionCode(@Param("tran_pro_model") String tranProModel);
+    String selectTranType(@Param("tran_pro_model") String tranProModel);
     int deleteTransTypeById(@Param("id") String id);
     List<HashMap<String, String>> searchTransTypeInfor(
             @Param("tranProModel") String tranProModel,
+            @Param("tranSingleCode") String tranSingleCode,
             @Param("tranShortCode") String tranShortCode,
+            @Param("tranTypeDetail") String tranTypeDetail,
             @Param("tranWarrantyYears") String tranWarrantyYears,
             @Param("tranWarrantyMillege") String tranWarrantyMillege
             );

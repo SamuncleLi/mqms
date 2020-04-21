@@ -130,10 +130,15 @@
         SELECT DISTINCT `eng_arrange` FROM `mqms_voucher`
         WHERE  `failure_date` &gt;= #{beginDate} AND `failure_date` &lt;= #{endDate}
     </select>
-    <select id="querryFailureMonthCount" resultType="java.lang.Integer">
+    <select id="querryEngFailureMonthCount" resultType="java.lang.Integer">
         SELECT count(*) FROM `mqms_voucher`
         WHERE  `failure_date` &gt;= #{beginDate} AND `failure_date` &lt;= #{endDate}
-        AND `eng_arrange`= #{engArrange}
+        AND `eng_arrange`= #{engArrange} AND `eng_type` = #{engType}
+    </select>
+    <select id="querryTransFailureMonthCount" resultType="java.lang.Integer">
+        SELECT count(*) FROM `mqms_voucher`
+        WHERE  `failure_date` &gt;= #{beginDate} AND `failure_date` &lt;= #{endDate}
+        AND `eng_arrange`= #{engArrange} AND `transmission_type_re` = #{transmissionTypeRe}
     </select>
     <select id="querryOfflineMonthCount" resultType="java.lang.Integer">
         SELECT count(*) FROM `mqms_voucher`

@@ -31,7 +31,7 @@ import java.util.concurrent.*;
 public class SalesServiceImpl implements SalesService {
     private ThreadFactory threadFactory = new ThreadFactoryBuilder().setNameFormat("sendEmailImmediately-pool-%d").build();
 //    private ExecutorService executorService = new ThreadPoolExecutor(8, 40, 1000, TimeUnit.MILLISECONDS, new SynchronousQueue<Runnable>(),threadFactory,new ThreadPoolExecutor.AbortPolicy());
-    private ExecutorService executorService = new ThreadPoolExecutor(16, 80, 500, TimeUnit.MILLISECONDS,    new LinkedBlockingQueue<Runnable>(200),threadFactory,new ThreadPoolExecutor.AbortPolicy());
+    private ExecutorService executorService = new ThreadPoolExecutor(8, 20, 100, TimeUnit.MILLISECONDS,    new LinkedBlockingQueue<Runnable>(50),threadFactory,new ThreadPoolExecutor.AbortPolicy());
 
     @Autowired
     private MqmsSalesRawMapper mqmsSalesRawMapper;
@@ -79,7 +79,16 @@ public class SalesServiceImpl implements SalesService {
             bigExcelReader.parse();
 
             //File files = new File(file);
-
+            boolean allThreadsIsDone = ((ThreadPoolExecutor) executorService).getTaskCount()==((ThreadPoolExecutor) executorService).getCompletedTaskCount();
+//                if(allThreadsIsDone){
+//                   //处理内容
+//                }
+            while (!allThreadsIsDone){
+                allThreadsIsDone = ((ThreadPoolExecutor) executorService).getTaskCount()==((ThreadPoolExecutor) executorService).getCompletedTaskCount();
+//                    if(allThreadsIsDone){
+//                            //处理内容
+//                    }
+            }
 
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -91,7 +100,7 @@ public class SalesServiceImpl implements SalesService {
 
     private void saveAll(List<List<Object>> lists, HttpServletRequest request) throws IllegalAccessException {
         try {
-                if  (lists.size() > 0&&((ThreadPoolExecutor)executorService).getActiveCount()<80)  {
+                if  (lists.size() > 0)  {
                     List<MqmsSalesRaw> mqmsSalesRawList = new ArrayList<>();
                     List<MqmsSales> mqmsSalesList = new ArrayList<>();
                     SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
@@ -141,15 +150,10 @@ public class SalesServiceImpl implements SalesService {
                     executorService.execute(importCall);
                     executorService.execute(importCallRaw);
                 }
-            boolean allThreadsIsDone = ((ThreadPoolExecutor) executorService).getTaskCount()==((ThreadPoolExecutor) executorService).getCompletedTaskCount();
-//                if(allThreadsIsDone){
-//                   //处理内容
-//                }
-            while (!allThreadsIsDone){
-                allThreadsIsDone = ((ThreadPoolExecutor) executorService).getTaskCount()==((ThreadPoolExecutor) executorService).getCompletedTaskCount();
-//                    if(allThreadsIsDone){
-//                            //处理内容
-//                    }
+
+            boolean allThreadsIsUse=((ThreadPoolExecutor) executorService).getActiveCount()<((ThreadPoolExecutor) executorService).getMaximumPoolSize();
+            while (!allThreadsIsUse) {
+                allThreadsIsUse=((ThreadPoolExecutor) executorService).getActiveCount()<((ThreadPoolExecutor) executorService).getMaximumPoolSize();
             }
 
 

@@ -6,7 +6,7 @@
     <settings>
         <setting name="cacheEnabled" value="true" />
         <!-- 打印sql日志 -->
-        <setting name="logImpl" value="STDOUT_LOGGING" />
+        <!--<setting name="logImpl" value="STDOUT_LOGGING" />-->
     </settings>
     <!--取别名，便于mapper的书写-->
     <typeAliases>

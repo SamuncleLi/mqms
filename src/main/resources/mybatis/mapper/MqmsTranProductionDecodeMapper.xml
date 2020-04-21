@@ -14,8 +14,14 @@
         SELECT * FROM `mqms_tran_production_decode`
         WHERE
         `tran_pro_model`  like concat('%',#{tranProModel},'%') AND
+         `tran_single_code`  like concat('%',#{tranSingleCode},'%') AND
         `tran_shortCode`  like concat('%',#{tranShortCode},'%')AND
+         `tran_type_detail`  like concat('%',#{tranTypeDetail},'%') AND
         `tran_warranty_years` like concat('%',#{tranWarrantyYears},'%') AND
         `tran_warranty_millege` like concat('%',#{tranWarrantyMillege},'%')
+    </select>
+    <select id="selectTranType"  resultType="java.lang.String" >
+        SELECT `tran_type_detail` FROM `mqms_tran_production_decode`
+        WHERE  `tran_pro_model` = #{tran_pro_model}
     </select>
 </mapper>

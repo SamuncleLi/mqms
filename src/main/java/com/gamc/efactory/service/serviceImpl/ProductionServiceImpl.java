@@ -29,7 +29,7 @@ import java.util.concurrent.*;
 public class ProductionServiceImpl implements ProductionService {
 
     private ThreadFactory threadFactory = new ThreadFactoryBuilder().setNameFormat("sendEmailImmediately-pool-%d").build();
-    private ExecutorService executorService = new ThreadPoolExecutor(16, 80, 500, TimeUnit.MILLISECONDS,    new LinkedBlockingQueue<Runnable>(200),threadFactory,new ThreadPoolExecutor.AbortPolicy());
+    private ExecutorService executorService = new ThreadPoolExecutor(8, 20, 100, TimeUnit.MILLISECONDS,    new LinkedBlockingQueue<Runnable>(50),threadFactory,new ThreadPoolExecutor.AbortPolicy());
     @Autowired
     private MqmsProductionRawMapper mqmsProductionRawMapper;
     @Autowired
@@ -157,7 +157,16 @@ public class ProductionServiceImpl implements ProductionService {
             bigExcelReader.parse();
             //File files = new File(file);
 //            System.out.println("0000000000000000000000000000000000000000000000");
-
+            boolean allThreadsIsDone = ((ThreadPoolExecutor) executorService).getTaskCount()==((ThreadPoolExecutor) executorService).getCompletedTaskCount();
+//                if(allThreadsIsDone){
+//                   //处理内容
+//                }
+            while (!allThreadsIsDone) {
+                allThreadsIsDone = ((ThreadPoolExecutor) executorService).getTaskCount() == ((ThreadPoolExecutor) executorService).getCompletedTaskCount();
+//                    if(allThreadsIsDone){
+//
+// 处理内容
+            }
 
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -168,7 +177,7 @@ public class ProductionServiceImpl implements ProductionService {
         try {
 //            int threadacCount=((ThreadPoolExecutor)executorService).getPoolSize();
 //            int threadacCount=((ThreadPoolExecutor)executorService).getActiveCount();
-            if (lists.size() > 0&&((ThreadPoolExecutor)executorService).getActiveCount()<80)  {
+            if (lists.size() > 0)  {
 
 //            System.out.println(lists.size());
                 List<MqmsProductionRaw> mqmsProductionRawList = new ArrayList<>();
@@ -222,15 +231,10 @@ public class ProductionServiceImpl implements ProductionService {
 
 
             }
-            boolean allThreadsIsDone = ((ThreadPoolExecutor) executorService).getTaskCount()==((ThreadPoolExecutor) executorService).getCompletedTaskCount();
-//                if(allThreadsIsDone){
-//                   //处理内容
-//                }
-            while (!allThreadsIsDone) {
-                allThreadsIsDone = ((ThreadPoolExecutor) executorService).getTaskCount() == ((ThreadPoolExecutor) executorService).getCompletedTaskCount();
-//                    if(allThreadsIsDone){
-//
-// 处理内容
+
+            boolean allThreadsIsUse=((ThreadPoolExecutor) executorService).getActiveCount()<((ThreadPoolExecutor) executorService).getMaximumPoolSize();
+            while (!allThreadsIsUse) {
+                allThreadsIsUse=((ThreadPoolExecutor) executorService).getActiveCount()<((ThreadPoolExecutor) executorService).getMaximumPoolSize();
             }
         } catch (Exception e) {
             e.printStackTrace();

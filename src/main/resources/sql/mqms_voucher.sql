@@ -45,7 +45,7 @@ CREATE TABLE `mqms_voucher` (
   `transport_date` varchar(255) DEFAULT NULL COMMENT '车辆发运时间',
   `shop_arrival_date` varchar(255) DEFAULT NULL COMMENT '车辆到店时间',
   `sales_failure_time` int(11) DEFAULT NULL COMMENT '销售至故障经过月',
-  `failure_desc` varchar(255) DEFAULT NULL COMMENT '故障描述',
+  `failure_desc` varchar(2000) DEFAULT NULL COMMENT '故障描述',
   `diagnostic_result` varchar(2000) DEFAULT NULL COMMENT '诊断过程',
   `man_cost` decimal(65,2) DEFAULT NULL COMMENT '工时金额',
   `material_cost` decimal(65,2) DEFAULT NULL COMMENT '配件金额',
