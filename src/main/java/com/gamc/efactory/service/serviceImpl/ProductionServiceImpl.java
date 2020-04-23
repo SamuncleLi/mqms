@@ -59,7 +59,6 @@ public class ProductionServiceImpl implements ProductionService {
 
         @Override
         public void run() {
-
             for (MqmsProduction mqmsProductionRecord : mqmsProductionList) {
                 //短码
                 String vinShortCode = mqmsProductionRecord.getVin().substring(0, 5);
