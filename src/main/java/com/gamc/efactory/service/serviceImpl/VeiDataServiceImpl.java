@@ -137,10 +137,10 @@ public class VeiDataServiceImpl implements VeiDataService {
                             mqmsVoucherRecord.setTransmissionProductionData(trsmProYear + "-" + trsmProMonth + "-" + trsmProDay);
                             //变速箱生产至确认经过月
                             int proFailureMonths = 0;
-                            if (mqmsVoucherRecord.getConfirmDate() != null) {
+                            if (mqmsVoucherRecord.getFailureDate() != null) {
                                 try {
 
-                                    proFailureMonths = MqmsUtil.getMonth(mqmsVoucherRecord.getTransmissionProductionData(), mqmsVoucherRecord.getConfirmDate());
+                                    proFailureMonths = MqmsUtil.getMonth(mqmsVoucherRecord.getTransmissionProductionData(), mqmsVoucherRecord.getFailureDate());
                                 } catch (Exception e) {
                                     System.out.println(trsmCode);
                                     e.printStackTrace();
@@ -167,9 +167,9 @@ public class VeiDataServiceImpl implements VeiDataService {
                 }
                 //下线至故障经过月
                 int offlineFailureMonths = 0;
-                if (mqmsVoucherRecord.getSalesDate()!= null && mqmsVoucherRecord.getConfirmDate()!= null) {
+                if (mqmsVoucherRecord.getOfflineDate()!= null && mqmsVoucherRecord.getFailureDate()!= null) {
                     try {
-                        offlineFailureMonths = MqmsUtil.getMonth(mqmsVoucherRecord.getSalesDate(), mqmsVoucherRecord.getConfirmDate());
+                        offlineFailureMonths = MqmsUtil.getMonth(mqmsVoucherRecord.getOfflineDate(), mqmsVoucherRecord.getFailureDate());
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -355,9 +355,9 @@ public class VeiDataServiceImpl implements VeiDataService {
                 executorService.execute(importCall);
                 executorService.execute(importCallRaw);
             }
-            boolean allThreadsIsUse=((ThreadPoolExecutor) executorService).getActiveCount()<((ThreadPoolExecutor) executorService).getMaximumPoolSize();
+            boolean allThreadsIsUse=((ThreadPoolExecutor) executorService).getActiveCount()<((ThreadPoolExecutor) executorService).getMaximumPoolSize()-1;
             while (!allThreadsIsUse) {
-                allThreadsIsUse=((ThreadPoolExecutor) executorService).getActiveCount()<((ThreadPoolExecutor) executorService).getMaximumPoolSize();
+                allThreadsIsUse=((ThreadPoolExecutor) executorService).getActiveCount()<((ThreadPoolExecutor) executorService).getMaximumPoolSize()-1;
             }
         } catch (Exception e) {
             e.printStackTrace();

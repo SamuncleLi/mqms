@@ -5,6 +5,7 @@ import com.gamc.efactory.model.dataObject.*;
 import com.gamc.efactory.service.ProductionService;
 import com.gamc.efactory.util.BigExcelReader;
 import com.gamc.efactory.util.ExcelUtil;
+import com.gamc.efactory.util.StringUtil;
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,6 +19,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.lang.reflect.Field;
 import java.math.BigDecimal;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.concurrent.*;
@@ -93,13 +95,22 @@ public class ProductionServiceImpl implements ProductionService {
                 else{
                     mqmsProductionRecord.setCarSimpleCode("");
                 }
-                //销售年/月
+                //生产年/月
+                String proDate="";
+                if (StringUtil.isEmpty(mqmsProductionRecord.getPassTime())) {
+                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                    try {
+                        Date date =  sdf.parse(mqmsProductionRecord.getPassTime());
+                        proDate =sdf.format(date);
 
-                if (mqmsSalesMapper.selectVinCodeCount(mqmsProductionRecord.getVin())!= 0) {
-                    MqmsSales mqmsSales = mqmsSalesMapper.selectByVinCode(mqmsProductionRecord.getVin());
-                    mqmsProductionRecord.setProductionYear(mqmsSales.getSalesYear());
-                    mqmsProductionRecord.setProductionMonth(mqmsSales.getSalesMonth());
-                    mqmsProductionRecord.setDistrictName(mqmsSales.getSalesArea());
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                    System.out.println(proDate);
+                    mqmsProductionRecord.setProductionYear(proDate.split("-")[0]);
+                    mqmsProductionRecord.setProductionMonth(proDate.split("-")[1]);
+                    //区域暂时空着
+                    mqmsProductionRecord.setDistrictName("");
                 } else {
                     mqmsProductionRecord.setProductionYear("");
                     mqmsProductionRecord.setProductionMonth("");
@@ -232,9 +243,9 @@ public class ProductionServiceImpl implements ProductionService {
 
             }
 
-            boolean allThreadsIsUse=((ThreadPoolExecutor) executorService).getActiveCount()<((ThreadPoolExecutor) executorService).getMaximumPoolSize();
+            boolean allThreadsIsUse=((ThreadPoolExecutor) executorService).getActiveCount()<((ThreadPoolExecutor) executorService).getMaximumPoolSize()-1;
             while (!allThreadsIsUse) {
-                allThreadsIsUse=((ThreadPoolExecutor) executorService).getActiveCount()<((ThreadPoolExecutor) executorService).getMaximumPoolSize();
+                allThreadsIsUse=((ThreadPoolExecutor) executorService).getActiveCount()<((ThreadPoolExecutor) executorService).getMaximumPoolSize()-1;
             }
         } catch (Exception e) {
             e.printStackTrace();

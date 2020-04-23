@@ -71,8 +71,8 @@ CREATE TABLE `mqms_voucher` (
   `claim_compensation` varchar(255) DEFAULT NULL COMMENT '是否算入索赔率统计',
   `sales_area` varchar(255) DEFAULT NULL COMMENT '销售区域',
   `PDI` varchar(255) DEFAULT NULL COMMENT '是否PDI索赔',
-  `offline_failure_time` int(11) DEFAULT NULL COMMENT '下线至确认经过月',
-  `transmission_comfirm_time` varchar(255) DEFAULT NULL COMMENT '变速箱生产至确认经过月',
+  `offline_failure_time` int(11) DEFAULT NULL COMMENT '下线至故障经过月',
+  `transmission_comfirm_time` varchar(255) DEFAULT NULL COMMENT '变速箱生产至故障经过月',
   `eng_or_tran` varchar(255) DEFAULT NULL COMMENT '发动机或变速箱',
   `short_code` varchar(255) DEFAULT NULL COMMENT '短码',
   `fault_code_classification` varchar(255) DEFAULT NULL COMMENT '故障码分类',
@@ -98,6 +98,8 @@ CREATE TABLE `mqms_voucher` (
   KEY `engType` (`eng_type`) USING BTREE,
   KEY `transType` (`tran_type_detail`) USING BTREE
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='vei系统导出表的拓展信息表';
+
+
 
 
 

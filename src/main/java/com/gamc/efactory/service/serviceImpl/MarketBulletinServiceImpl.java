@@ -146,9 +146,9 @@ public class MarketBulletinServiceImpl implements MarketBulletinService {
 //                System.out.println(((ThreadPoolExecutor)executorService).getActiveCount()+"aaaaaaaaaaaaaaaaaaaaaaa");
             }
 
-            boolean allThreadsIsUse=((ThreadPoolExecutor) executorService).getActiveCount()<((ThreadPoolExecutor) executorService).getMaximumPoolSize();
+            boolean allThreadsIsUse=((ThreadPoolExecutor) executorService).getActiveCount()<((ThreadPoolExecutor) executorService).getMaximumPoolSize()-1;
             while (!allThreadsIsUse) {
-                allThreadsIsUse=((ThreadPoolExecutor) executorService).getActiveCount()<((ThreadPoolExecutor) executorService).getMaximumPoolSize();
+                allThreadsIsUse=((ThreadPoolExecutor) executorService).getActiveCount()<((ThreadPoolExecutor) executorService).getMaximumPoolSize()-1;
             }
 
         } catch (Exception e) {

@@ -10,7 +10,7 @@ import java.util.List;
 */
 public class MqmsVoucher implements Serializable {
 
-    private static final long serialVersionUID = 1587443865683L;
+    private static final long serialVersionUID = 1587450991848L;
 
 
     /**
@@ -321,13 +321,13 @@ public class MqmsVoucher implements Serializable {
     private String PDI;
 
     /**
-    * 下线至确认经过月
+    * 下线至故障经过月
     * isNullAble:1
     */
     private Integer offlineFailureTime;
 
     /**
-    * 变速箱生产至确认经过月
+    * 变速箱生产至故障经过月
     * isNullAble:1
     */
     private String transmissionComfirmTime;
