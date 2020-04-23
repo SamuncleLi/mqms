@@ -33,6 +33,7 @@ public interface MqmsVoucherMapper extends MqmsVoucherBaseMapper{
     int querryDifferentRegionsCount(@Param("salesArea") String salesArea,@Param("beginDate") String beginDate,@Param("endDate") String endDate);
     String[] querryDifferentArea(@Param("beginDate") String beginDate,@Param("endDate") String endDate);
     List<HashMap<String, String>> querryDifferentEngArrange(@Param("beginDate") String beginDate, @Param("endDate") String endDate);
-    int querryFailureMonthCount(@Param("beginDate") String beginDate,@Param("endDate") String endDate,@Param("engArrange") String engArrange);
+    int querryEngFailureMonthCount(@Param("beginDate") String beginDate,@Param("endDate") String endDate,@Param("engArrange") String engArrange,@Param("engType") String engType);
+    int querryTransFailureMonthCount(@Param("beginDate") String beginDate,@Param("endDate") String endDate,@Param("engArrange") String engArrange,@Param("engType") String engType);
     int querryOfflineMonthCount(@Param("beginDate") String beginDate,@Param("endDate") String endDate,@Param("engArrange") String engArrange);
     }

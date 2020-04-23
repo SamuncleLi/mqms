@@ -27,7 +27,7 @@ public class MarketBulletinServiceImpl implements MarketBulletinService {
 
 
     private ThreadFactory threadFactory = new ThreadFactoryBuilder().setNameFormat("sendEmailImmediately-pool-%d").build();
-    private ExecutorService executorService = new ThreadPoolExecutor(16, 80, 500, TimeUnit.MILLISECONDS, new LinkedBlockingQueue<Runnable>(200), threadFactory, new ThreadPoolExecutor.AbortPolicy());
+    private ExecutorService executorService = new ThreadPoolExecutor(8, 20, 100, TimeUnit.MILLISECONDS, new LinkedBlockingQueue<Runnable>(50), threadFactory, new ThreadPoolExecutor.AbortPolicy());
     //    int threadacCount=;
     @Autowired
     private MqmsMarketBulletinMapper mqmsMarketBulletinMapper;
@@ -64,12 +64,21 @@ public class MarketBulletinServiceImpl implements MarketBulletinService {
             };
             // 执行解析
             bigExcelReader.parse();
-
+            boolean allThreadsIsDone = ((ThreadPoolExecutor) executorService).getTaskCount()==((ThreadPoolExecutor) executorService).getCompletedTaskCount();
+//                if(allThreadsIsDone){
+//                   //处理内容
+//                }
+            while (!allThreadsIsDone) {
+                allThreadsIsDone = ((ThreadPoolExecutor) executorService).getTaskCount() == ((ThreadPoolExecutor) executorService).getCompletedTaskCount();
+//                    if(allThreadsIsDone){
+//
+// 处理内容
+            }
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
 //        System.out.println(((ThreadPoolExecutor)executorService).getActiveCount()+"cccccccccccccccccccccccc");
-        return ((ThreadPoolExecutor)executorService).getActiveCount();
+        return 1;
     }
 
     private void saveAll(List<List<Object>> lists, HttpServletRequest request) throws IllegalAccessException {
@@ -136,16 +145,12 @@ public class MarketBulletinServiceImpl implements MarketBulletinService {
                 executorService.execute(importCall);
 //                System.out.println(((ThreadPoolExecutor)executorService).getActiveCount()+"aaaaaaaaaaaaaaaaaaaaaaa");
             }
-            boolean allThreadsIsDone = ((ThreadPoolExecutor) executorService).getTaskCount()==((ThreadPoolExecutor) executorService).getCompletedTaskCount();
-//                if(allThreadsIsDone){
-//                   //处理内容
-//                }
-            while (!allThreadsIsDone) {
-                allThreadsIsDone = ((ThreadPoolExecutor) executorService).getTaskCount() == ((ThreadPoolExecutor) executorService).getCompletedTaskCount();
-//                    if(allThreadsIsDone){
-//
-// 处理内容
+
+            boolean allThreadsIsUse=((ThreadPoolExecutor) executorService).getActiveCount()<((ThreadPoolExecutor) executorService).getMaximumPoolSize()-1;
+            while (!allThreadsIsUse) {
+                allThreadsIsUse=((ThreadPoolExecutor) executorService).getActiveCount()<((ThreadPoolExecutor) executorService).getMaximumPoolSize()-1;
             }
+
         } catch (Exception e) {
             e.printStackTrace();
         }

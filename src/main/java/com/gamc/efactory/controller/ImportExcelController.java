@@ -90,7 +90,7 @@ public class ImportExcelController {
         int result = 0;
         try {
             result =  veiDataService.addLists(files,request);
-            System.out.println(result+"555555555555555555555555555555555555555555555555555555555");
+//            System.out.println(result+"555555555555555555555555555555555555555555555555555555555");
         } catch (Exception e) {
             e.printStackTrace();
         }finally {

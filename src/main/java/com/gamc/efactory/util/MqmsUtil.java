@@ -92,7 +92,7 @@ public class MqmsUtil {
             Date date =  sdf.parse(dateTime);
             Calendar cal = Calendar.getInstance();
             cal.setTime(date);
-            cal.setFirstDayOfWeek(Calendar.MONDAY);// 设置一个星期的第一天，按中国的习惯一个星期的第一天是星期一
+            cal.setFirstDayOfWeek(Calendar.THURSDAY);// 设置一个星期的第一天，按中国的习惯一个星期的第一天是星期一
             int dayWeek = cal.get(Calendar.DAY_OF_WEEK);// 获得当前日期是一个星期的第几天
             if (dayWeek == 1) {
                 dayWeek = 8;
@@ -108,13 +108,13 @@ public class MqmsUtil {
             String weekEnd = sdf.format(sundayDate);
 
 
-            map.put("Monday", weekBegin);
-            map.put("Sunday", weekEnd);
+            map.put("Thurs", weekBegin);
+            map.put("Wens", weekEnd);
             return map;
         }
         else{
-            map.put("Monday", "");
-            map.put("Sunday", "");
+            map.put("Thurs", "");
+            map.put("Wens", "");
             return map;
         }
 

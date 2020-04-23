@@ -5,6 +5,7 @@ import com.gamc.efactory.model.dataObject.*;
 import com.gamc.efactory.service.ProductionService;
 import com.gamc.efactory.util.BigExcelReader;
 import com.gamc.efactory.util.ExcelUtil;
+import com.gamc.efactory.util.StringUtil;
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,6 +19,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.lang.reflect.Field;
 import java.math.BigDecimal;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.concurrent.*;
@@ -29,7 +31,7 @@ import java.util.concurrent.*;
 public class ProductionServiceImpl implements ProductionService {
 
     private ThreadFactory threadFactory = new ThreadFactoryBuilder().setNameFormat("sendEmailImmediately-pool-%d").build();
-    private ExecutorService executorService = new ThreadPoolExecutor(16, 80, 500, TimeUnit.MILLISECONDS,    new LinkedBlockingQueue<Runnable>(200),threadFactory,new ThreadPoolExecutor.AbortPolicy());
+    private ExecutorService executorService = new ThreadPoolExecutor(8, 20, 100, TimeUnit.MILLISECONDS,    new LinkedBlockingQueue<Runnable>(50),threadFactory,new ThreadPoolExecutor.AbortPolicy());
     @Autowired
     private MqmsProductionRawMapper mqmsProductionRawMapper;
     @Autowired
@@ -93,13 +95,22 @@ public class ProductionServiceImpl implements ProductionService {
                 else{
                     mqmsProductionRecord.setCarSimpleCode("");
                 }
-                //销售年/月
+                //生产年/月
+                String proDate="";
+                if (StringUtil.isEmpty(mqmsProductionRecord.getPassTime())) {
+                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                    try {
+                        Date date =  sdf.parse(mqmsProductionRecord.getPassTime());
+                        proDate =sdf.format(date);
 
-                if (mqmsSalesMapper.selectVinCodeCount(mqmsProductionRecord.getVin())!= 0) {
-                    MqmsSales mqmsSales = mqmsSalesMapper.selectByVinCode(mqmsProductionRecord.getVin());
-                    mqmsProductionRecord.setProductionYear(mqmsSales.getSalesYear());
-                    mqmsProductionRecord.setProductionMonth(mqmsSales.getSalesMonth());
-                    mqmsProductionRecord.setDistrictName(mqmsSales.getSalesArea());
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                    System.out.println(proDate);
+                    mqmsProductionRecord.setProductionYear(proDate.split("-")[0]);
+                    mqmsProductionRecord.setProductionMonth(proDate.split("-")[1]);
+                    //区域暂时空着
+                    mqmsProductionRecord.setDistrictName("");
                 } else {
                     mqmsProductionRecord.setProductionYear("");
                     mqmsProductionRecord.setProductionMonth("");
@@ -157,7 +168,16 @@ public class ProductionServiceImpl implements ProductionService {
             bigExcelReader.parse();
             //File files = new File(file);
 //            System.out.println("0000000000000000000000000000000000000000000000");
-
+            boolean allThreadsIsDone = ((ThreadPoolExecutor) executorService).getTaskCount()==((ThreadPoolExecutor) executorService).getCompletedTaskCount();
+//                if(allThreadsIsDone){
+//                   //处理内容
+//                }
+            while (!allThreadsIsDone) {
+                allThreadsIsDone = ((ThreadPoolExecutor) executorService).getTaskCount() == ((ThreadPoolExecutor) executorService).getCompletedTaskCount();
+//                    if(allThreadsIsDone){
+//
+// 处理内容
+            }
 
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -168,7 +188,7 @@ public class ProductionServiceImpl implements ProductionService {
         try {
 //            int threadacCount=((ThreadPoolExecutor)executorService).getPoolSize();
 //            int threadacCount=((ThreadPoolExecutor)executorService).getActiveCount();
-            if (lists.size() > 0&&((ThreadPoolExecutor)executorService).getActiveCount()<80)  {
+            if (lists.size() > 0)  {
 
 //            System.out.println(lists.size());
                 List<MqmsProductionRaw> mqmsProductionRawList = new ArrayList<>();
@@ -222,15 +242,10 @@ public class ProductionServiceImpl implements ProductionService {
 
 
             }
-            boolean allThreadsIsDone = ((ThreadPoolExecutor) executorService).getTaskCount()==((ThreadPoolExecutor) executorService).getCompletedTaskCount();
-//                if(allThreadsIsDone){
-//                   //处理内容
-//                }
-            while (!allThreadsIsDone) {
-                allThreadsIsDone = ((ThreadPoolExecutor) executorService).getTaskCount() == ((ThreadPoolExecutor) executorService).getCompletedTaskCount();
-//                    if(allThreadsIsDone){
-//
-// 处理内容
+
+            boolean allThreadsIsUse=((ThreadPoolExecutor) executorService).getActiveCount()<((ThreadPoolExecutor) executorService).getMaximumPoolSize()-1;
+            while (!allThreadsIsUse) {
+                allThreadsIsUse=((ThreadPoolExecutor) executorService).getActiveCount()<((ThreadPoolExecutor) executorService).getMaximumPoolSize()-1;
             }
         } catch (Exception e) {
             e.printStackTrace();

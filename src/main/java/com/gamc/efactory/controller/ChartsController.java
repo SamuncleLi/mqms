@@ -405,8 +405,8 @@ public class ChartsController {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        String beginDate=map.get("Monday").toString();
-        String endDate=map.get("Sunday").toString();
+        String beginDate=map.get("Thurs").toString();
+        String endDate=map.get("Wens").toString();
         //创建二维数组
         String[][] strArray=new String[3][13];
         strArray[0][0]="里程";
@@ -421,7 +421,7 @@ public class ChartsController {
         strArray[0][9]="6~7";
         strArray[0][10]="7~8";
         strArray[0][11]="8~9";
-        strArray[0][12]="9>10";
+        strArray[0][12]="9~10";
         strArray[1][0]="历史";
         strArray[2][0]="新增";
         String[] mileage={"0","100","5000","10000","20000","30000","40000","50000","60000","70000","80000","90000","100000"};
@@ -447,7 +447,11 @@ public class ChartsController {
      * @抛出异常
      */
     @RequestMapping("/eng/failureMonthCount")
-    public String[][] engFailureMonthCount(@RequestParam String yearAndMonth,@RequestParam String failureContent) throws Exception {
+    public String[][] engFailureMonthCount(
+            @RequestParam String yearAndMonth,
+            @RequestParam String failureContent,
+            @RequestParam String engOrtran,
+            @RequestParam String detailType) throws Exception {
         //计算任意一个日期属于哪个周一到周日
         Map map = new HashMap<String, Object>();
         try {
@@ -455,8 +459,8 @@ public class ChartsController {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        String beginDate=map.get("Monday").toString();
-        String endDate=map.get("Sunday").toString();
+        String beginDate=map.get("Thurs").toString();
+        String endDate=map.get("Wens").toString();
         String[] date=beginDate.split("-");
         String ym=date[0]+"-"+date[1];
         String startDate="2015-01";
@@ -469,34 +473,47 @@ public class ChartsController {
         int oldExistCount=0;
         int newIncCount=0;
         String sDate="";
-        for (int i = 0; i < month; i++) {
+        if (Arrays.asList("发动机","变速箱N").contains(engOrtran)) {
+            for (int i = 0; i < month; i++) {
 
-            String interMiddleDate= MqmsUtil.getDateInfor("yyyy-MM",startDate,1);
-            oldExistCount =mqmsVoucherMapper.querryFailureMonthCount(startDate,interMiddleDate,failureContent);
-            if (!Objects.equals(startDate.split("-")[1], "01")){
-                sDate=startDate.split("-")[1];
+                String interMiddleDate = MqmsUtil.getDateInfor("yyyy-MM", startDate, 1);
+                if (Objects.equals(engOrtran, "发动机")) {
+                    oldExistCount = mqmsVoucherMapper.querryEngFailureMonthCount(startDate, interMiddleDate, failureContent,detailType);
+                }
+                else {
+                    oldExistCount = mqmsVoucherMapper.querryTransFailureMonthCount(startDate, interMiddleDate, failureContent,detailType);
+                }
+
+                if (!Objects.equals(startDate.split("-")[1], "01")) {
+                    sDate = startDate.split("-")[1];
+                } else {
+                    sDate = startDate;
+                }
+                strArray[0][i + 1] = sDate;
+                strArray[1][i + 1] = Integer.toString(oldExistCount);
+                strArray[2][i + 1] = "0";
+                startDate = MqmsUtil.getDateInfor("yyyy-MM", startDate, 1);
             }
-            else
-            {
-                sDate=startDate;
+            if (Objects.equals(engOrtran, "发动机")) {
+                oldExistCount = mqmsVoucherMapper.querryEngFailureMonthCount(startDate, beginDate, failureContent,detailType);
+                newIncCount = mqmsVoucherMapper.querryEngFailureMonthCount(beginDate, endDate, failureContent,detailType);
             }
-            strArray[0][i+1]=sDate;
-            strArray[1][i+1]=Integer.toString(oldExistCount);
-            strArray[2][i+1]="0";
-            startDate=MqmsUtil.getDateInfor("yyyy-MM",startDate,1);
+            else{
+                oldExistCount = mqmsVoucherMapper.querryTransFailureMonthCount(startDate, beginDate, failureContent,detailType);
+                newIncCount = mqmsVoucherMapper.querryTransFailureMonthCount(beginDate, endDate, failureContent,detailType);
+            }
+            if (!Objects.equals(startDate.split("-")[1], "01")) {
+                sDate = startDate.split("-")[1];
+            } else {
+                sDate = startDate;
+            }
+            strArray[0][month + 1] = sDate;
+            strArray[1][month + 1] = Integer.toString(oldExistCount);
+            strArray[2][month + 1] = Integer.toString(newIncCount);
         }
-        oldExistCount=mqmsVoucherMapper.querryFailureMonthCount(startDate,beginDate,failureContent);
-        newIncCount=mqmsVoucherMapper.querryFailureMonthCount(beginDate,endDate,failureContent);
-        if (!Objects.equals(startDate.split("-")[1], "01")){
-            sDate=startDate.split("-")[1];
+        else{
+            //外购变速箱不知道怎么算，暂时空着
         }
-        else
-        {
-            sDate=startDate;
-        }
-        strArray[0][month+1]=sDate;
-        strArray[1][month+1]=Integer.toString(oldExistCount);
-        strArray[2][month+1]=Integer.toString(newIncCount);
         return strArray;
     }
     /**
@@ -516,8 +533,8 @@ public class ChartsController {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        String beginDate=map.get("Monday").toString();
-        String endDate=map.get("Sunday").toString();
+        String beginDate=map.get("Thurs").toString();
+        String endDate=map.get("Wens").toString();
         String[] date=beginDate.split("-");
         String ym=date[0]+"-"+date[1];
         String startDate="2015-01";
@@ -602,8 +619,8 @@ public class ChartsController {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        String beginDate=map.get("Monday").toString();
-        String endDate=map.get("Sunday").toString();
+        String beginDate=map.get("Thurs").toString();
+        String endDate=map.get("Wens").toString();
         //创建二维数组
         String[][] strArray=new String[2][27];
         strArray[0][0]="月份";
@@ -643,9 +660,9 @@ public class ChartsController {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        String beginDate=map.get("Monday").toString();
+        String beginDate=map.get("Thurs").toString();
 //        System.out.println(beginDate);
-        String endDate=map.get("Sunday").toString();
+        String endDate=map.get("Wens").toString();
 //        System.out.println(endDate);
         //获取不同地区
         String[] differentRegions=mqmsSalesPointMapper.searchDifferentSalesPointArea();

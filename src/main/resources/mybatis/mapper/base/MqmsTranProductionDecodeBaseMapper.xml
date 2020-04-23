@@ -14,8 +14,14 @@
                     <if test="tranProModel!=null">
                         `tran_pro_model`,
                     </if>
+                    <if test="tranSingleCode!=null">
+                        `tran_single_code`,
+                    </if>
                     <if test="tranShortCode!=null">
                         `tran_shortCode`,
+                    </if>
+                    <if test="tranTypeDetail!=null">
+                        `tran_type_detail`,
                     </if>
                     <if test="tranWarrantyYears!=null">
                         `tran_warranty_years`,
@@ -34,8 +40,14 @@
                 <if test="tranProModel!=null">
                     #{tranProModel},
                 </if>
+                <if test="tranSingleCode!=null">
+                    #{tranSingleCode},
+                </if>
                 <if test="tranShortCode!=null">
                     #{tranShortCode},
+                </if>
+                <if test="tranTypeDetail!=null">
+                    #{tranTypeDetail},
                 </if>
                 <if test="tranWarrantyYears!=null">
                     #{tranWarrantyYears},
@@ -57,8 +69,14 @@
             <if test="tranProModel != null and tranProModel!=''">
                 `tran_pro_model` = #{tranProModel},
             </if>
+            <if test="tranSingleCode != null and tranSingleCode!=''">
+                `tran_single_code` = #{tranSingleCode},
+            </if>
             <if test="tranShortCode != null and tranShortCode!=''">
                 `tran_shortCode` = #{tranShortCode},
+            </if>
+            <if test="tranTypeDetail != null and tranTypeDetail!=''">
+                `tran_type_detail` = #{tranTypeDetail},
             </if>
             <if test="tranWarrantyYears != null and tranWarrantyYears!=''">
                 `tran_warranty_years` = #{tranWarrantyYears},
@@ -80,8 +98,14 @@
         <if test="set.tranProModel != null and set.tranProModel!=''">
             `tran_pro_model` = #{set.tranProModel},
         </if>
+        <if test="set.tranSingleCode != null and set.tranSingleCode!=''">
+            `tran_single_code` = #{set.tranSingleCode},
+        </if>
         <if test="set.tranShortCode != null and set.tranShortCode!=''">
             `tran_shortCode` = #{set.tranShortCode},
+        </if>
+        <if test="set.tranTypeDetail != null and set.tranTypeDetail!=''">
+            `tran_type_detail` = #{set.tranTypeDetail},
         </if>
         <if test="set.tranWarrantyYears != null and set.tranWarrantyYears!=''">
             `tran_warranty_years` = #{set.tranWarrantyYears},
@@ -123,6 +147,26 @@
                 </foreach>
                 ) and
             </if>
+                <if test="where.tranSingleCodeList != null">
+                    `tran_single_code` in
+                    <foreach collection="where.tranSingleCodeList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test ="where.fuzzyTranSingleCode!=null and where.fuzzyTranSingleCode.size()>0">
+                (
+                <foreach collection="where.fuzzyTranSingleCode"  separator="or" item="item">
+                    `Tran_single_code` like concat('%',#{item},'%')
+                </foreach>
+                ) and
+            </if>
+            <if test ="where.rightFuzzyTranSingleCode!=null and where.rightFuzzyTranSingleCode.size()>0">
+                (
+                <foreach collection="where.rightFuzzyTranSingleCode"  separator="or" item="item">
+                    `Tran_single_code` like concat(#{item},'%')
+                </foreach>
+                ) and
+            </if>
                 <if test="where.tranShortCodeList != null">
                     `tran_shortCode` in
                     <foreach collection="where.tranShortCodeList" close=")" open="(" separator="," item="item">
@@ -140,6 +184,26 @@
                 (
                 <foreach collection="where.rightFuzzyTranShortCode"  separator="or" item="item">
                     `Tran_shortCode` like concat(#{item},'%')
+                </foreach>
+                ) and
+            </if>
+                <if test="where.tranTypeDetailList != null">
+                    `tran_type_detail` in
+                    <foreach collection="where.tranTypeDetailList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test ="where.fuzzyTranTypeDetail!=null and where.fuzzyTranTypeDetail.size()>0">
+                (
+                <foreach collection="where.fuzzyTranTypeDetail"  separator="or" item="item">
+                    `Tran_type_detail` like concat('%',#{item},'%')
+                </foreach>
+                ) and
+            </if>
+            <if test ="where.rightFuzzyTranTypeDetail!=null and where.rightFuzzyTranTypeDetail.size()>0">
+                (
+                <foreach collection="where.rightFuzzyTranTypeDetail"  separator="or" item="item">
+                    `Tran_type_detail` like concat(#{item},'%')
                 </foreach>
                 ) and
             </if>
@@ -190,7 +254,9 @@
     <resultMap type="com.gamc.efactory.model.dataObject.MqmsTranProductionDecode" id="MqmsTranProductionDecodeMap">
         <result property="id" column="id"/>
         <result property="tranProModel" column="tran_pro_model"/>
+        <result property="tranSingleCode" column="tran_single_code"/>
         <result property="tranShortCode" column="tran_shortCode"/>
+        <result property="tranTypeDetail" column="tran_type_detail"/>
         <result property="tranWarrantyYears" column="tran_warranty_years"/>
         <result property="tranWarrantyMillege" column="tran_warranty_millege"/>
     </resultMap>
@@ -207,8 +273,14 @@
             <if test="tranProModel != null and tranProModel!=''">
                 `tran_pro_model` = #{tranProModel} and
             </if>
+            <if test="tranSingleCode != null and tranSingleCode!=''">
+                `tran_single_code` = #{tranSingleCode} and
+            </if>
             <if test="tranShortCode != null and tranShortCode!=''">
                 `tran_shortCode` = #{tranShortCode} and
+            </if>
+            <if test="tranTypeDetail != null and tranTypeDetail!=''">
+                `tran_type_detail` = #{tranTypeDetail} and
             </if>
             <if test="tranWarrantyYears != null and tranWarrantyYears!=''">
                 `tran_warranty_years` = #{tranWarrantyYears} and
@@ -249,6 +321,26 @@
                     </foreach>
                     ) and
                 </if>
+                <if test="tranSingleCodeList != null">
+                    `tran_single_code` in
+                    <foreach collection="tranSingleCodeList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyTranSingleCode!=null and fuzzyTranSingleCode.size()>0">
+                    (
+                    <foreach collection="fuzzyTranSingleCode"  separator="or" item="item">
+                        `Tran_single_code` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyTranSingleCode!=null and rightFuzzyTranSingleCode.size()>0">
+                    (
+                    <foreach collection="rightFuzzyTranSingleCode"  separator="or" item="item">
+                        `Tran_single_code` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
                 <if test="tranShortCodeList != null">
                     `tran_shortCode` in
                     <foreach collection="tranShortCodeList" close=")" open="(" separator="," item="item">
@@ -266,6 +358,26 @@
                     (
                     <foreach collection="rightFuzzyTranShortCode"  separator="or" item="item">
                         `Tran_shortCode` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="tranTypeDetailList != null">
+                    `tran_type_detail` in
+                    <foreach collection="tranTypeDetailList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyTranTypeDetail!=null and fuzzyTranTypeDetail.size()>0">
+                    (
+                    <foreach collection="fuzzyTranTypeDetail"  separator="or" item="item">
+                        `Tran_type_detail` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyTranTypeDetail!=null and rightFuzzyTranTypeDetail.size()>0">
+                    (
+                    <foreach collection="rightFuzzyTranTypeDetail"  separator="or" item="item">
+                        `Tran_type_detail` like concat(#{item},'%')
                     </foreach>
                     ) and
                 </if>
@@ -324,8 +436,14 @@
             <if test="tranProModel != null and tranProModel!=''">
                 `tran_pro_model` = #{tranProModel} and
             </if>
+            <if test="tranSingleCode != null and tranSingleCode!=''">
+                `tran_single_code` = #{tranSingleCode} and
+            </if>
             <if test="tranShortCode != null and tranShortCode!=''">
                 `tran_shortCode` = #{tranShortCode} and
+            </if>
+            <if test="tranTypeDetail != null and tranTypeDetail!=''">
+                `tran_type_detail` = #{tranTypeDetail} and
             </if>
             <if test="tranWarrantyYears != null and tranWarrantyYears!=''">
                 `tran_warranty_years` = #{tranWarrantyYears} and
@@ -366,6 +484,26 @@
                     </foreach>
                     ) and
                 </if>
+                    <if test="tranSingleCodeList != null">
+                        `tran_single_code` in
+                        <foreach collection="tranSingleCodeList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyTranSingleCode!=null and fuzzyTranSingleCode.size()>0">
+                    (
+                    <foreach collection="fuzzyTranSingleCode"  separator="or" item="item">
+                        `Tran_single_code` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyTranSingleCode!=null and rightFuzzyTranSingleCode.size()>0">
+                    (
+                    <foreach collection="rightFuzzyTranSingleCode"  separator="or" item="item">
+                        `Tran_single_code` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
                     <if test="tranShortCodeList != null">
                         `tran_shortCode` in
                         <foreach collection="tranShortCodeList" close=")" open="(" separator="," item="item">
@@ -383,6 +521,26 @@
                     (
                     <foreach collection="rightFuzzyTranShortCode"  separator="or" item="item">
                         `Tran_shortCode` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                    <if test="tranTypeDetailList != null">
+                        `tran_type_detail` in
+                        <foreach collection="tranTypeDetailList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyTranTypeDetail!=null and fuzzyTranTypeDetail.size()>0">
+                    (
+                    <foreach collection="fuzzyTranTypeDetail"  separator="or" item="item">
+                        `Tran_type_detail` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyTranTypeDetail!=null and rightFuzzyTranTypeDetail.size()>0">
+                    (
+                    <foreach collection="rightFuzzyTranTypeDetail"  separator="or" item="item">
+                        `Tran_type_detail` like concat(#{item},'%')
                     </foreach>
                     ) and
                 </if>
@@ -435,7 +593,9 @@
         <trim suffixOverrides=",">
         `id`,
         `tran_pro_model`,
+        `tran_single_code`,
         `tran_shortCode`,
+        `tran_type_detail`,
         `tran_warranty_years`,
         `tran_warranty_millege`,
         </trim>
@@ -464,8 +624,14 @@
                     <if test="fetchFields.fetchFields.tranProModel==true">
                         `tran_pro_model`,
                     </if>
+                    <if test="fetchFields.fetchFields.tranSingleCode==true">
+                        `tran_single_code`,
+                    </if>
                     <if test="fetchFields.fetchFields.tranShortCode==true">
                         `tran_shortCode`,
+                    </if>
+                    <if test="fetchFields.fetchFields.tranTypeDetail==true">
+                        `tran_type_detail`,
                     </if>
                     <if test="fetchFields.fetchFields.tranWarrantyYears==true">
                         `tran_warranty_years`,
@@ -481,8 +647,14 @@
                     <if test="fetchFields.excludeFields.tranProModel==null">
                         `tran_pro_model`,
                     </if>
+                    <if test="fetchFields.excludeFields.tranSingleCode==null">
+                        `tran_single_code`,
+                    </if>
                     <if test="fetchFields.excludeFields.tranShortCode==null">
                         `tran_shortCode`,
+                    </if>
+                    <if test="fetchFields.excludeFields.tranTypeDetail==null">
+                        `tran_type_detail`,
                     </if>
                     <if test="fetchFields.excludeFields.tranWarrantyYears==null">
                         `tran_warranty_years`,

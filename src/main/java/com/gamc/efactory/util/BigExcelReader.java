@@ -360,18 +360,16 @@ public abstract class BigExcelReader {
                         SimpleDateFormat sdfHMS = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
                         if (formatIndex == 14 || formatIndex == 31 || formatIndex == 57 || formatIndex == 58
-                                || (176 <= formatIndex && formatIndex <= 177) || (182 <= formatIndex && formatIndex <= 196)
+                                || (176 == formatIndex)|| (182 <= formatIndex && formatIndex <= 196)
                                 || (210 <= formatIndex && formatIndex <= 213) || formatIndex == 180 ||(208 == formatIndex)) {// 日期
 //                            System.out.println(readValue+"'"+formatIndex+"'"+"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
                             Date date = DateUtil.getJavaDate(Double.parseDouble(readValue));
                             rowDatas[colIdx]=sdf.format(date);
                             rowTypes[colIdx] = STRING;
-
-//                            Date date = org.apache.poi.ss.usermodel.DateUtil.getJavaDate(Double.parseDouble(readValue));
-
                         }
-                        else if(formatIndex==178){
-//                            System.out.println(readValue+"'"+formatIndex+"'"+"TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT");
+                        else if((formatIndex==178)|| (formatIndex == 177)){
+//                           //时分秒
+//                            System.out.println(readValue+"'"+formatIndex+"'"+"BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB");
                             Date date = DateUtil.getJavaDate(Double.parseDouble(readValue));
                             rowDatas[colIdx]=sdfHMS.format(date);
                             rowTypes[colIdx] = STRING;
@@ -379,7 +377,6 @@ public abstract class BigExcelReader {
                         }
                         else if (formatIndex == 20 || formatIndex == 32 || formatIndex == 183 || (200 <= formatIndex && formatIndex <= 209)) {//时间
                             Date date = DateUtil.getJavaDate(Double.parseDouble(readValue));
-//                            System.out.println(readValue+"'"+formatIndex+"'"+"BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB");
                             rowDatas[colIdx]=sdf.format(date);
                             rowTypes[colIdx] = STRING;
 

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gamc.efactory.dao.MqmsEngAndTransMapper">
+    <select id="querryDifferentType" resultType="java.util.HashMap">
+        SELECT DISTINCT `eng_or_trans` FROM `mqms_eng_and_trans`
+    </select>
+    <select id="querryDetailType" resultType="java.util.HashMap">
+        SELECT DISTINCT `type_detail` FROM `mqms_eng_and_trans`
+        WHERE `eng_or_trans`=  #{engOrTrans}
+    </select>
+
+</mapper>

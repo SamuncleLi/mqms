@@ -337,14 +337,18 @@ public class DecodeController {
     public String transTypeRevise(HttpServletRequest request) throws IOException {
         String id = request.getParameter("id");
         String tranProModel = request.getParameter("tran_pro_model");
+        String tranSingleCode = request.getParameter("tran_single_code");
         String tranShortCode = request.getParameter("tran_shortCode");
+        String tranTypeDetail = request.getParameter("tran_type_detail");
         String tranWarrantyYears = request.getParameter("tran_warranty_years");
-        System.out.println(tranWarrantyYears);
+//        System.out.println(tranWarrantyYears);
         String tranWarrantyMillege = request.getParameter("tran_warranty_millege");
         System.out.println(tranWarrantyMillege);
         MqmsTranProductionDecode mqmsTranProductionDecode=new MqmsTranProductionDecode();
         mqmsTranProductionDecode.setTranProModel(tranProModel);
+        mqmsTranProductionDecode.setTranSingleCode(tranSingleCode);
         mqmsTranProductionDecode.setTranShortCode(tranShortCode);
+        mqmsTranProductionDecode.setTranTypeDetail(tranTypeDetail);
         mqmsTranProductionDecode.setTranWarrantyYears(tranWarrantyYears);
         mqmsTranProductionDecode.setTranWarrantyMillege(tranWarrantyMillege);
 
@@ -385,13 +389,17 @@ public class DecodeController {
         JSONArray jsonArray = new JSONArray();
         JSONObject result = new JSONObject();
         String tranProModel = request.getParameter("tranProModel");
+        String tranSingleCode = request.getParameter("tranSingleCode");
         String tranShortCode = request.getParameter("tranShortCode");
+        String tranTypeDetail = request.getParameter("tranTypeDetail");
         String tranWarrantyYears = request.getParameter("tranWarrantyYears");
         String tranWarrantyMillege = request.getParameter("tranWarrantyMillege");
 
         List<HashMap<String, String>> list = mqmsTranProductionDecodeMapper.searchTransTypeInfor(
                 tranProModel,
+                tranSingleCode,
                 tranShortCode,
+                tranTypeDetail,
                 tranWarrantyYears,
                 tranWarrantyMillege);
         for(HashMap obj:list){

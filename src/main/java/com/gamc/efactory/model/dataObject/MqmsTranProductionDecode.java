@@ -10,7 +10,7 @@ import java.util.List;
 */
 public class MqmsTranProductionDecode implements Serializable {
 
-    private static final long serialVersionUID = 1586676523912L;
+    private static final long serialVersionUID = 1587304942853L;
 
 
     /**
@@ -27,10 +27,22 @@ public class MqmsTranProductionDecode implements Serializable {
     private String tranProModel;
 
     /**
-    * 变速箱型号
+    * 变速箱类型1
+    * isNullAble:1
+    */
+    private String tranSingleCode;
+
+    /**
+    * 变速箱类型2
     * isNullAble:1
     */
     private String tranShortCode;
+
+    /**
+    * 变速箱型号
+    * isNullAble:1
+    */
+    private String tranTypeDetail;
 
     /**
     * 变速箱保修年限
@@ -53,9 +65,17 @@ public class MqmsTranProductionDecode implements Serializable {
 
     public String getTranProModel(){return this.tranProModel;}
 
+    public void setTranSingleCode(String tranSingleCode){this.tranSingleCode = tranSingleCode;}
+
+    public String getTranSingleCode(){return this.tranSingleCode;}
+
     public void setTranShortCode(String tranShortCode){this.tranShortCode = tranShortCode;}
 
     public String getTranShortCode(){return this.tranShortCode;}
+
+    public void setTranTypeDetail(String tranTypeDetail){this.tranTypeDetail = tranTypeDetail;}
+
+    public String getTranTypeDetail(){return this.tranTypeDetail;}
 
     public void setTranWarrantyYears(String tranWarrantyYears){this.tranWarrantyYears = tranWarrantyYears;}
 
@@ -69,7 +89,9 @@ public class MqmsTranProductionDecode implements Serializable {
         return "MqmsTranProductionDecode{" +
                 "id='" + id + '\'' +
                 "tranProModel='" + tranProModel + '\'' +
+                "tranSingleCode='" + tranSingleCode + '\'' +
                 "tranShortCode='" + tranShortCode + '\'' +
+                "tranTypeDetail='" + tranTypeDetail + '\'' +
                 "tranWarrantyYears='" + tranWarrantyYears + '\'' +
                 "tranWarrantyMillege='" + tranWarrantyMillege + '\'' +
             '}';
@@ -144,6 +166,18 @@ public class MqmsTranProductionDecode implements Serializable {
         private List<String> rightFuzzyTranProModel;
 
         public List<String> getRightFuzzyTranProModel(){return this.rightFuzzyTranProModel;}
+        private List<String> tranSingleCodeList;
+
+        public List<String> getTranSingleCodeList(){return this.tranSingleCodeList;}
+
+
+        private List<String> fuzzyTranSingleCode;
+
+        public List<String> getFuzzyTranSingleCode(){return this.fuzzyTranSingleCode;}
+
+        private List<String> rightFuzzyTranSingleCode;
+
+        public List<String> getRightFuzzyTranSingleCode(){return this.rightFuzzyTranSingleCode;}
         private List<String> tranShortCodeList;
 
         public List<String> getTranShortCodeList(){return this.tranShortCodeList;}
@@ -156,6 +190,18 @@ public class MqmsTranProductionDecode implements Serializable {
         private List<String> rightFuzzyTranShortCode;
 
         public List<String> getRightFuzzyTranShortCode(){return this.rightFuzzyTranShortCode;}
+        private List<String> tranTypeDetailList;
+
+        public List<String> getTranTypeDetailList(){return this.tranTypeDetailList;}
+
+
+        private List<String> fuzzyTranTypeDetail;
+
+        public List<String> getFuzzyTranTypeDetail(){return this.fuzzyTranTypeDetail;}
+
+        private List<String> rightFuzzyTranTypeDetail;
+
+        public List<String> getRightFuzzyTranTypeDetail(){return this.rightFuzzyTranTypeDetail;}
         private List<String> tranWarrantyYearsList;
 
         public List<String> getTranWarrantyYearsList(){return this.tranWarrantyYearsList;}
@@ -270,6 +316,51 @@ public class MqmsTranProductionDecode implements Serializable {
             return this;
         }
 
+        public QueryBuilder fuzzyTranSingleCode (List<String> fuzzyTranSingleCode){
+            this.fuzzyTranSingleCode = fuzzyTranSingleCode;
+            return this;
+        }
+
+        public QueryBuilder fuzzyTranSingleCode (String ... fuzzyTranSingleCode){
+            this.fuzzyTranSingleCode = solveNullList(fuzzyTranSingleCode);
+            return this;
+        }
+
+        public QueryBuilder rightFuzzyTranSingleCode (List<String> rightFuzzyTranSingleCode){
+            this.rightFuzzyTranSingleCode = rightFuzzyTranSingleCode;
+            return this;
+        }
+
+        public QueryBuilder rightFuzzyTranSingleCode (String ... rightFuzzyTranSingleCode){
+            this.rightFuzzyTranSingleCode = solveNullList(rightFuzzyTranSingleCode);
+            return this;
+        }
+
+        public QueryBuilder tranSingleCode(String tranSingleCode){
+            setTranSingleCode(tranSingleCode);
+            return this;
+        }
+
+        public QueryBuilder tranSingleCodeList(String ... tranSingleCode){
+            this.tranSingleCodeList = solveNullList(tranSingleCode);
+            return this;
+        }
+
+        public QueryBuilder tranSingleCodeList(List<String> tranSingleCode){
+            this.tranSingleCodeList = tranSingleCode;
+            return this;
+        }
+
+        public QueryBuilder fetchTranSingleCode(){
+            setFetchFields("fetchFields","tranSingleCode");
+            return this;
+        }
+
+        public QueryBuilder excludeTranSingleCode(){
+            setFetchFields("excludeFields","tranSingleCode");
+            return this;
+        }
+
         public QueryBuilder fuzzyTranShortCode (List<String> fuzzyTranShortCode){
             this.fuzzyTranShortCode = fuzzyTranShortCode;
             return this;
@@ -312,6 +403,51 @@ public class MqmsTranProductionDecode implements Serializable {
 
         public QueryBuilder excludeTranShortCode(){
             setFetchFields("excludeFields","tranShortCode");
+            return this;
+        }
+
+        public QueryBuilder fuzzyTranTypeDetail (List<String> fuzzyTranTypeDetail){
+            this.fuzzyTranTypeDetail = fuzzyTranTypeDetail;
+            return this;
+        }
+
+        public QueryBuilder fuzzyTranTypeDetail (String ... fuzzyTranTypeDetail){
+            this.fuzzyTranTypeDetail = solveNullList(fuzzyTranTypeDetail);
+            return this;
+        }
+
+        public QueryBuilder rightFuzzyTranTypeDetail (List<String> rightFuzzyTranTypeDetail){
+            this.rightFuzzyTranTypeDetail = rightFuzzyTranTypeDetail;
+            return this;
+        }
+
+        public QueryBuilder rightFuzzyTranTypeDetail (String ... rightFuzzyTranTypeDetail){
+            this.rightFuzzyTranTypeDetail = solveNullList(rightFuzzyTranTypeDetail);
+            return this;
+        }
+
+        public QueryBuilder tranTypeDetail(String tranTypeDetail){
+            setTranTypeDetail(tranTypeDetail);
+            return this;
+        }
+
+        public QueryBuilder tranTypeDetailList(String ... tranTypeDetail){
+            this.tranTypeDetailList = solveNullList(tranTypeDetail);
+            return this;
+        }
+
+        public QueryBuilder tranTypeDetailList(List<String> tranTypeDetail){
+            this.tranTypeDetailList = tranTypeDetail;
+            return this;
+        }
+
+        public QueryBuilder fetchTranTypeDetail(){
+            setFetchFields("fetchFields","tranTypeDetail");
+            return this;
+        }
+
+        public QueryBuilder excludeTranTypeDetail(){
+            setFetchFields("excludeFields","tranTypeDetail");
             return this;
         }
 
@@ -471,6 +607,18 @@ public class MqmsTranProductionDecode implements Serializable {
         private List<String> rightFuzzyTranProModel;
 
         public List<String> getRightFuzzyTranProModel(){return this.rightFuzzyTranProModel;}
+        private List<String> tranSingleCodeList;
+
+        public List<String> getTranSingleCodeList(){return this.tranSingleCodeList;}
+
+
+        private List<String> fuzzyTranSingleCode;
+
+        public List<String> getFuzzyTranSingleCode(){return this.fuzzyTranSingleCode;}
+
+        private List<String> rightFuzzyTranSingleCode;
+
+        public List<String> getRightFuzzyTranSingleCode(){return this.rightFuzzyTranSingleCode;}
         private List<String> tranShortCodeList;
 
         public List<String> getTranShortCodeList(){return this.tranShortCodeList;}
@@ -483,6 +631,18 @@ public class MqmsTranProductionDecode implements Serializable {
         private List<String> rightFuzzyTranShortCode;
 
         public List<String> getRightFuzzyTranShortCode(){return this.rightFuzzyTranShortCode;}
+        private List<String> tranTypeDetailList;
+
+        public List<String> getTranTypeDetailList(){return this.tranTypeDetailList;}
+
+
+        private List<String> fuzzyTranTypeDetail;
+
+        public List<String> getFuzzyTranTypeDetail(){return this.fuzzyTranTypeDetail;}
+
+        private List<String> rightFuzzyTranTypeDetail;
+
+        public List<String> getRightFuzzyTranTypeDetail(){return this.rightFuzzyTranTypeDetail;}
         private List<String> tranWarrantyYearsList;
 
         public List<String> getTranWarrantyYearsList(){return this.tranWarrantyYearsList;}
@@ -564,6 +724,36 @@ public class MqmsTranProductionDecode implements Serializable {
             return this;
         }
 
+        public ConditionBuilder fuzzyTranSingleCode (List<String> fuzzyTranSingleCode){
+            this.fuzzyTranSingleCode = fuzzyTranSingleCode;
+            return this;
+        }
+
+        public ConditionBuilder fuzzyTranSingleCode (String ... fuzzyTranSingleCode){
+            this.fuzzyTranSingleCode = solveNullList(fuzzyTranSingleCode);
+            return this;
+        }
+
+        public ConditionBuilder rightFuzzyTranSingleCode (List<String> rightFuzzyTranSingleCode){
+            this.rightFuzzyTranSingleCode = rightFuzzyTranSingleCode;
+            return this;
+        }
+
+        public ConditionBuilder rightFuzzyTranSingleCode (String ... rightFuzzyTranSingleCode){
+            this.rightFuzzyTranSingleCode = solveNullList(rightFuzzyTranSingleCode);
+            return this;
+        }
+
+        public ConditionBuilder tranSingleCodeList(String ... tranSingleCode){
+            this.tranSingleCodeList = solveNullList(tranSingleCode);
+            return this;
+        }
+
+        public ConditionBuilder tranSingleCodeList(List<String> tranSingleCode){
+            this.tranSingleCodeList = tranSingleCode;
+            return this;
+        }
+
         public ConditionBuilder fuzzyTranShortCode (List<String> fuzzyTranShortCode){
             this.fuzzyTranShortCode = fuzzyTranShortCode;
             return this;
@@ -591,6 +781,36 @@ public class MqmsTranProductionDecode implements Serializable {
 
         public ConditionBuilder tranShortCodeList(List<String> tranShortCode){
             this.tranShortCodeList = tranShortCode;
+            return this;
+        }
+
+        public ConditionBuilder fuzzyTranTypeDetail (List<String> fuzzyTranTypeDetail){
+            this.fuzzyTranTypeDetail = fuzzyTranTypeDetail;
+            return this;
+        }
+
+        public ConditionBuilder fuzzyTranTypeDetail (String ... fuzzyTranTypeDetail){
+            this.fuzzyTranTypeDetail = solveNullList(fuzzyTranTypeDetail);
+            return this;
+        }
+
+        public ConditionBuilder rightFuzzyTranTypeDetail (List<String> rightFuzzyTranTypeDetail){
+            this.rightFuzzyTranTypeDetail = rightFuzzyTranTypeDetail;
+            return this;
+        }
+
+        public ConditionBuilder rightFuzzyTranTypeDetail (String ... rightFuzzyTranTypeDetail){
+            this.rightFuzzyTranTypeDetail = solveNullList(rightFuzzyTranTypeDetail);
+            return this;
+        }
+
+        public ConditionBuilder tranTypeDetailList(String ... tranTypeDetail){
+            this.tranTypeDetailList = solveNullList(tranTypeDetail);
+            return this;
+        }
+
+        public ConditionBuilder tranTypeDetailList(List<String> tranTypeDetail){
+            this.tranTypeDetailList = tranTypeDetail;
             return this;
         }
 
@@ -686,8 +906,16 @@ public class MqmsTranProductionDecode implements Serializable {
             this.obj.setTranProModel(tranProModel);
             return this;
         }
+        public Builder tranSingleCode(String tranSingleCode){
+            this.obj.setTranSingleCode(tranSingleCode);
+            return this;
+        }
         public Builder tranShortCode(String tranShortCode){
             this.obj.setTranShortCode(tranShortCode);
+            return this;
+        }
+        public Builder tranTypeDetail(String tranTypeDetail){
+            this.obj.setTranTypeDetail(tranTypeDetail);
             return this;
         }
         public Builder tranWarrantyYears(String tranWarrantyYears){
