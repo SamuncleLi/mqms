@@ -61,78 +61,102 @@ public class ProductionServiceImpl implements ProductionService {
         public void run() {
 
             for (MqmsProduction mqmsProductionRecord : mqmsProductionList) {
-                //短码
-                String vinShortCode = mqmsProductionRecord.getVin().substring(0, 5);
-                mqmsProductionRecord.setShortCode(vinShortCode);
-                //地域
+                if (StringUtil.isNotEmpty(mqmsProductionRecord.getVin())&&mqmsProductionRecord.getVin().length()>7 ){
+                    //短码
+                    String vinShortCode = mqmsProductionRecord.getVin().substring(0, 5);
+                    mqmsProductionRecord.setShortCode(vinShortCode);
+                    //地域
 
-                //机型
-                MqmsVinDecode mqmsVinDecode = mqmsVinDecodeMapper.vinDecode(vinShortCode);
-                if (mqmsVinDecode.getVinEngType()!=null) {
-                    mqmsProductionRecord.setEngType(mqmsVinDecode.getVinEngType());
-                }
-                else {
-                    mqmsProductionRecord.setEngType("");
-                }
-                //系列
-                if (mqmsVinDecode.getVinSeries()!=null) {
-                    mqmsProductionRecord.setSerialCode(mqmsVinDecode.getVinSeries());
-                }
-                //车型简码
-                mqmsProductionRecord.setCarShortCode(vinShortCode.substring(3, 5));
-                //车型
-                if (mqmsVinDecode.getVinCarType()!=null) {
-                    mqmsProductionRecord.setCarModel(mqmsVinDecode.getVinCarType());
-                }
-                else{
-                    mqmsProductionRecord.setCarModel("");
-
-                }
-                //内部车型代号
-                if(mqmsVinDecode.getVinCarType()!=null) {
-                    mqmsProductionRecord.setCarSimpleCode(mqmsVinDecode.getVinCarShortCode());
-                }
-                else{
-                    mqmsProductionRecord.setCarSimpleCode("");
-                }
-                //生产年/月
-                String proDate="";
-                if (StringUtil.isEmpty(mqmsProductionRecord.getPassTime())) {
-                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-                    try {
-                        Date date =  sdf.parse(mqmsProductionRecord.getPassTime());
-                        proDate =sdf.format(date);
-
-                    } catch (ParseException e) {
-                        e.printStackTrace();
+                    //机型
+                    MqmsVinDecode mqmsVinDecode = mqmsVinDecodeMapper.vinDecode(vinShortCode);
+                    if (StringUtil.isNotEmpty(mqmsVinDecode.getVinEngType())) {
+                        mqmsProductionRecord.setEngType(mqmsVinDecode.getVinEngType());
                     }
-                    System.out.println(proDate);
-                    mqmsProductionRecord.setProductionYear(proDate.split("-")[0]);
-                    mqmsProductionRecord.setProductionMonth(proDate.split("-")[1]);
-                    //区域暂时空着
-                    mqmsProductionRecord.setDistrictName("");
-                } else {
-                    mqmsProductionRecord.setProductionYear("");
-                    mqmsProductionRecord.setProductionMonth("");
-                    mqmsProductionRecord.setDistrictName("");
+                    else {
+                        mqmsProductionRecord.setEngType("");
+                    }
+                    //系列
+                    if (StringUtil.isNotEmpty(mqmsVinDecode.getVinSeries())) {
+                        mqmsProductionRecord.setSerialCode(mqmsVinDecode.getVinSeries());
+                    }
+                    //车型简码
+                    mqmsProductionRecord.setCarShortCode(vinShortCode.substring(3, 5));
+                    //车型
+                    if (StringUtil.isNotEmpty(mqmsVinDecode.getVinCarType())) {
+                        mqmsProductionRecord.setCarModel(mqmsVinDecode.getVinCarType());
+                    }
+                    else{
+                        mqmsProductionRecord.setCarModel("");
+
+                    }
+                    //内部车型代号
+                    if(StringUtil.isNotEmpty(mqmsVinDecode.getVinCarType())) {
+                        mqmsProductionRecord.setCarSimpleCode(mqmsVinDecode.getVinCarShortCode());
+                    }
+                    else{
+                        mqmsProductionRecord.setCarSimpleCode("");
+                    }
+                    //生产年/月
+                    String proDate="";
+                    if (StringUtil.isNotEmpty(mqmsProductionRecord.getPassTime())) {
+                        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                        try {
+                            Date date =  sdf.parse(mqmsProductionRecord.getPassTime());
+                            proDate =sdf.format(date);
+
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }
+//                    System.out.println(proDate);
+                        mqmsProductionRecord.setProductionYear(proDate.split("-")[0]);
+                        mqmsProductionRecord.setProductionMonth(proDate.split("-")[1]);
+                        //区域暂时空着
+                        mqmsProductionRecord.setDistrictName("");
+                    } else {
+                        mqmsProductionRecord.setProductionYear("");
+                        mqmsProductionRecord.setProductionMonth("");
+                        //区域暂时空着
+                        mqmsProductionRecord.setDistrictName("");
+                    }
+
+                    //变速箱短码
+                    mqmsProductionRecord.setTransmissionShortCode(mqmsProductionRecord.getVin().substring(6, 7));
+                    //变速箱简码
+                    String trsmCode ="" ;
+                    if (trsmCode.length()>5) {
+                        trsmCode =mqmsProductionRecord.getTransmissionCode().replace("+", "");
+                        String trsmType = trsmCode.substring(0, 5);
+                        mqmsProductionRecord.setTransmissionSimpleCode(trsmType);
+
+                        //变速箱类型
+                        if (StringUtil.isNotEmpty(mqmsTranProductionDecodeMapper.selectTranProductionCode(trsmType))){
+                            String transmissionType=mqmsTranProductionDecodeMapper.selectTranProductionCode(trsmType))
+                            mqmsProductionRecord.setTransmissionType(transmissionType);
+                        }
+                        else
+                        {
+                            mqmsProductionRecord.setTransmissionType("");
+
+                        }
+                    }
+                    else
+                    {
+                        mqmsProductionRecord.setTransmissionSimpleCode("");
+                        mqmsProductionRecord.setTransmissionType("");
+
+                    }
+                    //插入操作
+                    String vin = mqmsProductionRecord.getVin();
+                    int cnt = mqmsProductionMapper.selectByVin(vin);
+                    if (cnt == 0) {
+                        mqmsProductionMapper.insertMqmsProduction(mqmsProductionRecord);
+
+                    } else {
+                        mqmsProductionMapper.updateByVin(mqmsProductionRecord);
+                    }
                 }
-
-                //变速箱短码
-                mqmsProductionRecord.setTransmissionShortCode(mqmsProductionRecord.getVin().substring(6, 7));
-                //变速箱简码
-                String trsmCode = mqmsProductionRecord.getTransmissionCode().replace("+", "");
-                String trsmType = trsmCode.substring(0, 5);
-                mqmsProductionRecord.setTransmissionSimpleCode(trsmType);
-                //变速箱类型
-                mqmsProductionRecord.setTransmissionType(mqmsTranProductionDecodeMapper.selectTranProductionCode(trsmType));
-                //插入操作
-                String vin = mqmsProductionRecord.getVin();
-                int cnt = mqmsProductionMapper.selectByVin(vin);
-                if (cnt == 0) {
-                    mqmsProductionMapper.insertMqmsProduction(mqmsProductionRecord);
-
-                } else {
-                    mqmsProductionMapper.updateByVin(mqmsProductionRecord);
+                else{
+                    System.out.println(mqmsProductionRecord.getEgtypeCode());
                 }
             }
         }
@@ -186,6 +210,7 @@ public class ProductionServiceImpl implements ProductionService {
     }
     private void saveAll(List<List<Object>> lists, HttpServletRequest request) throws IllegalAccessException {
         try {
+            System.out.println(lists.size());
 //            int threadacCount=((ThreadPoolExecutor)executorService).getPoolSize();
 //            int threadacCount=((ThreadPoolExecutor)executorService).getActiveCount();
             if (lists.size() > 0)  {
@@ -195,7 +220,7 @@ public class ProductionServiceImpl implements ProductionService {
                 List<MqmsProduction> mqmsProductionList = new ArrayList<>();
                 SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
                 User user = (User) request.getSession().getAttribute("user");
-                for (int i = 1; i < lists.size(); i++) {
+                for (int i = 0; i < lists.size(); i++) {
 //                System.out.println("222222222222222222222222222");
                     List<Object> rowData = lists.get(i);
                     //利用反射遍历对属性赋值
@@ -264,14 +289,19 @@ public class ProductionServiceImpl implements ProductionService {
         @Override
         public void run() {
             for (MqmsProductionRaw mqmsProductionRawRecord : mqmsProductionRawList) {
-                String vin = mqmsProductionRawRecord.getVin();
-                int cnt = mqmsProductionRawMapper.selectByVin(vin);
-                if (cnt == 0) {
-                    mqmsProductionRawMapper.insertMqmsProductionRaw(mqmsProductionRawRecord);
+                if (StringUtil.isNotEmpty(mqmsProductionRawRecord.getVin())&&mqmsProductionRawRecord.getVin().length()>7) {
+                    String vin = mqmsProductionRawRecord.getVin();
+                    int cnt = mqmsProductionRawMapper.selectByVin(vin);
+                    if (cnt == 0) {
+                        mqmsProductionRawMapper.insertMqmsProductionRaw(mqmsProductionRawRecord);
 //                        System.out.println(" 插入 " + mqmsProductionRawRecord);
-                } else {
-                    mqmsProductionRawMapper.updateByVin(mqmsProductionRawRecord);
+                    } else {
+                        mqmsProductionRawMapper.updateByVin(mqmsProductionRawRecord);
 //                        System.out.println(" 更新 " + mqmsProductionRawRecord);
+                    }
+                }
+                else{
+                    System.out.println(mqmsProductionRawRecord.getEgtypeCode());
                 }
             }
         }
