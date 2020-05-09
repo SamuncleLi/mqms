@@ -183,22 +183,6 @@ public class ImportExcelController {
             else{
                 return "文件上传失败";}
         }
-
-//    public String exImportSalesData(@RequestParam()MultipartFile file, HttpSession session) {
-//
-//        boolean a = false;
-//
-//        String fileName = file.getOriginalFilename();
-////        System.out.println("111111111111111111111111111111111111111111");
-////        System.out.println(fileName);
-//
-//        try {
-//            a = salesService.batchImport(fileName, file, session);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//        return "数据成功导入";
-
     /**
      * 复制文件到服务器本地
      * @param multipartFile

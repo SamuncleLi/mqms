@@ -32,7 +32,7 @@ import java.util.concurrent.*;
 public class VeiDataServiceImpl implements VeiDataService {
 
     private ThreadFactory threadFactory = new ThreadFactoryBuilder().setNameFormat("sendEmailImmediately-pool-%d").build();
-    private ExecutorService executorService = new ThreadPoolExecutor(8, 20, 100, TimeUnit.MILLISECONDS, new LinkedBlockingQueue<Runnable>(50), threadFactory, new ThreadPoolExecutor.AbortPolicy());
+    private ExecutorService executorService = new ThreadPoolExecutor(8, 16, 100, TimeUnit.MILLISECONDS, new LinkedBlockingQueue<Runnable>(40), threadFactory, new ThreadPoolExecutor.AbortPolicy());
     @Autowired
     private MqmsVoucherRawMapper mqmsVoucherRawMapper;
     @Autowired
@@ -355,9 +355,11 @@ public class VeiDataServiceImpl implements VeiDataService {
                 executorService.execute(importCall);
                 executorService.execute(importCallRaw);
             }
-            boolean allThreadsIsUse=((ThreadPoolExecutor) executorService).getActiveCount()<((ThreadPoolExecutor) executorService).getMaximumPoolSize()-1;
+            boolean allThreadsIsUse=(((ThreadPoolExecutor) executorService).getTaskCount()-((ThreadPoolExecutor) executorService).getCompletedTaskCount())<((ThreadPoolExecutor)executorService).getMaximumPoolSize();
+
             while (!allThreadsIsUse) {
-                allThreadsIsUse=((ThreadPoolExecutor) executorService).getActiveCount()<((ThreadPoolExecutor) executorService).getMaximumPoolSize()-1;
+                allThreadsIsUse=(((ThreadPoolExecutor) executorService).getTaskCount()-((ThreadPoolExecutor) executorService).getCompletedTaskCount())<((ThreadPoolExecutor) executorService).getMaximumPoolSize();
+//                System.out.println(((ThreadPoolExecutor) executorService).getTaskCount());
             }
         } catch (Exception e) {
             e.printStackTrace();

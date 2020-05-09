@@ -52,4 +52,5 @@ CREATE TABLE `mqms_production` (
   `applier_name` varchar(255) DEFAULT NULL COMMENT '上传人',
   `apply_time` varchar(255) DEFAULT NULL COMMENT '上传时间',
   PRIMARY KEY (`production_id`)
+  UNIQUE KEY `VIN码` (`vin`) USING BTREE
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;

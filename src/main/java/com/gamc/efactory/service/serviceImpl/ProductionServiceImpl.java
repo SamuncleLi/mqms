@@ -31,7 +31,7 @@ import java.util.concurrent.*;
 public class ProductionServiceImpl implements ProductionService {
 
     private ThreadFactory threadFactory = new ThreadFactoryBuilder().setNameFormat("sendEmailImmediately-pool-%d").build();
-    private ExecutorService executorService = new ThreadPoolExecutor(8, 20, 100, TimeUnit.MILLISECONDS,    new LinkedBlockingQueue<Runnable>(50),threadFactory,new ThreadPoolExecutor.AbortPolicy());
+    private ExecutorService executorService = new ThreadPoolExecutor(8, 16, 100, TimeUnit.MILLISECONDS,    new LinkedBlockingQueue<Runnable>(40),threadFactory,new ThreadPoolExecutor.AbortPolicy());
     @Autowired
     private MqmsProductionRawMapper mqmsProductionRawMapper;
     @Autowired
@@ -68,33 +68,34 @@ public class ProductionServiceImpl implements ProductionService {
                     //地域
 
                     //机型
-                    MqmsVinDecode mqmsVinDecode = mqmsVinDecodeMapper.vinDecode(vinShortCode);
-                    if (StringUtil.isNotEmpty(mqmsVinDecode.getVinEngType())) {
-                        mqmsProductionRecord.setEngType(mqmsVinDecode.getVinEngType());
-                    }
-                    else {
-                        mqmsProductionRecord.setEngType("");
-                    }
-                    //系列
-                    if (StringUtil.isNotEmpty(mqmsVinDecode.getVinSeries())) {
-                        mqmsProductionRecord.setSerialCode(mqmsVinDecode.getVinSeries());
-                    }
-                    //车型简码
-                    mqmsProductionRecord.setCarShortCode(vinShortCode.substring(3, 5));
-                    //车型
-                    if (StringUtil.isNotEmpty(mqmsVinDecode.getVinCarType())) {
-                        mqmsProductionRecord.setCarModel(mqmsVinDecode.getVinCarType());
-                    }
-                    else{
-                        mqmsProductionRecord.setCarModel("");
+                    MqmsVinDecode mqmsVinDecode= new MqmsVinDecode();
+                    if (mqmsVinDecodeMapper.vinDecode(vinShortCode)!=null) {
 
-                    }
-                    //内部车型代号
-                    if(StringUtil.isNotEmpty(mqmsVinDecode.getVinCarType())) {
-                        mqmsProductionRecord.setCarSimpleCode(mqmsVinDecode.getVinCarShortCode());
-                    }
-                    else{
-                        mqmsProductionRecord.setCarSimpleCode("");
+
+                        if (StringUtil.isNotEmpty(mqmsVinDecode.getVinEngType())) {
+                            mqmsProductionRecord.setEngType(mqmsVinDecode.getVinEngType());
+                        } else {
+                            mqmsProductionRecord.setEngType("");
+                        }
+                        //系列
+                        if (StringUtil.isNotEmpty(mqmsVinDecode.getVinSeries())) {
+                            mqmsProductionRecord.setSerialCode(mqmsVinDecode.getVinSeries());
+                        }
+                        //车型简码
+                        mqmsProductionRecord.setCarShortCode(vinShortCode.substring(3, 5));
+                        //车型
+                        if (StringUtil.isNotEmpty(mqmsVinDecode.getVinCarType())) {
+                            mqmsProductionRecord.setCarModel(mqmsVinDecode.getVinCarType());
+                        } else {
+                            mqmsProductionRecord.setCarModel("");
+
+                        }
+                        //内部车型代号
+                        if (StringUtil.isNotEmpty(mqmsVinDecode.getVinCarType())) {
+                            mqmsProductionRecord.setCarSimpleCode(mqmsVinDecode.getVinCarShortCode());
+                        } else {
+                            mqmsProductionRecord.setCarSimpleCode("");
+                        }
                     }
                     //生产年/月
                     String proDate="";
@@ -105,6 +106,7 @@ public class ProductionServiceImpl implements ProductionService {
                             proDate =sdf.format(date);
 
                         } catch (ParseException e) {
+                            System.out.println(mqmsProductionRecord.getVin());
                             e.printStackTrace();
                         }
 //                    System.out.println(proDate);
@@ -123,14 +125,14 @@ public class ProductionServiceImpl implements ProductionService {
                     mqmsProductionRecord.setTransmissionShortCode(mqmsProductionRecord.getVin().substring(6, 7));
                     //变速箱简码
                     String trsmCode ="" ;
-                    if (trsmCode.length()>5) {
+                    if (StringUtil.isNotEmpty(mqmsProductionRecord.getTransmissionCode())&&mqmsProductionRecord.getTransmissionCode().length()>5) {
                         trsmCode =mqmsProductionRecord.getTransmissionCode().replace("+", "");
                         String trsmType = trsmCode.substring(0, 5);
                         mqmsProductionRecord.setTransmissionSimpleCode(trsmType);
 
                         //变速箱类型
                         if (StringUtil.isNotEmpty(mqmsTranProductionDecodeMapper.selectTranProductionCode(trsmType))){
-                            String transmissionType=mqmsTranProductionDecodeMapper.selectTranProductionCode(trsmType))
+                            String transmissionType=mqmsTranProductionDecodeMapper.selectTranProductionCode(trsmType);
                             mqmsProductionRecord.setTransmissionType(transmissionType);
                         }
                         else
@@ -268,9 +270,11 @@ public class ProductionServiceImpl implements ProductionService {
 
             }
 
-            boolean allThreadsIsUse=((ThreadPoolExecutor) executorService).getActiveCount()<((ThreadPoolExecutor) executorService).getMaximumPoolSize()-1;
+            boolean allThreadsIsUse=(((ThreadPoolExecutor) executorService).getTaskCount()-((ThreadPoolExecutor) executorService).getCompletedTaskCount())<((ThreadPoolExecutor)executorService).getMaximumPoolSize();
+
             while (!allThreadsIsUse) {
-                allThreadsIsUse=((ThreadPoolExecutor) executorService).getActiveCount()<((ThreadPoolExecutor) executorService).getMaximumPoolSize()-1;
+                allThreadsIsUse=(((ThreadPoolExecutor) executorService).getTaskCount()-((ThreadPoolExecutor) executorService).getCompletedTaskCount())<((ThreadPoolExecutor) executorService).getMaximumPoolSize();
+//                System.out.println(((ThreadPoolExecutor) executorService).getTaskCount());
             }
         } catch (Exception e) {
             e.printStackTrace();

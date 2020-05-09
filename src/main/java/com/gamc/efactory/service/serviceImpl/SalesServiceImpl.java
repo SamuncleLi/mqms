@@ -31,7 +31,7 @@ import java.util.concurrent.*;
 public class SalesServiceImpl implements SalesService {
     private ThreadFactory threadFactory = new ThreadFactoryBuilder().setNameFormat("sendEmailImmediately-pool-%d").build();
     //    private ExecutorService executorService = new ThreadPoolExecutor(8, 40, 1000, TimeUnit.MILLISECONDS, new SynchronousQueue<Runnable>(),threadFactory,new ThreadPoolExecutor.AbortPolicy());
-    private ExecutorService executorService = new ThreadPoolExecutor(16, 80, 100, TimeUnit.MILLISECONDS,    new LinkedBlockingQueue<Runnable>(100),threadFactory,new ThreadPoolExecutor.AbortPolicy());
+    private ExecutorService executorService = new ThreadPoolExecutor(8, 16, 100, TimeUnit.MILLISECONDS,    new LinkedBlockingQueue<Runnable>(40),threadFactory,new ThreadPoolExecutor.AbortPolicy());
 
     @Autowired
     private MqmsSalesRawMapper mqmsSalesRawMapper;
@@ -153,9 +153,11 @@ public class SalesServiceImpl implements SalesService {
             }
 
 //线程活跃数判断，当达到最大线程数时，
-            boolean allThreadsIsUse=((ThreadPoolExecutor) executorService).getActiveCount()<((ThreadPoolExecutor) executorService).getMaximumPoolSize()-1;
+            boolean allThreadsIsUse=(((ThreadPoolExecutor) executorService).getTaskCount()-((ThreadPoolExecutor) executorService).getCompletedTaskCount())<((ThreadPoolExecutor)executorService).getMaximumPoolSize();
+
             while (!allThreadsIsUse) {
-                allThreadsIsUse=((ThreadPoolExecutor) executorService).getActiveCount()<((ThreadPoolExecutor) executorService).getMaximumPoolSize()-1;
+                allThreadsIsUse=(((ThreadPoolExecutor) executorService).getTaskCount()-((ThreadPoolExecutor) executorService).getCompletedTaskCount())<((ThreadPoolExecutor) executorService).getMaximumPoolSize();
+//                System.out.println(((ThreadPoolExecutor) executorService).getTaskCount());
             }
 
 
