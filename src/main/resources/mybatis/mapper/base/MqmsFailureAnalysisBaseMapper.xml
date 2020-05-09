@@ -26,6 +26,9 @@
                     <if test="failureAnalystComment!=null">
                         `failure_analyst_comment`,
                     </if>
+                    <if test="firstChangeCode!=null">
+                        `first_change_code`,
+                    </if>
                     <if test="saoId!=null">
                         `sao_id`,
                     </if>
@@ -63,6 +66,9 @@
                 </if>
                 <if test="failureAnalystComment!=null">
                     #{failureAnalystComment},
+                </if>
+                <if test="firstChangeCode!=null">
+                    #{firstChangeCode},
                 </if>
                 <if test="saoId!=null">
                     #{saoId},
@@ -105,6 +111,9 @@
             <if test="failureAnalystComment != null and failureAnalystComment!=''">
                 `failure_analyst_comment` = #{failureAnalystComment},
             </if>
+            <if test="firstChangeCode != null and firstChangeCode!=''">
+                `first_change_code` = #{firstChangeCode},
+            </if>
             <if test="saoId != null">
                 `sao_id` = #{saoId},
             </if>
@@ -145,6 +154,9 @@
         </if>
         <if test="set.failureAnalystComment != null and set.failureAnalystComment!=''">
             `failure_analyst_comment` = #{set.failureAnalystComment},
+        </if>
+        <if test="set.firstChangeCode != null and set.firstChangeCode!=''">
+            `first_change_code` = #{set.firstChangeCode},
         </if>
         <if test="set.saoId != null">
             `sao_id` = #{set.saoId},
@@ -259,6 +271,26 @@
                 </foreach>
                 ) and
             </if>
+                <if test="where.firstChangeCodeList != null">
+                    `first_change_code` in
+                    <foreach collection="where.firstChangeCodeList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test ="where.fuzzyFirstChangeCode!=null and where.fuzzyFirstChangeCode.size()>0">
+                (
+                <foreach collection="where.fuzzyFirstChangeCode"  separator="or" item="item">
+                    `First_change_code` like concat('%',#{item},'%')
+                </foreach>
+                ) and
+            </if>
+            <if test ="where.rightFuzzyFirstChangeCode!=null and where.rightFuzzyFirstChangeCode.size()>0">
+                (
+                <foreach collection="where.rightFuzzyFirstChangeCode"  separator="or" item="item">
+                    `First_change_code` like concat(#{item},'%')
+                </foreach>
+                ) and
+            </if>
                 <if test="where.saoIdList != null">
                     `sao_id` in
                     <foreach collection="where.saoIdList" close=")" open="(" separator="," item="item">
@@ -362,6 +394,7 @@
         <result property="failureAnalystName" column="failure_analyst_name"/>
         <result property="failureAnalystDepartment" column="failure_analyst_department"/>
         <result property="failureAnalystComment" column="failure_analyst_comment"/>
+        <result property="firstChangeCode" column="first_change_code"/>
         <result property="saoId" column="sao_id"/>
         <result property="flag" column="flag"/>
         <result property="taskName" column="task_name"/>
@@ -392,6 +425,9 @@
             </if>
             <if test="failureAnalystComment != null and failureAnalystComment!=''">
                 `failure_analyst_comment` = #{failureAnalystComment} and
+            </if>
+            <if test="firstChangeCode != null and firstChangeCode!=''">
+                `first_change_code` = #{firstChangeCode} and
             </if>
             <if test="saoId != null">
                 `sao_id` = #{saoId} and
@@ -502,6 +538,26 @@
                     (
                     <foreach collection="rightFuzzyFailureAnalystComment"  separator="or" item="item">
                         `Failure_analyst_comment` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="firstChangeCodeList != null">
+                    `first_change_code` in
+                    <foreach collection="firstChangeCodeList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyFirstChangeCode!=null and fuzzyFirstChangeCode.size()>0">
+                    (
+                    <foreach collection="fuzzyFirstChangeCode"  separator="or" item="item">
+                        `First_change_code` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyFirstChangeCode!=null and rightFuzzyFirstChangeCode.size()>0">
+                    (
+                    <foreach collection="rightFuzzyFirstChangeCode"  separator="or" item="item">
+                        `First_change_code` like concat(#{item},'%')
                     </foreach>
                     ) and
                 </if>
@@ -624,6 +680,9 @@
             <if test="failureAnalystComment != null and failureAnalystComment!=''">
                 `failure_analyst_comment` = #{failureAnalystComment} and
             </if>
+            <if test="firstChangeCode != null and firstChangeCode!=''">
+                `first_change_code` = #{firstChangeCode} and
+            </if>
             <if test="saoId != null">
                 `sao_id` = #{saoId} and
             </if>
@@ -736,6 +795,26 @@
                     </foreach>
                     ) and
                 </if>
+                    <if test="firstChangeCodeList != null">
+                        `first_change_code` in
+                        <foreach collection="firstChangeCodeList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyFirstChangeCode!=null and fuzzyFirstChangeCode.size()>0">
+                    (
+                    <foreach collection="fuzzyFirstChangeCode"  separator="or" item="item">
+                        `First_change_code` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyFirstChangeCode!=null and rightFuzzyFirstChangeCode.size()>0">
+                    (
+                    <foreach collection="rightFuzzyFirstChangeCode"  separator="or" item="item">
+                        `First_change_code` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
                     <if test="saoIdList != null">
                         `sao_id` in
                         <foreach collection="saoIdList" close=")" open="(" separator="," item="item">
@@ -841,6 +920,7 @@
         `failure_analyst_name`,
         `failure_analyst_department`,
         `failure_analyst_comment`,
+        `first_change_code`,
         `sao_id`,
         `flag`,
         `task_name`,
@@ -884,6 +964,9 @@
                     <if test="fetchFields.fetchFields.failureAnalystComment==true">
                         `failure_analyst_comment`,
                     </if>
+                    <if test="fetchFields.fetchFields.firstChangeCode==true">
+                        `first_change_code`,
+                    </if>
                     <if test="fetchFields.fetchFields.saoId==true">
                         `sao_id`,
                     </if>
@@ -918,6 +1001,9 @@
                     </if>
                     <if test="fetchFields.excludeFields.failureAnalystComment==null">
                         `failure_analyst_comment`,
+                    </if>
+                    <if test="fetchFields.excludeFields.firstChangeCode==null">
+                        `first_change_code`,
                     </if>
                     <if test="fetchFields.excludeFields.saoId==null">
                         `sao_id`,

@@ -8,6 +8,6 @@ import com.gamc.efactory.dao.base.MqmsUserDictBaseMapper;
 *  @author lizeh
 */
 public interface MqmsUserDictMapper extends MqmsUserDictBaseMapper{
-
+    int countMqmsUserDict(MqmsUserDict mqmsUserDict);
 
 }

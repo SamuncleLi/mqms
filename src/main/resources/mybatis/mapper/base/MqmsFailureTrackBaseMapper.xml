@@ -14,6 +14,9 @@
                     <if test="voucherCode!=null">
                         `voucher_code`,
                     </if>
+                    <if test="engOrTran!=null">
+                        `engOrTran`,
+                    </if>
                     <if test="saoId!=null">
                         `sao_id`,
                     </if>
@@ -44,6 +47,9 @@
                     <if test="deliveryCode!=null">
                         `delivery_code`,
                     </if>
+                    <if test="appearance!=null">
+                        `appearance`,
+                    </if>
                     <if test="carTestSymbol!=null">
                         `car_test_symbol`,
                     </if>
@@ -68,9 +74,6 @@
                     <if test="failureReappearResult!=null">
                         `failure_reappear_result`,
                     </if>
-                    <if test="appearance!=null">
-                        `appearance`,
-                    </if>
                     <if test="analysisDepartments!=null">
                         `analysis_departments`,
                     </if>
@@ -80,8 +83,14 @@
                     <if test="analysisRequirement!=null">
                         `analysis_requirement`,
                     </if>
+                    <if test="importance!=null">
+                        `importance`,
+                    </if>
                     <if test="appendix!=null">
                         `appendix`,
+                    </if>
+                    <if test="processState!=null">
+                        `process_state`,
                     </if>
         </trim>
         )
@@ -93,6 +102,9 @@
                 </if>
                 <if test="voucherCode!=null">
                     #{voucherCode},
+                </if>
+                <if test="engOrTran!=null">
+                    #{engOrTran},
                 </if>
                 <if test="saoId!=null">
                     #{saoId},
@@ -124,6 +136,9 @@
                 <if test="deliveryCode!=null">
                     #{deliveryCode},
                 </if>
+                <if test="appearance!=null">
+                    #{appearance},
+                </if>
                 <if test="carTestSymbol!=null">
                     #{carTestSymbol},
                 </if>
@@ -148,9 +163,6 @@
                 <if test="failureReappearResult!=null">
                     #{failureReappearResult},
                 </if>
-                <if test="appearance!=null">
-                    #{appearance},
-                </if>
                 <if test="analysisDepartments!=null">
                     #{analysisDepartments},
                 </if>
@@ -160,8 +172,14 @@
                 <if test="analysisRequirement!=null">
                     #{analysisRequirement},
                 </if>
+                <if test="importance!=null">
+                    #{importance},
+                </if>
                 <if test="appendix!=null">
                     #{appendix},
+                </if>
+                <if test="processState!=null">
+                    #{processState},
                 </if>
         </trim>
         )
@@ -176,6 +194,9 @@
         <trim suffixOverrides=",">
             <if test="voucherCode != null and voucherCode!=''">
                 `voucher_code` = #{voucherCode},
+            </if>
+            <if test="engOrTran != null and engOrTran!=''">
+                `engOrTran` = #{engOrTran},
             </if>
             <if test="saoId != null">
                 `sao_id` = #{saoId},
@@ -207,6 +228,9 @@
             <if test="deliveryCode != null and deliveryCode!=''">
                 `delivery_code` = #{deliveryCode},
             </if>
+            <if test="appearance != null and appearance!=''">
+                `appearance` = #{appearance},
+            </if>
             <if test="carTestSymbol != null and carTestSymbol!=''">
                 `car_test_symbol` = #{carTestSymbol},
             </if>
@@ -231,9 +255,6 @@
             <if test="failureReappearResult != null and failureReappearResult!=''">
                 `failure_reappear_result` = #{failureReappearResult},
             </if>
-            <if test="appearance != null and appearance!=''">
-                `appearance` = #{appearance},
-            </if>
             <if test="analysisDepartments != null and analysisDepartments!=''">
                 `analysis_departments` = #{analysisDepartments},
             </if>
@@ -243,8 +264,14 @@
             <if test="analysisRequirement != null and analysisRequirement!=''">
                 `analysis_requirement` = #{analysisRequirement},
             </if>
+            <if test="importance != null and importance!=''">
+                `importance` = #{importance},
+            </if>
             <if test="appendix != null and appendix!=''">
                 `appendix` = #{appendix},
+            </if>
+            <if test="processState != null and processState!=''">
+                `process_state` = #{processState},
             </if>
         </trim>
         WHERE
@@ -259,6 +286,9 @@
         <trim suffixOverrides=",">
         <if test="set.voucherCode != null and set.voucherCode!=''">
             `voucher_code` = #{set.voucherCode},
+        </if>
+        <if test="set.engOrTran != null and set.engOrTran!=''">
+            `engOrTran` = #{set.engOrTran},
         </if>
         <if test="set.saoId != null">
             `sao_id` = #{set.saoId},
@@ -290,6 +320,9 @@
         <if test="set.deliveryCode != null and set.deliveryCode!=''">
             `delivery_code` = #{set.deliveryCode},
         </if>
+        <if test="set.appearance != null and set.appearance!=''">
+            `appearance` = #{set.appearance},
+        </if>
         <if test="set.carTestSymbol != null and set.carTestSymbol!=''">
             `car_test_symbol` = #{set.carTestSymbol},
         </if>
@@ -314,9 +347,6 @@
         <if test="set.failureReappearResult != null and set.failureReappearResult!=''">
             `failure_reappear_result` = #{set.failureReappearResult},
         </if>
-        <if test="set.appearance != null and set.appearance!=''">
-            `appearance` = #{set.appearance},
-        </if>
         <if test="set.analysisDepartments != null and set.analysisDepartments!=''">
             `analysis_departments` = #{set.analysisDepartments},
         </if>
@@ -326,8 +356,14 @@
         <if test="set.analysisRequirement != null and set.analysisRequirement!=''">
             `analysis_requirement` = #{set.analysisRequirement},
         </if>
+        <if test="set.importance != null and set.importance!=''">
+            `importance` = #{set.importance},
+        </if>
         <if test="set.appendix != null and set.appendix!=''">
             `appendix` = #{set.appendix},
+        </if>
+        <if test="set.processState != null and set.processState!=''">
+            `process_state` = #{set.processState},
         </if>
         </trim>
         <trim prefix="where" suffixOverrides="and | or">
@@ -360,6 +396,26 @@
                 (
                 <foreach collection="where.rightFuzzyVoucherCode"  separator="or" item="item">
                     `Voucher_code` like concat(#{item},'%')
+                </foreach>
+                ) and
+            </if>
+                <if test="where.engOrTranList != null">
+                    `engOrTran` in
+                    <foreach collection="where.engOrTranList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test ="where.fuzzyEngOrTran!=null and where.fuzzyEngOrTran.size()>0">
+                (
+                <foreach collection="where.fuzzyEngOrTran"  separator="or" item="item">
+                    `EngOrTran` like concat('%',#{item},'%')
+                </foreach>
+                ) and
+            </if>
+            <if test ="where.rightFuzzyEngOrTran!=null and where.rightFuzzyEngOrTran.size()>0">
+                (
+                <foreach collection="where.rightFuzzyEngOrTran"  separator="or" item="item">
+                    `EngOrTran` like concat(#{item},'%')
                 </foreach>
                 ) and
             </if>
@@ -539,6 +595,26 @@
                 </foreach>
                 ) and
             </if>
+                <if test="where.appearanceList != null">
+                    `appearance` in
+                    <foreach collection="where.appearanceList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test ="where.fuzzyAppearance!=null and where.fuzzyAppearance.size()>0">
+                (
+                <foreach collection="where.fuzzyAppearance"  separator="or" item="item">
+                    `Appearance` like concat('%',#{item},'%')
+                </foreach>
+                ) and
+            </if>
+            <if test ="where.rightFuzzyAppearance!=null and where.rightFuzzyAppearance.size()>0">
+                (
+                <foreach collection="where.rightFuzzyAppearance"  separator="or" item="item">
+                    `Appearance` like concat(#{item},'%')
+                </foreach>
+                ) and
+            </if>
                 <if test="where.carTestSymbolList != null">
                     `car_test_symbol` in
                     <foreach collection="where.carTestSymbolList" close=")" open="(" separator="," item="item">
@@ -691,26 +767,6 @@
                 </foreach>
                 ) and
             </if>
-                <if test="where.appearanceList != null">
-                    `appearance` in
-                    <foreach collection="where.appearanceList" close=")" open="(" separator="," item="item">
-                        #{item}
-                    </foreach> and
-                </if>
-            <if test ="where.fuzzyAppearance!=null and where.fuzzyAppearance.size()>0">
-                (
-                <foreach collection="where.fuzzyAppearance"  separator="or" item="item">
-                    `Appearance` like concat('%',#{item},'%')
-                </foreach>
-                ) and
-            </if>
-            <if test ="where.rightFuzzyAppearance!=null and where.rightFuzzyAppearance.size()>0">
-                (
-                <foreach collection="where.rightFuzzyAppearance"  separator="or" item="item">
-                    `Appearance` like concat(#{item},'%')
-                </foreach>
-                ) and
-            </if>
                 <if test="where.analysisDepartmentsList != null">
                     `analysis_departments` in
                     <foreach collection="where.analysisDepartmentsList" close=")" open="(" separator="," item="item">
@@ -771,6 +827,26 @@
                 </foreach>
                 ) and
             </if>
+                <if test="where.importanceList != null">
+                    `importance` in
+                    <foreach collection="where.importanceList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test ="where.fuzzyImportance!=null and where.fuzzyImportance.size()>0">
+                (
+                <foreach collection="where.fuzzyImportance"  separator="or" item="item">
+                    `Importance` like concat('%',#{item},'%')
+                </foreach>
+                ) and
+            </if>
+            <if test ="where.rightFuzzyImportance!=null and where.rightFuzzyImportance.size()>0">
+                (
+                <foreach collection="where.rightFuzzyImportance"  separator="or" item="item">
+                    `Importance` like concat(#{item},'%')
+                </foreach>
+                ) and
+            </if>
                 <if test="where.appendixList != null">
                     `appendix` in
                     <foreach collection="where.appendixList" close=")" open="(" separator="," item="item">
@@ -791,6 +867,26 @@
                 </foreach>
                 ) and
             </if>
+                <if test="where.processStateList != null">
+                    `process_state` in
+                    <foreach collection="where.processStateList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test ="where.fuzzyProcessState!=null and where.fuzzyProcessState.size()>0">
+                (
+                <foreach collection="where.fuzzyProcessState"  separator="or" item="item">
+                    `Process_state` like concat('%',#{item},'%')
+                </foreach>
+                ) and
+            </if>
+            <if test ="where.rightFuzzyProcessState!=null and where.rightFuzzyProcessState.size()>0">
+                (
+                <foreach collection="where.rightFuzzyProcessState"  separator="or" item="item">
+                    `Process_state` like concat(#{item},'%')
+                </foreach>
+                ) and
+            </if>
         </trim>
     </update>
 
@@ -798,6 +894,7 @@
     <resultMap type="com.gamc.efactory.model.dataObject.MqmsFailureTrack" id="MqmsFailureTrackMap">
         <result property="failureTrackId" column="failure_track_id"/>
         <result property="voucherCode" column="voucher_code"/>
+        <result property="engOrTran" column="engOrTran"/>
         <result property="saoId" column="sao_id"/>
         <result property="trackBeginerId" column="track_beginer_id"/>
         <result property="trackBeginerNo" column="track_beginer_no"/>
@@ -808,6 +905,7 @@
         <result property="deliveryDeadline" column="delivery_deadline"/>
         <result property="deliveryReceivedDate" column="delivery_received_date"/>
         <result property="deliveryCode" column="delivery_code"/>
+        <result property="appearance" column="appearance"/>
         <result property="carTestSymbol" column="car_test_symbol"/>
         <result property="failureReappearPersonId" column="failure_reappear_person_id"/>
         <result property="failureReappearPersonName" column="failure_reappear_person_name"/>
@@ -816,11 +914,12 @@
         <result property="failureReappearDate" column="failure_reappear_date"/>
         <result property="failureReappearSituation" column="failure_reappear_situation"/>
         <result property="failureReappearResult" column="failure_reappear_result"/>
-        <result property="appearance" column="appearance"/>
         <result property="analysisDepartments" column="analysis_departments"/>
         <result property="analysisDeadline" column="analysis_deadline"/>
         <result property="analysisRequirement" column="analysis_requirement"/>
+        <result property="importance" column="importance"/>
         <result property="appendix" column="appendix"/>
+        <result property="processState" column="process_state"/>
     </resultMap>
 
 
@@ -834,6 +933,9 @@
             </if>
             <if test="voucherCode != null and voucherCode!=''">
                 `voucher_code` = #{voucherCode} and
+            </if>
+            <if test="engOrTran != null and engOrTran!=''">
+                `engOrTran` = #{engOrTran} and
             </if>
             <if test="saoId != null">
                 `sao_id` = #{saoId} and
@@ -865,6 +967,9 @@
             <if test="deliveryCode != null and deliveryCode!=''">
                 `delivery_code` = #{deliveryCode} and
             </if>
+            <if test="appearance != null and appearance!=''">
+                `appearance` = #{appearance} and
+            </if>
             <if test="carTestSymbol != null and carTestSymbol!=''">
                 `car_test_symbol` = #{carTestSymbol} and
             </if>
@@ -889,9 +994,6 @@
             <if test="failureReappearResult != null and failureReappearResult!=''">
                 `failure_reappear_result` = #{failureReappearResult} and
             </if>
-            <if test="appearance != null and appearance!=''">
-                `appearance` = #{appearance} and
-            </if>
             <if test="analysisDepartments != null and analysisDepartments!=''">
                 `analysis_departments` = #{analysisDepartments} and
             </if>
@@ -901,8 +1003,14 @@
             <if test="analysisRequirement != null and analysisRequirement!=''">
                 `analysis_requirement` = #{analysisRequirement} and
             </if>
+            <if test="importance != null and importance!=''">
+                `importance` = #{importance} and
+            </if>
             <if test="appendix != null and appendix!=''">
                 `appendix` = #{appendix} and
+            </if>
+            <if test="processState != null and processState!=''">
+                `process_state` = #{processState} and
             </if>
             <if test = "(_parameter instanceof com.gamc.efactory.model.dataObject.MqmsFailureTrack$QueryBuilder) == true">
                 <if test="failureTrackIdList != null">
@@ -934,6 +1042,26 @@
                     (
                     <foreach collection="rightFuzzyVoucherCode"  separator="or" item="item">
                         `Voucher_code` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="engOrTranList != null">
+                    `engOrTran` in
+                    <foreach collection="engOrTranList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyEngOrTran!=null and fuzzyEngOrTran.size()>0">
+                    (
+                    <foreach collection="fuzzyEngOrTran"  separator="or" item="item">
+                        `EngOrTran` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyEngOrTran!=null and rightFuzzyEngOrTran.size()>0">
+                    (
+                    <foreach collection="rightFuzzyEngOrTran"  separator="or" item="item">
+                        `EngOrTran` like concat(#{item},'%')
                     </foreach>
                     ) and
                 </if>
@@ -1113,6 +1241,26 @@
                     </foreach>
                     ) and
                 </if>
+                <if test="appearanceList != null">
+                    `appearance` in
+                    <foreach collection="appearanceList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyAppearance!=null and fuzzyAppearance.size()>0">
+                    (
+                    <foreach collection="fuzzyAppearance"  separator="or" item="item">
+                        `Appearance` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyAppearance!=null and rightFuzzyAppearance.size()>0">
+                    (
+                    <foreach collection="rightFuzzyAppearance"  separator="or" item="item">
+                        `Appearance` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
                 <if test="carTestSymbolList != null">
                     `car_test_symbol` in
                     <foreach collection="carTestSymbolList" close=")" open="(" separator="," item="item">
@@ -1265,26 +1413,6 @@
                     </foreach>
                     ) and
                 </if>
-                <if test="appearanceList != null">
-                    `appearance` in
-                    <foreach collection="appearanceList" close=")" open="(" separator="," item="item">
-                        #{item}
-                    </foreach> and
-                </if>
-                <if test ="fuzzyAppearance!=null and fuzzyAppearance.size()>0">
-                    (
-                    <foreach collection="fuzzyAppearance"  separator="or" item="item">
-                        `Appearance` like concat('%',#{item},'%')
-                    </foreach>
-                    ) and
-                </if>
-                <if test ="rightFuzzyAppearance!=null and rightFuzzyAppearance.size()>0">
-                    (
-                    <foreach collection="rightFuzzyAppearance"  separator="or" item="item">
-                        `Appearance` like concat(#{item},'%')
-                    </foreach>
-                    ) and
-                </if>
                 <if test="analysisDepartmentsList != null">
                     `analysis_departments` in
                     <foreach collection="analysisDepartmentsList" close=")" open="(" separator="," item="item">
@@ -1345,6 +1473,26 @@
                     </foreach>
                     ) and
                 </if>
+                <if test="importanceList != null">
+                    `importance` in
+                    <foreach collection="importanceList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyImportance!=null and fuzzyImportance.size()>0">
+                    (
+                    <foreach collection="fuzzyImportance"  separator="or" item="item">
+                        `Importance` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyImportance!=null and rightFuzzyImportance.size()>0">
+                    (
+                    <foreach collection="rightFuzzyImportance"  separator="or" item="item">
+                        `Importance` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
                 <if test="appendixList != null">
                     `appendix` in
                     <foreach collection="appendixList" close=")" open="(" separator="," item="item">
@@ -1365,6 +1513,26 @@
                     </foreach>
                     ) and
                 </if>
+                <if test="processStateList != null">
+                    `process_state` in
+                    <foreach collection="processStateList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyProcessState!=null and fuzzyProcessState.size()>0">
+                    (
+                    <foreach collection="fuzzyProcessState"  separator="or" item="item">
+                        `Process_state` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyProcessState!=null and rightFuzzyProcessState.size()>0">
+                    (
+                    <foreach collection="rightFuzzyProcessState"  separator="or" item="item">
+                        `Process_state` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
             </if>
         </trim>
     </select>
@@ -1379,6 +1547,9 @@
             </if>
             <if test="voucherCode != null and voucherCode!=''">
                 `voucher_code` = #{voucherCode} and
+            </if>
+            <if test="engOrTran != null and engOrTran!=''">
+                `engOrTran` = #{engOrTran} and
             </if>
             <if test="saoId != null">
                 `sao_id` = #{saoId} and
@@ -1410,6 +1581,9 @@
             <if test="deliveryCode != null and deliveryCode!=''">
                 `delivery_code` = #{deliveryCode} and
             </if>
+            <if test="appearance != null and appearance!=''">
+                `appearance` = #{appearance} and
+            </if>
             <if test="carTestSymbol != null and carTestSymbol!=''">
                 `car_test_symbol` = #{carTestSymbol} and
             </if>
@@ -1434,9 +1608,6 @@
             <if test="failureReappearResult != null and failureReappearResult!=''">
                 `failure_reappear_result` = #{failureReappearResult} and
             </if>
-            <if test="appearance != null and appearance!=''">
-                `appearance` = #{appearance} and
-            </if>
             <if test="analysisDepartments != null and analysisDepartments!=''">
                 `analysis_departments` = #{analysisDepartments} and
             </if>
@@ -1446,8 +1617,14 @@
             <if test="analysisRequirement != null and analysisRequirement!=''">
                 `analysis_requirement` = #{analysisRequirement} and
             </if>
+            <if test="importance != null and importance!=''">
+                `importance` = #{importance} and
+            </if>
             <if test="appendix != null and appendix!=''">
                 `appendix` = #{appendix} and
+            </if>
+            <if test="processState != null and processState!=''">
+                `process_state` = #{processState} and
             </if>
             <if test = "(_parameter instanceof com.gamc.efactory.model.dataObject.MqmsFailureTrack$QueryBuilder) == true">
                     <if test="failureTrackIdList != null">
@@ -1479,6 +1656,26 @@
                     (
                     <foreach collection="rightFuzzyVoucherCode"  separator="or" item="item">
                         `Voucher_code` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                    <if test="engOrTranList != null">
+                        `engOrTran` in
+                        <foreach collection="engOrTranList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyEngOrTran!=null and fuzzyEngOrTran.size()>0">
+                    (
+                    <foreach collection="fuzzyEngOrTran"  separator="or" item="item">
+                        `EngOrTran` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyEngOrTran!=null and rightFuzzyEngOrTran.size()>0">
+                    (
+                    <foreach collection="rightFuzzyEngOrTran"  separator="or" item="item">
+                        `EngOrTran` like concat(#{item},'%')
                     </foreach>
                     ) and
                 </if>
@@ -1658,6 +1855,26 @@
                     </foreach>
                     ) and
                 </if>
+                    <if test="appearanceList != null">
+                        `appearance` in
+                        <foreach collection="appearanceList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyAppearance!=null and fuzzyAppearance.size()>0">
+                    (
+                    <foreach collection="fuzzyAppearance"  separator="or" item="item">
+                        `Appearance` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyAppearance!=null and rightFuzzyAppearance.size()>0">
+                    (
+                    <foreach collection="rightFuzzyAppearance"  separator="or" item="item">
+                        `Appearance` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
                     <if test="carTestSymbolList != null">
                         `car_test_symbol` in
                         <foreach collection="carTestSymbolList" close=")" open="(" separator="," item="item">
@@ -1810,26 +2027,6 @@
                     </foreach>
                     ) and
                 </if>
-                    <if test="appearanceList != null">
-                        `appearance` in
-                        <foreach collection="appearanceList" close=")" open="(" separator="," item="item">
-                            #{item}
-                        </foreach> and
-                    </if>
-                <if test ="fuzzyAppearance!=null and fuzzyAppearance.size()>0">
-                    (
-                    <foreach collection="fuzzyAppearance"  separator="or" item="item">
-                        `Appearance` like concat('%',#{item},'%')
-                    </foreach>
-                    ) and
-                </if>
-                <if test ="rightFuzzyAppearance!=null and rightFuzzyAppearance.size()>0">
-                    (
-                    <foreach collection="rightFuzzyAppearance"  separator="or" item="item">
-                        `Appearance` like concat(#{item},'%')
-                    </foreach>
-                    ) and
-                </if>
                     <if test="analysisDepartmentsList != null">
                         `analysis_departments` in
                         <foreach collection="analysisDepartmentsList" close=")" open="(" separator="," item="item">
@@ -1890,6 +2087,26 @@
                     </foreach>
                     ) and
                 </if>
+                    <if test="importanceList != null">
+                        `importance` in
+                        <foreach collection="importanceList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyImportance!=null and fuzzyImportance.size()>0">
+                    (
+                    <foreach collection="fuzzyImportance"  separator="or" item="item">
+                        `Importance` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyImportance!=null and rightFuzzyImportance.size()>0">
+                    (
+                    <foreach collection="rightFuzzyImportance"  separator="or" item="item">
+                        `Importance` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
                     <if test="appendixList != null">
                         `appendix` in
                         <foreach collection="appendixList" close=")" open="(" separator="," item="item">
@@ -1910,6 +2127,26 @@
                     </foreach>
                     ) and
                 </if>
+                    <if test="processStateList != null">
+                        `process_state` in
+                        <foreach collection="processStateList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyProcessState!=null and fuzzyProcessState.size()>0">
+                    (
+                    <foreach collection="fuzzyProcessState"  separator="or" item="item">
+                        `Process_state` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyProcessState!=null and rightFuzzyProcessState.size()>0">
+                    (
+                    <foreach collection="rightFuzzyProcessState"  separator="or" item="item">
+                        `Process_state` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
             </if>
         </trim>
         limit 1
@@ -1919,6 +2156,7 @@
         <trim suffixOverrides=",">
         `failure_track_id`,
         `voucher_code`,
+        `engOrTran`,
         `sao_id`,
         `track_beginer_id`,
         `track_beginer_no`,
@@ -1929,6 +2167,7 @@
         `delivery_deadline`,
         `delivery_received_date`,
         `delivery_code`,
+        `appearance`,
         `car_test_symbol`,
         `failure_reappear_person_id`,
         `failure_reappear_person_name`,
@@ -1937,11 +2176,12 @@
         `failure_reappear_date`,
         `failure_reappear_situation`,
         `failure_reappear_result`,
-        `appearance`,
         `analysis_departments`,
         `analysis_deadline`,
         `analysis_requirement`,
+        `importance`,
         `appendix`,
+        `process_state`,
         </trim>
     </sql>
 
@@ -1967,6 +2207,9 @@
                     </if>
                     <if test="fetchFields.fetchFields.voucherCode==true">
                         `voucher_code`,
+                    </if>
+                    <if test="fetchFields.fetchFields.engOrTran==true">
+                        `engOrTran`,
                     </if>
                     <if test="fetchFields.fetchFields.saoId==true">
                         `sao_id`,
@@ -1998,6 +2241,9 @@
                     <if test="fetchFields.fetchFields.deliveryCode==true">
                         `delivery_code`,
                     </if>
+                    <if test="fetchFields.fetchFields.appearance==true">
+                        `appearance`,
+                    </if>
                     <if test="fetchFields.fetchFields.carTestSymbol==true">
                         `car_test_symbol`,
                     </if>
@@ -2022,9 +2268,6 @@
                     <if test="fetchFields.fetchFields.failureReappearResult==true">
                         `failure_reappear_result`,
                     </if>
-                    <if test="fetchFields.fetchFields.appearance==true">
-                        `appearance`,
-                    </if>
                     <if test="fetchFields.fetchFields.analysisDepartments==true">
                         `analysis_departments`,
                     </if>
@@ -2034,8 +2277,14 @@
                     <if test="fetchFields.fetchFields.analysisRequirement==true">
                         `analysis_requirement`,
                     </if>
+                    <if test="fetchFields.fetchFields.importance==true">
+                        `importance`,
+                    </if>
                     <if test="fetchFields.fetchFields.appendix==true">
                         `appendix`,
+                    </if>
+                    <if test="fetchFields.fetchFields.processState==true">
+                        `process_state`,
                     </if>
                     </if>
                     <if test="fetchFields.AllFields==null and fetchFields.excludeFields!=null">
@@ -2044,6 +2293,9 @@
                     </if>
                     <if test="fetchFields.excludeFields.voucherCode==null">
                         `voucher_code`,
+                    </if>
+                    <if test="fetchFields.excludeFields.engOrTran==null">
+                        `engOrTran`,
                     </if>
                     <if test="fetchFields.excludeFields.saoId==null">
                         `sao_id`,
@@ -2075,6 +2327,9 @@
                     <if test="fetchFields.excludeFields.deliveryCode==null">
                         `delivery_code`,
                     </if>
+                    <if test="fetchFields.excludeFields.appearance==null">
+                        `appearance`,
+                    </if>
                     <if test="fetchFields.excludeFields.carTestSymbol==null">
                         `car_test_symbol`,
                     </if>
@@ -2099,9 +2354,6 @@
                     <if test="fetchFields.excludeFields.failureReappearResult==null">
                         `failure_reappear_result`,
                     </if>
-                    <if test="fetchFields.excludeFields.appearance==null">
-                        `appearance`,
-                    </if>
                     <if test="fetchFields.excludeFields.analysisDepartments==null">
                         `analysis_departments`,
                     </if>
@@ -2111,8 +2363,14 @@
                     <if test="fetchFields.excludeFields.analysisRequirement==null">
                         `analysis_requirement`,
                     </if>
+                    <if test="fetchFields.excludeFields.importance==null">
+                        `importance`,
+                    </if>
                     <if test="fetchFields.excludeFields.appendix==null">
                         `appendix`,
+                    </if>
+                    <if test="fetchFields.excludeFields.processState==null">
+                        `process_state`,
                     </if>
                     </if>
                     <if test="fetchFields.otherFields!=null and fetchFields.otherFields.size>0">

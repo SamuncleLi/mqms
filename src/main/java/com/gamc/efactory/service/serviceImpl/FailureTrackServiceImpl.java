@@ -47,7 +47,7 @@ public class FailureTrackServiceImpl implements FailureTrackService{
         mqmsVoucher = mqmsVoucherMapper.queryMqmsVoucherLimit1(mqmsVoucher);
         ObjectMapper objectMapper = new ObjectMapper();
 
-        String structure1 = "[[1, 1, 1, 1], [1, 1, 1, 1],[4]]";
+        String structure1 = "[[1, 1, 1, 1], [1, 1, 1, 1],[1, 1, 1, 1],[4]]";
         List<List<Integer>> mStructure1 = objectMapper.readValue(structure1.toString(), List.class);
         ProcessForm.DataDisplaySingle single1 = new ProcessForm.DataDisplaySingle();
         single1.setTitle("质量反馈单号");
@@ -86,9 +86,9 @@ public class FailureTrackServiceImpl implements FailureTrackService{
         single6.setCol(2);
         single6.setRow(2);
         ProcessForm.DataDisplaySingle single7 = new ProcessForm.DataDisplaySingle();
-        single7.setTitle("发动机号");
+        single7.setTitle("发动机或变速箱");
         single7.setType("text");
-        single7.setContent(mqmsVoucher.getEgtypeCode());
+        single7.setContent(mqmsVoucher.getEngOrTran());
         single7.setCol(3);
         single7.setRow(2);
         ProcessForm.DataDisplaySingle single8 = new ProcessForm.DataDisplaySingle();
@@ -97,12 +97,24 @@ public class FailureTrackServiceImpl implements FailureTrackService{
         single8.setContent(mqmsVoucher.getEngArrange());
         single8.setCol(4);
         single8.setRow(2);
+        ProcessForm.DataDisplaySingle single11 = new ProcessForm.DataDisplaySingle();
+        single11.setTitle("发动机号");
+        single11.setType("text");
+        single11.setContent(mqmsVoucher.getEgtypeCode());
+        single11.setCol(1);
+        single11.setRow(3);
+        ProcessForm.DataDisplaySingle single10 = new ProcessForm.DataDisplaySingle();
+        single10.setTitle("变速箱号");
+        single10.setType("text");
+        single10.setContent(mqmsVoucher.getTransmissionCode());
+        single10.setCol(2);
+        single10.setRow(3);
         ProcessForm.DataDisplaySingle single9 = new ProcessForm.DataDisplaySingle();
         single9.setTitle("诊断结果");
         single9.setType("text");
         single9.setContent(mqmsVoucher.getDiagnosticResult());
         single9.setCol(1);
-        single9.setRow(3);
+        single9.setRow(4);
         ProcessForm.DataDisplayGroup group = new ProcessForm.DataDisplayGroup();
         group.addData(single1);
         group.addData(single2);
@@ -113,6 +125,8 @@ public class FailureTrackServiceImpl implements FailureTrackService{
         group.addData(single7);
         group.addData(single8);
         group.addData(single9);
+        group.addData(single10);
+        group.addData(single11);
         group.setGroup_name("基本信息");
 
         group.setStructure(mStructure1);
@@ -185,8 +199,6 @@ public class FailureTrackServiceImpl implements FailureTrackService{
         single9.setContent(mqmsFailureTrack.getAnalysisRequirement());
         single9.setCol(4);
         single9.setRow(3);
-
-
         group.addData(single1);
         group.addData(single2);
         group.addData(single3);
@@ -214,60 +226,68 @@ public class FailureTrackServiceImpl implements FailureTrackService{
         ObjectMapper objectMapper = new ObjectMapper();
 
         String appendix = mqmsFailureTrack.getAppendix();
-        String[] appendixs = appendix.split(",,");
-        int rows = appendixs.length/4 + 1;
-        String rowStructure = "[1,1,1,1]";
+        //判空
+        if(StringUtil.isNotEmpty(appendix)){
+            String[] appendixs = appendix.split(",,");
+            int rows = appendixs.length/4 + 1;
+            String rowStructure = "[1,1,1,1]";
 
-        String structure1 = "[";
-        for(int i=0;i<rows;i++){
-            structure1 += rowStructure;
+            String structure1 = "[";
+            for(int i=0;i<rows;i++){
+                structure1 += rowStructure;
+            }
+            structure1+="]";
+            List<List<Integer>> mStructure1 = objectMapper.readValue(structure1.toString(), List.class);
+            for(int i=0;i<appendixs.length;i++){
+                ProcessForm.DataDisplaySingle single = new ProcessForm.DataDisplaySingle();
+                single.setTitle(appendixs[i]);
+                single.setType("file");
+                single.setContent(Config.windowsDownloadPrefix.getVarName() + appendixs[i]);
+                single.setCol(i % 4 + 1);
+                single.setRow(i / 4 + 1);
+                group.addData(single);
+            }
+            group.setGroup_name("附件信息");
+
+            group.setStructure(mStructure1);
+
+            return group;
         }
-        structure1+="]";
-        List<List<Integer>> mStructure1 = objectMapper.readValue(structure1.toString(), List.class);
-//        ProcessForm.DataDisplaySingle[] singles = new ProcessForm.DataDisplaySingle[appendixs.length];
-        for(int i=0;i<appendixs.length;i++){
-            ProcessForm.DataDisplaySingle single = new ProcessForm.DataDisplaySingle();
-            single.setTitle(appendixs[i]);
-            single.setType("file");
-            single.setContent(Config.windowsDownloadPrefix.getVarName() + appendixs[i]);
-            single.setCol(i % 4 + 1);
-            single.setRow(i / 4 + 1);
-            group.addData(single);
+        else {
+            return null;
         }
-        group.setGroup_name("附件信息");
 
-        group.setStructure(mStructure1);
-
-        return group;
     }
 
     //上传附件
     public MqmsFailureTrack fileUpload(List<MultipartFile> file, SimpleApplicationObject simpleApplicationObject, User user, MqmsFailureTrack mqmsFailureTrack, String appendix) throws Exception{
-        System.out.println(file.get(0).getOriginalFilename());
+        System.out.println(file.get(0).isEmpty());
         //如果没有上传文件
-        if(file.get(0).getOriginalFilename().equals("")){
+        if(file.get(0).isEmpty()){
             return mqmsFailureTrack;
         }
-        for(MultipartFile multipartFile:file){
-            byte[] bytes = multipartFile.getBytes();
-            Resource resource = new ClassPathResource("");
-            System.out.println(resource.getFile().getAbsolutePath());
-            //建文件夹
-            File dir = new File(Config.windowsFile.getVarName() + "\\" + mqmsFailureTrack.getFailureTrackId());
-            dir.mkdir();
-            //保存文件
-            Path path = Paths.get(Config.windowsFile.getVarName() + "\\" + mqmsFailureTrack.getFailureTrackId() + "\\" + simpleApplicationObject.getTaskName() + user.getUserName() + "-" + multipartFile.getOriginalFilename());
-            Files.write(path, bytes);
-            if(StringUtil.isNotEmpty(appendix)){
-                appendix = appendix + ",,";
+        else{
+            for(MultipartFile multipartFile:file){
+                byte[] bytes = multipartFile.getBytes();
+                Resource resource = new ClassPathResource("");
+                System.out.println(resource.getFile().getAbsolutePath());
+                //建文件夹
+                File dir = new File(Config.windowsFile.getVarName() + "\\" + mqmsFailureTrack.getFailureTrackId());
+                dir.mkdir();
+                //保存文件
+                Path path = Paths.get(Config.windowsFile.getVarName() + "\\" + mqmsFailureTrack.getFailureTrackId() + "\\" + simpleApplicationObject.getTaskName() + user.getUserName() + "-" + multipartFile.getOriginalFilename());
+                Files.write(path, bytes);
+                if(StringUtil.isNotEmpty(appendix)){
+                    appendix = appendix + ",,";
+                }
+                else {
+                    appendix = "";
+                }
+                appendix = appendix + mqmsFailureTrack.getFailureTrackId() + "/" + simpleApplicationObject.getTaskName() + user.getUserName() + "-" + multipartFile.getOriginalFilename();
             }
-            else {
-                appendix = "";
-            }
-            appendix = appendix + mqmsFailureTrack.getFailureTrackId() + "/" + simpleApplicationObject.getTaskName() + user.getUserName() + "-" + multipartFile.getOriginalFilename();
+            mqmsFailureTrack.setAppendix(appendix);
+            return mqmsFailureTrack;
         }
-        mqmsFailureTrack.setAppendix(appendix);
-        return mqmsFailureTrack;
     }
 
     //获取多实例解析信息

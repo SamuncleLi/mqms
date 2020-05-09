@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>市场故障信息</title>
+    <title>市场索赔信息</title>
     <script type="text/javascript" src="${req.contextPath}/static/plugin/jquery-easyui-1.5.5.4/jquery.min.js"></script>
     <script type="text/javascript" src="${req.contextPath}/static/plugin/jquery-easyui-1.5.5.4/jquery.easyui.min.js"></script>
     <script type="text/javascript" src="${req.contextPath}/static/plugin/jquery-easyui-1.5.5.4/locale/easyui-lang-zh_CN.js"></script>
@@ -78,10 +78,9 @@
                 <td>要求返回时间</td><td><input id="deliveryDeadline" name="deliveryDeadline" class="easyui-datebox"></td>
             </tr>
             <tr>
-                <td>快递接收人工号</td><td><input id="deliveryPersonNo" name="deliveryPersonNo" class="easyui-textbox"></td>
-                <td>快递接收人姓名</td><td><input id="deliveryPersonName" name="deliveryPersonName" class="easyui-textbox"></td>
+                <td>快递接收人</td><td><input id="deliveryPersonId" name="deliveryPersonId" class="easyui-combobox" data-options="valueField: 'userId',textField: 'userName',url:'/mqms/user_dict/listInArray?orgType=delivery'"></td>
+                <td>零件选择</td><td><input id="partsSelect" class="easyui-textbox"></td>
             </tr>
-            <tr><td>零件选择</td><td><input id="partsSelect"></td></tr>
             </tbody>
         </table>
         </form>

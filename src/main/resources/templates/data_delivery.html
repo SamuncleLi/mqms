@@ -76,9 +76,8 @@
                 <td>实际返回时间</td><td><input id="deliveryReceivedDate" name="deliveryReceivedDate" class="easyui-datebox"></td>
                 <td>快递单号</td><td><input id="deliveryCode" name="deliveryCode" class="easyui-textbox"></td>
             </tr>
-            <tr>
-                <td><input id="failureTrackIds" name="failureTrackIds" class="easyui-textbox" hidden="hidden"></td>
-            </tr>
+            <input id="failureTrackIds" name="failureTrackIds" class="easyui-textbox" type="hidden">
+
             </tbody>
         </table>
     </form>
@@ -199,6 +198,7 @@
 
     //补充快递信息
     function delivery_modify() {
+        $('#failureTrackForm').form("clear");
         var selectedRows = $('#dg2').datagrid('getSelections');
         if(selectedRows.length==0){
             $.messager.alert("系统提示","请选择至少一行");
@@ -227,8 +227,8 @@
     }
     //关闭不良追踪对话框
     function close_delivery_modify_dlg() {
-        $('#failureTrack-dlg').dialog('close');
-        $('#dlgdg').datagrid('clear');
+        $('#failureTrack-dlg').dialog('close', true);
+        $('#failureTrackForm').form('clear');
     }
     //保存不良追踪对话框
     function save_delivery_modify_dlg() {

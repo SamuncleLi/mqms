@@ -10,7 +10,7 @@ import java.util.List;
 */
 public class MqmsFailureTrack implements Serializable {
 
-    private static final long serialVersionUID = 1585034007533L;
+    private static final long serialVersionUID = 1586751163333L;
 
 
     /**
@@ -25,6 +25,12 @@ public class MqmsFailureTrack implements Serializable {
     * isNullAble:1
     */
     private String voucherCode;
+
+    /**
+    * 
+    * isNullAble:1
+    */
+    private String engOrTran;
 
     /**
     * 流程系统id
@@ -87,6 +93,12 @@ public class MqmsFailureTrack implements Serializable {
     private String deliveryCode;
 
     /**
+    * 外观情况
+    * isNullAble:1
+    */
+    private String appearance;
+
+    /**
     * 是否装车测试
     * isNullAble:1
     */
@@ -135,12 +147,6 @@ public class MqmsFailureTrack implements Serializable {
     private String failureReappearResult;
 
     /**
-    * 外观情况
-    * isNullAble:1
-    */
-    private String appearance;
-
-    /**
     * 解析科室
     * isNullAble:1
     */
@@ -159,10 +165,22 @@ public class MqmsFailureTrack implements Serializable {
     private String analysisRequirement;
 
     /**
+    * 重要度
+    * isNullAble:1
+    */
+    private String importance;
+
+    /**
     * 附件
     * isNullAble:1,defaultVal:
     */
     private String appendix;
+
+    /**
+    * 流程状态
+    * isNullAble:1
+    */
+    private String processState;
 
 
     public void setFailureTrackId(Integer failureTrackId){this.failureTrackId = failureTrackId;}
@@ -172,6 +190,10 @@ public class MqmsFailureTrack implements Serializable {
     public void setVoucherCode(String voucherCode){this.voucherCode = voucherCode;}
 
     public String getVoucherCode(){return this.voucherCode;}
+
+    public void setEngOrTran(String engOrTran){this.engOrTran = engOrTran;}
+
+    public String getEngOrTran(){return this.engOrTran;}
 
     public void setSaoId(Long saoId){this.saoId = saoId;}
 
@@ -213,6 +235,10 @@ public class MqmsFailureTrack implements Serializable {
 
     public String getDeliveryCode(){return this.deliveryCode;}
 
+    public void setAppearance(String appearance){this.appearance = appearance;}
+
+    public String getAppearance(){return this.appearance;}
+
     public void setCarTestSymbol(String carTestSymbol){this.carTestSymbol = carTestSymbol;}
 
     public String getCarTestSymbol(){return this.carTestSymbol;}
@@ -245,10 +271,6 @@ public class MqmsFailureTrack implements Serializable {
 
     public String getFailureReappearResult(){return this.failureReappearResult;}
 
-    public void setAppearance(String appearance){this.appearance = appearance;}
-
-    public String getAppearance(){return this.appearance;}
-
     public void setAnalysisDepartments(String analysisDepartments){this.analysisDepartments = analysisDepartments;}
 
     public String getAnalysisDepartments(){return this.analysisDepartments;}
@@ -261,14 +283,23 @@ public class MqmsFailureTrack implements Serializable {
 
     public String getAnalysisRequirement(){return this.analysisRequirement;}
 
+    public void setImportance(String importance){this.importance = importance;}
+
+    public String getImportance(){return this.importance;}
+
     public void setAppendix(String appendix){this.appendix = appendix;}
 
     public String getAppendix(){return this.appendix;}
+
+    public void setProcessState(String processState){this.processState = processState;}
+
+    public String getProcessState(){return this.processState;}
     @Override
     public String toString() {
         return "MqmsFailureTrack{" +
                 "failureTrackId='" + failureTrackId + '\'' +
                 "voucherCode='" + voucherCode + '\'' +
+                "engOrTran='" + engOrTran + '\'' +
                 "saoId='" + saoId + '\'' +
                 "trackBeginerId='" + trackBeginerId + '\'' +
                 "trackBeginerNo='" + trackBeginerNo + '\'' +
@@ -279,6 +310,7 @@ public class MqmsFailureTrack implements Serializable {
                 "deliveryDeadline='" + deliveryDeadline + '\'' +
                 "deliveryReceivedDate='" + deliveryReceivedDate + '\'' +
                 "deliveryCode='" + deliveryCode + '\'' +
+                "appearance='" + appearance + '\'' +
                 "carTestSymbol='" + carTestSymbol + '\'' +
                 "failureReappearPersonId='" + failureReappearPersonId + '\'' +
                 "failureReappearPersonName='" + failureReappearPersonName + '\'' +
@@ -287,11 +319,12 @@ public class MqmsFailureTrack implements Serializable {
                 "failureReappearDate='" + failureReappearDate + '\'' +
                 "failureReappearSituation='" + failureReappearSituation + '\'' +
                 "failureReappearResult='" + failureReappearResult + '\'' +
-                "appearance='" + appearance + '\'' +
                 "analysisDepartments='" + analysisDepartments + '\'' +
                 "analysisDeadline='" + analysisDeadline + '\'' +
                 "analysisRequirement='" + analysisRequirement + '\'' +
+                "importance='" + importance + '\'' +
                 "appendix='" + appendix + '\'' +
+                "processState='" + processState + '\'' +
             '}';
     }
 
@@ -364,6 +397,18 @@ public class MqmsFailureTrack implements Serializable {
         private List<String> rightFuzzyVoucherCode;
 
         public List<String> getRightFuzzyVoucherCode(){return this.rightFuzzyVoucherCode;}
+        private List<String> engOrTranList;
+
+        public List<String> getEngOrTranList(){return this.engOrTranList;}
+
+
+        private List<String> fuzzyEngOrTran;
+
+        public List<String> getFuzzyEngOrTran(){return this.fuzzyEngOrTran;}
+
+        private List<String> rightFuzzyEngOrTran;
+
+        public List<String> getRightFuzzyEngOrTran(){return this.rightFuzzyEngOrTran;}
         private List<Long> saoIdList;
 
         public List<Long> getSaoIdList(){return this.saoIdList;}
@@ -484,6 +529,18 @@ public class MqmsFailureTrack implements Serializable {
         private List<String> rightFuzzyDeliveryCode;
 
         public List<String> getRightFuzzyDeliveryCode(){return this.rightFuzzyDeliveryCode;}
+        private List<String> appearanceList;
+
+        public List<String> getAppearanceList(){return this.appearanceList;}
+
+
+        private List<String> fuzzyAppearance;
+
+        public List<String> getFuzzyAppearance(){return this.fuzzyAppearance;}
+
+        private List<String> rightFuzzyAppearance;
+
+        public List<String> getRightFuzzyAppearance(){return this.rightFuzzyAppearance;}
         private List<String> carTestSymbolList;
 
         public List<String> getCarTestSymbolList(){return this.carTestSymbolList;}
@@ -580,18 +637,6 @@ public class MqmsFailureTrack implements Serializable {
         private List<String> rightFuzzyFailureReappearResult;
 
         public List<String> getRightFuzzyFailureReappearResult(){return this.rightFuzzyFailureReappearResult;}
-        private List<String> appearanceList;
-
-        public List<String> getAppearanceList(){return this.appearanceList;}
-
-
-        private List<String> fuzzyAppearance;
-
-        public List<String> getFuzzyAppearance(){return this.fuzzyAppearance;}
-
-        private List<String> rightFuzzyAppearance;
-
-        public List<String> getRightFuzzyAppearance(){return this.rightFuzzyAppearance;}
         private List<String> analysisDepartmentsList;
 
         public List<String> getAnalysisDepartmentsList(){return this.analysisDepartmentsList;}
@@ -628,6 +673,18 @@ public class MqmsFailureTrack implements Serializable {
         private List<String> rightFuzzyAnalysisRequirement;
 
         public List<String> getRightFuzzyAnalysisRequirement(){return this.rightFuzzyAnalysisRequirement;}
+        private List<String> importanceList;
+
+        public List<String> getImportanceList(){return this.importanceList;}
+
+
+        private List<String> fuzzyImportance;
+
+        public List<String> getFuzzyImportance(){return this.fuzzyImportance;}
+
+        private List<String> rightFuzzyImportance;
+
+        public List<String> getRightFuzzyImportance(){return this.rightFuzzyImportance;}
         private List<String> appendixList;
 
         public List<String> getAppendixList(){return this.appendixList;}
@@ -640,6 +697,18 @@ public class MqmsFailureTrack implements Serializable {
         private List<String> rightFuzzyAppendix;
 
         public List<String> getRightFuzzyAppendix(){return this.rightFuzzyAppendix;}
+        private List<String> processStateList;
+
+        public List<String> getProcessStateList(){return this.processStateList;}
+
+
+        private List<String> fuzzyProcessState;
+
+        public List<String> getFuzzyProcessState(){return this.fuzzyProcessState;}
+
+        private List<String> rightFuzzyProcessState;
+
+        public List<String> getRightFuzzyProcessState(){return this.rightFuzzyProcessState;}
         private QueryBuilder (){
             this.fetchFields = new HashMap<>();
         }
@@ -727,6 +796,51 @@ public class MqmsFailureTrack implements Serializable {
 
         public QueryBuilder excludeVoucherCode(){
             setFetchFields("excludeFields","voucherCode");
+            return this;
+        }
+
+        public QueryBuilder fuzzyEngOrTran (List<String> fuzzyEngOrTran){
+            this.fuzzyEngOrTran = fuzzyEngOrTran;
+            return this;
+        }
+
+        public QueryBuilder fuzzyEngOrTran (String ... fuzzyEngOrTran){
+            this.fuzzyEngOrTran = solveNullList(fuzzyEngOrTran);
+            return this;
+        }
+
+        public QueryBuilder rightFuzzyEngOrTran (List<String> rightFuzzyEngOrTran){
+            this.rightFuzzyEngOrTran = rightFuzzyEngOrTran;
+            return this;
+        }
+
+        public QueryBuilder rightFuzzyEngOrTran (String ... rightFuzzyEngOrTran){
+            this.rightFuzzyEngOrTran = solveNullList(rightFuzzyEngOrTran);
+            return this;
+        }
+
+        public QueryBuilder engOrTran(String engOrTran){
+            setEngOrTran(engOrTran);
+            return this;
+        }
+
+        public QueryBuilder engOrTranList(String ... engOrTran){
+            this.engOrTranList = solveNullList(engOrTran);
+            return this;
+        }
+
+        public QueryBuilder engOrTranList(List<String> engOrTran){
+            this.engOrTranList = engOrTran;
+            return this;
+        }
+
+        public QueryBuilder fetchEngOrTran(){
+            setFetchFields("fetchFields","engOrTran");
+            return this;
+        }
+
+        public QueryBuilder excludeEngOrTran(){
+            setFetchFields("excludeFields","engOrTran");
             return this;
         }
 
@@ -1168,6 +1282,51 @@ public class MqmsFailureTrack implements Serializable {
             return this;
         }
 
+        public QueryBuilder fuzzyAppearance (List<String> fuzzyAppearance){
+            this.fuzzyAppearance = fuzzyAppearance;
+            return this;
+        }
+
+        public QueryBuilder fuzzyAppearance (String ... fuzzyAppearance){
+            this.fuzzyAppearance = solveNullList(fuzzyAppearance);
+            return this;
+        }
+
+        public QueryBuilder rightFuzzyAppearance (List<String> rightFuzzyAppearance){
+            this.rightFuzzyAppearance = rightFuzzyAppearance;
+            return this;
+        }
+
+        public QueryBuilder rightFuzzyAppearance (String ... rightFuzzyAppearance){
+            this.rightFuzzyAppearance = solveNullList(rightFuzzyAppearance);
+            return this;
+        }
+
+        public QueryBuilder appearance(String appearance){
+            setAppearance(appearance);
+            return this;
+        }
+
+        public QueryBuilder appearanceList(String ... appearance){
+            this.appearanceList = solveNullList(appearance);
+            return this;
+        }
+
+        public QueryBuilder appearanceList(List<String> appearance){
+            this.appearanceList = appearance;
+            return this;
+        }
+
+        public QueryBuilder fetchAppearance(){
+            setFetchFields("fetchFields","appearance");
+            return this;
+        }
+
+        public QueryBuilder excludeAppearance(){
+            setFetchFields("excludeFields","appearance");
+            return this;
+        }
+
         public QueryBuilder fuzzyCarTestSymbol (List<String> fuzzyCarTestSymbol){
             this.fuzzyCarTestSymbol = fuzzyCarTestSymbol;
             return this;
@@ -1524,51 +1683,6 @@ public class MqmsFailureTrack implements Serializable {
             return this;
         }
 
-        public QueryBuilder fuzzyAppearance (List<String> fuzzyAppearance){
-            this.fuzzyAppearance = fuzzyAppearance;
-            return this;
-        }
-
-        public QueryBuilder fuzzyAppearance (String ... fuzzyAppearance){
-            this.fuzzyAppearance = solveNullList(fuzzyAppearance);
-            return this;
-        }
-
-        public QueryBuilder rightFuzzyAppearance (List<String> rightFuzzyAppearance){
-            this.rightFuzzyAppearance = rightFuzzyAppearance;
-            return this;
-        }
-
-        public QueryBuilder rightFuzzyAppearance (String ... rightFuzzyAppearance){
-            this.rightFuzzyAppearance = solveNullList(rightFuzzyAppearance);
-            return this;
-        }
-
-        public QueryBuilder appearance(String appearance){
-            setAppearance(appearance);
-            return this;
-        }
-
-        public QueryBuilder appearanceList(String ... appearance){
-            this.appearanceList = solveNullList(appearance);
-            return this;
-        }
-
-        public QueryBuilder appearanceList(List<String> appearance){
-            this.appearanceList = appearance;
-            return this;
-        }
-
-        public QueryBuilder fetchAppearance(){
-            setFetchFields("fetchFields","appearance");
-            return this;
-        }
-
-        public QueryBuilder excludeAppearance(){
-            setFetchFields("excludeFields","appearance");
-            return this;
-        }
-
         public QueryBuilder fuzzyAnalysisDepartments (List<String> fuzzyAnalysisDepartments){
             this.fuzzyAnalysisDepartments = fuzzyAnalysisDepartments;
             return this;
@@ -1704,6 +1818,51 @@ public class MqmsFailureTrack implements Serializable {
             return this;
         }
 
+        public QueryBuilder fuzzyImportance (List<String> fuzzyImportance){
+            this.fuzzyImportance = fuzzyImportance;
+            return this;
+        }
+
+        public QueryBuilder fuzzyImportance (String ... fuzzyImportance){
+            this.fuzzyImportance = solveNullList(fuzzyImportance);
+            return this;
+        }
+
+        public QueryBuilder rightFuzzyImportance (List<String> rightFuzzyImportance){
+            this.rightFuzzyImportance = rightFuzzyImportance;
+            return this;
+        }
+
+        public QueryBuilder rightFuzzyImportance (String ... rightFuzzyImportance){
+            this.rightFuzzyImportance = solveNullList(rightFuzzyImportance);
+            return this;
+        }
+
+        public QueryBuilder importance(String importance){
+            setImportance(importance);
+            return this;
+        }
+
+        public QueryBuilder importanceList(String ... importance){
+            this.importanceList = solveNullList(importance);
+            return this;
+        }
+
+        public QueryBuilder importanceList(List<String> importance){
+            this.importanceList = importance;
+            return this;
+        }
+
+        public QueryBuilder fetchImportance(){
+            setFetchFields("fetchFields","importance");
+            return this;
+        }
+
+        public QueryBuilder excludeImportance(){
+            setFetchFields("excludeFields","importance");
+            return this;
+        }
+
         public QueryBuilder fuzzyAppendix (List<String> fuzzyAppendix){
             this.fuzzyAppendix = fuzzyAppendix;
             return this;
@@ -1746,6 +1905,51 @@ public class MqmsFailureTrack implements Serializable {
 
         public QueryBuilder excludeAppendix(){
             setFetchFields("excludeFields","appendix");
+            return this;
+        }
+
+        public QueryBuilder fuzzyProcessState (List<String> fuzzyProcessState){
+            this.fuzzyProcessState = fuzzyProcessState;
+            return this;
+        }
+
+        public QueryBuilder fuzzyProcessState (String ... fuzzyProcessState){
+            this.fuzzyProcessState = solveNullList(fuzzyProcessState);
+            return this;
+        }
+
+        public QueryBuilder rightFuzzyProcessState (List<String> rightFuzzyProcessState){
+            this.rightFuzzyProcessState = rightFuzzyProcessState;
+            return this;
+        }
+
+        public QueryBuilder rightFuzzyProcessState (String ... rightFuzzyProcessState){
+            this.rightFuzzyProcessState = solveNullList(rightFuzzyProcessState);
+            return this;
+        }
+
+        public QueryBuilder processState(String processState){
+            setProcessState(processState);
+            return this;
+        }
+
+        public QueryBuilder processStateList(String ... processState){
+            this.processStateList = solveNullList(processState);
+            return this;
+        }
+
+        public QueryBuilder processStateList(List<String> processState){
+            this.processStateList = processState;
+            return this;
+        }
+
+        public QueryBuilder fetchProcessState(){
+            setFetchFields("fetchFields","processState");
+            return this;
+        }
+
+        public QueryBuilder excludeProcessState(){
+            setFetchFields("excludeFields","processState");
             return this;
         }
         private <T>List<T> solveNullList(T ... objs){
@@ -1815,6 +2019,18 @@ public class MqmsFailureTrack implements Serializable {
         private List<String> rightFuzzyVoucherCode;
 
         public List<String> getRightFuzzyVoucherCode(){return this.rightFuzzyVoucherCode;}
+        private List<String> engOrTranList;
+
+        public List<String> getEngOrTranList(){return this.engOrTranList;}
+
+
+        private List<String> fuzzyEngOrTran;
+
+        public List<String> getFuzzyEngOrTran(){return this.fuzzyEngOrTran;}
+
+        private List<String> rightFuzzyEngOrTran;
+
+        public List<String> getRightFuzzyEngOrTran(){return this.rightFuzzyEngOrTran;}
         private List<Long> saoIdList;
 
         public List<Long> getSaoIdList(){return this.saoIdList;}
@@ -1935,6 +2151,18 @@ public class MqmsFailureTrack implements Serializable {
         private List<String> rightFuzzyDeliveryCode;
 
         public List<String> getRightFuzzyDeliveryCode(){return this.rightFuzzyDeliveryCode;}
+        private List<String> appearanceList;
+
+        public List<String> getAppearanceList(){return this.appearanceList;}
+
+
+        private List<String> fuzzyAppearance;
+
+        public List<String> getFuzzyAppearance(){return this.fuzzyAppearance;}
+
+        private List<String> rightFuzzyAppearance;
+
+        public List<String> getRightFuzzyAppearance(){return this.rightFuzzyAppearance;}
         private List<String> carTestSymbolList;
 
         public List<String> getCarTestSymbolList(){return this.carTestSymbolList;}
@@ -2031,18 +2259,6 @@ public class MqmsFailureTrack implements Serializable {
         private List<String> rightFuzzyFailureReappearResult;
 
         public List<String> getRightFuzzyFailureReappearResult(){return this.rightFuzzyFailureReappearResult;}
-        private List<String> appearanceList;
-
-        public List<String> getAppearanceList(){return this.appearanceList;}
-
-
-        private List<String> fuzzyAppearance;
-
-        public List<String> getFuzzyAppearance(){return this.fuzzyAppearance;}
-
-        private List<String> rightFuzzyAppearance;
-
-        public List<String> getRightFuzzyAppearance(){return this.rightFuzzyAppearance;}
         private List<String> analysisDepartmentsList;
 
         public List<String> getAnalysisDepartmentsList(){return this.analysisDepartmentsList;}
@@ -2079,6 +2295,18 @@ public class MqmsFailureTrack implements Serializable {
         private List<String> rightFuzzyAnalysisRequirement;
 
         public List<String> getRightFuzzyAnalysisRequirement(){return this.rightFuzzyAnalysisRequirement;}
+        private List<String> importanceList;
+
+        public List<String> getImportanceList(){return this.importanceList;}
+
+
+        private List<String> fuzzyImportance;
+
+        public List<String> getFuzzyImportance(){return this.fuzzyImportance;}
+
+        private List<String> rightFuzzyImportance;
+
+        public List<String> getRightFuzzyImportance(){return this.rightFuzzyImportance;}
         private List<String> appendixList;
 
         public List<String> getAppendixList(){return this.appendixList;}
@@ -2091,6 +2319,18 @@ public class MqmsFailureTrack implements Serializable {
         private List<String> rightFuzzyAppendix;
 
         public List<String> getRightFuzzyAppendix(){return this.rightFuzzyAppendix;}
+        private List<String> processStateList;
+
+        public List<String> getProcessStateList(){return this.processStateList;}
+
+
+        private List<String> fuzzyProcessState;
+
+        public List<String> getFuzzyProcessState(){return this.fuzzyProcessState;}
+
+        private List<String> rightFuzzyProcessState;
+
+        public List<String> getRightFuzzyProcessState(){return this.rightFuzzyProcessState;}
 
         public ConditionBuilder failureTrackIdBetWeen(Integer failureTrackIdSt,Integer failureTrackIdEd){
             this.failureTrackIdSt = failureTrackIdSt;
@@ -2145,6 +2385,36 @@ public class MqmsFailureTrack implements Serializable {
 
         public ConditionBuilder voucherCodeList(List<String> voucherCode){
             this.voucherCodeList = voucherCode;
+            return this;
+        }
+
+        public ConditionBuilder fuzzyEngOrTran (List<String> fuzzyEngOrTran){
+            this.fuzzyEngOrTran = fuzzyEngOrTran;
+            return this;
+        }
+
+        public ConditionBuilder fuzzyEngOrTran (String ... fuzzyEngOrTran){
+            this.fuzzyEngOrTran = solveNullList(fuzzyEngOrTran);
+            return this;
+        }
+
+        public ConditionBuilder rightFuzzyEngOrTran (List<String> rightFuzzyEngOrTran){
+            this.rightFuzzyEngOrTran = rightFuzzyEngOrTran;
+            return this;
+        }
+
+        public ConditionBuilder rightFuzzyEngOrTran (String ... rightFuzzyEngOrTran){
+            this.rightFuzzyEngOrTran = solveNullList(rightFuzzyEngOrTran);
+            return this;
+        }
+
+        public ConditionBuilder engOrTranList(String ... engOrTran){
+            this.engOrTranList = solveNullList(engOrTran);
+            return this;
+        }
+
+        public ConditionBuilder engOrTranList(List<String> engOrTran){
+            this.engOrTranList = engOrTran;
             return this;
         }
 
@@ -2436,6 +2706,36 @@ public class MqmsFailureTrack implements Serializable {
             return this;
         }
 
+        public ConditionBuilder fuzzyAppearance (List<String> fuzzyAppearance){
+            this.fuzzyAppearance = fuzzyAppearance;
+            return this;
+        }
+
+        public ConditionBuilder fuzzyAppearance (String ... fuzzyAppearance){
+            this.fuzzyAppearance = solveNullList(fuzzyAppearance);
+            return this;
+        }
+
+        public ConditionBuilder rightFuzzyAppearance (List<String> rightFuzzyAppearance){
+            this.rightFuzzyAppearance = rightFuzzyAppearance;
+            return this;
+        }
+
+        public ConditionBuilder rightFuzzyAppearance (String ... rightFuzzyAppearance){
+            this.rightFuzzyAppearance = solveNullList(rightFuzzyAppearance);
+            return this;
+        }
+
+        public ConditionBuilder appearanceList(String ... appearance){
+            this.appearanceList = solveNullList(appearance);
+            return this;
+        }
+
+        public ConditionBuilder appearanceList(List<String> appearance){
+            this.appearanceList = appearance;
+            return this;
+        }
+
         public ConditionBuilder fuzzyCarTestSymbol (List<String> fuzzyCarTestSymbol){
             this.fuzzyCarTestSymbol = fuzzyCarTestSymbol;
             return this;
@@ -2672,36 +2972,6 @@ public class MqmsFailureTrack implements Serializable {
             return this;
         }
 
-        public ConditionBuilder fuzzyAppearance (List<String> fuzzyAppearance){
-            this.fuzzyAppearance = fuzzyAppearance;
-            return this;
-        }
-
-        public ConditionBuilder fuzzyAppearance (String ... fuzzyAppearance){
-            this.fuzzyAppearance = solveNullList(fuzzyAppearance);
-            return this;
-        }
-
-        public ConditionBuilder rightFuzzyAppearance (List<String> rightFuzzyAppearance){
-            this.rightFuzzyAppearance = rightFuzzyAppearance;
-            return this;
-        }
-
-        public ConditionBuilder rightFuzzyAppearance (String ... rightFuzzyAppearance){
-            this.rightFuzzyAppearance = solveNullList(rightFuzzyAppearance);
-            return this;
-        }
-
-        public ConditionBuilder appearanceList(String ... appearance){
-            this.appearanceList = solveNullList(appearance);
-            return this;
-        }
-
-        public ConditionBuilder appearanceList(List<String> appearance){
-            this.appearanceList = appearance;
-            return this;
-        }
-
         public ConditionBuilder fuzzyAnalysisDepartments (List<String> fuzzyAnalysisDepartments){
             this.fuzzyAnalysisDepartments = fuzzyAnalysisDepartments;
             return this;
@@ -2792,6 +3062,36 @@ public class MqmsFailureTrack implements Serializable {
             return this;
         }
 
+        public ConditionBuilder fuzzyImportance (List<String> fuzzyImportance){
+            this.fuzzyImportance = fuzzyImportance;
+            return this;
+        }
+
+        public ConditionBuilder fuzzyImportance (String ... fuzzyImportance){
+            this.fuzzyImportance = solveNullList(fuzzyImportance);
+            return this;
+        }
+
+        public ConditionBuilder rightFuzzyImportance (List<String> rightFuzzyImportance){
+            this.rightFuzzyImportance = rightFuzzyImportance;
+            return this;
+        }
+
+        public ConditionBuilder rightFuzzyImportance (String ... rightFuzzyImportance){
+            this.rightFuzzyImportance = solveNullList(rightFuzzyImportance);
+            return this;
+        }
+
+        public ConditionBuilder importanceList(String ... importance){
+            this.importanceList = solveNullList(importance);
+            return this;
+        }
+
+        public ConditionBuilder importanceList(List<String> importance){
+            this.importanceList = importance;
+            return this;
+        }
+
         public ConditionBuilder fuzzyAppendix (List<String> fuzzyAppendix){
             this.fuzzyAppendix = fuzzyAppendix;
             return this;
@@ -2819,6 +3119,36 @@ public class MqmsFailureTrack implements Serializable {
 
         public ConditionBuilder appendixList(List<String> appendix){
             this.appendixList = appendix;
+            return this;
+        }
+
+        public ConditionBuilder fuzzyProcessState (List<String> fuzzyProcessState){
+            this.fuzzyProcessState = fuzzyProcessState;
+            return this;
+        }
+
+        public ConditionBuilder fuzzyProcessState (String ... fuzzyProcessState){
+            this.fuzzyProcessState = solveNullList(fuzzyProcessState);
+            return this;
+        }
+
+        public ConditionBuilder rightFuzzyProcessState (List<String> rightFuzzyProcessState){
+            this.rightFuzzyProcessState = rightFuzzyProcessState;
+            return this;
+        }
+
+        public ConditionBuilder rightFuzzyProcessState (String ... rightFuzzyProcessState){
+            this.rightFuzzyProcessState = solveNullList(rightFuzzyProcessState);
+            return this;
+        }
+
+        public ConditionBuilder processStateList(String ... processState){
+            this.processStateList = solveNullList(processState);
+            return this;
+        }
+
+        public ConditionBuilder processStateList(List<String> processState){
+            this.processStateList = processState;
             return this;
         }
 
@@ -2852,6 +3182,10 @@ public class MqmsFailureTrack implements Serializable {
         }
         public Builder voucherCode(String voucherCode){
             this.obj.setVoucherCode(voucherCode);
+            return this;
+        }
+        public Builder engOrTran(String engOrTran){
+            this.obj.setEngOrTran(engOrTran);
             return this;
         }
         public Builder saoId(Long saoId){
@@ -2894,6 +3228,10 @@ public class MqmsFailureTrack implements Serializable {
             this.obj.setDeliveryCode(deliveryCode);
             return this;
         }
+        public Builder appearance(String appearance){
+            this.obj.setAppearance(appearance);
+            return this;
+        }
         public Builder carTestSymbol(String carTestSymbol){
             this.obj.setCarTestSymbol(carTestSymbol);
             return this;
@@ -2926,10 +3264,6 @@ public class MqmsFailureTrack implements Serializable {
             this.obj.setFailureReappearResult(failureReappearResult);
             return this;
         }
-        public Builder appearance(String appearance){
-            this.obj.setAppearance(appearance);
-            return this;
-        }
         public Builder analysisDepartments(String analysisDepartments){
             this.obj.setAnalysisDepartments(analysisDepartments);
             return this;
@@ -2942,8 +3276,16 @@ public class MqmsFailureTrack implements Serializable {
             this.obj.setAnalysisRequirement(analysisRequirement);
             return this;
         }
+        public Builder importance(String importance){
+            this.obj.setImportance(importance);
+            return this;
+        }
         public Builder appendix(String appendix){
             this.obj.setAppendix(appendix);
+            return this;
+        }
+        public Builder processState(String processState){
+            this.obj.setProcessState(processState);
             return this;
         }
         public MqmsFailureTrack build(){return obj;}

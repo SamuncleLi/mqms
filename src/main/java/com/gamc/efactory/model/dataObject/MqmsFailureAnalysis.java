@@ -10,7 +10,7 @@ import java.util.List;
 */
 public class MqmsFailureAnalysis implements Serializable {
 
-    private static final long serialVersionUID = 1585109348458L;
+    private static final long serialVersionUID = 1586508009205L;
 
 
     /**
@@ -49,6 +49,12 @@ public class MqmsFailureAnalysis implements Serializable {
     * isNullAble:1
     */
     private String failureAnalystComment;
+
+    /**
+    * 首台号
+    * isNullAble:1
+    */
+    private String firstChangeCode;
 
     /**
     * 流程系统id
@@ -105,6 +111,10 @@ public class MqmsFailureAnalysis implements Serializable {
 
     public String getFailureAnalystComment(){return this.failureAnalystComment;}
 
+    public void setFirstChangeCode(String firstChangeCode){this.firstChangeCode = firstChangeCode;}
+
+    public String getFirstChangeCode(){return this.firstChangeCode;}
+
     public void setSaoId(Long saoId){this.saoId = saoId;}
 
     public Long getSaoId(){return this.saoId;}
@@ -133,6 +143,7 @@ public class MqmsFailureAnalysis implements Serializable {
                 "failureAnalystName='" + failureAnalystName + '\'' +
                 "failureAnalystDepartment='" + failureAnalystDepartment + '\'' +
                 "failureAnalystComment='" + failureAnalystComment + '\'' +
+                "firstChangeCode='" + firstChangeCode + '\'' +
                 "saoId='" + saoId + '\'' +
                 "flag='" + flag + '\'' +
                 "taskName='" + taskName + '\'' +
@@ -258,6 +269,18 @@ public class MqmsFailureAnalysis implements Serializable {
         private List<String> rightFuzzyFailureAnalystComment;
 
         public List<String> getRightFuzzyFailureAnalystComment(){return this.rightFuzzyFailureAnalystComment;}
+        private List<String> firstChangeCodeList;
+
+        public List<String> getFirstChangeCodeList(){return this.firstChangeCodeList;}
+
+
+        private List<String> fuzzyFirstChangeCode;
+
+        public List<String> getFuzzyFirstChangeCode(){return this.fuzzyFirstChangeCode;}
+
+        private List<String> rightFuzzyFirstChangeCode;
+
+        public List<String> getRightFuzzyFirstChangeCode(){return this.rightFuzzyFirstChangeCode;}
         private List<Long> saoIdList;
 
         public List<Long> getSaoIdList(){return this.saoIdList;}
@@ -577,6 +600,51 @@ public class MqmsFailureAnalysis implements Serializable {
 
         public QueryBuilder excludeFailureAnalystComment(){
             setFetchFields("excludeFields","failureAnalystComment");
+            return this;
+        }
+
+        public QueryBuilder fuzzyFirstChangeCode (List<String> fuzzyFirstChangeCode){
+            this.fuzzyFirstChangeCode = fuzzyFirstChangeCode;
+            return this;
+        }
+
+        public QueryBuilder fuzzyFirstChangeCode (String ... fuzzyFirstChangeCode){
+            this.fuzzyFirstChangeCode = solveNullList(fuzzyFirstChangeCode);
+            return this;
+        }
+
+        public QueryBuilder rightFuzzyFirstChangeCode (List<String> rightFuzzyFirstChangeCode){
+            this.rightFuzzyFirstChangeCode = rightFuzzyFirstChangeCode;
+            return this;
+        }
+
+        public QueryBuilder rightFuzzyFirstChangeCode (String ... rightFuzzyFirstChangeCode){
+            this.rightFuzzyFirstChangeCode = solveNullList(rightFuzzyFirstChangeCode);
+            return this;
+        }
+
+        public QueryBuilder firstChangeCode(String firstChangeCode){
+            setFirstChangeCode(firstChangeCode);
+            return this;
+        }
+
+        public QueryBuilder firstChangeCodeList(String ... firstChangeCode){
+            this.firstChangeCodeList = solveNullList(firstChangeCode);
+            return this;
+        }
+
+        public QueryBuilder firstChangeCodeList(List<String> firstChangeCode){
+            this.firstChangeCodeList = firstChangeCode;
+            return this;
+        }
+
+        public QueryBuilder fetchFirstChangeCode(){
+            setFetchFields("fetchFields","firstChangeCode");
+            return this;
+        }
+
+        public QueryBuilder excludeFirstChangeCode(){
+            setFetchFields("excludeFields","firstChangeCode");
             return this;
         }
 
@@ -915,6 +983,18 @@ public class MqmsFailureAnalysis implements Serializable {
         private List<String> rightFuzzyFailureAnalystComment;
 
         public List<String> getRightFuzzyFailureAnalystComment(){return this.rightFuzzyFailureAnalystComment;}
+        private List<String> firstChangeCodeList;
+
+        public List<String> getFirstChangeCodeList(){return this.firstChangeCodeList;}
+
+
+        private List<String> fuzzyFirstChangeCode;
+
+        public List<String> getFuzzyFirstChangeCode(){return this.fuzzyFirstChangeCode;}
+
+        private List<String> rightFuzzyFirstChangeCode;
+
+        public List<String> getRightFuzzyFirstChangeCode(){return this.rightFuzzyFirstChangeCode;}
         private List<Long> saoIdList;
 
         public List<Long> getSaoIdList(){return this.saoIdList;}
@@ -1144,6 +1224,36 @@ public class MqmsFailureAnalysis implements Serializable {
             return this;
         }
 
+        public ConditionBuilder fuzzyFirstChangeCode (List<String> fuzzyFirstChangeCode){
+            this.fuzzyFirstChangeCode = fuzzyFirstChangeCode;
+            return this;
+        }
+
+        public ConditionBuilder fuzzyFirstChangeCode (String ... fuzzyFirstChangeCode){
+            this.fuzzyFirstChangeCode = solveNullList(fuzzyFirstChangeCode);
+            return this;
+        }
+
+        public ConditionBuilder rightFuzzyFirstChangeCode (List<String> rightFuzzyFirstChangeCode){
+            this.rightFuzzyFirstChangeCode = rightFuzzyFirstChangeCode;
+            return this;
+        }
+
+        public ConditionBuilder rightFuzzyFirstChangeCode (String ... rightFuzzyFirstChangeCode){
+            this.rightFuzzyFirstChangeCode = solveNullList(rightFuzzyFirstChangeCode);
+            return this;
+        }
+
+        public ConditionBuilder firstChangeCodeList(String ... firstChangeCode){
+            this.firstChangeCodeList = solveNullList(firstChangeCode);
+            return this;
+        }
+
+        public ConditionBuilder firstChangeCodeList(List<String> firstChangeCode){
+            this.firstChangeCodeList = firstChangeCode;
+            return this;
+        }
+
         public ConditionBuilder saoIdBetWeen(Long saoIdSt,Long saoIdEd){
             this.saoIdSt = saoIdSt;
             this.saoIdEd = saoIdEd;
@@ -1336,6 +1446,10 @@ public class MqmsFailureAnalysis implements Serializable {
         }
         public Builder failureAnalystComment(String failureAnalystComment){
             this.obj.setFailureAnalystComment(failureAnalystComment);
+            return this;
+        }
+        public Builder firstChangeCode(String firstChangeCode){
+            this.obj.setFirstChangeCode(firstChangeCode);
             return this;
         }
         public Builder saoId(Long saoId){

@@ -10,26 +10,39 @@ import java.util.List;
 */
 public class MqmsUserDict implements Serializable {
 
-    private static final long serialVersionUID = 1585728059125L;
+    private static final long serialVersionUID = 1586510697580L;
 
 
     /**
+    * 主键
     * 
-    * isNullAble:1
+    * isNullAble:0
     */
     private Integer id;
 
     /**
-    * 人员类型
+    * 组织层级
     * isNullAble:1
     */
     private String orgType;
 
     /**
-    * 人员描述
+    * 层级描述（中文）
+    * isNullAble:1
+    */
+    private String orgTypeCn;
+
+    /**
+    * 组织描述
     * isNullAble:1
     */
     private String orgDesc;
+
+    /**
+    * 组织秒速（中文）
+    * isNullAble:1
+    */
+    private String orgDescCn;
 
     /**
     * 用户id
@@ -58,9 +71,17 @@ public class MqmsUserDict implements Serializable {
 
     public String getOrgType(){return this.orgType;}
 
+    public void setOrgTypeCn(String orgTypeCn){this.orgTypeCn = orgTypeCn;}
+
+    public String getOrgTypeCn(){return this.orgTypeCn;}
+
     public void setOrgDesc(String orgDesc){this.orgDesc = orgDesc;}
 
     public String getOrgDesc(){return this.orgDesc;}
+
+    public void setOrgDescCn(String orgDescCn){this.orgDescCn = orgDescCn;}
+
+    public String getOrgDescCn(){return this.orgDescCn;}
 
     public void setUserId(Integer userId){this.userId = userId;}
 
@@ -78,7 +99,9 @@ public class MqmsUserDict implements Serializable {
         return "MqmsUserDict{" +
                 "id='" + id + '\'' +
                 "orgType='" + orgType + '\'' +
+                "orgTypeCn='" + orgTypeCn + '\'' +
                 "orgDesc='" + orgDesc + '\'' +
+                "orgDescCn='" + orgDescCn + '\'' +
                 "userId='" + userId + '\'' +
                 "userName='" + userName + '\'' +
                 "userNo='" + userNo + '\'' +
@@ -154,6 +177,18 @@ public class MqmsUserDict implements Serializable {
         private List<String> rightFuzzyOrgType;
 
         public List<String> getRightFuzzyOrgType(){return this.rightFuzzyOrgType;}
+        private List<String> orgTypeCnList;
+
+        public List<String> getOrgTypeCnList(){return this.orgTypeCnList;}
+
+
+        private List<String> fuzzyOrgTypeCn;
+
+        public List<String> getFuzzyOrgTypeCn(){return this.fuzzyOrgTypeCn;}
+
+        private List<String> rightFuzzyOrgTypeCn;
+
+        public List<String> getRightFuzzyOrgTypeCn(){return this.rightFuzzyOrgTypeCn;}
         private List<String> orgDescList;
 
         public List<String> getOrgDescList(){return this.orgDescList;}
@@ -166,6 +201,18 @@ public class MqmsUserDict implements Serializable {
         private List<String> rightFuzzyOrgDesc;
 
         public List<String> getRightFuzzyOrgDesc(){return this.rightFuzzyOrgDesc;}
+        private List<String> orgDescCnList;
+
+        public List<String> getOrgDescCnList(){return this.orgDescCnList;}
+
+
+        private List<String> fuzzyOrgDescCn;
+
+        public List<String> getFuzzyOrgDescCn(){return this.fuzzyOrgDescCn;}
+
+        private List<String> rightFuzzyOrgDescCn;
+
+        public List<String> getRightFuzzyOrgDescCn(){return this.rightFuzzyOrgDescCn;}
         private List<Integer> userIdList;
 
         public List<Integer> getUserIdList(){return this.userIdList;}
@@ -292,6 +339,51 @@ public class MqmsUserDict implements Serializable {
             return this;
         }
 
+        public QueryBuilder fuzzyOrgTypeCn (List<String> fuzzyOrgTypeCn){
+            this.fuzzyOrgTypeCn = fuzzyOrgTypeCn;
+            return this;
+        }
+
+        public QueryBuilder fuzzyOrgTypeCn (String ... fuzzyOrgTypeCn){
+            this.fuzzyOrgTypeCn = solveNullList(fuzzyOrgTypeCn);
+            return this;
+        }
+
+        public QueryBuilder rightFuzzyOrgTypeCn (List<String> rightFuzzyOrgTypeCn){
+            this.rightFuzzyOrgTypeCn = rightFuzzyOrgTypeCn;
+            return this;
+        }
+
+        public QueryBuilder rightFuzzyOrgTypeCn (String ... rightFuzzyOrgTypeCn){
+            this.rightFuzzyOrgTypeCn = solveNullList(rightFuzzyOrgTypeCn);
+            return this;
+        }
+
+        public QueryBuilder orgTypeCn(String orgTypeCn){
+            setOrgTypeCn(orgTypeCn);
+            return this;
+        }
+
+        public QueryBuilder orgTypeCnList(String ... orgTypeCn){
+            this.orgTypeCnList = solveNullList(orgTypeCn);
+            return this;
+        }
+
+        public QueryBuilder orgTypeCnList(List<String> orgTypeCn){
+            this.orgTypeCnList = orgTypeCn;
+            return this;
+        }
+
+        public QueryBuilder fetchOrgTypeCn(){
+            setFetchFields("fetchFields","orgTypeCn");
+            return this;
+        }
+
+        public QueryBuilder excludeOrgTypeCn(){
+            setFetchFields("excludeFields","orgTypeCn");
+            return this;
+        }
+
         public QueryBuilder fuzzyOrgDesc (List<String> fuzzyOrgDesc){
             this.fuzzyOrgDesc = fuzzyOrgDesc;
             return this;
@@ -334,6 +426,51 @@ public class MqmsUserDict implements Serializable {
 
         public QueryBuilder excludeOrgDesc(){
             setFetchFields("excludeFields","orgDesc");
+            return this;
+        }
+
+        public QueryBuilder fuzzyOrgDescCn (List<String> fuzzyOrgDescCn){
+            this.fuzzyOrgDescCn = fuzzyOrgDescCn;
+            return this;
+        }
+
+        public QueryBuilder fuzzyOrgDescCn (String ... fuzzyOrgDescCn){
+            this.fuzzyOrgDescCn = solveNullList(fuzzyOrgDescCn);
+            return this;
+        }
+
+        public QueryBuilder rightFuzzyOrgDescCn (List<String> rightFuzzyOrgDescCn){
+            this.rightFuzzyOrgDescCn = rightFuzzyOrgDescCn;
+            return this;
+        }
+
+        public QueryBuilder rightFuzzyOrgDescCn (String ... rightFuzzyOrgDescCn){
+            this.rightFuzzyOrgDescCn = solveNullList(rightFuzzyOrgDescCn);
+            return this;
+        }
+
+        public QueryBuilder orgDescCn(String orgDescCn){
+            setOrgDescCn(orgDescCn);
+            return this;
+        }
+
+        public QueryBuilder orgDescCnList(String ... orgDescCn){
+            this.orgDescCnList = solveNullList(orgDescCn);
+            return this;
+        }
+
+        public QueryBuilder orgDescCnList(List<String> orgDescCn){
+            this.orgDescCnList = orgDescCn;
+            return this;
+        }
+
+        public QueryBuilder fetchOrgDescCn(){
+            setFetchFields("fetchFields","orgDescCn");
+            return this;
+        }
+
+        public QueryBuilder excludeOrgDescCn(){
+            setFetchFields("excludeFields","orgDescCn");
             return this;
         }
 
@@ -534,6 +671,18 @@ public class MqmsUserDict implements Serializable {
         private List<String> rightFuzzyOrgType;
 
         public List<String> getRightFuzzyOrgType(){return this.rightFuzzyOrgType;}
+        private List<String> orgTypeCnList;
+
+        public List<String> getOrgTypeCnList(){return this.orgTypeCnList;}
+
+
+        private List<String> fuzzyOrgTypeCn;
+
+        public List<String> getFuzzyOrgTypeCn(){return this.fuzzyOrgTypeCn;}
+
+        private List<String> rightFuzzyOrgTypeCn;
+
+        public List<String> getRightFuzzyOrgTypeCn(){return this.rightFuzzyOrgTypeCn;}
         private List<String> orgDescList;
 
         public List<String> getOrgDescList(){return this.orgDescList;}
@@ -546,6 +695,18 @@ public class MqmsUserDict implements Serializable {
         private List<String> rightFuzzyOrgDesc;
 
         public List<String> getRightFuzzyOrgDesc(){return this.rightFuzzyOrgDesc;}
+        private List<String> orgDescCnList;
+
+        public List<String> getOrgDescCnList(){return this.orgDescCnList;}
+
+
+        private List<String> fuzzyOrgDescCn;
+
+        public List<String> getFuzzyOrgDescCn(){return this.fuzzyOrgDescCn;}
+
+        private List<String> rightFuzzyOrgDescCn;
+
+        public List<String> getRightFuzzyOrgDescCn(){return this.rightFuzzyOrgDescCn;}
         private List<Integer> userIdList;
 
         public List<Integer> getUserIdList(){return this.userIdList;}
@@ -639,6 +800,36 @@ public class MqmsUserDict implements Serializable {
             return this;
         }
 
+        public ConditionBuilder fuzzyOrgTypeCn (List<String> fuzzyOrgTypeCn){
+            this.fuzzyOrgTypeCn = fuzzyOrgTypeCn;
+            return this;
+        }
+
+        public ConditionBuilder fuzzyOrgTypeCn (String ... fuzzyOrgTypeCn){
+            this.fuzzyOrgTypeCn = solveNullList(fuzzyOrgTypeCn);
+            return this;
+        }
+
+        public ConditionBuilder rightFuzzyOrgTypeCn (List<String> rightFuzzyOrgTypeCn){
+            this.rightFuzzyOrgTypeCn = rightFuzzyOrgTypeCn;
+            return this;
+        }
+
+        public ConditionBuilder rightFuzzyOrgTypeCn (String ... rightFuzzyOrgTypeCn){
+            this.rightFuzzyOrgTypeCn = solveNullList(rightFuzzyOrgTypeCn);
+            return this;
+        }
+
+        public ConditionBuilder orgTypeCnList(String ... orgTypeCn){
+            this.orgTypeCnList = solveNullList(orgTypeCn);
+            return this;
+        }
+
+        public ConditionBuilder orgTypeCnList(List<String> orgTypeCn){
+            this.orgTypeCnList = orgTypeCn;
+            return this;
+        }
+
         public ConditionBuilder fuzzyOrgDesc (List<String> fuzzyOrgDesc){
             this.fuzzyOrgDesc = fuzzyOrgDesc;
             return this;
@@ -666,6 +857,36 @@ public class MqmsUserDict implements Serializable {
 
         public ConditionBuilder orgDescList(List<String> orgDesc){
             this.orgDescList = orgDesc;
+            return this;
+        }
+
+        public ConditionBuilder fuzzyOrgDescCn (List<String> fuzzyOrgDescCn){
+            this.fuzzyOrgDescCn = fuzzyOrgDescCn;
+            return this;
+        }
+
+        public ConditionBuilder fuzzyOrgDescCn (String ... fuzzyOrgDescCn){
+            this.fuzzyOrgDescCn = solveNullList(fuzzyOrgDescCn);
+            return this;
+        }
+
+        public ConditionBuilder rightFuzzyOrgDescCn (List<String> rightFuzzyOrgDescCn){
+            this.rightFuzzyOrgDescCn = rightFuzzyOrgDescCn;
+            return this;
+        }
+
+        public ConditionBuilder rightFuzzyOrgDescCn (String ... rightFuzzyOrgDescCn){
+            this.rightFuzzyOrgDescCn = solveNullList(rightFuzzyOrgDescCn);
+            return this;
+        }
+
+        public ConditionBuilder orgDescCnList(String ... orgDescCn){
+            this.orgDescCnList = solveNullList(orgDescCn);
+            return this;
+        }
+
+        public ConditionBuilder orgDescCnList(List<String> orgDescCn){
+            this.orgDescCnList = orgDescCn;
             return this;
         }
 
@@ -787,8 +1008,16 @@ public class MqmsUserDict implements Serializable {
             this.obj.setOrgType(orgType);
             return this;
         }
+        public Builder orgTypeCn(String orgTypeCn){
+            this.obj.setOrgTypeCn(orgTypeCn);
+            return this;
+        }
         public Builder orgDesc(String orgDesc){
             this.obj.setOrgDesc(orgDesc);
+            return this;
+        }
+        public Builder orgDescCn(String orgDescCn){
+            this.obj.setOrgDescCn(orgDescCn);
             return this;
         }
         public Builder userId(Integer userId){

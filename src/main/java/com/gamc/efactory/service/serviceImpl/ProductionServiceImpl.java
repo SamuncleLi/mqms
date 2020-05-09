@@ -59,7 +59,6 @@ public class ProductionServiceImpl implements ProductionService {
 
         @Override
         public void run() {
-
             for (MqmsProduction mqmsProductionRecord : mqmsProductionList) {
                 if (StringUtil.isNotEmpty(mqmsProductionRecord.getVin())&&mqmsProductionRecord.getVin().length()>7 ){
                     //短码
